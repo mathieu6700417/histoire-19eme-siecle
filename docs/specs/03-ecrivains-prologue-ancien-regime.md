@@ -1,5 +1,7 @@
 # Spec 03 — Le siècle raconté par ses écrivains, chapitre 0 : prologue, la France avant 1789
 
+> **Charte en vigueur** : pour les règles de la section (chapitres 2 à 8 compris), [`00-charte-chapitres-ecrivains.md`](00-charte-chapitres-ecrivains.md) prévaut sur cette spec en cas de divergence. La spec ci-dessous garde l'historique des décisions.
+
 Complète la spec 02 (cadre de la section), dont toutes les règles s'appliquent : extraits
 copiés mot pour mot depuis Wikisource (Gallica à défaut) et vérifiés contre l'URL du lien,
 lien « Lire le chapitre complet » vers la page la plus précise possible, appareil (contexte,

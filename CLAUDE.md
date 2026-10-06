@@ -54,6 +54,10 @@ docs/specs/                     # cahier des charges de chaque page, numéroté
 3. Réutiliser les composants existants avant d'en créer de nouveaux.
 4. `npm run build` doit passer sans erreur avant de considérer la page finie.
 
+Section « Le siècle raconté par ses écrivains » : suivre `docs/specs/00-charte-chapitres-ecrivains.md`
+(règles et procédure, qui prévalent sur les specs 02 et 03) et les scripts de `scripts/ecrivains/`.
+`npm run verifier:ecrivains` doit confirmer tous les extraits mot pour mot avant de finir un chapitre.
+
 ## Git
 
 Ne pas committer ni pousser sans demande explicite de l'utilisateur.

@@ -22,3 +22,7 @@ npm-debug.log*
 
 # Fichiers temporaires de vérification
 verif-*.txt
+
+# Cache des pages Wikisource (scripts/ecrivains)
+.cache/
+__pycache__/

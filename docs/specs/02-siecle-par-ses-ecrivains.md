@@ -1,5 +1,7 @@
 # Spec 02 — Le siècle raconté par ses écrivains (cadre + chapitre 1 : la Révolution)
 
+> **Charte en vigueur** : pour les règles de la section (chapitres 2 à 8 compris), [`00-charte-chapitres-ecrivains.md`](00-charte-chapitres-ecrivains.md) prévaut sur cette spec en cas de divergence. La spec ci-dessous garde l'historique des décisions.
+
 ## Objectif
 
 Créer une **nouvelle section** du site, distincte des leçons thématiques : une histoire de la
