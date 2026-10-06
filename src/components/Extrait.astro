@@ -48,6 +48,12 @@ interface Props {
    * Affiché dans la ligne de référence, à côté de la date.
    */
   regard?: 'contemporain' | 'retrospectif';
+  /**
+   * Année (ou plage d'années « 1792-1797 », dont on retient la première) des faits
+   * racontés. Sert à classer l'extrait parmi les « témoins de l'époque » : l'auteur
+   * est né au moins 10 ans avant. Pour un texte fondateur, l'année de sa publication.
+   */
+  faits?: number | string;
   /** Partie, livre, chapitre, poème… */
   reference: string;
   /** Dates d'écriture et de publication, en clair. */
@@ -69,6 +75,7 @@ const {
   oeuvre,
   ecrit,
   regard,
+  faits,
   reference,
   date,
   lien,
@@ -79,6 +86,10 @@ const {
 } = Astro.props;
 
 const a = trouverAuteur(idAuteur);
+// Statut « témoin de l'époque », calculé au build.
+const anneeFaits = faits === undefined ? undefined : Number(String(faits).match(/\d{4}/)?.[0]);
+if (!anneeFaits) console.warn(`[Extrait ${id}] année des faits (prop « faits ») manquante`);
+const temoin = anneeFaits ? a.naissance.annee + 10 <= anneeFaits : true;
 const g = genres[idGenre];
 if (!g) throw new Error(`[Extrait ${id}] genre inconnu : ${idGenre}`);
 for (const s of ['chapeau', 'texte', 'critique']) {
@@ -86,7 +97,7 @@ for (const s of ['chapeau', 'texte', 'critique']) {
 }
 ---
 
-<section class="extrait" id={`extrait-${id}`} aria-labelledby={id}>
+<section class="extrait" id={`extrait-${id}`} aria-labelledby={id} data-temoin={temoin ? "oui" : "non"} data-auteur={idAuteur}>
   <header class="extrait__entete">
     <h3 id={id} class="extrait__titre">{typographie(titre)}</h3>
     <p class="extrait__ligne">
@@ -103,6 +114,8 @@ for (const s of ['chapeau', 'texte', 'critique']) {
           <span class="extrait__regard">{regard === 'contemporain' ? 'texte contemporain des faits' : 'regard rétrospectif'}</span>
         </>
       )}
+      <span class="extrait__sep" aria-hidden="true"> · </span>
+      <span class="extrait__regard">{temoin ? 'témoin' : "regard d'une génération suivante"}</span>
     </p>
   </header>
 

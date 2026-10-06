@@ -178,3 +178,37 @@ Tocqueville, Lamartine, Hugo, etc.).
   (1791) ; discours de Robespierre, de Danton, de Vergniaud ou de Saint-Just ; Marat,
   *L'Ami du peuple* ; Hébert, *Le Père Duchesne* ; Mercier, *Le Nouveau Paris* (1798, déjà présent) ;
   Arthur Young non retenu (étranger).
+
+## Révision du 2026-10-06 : filtre « Témoins de l'époque »
+
+Sur chaque page de chapitre, une option permet de choisir quels textes afficher :
+- **« Témoins de l'époque »** (par défaut) : seuls les textes dont l'auteur a vécu les faits
+  racontés, **même s'il écrit plus tard** (Chateaubriand, Staël…) ;
+- **« Postérieurs »** : seulement les textes des générations suivantes (Michelet, Hugo,
+  Tocqueville, Dumas…), qui n'ont pas vécu les faits ;
+- **« Tous les textes »** : les deux ensemble.
+(Trois choix, révision du 2026-10-06 ; le mode « Témoins » reste le mode par défaut.)
+
+**Critère, appliqué extrait par extrait** : l'auteur est né au moins 10 ans avant l'année des
+faits racontés (assez âgé pour s'en souvenir). Chaque extrait porte l'année des faits (prop
+`faits`, ou une plage d'années, auquel cas on retient la première) ; l'année de naissance vient
+de `auteurs.ts`. Le statut est calculé au moment du build, pas saisi à la main ; un avertissement
+s'affiche au build si l'année des faits manque. Pour les textes fondateurs antérieurs à la période
+(Montesquieu, Rousseau…), qui ne racontent pas des faits, on les compte parmi les témoins : ce
+sont des voix de l'époque, pas des regards rétrospectifs.
+
+**Interface**
+- Un sélecteur à trois options, sobre (deux liens ou boutons en petites capitales, l'option
+  active soulignée), placé en haut du chapitre et en tête du sommaire fixe sur ordinateur. Il
+  porte un compteur : « 14 textes sur 28 ».
+- Le choix est mémorisé (`localStorage`, avec try/catch) et s'applique à tous les chapitres.
+- Les extraits masqués disparaissent aussi du sommaire. Une partie qui n'a plus aucun extrait
+  visible est masquée. La numérotation est recalculée sur les textes visibles. La durée de
+  lecture affichée suit le filtre.
+- **Les transitions** entre extraits doivent rester lisibles dans les deux modes : une transition
+  liée à un extrait masqué disparaît avec lui. On relit les transitions qui renvoient à un texte
+  qu'un mode peut masquer, et on les rend neutres si nécessaire.
+- Dans la ligne de référence, un discret « témoin » ou « regard d'une génération suivante »
+  complète l'étiquette contemporain / rétrospectif.
+- Sans JavaScript, tous les textes s'affichent.
+- Si on arrive sur l'ancre d'un extrait masqué, le filtre passe sur « Tous les textes ».

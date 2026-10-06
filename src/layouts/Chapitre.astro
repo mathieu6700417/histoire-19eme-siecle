@@ -46,6 +46,97 @@ const duree = dureeLecture < 60
       window.addEventListener('hashchange', ouvrirSommaire);
       ouvrirSommaire();
 
+      // Filtre « Témoins de l'époque » (par défaut) / « Postérieurs » / « Tous ». Le statut de
+      // chaque extrait (data-temoin) est calculé au build ; le choix est mémorisé pour
+      // tous les chapitres.
+      const CLE_FILTRE = 'ecrivains-filtre';
+      type Mode = 'temoins' | 'posterieurs' | 'tous';
+      const MODES: Mode[] = ['temoins', 'posterieurs', 'tous'];
+      // Les valeurs enregistrées par la version à deux choix (« temoins », « tous ») restent
+      // valables telles quelles ; toute autre valeur (ancienne ou corrompue) est remplacée
+      // par le choix par défaut.
+      function lireMode(): Mode {
+        try {
+          const v = localStorage.getItem(CLE_FILTRE);
+          if (v && (MODES as string[]).includes(v)) return v as Mode;
+          if (v !== null) localStorage.setItem(CLE_FILTRE, 'temoins');
+        } catch { /* stockage indisponible */ }
+        return 'temoins';
+      }
+      function ecrireMode(m: string) {
+        try { localStorage.setItem(CLE_FILTRE, m); } catch { /* stockage indisponible */ }
+      }
+      const sections = [...document.querySelectorAll<HTMLElement>('section.extrait[data-temoin]')];
+      const motsDe = (sec: HTMLElement) => (sec.querySelector('.extrait__texte')?.textContent ?? '').trim().split(/\s+/).length;
+      const mots = new Map(sections.map((sec) => [sec, motsDe(sec)]));
+      const filtre = document.querySelector<HTMLElement>('.filtre');
+      function formaterDuree(min: number) {
+        return min < 60 ? `${min} minutes` : `${Math.floor(min / 60)} h${min % 60 ? ' ' + String(min % 60).padStart(2, '0') : ''}`;
+      }
+      function appliquer(mode: Mode) {
+        let visibles = 0, motsVisibles = 0, motsTotal = 0;
+        for (const sec of sections) {
+          const montre = mode === 'tous' || (mode === 'temoins') === (sec.dataset.temoin === 'oui');
+          sec.hidden = !montre;
+          // La transition qui introduit l'extrait disparaît avec lui.
+          const avant = sec.previousElementSibling as HTMLElement | null;
+          if (avant?.classList.contains('transition')) avant.hidden = !montre;
+          const li = document.querySelector<HTMLElement>(`.sommaire li[data-extrait="${sec.getAttribute('aria-labelledby')}"]`);
+          if (li) li.hidden = !montre;
+          motsTotal += mots.get(sec)!;
+          if (montre) { visibles++; motsVisibles += mots.get(sec)!; }
+        }
+        // Une partie sans extrait visible est masquée (page et sommaire).
+        for (const h of document.querySelectorAll<HTMLElement>('.prose > h2.partie')) {
+          let el = h.nextElementSibling, garde = false;
+          while (el && el.tagName !== 'H2') {
+            if (el.matches('section.extrait') && !(el as HTMLElement).hidden) { garde = true; break; }
+            el = el.nextElementSibling;
+          }
+          h.hidden = !garde;
+        }
+        for (const p of document.querySelectorAll<HTMLElement>('.sommaire__partie')) {
+          p.hidden = !p.querySelector('li[data-extrait]:not([hidden])');
+        }
+        // Compteurs et durée.
+        const compteur = filtre?.querySelector('.filtre__compteur');
+        if (compteur) compteur.textContent = `${visibles} textes sur ${sections.length}`;
+        const nombre = document.querySelector('.sommaire__nombre');
+        if (nombre) nombre.textContent = String(visibles);
+        const duree = document.querySelector<HTMLElement>('.chapitre__duree');
+        if (duree && motsTotal) {
+          const total = Number(duree.dataset.minutes);
+          duree.textContent = formaterDuree(Math.max(5, Math.round((total * motsVisibles) / motsTotal / 5) * 5));
+        }
+        for (const b of filtre?.querySelectorAll('.filtre__option') ?? []) {
+          b.setAttribute('aria-pressed', String(b.getAttribute('data-mode') === mode));
+        }
+      }
+      if (filtre && sections.length) {
+        filtre.hidden = false;
+        filtre.addEventListener('click', (e) => {
+          const b = (e.target as Element).closest<HTMLElement>('.filtre__option');
+          if (!b) return;
+          const mode = (MODES as string[]).includes(b.dataset.mode ?? '') ? (b.dataset.mode as Mode) : 'temoins';
+          ecrireMode(mode);
+          appliquer(mode);
+        });
+        appliquer(lireMode());
+      }
+      // Une ancre vers un texte masqué fait passer le filtre sur « Tous les textes ».
+      function reveler() {
+        if (!location.hash) return;
+        const cible = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (cible && cible.closest('[hidden]')) {
+          ecrireMode('tous');
+          appliquer('tous');
+          // Saut immédiat (sans l'animation « smooth ») une fois le texte réaffiché.
+          requestAnimationFrame(() => cible.scrollIntoView({ behavior: 'instant', block: 'start' }));
+        }
+      }
+      window.addEventListener('hashchange', reveler);
+      reveler();
+
       // Sur ordinateur (≥ 1200 px), le sommaire est une colonne fixe, toujours ouverte,
       // qui surligne le texte en cours de lecture.
       const large = window.matchMedia('(min-width: 1200px)');
@@ -105,7 +196,7 @@ const duree = dureeLecture < 60
         <span aria-hidden="true"> · </span>
         <span>{periode}</span>
         <span aria-hidden="true"> · </span>
-        <span>{typographie(`Lecture : environ ${duree}`)}</span>
+        <span>{typographie('Lecture : environ ')}<span class="chapitre__duree" data-minutes={dureeLecture}>{duree}</span></span>
       </p>
       <h1>{typographie(titre)}</h1>
       <p class="chapitre__resume">{typographie(resume)}</p>
@@ -113,8 +204,18 @@ const duree = dureeLecture < 60
 
     {nbExtraits > 0 && (
       <nav class="sommaire conteneur" aria-labelledby="titre-sommaire">
+        {/* Filtre « Témoins de l'époque » / « Postérieurs » / « Tous » : activé par le script ;
+            sans JavaScript, il reste caché et tous les textes s'affichent. */}
+        <div class="filtre" role="group" aria-label="Textes affichés" hidden>
+          <button type="button" class="filtre__option" data-mode="temoins" aria-pressed="true" title="Auteurs qui ont vécu les faits">Témoins</button>
+          <span class="filtre__sep" aria-hidden="true">·</span>
+          <button type="button" class="filtre__option" data-mode="posterieurs" aria-pressed="false" title="Auteurs des générations suivantes">Postérieurs</button>
+          <span class="filtre__sep" aria-hidden="true">·</span>
+          <button type="button" class="filtre__option" data-mode="tous" aria-pressed="false">Tous</button>
+          <span class="filtre__compteur" aria-live="polite"></span>
+        </div>
         <details id="sommaire">
-          <summary id="titre-sommaire">Sommaire : les {nbExtraits} textes du chapitre</summary>
+          <summary id="titre-sommaire">Sommaire : les <span class="sommaire__nombre">{nbExtraits}</span> textes du chapitre</summary>
           <div class="sommaire__parties">
             {sommaire.parties.map((p, i) => (
               <section class="sommaire__partie">
@@ -209,7 +310,48 @@ const duree = dureeLecture < 60
     font-weight: 500;
   }
   .sommaire__titre-partie a { color: var(--c-texte-doux); }
-  .sommaire ol { margin: 0; padding-left: 1.6em; }
+  /* Numérotation continue par compteur CSS : les entrées masquées par le filtre ne comptent pas. */
+  .sommaire__parties { counter-reset: texte; }
+  .sommaire ol { margin: 0; padding-left: 1.6em; list-style: none; }
+  .sommaire li[data-extrait] { counter-increment: texte; position: relative; }
+  .sommaire li[data-extrait]::before {
+    content: counter(texte) '.';
+    position: absolute;
+    right: calc(100% + 0.4em);
+    color: var(--c-texte-doux);
+    font-variant-numeric: oldstyle-nums;
+  }
+
+  /* Filtre : deux options en petites capitales, l'option active soulignée. */
+  .filtre {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.5em;
+    margin-bottom: var(--e-2);
+    font-size: 0.98rem;
+  }
+  .filtre[hidden] { display: none; }
+  .filtre__option {
+    font: inherit;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    background: none;
+    border: 0;
+    padding: 0;
+    color: var(--c-texte-doux);
+    cursor: pointer;
+  }
+  .filtre__option[aria-pressed='true'] {
+    color: var(--c-texte);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+  }
+  .filtre__option:hover { color: var(--c-texte); }
+  .filtre__option:focus-visible { outline: 1px solid var(--c-texte); outline-offset: 2px; }
+  .filtre__sep { color: var(--c-texte-doux); }
+  .filtre__compteur { color: var(--c-texte-doux); font-size: 0.92em; margin-left: auto; }
   .sommaire li { margin-bottom: 0.2rem; line-height: 1.4; }
   .sommaire__auteur { color: var(--c-texte-doux); font-size: 0.92em; }
   .sommaire a { text-decoration: none; }
