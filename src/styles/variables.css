@@ -1,0 +1,42 @@
+/* Variables du site : palette, typographie, espacements. */
+:root {
+  /* Palette « édition savante », strictement monochrome : noir sur blanc cassé,
+     gris pour le secondaire, aucune couleur (liens soulignés).
+     Les anciens noms de variables sont conservés pour ne rien casser. */
+  --c-fond: #fbfaf7;          /* blanc cassé */
+  --c-fond-2: #fbfaf7;        /* plus de fonds colorés : identique au fond */
+  --c-texte: #1a1a1a;         /* noir d'encre */
+  --c-texte-doux: #5c5c5c;    /* gris secondaire (6,4:1 sur le fond) */
+  --c-ocre: #666666;          /* ancien accent ocre → gris des surtitres (5,5:1) */
+  --c-ocre-clair: #c8c5bd;    /* filets légèrement marqués */
+  --c-bordeaux: #1a1a1a;      /* ancien accent : désormais noir (liens, titres) */
+  --c-bleu-nuit: #1a1a1a;     /* titres : noir */
+  --c-filet: #dcd9d2;         /* filets fins */
+  --c-lien: var(--c-bordeaux);
+
+  /* Typographie */
+  --f-texte: 'EB Garamond', Garamond, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --f-titre: var(--f-texte);  /* une seule famille, comme dans une édition savante */
+  --t-base: 1.1875rem;        /* 19 px : le Garamond est petit à l'œil */
+  --t-petit: 0.9rem;
+  --interligne: 1.6;
+
+  /* Espacements */
+  --e-1: 0.25rem;
+  --e-2: 0.5rem;
+  --e-3: 1rem;
+  --e-4: 1.5rem;
+  --e-5: 2.5rem;
+  --e-6: 4rem;
+
+  /* Largeurs */
+  --l-lecture: 44rem;         /* colonne de lecture : ~80 caractères en Garamond 19 px */
+  --l-large: 1120px;          /* frise, arbre */
+  --gouttiere: 16px;
+
+  --rayon: 4px;
+}
+
+@media (min-width: 700px) {
+  :root { --gouttiere: 24px; }
+}

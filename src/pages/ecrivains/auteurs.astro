@@ -1,0 +1,77 @@
+---
+// Index des auteurs : généré à partir de src/data/auteurs.ts et des chapitres
+// écrits (un auteur figure ici dès qu'un <Extrait auteur="…"> le cite).
+import Base from '../../layouts/Base.astro';
+import FicheAuteur from '../../components/FicheAuteur.astro';
+import { auteursTries } from '../../data/auteurs';
+import { chapitresEcrits, auteursCites, urlChapitre, urlSection } from '../../utils/ecrivains';
+import { typographie } from '../../utils/typographie.mjs';
+import { libelleChapitre } from '../../data/chapitres-ecrivains';
+
+const chapitres = await chapitresEcrits();
+const citations = new Map<string, typeof chapitres>();
+for (const c of chapitres) {
+  for (const id of auteursCites(c)) citations.set(id, [...(citations.get(id) ?? []), c]);
+}
+for (const id of citations.keys()) {
+  if (!auteursTries.some((a) => a.id === id)) throw new Error(`Auteur cité mais absent de src/data/auteurs.ts : ${id}`);
+}
+const presents = auteursTries.filter((a) => citations.has(a.id));
+---
+
+<Base
+  title="Index des auteurs · Le siècle raconté par ses écrivains"
+  description="Les écrivains cités dans le parcours « Le siècle raconté par ses écrivains » : dates, position politique, œuvres et chapitres où ils apparaissent."
+>
+  <div class="conteneur index-auteurs">
+    <header class="entete">
+      <p class="surtitre"><a href={urlSection}>Le siècle raconté par ses écrivains</a></p>
+      <h1>Index des auteurs</h1>
+      <p class="chapeau">
+        {typographie(`${presents.length} écrivains cités, par ordre alphabétique. Pour chacun : ses dates, sa position politique, les œuvres citées et les chapitres où il apparaît.`)}
+      </p>
+      <nav aria-label="Accès direct aux auteurs">
+        <ul class="acces">
+          {presents.map((a) => <li><a href={`#auteur-${a.id}`}>{typographie(a.tri)}</a></li>)}
+        </ul>
+      </nav>
+    </header>
+
+    {presents.map((a) => (
+      <FicheAuteur id={a.id} niveau="h2">
+        <p class="cite-dans">
+          <span class="cite-dans__titre">Cité dans</span>
+          {citations.get(a.id)!.map((c, i) => (
+            <>{i > 0 && ' ; '}<a href={urlChapitre(c)}>{typographie(`${libelleChapitre(c.data.numero)}, ${c.data.titre} (${c.data.periode})`)}</a></>
+          ))}
+        </p>
+      </FicheAuteur>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .index-auteurs { max-width: calc(var(--l-lecture) + 2 * var(--gouttiere)); }
+  .entete { padding-top: var(--e-5); }
+  .surtitre { font-variant: small-caps; letter-spacing: 0.1em; margin-bottom: var(--e-2); }
+  .surtitre a { color: var(--c-texte-doux); }
+  .chapeau { font-size: 1.2rem; font-style: italic; color: var(--c-texte-doux); }
+  .acces {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-1) var(--e-3);
+    border-bottom: 1px solid var(--c-filet);
+    padding-bottom: var(--e-3);
+  }
+  .acces li { margin: 0; }
+  .cite-dans__titre {
+    display: block;
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    font-weight: 500;
+    color: var(--c-texte-doux);
+    margin-bottom: var(--e-1);
+  }
+</style>

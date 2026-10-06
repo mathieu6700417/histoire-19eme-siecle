@@ -1,0 +1,297 @@
+---
+// Frise chronologique en SVG inline.
+// Échelle exacte : chaque année occupe la même largeur (pxParAn).
+// `compacte` : rendu pour une ou deux lignes (mini-frise d'une page de courant) :
+// noms non cliquables, légende réduite, texte d'aide raccourci.
+import type { LigneFrise, Periode, Repere } from '../data/types';
+import { cibleLien, etagerLibelles, idSur, largeurTexte } from '../utils/svg';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  debut: number;
+  fin: number;
+  lignes: LigneFrise[];
+  reperes?: Repere[];
+  periodes?: Periode[];
+  /** Légende sous la frise (texte court). */
+  legende?: string;
+  pxParAn?: number;
+  /** Préfixe pour rendre les id uniques si plusieurs frises sur la page. */
+  idFrise?: string;
+  /** Rendu compact (mini-frise). */
+  compacte?: boolean;
+}
+
+const {
+  debut,
+  fin,
+  lignes,
+  reperes = [],
+  periodes = [],
+  legende,
+  pxParAn = 8,
+  idFrise = 'frise',
+  compacte = false,
+} = Astro.props;
+
+// --- Géométrie -------------------------------------------------------
+const COL_NOMS = 132;       // colonne des noms de courants
+const MARGE_D = 24;
+const H_PERIODES = periodes.length ? 26 : 0;
+const T_REPERE = 12;        // taille du texte des années
+const H_RANGEE_REPERE = 16;
+const H_LIGNE = 36;
+const T_NOM = 14;
+
+const x = (annee: number) => COL_NOMS + (annee - debut) * pxParAn;
+const largeur = COL_NOMS + (fin - debut) * pxParAn + MARGE_D;
+
+// Années des repères, étagées pour éviter les chevauchements.
+const rangsReperes = etagerLibelles(
+  reperes.map((r) => ({ x: x(r.annee), largeur: largeurTexte(String(r.annee), T_REPERE) })),
+);
+const nbRangsReperes = reperes.length ? Math.max(...rangsReperes) + 1 : 0;
+const yDebutLignes = H_PERIODES + nbRangsReperes * H_RANGEE_REPERE + 8;
+const yFinLignes = yDebutLignes + lignes.length * H_LIGNE;
+const hauteur = yFinLignes + 28; // + graduation des décennies
+
+// Graduation par décennie, en bas.
+const decennies: number[] = [];
+for (let a = Math.ceil(debut / 10) * 10; a <= fin; a += 10) decennies.push(a);
+
+const libellePeriode = (p: Periode) => {
+  const dispo = (p.fin - p.debut) * pxParAn - 8;
+  if (largeurTexte(p.libelle, 12) <= dispo) return p.libelle;
+  if (p.court && largeurTexte(p.court, 12) <= dispo) return p.court;
+  return '';
+};
+
+const hauteurs = { existe: 5, declin: 14, pouvoir: 20 } as const;
+const nomsStatut = { existe: 'existe', pouvoir: 'au pouvoir', declin: 'en déclin' } as const;
+const idHachure = (l: LigneFrise) => `${idFrise}-hach-${idSur(l.id)}`;
+---
+
+<figure class:list={['frise large', { 'frise--compacte': compacte }]} data-frise>
+  <div
+    class="frise__defilement"
+    tabindex="0"
+    role="region"
+    aria-label="Frise chronologique (faire défiler horizontalement sur petit écran)"
+  >
+    <svg
+      viewBox={`0 0 ${largeur} ${hauteur}`}
+      width={largeur}
+      height={hauteur}
+      style={`min-width:${largeur}px`}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-labelledby={`${idFrise}-titre`}
+    >
+      <title id={`${idFrise}-titre`}>
+        {typographie(`Frise chronologique ${debut}-${fin} : ${lignes.map((l) => l.nom).join(', ')}`)}
+      </title>
+      <defs>
+        {lignes.map((l) => (
+          <pattern id={idHachure(l)} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill="#fbfaf7" />
+            <line x1="0" y1="0" x2="0" y2="6" stroke={l.couleur} stroke-width="2.5" />
+          </pattern>
+        ))}
+      </defs>
+
+      {/* Bandes des périodes (régimes) */}
+      {periodes.map((p, i) => (
+        <g class="frise__periode">
+          <title>{typographie(`${p.libelle} (${p.debut}-${p.fin})`)}</title>
+          <rect
+            x={x(p.debut)}
+            y={0}
+            width={(p.fin - p.debut) * pxParAn}
+            height={yFinLignes}
+            fill={i % 2 === 0 ? '#f2f1ed' : '#fbfaf7'}
+          />
+          <text x={x((p.debut + p.fin) / 2)} y={17} text-anchor="middle" class="frise__txt-periode">
+            {libellePeriode(p)}
+          </text>
+        </g>
+      ))}
+
+      {/* Lignes horizontales de séparation */}
+      {lignes.map((_, i) => (
+        <line
+          x1={0}
+          x2={largeur - MARGE_D}
+          y1={yDebutLignes + (i + 1) * H_LIGNE}
+          y2={yDebutLignes + (i + 1) * H_LIGNE}
+          class="frise__separateur"
+        />
+      ))}
+
+      {/* Repères verticaux */}
+      {reperes.map((r, i) => (
+        <g class="frise__repere">
+          <title>{typographie(`${r.annee} : ${r.libelle}`)}</title>
+          <line
+            x1={x(r.annee)}
+            x2={x(r.annee)}
+            y1={H_PERIODES + (rangsReperes[i] + 1) * H_RANGEE_REPERE + 2}
+            y2={yFinLignes}
+          />
+          <text
+            x={x(r.annee)}
+            y={H_PERIODES + (rangsReperes[i] + 1) * H_RANGEE_REPERE - 2}
+            text-anchor="middle"
+          >{r.annee}</text>
+        </g>
+      ))}
+
+      {/* Une ligne par courant */}
+      {lignes.map((l, i) => {
+        const yc = yDebutLignes + i * H_LIGNE + H_LIGNE / 2;
+        return (
+          <g class="frise__ligne">
+            {compacte ? (
+              <text x={8} y={yc + 5} fill={l.couleur} font-size={T_NOM} class="frise__nom-texte">{l.nom}</text>
+            ) : (
+              <a href={cibleLien(l.lien ?? l.id)} class="frise__nom">
+                <text x={8} y={yc + 5} fill={l.couleur} font-size={T_NOM}>{l.nom}</text>
+              </a>
+            )}
+            {l.segments.map((s) => {
+              const h = hauteurs[s.statut];
+              const texte = typographie(`${l.nom}, ${s.debut}-${s.fin} (${nomsStatut[s.statut]}) : ${s.libelle}`);
+              return (
+                <g class="frise__segment" tabindex="0" role="img" aria-label={texte} data-info={texte}>
+                  <title>{texte}</title>
+                  {/* zone de survol confortable */}
+                  <rect x={x(s.debut)} y={yc - 13} width={(s.fin - s.debut) * pxParAn} height={26} fill="transparent" />
+                  <rect
+                    x={x(s.debut) + 0.5}
+                    y={yc - h / 2}
+                    width={Math.max((s.fin - s.debut) * pxParAn - 1, 2)}
+                    height={h}
+                    rx={s.statut === 'existe' ? 2.5 : 2}
+                    fill={s.statut === 'declin' ? `url(#${idHachure(l)})` : l.couleur}
+                    stroke={s.statut === 'declin' ? l.couleur : 'none'}
+                    stroke-width={s.statut === 'declin' ? 1 : 0}
+                    class="frise__marque"
+                  />
+                </g>
+              );
+            })}
+          </g>
+        );
+      })}
+
+      {/* Graduation des décennies */}
+      <line x1={x(debut)} x2={x(fin)} y1={yFinLignes} y2={yFinLignes} class="frise__axe" />
+      {decennies.map((a) => (
+        <g class="frise__graduation">
+          <line x1={x(a)} x2={x(a)} y1={yFinLignes} y2={yFinLignes + 5} />
+          <text x={x(a)} y={yFinLignes + 19} text-anchor="middle">{a}</text>
+        </g>
+      ))}
+    </svg>
+  </div>
+
+  <p class="frise__info" aria-live="polite" data-frise-info>
+    {compacte
+      ? 'Survolez ou touchez un segment pour afficher son détail.'
+      : 'Survolez ou touchez un segment pour afficher son détail\u202F; cliquez sur un nom pour ouvrir la page du courant.'}
+  </p>
+
+  <figcaption>
+    <ul class="frise__legende" aria-label="Légende">
+      <li><svg width="34" height="20" aria-hidden="true"><rect x="1" y="7.5" width="32" height="5" rx="2.5" fill="#1a1a1a" /></svg> le courant existe</li>
+      <li><svg width="34" height="20" aria-hidden="true"><rect x="1" y="0" width="32" height="20" rx="2" fill="#1a1a1a" /></svg> au pouvoir</li>
+      <li>
+        <svg width="34" height="20" aria-hidden="true">
+          <defs>
+            <pattern id={`${idFrise}-hach-legende`} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="6" height="6" fill="#fbfaf7" />
+              <line x1="0" y1="0" x2="0" y2="6" stroke="#1a1a1a" stroke-width="2.5" />
+            </pattern>
+          </defs>
+          <rect x="1" y="3" width="32" height="14" rx="2" fill={`url(#${idFrise}-hach-legende)`} stroke="#1a1a1a" />
+        </svg> en déclin
+      </li>
+      {!compacte && (
+        <li><svg width="34" height="20" aria-hidden="true"><line x1="17" x2="17" y1="0" y2="20" stroke="#5c5c5c" stroke-dasharray="3 3" /></svg> changement de régime</li>
+      )}
+    </ul>
+    {legende && <p class="frise__texte-legende">{typographie(legende)}</p>}
+  </figcaption>
+</figure>
+
+<script>
+  // Affiche le détail du segment survolé, touché ou sélectionné au clavier.
+  document.querySelectorAll<HTMLElement>('[data-frise]').forEach((frise) => {
+    const info = frise.querySelector<HTMLElement>('[data-frise-info]');
+    if (!info) return;
+    const montrer = (e: Event) => {
+      const seg = (e.target as Element).closest<SVGElement>('[data-info]');
+      if (seg?.dataset.info) info.textContent = seg.dataset.info;
+    };
+    frise.addEventListener('mouseover', montrer);
+    frise.addEventListener('focusin', montrer);
+    frise.addEventListener('click', montrer);
+  });
+</script>
+
+<style>
+  .frise { margin: var(--e-5) auto; }
+  .frise__defilement {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-block: 1px solid var(--c-filet);
+    background: var(--c-fond);
+  }
+  .frise__defilement svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--f-texte);
+  }
+  .frise__txt-periode {
+    font-size: 12px;
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    fill: var(--c-texte-doux);
+  }
+  .frise__separateur { stroke: var(--c-filet); stroke-width: 1; opacity: 0.6; }
+  .frise__repere line { stroke: var(--c-bordeaux); stroke-dasharray: 3 3; opacity: 0.55; }
+  .frise__repere text { font-size: 12px; fill: var(--c-bordeaux); font-weight: 500; }
+  .frise__nom text { font-weight: 600; text-decoration: none; }
+  .frise__nom:hover text, .frise__nom:focus text { text-decoration: underline; }
+  .frise__segment { cursor: help; outline: none; }
+  .frise__segment:hover .frise__marque,
+  .frise__segment:focus .frise__marque { filter: brightness(1.25); }
+  .frise__segment:focus-visible .frise__marque { stroke: var(--c-texte); stroke-width: 2; }
+  .frise__axe, .frise__graduation line { stroke: var(--c-texte-doux); }
+  .frise__graduation text { font-size: 12px; fill: var(--c-texte-doux); }
+
+  .frise__info {
+    min-height: 3.2em;
+    margin: var(--e-2) 0 0;
+    padding: var(--e-2) var(--e-3);
+    border-left: 1px solid var(--c-ocre-clair);
+    font-size: 1rem;
+  }
+  .frise__legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2) var(--e-4);
+    list-style: none;
+    padding: 0;
+    margin: var(--e-2) 0 0;
+    font-size: 1rem;
+    color: var(--c-texte-doux);
+  }
+  .frise__legende li { display: flex; align-items: center; gap: var(--e-2); margin: 0; hyphens: manual; -webkit-hyphens: manual; white-space: nowrap; }
+  .frise__legende svg { flex: none; }
+  .frise__nom-texte { font-weight: 600; }
+  .frise--compacte { margin: var(--e-4) auto; }
+  .frise--compacte .frise__info { min-height: 0; font-size: 0.95rem; padding-block: var(--e-1); }
+  .frise--compacte .frise__legende { font-size: 0.9rem; gap: var(--e-1) var(--e-3); }
+  .frise--compacte .frise__legende svg { transform: scale(0.8); }
+  .frise__texte-legende { font-size: 1rem; font-style: italic; color: var(--c-texte-doux); margin-top: var(--e-2); }
+</style>

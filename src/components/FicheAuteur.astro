@@ -1,0 +1,82 @@
+---
+// Mini-portrait d'un auteur (section « Le siècle raconté par ses écrivains »).
+// Reprend le modèle visuel de Fiche.astro : bandeau coloré selon la famille
+// politique, puis rubriques. Les données viennent de src/data/auteurs.ts.
+// Usage : <FicheAuteur id="chateaubriand" />  (niveau="h2" dans l'index des auteurs)
+// Dans un chapitre, la fiche est affichée par <Extrait … fiche>.
+import { auteur } from '../data/auteurs';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  id: string;
+  /** Niveau de titre du nom (h3 dans un chapitre, h2 dans l'index). */
+  niveau?: 'h2' | 'h3';
+  /** Contenu supplémentaire (liste des chapitres dans l'index) : slot par défaut. */
+}
+
+const { id, niveau = 'h3' } = Astro.props;
+const a = auteur(id);
+const Titre = niveau;
+const ancre = `auteur-${a.id}`;
+---
+
+<aside class="fiche-auteur" id={ancre} style={`--couleur-auteur:${a.couleur}`} aria-labelledby={`${ancre}-nom`}>
+  <header class="fiche-auteur__bandeau">
+    <p class="fiche-auteur__etiquette">Portrait</p>
+    <Titre id={`${ancre}-nom`} class="fiche-auteur__nom">{typographie(a.nom)}</Titre>
+    <p class="fiche-auteur__dates">
+      {a.naissance.lieu}, {a.naissance.annee} – {a.mort.lieu}, {a.mort.annee}
+    </p>
+  </header>
+  <div class="fiche-auteur__corps">
+    <p class="fiche-auteur__position"><span class="fiche-auteur__rubrique">Position politique</span> {typographie(a.position)}</p>
+    <p class="fiche-auteur__portrait">{typographie(a.portrait)}</p>
+    {a.exception && <p class="fiche-auteur__exception">{typographie(a.exception)}</p>}
+    <p class="fiche-auteur__oeuvres">
+      <span class="fiche-auteur__rubrique">{a.oeuvres.length > 1 ? 'Œuvres citées' : 'Œuvre citée'}</span>
+      {a.oeuvres.map((o, i) => (<>{i > 0 && ' ; '}<span>{typographie(o)}</span></>))}
+    </p>
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .fiche-auteur {
+    margin: var(--e-4) auto var(--e-4);
+    border-top: 1px solid var(--c-texte-doux);
+    border-bottom: 1px solid var(--c-filet);
+    font-size: 1.02rem;
+  }
+  .fiche-auteur__bandeau { padding: var(--e-2) 0 var(--e-1); }
+  .fiche-auteur__etiquette {
+    margin: 0;
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-size: 0.95rem;
+    color: var(--c-texte-doux);
+  }
+  .fiche-auteur__nom {
+    color: var(--c-texte);
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+  .fiche-auteur__dates { margin: 0; color: var(--c-texte-doux); }
+  .fiche-auteur__corps { padding: var(--e-2) 0 var(--e-1); }
+  .fiche-auteur__rubrique {
+    display: block;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--c-texte-doux);
+    margin-bottom: var(--e-1);
+  }
+  .fiche-auteur__corps :global(p) { margin-bottom: var(--e-3); }
+  .fiche-auteur__exception {
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--c-texte-doux);
+    border-left: 1px solid var(--c-filet);
+    padding-left: var(--e-2);
+  }
+</style>

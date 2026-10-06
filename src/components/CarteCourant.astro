@@ -1,0 +1,95 @@
+---
+// Carte d'un courant pour la grille du portail : filet de la couleur (sourde) du
+// courant, nom, période, « en une phrase » ; toute la carte est un lien.
+// Usage MDX (la grille est fournie par la classe globale .grille-courants) :
+//   <ul class="grille-courants large">
+//     <li><CarteCourant courant={courants.legitimistes} href="…" /></li>
+//   </ul>
+// `periode` et `phrase` valent par défaut celles du courant (données).
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  courant: { id: string; nom: string; titre: string; couleur: string; periode?: string; phrase?: string; lien?: string };
+  periode?: string;
+  phrase?: string;
+  /** Adresse de la page du courant (par défaut : courant.lien). */
+  href?: string;
+}
+
+const { courant } = Astro.props;
+const periode = Astro.props.periode ?? courant.periode;
+const phrase = Astro.props.phrase ?? courant.phrase;
+const href = Astro.props.href ?? courant.lien;
+if (!href) console.warn(`[CarteCourant ${courant.id}] lien manquant`);
+---
+
+<a class="carte-courant" href={href} style={`--couleur-courant:${courant.couleur}`}>
+  <span class="carte-courant__bandeau">
+    <span class="carte-courant__nom">{typographie(courant.nom)}</span>
+    {periode && <span class="carte-courant__periode">{periode}</span>}
+  </span>
+  <span class="carte-courant__corps">
+    {courant.titre !== courant.nom && (
+      <span class="carte-courant__titre">{typographie(courant.titre)}</span>
+    )}
+    {phrase && <span class="carte-courant__phrase">{typographie(phrase)}</span>}
+    <span class="carte-courant__suite" aria-hidden="true">Lire le récit →</span>
+  </span>
+</a>
+
+<style>
+  /* Grille du portail : 3 colonnes sur grand écran, 1 sur téléphone. */
+  :global(.grille-courants) {
+    list-style: none;
+    padding: 0;
+    margin: var(--e-4) auto var(--e-5);
+    display: grid;
+    gap: var(--e-3);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+  :global(.grille-courants > li) { margin: 0; display: flex; }
+
+  .carte-courant {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 2px solid var(--couleur-courant);
+    border-bottom: 1px solid var(--c-filet);
+    color: var(--c-texte);
+    text-decoration: none;
+  }
+  .carte-courant:hover .carte-courant__nom,
+  .carte-courant:focus-visible .carte-courant__nom { text-decoration: underline; text-decoration-thickness: 1px; }
+  .carte-courant__bandeau {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0 var(--e-2);
+    padding: var(--e-2) 0 0;
+  }
+  .carte-courant__nom { font-family: var(--f-titre); font-size: 1.3rem; font-weight: 500; line-height: 1.25; color: var(--c-bleu-nuit); }
+  .carte-courant__periode { font-variant: small-caps; letter-spacing: 0.08em; font-size: 1rem; color: var(--c-texte-doux); }
+  .carte-courant__corps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-1);
+    flex: 1;
+    padding: var(--e-1) 0 var(--e-3);
+  }
+  .carte-courant__titre {
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    color: var(--c-texte-doux);
+    font-size: 0.98rem;
+    line-height: 1.35;
+  }
+  .carte-courant__phrase { font-size: 1.02rem; line-height: 1.5; }
+  .carte-courant__suite {
+    margin-top: auto;
+    padding-top: var(--e-1);
+    color: var(--c-bordeaux);
+    font-size: 0.98rem;
+  }
+  .carte-courant:hover .carte-courant__suite { text-decoration: underline; }
+</style>

@@ -1,0 +1,151 @@
+---
+titre: "Les républicains"
+theme: politique
+courant: republicains
+ordre: 4
+periode: "1789-1900"
+resume: "Des pétitionnaires du Champ-de-Mars en 1791 à la Défense républicaine de 1899, le siècle vécu par les républicains : vainqueurs en 1792, 1848 et 1870, vaincus en 1799 et 1851, longtemps proscrits, enfin maîtres d'une République qu'ils ont faite à leur image."
+dureeLecture: 14
+---
+import Fiche from '../../../components/Fiche.astro';
+import Frise from '../../../components/Frise.astro';
+import Encadre from '../../../components/Encadre.astro';
+import { courants, lignesDe, reperesFrise, periodesFrise } from '../../../data/courants-politiques';
+
+<Fiche entete courant={courants.republicains}>
+<div slot="idees">
+
+- Souveraineté nationale et **suffrage universel** (masculin, au XIXe siècle).
+- Libertés publiques : presse, réunion, association.
+- Laïcité : l'État et l'école doivent être indépendants de l'Église.
+- Fidélité à la Révolution française, à sa devise et à ses symboles (Marseillaise, drapeau tricolore, 14 Juillet).
+- Le progrès par l'instruction, la science et la propriété accessible à tous plutôt que par la révolution sociale.
+
+</div>
+<div slot="figures">
+
+- **Robespierre** et **Danton** : figures de la Première République et de la Montagne.
+- **Lamartine** et **Ledru-Rollin** : membres du Gouvernement provisoire de 1848.
+- **Jules Favre** et **Jules Simon** : opposants au Second Empire, ministres en 1870-1871.
+- **Léon Gambetta** : tribun du programme de Belleville (1869) et de la Défense nationale, chef des républicains dans les années 1870.
+- **Jules Ferry** : président du Conseil, auteur des lois scolaires de 1881-1882.
+
+</div>
+<div slot="moments">
+
+- **1792** : proclamation de la Première République.
+- **1830-1834** : sociétés républicaines (Société des droits de l'homme), insurrections de juin 1832 et d'avril 1834 ; **1835** : les lois de septembre interdisent de se dire républicain.
+- **Mars 1848** : suffrage universel masculin.
+- **1875** : lois constitutionnelles de la IIIe République.
+- **1877-1879** : crise du 16 mai, puis conquête de toutes les institutions.
+- **1881-1884** : lois sur la presse et les réunions (1881), lois Ferry (1881-1882), lois sur les syndicats et les municipalités (1884).
+
+</div>
+<div slot="devenir">
+
+Victorieux en 1879, ils se divisent entre modérés et radicaux ; à la fin du siècle, la République n'est plus contestée que par une minorité.
+
+</div>
+</Fiche>
+
+<Frise
+  debut={1789}
+  fin={1900}
+  lignes={lignesDe('republicains')}
+  reperes={reperesFrise}
+  periodes={periodesFrise}
+  idFrise="frise-republicains"
+  compacte
+/>
+
+## Naissance d'une idée neuve (1789-1799)
+
+En 1789, presque personne n'est républicain : les députés qui proclament les droits de l'homme veulent un roi, mais soumis à la loi. L'idée grandit pourtant dans les clubs de Paris, et d'abord au **club des Cordeliers**, fondé en 1790 : on y croise Danton, Marat, Camille Desmoulins et des artisans du quartier.
+
+Le tournant, c'est une fuite. Dans la nuit du 20 au 21 juin 1791, Louis XVI tente de quitter la France ; il est reconnu et arrêté à **Varennes**. Le roi a trahi la Constitution : pourquoi garder un roi ? Les Cordeliers lancent une pétition pour sa déchéance. Le 17 juillet 1791, au **Champ-de-Mars**, la garde nationale de La Fayette tire sur la foule venue la signer : plusieurs dizaines de morts selon les estimations. Le premier sang républicain a été versé par des révolutionnaires modérés.
+
+La guerre, déclarée en avril 1792, emporte la monarchie. Le **10 août 1792**, les sections parisiennes et les fédérés venus de province, dont les Marseillais, prennent les Tuileries. Une Convention élue au suffrage presque universel des hommes se réunit et, le **21 septembre 1792**, au lendemain de la victoire de Valmy, abolit la royauté.
+
+<Encadre titre="République">
+Une **république** (du latin *res publica*, « la chose publique ») est un régime sans roi, où le pouvoir appartient au peuple ou à ses représentants élus. La France en connaît trois au XIXe siècle : 1792-1804, 1848-1852, et la Troisième, née le 4 septembre 1870.
+</Encadre>
+
+La jeune République se déchire aussitôt. À la Convention, les **Girondins** (Brissot, Vergniaud), attachés aux libertés et à la province, se méfient du peuple de Paris ; les **Montagnards** (Robespierre, Danton, Marat), assis en haut des gradins, veulent des mesures d'exception pour sauver la Révolution. Après l'exécution de Louis XVI (21 janvier 1793), les sans-culottes parisiens imposent l'arrestation des chefs girondins le **2 juin 1793**.
+
+<Encadre titre="Jacobins">
+Le **club des Jacobins**, installé rue Saint-Honoré, réunit les révolutionnaires les plus influents ; sous la Convention, il est dominé par les Montagnards. Au XIXe siècle, être « jacobin », c'est se réclamer de 1793 : la patrie en danger, l'État central fort, l'égalité, le salut public au-dessus des libertés individuelles.
+</Encadre>
+
+Commence la **Terreur** (1793-1794), un gouvernement d'exception qui suspend les libertés et fait juger les « suspects » par des tribunaux révolutionnaires : environ 17 000 condamnations à mort, sans compter les exécutions sommaires. Les républicains se dévorent entre eux : Danton est guillotiné en avril 1794, Robespierre après le **9 thermidor an II** (27 juillet 1794). Le **Directoire** (1795-1799) revient à un vote réservé aux possédants et gouverne par coups d'État contre les royalistes et les jacobins, jusqu'à ce que le général Bonaparte le renverse, le 18 brumaire an VIII (9 novembre 1799). Elle laisse un double héritage : l'élan de 1792, la nation souveraine et la patrie défendue ; et le souvenir de la guillotine, que ses adversaires agiteront tout le siècle.
+
+## Le temps des conspirations (1799-1830)
+
+Sous Napoléon, les républicains se taisent ou se rallient : bien des anciens conventionnels deviennent préfets, sénateurs, comtes d'Empire. Le régime des [bonapartistes](../bonapartistes/) a confisqué la République tout en gardant une partie de son héritage.
+
+La Restauration ne rend pas le droit de se dire républicain. On se cache parmi les libéraux, dans l'ombre de La Fayette, et l'on conspire. La **Charbonnerie**, imitée des *carbonari* italiens, se développe en 1821-1822 et prépare des soulèvements dans les garnisons. Tous échouent, à Belfort, à Saumur, à La Rochelle. Les **quatre sergents de La Rochelle**, de jeunes sous-officiers, sont guillotinés à Paris, place de Grève, le 21 septembre 1822. Ils deviennent des martyrs.
+
+En juillet 1830, pendant les **Trois Glorieuses**, les républicains tiennent les barricades contre Charles X. Mais les libéraux de la Chambre ont leur candidat, le duc d'Orléans. Le 31 juillet, à l'Hôtel de Ville, La Fayette, que les républicains voyaient en président, embrasse le prince au balcon devant la foule. Louis-Philippe devient « roi des Français ». Pour les républicains, la révolution a été **escamotée** : ils ont fait le travail, les [orléanistes](../orleanistes/) ramassent le pouvoir.
+
+## Sociétés secrètes et barricades (1830-1848)
+
+Les déçus de 1830 se regroupent dans la **Société des amis du peuple** (Raspail, Godefroy Cavaignac, le jeune Auguste Blanqui), puis dans la **Société des droits de l'homme** (1832-1834). Ils réclament le suffrage universel et rêvent de 1792. Le 5 juin 1832, les funérailles du général Lamarque, député populaire, tournent à l'insurrection ; le 6, les derniers insurgés meurent au cloître Saint-Merry, scène que Victor Hugo immortalisera dans *Les Misérables*. En avril 1834, une loi contre les associations provoque de nouveaux soulèvements, à Lyon puis à Paris. Rue Transnonain, des soldats qui ont essuyé un coup de feu massacrent les habitants d'un immeuble ; une lithographie de Daumier en fait un symbole.
+
+Après l'attentat de Fieschi contre le roi (juillet 1835), les **lois de septembre 1835** interdisent de se dire républicain dans la presse. On se dira donc « démocrate » ou « [radical](../radicaux/) ». Les plus résolus, comme Blanqui et Barbès, retournent au complot : leur insurrection du 12 mai 1839 échoue. La plupart choisissent la presse et l'élection. *Le National*, dirigé par **Armand Marrast**, défend une République modérée et libérale ; *La Réforme*, fondée en 1843 autour de l'avocat **Ledru-Rollin**, une République plus démocratique et plus sociale, ouverte aux [socialistes](../socialistes/) comme Louis Blanc. En 1847, avec l'opposition dynastique, ils lancent la **campagne des banquets** pour réclamer l'élargissement du droit de vote.
+
+## La République de 1848 : l'espoir et la chute (1848-1851)
+
+Le 24 février 1848, Louis-Philippe abdique, et les républicains ne laissent pas passer leur chance une seconde fois : à l'Hôtel de Ville, sous la pression de la foule, un **Gouvernement provisoire** proclame la République. Il réunit des modérés du *National*, dont le poète Lamartine, des démocrates de *La Réforme*, comme Ledru-Rollin, et même le socialiste Louis Blanc et l'ouvrier Albert.
+
+<Encadre titre="Suffrage universel">
+Le **suffrage universel** est le droit de vote accordé à tous les citoyens, sans condition de fortune. En France, il est instauré pour les hommes de plus de vingt et un ans par le décret du 5 mars 1848 : le nombre d'électeurs passe d'environ 250 000 à plus de 9 millions. Les femmes ne voteront qu'à partir de 1944 ; on parle donc, pour le XIXe siècle, de suffrage universel **masculin**.
+</Encadre>
+
+C'est un printemps : abolition de la peine de mort en matière politique, liberté de la presse et des réunions, abolition de l'esclavage dans les colonies (avril 1848) sous l'impulsion de Victor Schœlcher, **ateliers nationaux** pour donner du travail aux chômeurs. Mais un impôt supplémentaire, les « 45 centimes », fâche les paysans. Aux élections du **23 avril 1848**, les républicains modérés l'emportent, aux côtés de nombreux notables monarchistes. Le 15 mai, des manifestants envahissent l'Assemblée ; leurs chefs, Barbès, Blanqui, Raspail, sont arrêtés.
+
+Puis vient le drame. L'Assemblée ferme les ateliers nationaux ; les ouvriers parisiens se soulèvent. Pendant les **journées de Juin** (23-26 juin 1848), le général **Eugène Cavaignac**, républicain et frère de Godefroy, écrase l'insurrection : des milliers de morts et d'arrestations. Des républicains ont fait tirer sur des ouvriers qui réclamaient une « République démocratique et sociale » ; la blessure mettra longtemps à se refermer.
+
+La Constitution du **4 novembre 1848** prévoit un président élu au suffrage universel. Le 10 décembre, c'est un désastre : Louis-Napoléon Bonaparte obtient environ les trois quarts des voix ; Cavaignac moins de 20 %, Lamartine moins de 20 000 voix. En mai 1849, le parti de l'Ordre, coalition des [orléanistes](../orleanistes/), des [légitimistes](../legitimistes/) et des [catholiques](../catholiques/), emporte l'Assemblée ; les républicains modérés sont laminés, mais les démocrates-socialistes de Ledru-Rollin résistent dans certaines campagnes. Après l'échec d'une manifestation, le 13 juin 1849, Ledru-Rollin s'exile. La loi du **31 mai 1850**, en exigeant trois ans de domicile, retire le droit de vote à près de trois millions d'hommes.
+
+Le **2 décembre 1851**, le président dissout l'Assemblée par un coup d'État. Le lendemain, sur une barricade du faubourg Saint-Antoine, le député **Alphonse Baudin** se fait tuer ; à des ouvriers qui refusaient de se battre pour les « vingt-cinq francs » de l'indemnité parlementaire, il aurait lancé, selon la tradition : « Vous allez voir comment on meurt pour vingt-cinq francs ! » Dans le Var, la Drôme, la Nièvre, des milliers de paysans républicains prennent les armes ; la répression est féroce. **Victor Hugo** part pour un exil de dix-neuf ans, à Bruxelles, Jersey puis Guernesey, d'où il lance contre « Napoléon le Petit » les vers des *Châtiments* (1853).
+
+## Contre l'Empire (1852-1870)
+
+Sous le Second Empire, les républicains sont exilés, surveillés ou silencieux ; pour siéger, il faut prêter serment à l'Empereur. En 1857-1858, cinq républicains seulement entrent au Corps législatif : **les Cinq** (Jules Favre, Émile Ollivier, Ernest Picard, Alfred Darimon, Louis Hénon). 
+
+L'Empire s'adoucit après 1860, et l'opposition reprend vie : aux élections de 1863, Paris ne vote plus que pour des opposants, dont Jules Simon. En 1868, une loi sur la presse plus libérale donne une tribune à une nouvelle génération. Henri **Rochefort** lance *La Lanterne*, dont la première phrase fait rire toute la France : « La France contient, dit l'*Almanach impérial*, trente-six millions de sujets, sans compter les sujets de mécontentement. » La même année, au procès des journaux qui ont ouvert une souscription pour la tombe de Baudin, un avocat de trente ans, **Léon Gambetta**, fait le procès du coup d'État.
+
+En 1869, Gambetta est élu à Belleville, quartier populaire de Paris, sur un programme qui fixe pour longtemps l'idéal républicain : suffrage universel, libertés de presse, de réunion et d'association, séparation des Églises et de l'État, instruction primaire laïque, gratuite et obligatoire. C'est le **programme de Belleville**. Mais en janvier 1870, Émile Ollivier, l'un des anciens Cinq, devient le chef du gouvernement de l'Empereur : une trahison, pour ses anciens amis. Le plébiscite de mai 1870 triomphe : les républicains semblent condamnés à l'opposition.
+
+## Fonder la République (1870-1879)
+
+C'est la défaite qui leur rend le pouvoir. Le 4 septembre 1870, deux jours après la capitulation de Sedan, Gambetta et Jules Favre proclament la République à l'Hôtel de Ville. Un **Gouvernement de la Défense nationale** poursuit la guerre ; le 7 octobre, Gambetta quitte Paris assiégé en ballon pour lever de nouvelles armées en province. En vain : l'armistice est signé le 28 janvier 1871.
+
+Aux élections du 8 février 1871, les campagnes veulent la paix : les républicains, partisans de la guerre à outrance, n'obtiennent qu'environ un tiers des sièges. Le 18 mars, Paris se soulève : c'est la **Commune**, un gouvernement insurrectionnel élu. Les républicains se divisent. Certains, comme le jeune maire de Montmartre, Georges Clemenceau, tentent une conciliation ; des républicains avancés siègent à la Commune. Mais la plupart des chefs, Jules Favre, Jules Ferry, Jules Simon, restent aux côtés de **Thiers**, le vieil orléaniste devenu chef du gouvernement, qui écrase la Commune pendant la Semaine sanglante (21-28 mai 1871). Gambetta se tait. Ce silence est un calcul : la République doit prouver qu'elle sait faire régner l'ordre.
+
+Le calcul paie. Gambetta parcourt la France pour convaincre les paysans et les « couches sociales nouvelles » (petits patrons, commerçants, employés) que la République protège la propriété et la paix ; les élections partielles se gagnent une à une. Thiers lui-même se rallie à une République conservatrice ; la majorité monarchiste le renverse en mai 1873, sans parvenir à restaurer le roi. En 1875, les républicains modérés acceptent un compromis avec le centre droit : un Sénat conservateur en échange de la République. L'amendement Wallon, voté à une voix de majorité le 30 janvier 1875, puis les **lois constitutionnelles** fondent le régime. En 1876, les républicains gagnent la Chambre.
+
+Reste à conquérir le pouvoir réel. Le **16 mai 1877**, le président Mac-Mahon renvoie le républicain Jules Simon et rappelle le duc de Broglie. En juin, **363 députés républicains** refusent leur confiance au ministère et en appellent au pays par un manifeste ; Mac-Mahon dissout la Chambre. Le 15 août 1877, à Lille, Gambetta prévient : quand la France aura parlé, « il faudra se soumettre ou se démettre ». En octobre, les républicains gardent la majorité ; Mac-Mahon se soumet. En janvier 1879, ils gagnent le Sénat ; le 30 janvier, Mac-Mahon se démet, et **Jules Grévy** est élu président. La République se donne ses symboles : la *Marseillaise* devient hymne national (14 février 1879), le **14 Juillet** fête nationale (loi du 6 juillet 1880). En juillet 1880, l'amnistie complète des communards tourne la page de 1871.
+
+## La République des républicains (1879-1900)
+
+Au pouvoir, les républicains modérés appliquent leur programme par étapes.
+
+<Encadre titre="Opportunistes">
+Le mot, lancé par moquerie par Henri Rochefort, est repris par Gambetta : il faut faire les réformes une à une, « au moment opportun », quand le pays est prêt. Les **opportunistes** (Gambetta, Jules Ferry, Freycinet) gouvernent la République des années 1879-1890 ; ils prennent ensuite le nom de « progressistes ».
+</Encadre>
+
+En quelques années, ils posent les fondations : liberté de réunion et liberté de la presse (lois de 1881), école primaire gratuite (1881), puis obligatoire et laïque (1882), grâce aux **lois Ferry** ; liberté syndicale (loi Waldeck-Rousseau) et élection des maires par les conseils municipaux (1884). L'école doit former des citoyens.
+
+<Encadre titre="Laïcité">
+La **laïcité** est le principe selon lequel l'État et l'école sont indépendants des religions et neutres à leur égard, tout en garantissant la liberté de conscience. Pour les républicains, elle doit aussi soustraire les esprits à l'influence de l'Église, alliée des monarchistes. Elle s'impose d'abord à l'école (1882), avant la séparation des Églises et de l'État en 1905.
+</Encadre>
+
+Mais la victoire divise les vainqueurs. À leur gauche, les [radicaux](../radicaux/) de Clemenceau reprochent aux opportunistes d'avoir oublié le programme de Belleville et combattent leur politique coloniale : protectorat sur la Tunisie (1881), conquête du Tonkin. En mars 1885, l'annonce d'une retraite à Lang Son fait tomber Ferry, surnommé « Ferry-Tonkin ». Puis les crises se succèdent. En 1887, un trafic de décorations organisé par son gendre contraint Grévy à démissionner. Le général **Boulanger** rassemble contre le Parlement [nationalistes](../nationalistes/), radicaux déçus, [bonapartistes](../bonapartistes/) et royalistes ; après son triomphe à Paris le 27 janvier 1889, les républicains font front et le menacent de poursuites : il s'enfuit. En 1892, le **scandale de Panama** révèle que des parlementaires ont été achetés par la compagnie du canal : l'antiparlementarisme s'en nourrit.
+
+Les modérés accueillent avec réserve le **Ralliement** des catholiques à la République, demandé par le pape Léon XIII (1892) : les convertis sont-ils sincères ? En 1894, le ministre Eugène Spuller annonce pourtant un « esprit nouveau » envers l'Église, et de 1896 à 1898, **Jules Méline** gouverne avec l'appui des ralliés contre les radicaux et les [socialistes](../socialistes/). La vieille famille républicaine se partage entre une gauche et un centre droit.
+
+L'**affaire Dreyfus** la recompose. Le capitaine Alfred Dreyfus, officier juif, a été condamné à tort pour espionnage en 1894. Quand le vice-président du Sénat, l'Alsacien Scheurer-Kestner, se convainc de son innocence, Méline répond, en décembre 1897, qu'« il n'y a pas d'affaire Dreyfus ». Mais la tentative de coup de force du nationaliste Déroulède en février 1899, puis l'agression du président Émile Loubet en juin font craindre pour la République elle-même. En juin 1899, **Pierre Waldeck-Rousseau**, républicain modéré, forme un gouvernement de **Défense républicaine** qui va du général de Galliffet, l'un des chefs de la répression de la Commune, au socialiste Alexandre Millerand. Dreyfus est gracié en septembre, les meneurs nationalistes poursuivis. Au seuil du XXe siècle, les républicains ont gagné la bataille du régime.
+
+## Et après 1900
+
+La Défense républicaine ouvre la voie au **Bloc des gauches** et à la domination des [radicaux](../radicaux/) : la loi sur les associations (1901), puis la **séparation des Églises et de l'État** (1905) achèvent le programme laïque. Les républicains modérés, devenus « progressistes », glissent vers le centre droit. La République n'est plus contestée que par une minorité : elle traverse la Grande Guerre et ne tombera, en 1940, que sous le coup d'une défaite militaire.

@@ -1,0 +1,369 @@
+---
+// Extrait d'un écrivain, cœur des chapitres « Le siècle raconté par ses écrivains ».
+// Les textes d'abord : seuls sont visibles le titre, le badge de genre, une ligne
+// de référence (auteur, œuvre, date), le texte et le lien « Lire le chapitre complet ».
+// Le contexte, la fiche de l'auteur, les mots expliqués et le regard critique sont
+// repliés dans des <details>. Cliquer sur un appel de note ouvre les notes et y conduit.
+//
+// Usage MDX (l'attribut auteur doit rester le premier, suivi de `fiche` s'il y a lieu :
+// ils sont lus par l'index des auteurs et par la vérification de build) :
+//   <Extrait auteur="chateaubriand" fiche id="bastille" titre="…" genre="temoignage"
+//     oeuvre="Mémoires d'outre-tombe" ecrit="1821" reference="première partie, livre V"
+//     date="écrit en 1821, publié en 1848-1850" lien="https://fr.wikisource.org/wiki/…"
+//     notes={[{ mot: '…', texte: '…' }]}>
+//   <div slot="chapeau">(Markdown)</div>
+//   <div slot="texte">(texte exact, appels de note : <Appel ex="bastille" n={1} />)</div>
+//   <div slot="critique">(Markdown)</div>
+//   </Extrait>
+//
+// - `fiche` : propose la fiche de l'auteur (première apparition dans le chapitre).
+// - `poeme` : conserve les retours à la ligne du texte (vers).
+//
+// Version courte / version longue : dans le slot « texte », le passage clé
+// (~200-300 mots, suite continue de paragraphes ou de strophes prise telle quelle)
+// est entouré de <div class="cle"> … </div> (lignes vides autour du Markdown).
+// Par défaut seul ce passage s'affiche ; « Voir plus » déplie le texte complet,
+// où le passage clé reste signalé par un filet. Sans JavaScript, tout s'affiche.
+import FicheAuteur from './FicheAuteur.astro';
+import { auteur as trouverAuteur } from '../data/auteurs';
+import { genres, type IdGenre } from '../data/genres';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Note {
+  mot: string;
+  texte: string;
+}
+
+interface Props {
+  auteur: string;
+  id: string;
+  titre: string;
+  genre: IdGenre;
+  oeuvre: string;
+  /** Date courte affichée dans la ligne de référence (« 1821 », « 1872-1873 »). */
+  ecrit: string;
+  /**
+   * Rapport du texte aux faits : « contemporain » (écrit pendant les événements ou
+   * juste après) ou « retrospectif » (souvenir, histoire, roman écrit après coup).
+   * Affiché dans la ligne de référence, à côté de la date.
+   */
+  regard?: 'contemporain' | 'retrospectif';
+  /** Partie, livre, chapitre, poème… */
+  reference: string;
+  /** Dates d'écriture et de publication, en clair. */
+  date: string;
+  /** Page précise du chapitre sur Wikisource (ou Gallica). */
+  lien: string;
+  /** Nom de la bibliothèque numérique du lien. */
+  source?: string;
+  fiche?: boolean;
+  poeme?: boolean;
+  notes?: Note[];
+}
+
+const {
+  auteur: idAuteur,
+  id,
+  titre,
+  genre: idGenre,
+  oeuvre,
+  ecrit,
+  regard,
+  reference,
+  date,
+  lien,
+  source = 'Wikisource',
+  fiche = false,
+  poeme = false,
+  notes = [],
+} = Astro.props;
+
+const a = trouverAuteur(idAuteur);
+const g = genres[idGenre];
+if (!g) throw new Error(`[Extrait ${id}] genre inconnu : ${idGenre}`);
+for (const s of ['chapeau', 'texte', 'critique']) {
+  if (!Astro.slots.has(s)) console.warn(`[Extrait ${id}] rubrique manquante : ${s}`);
+}
+---
+
+<section class="extrait" id={`extrait-${id}`} aria-labelledby={id}>
+  <header class="extrait__entete">
+    <h3 id={id} class="extrait__titre">{typographie(titre)}</h3>
+    <p class="extrait__ligne">
+      <span class="extrait__genre"><span class="sr-only">Genre : </span>{g.libelle}</span>
+      <span class="extrait__sep" aria-hidden="true"> · </span>
+      <span class="extrait__auteur">{typographie(a.court)}</span>
+      <span class="extrait__sep" aria-hidden="true"> · </span>
+      <cite>{typographie(oeuvre)}</cite>
+      <span class="extrait__sep" aria-hidden="true"> · </span>
+      <span class="extrait__date">{ecrit}</span>
+      {regard && (
+        <>
+          <span class="extrait__sep" aria-hidden="true"> · </span>
+          <span class="extrait__regard">{regard === 'contemporain' ? 'texte contemporain des faits' : 'regard rétrospectif'}</span>
+        </>
+      )}
+    </p>
+  </header>
+
+  <figure class="extrait__citation">
+    <blockquote id={`texte-${id}`} class:list={['extrait__texte', { 'extrait__texte--poeme': poeme }]} cite={lien}>
+      <slot name="texte" />
+    </blockquote>
+    <figcaption class="extrait__reference">
+      {typographie(reference)} ({typographie(date)}).
+      <a class="extrait__lien" href={lien} target="_blank" rel="noopener">
+        Lire le chapitre complet<span class="sr-only"> sur {source} (nouvel onglet)</span><span aria-hidden="true"> ↗</span>
+      </a>
+    </figcaption>
+  </figure>
+
+  <!-- Outils en ligne : Voir plus · Contexte · (Qui est…) · Notes · Regard critique -->
+  <div class="extrait__outils">
+    <button type="button" class="extrait__bascule" aria-expanded="true" aria-controls={`texte-${id}`} hidden>
+      <span class="extrait__bascule-libelle">Voir moins</span><span class="sr-only"> : {typographie(titre)}</span>
+    </button>
+
+    <details class="repli repli--contexte">
+      <summary>Contexte</summary>
+      <div class="repli__corps"><slot name="chapeau" /></div>
+    </details>
+
+    {fiche && (
+      <details class="repli repli--auteur">
+        <summary>{typographie(`Qui est ${a.court} ?`)}</summary>
+        <div class="repli__corps"><FicheAuteur id={idAuteur} /></div>
+      </details>
+    )}
+
+    {notes.length > 0 && (
+      <details class="repli repli--notes" id={`notes-${id}`}>
+        <summary>Notes <span class="repli__nombre">({notes.length})</span></summary>
+        <ol class="repli__corps extrait__notes">
+          {notes.map((n, i) => (
+            <li id={`n-${id}-${i + 1}`}>
+              <strong>{typographie(n.mot)}</strong>{typographie(' : ')}{typographie(n.texte)}
+              <a class="extrait__retour" href={`#a-${id}-${i + 1}`} aria-label={`Retour au texte (note ${i + 1})`}>↩</a>
+            </li>
+          ))}
+        </ol>
+      </details>
+    )}
+
+    <details class="repli repli--critique">
+      <summary>Regard critique</summary>
+      <div class="repli__corps"><slot name="critique" /></div>
+    </details>
+  </div>
+
+  <p class="extrait__haut"><a href="#titre-sommaire">↑ Retour au sommaire</a></p>
+</section>
+
+<script>
+  // Un appel de note (ou une ancre #n-…) ouvre le bloc « Mots expliqués » qui la contient.
+  function ouvrirNote(hash: string) {
+    if (!hash.startsWith('#n-')) return;
+    const cible = document.getElementById(decodeURIComponent(hash.slice(1)));
+    const bloc = cible?.closest('details');
+    if (cible && bloc) {
+      bloc.open = true;
+      cible.scrollIntoView({ block: 'center' });
+      cible.focus?.({ preventScroll: true });
+    }
+  }
+  document.addEventListener('click', (e) => {
+    const lien = (e.target as Element | null)?.closest?.('sup.appel a');
+    if (!lien) return;
+    const hash = lien.getAttribute('href') ?? '';
+    e.preventDefault();
+    history.pushState(null, '', hash);
+    ouvrirNote(hash);
+  });
+  // Version courte / version longue.
+  function regler(bouton: HTMLButtonElement, deplie: boolean) {
+    const texte = document.getElementById(bouton.getAttribute('aria-controls') ?? '');
+    if (!texte) return;
+    texte.toggleAttribute('data-court', !deplie);
+    bouton.setAttribute('aria-expanded', String(deplie));
+    const libelle = bouton.querySelector('.extrait__bascule-libelle');
+    if (libelle) libelle.textContent = deplie ? 'Voir moins' : 'Voir plus';
+  }
+  function deplier(el: Element | null) {
+    const texte = el?.closest('.extrait__texte');
+    const bouton = texte && document.querySelector<HTMLButtonElement>(`button[aria-controls="${texte.id}"]`);
+    if (bouton && texte?.hasAttribute('data-court')) regler(bouton, true);
+  }
+  for (const bouton of document.querySelectorAll<HTMLButtonElement>('.extrait__bascule')) {
+    const texte = document.getElementById(bouton.getAttribute('aria-controls') ?? '');
+    const corps = texte?.firstElementChild;
+    // Le bouton n'a de sens que si le texte contient autre chose que le passage clé.
+    if (!corps || !corps.querySelector(':scope > .cle') || corps.children.length < 2) continue;
+    bouton.hidden = false;
+    regler(bouton, false);
+    bouton.addEventListener('click', () => {
+      const deplie = bouton.getAttribute('aria-expanded') !== 'true';
+      regler(bouton, deplie);
+      if (!deplie) bouton.closest('.extrait')?.scrollIntoView({ block: 'start' });
+    });
+  }
+  // Une ancre vers un appel de note (#a-…) masqué déplie d'abord le texte.
+  function suivreAncre(hash: string) {
+    if (hash.startsWith('#a-')) {
+      const appel = document.getElementById(decodeURIComponent(hash.slice(1)));
+      deplier(appel);
+      appel?.scrollIntoView({ block: 'center' });
+    } else ouvrirNote(hash);
+  }
+  document.addEventListener('click', (e) => {
+    const lien = (e.target as Element | null)?.closest?.('a.extrait__retour');
+    if (!lien) return;
+    e.preventDefault();
+    const hash = lien.getAttribute('href') ?? '';
+    history.pushState(null, '', hash);
+    suivreAncre(hash);
+  });
+  window.addEventListener('hashchange', () => suivreAncre(location.hash));
+  suivreAncre(location.hash);
+</script>
+
+<style>
+  .extrait {
+    margin: var(--e-6) auto var(--e-5);
+    scroll-margin-top: var(--e-3);
+  }
+  .extrait__entete { margin-bottom: var(--e-3); }
+  .extrait__titre {
+    margin: 0 0 var(--e-1);
+    font-size: clamp(1.3rem, 4vw, 1.6rem);
+  }
+  /* « TÉMOIGNAGE · Michelet · Œuvre · 1847 » : petites capitales grises. */
+  .extrait__ligne {
+    margin: 0;
+    color: var(--c-texte-doux);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+  .extrait__genre, .extrait__auteur, .extrait__regard {
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+  }
+  .extrait__ligne cite { font-style: italic; }
+  .extrait__date { color: var(--c-texte); font-variant-numeric: oldstyle-nums; }
+
+  .extrait__citation { margin: 0 0 var(--e-2); }
+  .extrait__texte {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-style: normal;
+    font-size: 1.16rem;
+    line-height: 1.65;
+  }
+  .extrait__texte :global(p) { margin-bottom: var(--e-3); text-align: justify; }
+  .extrait__texte--poeme :global(p) {
+    white-space: pre-line;
+    text-align: left;
+    hyphens: manual;
+    -webkit-hyphens: manual;
+    padding-left: var(--e-4);
+  }
+  /* Version courte : seul le passage clé reste visible. */
+  .extrait__texte[data-court] > :global(div > :not(.cle)) { display: none; }
+  /* Version complète : le passage clé est signalé par un filet fin gris, sans fond. */
+  .extrait__texte:not([data-court]) :global(.cle) {
+    margin-left: calc(-1 * var(--e-3));
+    padding-left: calc(var(--e-3) - 1px);
+    border-left: 1px solid var(--c-texte-doux);
+  }
+  .extrait__texte :global(sup.appel) { line-height: 0; font-size: 0.68em; }
+  .extrait__texte :global(sup.appel a) {
+    text-decoration: none;
+    padding: 0 0.12em;
+    color: var(--c-texte-doux);
+  }
+  .extrait__texte :global(sup.appel a:hover) { color: var(--c-texte); text-decoration: underline; }
+
+  .extrait__reference {
+    font-size: 0.95rem;
+    color: var(--c-texte-doux);
+  }
+  .extrait__lien { margin-left: 0.2em; white-space: nowrap; color: var(--c-texte); }
+
+  /* Outils : liens discrets en ligne, séparés par des points médians. */
+  .extrait__outils {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.5em;
+    padding-top: var(--e-1);
+    border-top: 1px solid var(--c-filet);
+    font-size: 0.98rem;
+  }
+  .extrait__bascule,
+  .repli > summary {
+    font: inherit;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: var(--c-texte);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--c-texte-doux);
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .extrait__bascule {
+    background: none;
+    border: 0;
+    padding: 0;
+  }
+  .extrait__bascule[hidden] { display: none; }
+  .repli { margin: 0; }
+  .repli > summary { list-style: none; display: inline; }
+  .repli > summary::-webkit-details-marker { display: none; }
+  /* Point médian entre deux outils (sauf devant le premier visible). */
+  .repli > summary::before {
+    content: '·';
+    display: inline-block;
+    margin-right: 0.5em;
+    color: var(--c-texte-doux);
+    text-decoration: none;
+  }
+  .extrait__outils > .repli:first-child > summary::before,
+  .extrait__bascule[hidden] + .repli > summary::before,
+  .repli[open] > summary::before,
+  .repli[open] + .repli > summary::before { content: none; }
+  .repli[open] { flex-basis: 100%; }
+  .repli[open] > summary { color: var(--c-texte-doux); }
+  .extrait__bascule:hover,
+  .repli > summary:hover { text-decoration-color: currentColor; }
+  .extrait__bascule:focus-visible,
+  .repli > summary:focus-visible { outline: 1px solid var(--c-texte); outline-offset: 2px; }
+  .repli__nombre { font-variant: normal; }
+  .repli__corps {
+    margin: var(--e-2) 0 var(--e-3);
+    padding-left: var(--e-3);
+    border-left: 1px solid var(--c-filet);
+    color: var(--c-texte);
+    font-size: 1.02rem;
+  }
+  .repli__corps :global(p:last-child) { margin-bottom: 0; }
+  .repli--auteur .repli__corps { border: 0; padding: 0; }
+  .repli--auteur .repli__corps :global(.fiche-auteur) { margin: var(--e-2) 0 var(--e-3); }
+
+  .extrait__notes { list-style: decimal; padding-left: 2.2em; line-height: 1.5; }
+  .extrait__notes li { margin-bottom: var(--e-1); scroll-margin-top: var(--e-5); }
+  .extrait__notes li:target { outline: 1px solid var(--c-texte-doux); outline-offset: 3px; }
+  .extrait__notes strong { font-weight: 500; }
+  .extrait__retour { text-decoration: none; margin-left: 0.3em; color: var(--c-texte-doux); }
+
+  .extrait__haut { margin: var(--e-2) 0 0; text-align: right; font-size: var(--t-petit); }
+  .extrait__haut a { color: var(--c-texte-doux); }
+  /* Sur ordinateur, le sommaire est toujours visible à gauche : lien inutile. */
+  @media (min-width: 1200px) { .extrait__haut { display: none; } }
+
+  @media (max-width: 480px) {
+    .extrait__texte { font-size: 1.1rem; }
+    .extrait__texte :global(p) { text-align: left; }
+    .extrait__texte--poeme :global(p) { padding-left: 0; }
+  }
+</style>

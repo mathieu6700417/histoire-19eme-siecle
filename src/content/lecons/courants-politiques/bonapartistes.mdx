@@ -1,0 +1,136 @@
+---
+titre: "Les bonapartistes"
+theme: politique
+courant: bonapartistes
+ordre: 3
+periode: "1799-1900"
+resume: "De Vendémiaire à Sedan, le siècle vécu par les fidèles d'un chef appuyé sur le peuple : deux empires, une légende plus forte que les défaites, puis la lente agonie d'un parti privé de son héritier."
+dureeLecture: 14
+---
+import Fiche from '../../../components/Fiche.astro';
+import Frise from '../../../components/Frise.astro';
+import Encadre from '../../../components/Encadre.astro';
+import { courants, lignesDe, reperesFrise, periodesFrise } from '../../../data/courants-politiques';
+
+<Fiche entete courant={courants.bonapartistes}>
+<div slot="idees">
+
+- Autorité d'un homme, appuyée sur le **suffrage universel** et le **plébiscite** plutôt que sur les assemblées (on parle de « césarisme démocratique »).
+- Synthèse de l'ordre (administration centralisée, Concordat, armée) et de la Révolution (égalité civile, Code civil, méritocratie).
+- Grandeur nationale et gloire militaire, entretenues par la légende de Napoléon.
+- Méfiance envers les partis, les notables et le parlementarisme ; volonté de s'adresser directement aux paysans et aux ouvriers.
+
+</div>
+<div slot="figures">
+
+- **Napoléon Ier** : Premier consul (1799), empereur (1804-1814 et Cent-Jours de 1815).
+- **Louis-Napoléon Bonaparte (Napoléon III)** : neveu du précédent, président (1848-1852), puis empereur (1852-1870).
+- **Le duc de Morny et Persigny** : piliers du coup d'État de 1851 et du régime.
+- **Eugène Rouher** : ministre tout-puissant des années 1860, surnommé le « vice-empereur », puis chef des bonapartistes après 1870.
+- **Le Prince impérial** : fils de Napoléon III, tué en 1879 en Afrique australe.
+
+</div>
+<div slot="moments">
+
+- **1799-1804** : coup d'État de Brumaire, Consulat, puis Empire.
+- **1823** : *Mémorial de Sainte-Hélène* de Las Cases ; avec les chansons de Béranger, il nourrit la légende napoléonienne.
+- **1836 et 1840** : tentatives de coup de force de Louis-Napoléon à Strasbourg et à Boulogne ; **1840** : retour des cendres de Napoléon à Paris.
+- **10 décembre 1848** : Louis-Napoléon élu président de la République.
+- **2 décembre 1851** : coup d'État ; Second Empire proclamé un an plus tard.
+- **1870** : Empire libéral (Émile Ollivier), plébiscite triomphal en mai, puis défaite de Sedan le 2 septembre.
+
+</div>
+<div slot="devenir">
+
+Affaibli par la mort du Prince impérial (1879), le parti se dilue en partie dans le boulangisme ; son style plébiscitaire lui survit.
+
+</div>
+</Fiche>
+
+<Frise
+  debut={1789}
+  fin={1900}
+  lignes={lignesDe('bonapartistes')}
+  reperes={reperesFrise}
+  periodes={periodesFrise}
+  idFrise="frise-bonapartistes"
+  compacte
+/>
+
+## Le général et le Consul (1795-1804)
+
+Le bonapartisme commence par une canonnade. Le 13 vendémiaire an IV (5 octobre 1795), des royalistes parisiens marchent sur la Convention. Pour la défendre, le député Barras fait appel à un jeune général corse au chômage, **Napoléon Bonaparte**, qui disperse les insurgés à coups de canon devant l'église Saint-Roch. On le surnomme « le général Vendémiaire ». Quelques mois plus tard, il reçoit le commandement de l'armée d'Italie.
+
+La campagne d'Italie (1796-1797) fait de lui une légende vivante : victoires d'Arcole et de Rivoli, paix de Campo-Formio imposée à l'Autriche en octobre 1797. Bonaparte soigne son image par ses propres journaux. Il n'appartient à aucun parti : ni jacobin, ni royaliste, il se présente comme le soldat de la nation, au-dessus des factions qui déchirent le Directoire. De retour d'Égypte, il s'allie à **Sieyès**, qui cherche un « sabre » pour renforcer l'exécutif. Le **18 brumaire an VIII** (9 novembre 1799), et surtout le lendemain à Saint-Cloud, où son frère Lucien sauve un coup d'État mal engagé, le Directoire est renversé.
+
+Bonaparte devient **Premier consul**. Il garde l'essentiel de la Révolution mais en ferme le chapitre : « Citoyens, la Révolution est fixée aux principes qui l'ont commencée. Elle est finie », proclament les consuls en décembre 1799. Pour asseoir sa légitimité, il ne demande pas l'avis des assemblées, mais celui du peuple tout entier.
+
+<Encadre titre="Plébiscite">
+Un **plébiscite** est un vote par lequel les citoyens répondent par « oui » ou par « non » à une question posée par le pouvoir, le plus souvent pour approuver un homme ou un régime. Napoléon Bonaparte y recourt en 1800, 1802 et 1804, son neveu en 1851, 1852 et 1870. Les « oui » l'emportent toujours massivement, aidés par la pression de l'administration (en 1800, Lucien Bonaparte a même gonflé les chiffres). C'est l'instrument par excellence du bonapartisme : le chef tient son pouvoir du peuple, sans intermédiaire.
+</Encadre>
+
+Les années du Consulat sont celles de la grande reconstruction. Les **préfets**, créés en 1800, font appliquer dans chaque département les ordres de Paris ; la Banque de France, les lycées et la Légion d'honneur naissent en quelques années. Le **Concordat** de 1801, signé avec le pape Pie VII, rétablit la paix religieuse : le catholicisme est reconnu comme la religion de la majorité des Français, les évêques et les curés deviennent des salariés de l'État. Enfin, le **Code civil** de 1804 grave dans la loi l'égalité civile, la propriété et la famille dirigée par le père. Aux paysans, il garantit qu'on ne leur reprendra pas les biens nationaux achetés pendant la Révolution ; aux notables, il assure l'ordre. Le bonapartisme est né : une synthèse de l'autorité et de l'égalité, de l'ordre et de 1789. Ses ennemis sont aux deux bouts : les [royalistes](../legitimistes/), qui complotent pour le tuer, et les derniers jacobins, ancêtres des [républicains](../republicains/), qui voient en lui un nouveau César.
+
+## L'épopée impériale (1804-1815)
+
+En 1802, un plébiscite fait de Bonaparte un consul à vie. En mai 1804, le Sénat proclame l'Empire, ratifié lui aussi par plébiscite. Le **2 décembre 1804**, à Notre-Dame de Paris, en présence du pape, Napoléon se couronne lui-même empereur des Français. Il ne tient sa couronne ni de Dieu, comme les rois d'autrefois, ni d'une assemblée, mais de son épée et du peuple.
+
+Un an plus tard, jour pour jour, la victoire d'**Austerlitz** (2 décembre 1805) ouvre une décennie de domination sur l'Europe. Napoléon crée une noblesse d'Empire (1808) qui récompense le mérite, surtout militaire. Mais la conscription pèse de plus en plus lourd sur les familles, la guerre d'Espagne (à partir de 1808) s'enlise, et la campagne de Russie (1812) tourne au désastre. Après la défaite de Leipzig (1813) et l'invasion de la France, l'Empereur abdique en avril 1814 et part pour l'île d'Elbe. Louis XVIII monte sur le trône.
+
+Le dernier acte est le plus romanesque. Le 1er mars 1815, Napoléon débarque à Golfe-Juan avec un millier d'hommes ; les troupes envoyées contre lui se rallient, et il entre aux Tuileries le 20 mars sans avoir tiré un coup de feu. Ce sont les **Cent-Jours** (mars-juin 1815). Pour se concilier les libéraux, l'Empereur fait rédiger par son ancien adversaire Benjamin Constant une constitution plus libérale, l'**Acte additionnel** aux constitutions de l'Empire (avril 1815). Dans les faubourgs ouvriers et les villes de l'Est, des « fédérés » s'arment pour défendre la patrie contre les rois : le bonapartisme se colore de jacobinisme. Tout s'achève le 18 juin 1815 à **Waterloo**. Napoléon abdique une seconde fois et se livre aux Anglais, qui l'exilent à Sainte-Hélène, un îlot perdu de l'Atlantique Sud.
+
+## La légende (1815-1848)
+
+Pour les fidèles de l'Empereur, la Restauration est un temps d'humiliation. Pendant la **Terreur blanche** de 1815, des royalistes massacrent des bonapartistes dans le Midi ; le maréchal Brune est assassiné à Avignon, le maréchal Ney fusillé à Paris en décembre. Des milliers d'officiers sont mis en **demi-solde** : écartés de l'armée, payés à moitié, ils traînent leur désœuvrement et leur rancœur dans les cafés, conspirent parfois avec les libéraux et les [républicains](../republicains/) de la Charbonnerie.
+
+Le 5 mai 1821, Napoléon meurt à Sainte-Hélène. Paradoxalement, sa mort libère sa légende. En 1823 paraît le ***Mémorial de Sainte-Hélène***, où le comte de **Las Cases** rapporte les conversations de l'exilé : Napoléon s'y présente en héritier de la Révolution, en défenseur des peuples et de la liberté, en martyr des rois coalisés. Le livre est un immense succès. Les chansons de **Béranger**, emprisonné à deux reprises, célèbrent le « petit caporal » et sa redingote grise ; les images d'Épinal popularisent ses batailles jusque dans les chaumières. Victor Hugo, d'abord royaliste, chante la colonne Vendôme en 1827.
+
+<Encadre titre="Légende napoléonienne">
+On appelle **légende napoléonienne** l'image idéalisée de Napoléon qui se répand après sa mort : un génie sorti du peuple, fils de la Révolution, qui a donné la gloire à la France et l'égalité aux Français. Elle oublie les morts des guerres, la conscription et la dictature. Diffusée par les livres, les chansons, les gravures et les récits des anciens soldats, elle est la principale force du bonapartisme, surtout dans les campagnes.
+</Encadre>
+
+La monarchie de Juillet, qui a repris le drapeau tricolore, croit pouvoir capter cette légende à son profit. Elle achève l'Arc de triomphe de l'Étoile (1836) et replace en 1833 la statue de Napoléon au sommet de la colonne Vendôme. En 1840, à l'initiative de Thiers, elle obtient des Anglais le retour de sa dépouille : le 15 décembre 1840, une foule immense suit le char funèbre jusqu'aux Invalides. C'est un triomphe pour la mémoire de l'Empereur, pas pour Louis-Philippe.
+
+Il manque pourtant un héritier. Le fils de Napoléon, le duc de Reichstadt, que ses fidèles appellent Napoléon II, élevé à Vienne chez son grand-père l'empereur d'Autriche, meurt de tuberculose en 1832, à vingt et un ans. Un neveu de l'Empereur, **Louis-Napoléon Bonaparte**, fils de son frère Louis, se pose alors en héritier. Le 30 octobre 1836, il tente de soulever la garnison de **Strasbourg** : l'affaire échoue en quelques heures, et le gouvernement se contente de l'expédier en Amérique. Il récidive le 6 août 1840 à **Boulogne-sur-Mer**, avec une poignée de partisans : nouvel échec, et cette fois la Chambre des pairs le condamne à la prison perpétuelle au **fort de Ham**, dans la Somme.
+
+Ces fiascos le rendent ridicule, mais il les met à profit. En exil, il a publié *Des idées napoléoniennes* (1839) ; à Ham, qu'il appellera son « université », il écrit *Extinction du paupérisme* (1844), où il propose de lutter contre la misère ouvrière par des colonies agricoles. Le bonapartisme se donne ainsi une dimension sociale. En mai 1846, Louis-Napoléon s'évade, déguisé en ouvrier maçon, et gagne l'Angleterre ; ses adversaires le surnommeront « Badinguet », du nom qu'on prête à ce maçon.
+
+## Le prince-président (1848-1851)
+
+La révolution de février 1848 et le **suffrage universel masculin** offrent au neveu sa chance. Élu député en juin puis en septembre 1848, il monte à la tribune et s'y montre piètre orateur ; on le sous-estime. Pour l'élection présidentielle du **10 décembre 1848**, les chefs du parti de l'Ordre, comme Thiers, se résignent à le soutenir en pensant le manœuvrer. Le résultat est un raz-de-marée : environ 74 % des voix, loin devant le général Cavaignac et le républicain avancé Ledru-Rollin. Pour des millions de paysans qui votent pour la première fois, son nom est le seul qu'ils connaissent : il évoque l'ordre, la gloire, l'Empereur qui a garanti leurs terres.
+
+Le prince-président doit pourtant cohabiter avec une Assemblée dominée, après mai 1849, par le **parti de l'Ordre**, coalition des [orléanistes](../orleanistes/), des [légitimistes](../legitimistes/) et des [catholiques](../catholiques/). Il les laisse frapper les [républicains](../republicains/), puis se démarque d'eux. Quand l'Assemblée restreint le suffrage universel par la loi du 31 mai 1850, il se pose en défenseur du peuple contre les notables. Il parcourt les provinces, se fait acclamer par les soldats. Or la Constitution lui interdit de se représenter en 1852, et l'Assemblée refuse de la réviser (juillet 1851).
+
+Alors il frappe. Dans la nuit du 1er au **2 décembre 1851**, anniversaire du sacre et d'Austerlitz, ses fidèles, son demi-frère le duc de **Morny**, Persigny, le général de Saint-Arnaud, font occuper Paris et arrêter les chefs de l'opposition. Un décret dissout l'Assemblée et rétablit le suffrage universel. La résistance républicaine, à Paris puis dans plusieurs régions du Centre et du Sud-Est, est écrasée : environ 26 000 personnes sont arrêtées, des milliers déportées en Algérie ou en Guyane. Le plébiscite des 20 et 21 décembre approuve le coup d'État par environ 7,4 millions de « oui » contre environ 640 000 « non ».
+
+## Le Second Empire (1852-1870)
+
+« L'Empire, c'est la paix », promet Louis-Napoléon à Bordeaux en octobre 1852. Un nouveau plébiscite approuve le rétablissement de l'Empire, proclamé le **2 décembre 1852**. Il prend le nom de Napoléon III, car ses fidèles comptent comme Napoléon II le fils de l'Empereur, mort en 1832. C'est l'apogée du bonapartisme : un homme, appuyé sur le peuple, l'armée, l'Église et les milieux d'affaires.
+
+<Encadre titre="Candidature officielle">
+Sous le Second Empire, le Corps législatif est élu au suffrage universel masculin, mais le gouvernement désigne dans chaque circonscription son **candidat officiel**. Le préfet, les maires et les fonctionnaires le soutiennent ouvertement : seul il a droit aux affiches blanches, réservées aux actes officiels. C'est ainsi que l'Empire obtient de fortes majorités sans supprimer le vote.
+</Encadre>
+
+Les années 1850 sont celles de la prospérité. Les chemins de fer couvrent le pays, les banques comme le Crédit mobilier financent l'industrie. Le baron **Haussmann**, préfet de la Seine de 1853 à 1870, éventre le vieux Paris pour tracer de grands boulevards, des égouts, des parcs. Le régime croit aussi pouvoir effacer 1815 : la guerre de **Crimée** (1854-1856), aux côtés de l'Angleterre contre la Russie, se termine en victoire ; en 1859, en **Italie**, les victoires de Magenta et de Solferino contre l'Autriche aident à l'unité italienne et valent à la France Nice et la Savoie (1860). L'Empereur a épousé en 1853 une aristocrate espagnole, Eugénie de Montijo, qui lui donne en 1856 un héritier : le Prince impérial. L'avenir semble assuré.
+
+Le tournant vient en 1860. Le **traité de commerce** avec l'Angleterre, qui abaisse les droits de douane, fâche une partie des industriels ; la politique italienne, qui menace les États du pape, fâche les catholiques. Le décret du **24 novembre 1860** rend aux chambres le droit de répondre au discours du trône et de publier leurs débats ; la loi de 1864 accorde aux ouvriers le **droit de grève** ; les lois de 1868 assouplissent le régime de la presse et des réunions. Les bonapartistes se divisent : les « autoritaires », autour du ministre **Eugène Rouher**, surnommé le « vice-empereur », veulent tenir bon ; les libéraux veulent une monarchie parlementaire. L'expédition du Mexique (1861-1867) se termine en fiasco, et la Prusse écrase l'Autriche à Sadowa en 1866 sans que la France ait rien obtenu. L'opposition progresse aux élections de 1863 puis de 1869.
+
+<Encadre titre="Empire libéral">
+On appelle **Empire libéral** la dernière phase du Second Empire (1869-1870), quand Napoléon III accepte un gouvernement issu de la majorité du Corps législatif et responsable devant lui. Le régime devient alors une sorte de monarchie parlementaire, tout en gardant le plébiscite comme lien direct entre l'Empereur et le peuple.
+</Encadre>
+
+Le 2 janvier 1870, l'Empereur confie le gouvernement à **Émile Ollivier**, un ancien républicain rallié. Le **plébiscite du 8 mai 1870** approuve la nouvelle Constitution par plus de sept millions de « oui » contre environ un million et demi de « non ». Selon un mot souvent attribué à Gambetta, l'Empire paraît « plus fort que jamais ». Quatre mois plus tard, il n'existe plus. Entraîné par la dépêche d'Ems dans une guerre contre la Prusse, déclarée en juillet, l'Empereur malade capitule à **Sedan** le 2 septembre 1870 avec toute une armée. Le 4 septembre, Paris proclame la République ; l'Impératrice s'enfuit en Angleterre.
+
+## Après Sedan : l'Appel au peuple (1870-1900)
+
+La chute est d'une violence inouïe. Le 1er mars 1871, l'Assemblée nationale réunie à Bordeaux vote la déchéance de Napoléon III, déclaré « responsable de la ruine, de l'invasion et du démembrement de la France ». Pour longtemps, le nom de Bonaparte sera associé à la défaite et à la perte de l'Alsace-Lorraine. L'ancien empereur meurt en exil, à Chislehurst, près de Londres, le 9 janvier 1873.
+
+Pourtant le parti renaît vite. Rouher, élu député en Corse en 1872, organise le comité de l'**Appel au peuple** : c'est le nom que se donnent les bonapartistes, car ils réclament que le peuple choisisse le régime par plébiscite. Ils gagnent des élections partielles, comme celle de la Nièvre en 1874, et comptent des polémistes redoutés comme Paul de Cassagnac. Ils forment avec les [légitimistes](../legitimistes/) et les [orléanistes](../orleanistes/) la coalition conservatrice qui soutient Mac-Mahon lors de la crise du 16 mai 1877, et partagent sa défaite face aux [républicains](../republicains/). Tout repose sur un jeune homme : le **Prince impérial**, qui a fêté sa majorité en 1874.
+
+Le 1er juin 1879, engagé comme officier volontaire dans l'armée britannique en Afrique australe, il est tué par des guerriers zoulous au cours d'une reconnaissance. Il avait vingt-trois ans. Ce coup du sort décapite le parti. Son testament désigne comme héritier, non pas le plus proche parent, son cousin le prince **Napoléon** (Jérôme), surnommé « Plon-Plon », anticlérical et ami des républicains, mais le fils aîné de celui-ci, **Victor**. Le parti se déchire entre « jérômistes », bonapartistes de gauche fidèles à l'héritage révolutionnaire, et « victoriens », conservateurs et catholiques, proches des royalistes. En 1886, une loi exile les chefs des anciennes familles régnantes, Bonaparte compris.
+
+La crise boulangiste (1886-1889) offre une dernière chance au bonapartisme, sans les Bonaparte. Le général Boulanger, chef populaire, ennemi des parlementaires, réclame la révision de la Constitution et parle directement au peuple : beaucoup de bonapartistes, et le prince Napoléon lui-même, voient en lui un nouveau Bonaparte possible. Après l'échec du général en 1889, il ne reste plus à la Chambre qu'une poignée de députés bonapartistes. Le prince Napoléon meurt en 1891 ; le prince Victor, installé à Bruxelles, n'a plus guère d'influence. Mais l'idée bonapartiste, un chef élu par le peuple contre les partis, survit chez les [nationalistes](../nationalistes/) : à la fin du siècle, Paul Déroulède réclame une « République plébiscitaire ».
+
+## Et après 1900
+
+Le bonapartisme disparaît presque comme parti : quelques élus, des comités fidèles au prince Victor, puis à son fils, et une mémoire vivace, surtout en Corse et dans certaines campagnes. Son style, lui, a une longue postérité : un chef qui s'adresse directement au peuple par-dessus les partis, le recours au référendum, le culte de l'autorité et de la grandeur nationale. L'historien René Rémond y a vu l'une des « trois droites » françaises, et beaucoup ont cru en retrouver la trace au XXe siècle, notamment dans le gaullisme.

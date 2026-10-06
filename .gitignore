@@ -1,0 +1,24 @@
+# Dépendances
+node_modules/
+
+# Sortie de build
+dist/
+
+# Fichiers générés par Astro
+.astro/
+
+# Journaux
+npm-debug.log*
+
+# Environnement
+.env
+.env.*
+
+# Système
+.DS_Store
+
+# Cloudflare (wrangler)
+.wrangler/
+
+# Fichiers temporaires de vérification
+verif-*.txt

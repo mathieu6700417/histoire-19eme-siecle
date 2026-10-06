@@ -1,0 +1,145 @@
+---
+titre: "Les légitimistes"
+theme: politique
+courant: legitimistes
+ordre: 1
+periode: "1789-1900"
+resume: "Des émigrés de 1789 aux fidèles du comte de Chambord, le siècle vécu par ceux qui n'ont jamais accepté la Révolution : une revanche éclatante sous la Restauration, puis un long combat perdu pour le roi légitime."
+dureeLecture: 14
+---
+import Fiche from '../../../components/Fiche.astro';
+import Frise from '../../../components/Frise.astro';
+import Encadre from '../../../components/Encadre.astro';
+import { courants, lignesDe, reperesFrise, periodesFrise } from '../../../data/courants-politiques';
+
+<Fiche entete courant={courants.legitimistes}>
+<div slot="idees">
+
+- Le pouvoir vient de Dieu et de l'histoire, pas de la volonté du peuple : le roi légitime est l'héritier de la branche aînée des Bourbons.
+- La société est un corps hiérarchisé (familles, provinces, corporations), non une addition d'individus égaux.
+- L'Église catholique doit encadrer la société, la morale et l'école ; d'où l'« alliance du trône et de l'autel ».
+- Méfiance envers l'individualisme, l'industrie et Paris ; idéalisation des campagnes et de la noblesse terrienne.
+
+</div>
+<div slot="figures">
+
+- **Joseph de Maistre** : penseur savoyard de la contre-révolution (*Considérations sur la France*, 1796).
+- **Louis de Bonald** : théoricien d'une société fondée sur la religion et la famille.
+- **Charles X** : chef des ultras sous le nom de comte d'Artois, puis roi de 1824 à 1830.
+- **Villèle** et **Polignac** : chefs de gouvernement ultras (1821-1828 et 1829-1830).
+- **Pierre-Antoine Berryer** : avocat et orateur, voix des légitimistes à la Chambre de 1830 à sa mort (1868).
+- **Le comte de Chambord** : petit-fils de Charles X, prétendant « Henri V » de 1830 à sa mort en 1883.
+
+</div>
+<div slot="moments">
+
+- **1793** : insurrection de la Vendée contre la République.
+- **1815-1816** : Terreur blanche et Chambre introuvable.
+- **1825** : sacre de Charles X ; loi du « milliard des émigrés » et loi du sacrilège.
+- **Juillet 1830** : ordonnances de Charles X et chute de la dynastie.
+- **Octobre 1873** : le comte de Chambord refuse le drapeau tricolore ; la restauration échoue.
+- **1883** : mort du comte de Chambord sans héritier.
+
+</div>
+<div slot="devenir">
+
+Après 1883, la plupart des légitimistes se rallient au prétendant orléaniste ; d'autres acceptent la République ou rejoignent le nationalisme. Leur héritage intellectuel passe à l'Action française.
+
+</div>
+</Fiche>
+
+<Frise
+  debut={1789}
+  fin={1900}
+  lignes={lignesDe('legitimistes')}
+  reperes={reperesFrise}
+  periodes={periodesFrise}
+  idFrise="frise-legitimistes"
+  compacte
+/>
+
+## Le refus de la Révolution (1789-1799)
+
+Tout commence par un départ. Le 17 juillet 1789, trois jours après la prise de la Bastille, le comte d'Artois, frère cadet de Louis XVI, quitte la France. Des milliers de nobles et de prêtres le suivent dans les mois et les années qui viennent : ce sont les **émigrés**. Réfugiés à Coblence, à Turin ou à Londres, ils lèvent de petites armées et supplient les rois d'Europe d'intervenir. Ils ne veulent pas réformer la monarchie, comme les députés **monarchiens** (les ancêtres des [orléanistes](../orleanistes/)) qui rêvent d'un roi à l'anglaise : ils veulent rétablir l'ordre ancien, avec ses trois ordres, ses privilèges et son roi absolu.
+
+<Encadre titre="Contre-révolution">
+On appelle **contre-révolution** l'ensemble de ceux qui refusent la Révolution française dans son principe, et pas seulement dans ses excès : émigrés, insurgés de l'Ouest, prêtres réfractaires, penseurs. Pour eux, la société ne peut pas être refondée par la raison et le vote ; elle repose sur Dieu, le roi et les traditions héritées.
+</Encadre>
+
+En France même, la contre-révolution devient populaire quand la Révolution s'en prend à l'Église et aux campagnes. Au printemps 1793, la levée de 300 000 hommes pour l'armée met le feu aux poudres dans l'Ouest : les paysans de la **Vendée** militaire se soulèvent, prennent pour chefs des nobles (Charette, La Rochejaquelein, d'Elbée) et des hommes du peuple (Cathelineau, Stofflet) et se battent « pour Dieu et pour le roi ». La guerre est d'une violence inouïe : après la défaite vendéenne de Savenay (décembre 1793), les « colonnes infernales » du général Turreau ravagent le pays en 1794. Au nord de la Loire, la **chouannerie**, une guérilla de paysans de Bretagne, du Maine et de Normandie (du surnom de l'un de ses premiers chefs, Jean Chouan), harcèle les républicains pendant des années.
+
+L'exécution de Louis XVI (21 janvier 1793), puis la mort en prison de son fils, le petit Louis XVII (juin 1795), font du comte de Provence, autre frère du roi, le prétendant : il prend le nom de **Louis XVIII**. Mais sa déclaration de Vérone (1795), qui promet de punir les « régicides » et de revenir à l'ancienne constitution du royaume, effraie ceux qui auraient pu se rallier. La même année, le débarquement d'émigrés à **Quiberon**, avec l'aide de la flotte anglaise, tourne au désastre : le général Hoche les écrase en juillet 1795, et plusieurs centaines de prisonniers sont fusillés. En 1797, les royalistes gagnent pourtant les élections et approchent du pouvoir par les urnes ; le coup d'État du 18 fructidor (4 septembre 1797) les en chasse.
+
+Dans l'exil, la contre-révolution trouve aussi ses penseurs : en 1796, **Joseph de Maistre** voit dans la Révolution un châtiment divin, et **Louis de Bonald** fonde l'ordre politique sur la religion. Toute la droite légitimiste du siècle s'en nourrira.
+
+## Sous Napoléon : se rallier ou conspirer (1799-1814)
+
+Le coup d'État de Brumaire (novembre 1799) place les royalistes devant un choix nouveau. Le Premier consul **Bonaparte**, futur chef des [bonapartistes](../bonapartistes/), leur offre ce qu'ils réclamaient en partie : l'ordre, la fin de la persécution religieuse avec le **Concordat** de 1801 (accord avec le pape qui rétablit le culte catholique), et l'amnistie de la plupart des émigrés en 1802. Beaucoup rentrent, retrouvent les biens qui n'avaient pas été vendus, et certains entrent au service du nouveau régime. La Vendée elle-même se pacifie.
+
+Les irréductibles, eux, conspirent. Le 24 décembre 1800, une « machine infernale » explose rue Saint-Nicaise, à Paris, sur le passage de Bonaparte, qui en réchappe. En 1804, le chef chouan **Georges Cadoudal** prépare l'enlèvement ou l'assassinat du Premier consul ; il est arrêté et guillotiné. Bonaparte frappe pour l'exemple : il fait enlever en territoire allemand le duc d'Enghien, un prince Bourbon étranger au complot, qui est fusillé à Vincennes le 21 mars 1804. Ce sang royal versé creuse un fossé définitif entre les Bourbons et les Bonaparte.
+
+Pendant dix ans, les royalistes attendent. Une société secrète, les Chevaliers de la Foi, entretient des réseaux. Quand l'Empire chancelle, ils sortent de l'ombre : le 12 mars 1814, Bordeaux accueille le duc d'Angoulême, neveu de Louis XVIII, en arborant la cocarde blanche. Quelques semaines plus tard, Napoléon abdique.
+
+## La revanche des ultras (1814-1830)
+
+En avril 1814, Louis XVIII rentre en France. Il est prudent : par la **Charte** du 4 juin 1814, il « octroie » une constitution qui garde l'essentiel des acquis de la Révolution (égalité devant la loi, Code civil, vente des biens nationaux) et partage le pouvoir avec deux chambres, dont une élue au **suffrage censitaire**, réservé aux hommes assez riches pour payer un impôt élevé. Pour les fidèles de l'émigration, c'est une déception : on leur rend le roi et le drapeau blanc, mais pas l'ancienne France. Leur chef naturel est le comte d'Artois, frère du roi.
+
+<Encadre titre="Ultra">
+Un **ultra** (du latin *ultra*, « au-delà ») est, sous la Restauration, un royaliste plus intransigeant que le roi lui-même : on les disait « plus royalistes que le roi ». Ils veulent effacer l'héritage révolutionnaire et rendre à la noblesse et à l'Église leur rôle d'avant 1789. Ce sont les héritiers directs de la contre-révolution.
+</Encadre>
+
+Le retour de Napoléon pendant les **Cent-Jours** (mars-juin 1815) leur donne l'occasion d'une revanche. Après Waterloo, une **Terreur blanche** s'abat sur le Midi : des bonapartistes et des protestants sont massacrés à Marseille, à Nîmes, à Avignon, où le maréchal Brune est assassiné ; à Paris, le maréchal Ney, rallié à l'Empereur pendant les Cent-Jours, est condamné et fusillé (décembre 1815). Aux élections d'août 1815, les ultras remportent une écrasante majorité : Louis XVIII, ravi puis inquiet, aurait qualifié cette assemblée de **Chambre introuvable**, tant elle était plus royaliste qu'il ne l'aurait espéré. Ses excès poussent le roi à la dissoudre en septembre 1816.
+
+Commencent alors quatre années d'opposition, au cours desquelles les ultras, paradoxe savoureux, défendent les droits de la Chambre contre les ministres du roi. Leur bête noire est **Decazes**, favori de Louis XVIII, qui gouverne avec les libéraux modérés, les **doctrinaires**. Le 13 février 1820, le duc de Berry, neveu du roi et seul espoir de la dynastie, est poignardé à la sortie de l'Opéra par un ouvrier, Louvel. Les ultras accusent Decazes d'avoir laissé faire ; selon un mot attribué à Chateaubriand, « le pied lui a glissé dans le sang ». Decazes tombe. Sept mois plus tard naît l'enfant posthume du duc, Henri, duc de Bordeaux, salué comme « l'enfant du miracle » : la branche aînée a un héritier.
+
+C'est l'apogée. **Villèle**, un hobereau toulousain habile et bon financier, gouverne de 1821 à 1828. En 1824, le comte d'Artois succède à son frère sous le nom de **Charles X**, et se fait sacrer à Reims en mai 1825, selon l'ancien rituel des rois de France. La même année, deux lois résument le programme ultra : la loi dite du « **milliard des émigrés** », qui indemnise les anciens propriétaires dont les biens avaient été confisqués et vendus, et la **loi du sacrilège**, qui punit de mort certaines profanations d'objets sacrés (elle ne sera jamais appliquée).
+
+Ce triomphe fabrique ses propres adversaires. Les [libéraux](../orleanistes/), forts d'une partie de la bourgeoisie, dénoncent avec des royalistes gallicans comme le comte de Montlosier l'influence du « parti prêtre » sur le gouvernement, tandis qu'une partie de la droite, derrière Chateaubriand, renvoyé du ministère en 1824, passe à l'opposition. Battu aux élections de 1827, Villèle se retire. En août 1829, Charles X appelle le prince de **Polignac**, ultra déclaré. La Chambre lui répond par l'adresse des 221 (mars 1830), qui lui refuse sa confiance ; le roi la dissout, l'opposition gagne de nouveau les élections. Malgré la prise d'Alger (5 juillet 1830), Charles X choisit l'épreuve de force : les **ordonnances** du 25 juillet suspendent la liberté de la presse, dissolvent la nouvelle Chambre et restreignent encore le droit de vote. Paris se couvre de barricades. Après les **Trois Glorieuses** (27, 28 et 29 juillet 1830), Charles X abdique en faveur de son petit-fils et reprend le chemin de l'exil.
+
+## Fidèles dans l'opposition (1830-1848)
+
+La couronne ne va pas au petit-fils, mais au cousin : Louis-Philippe, duc d'Orléans, devient « roi des Français » et adopte le drapeau tricolore. Pour les fidèles de Charles X, c'est une usurpation, et la branche d'Orléans porte une tache originelle : le père de Louis-Philippe avait voté la mort de Louis XVI. Ils prennent dès lors le nom de **légitimistes**.
+
+<Encadre titre="Légitimiste et orléaniste">
+Après 1830, il y a deux familles royales concurrentes. Les **légitimistes** restent fidèles à la branche aînée des Bourbons (Charles X, puis son petit-fils le comte de Chambord), seule « légitime » à leurs yeux. Les **orléanistes** soutiennent la branche cadette d'Orléans (Louis-Philippe, puis le comte de Paris), qui a accepté le drapeau tricolore et une monarchie parlementaire.
+</Encadre>
+
+Beaucoup refusent de prêter serment au nouveau roi : des officiers, des magistrats, des préfets démissionnent. On parle d'« émigration intérieure » : la noblesse légitimiste boude Paris et la cour, se retire sur ses terres et garde une forte influence locale dans l'Ouest, le Midi et le Massif central.
+
+Une dernière fois, on tente la guerre. En 1832, la duchesse de Berry, mère du jeune prétendant, débarque en Provence puis gagne la Vendée pour soulever l'Ouest au nom de son fils, « Henri V ». L'insurrection fait long feu. Cachée à Nantes, la duchesse est trahie, arrêtée en novembre 1832 et enfermée à la citadelle de Blaye, où elle accouche d'une fille née d'un remariage secret : l'aventure, devenue un objet de moquerie, discrédite durablement le recours aux armes.
+
+Les légitimistes choisissent alors la parole. Leur grand orateur est l'avocat **Berryer**, député tout au long du règne de Louis-Philippe, que même ses adversaires viennent écouter. Leurs journaux, *La Quotidienne* ou *La Gazette de France*, attaquent sans relâche le régime des banquiers ; certains, par haine du suffrage censitaire qui favorise la bourgeoisie orléaniste, en viennent à réclamer l'élargissement du droit de vote, convaincus que les campagnes voteraient pour leurs seigneurs et leurs curés. En 1843, plusieurs députés vont saluer le jeune prétendant à Londres, à Belgrave Square ; la Chambre les « flétrit » dans son adresse au roi (janvier 1844), ils démissionnent et se font aussitôt réélire. Face au même ennemi, les légitimistes se retrouvent parfois aux côtés des [républicains](../republicains/) dans l'opposition : ils ne pleurent pas Louis-Philippe quand il est chassé à son tour, en février 1848.
+
+## Le parti de l'Ordre, puis l'exil intérieur (1848-1870)
+
+La IIe République apporte une surprise : le **suffrage universel masculin**, instauré en mars 1848, ne profite pas seulement à la gauche. Dans l'Ouest et le Midi, les paysans élisent leurs notables, et des légitimistes comme Berryer ou le comte de Falloux entrent à l'Assemblée. Après l'insurrection ouvrière de juin 1848, la peur sociale soude toutes les droites : légitimistes, orléanistes et catholiques forment le **parti de l'Ordre**, qui gagne les élections de mai 1849. Falloux, ministre de l'Instruction publique, prépare la **loi Falloux** (votée en mars 1850), qui donne à l'Église une large place dans l'enseignement : une revanche sur l'Université, héritée de Napoléon, que l'Église accusait de répandre l'irréligion.
+
+À la mort de Louis-Philippe (1850), on parle de **fusion** : réconcilier les deux branches royales, le comte de Chambord (c'est le titre que porte en exil Henri, l'ancien duc de Bordeaux) régnerait le premier et, faute d'enfant, les Orléans lui succéderaient. Mais les ambitions et les rancunes l'emportent, et le prince, retiré au château de Frohsdorf en Autriche, entend fixer seul sa ligne. Le coup d'État du **2 décembre 1851** tranche la question : Berryer et d'autres députés réunis à la mairie du Xe arrondissement votent la déchéance du président, et sont arrêtés.
+
+Sous le Second Empire, le comte de Chambord demande à ses fidèles de s'abstenir : ne pas prêter serment à l'Empereur, ne pas siéger. Beaucoup obéissent, d'autres se rallient à un régime qui protège l'Église et l'ordre. La politique italienne de Napoléon III, qui menace à partir de 1859 les États du pape, rapproche de nouveau légitimistes et catholiques dans l'opposition. Berryer revient au Corps législatif en 1863 et meurt en 1868 en fidèle, sans avoir vu son roi régner.
+
+## L'occasion manquée : le drapeau blanc (1871-1879)
+
+La défaite de 1870 ouvre une chance inespérée. Aux élections de février 1871, dominées par la question de la paix, les campagnes votent pour les notables conservateurs : environ quatre cents monarchistes sur un peu plus de six cents députés. Jamais depuis 1830 une restauration n'a semblé si proche. Les plus intransigeants des légitimistes sont surnommés les « **chevau-légers** », du nom du lieu de leurs réunions à Versailles.
+
+Il faut pourtant s'entendre avec les [orléanistes](../orleanistes/). Le 5 août 1873, le comte de Paris, petit-fils de Louis-Philippe, se rend à Frohsdorf et reconnaît le comte de Chambord comme chef de la maison de France : la fusion est faite, le chemin du trône paraît libre. Un obstacle demeure, que l'on croit secondaire : le drapeau. Dès juillet 1871, Chambord a proclamé qu'il ne renoncerait pas au drapeau blanc, « le drapeau d'Henri IV ». Les monarchistes de l'Assemblée espèrent un compromis. Le 27 octobre 1873, une lettre du prince publiée dans la presse anéantit leurs espoirs : il ne laissera pas « arracher de [ses] mains l'étendard d'Henri IV, de François Ier et de Jeanne d'Arc ». Pour lui, accepter le drapeau tricolore, c'était accepter la Révolution. Pour la majorité des Français, et pour l'armée, refuser le drapeau tricolore était inconcevable. La restauration est morte.
+
+Les monarchistes se replient sur une solution d'attente. En novembre 1873, ils confient au maréchal de **Mac-Mahon**, élu président après la chute de Thiers, un mandat de sept ans, le **septennat**, en espérant que la situation change d'ici là. Le duc de Broglie, orléaniste, mène la politique d'**Ordre moral**.
+
+<Encadre titre="Ordre moral">
+L'**Ordre moral** (1873-1877) désigne la politique des monarchistes au pouvoir sous la présidence de Mac-Mahon : surveillance des républicains, épuration des fonctionnaires, soutien affiché à l'Église. C'est l'époque des grands pèlerinages et du vœu national de construire la basilique du Sacré-Cœur à Montmartre, déclarée d'utilité publique en 1873.
+</Encadre>
+
+Mais l'entente entre les deux droites ne survit pas à l'échec. Les chevau-légers en veulent aux orléanistes de préparer, avec le septennat, une monarchie sans Chambord, ou une république conservatrice ; ils contribuent à renverser le duc de Broglie en mai 1874. En janvier 1875, l'amendement Wallon, qui mentionne l'élection du « Président de la République », passe à une voix de majorité : la République est fondée, faute de roi. En décembre 1875, des légitimistes intransigeants vont jusqu'à s'entendre avec la gauche pour l'élection des sénateurs inamovibles, plutôt que de laisser des sièges aux orléanistes. Les [républicains](../republicains/) gagnent ensuite les élections de 1876, résistent à la crise du 16 mai 1877, conquièrent le Sénat en janvier 1879 ; Mac-Mahon démissionne. Les légitimistes ne gouverneront plus jamais la France.
+
+## La dispersion (1879-1900)
+
+Dans l'opposition, les légitimistes mènent surtout le combat religieux. Quand la République s'attaque aux congrégations religieuses non autorisées, en 1880, de nombreux magistrats, souvent issus de familles légitimistes, démissionnent plutôt que d'appliquer les décrets. Aux côtés des [catholiques](../catholiques/), ils combattent les lois Ferry sur l'école laïque.
+
+Le 24 août 1883, le comte de Chambord meurt à Frohsdorf, sans enfant. Avec lui s'éteint la branche aînée des Bourbons de France. Que faire ? La plupart des légitimistes, par fidélité au principe monarchique, reconnaissent pour roi le comte de Paris, malgré leur vieille hostilité aux Orléans : les deux royalismes fusionnent enfin, mais dans un parti affaibli. Une petite minorité refuse et se tourne vers les Bourbons d'Espagne, descendants de Louis XIV par son petit-fils Philippe V : on les surnomme les « **blancs d'Espagne** ».
+
+Le royalisme réunifié cherche des raccourcis : en 1886, une loi exile le comte de Paris et son fils, et le prétendant soutient et finance en partie le général Boulanger, avant l'effondrement du [boulangisme](../nationalistes/) en 1889. Puis, coup de grâce pour les catholiques royalistes, le pape Léon XIII leur demande d'accepter la République : c'est le **Ralliement** (1890-1892). Certains obéissent, comme le comte Albert de Mun, royaliste devenu figure du catholicisme social ; beaucoup refusent. L'affaire Dreyfus, à la fin du siècle, pousse une partie des héritiers de la contre-révolution vers le [nationalisme](../nationalistes/) antisémite et antidreyfusard. En 1899 naît l'Action française, d'abord nationaliste et républicaine ; l'un de ses jeunes membres, Charles Maurras, va la convertir à la monarchie.
+
+## Et après 1900
+
+Le légitimisme comme parti a disparu, mais son héritage demeure. Charles Maurras fait de l'**Action française**, au début du XXe siècle, le principal mouvement royaliste, au nom d'un « nationalisme intégral » qui reprend le refus de 1789 et le culte de l'ordre et de la tradition. La tradition légitimiste survit aussi dans les terres catholiques de l'Ouest, où le vote à droite restera longtemps solide, et chez une poignée de fidèles qui reconnaissent encore aujourd'hui un Bourbon d'Espagne comme roi de France.

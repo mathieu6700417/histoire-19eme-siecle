@@ -1,0 +1,126 @@
+---
+titre: "Les anarchistes"
+theme: politique
+courant: anarchistes
+ordre: 7
+periode: "1840-1900"
+resume: "De Proudhon aux Bourses du travail, le siècle vécu par ceux qui veulent abolir l'État : un rêve de liberté absolue, la rupture avec Marx, les bombes de 1892-1894, puis le pari du syndicat."
+dureeLecture: 12
+---
+import Fiche from '../../../components/Fiche.astro';
+import Frise from '../../../components/Frise.astro';
+import Encadre from '../../../components/Encadre.astro';
+import { courants, lignesDe, reperesFrise, periodesFrise } from '../../../data/courants-politiques';
+
+<Fiche entete courant={courants.anarchistes}>
+<div slot="idees">
+
+- L'État est l'instrument de l'oppression, même s'il est républicain ou socialiste : il faut le détruire, pas le conquérir.
+- Refus des élections et des partis : « ni Dieu ni maître ».
+- Fédéralisme : la société doit s'organiser de bas en haut, par libre association des communes et des groupes de producteurs.
+- Débat sur les moyens : action violente (**propagande par le fait**) ou action syndicale et éducative.
+
+</div>
+<div slot="figures">
+
+- **Pierre-Joseph Proudhon** : auteur de *Qu'est-ce que la propriété ?* (1840), qui répond « La propriété, c'est le vol ! » ; premier à se dire anarchiste, défenseur du fédéralisme et du mutuellisme (des associations de producteurs échangeant leurs produits à leur juste valeur et se prêtant sans intérêt).
+- **Michel Bakounine** : révolutionnaire russe, rival de Marx dans l'Internationale.
+- **Pierre Kropotkine** et **Élisée Reclus** : théoriciens d'un anarchisme communiste, sans État ni propriété privée.
+- **Ravachol**, **Auguste Vaillant**, **Émile Henry** : auteurs d'attentats (1892-1894), tous guillotinés.
+- **Fernand Pelloutier** : secrétaire de la Fédération des Bourses du travail, inspirateur de l'anarcho-syndicalisme.
+
+</div>
+<div slot="moments">
+
+- **1840** : Proudhon publie *Qu'est-ce que la propriété ?*
+- **1872** : exclusion de Bakounine de l'Internationale ; rupture entre marxistes et anarchistes.
+- **1892** : attentats de Ravachol.
+- **Décembre 1893** : Auguste Vaillant lance une bombe dans la Chambre des députés ; en **février 1894**, Émile Henry fait exploser une bombe au café Terminus.
+- **24 juin 1894** : l'anarchiste italien Caserio poignarde à Lyon le président Sadi Carnot, qui meurt quelques heures plus tard.
+- **Décembre 1893-juillet 1894** : vote des trois lois que leurs adversaires surnomment « lois scélérates » ; **1895** : fondation de la CGT à Limoges.
+
+</div>
+<div slot="devenir">
+
+Après les attentats et la répression, beaucoup se tournent vers le syndicalisme révolutionnaire de la CGT.
+
+</div>
+</Fiche>
+
+<Frise
+  debut={1789}
+  fin={1900}
+  lignes={lignesDe('anarchistes')}
+  reperes={reperesFrise}
+  periodes={periodesFrise}
+  idFrise="frise-anarchistes"
+  compacte
+/>
+
+## « Je suis anarchiste » : Proudhon (1840-1865)
+
+En 1840, un ouvrier typographe de Besançon, **Pierre-Joseph Proudhon**, publie un livre au titre provocant : *Qu'est-ce que la propriété ?* Sa réponse fait scandale : « La propriété, c'est le vol ! » Par là, il ne vise pas la maison du paysan ou l'outil de l'artisan, mais la rente, le loyer, l'intérêt, tout ce qui permet de gagner de l'argent sans travailler, sur le dos de ceux qui travaillent. Dans le même livre, il revendique un mot jusqu'alors injurieux : « Je suis anarchiste. »
+
+<Encadre titre="Anarchie">
+Le mot **anarchie** vient du grec *anarkhia*, « absence de chef ». Dans le langage courant, il signifie désordre ; les anarchistes lui donnent un sens positif : une société sans État, sans gouvernement imposé, où l'ordre naît de la libre entente entre les individus et les groupes. Pour eux, tout pouvoir, même élu, même républicain ou socialiste, finit par opprimer ceux qu'il gouverne.
+</Encadre>
+
+Proudhon se distingue des autres [socialistes](../socialistes/) de son temps. Il se moque des sociétés idéales de Fourier ou de Cabet, et surtout il refuse de confier à l'État l'organisation du travail, comme le propose Louis Blanc : ce serait remplacer le patron par un maître plus puissant encore. Il imagine plutôt une société de petits producteurs associés.
+
+<Encadre titre="Mutuellisme et fédéralisme">
+Le **mutuellisme** est le système économique de Proudhon : des associations de producteurs échangent leurs produits à leur juste valeur et se prêtent de l'argent sans intérêt, grâce à une banque mutuelle. Le **fédéralisme** est son système politique : la société s'organise de bas en haut, par des contrats libres entre communes, régions et groupes de travailleurs, au lieu d'être gouvernée d'en haut par un État centralisé.
+</Encadre>
+
+La révolution de 1848 met Proudhon à l'épreuve. Élu député de la Seine en juin 1848, il assiste avec effroi à l'écrasement des journées de Juin. Il tente de créer une « Banque du peuple », qui prêterait sans intérêt, mais le projet échoue en 1849, et ses attaques contre le président Louis-Napoléon Bonaparte, le futur chef des [bonapartistes](../bonapartistes/), lui valent trois ans de prison. Sous le Second Empire, il écrit sans relâche ; son livre *De la justice dans la Révolution et dans l'Église* (1858) l'oblige à fuir en Belgique. Dans *Du principe fédératif* (1863), il oppose le fédéralisme à la centralisation, héritée de la monarchie, de la Révolution et de Napoléon. Il meurt en janvier 1865. Ses idées ont leurs ombres : il est violemment hostile à l'émancipation des femmes, condamnées selon lui à n'être que « courtisane ou ménagère ». Mais elles ont une immense influence chez les ouvriers parisiens, artisans fiers de leur métier, qui se méfient de l'État autant que des patrons.
+
+## Bakounine contre Marx (1864-1872)
+
+Quand naît à Londres, en septembre 1864, l'**Association internationale des travailleurs**, ou Première Internationale, ce sont des disciples de Proudhon, comme le ciseleur Henri Tolain, qui la représentent en France. Mais un autre géant entre bientôt en scène : le révolutionnaire russe **Michel Bakounine**, aristocrate devenu insurgé, évadé de Sibérie. Il rejoint l'Internationale en 1868. Comme Proudhon, il veut détruire l'État ; mais il est collectiviste, c'est-à-dire partisan de la propriété commune de la terre et des usines, et il croit en la révolution violente des masses, paysans compris.
+
+Face à lui se dresse **Karl Marx**, qui inspire le Conseil général de l'Internationale. Les deux hommes veulent la même chose à long terme, une société sans classes, mais pas le même chemin. Pour Marx, les ouvriers doivent former des partis, conquérir le pouvoir, et utiliser l'État pendant une période de transition. Pour Bakounine, c'est un piège : un État ouvrier deviendrait une nouvelle tyrannie, dirigée par une minorité de chefs. Il faut abolir l'État tout de suite, par la révolte spontanée du peuple.
+
+Le 28 septembre 1870, après la chute de l'Empire, Bakounine tente l'expérience à **Lyon** : avec quelques militants, il occupe l'Hôtel de Ville et proclame l'abolition de l'État. L'aventure dure quelques heures ; la garde nationale reprend le bâtiment. Quelques mois plus tard, la **Commune de Paris** (18 mars-28 mai 1871) offre aux anti-autoritaires une image plus forte : Paris s'administre lui-même et appelle les communes de France à se fédérer librement. Dans la Commune, des militants anti-autoritaires, comme Varlin ou le peintre Courbet, ami de Proudhon, forment une « minorité » qui refuse en mai la création d'un Comité de salut public, jugé dictatorial. Le géographe **Élisée Reclus** combat avec les fédérés. **Louise Michel**, institutrice de Montmartre, se bat sur les barricades. Après la Semaine sanglante, elle est condamnée à la déportation en Nouvelle-Calédonie ; c'est pendant le voyage et l'exil, au contact d'autres déportés, qu'elle devient anarchiste.
+
+La défaite de la Commune rend le conflit inévitable. Au **congrès de La Haye**, en septembre 1872, Marx fait exclure Bakounine et son ami suisse James Guillaume de l'Internationale. Les fédérations qui les soutiennent (suisses, italiennes, espagnoles) fondent aussitôt à Saint-Imier, en Suisse, une Internationale « anti-autoritaire ». La rupture est consommée : désormais, marxistes et anarchistes sont deux familles distinctes, et souvent ennemies.
+
+## La propagande par le fait (1872-1891)
+
+En France, le mouvement ouvrier est décapité par la répression de la Commune. C'est en Suisse, dans le Jura, que l'anarchisme survit. La **Fédération jurassienne**, qui réunit des ouvriers horlogers, devient le laboratoire de l'idée. Un jeune Français réfugié, Paul Brousse, y défend en 1877 une méthode nouvelle : puisque les discours et les journaux ne touchent pas les masses, il faut des actes qui frappent les esprits. Ironie de l'histoire, Brousse deviendra quelques années plus tard le chef des socialistes les plus modérés.
+
+<Encadre titre="Propagande par le fait">
+La **propagande par le fait** est l'idée, défendue par certains anarchistes à partir de la fin des années 1870, qu'un acte spectaculaire (insurrection, attentat) convaincra mieux les masses que les discours. Le congrès anarchiste réuni à Londres en juillet 1881 l'adopte. Elle aboutit en France à la vague d'attentats de 1892-1894.
+</Encadre>
+
+Le prince russe **Pierre Kropotkine**, géographe lui aussi, venu à l'anarchisme au contact des horlogers jurassiens, fonde à Genève en 1879 le journal *Le Révolté*. Il défend un **communisme anarchiste** : chacun produirait selon ses forces et puiserait dans les richesses communes selon ses besoins. En 1882, l'agitation éclate dans le bassin minier de Montceau-les-Mines, où une « Bande noire » fait sauter des croix et menace les patrons, puis une bombe explose dans un café de Lyon. Le gouvernement frappe : en janvier 1883, Kropotkine et une soixantaine de compagnons sont jugés à Lyon pour appartenance à l'Internationale, interdite en France. Kropotkine est condamné à cinq ans de prison ; il est gracié en 1886.
+
+La même année 1883, Louise Michel, revenue de déportation en 1880 grâce à l'amnistie, conduit à Paris une manifestation de chômeurs derrière un **drapeau noir**, qui devient l'emblème des anarchistes ; des boulangeries sont pillées, elle est condamnée à six ans de prison. Pendant ce temps, Jean Grave, un cordonnier devenu journaliste, installe *Le Révolté* à Paris en 1885, puis le rebaptise *La Révolte* en 1887. Les anarchistes prônent l'abstention aux élections (en 1888, l'écrivain Octave Mirbeau, qui leur est proche, publie « La grève des électeurs »), méprisent les [socialistes](../socialistes/) qui siègent à la Chambre et tiennent les [radicaux](../radicaux/) pour des bourgeois déguisés. Ils ne sont que quelques milliers en France, mais leurs journaux, leurs chansons et leurs réunions attirent ouvriers, artistes et écrivains.
+
+## L'ère des attentats (1892-1894)
+
+Le 1er mai 1891, à Clichy, des anarchistes arrêtés après une bagarre avec la police sont frappés au commissariat, puis lourdement condamnés. Pour les venger, un ouvrier, François Koënigstein, dit **Ravachol**, fait exploser en mars 1892 les immeubles où vivent le juge et le procureur de l'affaire. Il n'y a pas de mort, mais la peur s'installe. Arrêté, Ravachol est aussi jugé pour des crimes de droit commun, dont un assassinat, et guillotiné à Montbrison en juillet 1892. Pour une partie des anarchistes, il devient un martyr ; on chante « la Ravachole ».
+
+Les attentats se succèdent. Le 9 décembre 1893, **Auguste Vaillant**, un ouvrier misérable, lance une bombe dans la Chambre des députés, en pleine séance. Il ne tue personne, mais blesse légèrement plusieurs dizaines de personnes, dont des députés. On attribue au président de la Chambre, Charles Dupuy, le mot célèbre : « Messieurs, la séance continue ! » Vaillant est condamné à mort et exécuté en février 1894 ; le président de la République, Sadi Carnot, a refusé sa grâce. Une semaine plus tard, le 12 février 1894, **Émile Henry**, un jeune homme instruit, lance une bombe dans le café Terminus, près de la gare Saint-Lazare, au milieu de simples consommateurs : un mort et une vingtaine de blessés. À son procès, il revendique de frapper la bourgeoisie tout entière ; on retient de lui la formule « Il n'y a pas d'innocents ». Il est guillotiné en mai.
+
+Le 24 juin 1894, à Lyon, un jeune anarchiste italien, **Sante Geronimo Caserio**, poignarde le président Carnot, qui meurt dans la nuit. Il dit avoir voulu venger les anarchistes exécutés. L'opinion est bouleversée, et les [républicains](../republicains/) modérés au pouvoir ont déjà commencé à répondre par des lois d'exception.
+
+<Encadre titre="Lois « scélérates »">
+Les lois du 12 et du 18 décembre 1893 et du 28 juillet 1894 répriment l'apologie des attentats, l'« association de malfaiteurs » (on peut être condamné pour avoir seulement préparé un crime en groupe) et toute propagande anarchiste. Leurs adversaires les surnomment « **lois scélérates** » (le mot est popularisé en 1898-1899 par Francis de Pressensé et le jeune Léon Blum), parce qu'elles permettent de frapper des opinions et pas seulement des actes.
+</Encadre>
+
+La répression est massive : journaux interdits, perquisitions, centaines d'arrestations. En août 1894, l'État veut un grand procès exemplaire : c'est le **procès des Trente**, qui mêle des théoriciens comme Jean Grave ou Sébastien Faure, le critique d'art Félix Fénéon et quelques cambrioleurs, pour faire croire à une vaste association de malfaiteurs. Le jury acquitte presque tous les accusés, sauf les voleurs. C'est un camouflet pour le gouvernement, mais la leçon est rude pour les anarchistes : les bombes les ont isolés, et la plupart des ouvriers n'ont vu dans les attentats que des crimes.
+
+## Le tournant syndical (1892-1900)
+
+Une autre voie s'ouvre alors, moins spectaculaire, plus durable : celle des syndicats, autorisés depuis 1884. Dans les villes, des **Bourses du travail** se créent, souvent avec l'aide des mairies : on y trouve des bureaux de placement pour les chômeurs, des cours, des bibliothèques, des salles de réunion. En 1892, elles se regroupent dans une **Fédération des Bourses du travail**. Un jeune journaliste anarchiste, **Fernand Pelloutier**, en devient le secrétaire général en 1895. Pour lui, les syndicats sont l'école où les ouvriers apprennent à gérer eux-mêmes la production : ce sont les cellules de la société future, sans État ni patrons. Il invite ses camarades à entrer dans les syndicats plutôt qu'à poser des bombes.
+
+<Encadre titre="Grève générale">
+La **grève générale** est l'arrêt de travail simultané de tous les travailleurs d'un pays. Pour les syndicalistes révolutionnaires, elle doit paralyser l'économie, faire tomber le pouvoir des patrons et de l'État et ouvrir la voie à la société nouvelle, sans passer par les élections ni par un parti. On appelle **anarcho-syndicalisme** cette rencontre des idées anarchistes et de l'action syndicale.
+</Encadre>
+
+En septembre 1895, à **Limoges**, naît la **Confédération générale du travail** (CGT), qui veut réunir tous les syndicats de France. Les anarchistes y pèsent de plus en plus, face aux socialistes guesdistes qui veulent subordonner les syndicats à leur parti. **Émile Pouget**, qui fait rire et rugir les ouvriers dans son journal en argot *Le Père Peinard*, se rallie à l'action syndicale et deviendra l'un des dirigeants de la CGT. Sébastien Faure fonde *Le Libertaire* en 1895 avec Louise Michel ; Jean Grave lance *Les Temps nouveaux*.
+
+L'**affaire Dreyfus** divise d'abord les anarchistes : pourquoi défendre un officier, un homme de l'armée et de la bourgeoisie ? Mais l'un des premiers à dénoncer l'erreur judiciaire, dès 1896, est l'écrivain Bernard Lazare, proche des milieux libertaires. Sébastien Faure se jette dans la bataille dreyfusarde, multiplie les meetings et fonde en 1899 *Le Journal du peuple* ; ses amis affrontent dans la rue les ligueurs [nationalistes](../nationalistes/) et antisémites. Pour une fois, les anarchistes se retrouvent dans le même camp que les républicains et les socialistes qu'ils combattaient. À la fin du siècle, ils ne posent plus de bombes : ils animent les syndicats.
+
+## Et après 1900
+
+Pelloutier meurt en 1901, mais son idée triomphe : le **syndicalisme révolutionnaire**, nourri d'anarchisme, domine la CGT, dont Émile Pouget devient l'un des chefs. En 1906, la **charte d'Amiens** proclame l'indépendance des syndicats à l'égard des partis et fait de la grève générale l'arme de l'émancipation ouvrière. D'autres anarchistes choisissent la révolte individuelle, jusqu'aux braquages sanglants de la « bande à Bonnot » (1911-1912). La Première Guerre mondiale, que la plupart des syndicalistes finissent par accepter, brise l'élan du mouvement.

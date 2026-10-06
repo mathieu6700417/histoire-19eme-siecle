@@ -1,0 +1,128 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const nomSite = 'Le XIXe siècle français';
+const titreComplet = title === nomSite ? title : `${title} · ${nomSite}`;
+const base = import.meta.env.BASE_URL;
+const chemin = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titreComplet}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&display=swap"
+    />
+  </head>
+  <body>
+    <a class="evitement" href="#contenu">Aller au contenu</a>
+    <header class="entete">
+      <div class="conteneur entete__interieur">
+        <a class="logo" href={base}>
+          <span class="logo__fleuron" aria-hidden="true">❦</span>
+          <span>Le <span class="sc">xix</span><sup>e</sup> siècle français</span>
+        </a>
+        <nav aria-label="Navigation principale">
+          <ul class="nav">
+            <li><a href={base} aria-current={chemin === base ? 'page' : undefined}>Accueil</a></li>
+            <li><a href={`${base}#lecons`}>Leçons</a></li>
+            <li><a href={`${base}ecrivains/`} aria-current={chemin.startsWith(`${base}ecrivains/`) ? 'page' : undefined}>Écrivains</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenu">
+      <slot />
+    </main>
+
+    <footer class="pied">
+      <div class="conteneur">
+        <p>
+          Le <span class="sc">xix</span><sup>e</sup> siècle français, de 1789 à 1900&nbsp;: un site d’apprentissage
+          construit leçon par leçon.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .evitement {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--c-bleu-nuit);
+    color: var(--c-fond);
+    padding: var(--e-2) var(--e-3);
+    z-index: 10;
+  }
+  .evitement:focus { left: var(--e-3); }
+
+  .entete {
+    border-bottom: 1px solid var(--c-filet);
+    background: var(--c-fond);
+  }
+  .entete__interieur {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--e-2) var(--e-4);
+    padding-block: var(--e-3);
+  }
+  .logo {
+    font-family: var(--f-titre);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--c-texte);
+    text-decoration: none;
+  }
+  .logo__fleuron { color: var(--c-texte-doux); margin-right: 0.3em; }
+  .logo sup, .pied sup { font-size: 0.6em; }
+  .nav {
+    display: flex;
+    gap: var(--e-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav li { margin: 0; }
+  .nav a {
+    color: var(--c-texte);
+    text-decoration: none;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    font-size: 1.05rem;
+    color: var(--c-texte-doux);
+  }
+  .nav a:hover, .nav a[aria-current='page'] {
+    color: var(--c-bordeaux);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+  }
+
+  .pied {
+    margin-top: var(--e-6);
+    border-top: 1px solid var(--c-filet);
+    padding-block: var(--e-4);
+    color: var(--c-texte-doux);
+    font-size: var(--t-petit);
+  }
+  .pied p { margin: 0; }
+</style>

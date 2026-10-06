@@ -1,0 +1,122 @@
+---
+// Fiche d'un courant politique. Toutes les fiches suivent le même modèle :
+// bandeau coloré, « En une phrase », Idées clés, Figures, Moments clés, Devenir.
+// Usage MDX :
+//   <Fiche courant={courants.bonapartistes} phrase="…">
+//     <div slot="idees">(liste Markdown)</div>
+//     <div slot="figures">…</div>
+//     <div slot="moments">…</div>
+//     <div slot="devenir">…</div>
+//   </Fiche>
+//
+// Mode en-tête de page (`entete`) : la fiche ouvre une page dont le h1 porte
+// déjà le nom du courant ; elle ne répète pas ce titre, son bandeau affiche
+// « Carte d'identité » et la période, et ses rubriques sont des h2 (hors sommaire).
+// `phrase` et `periode` peuvent être omises si le courant les porte (données).
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  courant: { id: string; nom?: string; titre: string; couleur: string; periode?: string; phrase?: string };
+  /** Ce que veut le courant, en une phrase (par défaut : courant.phrase). */
+  phrase?: string;
+  /** Période d'existence affichée dans le bandeau (par défaut : courant.periode). */
+  periode?: string;
+  /** Fiche placée en tête de la page du courant. */
+  entete?: boolean;
+}
+
+const { courant, entete = false } = Astro.props;
+const phrase = Astro.props.phrase ?? courant.phrase ?? '';
+const periode = Astro.props.periode ?? courant.periode;
+const Rubrique = entete ? 'h2' : 'h4';
+
+const rubriques = [
+  { slot: 'idees', titre: 'Idées clés' },
+  { slot: 'figures', titre: 'Figures' },
+  { slot: 'moments', titre: 'Moments clés' },
+  { slot: 'devenir', titre: 'Devenir' },
+] as const;
+
+const manquantes = rubriques.filter((r) => !Astro.slots.has(r.slot)).map((r) => r.slot);
+if (manquantes.length) {
+  console.warn(`[Fiche ${courant.id}] rubriques manquantes : ${manquantes.join(', ')}`);
+}
+---
+
+<article
+  class:list={['fiche', { 'fiche--entete': entete }]}
+  id={entete ? 'carte-identite' : courant.id}
+  style={`--couleur-courant:${courant.couleur}`}
+  aria-labelledby={`${courant.id}-titre`}
+>
+  <header class="fiche__bandeau">
+    {entete ? (
+      <p class="fiche__etiquette" id={`${courant.id}-titre`}>
+        Carte d’identité<span class="sr-only">{typographie(` : ${courant.nom ?? courant.titre}`)}</span>
+      </p>
+    ) : (
+      <h3 id={`${courant.id}-titre`}>{typographie(courant.titre)}</h3>
+    )}
+    {periode && <p class="fiche__periode">{periode}</p>}
+  </header>
+
+  <div class="fiche__corps">
+    <section class="fiche__phrase">
+      <Rubrique class="fiche__titre-rubrique">En une phrase</Rubrique>
+      <p>{typographie(phrase)}</p>
+    </section>
+
+    {rubriques.map((r) => (
+      Astro.slots.has(r.slot) && (
+        <section class={`fiche__rubrique fiche__rubrique--${r.slot}`}>
+          <Rubrique class="fiche__titre-rubrique">{r.titre}</Rubrique>
+          <slot name={r.slot} />
+        </section>
+      )
+    ))}
+  </div>
+</article>
+
+<style>
+  .fiche {
+    margin: var(--e-5) auto;
+    border-top: 2px solid var(--couleur-courant);
+    border-bottom: 1px solid var(--c-filet);
+  }
+  .fiche__bandeau {
+    padding: var(--e-2) 0 var(--e-1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0 var(--e-3);
+    border-bottom: 1px solid var(--c-filet);
+  }
+  .fiche__bandeau h3 { color: var(--c-bleu-nuit); margin: 0; font-size: 1.35rem; }
+  .fiche__periode { margin: 0; font-variant: small-caps; letter-spacing: 0.08em; color: var(--c-texte-doux); }
+  .fiche__etiquette {
+    margin: 0;
+    font-family: var(--f-titre);
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--c-bleu-nuit);
+  }
+  .fiche--entete { margin-top: var(--e-4); }
+
+  .fiche__corps { padding: var(--e-2) 0 var(--e-2); }
+  .fiche .fiche__titre-rubrique {
+    font-family: var(--f-texte);
+    line-height: 1.3;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--c-texte-doux);
+    margin: var(--e-3) 0 var(--e-1);
+  }
+  .fiche__phrase .fiche__titre-rubrique { margin-top: var(--e-1); }
+  .fiche__phrase p { font-size: 1.12rem; font-style: italic; }
+  .fiche :global(ul) { margin-bottom: var(--e-2); }
+  .fiche :global(li::marker) { color: var(--c-texte-doux); }
+  .fiche :global(p:last-child) { margin-bottom: var(--e-2); }
+</style>

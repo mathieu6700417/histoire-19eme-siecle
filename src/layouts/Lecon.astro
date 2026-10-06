@@ -1,0 +1,256 @@
+---
+import Base from './Base.astro';
+import { libelleTheme } from '../data/themes';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Titre { depth: number; slug: string; text: string }
+interface LienLecon { titre: string; href: string }
+interface Miette { titre: string; href?: string }
+
+interface Props {
+  titre: string;
+  theme: string;
+  periode: string;
+  resume: string;
+  dureeLecture?: number;
+  headings: Titre[];
+  precedente?: LienLecon;
+  suivante?: LienLecon;
+  /** Fil d'Ariane d'une sous-page (thème › leçon parente › page). */
+  filAriane?: Miette[];
+  /** Leçon parente d'une sous-page (lien de retour au portail). */
+  retour?: LienLecon;
+  /** Couleur d'accent (couleur du courant de la page). */
+  couleur?: string;
+  /** id du courant (frontmatter), non utilisé ici : la couleur est résolue par la route. */
+  courant?: string;
+}
+
+const {
+  titre, theme, periode, resume, dureeLecture, headings, precedente, suivante, filAriane, retour, couleur,
+} = Astro.props;
+const sousPage = Boolean(retour);
+
+// Sommaire automatique : les h2, avec leurs h3 imbriqués.
+type Entree = Titre & { enfants: Titre[] };
+const sommaire: Entree[] = [];
+for (const h of headings) {
+  if (h.depth === 2) sommaire.push({ ...h, enfants: [] });
+  else if (h.depth === 3 && sommaire.length) sommaire[sommaire.length - 1].enfants.push(h);
+}
+---
+
+<Base title={titre} description={typographie(resume)}>
+  <article
+    class:list={['lecon', { 'lecon--courant': couleur }]}
+    style={couleur ? `--couleur-courant:${couleur}` : undefined}
+  >
+    <header class="lecon__entete conteneur">
+      {filAriane && (
+        <nav class="ariane" aria-label="Fil d'Ariane">
+          <ol>
+            {filAriane.map((m) => (
+              <li>
+                {m.href ? <a href={m.href}>{typographie(m.titre)}</a> : <span aria-current="page">{typographie(m.titre)}</span>}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <p class="lecon__surtitre">
+        <span class="lecon__theme">{libelleTheme(theme)}</span>
+        <span aria-hidden="true"> · </span>
+        <span>{periode}</span>
+        {dureeLecture && (
+          <>
+            <span aria-hidden="true"> · </span>
+            <span>{typographie(`Lecture : environ ${dureeLecture} minutes`)}</span>
+          </>
+        )}
+      </p>
+      <h1>{titre}</h1>
+      <p class="lecon__resume">{typographie(resume)}</p>
+    </header>
+
+    {sommaire.length > 0 && (
+      <nav class="sommaire conteneur" aria-labelledby="titre-sommaire">
+        <details open={!sousPage}>
+          <summary id="titre-sommaire">Sommaire</summary>
+          <ol>
+            {sommaire.map((h) => (
+              <li>
+                <a href={`#${h.slug}`}>{h.text}</a>
+                {h.enfants.length > 0 && (
+                  <ol>
+                    {h.enfants.map((e) => (
+                      <li><a href={`#${e.slug}`}>{e.text}</a></li>
+                    ))}
+                  </ol>
+                )}
+              </li>
+            ))}
+          </ol>
+        </details>
+      </nav>
+    )}
+
+    <div class="prose conteneur">
+      <slot />
+    </div>
+
+    {(precedente || suivante || retour) && (
+      <nav class:list={['voisines conteneur', { 'voisines--retour': retour }]} aria-label={sousPage ? 'Pages voisines' : 'Autres leçons'}>
+        {precedente ? (
+          <a class="voisine voisine--prec" href={precedente.href}>
+            <span class="voisine__sens">← {sousPage ? 'Précédent' : 'Leçon précédente'}</span>
+            <span class="voisine__titre">{typographie(precedente.titre)}</span>
+          </a>
+        ) : <span />}
+        {retour && (
+          <a class="voisine voisine--retour" href={retour.href}>
+            <span class="voisine__sens">↑ Retour au portail</span>
+            <span class="voisine__titre">{typographie(retour.titre)}</span>
+          </a>
+        )}
+        {suivante ? (
+          <a class="voisine voisine--suiv" href={suivante.href}>
+            <span class="voisine__sens">{sousPage ? 'Suivant' : 'Leçon suivante'} →</span>
+            <span class="voisine__titre">{typographie(suivante.titre)}</span>
+          </a>
+        ) : <span />}
+      </nav>
+    )}
+  </article>
+</Base>
+
+<style>
+  .lecon__entete,
+  .sommaire,
+  .voisines {
+    max-width: calc(var(--l-lecture) + 2 * var(--gouttiere));
+  }
+  .lecon__entete { padding-top: var(--e-5); }
+
+  .ariane ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--e-3);
+    font-size: 1rem;
+    color: var(--c-texte-doux);
+  }
+  .ariane li { margin: 0; }
+  .ariane li + li::before { content: '›'; margin: 0 0.45em; color: var(--c-ocre); }
+  .ariane a { color: var(--c-texte-doux); text-decoration-color: var(--c-filet); }
+  .ariane a:hover { color: var(--c-bordeaux); }
+  .ariane [aria-current] { color: var(--c-texte); }
+
+  /* Accent de couleur d'une page de courant, avec sobriété. */
+  .lecon--courant .lecon__theme,
+  .lecon--courant .ariane li + li::before { color: var(--couleur-courant); }
+  .lecon--courant h1 { border-left: 1px solid var(--couleur-courant); padding-left: var(--e-3); }
+  .lecon--courant .prose > :global(h2)::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    margin-bottom: var(--e-2);
+    background: var(--couleur-courant);
+  }
+  .lecon__surtitre {
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: var(--c-texte-doux);
+    margin-bottom: var(--e-2);
+  }
+  .lecon__theme { color: var(--c-texte-doux); font-weight: 500; }
+  .lecon__resume {
+    font-size: 1.25rem;
+    font-style: italic;
+    color: var(--c-texte-doux);
+    border-bottom: 1px solid var(--c-filet);
+    padding-bottom: var(--e-4);
+  }
+
+  .sommaire details {
+    border-block: 1px solid var(--c-filet);
+    padding: var(--e-2) 0;
+    font-size: 1.05rem;
+  }
+  .sommaire summary {
+    font-family: var(--f-titre);
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--c-bleu-nuit);
+  }
+  .sommaire ol { margin: var(--e-2) 0 0; padding-left: 1.4em; }
+  .sommaire ol ol { margin-top: var(--e-1); font-size: 0.95em; list-style: lower-alpha; }
+  .sommaire li { margin-bottom: 0.15rem; }
+  .sommaire a { text-decoration: none; }
+  .sommaire a:hover { text-decoration: underline; }
+
+  .voisines {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--e-3);
+    margin-top: var(--e-6);
+    padding-top: var(--e-4);
+    border-top: 1px solid var(--c-filet);
+  }
+  .voisine { display: flex; flex-direction: column; text-decoration: none; max-width: 48%; }
+  .voisine--suiv { text-align: right; margin-left: auto; }
+  /* Sous-page : précédent · retour au portail · suivant */
+  .voisines--retour { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; }
+  .voisines--retour .voisine { max-width: none; }
+  .voisines--retour .voisine--retour { text-align: center; justify-self: center; max-width: 16rem; }
+  @media (max-width: 600px) {
+    .voisines--retour { grid-template-columns: 1fr 1fr; }
+    .voisines--retour .voisine--retour { grid-column: 1 / -1; grid-row: 2; }
+  }
+  .voisine__sens { font-variant: small-caps; color: var(--c-texte-doux); }
+  .voisine__titre { font-family: var(--f-titre); }
+
+  /* Colonne de lecture : tout le contenu est limité à ~68 caractères,
+     sauf les éléments marqués .large (frise, arbre). */
+  .prose > :global(*) {
+    max-width: var(--l-lecture);
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .prose > :global(.large) { max-width: var(--l-large); }
+
+  /* Tableaux (repères) : un peu plus larges que la colonne de lecture,
+     défilement horizontal sur téléphone. */
+  .prose > :global(table) {
+    max-width: min(var(--l-large), 54rem);
+    width: 100%;
+    margin-bottom: var(--e-4);
+    border-collapse: collapse;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--e-2) var(--e-2);
+    border-bottom: 1px solid var(--c-filet);
+  }
+  .prose :global(thead th) {
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+    color: var(--c-ocre);
+    border-bottom: 1px solid var(--c-texte-doux);
+  }
+  .prose :global(tbody tr:nth-child(odd)) { background: var(--c-fond-2); }
+  .prose :global(td:first-child) { font-weight: 500; color: var(--c-texte); }
+  .prose :global(td:nth-child(2)) { white-space: nowrap; }
+  @media (max-width: 700px) {
+    .prose > :global(table) { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .prose :global(th), .prose :global(td) { min-width: 9rem; }
+    .prose :global(td:nth-child(2)) { min-width: 0; }
+  }
+</style>

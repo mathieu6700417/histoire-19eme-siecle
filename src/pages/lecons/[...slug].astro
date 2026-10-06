@@ -1,0 +1,71 @@
+---
+// Rendu d'une leçon (/lecons/<slug>/) ou d'une sous-page (/lecons/<slug>/<sous>/).
+import { getCollection, render } from 'astro:content';
+import Lecon from '../../layouts/Lecon.astro';
+import { libelleTheme } from '../../data/themes';
+import { courants } from '../../data/courants-politiques';
+import { enfantsDe, lienLecon, parentDe, premierNiveau, titreCourt } from '../../utils/lecons';
+
+export async function getStaticPaths() {
+  const lecons = await getCollection('lecons');
+  const base = import.meta.env.BASE_URL;
+  type Entree = (typeof lecons)[number];
+  const lien = (l: Entree) => ({ titre: l.data.titre, href: lienLecon(l.id) });
+
+  // Voisines : entre frères pour une sous-page, entre leçons de premier niveau sinon.
+  const voisines = (l: Entree) => {
+    const idParent = parentDe(l.id);
+    const freres = idParent ? enfantsDe(lecons, idParent) : premierNiveau(lecons);
+    const i = freres.findIndex((f) => f.id === l.id);
+    return {
+      precedente: i > 0 ? lien(freres[i - 1]) : undefined,
+      suivante: i < freres.length - 1 ? lien(freres[i + 1]) : undefined,
+    };
+  };
+
+  return lecons.map((lecon) => {
+    const idParent = parentDe(lecon.id);
+    const parent = idParent ? lecons.find((l) => l.id === idParent) : undefined;
+    if (idParent && !parent) console.warn(`[lecons] parent introuvable pour ${lecon.id}`);
+
+    const courant = lecon.data.courant
+      ? (courants as Record<string, { nom: string; couleur: string }>)[lecon.data.courant]
+      : undefined;
+    if (lecon.data.courant && !courant) console.warn(`[lecons] courant inconnu : ${lecon.data.courant} (${lecon.id})`);
+
+    const filAriane = parent
+      ? [
+          { titre: libelleTheme(lecon.data.theme), href: `${base}#theme-${lecon.data.theme}` },
+          { titre: titreCourt(parent.data.titre), href: lienLecon(parent.id) },
+          { titre: courant?.nom ?? lecon.data.titre },
+        ]
+      : undefined;
+
+    return {
+      params: { slug: lecon.id },
+      props: {
+        lecon,
+        filAriane,
+        retour: parent ? lien(parent) : undefined,
+        couleur: courant?.couleur,
+        ...voisines(lecon),
+      },
+    };
+  });
+}
+
+const { lecon, filAriane, retour, couleur, precedente, suivante } = Astro.props;
+const { Content, headings } = await render(lecon);
+---
+
+<Lecon
+  {...lecon.data}
+  headings={headings}
+  filAriane={filAriane}
+  retour={retour}
+  couleur={couleur}
+  precedente={precedente}
+  suivante={suivante}
+>
+  <Content />
+</Lecon>

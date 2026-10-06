@@ -1,0 +1,142 @@
+---
+titre: "Les catholiques"
+theme: politique
+courant: catholiques
+ordre: 8
+periode: "1830-1900"
+resume: "Persécutés par la Révolution, choyés par les rois, combattus par la République : le siècle vécu par les catholiques engagés en politique, déchirés entre le refus du monde moderne et la tentation de s'y rallier."
+dureeLecture: 14
+---
+import Fiche from '../../../components/Fiche.astro';
+import Frise from '../../../components/Frise.astro';
+import Encadre from '../../../components/Encadre.astro';
+import { courants, lignesDe, reperesFrise, periodesFrise } from '../../../data/courants-politiques';
+
+<Fiche entete courant={courants.catholiques}>
+<div slot="idees">
+
+- **Liberté de l'enseignement** : l'Église doit pouvoir ouvrir ses écoles et éduquer la jeunesse.
+- Pour les **catholiques libéraux**, la liberté profite à l'Église ; pour les **intransigeants**, le libéralisme et la Révolution sont des erreurs condamnées par Rome.
+- **Catholicisme social** : répondre à la misère ouvrière par la charité, les associations et des lois protectrices, contre le libéralisme comme contre le socialisme.
+- Question du régime : longtemps liés aux monarchistes, une partie des catholiques accepte la République à la demande du pape (**Ralliement**).
+
+</div>
+<div slot="figures">
+
+- **Félicité de Lamennais** : fondateur du journal *L'Avenir* (1830-1831), condamné par Rome, il finit par rompre avec l'Église.
+- **Charles de Montalembert** : chef du « parti catholique » des années 1840, défenseur de la liberté de l'enseignement.
+- **Louis Veuillot** : journaliste de *L'Univers*, porte-parole des intransigeants ultramontains.
+- **Albert de Mun** : officier, fondateur avec René de La Tour du Pin des Cercles catholiques d'ouvriers (1871), député, rallié en 1892.
+- **Le cardinal Lavigerie** et **le pape Léon XIII** : artisans du Ralliement.
+
+</div>
+<div slot="moments">
+
+- **1832** : l'encyclique *Mirari vos* condamne les idées défendues par *L'Avenir*, sans nommer le journal.
+- **1850** : loi Falloux sur la liberté de l'enseignement.
+- **1864** : le *Syllabus* condamne les « erreurs » modernes, dont le libéralisme.
+- **1871** : fondation de l'Œuvre des cercles catholiques d'ouvriers.
+- **1891** : encyclique *Rerum novarum* sur la condition des ouvriers.
+- **Novembre 1890 – février 1892** : toast d'Alger du cardinal Lavigerie, puis encyclique *Au milieu des sollicitudes* : c'est le Ralliement.
+
+</div>
+<div slot="devenir">
+
+Le Ralliement reste incomplet ; le conflit avec la République aboutit à la séparation de 1905, tandis que naît la démocratie chrétienne.
+
+</div>
+</Fiche>
+
+<Frise
+  debut={1789}
+  fin={1900}
+  lignes={lignesDe('catholiques')}
+  reperes={reperesFrise}
+  periodes={periodesFrise}
+  idFrise="frise-catholiques"
+  compacte
+/>
+
+## L'Église face à la Révolution (1789-1814)
+
+Les catholiques ne forment pas un parti : c'est une sensibilité qui traverse plusieurs courants, légitimistes, orléanistes, puis républicains ralliés, et qui se mobilise dès que la place de l'Église est en jeu.
+
+En 1789, presque tous les Français sont catholiques, et le clergé est le premier ordre du royaume. Il n'est pas d'emblée hostile à la Révolution : en juin 1789, bien des curés de campagne rejoignent le tiers état. La rupture vient de la réorganisation de l'Église. Le 2 novembre 1789, les biens du clergé sont mis « à la disposition de la Nation » ; en échange, l'État paiera les prêtres. Puis, le 12 juillet 1790, l'Assemblée vote la **constitution civile du clergé** : un diocèse par département, des évêques et des curés élus par les citoyens comme des fonctionnaires, sans l'aval du pape. À la fin de l'année, les prêtres doivent jurer fidélité à la Constitution. Au printemps 1791, le pape Pie VI condamne le texte.
+
+<Encadre titre="Prêtres jureurs et réfractaires">
+Les prêtres qui prêtent le serment exigé à partir de la fin de 1790 sont appelés **jureurs** (ou constitutionnels) ; ceux qui le refusent, par fidélité au pape, sont les **réfractaires**. Le clergé se coupe à peu près en deux, avec de fortes différences selon les régions : l'Ouest, le Nord et l'Est comptent beaucoup de réfractaires, le Bassin parisien et le Centre beaucoup de jureurs. Cette carte de 1791 annonce pour un siècle celle de la pratique religieuse.
+</Encadre>
+
+Pour les fidèles, la Révolution devient une persécution : en septembre 1792, plus de deux cents prêtres réfractaires sont massacrés dans les prisons de Paris. Dans l'Ouest, les insurgés de la Vendée se battent en 1793 « pour Dieu et pour le roi », aux côtés de ceux qui deviendront les [légitimistes](../legitimistes/). Puis vient la **déchristianisation** de l'an II (automne 1793-printemps 1794) : des églises sont fermées ou pillées, des prêtres contraints d'abdiquer, et Notre-Dame de Paris accueille une fête de la Raison (10 novembre 1793). Les catholiques garderont tout le siècle le souvenir de leurs martyrs.
+
+La paix vient d'un général. Le Premier consul Bonaparte, futur chef des [bonapartistes](../bonapartistes/), sait que la religion reste chère aux campagnes. Le 15 juillet 1801, il signe avec le pape Pie VII le **Concordat**. Le catholicisme ne redevient pas religion d'État, mais il est reconnu comme celui de « la grande majorité des Français » ; le Premier consul nomme les évêques, le pape leur donne l'investiture religieuse, l'État rémunère le clergé, et l'Église renonce aux biens vendus. En avril 1802, Bonaparte promulgue le texte en y ajoutant, sans l'accord du pape, des **Articles organiques** qui placent l'Église sous la surveillance de l'État. La lune de miel ne dure pas : Napoléon annexe les États du pape et fait enlever Pie VII en 1809 ; le pontife reste son prisonnier jusqu'en 1814.
+
+## Le trône et l'autel (1814-1830)
+
+Avec le retour des Bourbons, l'Église croit retrouver sa place. La **Charte** de 1814 proclame que la religion catholique est « la religion de l'État ». Le pouvoir et le clergé se soutiennent mutuellement : c'est l'**alliance du trône et de l'autel**, que défendent avec ardeur les [ultras](../legitimistes/). Des prédicateurs parcourent le pays pour des **missions intérieures** : des semaines de sermons et de processions, achevées par la plantation d'une grande croix. On parle beaucoup, en exagérant, de la **Congrégation**, une association pieuse de laïcs fondée sous le Consulat, accusée de placer ses membres aux postes clés. En 1825, sous Charles X, sacré à Reims selon l'ancien rituel, la **loi sur le sacrilège** punit de mort la profanation publique des hosties consacrées. Jamais appliquée, elle fait pourtant scandale.
+
+Ce triomphe est un piège. Pour les [libéraux](../orleanistes/) et les [républicains](../republicains/), le clergé devient l'allié d'une monarchie qui veut effacer 1789. En 1826, un royaliste gallican, le comte de Montlosier, dénonce le « parti prêtre » et les jésuites. Quand Paris se soulève en juillet 1830, la colère vise aussi l'Église : l'archevêché de Paris est pillé. La nouvelle Charte ne fait plus du catholicisme que la religion « professée par la majorité des Français ». En février 1831, un service religieux à la mémoire du duc de Berry, organisé par des légitimistes en l'église Saint-Germain-l'Auxerrois, provoque une émeute : l'église est saccagée, et l'archevêché détruit le lendemain. Pour l'Église, la leçon est cruelle : s'être liée à un trône l'a entraînée dans sa chute.
+
+## « Dieu et la liberté » : l'aventure de Lamennais (1830-1834)
+
+Un prêtre breton tire de cette leçon une conclusion audacieuse. **Félicité de Lamennais**, célèbre depuis son *Essai sur l'indifférence en matière de religion* (1817), pense que l'Église doit rompre avec les rois et s'appuyer sur le pape et sur les peuples. Le 16 octobre 1830, il lance le journal ***L'Avenir***, avec pour devise « Dieu et la liberté ». Autour de lui, deux jeunes hommes, l'abbé **Henri Lacordaire** et le comte **Charles de Montalembert**. Le programme est neuf : séparation de l'Église et de l'État, liberté de l'enseignement, de la presse et d'association, soutien aux peuples catholiques qui se soulèvent, Belges, Polonais ou Irlandais.
+
+<Encadre titre="Ultramontains et gallicans">
+Est **ultramontain** (« au-delà des monts », c'est-à-dire du côté de Rome) le catholique qui place l'autorité du pape au-dessus de celle des évêques et des États. Les ultramontains s'opposent aux **gallicans**, attachés aux libertés traditionnelles de l'Église de France et à un certain contrôle du roi sur elle. Au XIXe siècle, les ultramontains l'emportent peu à peu.
+</Encadre>
+
+Les évêques, gallicans pour la plupart, sont scandalisés. En novembre 1831, *L'Avenir* suspend sa parution, et ses trois fondateurs partent pour Rome, en « pèlerins de la liberté », demander l'arbitrage du pape. La réponse tombe le 15 août 1832 : dans l'encyclique ***Mirari vos***, Grégoire XVI condamne, sans nommer le journal, la liberté de conscience, qualifiée de « délire », la liberté de la presse et la révolte contre les princes. Lacordaire et Montalembert se soumettent. Lamennais, lui, publie en 1834 les *Paroles d'un croyant* ; Rome le condamne de nouveau. Il quitte l'Église et finira député de la gauche en 1848. L'épisode fixe pour tout le siècle le dilemme des catholiques : faut-il réconcilier l'Église avec la liberté, ou la défendre contre elle ?
+
+## Le parti catholique (1835-1851)
+
+Les disciples de Lamennais choisissent une voie plus prudente : utiliser les libertés de la monarchie de Juillet au service de l'Église. Lacordaire, à partir de 1835, attire les foules aux **conférences de Notre-Dame**. Montalembert, devenu pair de France, prend la tête d'un « **parti catholique** » qui livre un seul combat : la **liberté de l'enseignement**. L'État, à travers l'Université créée par Napoléon, contrôle en effet l'enseignement secondaire ; les catholiques veulent pouvoir ouvrir librement leurs collèges. « Nous sommes les fils des croisés, et nous ne reculerons pas devant les fils de Voltaire », lance Montalembert à la Chambre des pairs en 1844. En face, le gouvernement [orléaniste](../orleanistes/) de Guizot temporise.
+
+La révolution de février 1848 surprend agréablement les catholiques : la République ne s'en prend pas à l'Église, et des prêtres bénissent les arbres de la liberté. Mais l'insurrection ouvrière de juin change tout. L'archevêque de Paris, Mgr Affre, venu sur une barricade pour arrêter le combat, est mortellement blessé. La peur sociale pousse les catholiques dans le **parti de l'Ordre**, avec les [légitimistes](../legitimistes/) et les orléanistes. Même Thiers, ancien voltairien, se rallie à la liberté de l'enseignement, par peur du peuple. Le 15 mars 1850, la **loi Falloux** donne aux catholiques ce qu'ils réclamaient : la liberté d'ouvrir des établissements secondaires, une large place pour les congrégations dans l'enseignement primaire, et des évêques dans les conseils qui dirigent l'instruction publique. C'est le triomphe de Montalembert. Pourtant, le journaliste **Louis Veuillot**, du quotidien *L'Univers*, la juge trop timide : c'est un compromis avec l'Université, qu'il voudrait voir disparaître. La fracture est ouverte.
+
+## Rome contre le monde moderne (1851-1870)
+
+Le coup d'État du 2 décembre 1851 est approuvé par la plupart des catholiques, Veuillot en tête : Louis-Napoléon promet l'ordre et protège l'Église. Sous le Second Empire, le budget des cultes augmente et les congrégations se multiplient. En 1858, les apparitions de la Vierge à Bernadette Soubirous, à Lourdes, font naître un immense pèlerinage.
+
+Tout bascule avec l'Italie. En 1859, Napoléon III fait la guerre à l'Autriche pour aider le Piémont à unifier la péninsule ; en 1860, le nouveau royaume d'Italie s'empare de la plus grande partie des États du pape. Les catholiques français sont ulcérés : pour eux, le **pouvoir temporel** du pape, c'est-à-dire sa souveraineté sur un territoire, garantit son indépendance. Malgré la garnison française qui protège encore Rome, les catholiques basculent dans l'opposition ; *L'Univers* est interdit en janvier 1860.
+
+<Encadre titre="Catholiques libéraux et intransigeants">
+Les **catholiques libéraux** (Montalembert, Mgr Dupanloup, évêque d'Orléans) pensent que l'Église peut vivre dans une société de libertés et y gagner. Les **intransigeants** (Louis Veuillot et son journal *L'Univers*), très attachés au pape, voient au contraire dans le libéralisme une erreur héritée de la Révolution.
+</Encadre>
+
+Rome tranche en faveur des seconds. Le 8 décembre 1864, Pie IX publie le ***Syllabus***, une liste de quatre-vingts « erreurs » de l'époque ; la dernière condamne l'idée que le pape devrait se réconcilier « avec le progrès, le libéralisme et la civilisation moderne ». Mgr Dupanloup tente d'en atténuer la portée : le texte décrirait un idéal, non une règle pour la société réelle. Puis le **concile du Vatican**, ouvert en décembre 1869, proclame le 18 juillet 1870 l'**infaillibilité pontificale** : quand il définit solennellement un point de foi ou de morale, le pape ne peut se tromper. Dupanloup jugeait la proclamation inopportune ; Veuillot triomphe. Mais la guerre contre la Prusse oblige la France à rappeler ses soldats de Rome, et le 20 septembre 1870, les troupes italiennes entrent dans la ville. Pie IX se dit désormais « prisonnier » au Vatican.
+
+## L'Ordre moral, puis la guerre scolaire (1871-1889)
+
+La défaite de 1870 et la Commune, qui fusille l'archevêque de Paris, Mgr Darboy, comme otage en mai 1871, sont vécues par beaucoup de catholiques comme un châtiment des péchés de la France. Une loi du 24 juillet 1873 déclare d'utilité publique la construction, sur la butte Montmartre, d'une basilique dédiée au **Sacré-Cœur**, fruit d'un « vœu national ». Les pèlerinages se multiplient : à Paray-le-Monial en juin 1873, des dizaines de députés viennent consacrer la France au Sacré-Cœur ; à Lourdes, les religieux assomptionnistes organisent chaque année un pèlerinage national. C'est le temps de l'**Ordre moral** (1873-1877), la politique des monarchistes au pouvoir, qui s'appuie ouvertement sur l'Église.
+
+Cette alliance affichée avec les monarchistes coûte cher. Le 4 mai 1877, Gambetta lance à la Chambre, en reprenant une formule d'un journaliste républicain : « Le cléricalisme ? Voilà l'ennemi ! » Vainqueurs en 1879, les [républicains](../republicains/) veulent soustraire l'école et l'État à l'influence de l'Église.
+
+<Encadre titre="Congrégations">
+Une **congrégation** est une communauté de religieux ou de religieuses (jésuites, frères des Écoles chrétiennes, ursulines…) qui vivent selon une règle et se consacrent souvent à l'enseignement ou aux soins. Elles se sont multipliées au XIXe siècle, mais beaucoup n'ont jamais reçu d'autorisation légale : c'est par là que la République les attaque.
+</Encadre>
+
+Les **décrets du 29 mars 1880** ordonnent la dissolution des jésuites et obligent les autres congrégations non autorisées à demander une autorisation. À partir de juin, la police force les portes des couvents et expulse plusieurs milliers de religieux ; des centaines de magistrats démissionnent plutôt que de s'y associer. Viennent ensuite les **lois Ferry** : l'école primaire publique devient gratuite (1881), puis obligatoire et laïque (1882). Le catéchisme sort des programmes, remplacé par l'instruction morale et civique ; il se fait désormais à l'église, un jour libéré chaque semaine. En 1886, la **loi Goblet** confie l'enseignement des écoles publiques à un personnel exclusivement laïque. En 1889, les séminaristes doivent faire leur service militaire : ce sont les « curés sac au dos ».
+
+<Encadre titre="Laïcité">
+La **laïcité** est le principe selon lequel l'État et les services publics, à commencer par l'école, sont neutres en matière de religion. Pour les républicains, elle garantit la liberté de conscience ; pour beaucoup de catholiques de l'époque, c'est l'« école sans Dieu », à laquelle ils opposent l'école libre, catholique.
+</Encadre>
+
+Les catholiques ripostent en ouvrant leurs propres écoles et en votant pour la droite monarchiste. Tant que l'Église restera liée aux rois, la République la combattra.
+
+## Catholicisme social et Ralliement (1871-1900)
+
+Une autre voie s'ouvre pourtant : la question ouvrière. Le comte **Albert de Mun**, jeune officier de cavalerie, a assisté en 1871 à l'écrasement de la Commune ; il en tire la conviction que la misère ouvrière éloigne le peuple de l'Église. Avec **René de La Tour du Pin**, il fonde à la fin de 1871 l'**Œuvre des cercles catholiques d'ouvriers** pour réunir patrons et ouvriers chrétiens. C'est la naissance du **catholicisme social** : répondre à la question sociale par la charité, les associations et des lois protectrices, contre le libéralisme économique qui laisse les ouvriers sans défense, comme contre le [socialisme](../socialistes/) qui prêche la lutte des classes. De Mun, élu député en 1876, réclame des lois limitant le travail des enfants et des femmes. Le pape **Léon XIII**, élu en 1878, lui donne raison : son encyclique ***Rerum novarum*** (15 mai 1891) condamne le socialisme, mais aussi l'exploitation des ouvriers, défend le juste salaire et le droit des travailleurs à s'associer.
+
+Léon XIII veut aussi sortir les catholiques français de l'impasse politique. Le comte de Chambord est mort en 1883, l'aventure boulangiste soutenue par bien des royalistes a échoué en 1889 : à quoi bon lier l'Église à une monarchie qui ne reviendra pas ? Le 12 novembre 1890, à Alger, le cardinal **Lavigerie** reçoit les officiers de l'escadre de la Méditerranée et porte un toast où il appelle à adhérer « sans arrière-pensée » à la forme de gouvernement que la France s'est donnée ; la fanfare de ses missionnaires joue ensuite *La Marseillaise*. Le scandale est immense chez les monarchistes. Le pape confirme pourtant, dans une encyclique écrite en français, ***Au milieu des sollicitudes*** (16 février 1892).
+
+<Encadre titre="Le Ralliement">
+Le **Ralliement** est la politique, voulue par le pape Léon XIII, qui demande aux catholiques français d'accepter la République comme régime légal, pour mieux combattre de l'intérieur ses lois anticléricales. Les catholiques qui suivent cet appel sont les **ralliés**.
+</Encadre>
+
+Albert de Mun obéit ; beaucoup de nobles et d'évêques monarchistes refusent ou traînent les pieds. Aux élections de 1893, les ralliés sont peu nombreux à être élus, et de Mun lui-même est battu. Une main se tend pourtant : en 1894, le ministre républicain Eugène Spuller promet un « esprit nouveau » de tolérance, et les modérés de Méline gouvernent avec l'appui des ralliés. En 1894 paraît aussi une revue, *Le Sillon*, que le jeune **Marc Sangnier** transforme bientôt en un mouvement d'éducation populaire, chrétien et républicain.
+
+L'**affaire Dreyfus** ruine cette fragile détente. La plupart des journaux catholiques, à commencer par le quotidien *La Croix* des assomptionnistes prennent violemment parti contre le capitaine juif et contre ses défenseurs, aux côtés des [nationalistes](../nationalistes/), contre les républicains et les [radicaux](../radicaux/) dreyfusards : ils défendent l'armée et dénoncent un prétendu complot des juifs, des protestants et des francs-maçons. Seule une petite minorité, autour de l'historien Paul Viollet, défend Dreyfus. Le gouvernement de Défense républicaine de Waldeck-Rousseau fait poursuivre les assomptionnistes, dont la congrégation est dissoute par un jugement de janvier 1900, et prépare une loi contre les congrégations. Le siècle s'achève comme il a commencé : sur un affrontement entre l'Église et la République.
+
+## Et après 1900
+
+La loi du 1er juillet 1901 sur les associations soumet les congrégations à une autorisation que le gouvernement d'Émile Combes refuse presque toujours : des milliers de religieux partent en exil, et en 1904 l'enseignement est interdit aux congrégations. La loi de **séparation des Églises et de l'État** (9 décembre 1905) met fin au Concordat de 1801 ; le pape Pie X la condamne, et les inventaires des biens d'Église provoquent des heurts en 1906. Les héritiers du catholicisme social et du Ralliement, comme le Sillon de Marc Sangnier (condamné par Rome en 1910), préparent la **démocratie chrétienne** du XXe siècle.

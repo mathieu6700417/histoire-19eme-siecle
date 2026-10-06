@@ -1,0 +1,23 @@
+---
+// Grande étape d'un chapitre de la section « Le siècle raconté par ses écrivains »
+// (ex. « 1789-1791 : la fin de l'Ancien Régime »). Elle structure la page et le sommaire.
+// Usage MDX : <Partie id="partie-1789" titre="1789-1791 : …" />
+import { typographie } from '../utils/typographie.mjs';
+interface Props { id: string; titre: string }
+const { id, titre } = Astro.props;
+---
+<h2 class="partie" id={id}>{typographie(titre)}</h2>
+
+<style>
+  .partie {
+    margin: var(--e-6) auto var(--e-3);
+    padding-top: var(--e-3);
+    border-top: 1px solid var(--c-texte-doux);
+    text-align: center;
+    font-size: clamp(1.15rem, 3.5vw, 1.35rem);
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    color: var(--c-texte-doux);
+  }
+</style>

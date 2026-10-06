@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="Page introuvable" description="Cette page n'existe pas.">
+  <main class="introuvable">
+    <h1>Page introuvable</h1>
+    <p>Cette page n'existe pas ou a changé d'adresse.</p>
+    <p><a href={base}>Retour à l'accueil</a></p>
+  </main>
+</Base>
+
+<style>
+  .introuvable {
+    max-width: var(--l-lecture);
+    margin: 4rem auto;
+    padding-inline: var(--gouttiere);
+  }
+</style>

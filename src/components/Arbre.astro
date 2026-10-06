@@ -1,0 +1,218 @@
+---
+// Arbre généalogique des courants, en SVG inline.
+// Le temps s'écoule de gauche à droite : le bord gauche de chaque nœud
+// est placé à son année d'apparition ; chaque famille occupe une ou
+// plusieurs rangées. Les chevauchements éventuels sont signalés au build.
+import type { AreteArbre, NoeudArbre, Repere } from '../data/types';
+import { cibleLien, etagerLibelles, idSur, largeurTexte } from '../utils/svg';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  debut: number;
+  fin: number;
+  noeuds: NoeudArbre[];
+  aretes: AreteArbre[];
+  reperes?: Repere[];
+  titre: string;
+  pxParAn?: number;
+  idArbre?: string;
+}
+
+const { debut, fin, noeuds, aretes, reperes = [], titre, pxParAn = 9, idArbre = 'arbre' } = Astro.props;
+
+// --- Géométrie -------------------------------------------------------
+const MARGE_G = 16;
+const MARGE_D = 16;
+const T_NOEUD = 13;         // taille du texte des nœuds (px)
+const H_NOEUD = 28;
+const H_RANGEE = 48;
+const T_REPERE = 12;
+const H_RANGEE_REPERE = 16;
+const PADDING_NOEUD = 9;
+
+const x = (annee: number) => MARGE_G + (annee - debut) * pxParAn;
+
+const rangsReperes = etagerLibelles(
+  reperes.map((r) => ({ x: x(r.annee), largeur: largeurTexte(String(r.annee), T_REPERE) })),
+);
+const nbRangsReperes = reperes.length ? Math.max(...rangsReperes) + 1 : 0;
+const yRangee0 = nbRangsReperes * H_RANGEE_REPERE + 14;
+const nbRangees = Math.max(...noeuds.map((n) => n.rangee)) + 1;
+
+type Boite = NoeudArbre & { x: number; y: number; l: number; h: number; cx: number; cy: number };
+const boites: Boite[] = noeuds.map((n) => {
+  const l = Math.ceil(largeurTexte(n.libelle, T_NOEUD) + 2 * PADDING_NOEUD);
+  const bx = x(n.annee);
+  const by = yRangee0 + n.rangee * H_RANGEE + (H_RANGEE - H_NOEUD) / 2;
+  return { ...n, x: bx, y: by, l, h: H_NOEUD, cx: bx + l / 2, cy: by + H_NOEUD / 2 };
+});
+const parId = new Map(boites.map((b) => [b.id, b]));
+
+const largeur = Math.ceil(Math.max(x(fin), ...boites.map((b) => b.x + b.l)) + MARGE_D);
+const hauteur = yRangee0 + nbRangees * H_RANGEE + 8;
+
+// --- Tracé des arêtes ------------------------------------------------
+// Vers l'avant : courbe horizontale du bord droit de la source au bord
+// gauche de la cible. Si la cible commence avant la fin de la source :
+// départ vertical depuis le dessus/dessous de la source.
+type Trace = { d: string; points: [number, number][]; arete: AreteArbre; couleur: string };
+const traces: Trace[] = [];
+for (const a of aretes) {
+  const s = parId.get(a.de);
+  const t = parId.get(a.vers);
+  if (!s || !t) {
+    console.warn(`[Arbre] arête inconnue : ${a.de} → ${a.vers}`);
+    continue;
+  }
+  const tx = t.x - 2; // place pour la pointe de flèche
+  const ty = t.cy;
+  let d: string;
+  const points: [number, number][] = [];
+  if (t.x >= s.x + s.l + 8) {
+    const sx = s.x + s.l;
+    const sy = s.cy;
+    if (Math.abs(sy - ty) < 1) {
+      d = `M${sx},${sy} H${tx}`;
+      for (let k = 0; k <= 20; k++) points.push([sx + ((tx - sx) * k) / 20, sy]);
+    } else {
+      const mx = (sx + tx) / 2;
+      d = `M${sx},${sy} C${mx},${sy} ${mx},${ty} ${tx},${ty}`;
+      for (let k = 0; k <= 40; k++) {
+        const u = k / 40;
+        const bx = (1 - u) ** 3 * sx + 3 * (1 - u) ** 2 * u * mx + 3 * (1 - u) * u ** 2 * mx + u ** 3 * tx;
+        const by = (1 - u) ** 3 * sy + 3 * (1 - u) ** 2 * u * sy + 3 * (1 - u) * u ** 2 * ty + u ** 3 * ty;
+        points.push([bx, by]);
+      }
+    }
+  } else {
+    const sx = Math.min(Math.max(t.x - 14, s.x + 8), s.x + s.l - 8);
+    const sy = ty > s.cy ? s.y + s.h : s.y;
+    d = `M${sx},${sy} Q${sx},${ty} ${tx},${ty}`;
+    for (let k = 0; k <= 40; k++) {
+      const u = k / 40;
+      points.push([
+        (1 - u) ** 2 * sx + 2 * (1 - u) * u * sx + u ** 2 * tx,
+        (1 - u) ** 2 * sy + 2 * (1 - u) * u * ty + u ** 2 * ty,
+      ]);
+    }
+  }
+  traces.push({ d, points, arete: a, couleur: s.couleur });
+}
+
+// --- Contrôles de lisibilité (au build) -------------------------------
+const ECART_MIN = 6;
+for (const b of boites) {
+  for (const o of boites) {
+    if (b === o || b.rangee !== o.rangee || o.x < b.x) continue;
+    if (b.x + b.l + ECART_MIN > o.x) {
+      console.warn(`[Arbre] chevauchement de nœuds : « ${b.libelle} » et « ${o.libelle} »`);
+    }
+  }
+}
+for (const tr of traces) {
+  for (const b of boites) {
+    if (b.id === tr.arete.de || b.id === tr.arete.vers) continue;
+    const touche = tr.points.some(([px, py]) => px > b.x - 2 && px < b.x + b.l + 2 && py > b.y - 2 && py < b.y + b.h + 2);
+    if (touche) console.warn(`[Arbre] l'arête ${tr.arete.de} → ${tr.arete.vers} traverse « ${b.libelle} »`);
+  }
+}
+
+const couleurs = [...new Set(traces.map((t) => t.couleur))];
+const idFleche = (c: string) => `${idArbre}-fleche-${idSur(c)}`;
+---
+
+<figure class="arbre large">
+  <div class="arbre__defilement" tabindex="0" role="region" aria-label="Arbre généalogique (faire défiler horizontalement sur petit écran)">
+    <svg
+      viewBox={`0 0 ${largeur} ${hauteur}`}
+      style={`min-width:${Math.round(largeur * 0.93)}px`}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-labelledby={`${idArbre}-titre`}
+      role="img"
+    >
+      <title id={`${idArbre}-titre`}>{typographie(titre)}</title>
+      <defs>
+        {couleurs.map((c) => (
+          <marker id={idFleche(c)} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill={c} />
+          </marker>
+        ))}
+      </defs>
+
+      {/* Repères chronologiques */}
+      {reperes.map((r, i) => (
+        <g class="arbre__repere">
+          <title>{typographie(`${r.annee} : ${r.libelle}`)}</title>
+          <line x1={x(r.annee)} x2={x(r.annee)} y1={(rangsReperes[i] + 1) * H_RANGEE_REPERE + 2} y2={hauteur - 4} />
+          <text x={x(r.annee)} y={(rangsReperes[i] + 1) * H_RANGEE_REPERE - 2} text-anchor="middle">{r.annee}</text>
+        </g>
+      ))}
+
+      {/* Arêtes, sous les nœuds */}
+      {traces.map((t) => (
+        <path
+          d={t.d}
+          fill="none"
+          stroke={t.couleur}
+          stroke-width="1.8"
+          stroke-dasharray={t.arete.type === 'scission' ? '6 4' : undefined}
+          marker-end={`url(#${idFleche(t.couleur)})`}
+          class="arbre__arete"
+        />
+      ))}
+
+      {/* Nœuds */}
+      {boites.map((b) => {
+        const contenu = (
+          <>
+            <title>{typographie(`${b.libelle} (${b.annee}) : ${b.detail}`)}</title>
+            <rect x={b.x} y={b.y} width={b.l} height={b.h} rx="5" fill={b.couleur} />
+            <text x={b.cx} y={b.cy + 4.5} text-anchor="middle" font-size={T_NOEUD}>{b.libelle}</text>
+          </>
+        );
+        return b.lien ? (
+          <a href={cibleLien(b.lien)} class="arbre__noeud">{contenu}</a>
+        ) : (
+          <g class="arbre__noeud">{contenu}</g>
+        );
+      })}
+    </svg>
+  </div>
+  <figcaption>
+    <ul class="arbre__legende" aria-label="Légende">
+      <li><svg width="44" height="12" aria-hidden="true"><line x1="2" x2="40" y1="6" y2="6" stroke="#1a1a1a" stroke-width="1.8" /><path d="M36,2 L43,6 L36,10 z" fill="#1a1a1a" /></svg> filiation</li>
+      <li><svg width="44" height="12" aria-hidden="true"><line x1="2" x2="40" y1="6" y2="6" stroke="#1a1a1a" stroke-width="1.8" stroke-dasharray="6 4" /><path d="M36,2 L43,6 L36,10 z" fill="#1a1a1a" /></svg> scission</li>
+      <li>Le bord gauche de chaque case indique l’apparition du courant. Cliquez sur une case pour en savoir plus sur le courant.</li>
+    </ul>
+  </figcaption>
+</figure>
+
+<style>
+  .arbre { margin: var(--e-5) auto; }
+  .arbre__defilement {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-block: 1px solid var(--c-filet);
+    background: var(--c-fond);
+  }
+  .arbre__defilement svg { display: block; width: 100%; height: auto; font-family: var(--f-texte); }
+  .arbre__repere line { stroke: var(--c-bordeaux); stroke-dasharray: 3 3; opacity: 0.35; }
+  .arbre__repere text { font-size: 12px; fill: var(--c-bordeaux); font-weight: 500; }
+  .arbre__arete { opacity: 0.85; }
+  .arbre__noeud text { fill: #fff; font-weight: 500; letter-spacing: 0.01em; }
+  .arbre__noeud:hover rect, .arbre__noeud:focus rect { filter: brightness(1.2); }
+  .arbre__noeud:focus-visible rect { stroke: var(--c-texte); stroke-width: 2; }
+  .arbre__legende {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-2) var(--e-4);
+    list-style: none;
+    padding: 0;
+    margin: var(--e-2) 0 0;
+    font-size: 1rem;
+    color: var(--c-texte-doux);
+  }
+  .arbre__legende li { display: flex; align-items: center; gap: var(--e-2); margin: 0; hyphens: manual; -webkit-hyphens: manual; }
+  .arbre__legende svg { flex: none; }
+</style>

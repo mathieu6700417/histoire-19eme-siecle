@@ -1,0 +1,13 @@
+---
+// Appel de note dans le texte d'un extrait. La note elle-même est affichée
+// sous l'extrait (prop `notes` d'<Extrait>) : lisible sur téléphone sans survol.
+// Usage : mot difficile<Appel ex="bastille" n={1} />
+interface Props {
+  /** id de l'extrait. */
+  ex: string;
+  /** Numéro de la note (à partir de 1, dans l'ordre de la prop `notes`). */
+  n: number;
+}
+const { ex, n } = Astro.props;
+---
+<sup class="appel"><a id={`a-${ex}-${n}`} href={`#n-${ex}-${n}`} aria-label={`Note ${n}`}>{n}</a></sup>
