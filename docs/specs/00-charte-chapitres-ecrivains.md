@@ -25,10 +25,10 @@ directement la France ; textes écrits en français, pas de traductions).
 | --- | --- | --- | --- | --- |
 | 0 | `00-prologue` | La France avant 1789 | 1774-1788 | écrit |
 | 1 | `01-revolution` | La Révolution | 1789-1799 | écrit |
-| 2 | `02-consulat-empire` | Consulat et Empire | 1799-1815 | à écrire |
-| 3 | `03-restauration` | La Restauration | 1814-1830 | à écrire |
-| 4 | `04-monarchie-de-juillet` | La monarchie de Juillet | 1830-1848 | à écrire |
-| 5 | `05-deuxieme-republique` | 1848 et la IIe République | 1848-1852 | à écrire |
+| 2 | `02-consulat-empire` | Consulat et Empire | 1799-1815 | écrit |
+| 3 | `03-restauration` | La Restauration | 1814-1830 | écrit |
+| 4 | `04-monarchie-de-juillet` | La monarchie de Juillet | 1830-1848 | écrit |
+| 5 | `05-deuxieme-republique` | 1848 et la IIe République | 1848-1852 | écrit |
 | 6 | `06-second-empire` | Le Second Empire | 1852-1870 | à écrire |
 | 7 | `07-annee-terrible` | L'année terrible : guerre et Commune | 1870-1871 | à écrire |
 | 8 | `08-troisieme-republique` | La IIIe République jusqu'à 1900 | 1871-1900 | à écrire |
