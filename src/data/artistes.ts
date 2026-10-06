@@ -67,6 +67,26 @@ const liste: Artiste[] = [
   { id: 'sorrieu', nom: 'Frédéric Sorrieu', naissance: { annee: 1807 } },
   { id: 'vogel', nom: 'Hermann Vogel', naissance: { annee: 1856 }, mort: { annee: 1918 } },
   { id: 'vierge', nom: 'Daniel Vierge', naissance: { annee: 1851 }, mort: { annee: 1904 } },
+  // Chapitre 8
+  { id: 'roll', nom: 'Alfred Roll', naissance: { annee: 1846 }, mort: { annee: 1919 } },
+  { id: 'geoffroy', nom: 'Jean Geoffroy', naissance: { annee: 1853 }, mort: { annee: 1924 } },
+  { id: 'alfred-normand', nom: 'Alfred-Nicolas Normand', naissance: { annee: 1822 }, mort: { annee: 1909 } },
+  { id: 'durandelle', nom: 'Louis-Émile Durandelle', naissance: { annee: 1839 }, mort: { annee: 1917 } },
+  { id: 'henri-meyer', nom: 'Henri Meyer', naissance: { annee: 1841 }, mort: { annee: 1899 } },
+  { id: 'caran-dache', nom: "Caran d'Ache", naissance: { annee: 1858 }, mort: { annee: 1909 } },
+  // Chapitres 6 et 7
+  { id: 'flandrin', nom: 'Hippolyte Flandrin', naissance: { annee: 1809 }, mort: { annee: 1864 } },
+  { id: 'charles-hugo', nom: 'Charles Hugo', naissance: { annee: 1826 }, mort: { annee: 1871 } },
+  { id: 'carjat', nom: 'Étienne Carjat', naissance: { annee: 1828 }, mort: { annee: 1906 } },
+  { id: 'marville', nom: 'Charles Marville', naissance: { annee: 1813 }, mort: { annee: 1879 } },
+  { id: 'ciceri', nom: 'Eugène Cicéri', naissance: { annee: 1813 }, mort: { annee: 1890 } },
+  { id: 'manet', nom: 'Édouard Manet', naissance: { annee: 1832 }, mort: { annee: 1883 } },
+  { id: 'neuville', nom: 'Alphonse de Neuville', naissance: { annee: 1835 }, mort: { annee: 1885 } },
+  { id: 'didier', nom: 'Jules Didier', naissance: { annee: 1831 }, mort: { annee: 1914 } },
+  { id: 'puvis', nom: 'Pierre Puvis de Chavannes', naissance: { annee: 1824 }, mort: { annee: 1898 } },
+  { id: 'bertall', nom: 'Bertall', naissance: { annee: 1820 }, mort: { annee: 1882 } },
+  { id: 'braquehais', nom: 'Bruno Braquehais', naissance: { annee: 1823 }, mort: { annee: 1875 } },
+  { id: 'luce', nom: 'Maximilien Luce', naissance: { annee: 1858 }, mort: { annee: 1941 } },
 ];
 
 export const artistes: Record<string, Artiste> = Object.fromEntries(liste.map((a) => [a.id, a]));
