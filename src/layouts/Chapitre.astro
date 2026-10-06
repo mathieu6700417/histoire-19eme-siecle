@@ -86,14 +86,22 @@ const duree = dureeLecture < 60
           motsTotal += mots.get(sec)!;
           if (montre) { visibles++; motsVisibles += mots.get(sec)!; }
         }
-        // Une partie sans extrait visible est masquée (page et sommaire).
+        // Les œuvres d'art (Oeuvre.astro) suivent la même règle que les extraits ; elles
+        // n'entrent ni dans le compteur, ni dans le sommaire, ni dans la durée.
+        for (const o of document.querySelectorAll<HTMLElement>('.prose > .oeuvre[data-temoin]')) {
+          o.hidden = !(mode === 'tous' || (mode === 'temoins') === (o.dataset.temoin === 'oui'));
+        }
+        // Une partie sans extrait visible est masquée (page et sommaire), avec ses œuvres.
         for (const h of document.querySelectorAll<HTMLElement>('.prose > h2.partie')) {
           let el = h.nextElementSibling, garde = false;
+          const oeuvres: HTMLElement[] = [];
           while (el && el.tagName !== 'H2') {
-            if (el.matches('section.extrait') && !(el as HTMLElement).hidden) { garde = true; break; }
+            if (el.matches('section.extrait') && !(el as HTMLElement).hidden) garde = true;
+            if (el.matches('.oeuvre')) oeuvres.push(el as HTMLElement);
             el = el.nextElementSibling;
           }
           h.hidden = !garde;
+          if (!garde) for (const o of oeuvres) o.hidden = true;
         }
         for (const p of document.querySelectorAll<HTMLElement>('.sommaire__partie')) {
           p.hidden = !p.querySelector('li[data-extrait]:not([hidden])');

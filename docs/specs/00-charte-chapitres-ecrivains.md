@@ -365,6 +365,24 @@ Typographie française : guillemets « », apostrophe typographique dans les tex
 Wikisource l'ont déjà). Dans la prose de l'appareil, on peut taper les espaces normales avant
 `:` `;` `?` `!` et l'apostrophe droite : le plugin de typographie du site les convertit.
 
+### Illustrations
+
+Chaque chapitre est illustré d'œuvres d'art de l'époque selon `docs/specs/11-ecrivains-illustrations.md`
+(qui fait foi) : 6 à 10 œuvres, une en tête de chaque `<Partie>` (prop `frontispice`), les autres
+juste après l'extrait qu'elles éclairent ; composant `Oeuvre` (`src/components/Oeuvre.astro`,
+documenté en tête), artistes dans `src/data/artistes.ts`, images Wikimedia Commons (domaine
+public ou CC0) dans `src/assets/oeuvres/<NN>/<id>.jpg` (≤ 2000 px, JPEG). Seule exception à la
+règle monochrome : gris dans la page, couleur dans la visionneuse.
+- Placer une `<Oeuvre>` **entre deux blocs** : après un `</Extrait>` ou juste après une
+  `<Partie … />`, jamais entre une transition et l'extrait qu'elle introduit, ni dans un extrait.
+- `id` de l'œuvre **différent de tous les id d'extraits** du chapitre ; pas de prop `lien`.
+- Les insérer **dans le gabarit** puis `generer.py`, ou dans le MDX puis
+  `python3 scripts/ecrivains/gabarit.py <slug>` (sinon une régénération les efface). Contrôler
+  ensuite que `generer.py <slug> --sortie /tmp/x.mdx` redonne le MDX à l'identique, puis
+  `npm run verifier:ecrivains` (les œuvres n'y entrent pas) et `npm run build`.
+- « Lire l'image » ne renvoie à un texte voisin que s'il a le même statut témoin / postérieur
+  que l'œuvre (sinon l'un des deux peut être masqué par le filtre).
+
 ---
 
 ## 9. Procédure pour un nouveau chapitre

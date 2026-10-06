@@ -1,0 +1,363 @@
+---
+// Œuvre d'art (peinture, gravure, caricature, sculpture, monument…) qui illustre un
+// chapitre de la section « Le siècle raconté par ses écrivains » (spec 11). L'image est
+// traitée comme une source : notice d'édition savante (artiste, titre, date, technique,
+// lieu de conservation), mention « contemporaine / rétrospective » et statut « témoin »,
+// bloc replié « Lire l'image », crédits. Dans la page, l'image est en niveaux de gris
+// (charte monochrome) ; un clic l'ouvre en couleur dans une visionneuse plein écran
+// (<dialog>). Sans JavaScript, l'image est un lien vers la grande version.
+//
+// Usage MDX (entre deux blocs, jamais à l'intérieur d'un <Extrait> ni entre une
+// transition et l'extrait qu'elle introduit) :
+//   <Oeuvre id="marat" image="01/marat" artiste="david" titre="La Mort de Marat"
+//     date="1793" technique="huile sur toile" lieu="Bruxelles, Musées royaux des
+//     Beaux-Arts de Belgique" faits="1793" regard="contemporain"
+//     commons="https://commons.wikimedia.org/wiki/File:…" musee="https://…"
+//     alt="Marat mort dans sa baignoire, une lettre à la main.">
+//   <div slot="lire">
+//
+//   (Markdown, 80 à 150 mots : ce qu'on voit, lien avec les textes voisins, parti pris.)
+//
+//   </div>
+//   </Oeuvre>
+//
+// - `image` : chemin du fichier dans src/assets/oeuvres/, sans extension (« 01/marat »),
+//   ou une image importée (`import marat from '…/marat.jpg'` puis image={marat}).
+// - `artiste` : identifiant de src/data/artistes.ts. Pour une œuvre anonyme ou
+//   collective, l'omettre et donner `createur` (« Anonyme », « Graveur non identifié »).
+// - `mention` : complément après le nom (« gravé par Louis Darcis », « et atelier »).
+//   `attribue` : affiche « attribué à » devant le nom.
+// - `faits` : année (ou plage « 1792-1797 », dont on retient la première) des faits
+//   représentés. Statut « témoin », calculé au build comme pour les extraits : artiste
+//   né au moins 10 ans avant les faits. Œuvre sans artiste : témoin si l'année de
+//   réalisation (première année de `date`) tombe dans la période du chapitre (lue dans
+//   src/data/chapitres-ecrivains.ts d'après l'URL ; prop `periode` pour la forcer).
+// - `regard` : « contemporain » (réalisée pendant les faits ou juste après) ou
+//   « retrospectif ». On peut l'omettre pour un portrait d'auteur placé près de son texte.
+// - `frontispice` : œuvre d'ouverture d'une partie (un peu plus large sur grand écran).
+// - Le filtre « Témoins · Postérieurs · Tous » de Chapitre.astro masque l'œuvre selon
+//   son attribut data-temoin. Les œuvres ne comptent ni dans le sommaire, ni dans la
+//   numérotation, ni dans la durée de lecture.
+import type { ImageMetadata } from 'astro';
+import { Image, getImage } from 'astro:assets';
+import { artiste as trouverArtiste, datesArtiste } from '../data/artistes';
+import { chapitresPrevus } from '../data/chapitres-ecrivains';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  id: string;
+  image: ImageMetadata | string;
+  alt: string;
+  titre: string;
+  artiste?: string;
+  createur?: string;
+  mention?: string;
+  attribue?: boolean;
+  /** Date affichée (« 1793 », « vers 1795 », « 1812 »). */
+  date: string;
+  technique: string;
+  lieu: string;
+  faits?: number | string;
+  regard?: 'contemporain' | 'retrospectif';
+  commons: string;
+  musee?: string;
+  frontispice?: boolean;
+  periode?: string;
+}
+
+const {
+  id, image, alt, titre, artiste: idArtiste, createur, mention, attribue = false,
+  date, technique, lieu, faits, regard, commons, musee, frontispice = false, periode,
+} = Astro.props;
+
+// Fichier image : chemin relatif à src/assets/oeuvres/, ou image importée.
+const fichiers = import.meta.glob<{ default: ImageMetadata }>('../assets/oeuvres/**/*.{jpg,jpeg,png,webp}', { eager: true });
+function resoudre(img: ImageMetadata | string): ImageMetadata {
+  if (typeof img !== 'string') return img;
+  const base = `../assets/oeuvres/${img.replace(/^\/+/, '')}`;
+  const cle = Object.keys(fichiers).find((k) => k === base || k.replace(/\.[a-z]+$/, '') === base);
+  if (!cle) throw new Error(`[Oeuvre ${id}] image introuvable : src/assets/oeuvres/${img}`);
+  return fichiers[cle].default;
+}
+const img = resoudre(image);
+
+// Statut « témoin », calculé au build.
+const premiereAnnee = (s: unknown) => Number(String(s ?? '').match(/\d{4}/)?.[0]) || undefined;
+const a = idArtiste ? trouverArtiste(idArtiste) : undefined;
+if (!a && !createur) console.warn(`[Oeuvre ${id}] ni « artiste » ni « createur »`);
+let temoin = true;
+if (a) {
+  const anneeFaits = premiereAnnee(faits);
+  if (!anneeFaits) console.warn(`[Oeuvre ${id}] année des faits (prop « faits ») manquante`);
+  else temoin = a.naissance.annee + 10 <= anneeFaits;
+} else {
+  const numero = Number(Astro.url.pathname.match(/\/ecrivains\/(\d{2})-/)?.[1]);
+  const per = periode ?? chapitresPrevus.find((c) => c.numero === numero)?.periode;
+  const [debut, fin] = (per ?? '').match(/\d{4}/g)?.map(Number) ?? [];
+  const realise = premiereAnnee(date);
+  if (!debut || !realise) console.warn(`[Oeuvre ${id}] période du chapitre ou date de réalisation introuvable`);
+  else temoin = debut <= realise && realise <= (fin ?? debut);
+}
+
+// Vignette de colonne (plusieurs largeurs) et grande version pour la visionneuse.
+const largeurs = [480, 800, 1200, 1600].filter((w) => w < img.width).concat(Math.min(img.width, 1600));
+const grand = await getImage({ src: img, width: Math.min(img.width, 2000), format: 'webp', quality: 82 });
+
+const nomArtiste = a ? a.nom : createur ?? '';
+const etiquetteTemoin = a
+  ? (temoin ? 'artiste témoin' : "regard d'une génération suivante")
+  : (temoin ? 'réalisée pendant la période' : 'réalisée après la période');
+const etiquetteRegard = regard === 'contemporain' ? 'œuvre contemporaine des faits' : regard === 'retrospectif' ? 'œuvre rétrospective' : undefined;
+const titreDialogue = `titre-visionneuse-${id}`;
+---
+
+<div class:list={['oeuvre', { 'oeuvre--frontispice': frontispice }]} id={`oeuvre-${id}`} data-temoin={temoin ? 'oui' : 'non'}>
+  <figure class="oeuvre__figure">
+    <a class="oeuvre__lien" href={grand.src} data-visionneuse aria-haspopup="dialog">
+      <Image class="oeuvre__image" src={img} alt={typographie(alt)} widths={largeurs}
+        sizes={frontispice ? '(min-width: 1200px) 50rem, (min-width: 760px) 44rem, 100vw' : '(min-width: 760px) 44rem, 100vw'}
+        format="webp" quality={78} loading="lazy" decoding="async" />
+      <span class="oeuvre__couleur">voir en couleur<span class="sr-only"> : {typographie(titre)}, en grand</span></span>
+    </a>
+    <figcaption class="oeuvre__notice">
+      <span class="oeuvre__artiste">
+        {attribue && 'attribué à '}{typographie(nomArtiste)}{a && <span class="oeuvre__dates"> ({datesArtiste(a)})</span>}{mention && `, ${typographie(mention)}`}
+      </span>
+      <span class="oeuvre__titre"><cite>{typographie(titre)}</cite>, {typographie(date)}. {typographie(technique.charAt(0).toUpperCase() + technique.slice(1))}. {typographie(lieu)}.</span>
+      <span class="oeuvre__statut">
+        {etiquetteRegard && <>{etiquetteRegard}<span aria-hidden="true"> · </span></>}{etiquetteTemoin}
+      </span>
+    </figcaption>
+  </figure>
+
+  <div class="oeuvre__outils">
+    {Astro.slots.has('lire') && (
+      <details class="oeuvre__repli">
+        <summary>{typographie("Lire l'image")}</summary>
+        <div class="oeuvre__corps"><slot name="lire" /></div>
+      </details>
+    )}
+    <a class="oeuvre__credit" href={commons} target="_blank" rel="noopener">Wikimedia Commons<span class="sr-only"> (nouvel onglet)</span><span aria-hidden="true"> ↗</span></a>
+    {musee && <a class="oeuvre__credit" href={musee} target="_blank" rel="noopener">{typographie('Notice du musée')}<span class="sr-only"> (nouvel onglet)</span><span aria-hidden="true"> ↗</span></a>}
+  </div>
+
+  <dialog class="visionneuse" aria-labelledby={titreDialogue}>
+    <div class="visionneuse__barre">
+      <button type="button" class="visionneuse__fermer">Fermer</button>
+    </div>
+    <div class="visionneuse__cadre">
+      <img class="visionneuse__image" src={grand.src} width={grand.attributes.width} height={grand.attributes.height} alt={typographie(alt)} loading="lazy" decoding="async" />
+    </div>
+    <p class="visionneuse__legende" id={titreDialogue}>
+      <span class="oeuvre__artiste">{attribue && 'attribué à '}{typographie(nomArtiste)}{a && ` (${datesArtiste(a)})`}</span>{' '}
+      <cite>{typographie(titre)}</cite>, {typographie(date)}. {typographie(lieu)}.
+    </p>
+  </dialog>
+</div>
+
+<script>
+  // Visionneuse : un clic sur l'image ouvre son <dialog> en couleur ; fermeture par Échap
+  // (natif), par le bouton « Fermer » ou par un clic hors de l'image ; le focus revient
+  // à l'image. Un clic avec Ctrl/Cmd/Maj garde le comportement du lien.
+  let declencheur: HTMLElement | null = null;
+  document.addEventListener('click', (e) => {
+    const lien = (e.target as Element | null)?.closest?.<HTMLAnchorElement>('a[data-visionneuse]');
+    if (!lien || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || (e as MouseEvent).button !== 0) return;
+    const dialogue = lien.closest('.oeuvre')?.querySelector<HTMLDialogElement>('dialog.visionneuse');
+    if (!dialogue || typeof dialogue.showModal !== 'function') return;
+    e.preventDefault();
+    declencheur = lien;
+    dialogue.showModal();
+    document.documentElement.classList.add('visionneuse-ouverte');
+    dialogue.querySelector<HTMLButtonElement>('.visionneuse__fermer')?.focus();
+  });
+  // Remise en état idempotente : appelée directement par nos fermetures, et par les
+  // événements « cancel » (Échap) et « close » (que le navigateur peut différer).
+  function nettoyer() {
+    document.documentElement.classList.remove('visionneuse-ouverte');
+    declencheur?.focus();
+    declencheur = null;
+  }
+  for (const dialogue of document.querySelectorAll<HTMLDialogElement>('dialog.visionneuse')) {
+    dialogue.addEventListener('click', (e) => {
+      if ((e.target as Element).closest('.visionneuse__image')) return;
+      dialogue.close();
+      nettoyer();
+    });
+    // Après « cancel », le dialogue se ferme aussitôt : on remet en état juste après.
+    dialogue.addEventListener('cancel', () => setTimeout(nettoyer, 0));
+    dialogue.addEventListener('close', nettoyer);
+  }
+</script>
+
+<style>
+  .oeuvre {
+    margin: var(--e-5) auto;
+    scroll-margin-top: var(--e-3);
+  }
+  /* Frontispice de partie : un peu plus large sur grand écran, sans déborder de la colonne. */
+  :global(.prose) > .oeuvre--frontispice {
+    max-width: min(100%, 50rem);
+    margin-top: var(--e-3);
+  }
+  .oeuvre__figure { margin: 0; }
+  .oeuvre__lien {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  /* Niveaux de gris dans la page, filet fin, ni ombre ni fond. */
+  .oeuvre__image {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: min(75vh, 36rem);
+    margin-inline: auto;
+    border: 1px solid var(--c-filet);
+    filter: grayscale(1);
+  }
+  .oeuvre--frontispice .oeuvre__image { max-height: min(80vh, 42rem); }
+  .oeuvre__lien:focus-visible { outline: none; }
+  .oeuvre__lien:focus-visible .oeuvre__image { outline: 1px solid var(--c-texte); outline-offset: 3px; }
+  .oeuvre__couleur {
+    display: block;
+    margin-top: var(--e-1);
+    text-align: right;
+    font-size: 0.88rem;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: var(--c-texte-doux);
+  }
+  .oeuvre__lien:hover .oeuvre__couleur { color: var(--c-texte); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+
+  /* Notice d'édition savante : artiste en petites capitales grises, titre en italique. */
+  .oeuvre__notice {
+    margin-top: var(--e-1);
+    font-size: 0.98rem;
+    line-height: 1.45;
+    color: var(--c-texte);
+  }
+  .oeuvre__notice > span { display: block; }
+  .oeuvre__artiste,
+  .oeuvre__statut {
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    color: var(--c-texte-doux);
+  }
+  .oeuvre__dates { letter-spacing: 0; font-variant-numeric: oldstyle-nums; }
+  .oeuvre__titre cite { font-style: italic; }
+  .oeuvre__statut { font-size: 0.95em; }
+
+  /* Outils : « Lire l'image » · Wikimedia Commons · Notice du musée (comme sous un extrait). */
+  .oeuvre__outils {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.5em;
+    margin-top: var(--e-1);
+    padding-top: var(--e-1);
+    border-top: 1px solid var(--c-filet);
+    font-size: 0.95rem;
+  }
+  .oeuvre__repli > summary {
+    list-style: none;
+    display: inline;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: var(--c-texte);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--c-texte-doux);
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .oeuvre__repli > summary::-webkit-details-marker { display: none; }
+  .oeuvre__repli > summary:hover { text-decoration-color: currentColor; }
+  .oeuvre__repli > summary:focus-visible { outline: 1px solid var(--c-texte); outline-offset: 2px; }
+  .oeuvre__repli[open] { flex-basis: 100%; }
+  .oeuvre__repli[open] > summary { color: var(--c-texte-doux); }
+  .oeuvre__credit {
+    color: var(--c-texte-doux);
+    font-size: 0.95em;
+  }
+  .oeuvre__credit::before {
+    content: '·';
+    display: inline-block;
+    margin-right: 0.5em;
+    color: var(--c-texte-doux);
+  }
+  .oeuvre__outils > .oeuvre__credit:first-child::before,
+  .oeuvre__repli[open] + .oeuvre__credit::before { content: none; }
+  .oeuvre__corps {
+    margin: var(--e-2) 0 var(--e-2);
+    padding-left: var(--e-3);
+    border-left: 1px solid var(--c-filet);
+    font-size: 1.02rem;
+  }
+  .oeuvre__corps :global(p:last-child) { margin-bottom: 0; }
+
+  /* Visionneuse plein écran, en couleur, sur fond blanc cassé. */
+  .visionneuse {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--c-fond);
+    color: var(--c-texte);
+    overflow: auto;
+  }
+  .visionneuse[open] { display: flex; flex-direction: column; }
+  .visionneuse::backdrop { background: var(--c-fond); }
+  .visionneuse__barre {
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--e-2) var(--gouttiere);
+  }
+  .visionneuse__fermer {
+    font: inherit;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    background: none;
+    border: 0;
+    padding: var(--e-1) 0;
+    color: var(--c-texte);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--c-texte-doux);
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+  .visionneuse__fermer:focus-visible { outline: 1px solid var(--c-texte); outline-offset: 2px; }
+  .visionneuse__cadre {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--gouttiere);
+  }
+  .visionneuse__image {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    touch-action: pinch-zoom;
+  }
+  .visionneuse__legende {
+    margin: 0;
+    padding: var(--e-2) var(--gouttiere) var(--e-3);
+    text-align: center;
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
+  .visionneuse__legende .oeuvre__artiste { display: block; }
+  .visionneuse__legende cite { font-style: italic; }
+  :global(html.visionneuse-ouverte) { overflow: hidden; }
+</style>

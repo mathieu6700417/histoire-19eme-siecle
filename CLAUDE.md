@@ -20,7 +20,9 @@ au fil de l'eau ; le site doit rester simple à étendre sans toucher aux pages 
   aucune couleur, même pour les liens (soulignés) et même dans la frise et l'arbre (les courants
   y sont distingués par des nuances de gris, des motifs ou des styles de trait, et par leurs
   libellés). Pas de fonds colorés, pas d'ombres, pas de badges pleins : on utilise des petites
-  capitales grises et des filets fins. Typographie serif élégante.
+  capitales grises et des filets fins. Typographie serif élégante. Exception : les œuvres d'art
+  des chapitres écrivains s'affichent en gris dans la page et en couleur dans la visionneuse
+  (spec 11).
   Pas de mode sombre pour l'instant. Responsive (lecture confortable sur téléphone).
 - **Pas de quiz** pour l'instant (pourra être ajouté plus tard).
 - **Structure** : page d'accueil listant les leçons par thème + navigation commune.

@@ -19,7 +19,8 @@ CLE_MIN, CLE_MAX = 150, 350
 
 
 def mots_des_notes(gabarit: str, k: str) -> list[str]:
-    bloc = gabarit[gabarit.index(f'id="{k}"'):]
+    # L'ouverture du <Extrait> (et non le premier id="…" venu : une <Oeuvre> peut précéder).
+    bloc = gabarit[re.search(rf'<Extrait\b[^>]*?\bid="{re.escape(k)}"', gabarit).start():]
     bloc = bloc[:bloc.index('</Extrait>')]
     return re.findall(r'\{ mot: "([^"]+)"', bloc.split(']}>')[0])
 
