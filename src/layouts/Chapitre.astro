@@ -247,6 +247,7 @@ const duree = dureeLecture < 60
           <span class="voisin__titre">{typographie(precedent.titre)}</span>
         </a>
       ) : <a class="voisin" href={urlSection}><span class="voisin__sens">← Tous les chapitres</span><span class="voisin__titre">Le siècle raconté par ses écrivains</span></a>}
+      {!suivant && <a class="voisin voisin--suiv" href={urlSection}><span class="voisin__sens">Tous les chapitres →</span><span class="voisin__titre">Le siècle raconté par ses écrivains</span></a>}
       {suivant && (suivant.href ? (
         <a class="voisin voisin--suiv" href={suivant.href}>
           <span class="voisin__sens">{libelleChapitre(suivant.numero)} →</span>

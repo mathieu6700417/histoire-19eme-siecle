@@ -29,9 +29,9 @@ directement la France ; textes écrits en français, pas de traductions).
 | 3 | `03-restauration` | La Restauration | 1814-1830 | écrit |
 | 4 | `04-monarchie-de-juillet` | La monarchie de Juillet | 1830-1848 | écrit |
 | 5 | `05-deuxieme-republique` | 1848 et la IIe République | 1848-1852 | écrit |
-| 6 | `06-second-empire` | Le Second Empire | 1852-1870 | à écrire |
-| 7 | `07-annee-terrible` | L'année terrible : guerre et Commune | 1870-1871 | à écrire |
-| 8 | `08-troisieme-republique` | La IIIe République jusqu'à 1900 | 1871-1900 | à écrire |
+| 6 | `06-second-empire` | Le Second Empire | 1852-1870 | écrit |
+| 7 | `07-annee-terrible` | L'année terrible : guerre et Commune | 1870-1871 | écrit |
+| 8 | `08-troisieme-republique` | La IIIe République jusqu'à 1900 | 1871-1900 | écrit |
 
 Un chapitre est « écrit » dès qu'un fichier de `src/content/ecrivains/` porte son `numero` ;
 les autres apparaissent grisés (« à venir ») sur l'accueil de la section. La navigation

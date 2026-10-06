@@ -1,0 +1,413 @@
+{
+ "slug": "06-second-empire",
+ "gabarit": "06-second-empire.gabarit.mdx",
+ "sortie": "src/content/ecrivains/06-second-empire.mdx",
+ "ancres": {},
+ "extraits": {
+  "bordeaux": {
+   "page": "Discours_de_Bordeaux_du_9_octobre_1852",
+   "segments": [
+    {
+     "debut": "« Messieurs,",
+     "fin": "comme moi, le bien de notre patrie, vous êtes mes soldats. »"
+    }
+   ],
+   "cle": [
+    5,
+    7
+   ]
+  },
+  "ultima": {
+   "page": "Ultima_verba_(Hugo)",
+   "poeme": {
+    "debut": "La conscience humaine est morte ; dans l’orgie,",
+    "fin": "Et s’il n’en reste qu’un, je serai celui-là !",
+    "strophe": 4
+   },
+   "cle": [
+    10,
+    15
+   ]
+  },
+  "goncourt": {
+   "page": "Journal_des_Goncourt/I/Année_1853",
+   "segments": [
+    {
+     "debut": "Nous étions cités à comparaître en police correctionnelle de",
+     "fin": "pables. Il nous le déclarait naïvement, cyniquement en face."
+    },
+    "CUT",
+    {
+     "debut": "La salle avait deux fenêtres, une horloge, un papier vert. L",
+     "fin": "de son réquisitoire — comme des apôtres de l’amour physique."
+    }
+   ],
+   "cle": [
+    4,
+    6
+   ]
+  },
+  "crimee": {
+   "page": "Nouveaux_contes_à_Ninon/Souvenirs/Chapitre_XII",
+   "segments": [
+    {
+     "debut": "Mais je me souviens mieux encore de l’autre guerre, de la ca",
+     "fin": "a bande descendît à la rivière et s’y oubliât jusqu’au soir."
+    },
+    "CUT",
+    {
+     "debut": "Que j’ai suivi de régiments à cette époque, et que de soldat",
+     "fin": "sa vieille ; j’aimerais mieux être resté là-bas à sa place."
+    }
+   ],
+   "cle": [
+    9,
+    18
+   ]
+  },
+  "bovary": {
+   "page": "Madame_Bovary/Procès_intenté_à_l’auteur/Réquisitoire",
+   "segments": [
+    {
+     "debut": "Voilà le roman ; je l’ai raconté tout entier en n’en supprim",
+     "fin": "c justesse : Histoire des adultères d’une femme de province."
+    },
+    "CUT",
+    {
+     "debut": "Je soutiens que le roman de Madame Bovary, envisagé au point",
+     "fin": "livre un seul mot où le mari ne s’incline devant l’adultère."
+    },
+    "CUT",
+    {
+     "debut": "Le condamnerez-vous au nom du sentiment religieux ? Mais ce",
+     "fin": "achève, et le cri de l’incrédulité dans la vie qui commence."
+    }
+   ],
+   "cle": [
+    2,
+    3
+   ]
+  },
+  "avocat": {
+   "page": "Notes_et_documents_pour_mon_avocat",
+   "segments": [
+    {
+     "debut": "Le livre doit être jugé dans son ensemble, et alors il en re",
+     "fin": "ne garantie importante. Je ne m’adresse donc pas à la foule."
+    },
+    "CUT",
+    {
+     "debut": "Mais je prétends, au cas même où on me contraindrait de me r",
+     "fin": "et que tous les hommes sont heureux. Abominable hypocrisie."
+    }
+   ],
+   "cle": [
+    10,
+    19
+   ]
+  },
+  "ducamp": {
+   "page": "Paris,_ses_organes,_ses_fonctions_et_sa_vie_dans_la_seconde_moitié_du_XIXe_siècle/XXXV",
+   "segments": [
+    {
+     "debut": "Cette réponse, M. Haussmann la faisait aussi lorsqu’on lui r",
+     "fin": "travail dont l’urgence s’imposait depuis plus de vingt ans."
+    },
+    "CUT",
+    {
+     "debut": "D’après les évaluations les plus modérées, les manœuvres de",
+     "fin": ", et il sera l’éternel honneur de l’homme qui l’avait conçu."
+    }
+   ],
+   "cle": [
+    1,
+    2
+   ]
+  },
+  "curee": {
+   "page": "La_Curée/II",
+   "segments": [
+    {
+     "debut": "Il vint un moment où le rayon qui glissait entre deux nuages",
+     "fin": "les à des étoiles s’allumant dans le noir d’un ciel d’orage."
+    }
+   ],
+   "cle": [
+    10,
+    12
+   ]
+  },
+  "cygne": {
+   "page": "Les_Fleurs_du_mal_(1861)/Le_Cygne",
+   "poeme": {
+    "debut": "Andromaque, je pense à vous ! Ce petit fleuve,",
+    "fin": "Comme s’il adressait des reproches à Dieu !",
+    "strophe": 4
+   },
+   "cle": [
+    0,
+    6
+   ]
+  },
+  "yeux": {
+   "page": "Les_Yeux_des_pauvres",
+   "segments": [
+    {
+     "debut": "Ah ! vous voulez savoir pourquoi je vous hais aujourd’hui. I",
+     "fin": "la pensée est incommunicable, même entre gens qui s’aiment !"
+    }
+   ],
+   "cle": [
+    2,
+    4
+   ]
+  },
+  "exposition": {
+   "page": "Journal_des_Goncourt/III/Année_1867",
+   "segments": [
+    {
+     "debut": "— L’Exposition universelle, le dernier coup au passé : l’amé",
+     "fin": "les statues à l’air : en un mot la Fédération de la Matière."
+    },
+    "CUT",
+    {
+     "debut": "Vendredi 24 mai. — Théophile Gautier, qui est dans ce moment",
+     "fin": "placabilité de son visage de blonde, un passé qui fait peur."
+    },
+    "CUT",
+    {
+     "debut": "Le soir venu, nous avons vagué avec Théophile Gautier, autou",
+     "fin": "zigzags claquants de leurs enseignes et de leurs oriflammes."
+    }
+   ],
+   "cle": [
+    7,
+    8
+   ]
+  },
+  "villafranca": {
+   "page": "Chronique_de_la_quinzaine_-_14_juillet_1859",
+   "segments": [
+    {
+     "debut": "Amis de la paix, convaincus en conscience que la guerre n’es",
+     "fin": "t d’espérances excessives et trop témérairement surexcitées."
+    },
+    "CUT",
+    {
+     "debut": "Que l’on compare maintenant les bases de paix convenues dans",
+     "fin": "ser l’hypothèse qui avait tant miroité dans sa proclamation."
+    }
+   ],
+   "cle": [
+    0,
+    0
+   ]
+  },
+  "typographes": {
+   "page": "Histoire_socialiste/Le_Second_Empire/04",
+   "segments": [
+    {
+     "debut": "Quoiqu’il en soit, par l’intervention du prince Napoléon, l’",
+     "fin": "ppel ; le 4 juin, ils étaient de nouveau condamnés en appel."
+    },
+    "CUT",
+    {
+     "debut": "C’est alors qu’un coup de théâtre se produisit. La majorité",
+     "fin": "tre, ce danger ne fut plus imminent qu’aux environs de 1862."
+    }
+   ],
+   "cle": [
+    8,
+    9
+   ]
+  },
+  "elections": {
+   "page": "Proudhon_-_De_la_Capacité_politique_des_classes_ouvrières/I,1",
+   "segments": [
+    {
+     "debut": "Le lundi 1er juin 1863, vers dix heures du soir, Paris était",
+     "fin": "-grave. Paris dans l’Opposition, l’Empire est sans capitale…"
+    },
+    "CUT",
+    {
+     "debut": "À travers la foule quelques hommes circulaient, qui avaient",
+     "fin": "en l’état, pesons autant que vos cent cinquante-trois mille."
+    }
+   ],
+   "cle": [
+    6,
+    7
+   ]
+  },
+  "libertes": {
+   "page": "Discours_sur_les_libertés_nécessaires",
+   "segments": [
+    {
+     "debut": "Pour moi, messieurs, il y a cinq conditions qui constituent",
+     "fin": "nant lui-même par sa propre pensée et pas sa propre opinion."
+    }
+   ],
+   "cle": [
+    2,
+    3
+   ]
+  },
+  "mora": {
+   "page": "Le_Nabab/XIX",
+   "segments": [
+    {
+     "debut": "C’était ce qu’on peut voir de plus beau comme funérailles, l",
+     "fin": "débordaient du coussin de velours noir à crépines d’argent."
+    },
+    "CUT",
+    {
+     "debut": "L’indifférence !… C’était là le caractère très particulier d",
+     "fin": "de même, ce vieux Mora, il y est venu comme les autres !… »"
+    }
+   ],
+   "cle": [
+    3,
+    3
+   ]
+  },
+  "veuillot": {
+   "page": "L’illusion_libérale/01",
+   "segments": [
+    {
+     "debut": "Sentant l’hérésie… J’ai compris, il y a quelques jours, la v",
+     "fin": "le déposer. L’État ne connaît que des faits d’ordre public."
+    }
+   ],
+   "cle": [
+    1,
+    2
+   ]
+  },
+  "juarez": {
+   "page": "Pendant_l’Exil_Tome_II_L’empereur_Maximilien._—_À_Juarez",
+   "segments": [
+    {
+     "debut": "Juarez, vous avez égalé John Brown.",
+     "fin": "’est grand. Ce qui vous reste à faire est plus grand encore."
+    },
+    "CUT",
+    {
+     "debut": "L’usurpateur sera sauvé, et le libérateur n’a pu l’être, hél",
+     "fin": "Hauteville-House, 20 juin 1867."
+    }
+   ],
+   "cle": [
+    5,
+    7
+   ]
+  },
+  "lanterne": {
+   "page": "L’Affaire_Baudin_(1868)",
+   "segments": [
+    {
+     "debut": "Mais le samedi 31 mai 1868, des porteurs affairés venaient d",
+     "fin": "’avons pas dans toute l’Europe une princesse aussi lucide. »"
+    },
+    "CUT",
+    {
+     "debut": "Dans l’auditoire qu’avaient bercé plutôt qu’ému les confiden",
+     "fin": "la Constitution qu’on égorgeait."
+    }
+   ],
+   "cle": [
+    1,
+    1
+   ]
+  },
+  "noir": {
+   "page": "L’Insurgé_(Vallès)/15",
+   "segments": [
+    {
+     "debut": "10 janvier 70.",
+     "fin": "nous n’avons pas osé risquer le coup sur cet enjeu sanglant."
+    }
+   ],
+   "cle": [
+    39,
+    55
+   ]
+  },
+  "non": {
+   "page": "Pendant_l’Exil_Tome_II_Le_plébiscite_1870",
+   "segments": [
+    {
+     "debut": "Au printemps de 1870, Louis Bonaparte, sentant peut-être on",
+     "fin": "u’une toute petite lettre à changer. Rien de plus difficile."
+    },
+    "CUT",
+    {
+     "debut": "C’est étrange, un plébiscite. C’est le coup d’état qui se fa",
+     "fin": "vant le mécanisme dit plébiscite, nous haussons les épaules."
+    },
+    "CUT",
+    {
+     "debut": "Du reste, si l’auteur du coup d’état tient absolument à nous",
+     "fin": "Hauteville-House, 27 avril 1870."
+    }
+   ],
+   "cle": [
+    16,
+    23
+   ]
+  },
+  "plebiscite": {
+   "page": "Le_Plébiscite",
+   "segments": [
+    {
+     "debut": "La question posée au peuple fut celle-ci :",
+     "fin": "e l’État, et ratifie le sénatus-consulte du 20 avril 1870. »"
+    },
+    "CUT",
+    {
+     "debut": "Ainsi nous avions dit : Liberté ! L’opposition nous avait ré",
+     "fin": "uand elle jugera la Constitution qui en fut le couronnement."
+    }
+   ],
+   "cle": [
+    5,
+    6
+   ]
+  },
+  "hohenzollern": {
+   "page": "Chronique_de_la_quinzaine_-_14_juillet_1870",
+   "segments": [
+    {
+     "debut": "Le monde contemporain est destiné à éprouver d’étranges surp",
+     "fin": "les pilotes ne sortent de l’ouragan quelque peu endommagés."
+    },
+    "CUT",
+    {
+     "debut": "P. S. C’est la paix entre la France et la Prusse qui a sembl",
+     "fin": "branler ? Telle est la question qui reste encore en suspens."
+    }
+   ],
+   "cle": [
+    1,
+    1
+   ]
+  },
+  "berlin": {
+   "page": "Nana/Chapitre_14",
+   "segments": [
+    {
+     "debut": "Mais bientôt elles oublièrent de nouveau. Léa de Horn, qui a",
+     "fin": "— À Berlin ! à Berlin ! à Berlin !"
+    },
+    "CUT",
+    {
+     "debut": "Elle partit, elle ferma la porte. Nana restait seule, la fac",
+     "fin": "— À Berlin ! à Berlin ! à Berlin !"
+    }
+   ],
+   "cle": [
+    0,
+    8
+   ]
+  }
+ }
+}
