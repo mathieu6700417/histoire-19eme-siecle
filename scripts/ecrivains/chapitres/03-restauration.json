@@ -1,0 +1,410 @@
+{
+ "slug": "03-restauration",
+ "gabarit": "03-restauration.gabarit.mdx",
+ "sortie": "src/content/ecrivains/03-restauration.mdx",
+ "ancres": {},
+ "extraits": {
+  "buonaparte": {
+   "page": "De_Buonaparte_et_des_Bourbons",
+   "segments": [
+    {
+     "debut": "Telles sont les paroles que nous adressons à l’étranger. Mai",
+     "fin": "s si nous rejetons Buonaparte, qui le remplacera ? — Le Roi."
+    },
+    "CUT",
+    {
+     "debut": "Louis XVIII, qui doit régner le premier sur nous, est un pri",
+     "fin": "issez d’un côté l’usurpateur, de l’autre le prince légitime."
+    },
+    "CUT",
+    {
+     "debut": "Qu’il sera doux de se reposer enfin de tant d’agitations et ",
+     "fin": " France et lui manquer aujourd’hui comme l’air et le soleil."
+    }
+   ],
+   "cle": [
+    2,
+    4
+   ]
+  },
+  "charte": {
+   "page": "Considérations_sur_…_la_Révolution_Française/Cinquième_partie/VII",
+   "segments": [
+    {
+     "debut": "JE me glorifie de rappeler ici que la déclaration signée par",
+     "fin": " par toutes les formes possibles d’acquiescement volontaire."
+    },
+    "CUT",
+    {
+     "debut": "Le 4 juin 1814, le roi vint déclarer aux deux chambres la ch",
+     "fin": "ent, dix mois après, d’une promesse aussi légèrement donnée."
+    },
+    "CUT",
+    {
+     "debut": "Quoiqu’à plusieurs égards la charte dût contenter le vœu pub",
+     "fin": " ne peut se séparer de l’intérêt général dans un pays libre."
+    }
+   ],
+   "cle": [
+    4,
+    4
+   ]
+  },
+  "fontaine": {
+   "page": "Le_Bal_de_Sceaux",
+   "segments": [
+    {
+     "debut": "La Restauration surprit monsieur de Fontaine chargé d’une no",
+     "fin": "la croix de l’ordre de la Légion-d’Honneur et celle de Saint-Louis."
+    },
+    "CUT",
+    {
+     "debut": "Malgré cette ovation, aucune de ces augustes personnes",
+     "fin": "a cour à Gand, et l’un des cinquante mille qui en revinrent."
+    }
+   ],
+   "cle": [
+    3,
+    5
+   ]
+  },
+  "gand": {
+   "page": "Mémoires_d’outre-tombe/Troisième_partie/Livre_IV",
+   "segments": [
+    {
+     "debut": "Un ordre du roi m’appela à Gand. Les volontaires royaux et l",
+     "fin": "éloquence trompait sa vertu et enfonçait le dard plus avant."
+    },
+    "CUT",
+    {
+     "debut": "L’idée fixe de la grandeur, de l’antiquité, de la dignité, d",
+     "fin": "é incarnée ; elle a cessé d’être visible quand il a disparu."
+    }
+   ],
+   "cle": [
+    5,
+    7
+   ]
+  },
+  "luynes": {
+   "page": "Œuvres_complètes_de_Paul-Louis_Courier/Pétition_aux_Chambres,_1816",
+   "segments": [
+    {
+     "debut": "Je suis Tourangeau ; j’habite Luynes, sur la rive droite de ",
+     "fin": "rent pas de faim ; en cela il fut plus heureux que d’autres."
+    },
+    "CUT",
+    {
+     "debut": "Ce fut le jour de la mi-carême, le 25 mars, à une heure du m",
+     "fin": " mais c’est celle des gendarmes, qui en vaut bien une autre."
+    }
+   ],
+   "cle": [
+    2,
+    3
+   ]
+  },
+  "laurette": {
+   "page": "Servitude_et_grandeur_militaires/I/4",
+   "segments": [
+    {
+     "debut": "La grande route d’Artois et de Flandre est longue et triste.",
+     "fin": "’une mer bourbeuse, suivant un courant de vase et de plâtre."
+    }
+   ],
+   "cle": [
+    1,
+    3
+   ]
+  },
+  "annee-1817": {
+   "page": "Les_Misérables/Tome_1/Livre_3/01",
+   "segments": [
+    {
+     "debut": "1817 est l’année que Louis XVIII, avec un certain aplomb roy",
+     "fin": "à Pleignier, à Carbonneau et à Tolleron."
+    },
+    "CUT",
+    {
+     "debut": "Dans des journaux vendus, des journalistes prostitués",
+     "fin": "à M. Pilorge, son secrétaire."
+    },
+    "CUT",
+    {
+     "debut": "Voilà, pêle-mêle, ce qui surnage confusément de l’année 1817",
+     "fin": "physionomie des années que se compose la figure des siècles."
+    }
+   ],
+   "cle": [
+    2,
+    2
+   ]
+  },
+  "parabole": {
+   "page": "Parabole_de_Saint-Simon",
+   "segments": [
+    {
+     "debut": "Nous supposons que la France perde subitement ses cinquante ",
+     "fin": "se de Berry, que Mesdames d’Orléans, de Bourbon et de Condé."
+    },
+    "CUT",
+    {
+     "debut": "Ces suppositions font voir que la société actuelle est vérit",
+     "fin": "que la société actuelle est véritablement le monde renversé."
+    }
+   ],
+   "cle": [
+    5,
+    8
+   ]
+  },
+  "berry": {
+   "page": "Odes_et_Ballades/La_Mort_du_duc_de_Berry",
+   "poeme": {
+    "debut": "Fuis les banquets, fais trêve à ton joyeux délire,",
+    "fin": "Est encore un cri de pardon.",
+    "strophe": 10
+   },
+   "cle": [
+    5,
+    7
+   ]
+  },
+  "vieux-drapeau": {
+   "page": "Œuvres_complètes_de_Béranger/Le_Vieux_Drapeau",
+   "poeme": {
+    "debut": "De mes vieux compagnons de gloire",
+    "fin": "Qui ternit tes nobles couleurs.",
+    "strophe": 8
+   },
+   "cle": [
+    1,
+    4
+   ]
+  },
+  "villageois": {
+   "page": "Œuvres_complètes_de_Paul-Louis_Courier/Pétition_pour_les_villageois_que_l’on_empêche_de_danser",
+   "segments": [
+    {
+     "debut": "L’objet de ma demande est plus important qu’il ne semble ; c",
+     "fin": ", que tous vous jugerez ma requête digne de votre attention."
+    },
+    "CUT",
+    {
+     "debut": "Les fêtes d’Azai étaient célèbres entre toutes celles de nos",
+     "fin": "us jeûnerons par ordonnance, non du médecin, mais du préfet."
+    }
+   ],
+   "cle": [
+    3,
+    4
+   ]
+  },
+  "espagne": {
+   "page": "Mélanges_politiques_(Chateaubriand)/De_la_guerre_d’Espagne",
+   "segments": [
+    {
+     "debut": "Avant notre entrée en Espagne, il s’agissoit de savoir si no",
+     "fin": "ts pour tout conserver, comme les autres pour tout détruire."
+    },
+    "CUT",
+    {
+     "debut": "Il y a loin de la France de 1815 à la France de 1823, et six",
+     "fin": " elle est sans péril, car elle ne détruira point la liberté."
+    }
+   ],
+   "cle": [
+    2,
+    4
+   ]
+  },
+  "enfant-siecle": {
+   "page": "La_Confession_d’un_enfant_du_siècle_(1836)/Première_partie",
+   "segments": [
+    {
+     "debut": "Alors il s’assit sur un monde en ruines une jeunesse soucieu",
+     "fin": "s hommes de la veille devenaient tout à coup des vieillards."
+    }
+   ],
+   "cle": [
+    4,
+    7
+   ]
+  },
+  "isolement": {
+   "page": "Méditations_poétiques_(éd._originale_1820)/L’Isolement",
+   "poeme": {
+    "debut": "Souvent sur la montagne, à l’ombre du vieux chêne,",
+    "fin": "Emportez-moi comme elle, orageux aquilons !",
+    "strophe": 4
+   },
+   "cle": [
+    4,
+    10
+   ]
+  },
+  "cromwell": {
+   "page": "Cromwell_-_Préface",
+   "segments": [
+    {
+     "debut": "On répète néanmoins, et quelque temps encore sans doute on i",
+     "fin": "are. » — Les modernes ? Ah ! imiter des imitations ! Grâce !"
+    },
+    "CUT",
+    {
+     "debut": "Disons-le donc hardiment. Le temps en est venu, et il serait",
+     "fin": "de l’inspiration qui est aussi une vérité et une nature."
+    },
+    "CUT",
+    {
+     "debut": "Il y a aujourd’hui l’ancien régime littéraire comme l’ancien",
+     "fin": "oltaire le Temple du Goût, Jean-Jacques le Devin du Village."
+    }
+   ],
+   "cle": [
+    3,
+    4
+   ]
+  },
+  "hernani": {
+   "page": "Histoire_du_Romantisme/XI_-_Première_représentation_d’Hernani",
+   "segments": [
+    {
+     "debut": "25 février 1830 ! Cette date reste écrite dans le fond de no",
+     "fin": "îtres de la Renaissance eussent aimé à prendre pour modèles."
+    },
+    "CUT",
+    {
+     "debut": "Cependant le lustre descendait lentement du plafond avec sa ",
+     "fin": "Enfin les trois coups retentirent."
+    }
+   ],
+   "cle": [
+    5,
+    6
+   ]
+  },
+  "sacre-ode": {
+   "page": "Odes_et_Ballades/Le_Sacre_de_Charles_X",
+   "poeme": {
+    "debut": "Voici que le cortège à pas égaux s’avance.",
+    "fin": "Comme un passereau sous nos doigts ! »",
+    "strophe": 10
+   },
+   "cle": [
+    1,
+    2
+   ]
+  },
+  "reims": {
+   "page": "Mémoires_d’outre-tombe/Troisième_partie/Livre_IX",
+   "segments": [
+    {
+     "debut": "« Reims, 26 mai 1825.",
+     "fin": "on descendu du ciel, jusqu’à Charles VII, avec Jeanne d’Arc."
+    },
+    "CUT",
+    {
+     "debut": "« Louis XVII et Louis XVIII n’ont point été sacrés ; le sacr",
+     "fin": "té ; encore si l’on avait eu du moins le goût de la gloire !"
+    },
+    "CUT",
+    {
+     "debut": "« Enfin le sacre nouveau, où le pape est venu oindre un homm",
+     "fin": " ampoule assez salutaire pour rendre les rois inviolables. »"
+    }
+   ],
+   "cle": [
+    1,
+    2
+   ]
+  },
+  "julien": {
+   "page": "Le_Rouge_et_le_Noir_(édition_Martineau,_1927)/01/05",
+   "segments": [
+    {
+     "debut": "Julien, étonné de n’être pas battu, se hâta de partir. Mais ",
+     "fin": "ous le bras, entrait dans la magnifique église de Verrières."
+    }
+   ],
+   "cle": [
+    6,
+    9
+   ]
+  },
+  "note-secrete": {
+   "page": "Le_Rouge_et_le_Noir_(édition_Martineau,_1927)/02/22",
+   "segments": [
+    {
+     "debut": "Songez, Messieurs, disait le président, que de ce moment nou",
+     "fin": "vre n’est plus un miroir, comme vous en avez la prétention…)"
+    },
+    "CUT",
+    {
+     "debut": "Je ne le crois pas, reprit M. de La Mole après le tumulte. I",
+     "fin": "i vous voulez, mais ne soyez pas stupides ; ouvrez les yeux."
+    }
+   ],
+   "cle": [
+    11,
+    14
+   ]
+  },
+  "ordonnances": {
+   "page": "Histoire_de_dix_ans/Tome_1/Chapitre_2",
+   "segments": [
+    {
+     "debut": "À Paris, la journée du 26 fut très calme. Au Palais-Royal, c",
+     "fin": "té politique dans des événements dont l’issue était ignorée."
+    },
+    "CUT",
+    {
+     "debut": "Mais elle avait défié un pouvoir plus formidable encore. Men",
+     "fin": "istance et l’étendre sur tant de têtes, c’était l’affaiblir."
+    }
+   ],
+   "cle": [
+    5,
+    6
+   ]
+  },
+  "dicte": {
+   "page": "Les_Chants_du_crépuscule/Dicté_après_juillet_1830",
+   "poeme": {
+    "debut": "Quand notre ville épouvantée,",
+    "fin": "Regarde ses ongles souvent ! »",
+    "strophe": 10
+   },
+   "cle": [
+    0,
+    3
+   ]
+  },
+  "juillet": {
+   "page": "Mémoires_d’outre-tombe/Troisième_partie/Livre_XIV",
+   "segments": [
+    {
+     "debut": "Un autre spectacle m’attendait à quelques pas de là : une fo",
+     "fin": " les citoyens tués par les balles des soldats de Charles X !"
+    }
+   ],
+   "cle": [
+    0,
+    1
+   ]
+  },
+  "hotel-de-ville": {
+   "page": "Mes_Mémoires_(A._Dumas)/06/25",
+   "segments": [
+    {
+     "debut": "Le duc d’Orléans monta les degrés de l’hôtel de ville d’un p",
+     "fin": "us êtes faibles lorsqu’il faut soutenir un pouvoir vieilli !"
+    }
+   ],
+   "cle": [
+    19,
+    30
+   ]
+  }
+ }
+}

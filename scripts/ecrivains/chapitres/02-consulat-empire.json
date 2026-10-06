@@ -1,0 +1,367 @@
+{
+  "slug": "02-consulat-empire",
+  "gabarit": "02-consulat-empire.gabarit.mdx",
+  "sortie": "src/content/ecrivains/02-consulat-empire.mdx",
+  "ancres": {},
+  "extraits": {
+    "marengo": {
+      "page": "Les_Cahiers_du_capitaine_Coignet_(Larchey)/Troisième_cahier",
+      "segments": [
+        {
+          "debut": "Nous battions en retraite en bon ordre, mais les bataillons ",
+          "fin": "pour pouvoir les décrasser. Ça nous faisait perdre du temps."
+        },
+        "CUT",
+        {
+          "debut": "En attendant, nous avions beau faire, nous baissions l’oreil",
+          "fin": " lui, et mon œil fut pansé, ma chevelure fut remise en état."
+        }
+      ],
+      "cle": [
+        3,
+        7
+      ]
+    },
+    "cloches": {
+      "page": "Génie_du_christianisme/Partie_4/Livre_1/Chapitre_I",
+      "segments": [
+        {
+          "debut": "Nous allons maintenant nous occuper du culte chrétien. Ce su",
+          "fin": "choisir un enfant pour nous appeler à la maison du Seigneur."
+        }
+      ],
+      "cle": [
+        5,
+        6
+      ]
+    },
+    "code-civil": {
+      "page": "Œuvres_complètes_(M._de_Fontanes)/Discours_du_Président_du_Corps_législatif,_3_germinal_an_XII",
+      "segments": [
+        {
+          "debut": "Citoyens Législateurs,",
+          "fin": "en jouissant des bienfaits qu’ils auront préparés eux-mêmes."
+        }
+      ],
+      "cle": [
+        7,
+        10
+      ]
+    },
+    "enghien-ode": {
+      "page": "Œuvres_complètes_(M._de_Fontanes)/La_Mort_du_duc_d’Enghien",
+      "poeme": {
+        "debut": "Quel bruit interrompt le silence",
+        "fin": "Saura t’atteindre et te punir.",
+        "strophe": 10
+      },
+      "cle": [
+        5,
+        8
+      ]
+    },
+    "enghien-memorial": {
+      "page": "Mémorial_de_Sainte-Hélène_(1842)/Tome_2/Chapitre_11",
+      "segments": [
+        {
+          "debut": "L’Empereur avait coutume de considérer cette affaire sous de",
+          "fin": "n si grand coup au nom et dans les intérêts de sa famille. »"
+        }
+      ],
+      "cle": [
+        1,
+        1
+      ]
+    },
+    "sacre": {
+      "page": "Œuvres_complètes_(M._de_Fontanes)/Discours_à_Sa_Sainteté_Pie_VII",
+      "segments": [
+        {
+          "debut": "Très saint Père,",
+          "fin": " monde chrétien un modèle plus respectable et plus touchant."
+        }
+      ],
+      "cle": [
+        4,
+        8
+      ]
+    },
+    "empire": {
+      "page": "Considérations_sur_…_la_Révolution_Française/Quatième_partie/XI",
+      "segments": [
+        {
+          "debut": "LORSQU’À la fin du dernier siècle, Bonaparte se mit à la têt",
+          "fin": " dans l’état, et ne servoit que de parure au pouvoir absolu."
+        },
+        "CUT",
+        {
+          "debut": "Au moment où Bonaparte voulut se faire nommer empereur, il c",
+          "fin": "rt dépendant uniquement de la simple décision des ministres."
+        }
+      ],
+      "cle": [
+        5,
+        6
+      ]
+    },
+    "austerlitz": {
+      "page": "Œuvres_littéraires_de_Napoléon_Bonaparte/Lettres_à_Joséphine",
+      "segments": [
+        {
+          "debut": "XLVIII",
+          "fin": "i décidé. Adieu, mon amie, mille choses aimables et tendres."
+        }
+      ],
+      "cle": [
+        0,
+        8
+      ]
+    },
+    "eylau": {
+      "page": "Œuvres_littéraires_de_Napoléon_Bonaparte/Lettres_à_Joséphine",
+      "segments": [
+        {
+          "debut": "Sans date (janvier 1807.)",
+          "fin": "dit tout ; les pertes y sont plutôt exagérées qu’amoindries."
+        }
+      ],
+      "cle": [
+        2,
+        10
+      ]
+    },
+    "marbot": {
+      "page": "Mémoires_du_Général_Baron_de_Marbot/Tome_1/Chapitre_XXVI",
+      "segments": [
+        {
+          "debut": "L’Empereur, que nous avons laissé sur le plateau de Pratzen,",
+          "fin": "endaient du rivage ; mais la plus grande partie fut noyée !…"
+        },
+        "CUT",
+        {
+          "debut": "Le 3, au matin, l’Empereur monta à cheval et parcourut les d",
+          "fin": "nt un lieutenant d’artillerie, nommé Roumestain, à m’imiter."
+        }
+      ],
+      "cle": [
+        0,
+        0
+      ]
+    },
+    "chabert": {
+      "page": "Le_Colonel_Chabert",
+      "segments": [
+        {
+          "debut": "— Monsieur, dit le défunt, peut-être savez-vous que je commandais",
+          "fin": "d’après les règles établies par la jurisprudence militaire."
+        },
+        "CUT",
+        {
+          "debut": "Donc, monsieur, les blessures que j’ai reçues",
+          "fin": "Sans ce secours inespéré, je périssais !"
+        }
+      ],
+      "cle": [
+        0,
+        0
+      ]
+    },
+    "allemagne": {
+      "page": "De_l’Allemagne/Préface",
+      "segments": [
+        {
+          "debut": "En 1810 je donnai le manuscrit de cet ouvrage sur l’Allemagn",
+          "fin": "il valoit mieux s’en tenir au simple fait du pouvoir absolu."
+        },
+        "CUT",
+        {
+          "debut": "Au moment où cet ouvrage alloit paroitre, et lorsqu’on avoit",
+          "fin": "Madame de Staël. (Signé) Le duc de Rovigo."
+        }
+      ],
+      "cle": [
+        7,
+        12
+      ]
+    },
+    "pape": {
+      "page": "Œuvres_complètes_(M._de_Fontanes)/Ode_sur_l’Enlèvement_du_Pape",
+      "poeme": {
+        "debut": "Les temples se rouvraient, et, longtemps exilée,",
+        "fin": "Et sur son ancre d’or la Foi même a tremblé.",
+        "strophe": 6
+      },
+      "cle": [
+        3,
+        7
+      ]
+    },
+    "enfant": {
+      "page": "La_Confession_d’un_enfant_du_siècle_(Charpentier,_1888)/I",
+      "segments": [
+        {
+          "debut": "Pendant les guerres de l’Empire, tandis que les maris et les",
+          "fin": "t les foyers des châteaux déserts se rallumèrent tristement."
+        }
+      ],
+      "cle": [
+        0,
+        2
+      ]
+    },
+    "mensonge": {
+      "page": "De_l’esprit_de_conquête_et_de_l’usurpation_dans_leur_rapports_avec_la_civilisation_européenne/8",
+      "segments": [
+        {
+          "debut": "J’ai montré, ce me semble, qu’un gouvernement, livré à l’esp",
+          "fin": "es ; ils ne le sont pas moins quand ils ne les trompent pas."
+        }
+      ],
+      "cle": [
+        4,
+        8
+      ]
+    },
+    "coalition": {
+      "page": "De_l’esprit_de_conquête_et_de_l’usurpation_dans_leur_rapports_avec_la_civilisation_européenne/14",
+      "segments": [
+        {
+          "debut": "La force nécessaire à un peuple, pour tenir tous les autres ",
+          "fin": "balayées par un vent funeste, et précipitées dans la tombe !"
+        }
+      ],
+      "cle": [
+        5,
+        6
+      ]
+    },
+    "moscou": {
+      "page": "Mémoires_du_Sergent_Bourgogne/02",
+      "segments": [
+        {
+          "debut": "Le 14 septembre, à une heure de l’après-midi, après avoir tr",
+          "fin": "ire français : du combat à l’amour, et de l’amour au combat."
+        },
+        "CUT",
+        {
+          "debut": "Enfin, nous arrivâmes sur la place du Gouvernement ; nous no",
+          "fin": ", venant d’une espèce de cul-de-sac, et dirigés contre nous."
+        }
+      ],
+      "cle": [
+        7,
+        9
+      ]
+    },
+    "russie": {
+      "page": "Considérations_sur_…_la_Révolution_Française/Quatième_partie/XIX",
+      "segments": [
+        {
+          "debut": "Cependant le prestige de l’admiration et de la terreur que N",
+          "fin": "ntinent étoit, comme la tour d’Ugolin, muré de toutes parts."
+        },
+        "CUT",
+        {
+          "debut": "J’étois à Moscou un mois, jour pour jour, avant que l’armée ",
+          "fin": " les ruines de la patrie que son oppresseur eût été accablé."
+        }
+      ],
+      "cle": [
+        5,
+        5
+      ]
+    },
+    "retraite": {
+      "page": "L’Expiation",
+      "poeme": {
+        "debut": "Il neigeait. On était vaincu par sa conquête.",
+        "fin": "D’horribles escadrons, tourbillons d’hommes fauves.",
+        "strophe": 23
+      },
+      "cle": [
+        0,
+        0
+      ]
+    },
+    "waterloo": {
+      "page": "L’Expiation",
+      "poeme": {
+        "debut": "Waterloo ! Waterloo ! Waterloo ! morne plaine !",
+        "fin": "Et, se tordant les bras, cria : Sauve qui peut !",
+        "strophe": 32
+      },
+      "cle": [
+        1,
+        1
+      ]
+    },
+    "chute": {
+      "page": "Considérations_sur_…_la_Révolution_Française/Cinquième_partie/XV",
+      "segments": [
+        {
+          "debut": "J’oserai le dire cependant, notre France n’auroit peut-être ",
+          "fin": "erf militaire ; ce qui ne ressemble point à l’esprit public."
+        },
+        "CUT",
+        {
+          "debut": "Le même système d’égoïsme qui a toujours guidé Bonaparte, l’",
+          "fin": "a punition d’un grand coupable des forfaits mêmes de sa vie."
+        }
+      ],
+      "cle": [
+        2,
+        3
+      ]
+    },
+    "gaulois": {
+      "page": "Œuvres_complètes_de_Béranger/Les_Gaulois_et_les_Francs",
+      "poeme": {
+        "debut": "Gai ! gai ! serrons nos rangs,",
+        "fin": "Vous payer de tant d’exploits.",
+        "strophe": 5
+      },
+      "cle": [
+        0,
+        9
+      ]
+    },
+    "tombeau": {
+      "page": "Œuvres_complètes_de_Lamartine_(1860)/Tome_1/Bonaparte",
+      "poeme": {
+        "debut": "Tu tombas cependant de ce sublime faîte :",
+        "fin": "Qui ne fonde pas des vertus !",
+        "strophe": 6
+      },
+      "cle": [
+        6,
+        9
+      ]
+    },
+    "abdication": {
+      "page": "Mémorial_de_Sainte-Hélène_(1842)/Tome_1/Chapitre_01",
+      "segments": [
+        {
+          "debut": "Retour de l’Empereur à l’Élysée après Waterloo",
+          "fin": "ait extrême ; l’Empereur résolut de s’éloigner le lendemain."
+        }
+      ],
+      "cle": [
+        4,
+        9
+      ]
+    },
+    "drapeaux": {
+      "page": "Œuvres_complètes_(M._de_Fontanes)/Discours_à_l’occasion_des_drapeaux,_etc.",
+      "segments": [
+        {
+          "debut": "Messieurs les Orateurs du Conseil d’État,",
+          "fin": "me s’il était assis tranquillement au milieu de son conseil."
+        }
+      ],
+      "cle": [
+        5,
+        7
+      ]
+    }
+  }
+}
