@@ -76,3 +76,35 @@ autour de 1789-1795), et pas des reconstitutions du XIXe siècle.
   sont pas l'œuvre d'un écrivain).
 - Même format : texte complet de 400 à 900 mots (le théâtre peut faire un peu moins si la scène
   est complète), passage clé de 150 à 350 mots, appareil replié, vérification mot pour mot.
+
+## Révision du 2026-10-06 : les sensibilités politiques avant 1789
+
+L'utilisateur demande des textes qui montrent **les différentes sensibilités politiques
+qui existaient avant la Révolution**.
+
+- **Nouvelle partie** du prologue, « Les sensibilités politiques avant 1789 », de 6 à 8
+  extraits, placée entre « Les Lumières et l'esprit public » et « La cour et la crise »,
+  ou bien juste avant la crise si l'ordre de lecture s'en trouve plus clair. Les 14 extraits
+  existants sont conservés.
+- **Les textes fondateurs antérieurs à 1770 sont admis** (Montesquieu 1748, Rousseau 1762,
+  Voltaire), puisque ce sont eux que lisent les hommes de 1789. Leur date est bien visible,
+  et le chapeau explique pourquoi ils figurent ici malgré leur ancienneté.
+- **Sensibilités à couvrir**, au moins 5, chacune nommée dans le titre ou le chapeau :
+  1. la monarchie absolue de droit divin et l'alliance du trône et de l'autel (apologistes,
+     anti-philosophes : Jacob-Nicolas Moreau, Linguet, Fréron, Barruel, *Les Helviennes*,
+     1781, etc.) ;
+  2. la monarchie tempérée et les corps intermédiaires : Montesquieu, et l'opposition
+     parlementaire (Malesherbes, *Remontrances de la Cour des aides*, 1775) ;
+  3. le réformisme éclairé et les physiocrates : Turgot, Necker (*Compte rendu au roi*, 1781),
+     le despotisme éclairé ;
+  4. la souveraineté du peuple et l'égalité : Rousseau, *Du contrat social* ; Mably,
+     *Des droits et des devoirs du citoyen* ;
+  5. la critique radicale et anticléricale : Voltaire, Raynal et Diderot (*Histoire des deux
+     Indes*), Marat (*Les Chaînes de l'esclavage*, 1774) ;
+  6. 1788, l'heure des choix : Sieyès, *Essai sur les privilèges* ; d'Antraigues, *Mémoire
+     sur les états généraux* ; ou un texte défendant les ordres privilégiés (le *Mémoire des
+     princes*, décembre 1788).
+- Le regard critique de chaque extrait situe le texte : qui le lisait, quelle influence
+  il a eue, et qui il ne représente pas.
+- Même format et même rigueur : texte complet de 400 à 900 mots, passage clé de 150 à 350 mots,
+  appareil replié, vérification mot pour mot. Durée de lecture et sommaire mis à jour.
