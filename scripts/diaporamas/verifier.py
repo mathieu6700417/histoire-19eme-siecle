@@ -358,7 +358,7 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
             erreurs.append(f"{q} : champs manquants ({', '.join(manquants)})")
             continue
         apres(q, l['apres'])
-        if au['voix'] not in VOIX_LECTURE:
+        if au['voix'] not in ('homme', 'femme'):
             erreurs.append(f"{q} : voix « {au['voix']} » inconnue (homme ou femme)")
             continue
         if l.get('date') and not bornes_date(l['date']):
@@ -398,7 +398,7 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
         r = po.get('cadre')
         if r is not None and not (len(r) == 4 and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
             erreurs.append(f'{q} : cadre du portrait invalide ({r})')
-        audio(q, l, c.texte_lu(l), VOIX_LECTURE[au['voix']], (20, 40))
+        audio(q, l, c.texte_lu(l), VOIX_LECTURE, (20, 40))
 
     episodes = d.get('episodes', [])
     if episodes and not 3 <= len(episodes) <= 5:

@@ -45,10 +45,10 @@ import commun as c
 MODELE_VOIX = os.environ.get('DIAPORAMAS_MODELE_VOIX') or 'gemini-3.8-flash-tts'
 MODELE_TRANSCRIPTION = os.environ.get('DIAPORAMAS_MODELE_TRANSCRIPTION') or 'gemini-3.8-flash'
 VOIX = 'Charon'
-# Voix de lecture (lectures d'époque), selon l'auteur : choix provisoire, à confirmer à l'écoute
-# (essais dans .cache/diaporamas/essais-voix-lecture/).
-VOIX_LECTURE = {'homme': os.environ.get('DIAPORAMAS_VOIX_LECTEUR') or 'Schedar',
-                'femme': os.environ.get('DIAPORAMAS_VOIX_LECTRICE') or 'Aoede'}
+# Voix de lecture (lectures d'époque) : une seule voix de femme pour tous les textes, quel que
+# soit l'auteur, nettement distincte du narrateur (décision de l'utilisateur du 2026-10-07).
+# Le champ `auteur.voix` des lectures reste renseigné mais n'est plus utilisé.
+VOIX_LECTURE = os.environ.get('DIAPORAMAS_VOIX_LECTURE') or 'Aoede'
 URL = 'https://generativelanguage.googleapis.com/v1beta/models'
 TAUX = 24_000
 SEUIL_FIDELITE = 0.9
@@ -284,7 +284,7 @@ def pistes(d: dict, lexique: dict) -> list[dict]:
                        'defaut': c.nom(x['n'], 'm4a'), 'nom': f"{x['n']:3d}"})
     for l in d.get('lectures', []):
         sortie.append({'cle': f"lecture:{l['id']}", 'obj': l, 'texte': c.texte_lu(l),
-                       'voix': VOIX_LECTURE[l['auteur']['voix']], 'defaut': f"lectures/{l['id']}.m4a",
+                       'voix': VOIX_LECTURE, 'defaut': f"lectures/{l['id']}.m4a",
                        'nom': f"lecture {l['id']}"})
     for e in d.get('episodes', []):
         sortie.append({'cle': f"episode:{e['id']}", 'obj': e, 'texte': e['narration'], 'voix': VOIX,
@@ -420,7 +420,7 @@ def main() -> int:
         elif a.force or etat.get(q['cle'], {}).get('empreinte') != q['empreinte'] or not fichier.exists():
             a_faire.append(q)
     print(f"{len(a_faire)} piste(s) à synthétiser ({MODELE_VOIX} ; narrateur {VOIX}, lecture "
-          f"{VOIX_LECTURE['homme']} / {VOIX_LECTURE['femme']}).")
+          f"{VOIX_LECTURE}).")
 
     echecs = []
     debut = time.time()
