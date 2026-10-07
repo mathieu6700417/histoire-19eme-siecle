@@ -53,14 +53,14 @@ const urlLicence = (x: string) => {
     <Diaporama diaporama={d} />
 
     <p class="credits">
-      {typographie("Voix off de synthèse (Gemini, voix Charon), texte relu ; images du domaine public, de Wikimedia Commons. Clavier : espace (lecture, pause), flèches (précédente, suivante), F (plein écran), S (sous-titres), M (musique), Entrée (passer le carton d'un acte) ; flèche droite pour passer un chant.")}
+      {typographie("Voix off de synthèse (Gemini, voix Charon), texte relu ; images du domaine public, de Wikimedia Commons. Clavier : espace (lecture, pause), flèches (précédente, suivante), F (plein écran), S (sous-titres), M (musique), Entrée (passer le carton d'un acte) ; flèche droite pour passer un chant ou un intermède.")}
     </p>
     {(actesMusique.length > 0 || chants.length > 0) && (
       <section class="musiques" aria-labelledby="titre-musiques">
         <h2 id="titre-musiques">Musiques</h2>
         {chants.length > 0 && (
           <Fragment>
-            <h3>Chants</h3>
+            <h3>{chants.some((p) => p.instrumental) ? 'Chants et intermèdes musicaux' : 'Chants'}</h3>
             <ul>
               {chants.map((p) => (
                 <li>

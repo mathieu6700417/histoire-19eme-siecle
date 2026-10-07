@@ -71,12 +71,14 @@ export interface PisteFond extends PisteCommune {
   volume?: number;
 }
 /** Intermède chanté joué au premier plan après la diapositive `apres`. `paroles` :
- *  [instant (s, dans l'extrait), vers]. */
+ *  [instant (s, dans l'extrait), vers]. `instrumental` : intermède musical (œuvre sans
+ *  paroles, spec 12, « Arts et techniques ») ; `paroles` est vide et le sous-titre masqué. */
 export interface Intermede extends PisteCommune {
   apres: number;
   auteur: string;
   enregistrement: string;
   paroles: [number, string][];
+  instrumental?: boolean;
 }
 /** `note` : phrase facultative sous les crédits (ex. pourquoi des compositeurs étrangers). */
 export interface Musique { note?: string; fond: PisteFond[]; intermedes: Intermede[] }

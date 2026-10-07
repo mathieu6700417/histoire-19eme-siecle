@@ -15,6 +15,11 @@ fichier ne décrit que les outils.
 
 Les commandes se lancent depuis la racine du projet.
 
+**Renumérotation.** Les états de `.cache/diaporamas/<slug>/` (images, voix, caméra) sont indexés
+par numéro de diapositive ; après une insertion, `renumeroter.py` les réindexe en même temps que
+les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelles ou retouchées
+(l'empreinte du texte fait foi). Ne jamais renommer `NNN.webp` / `NNN.m4a` à la main.
+
 ## Fichiers
 
 | Fichier | Rôle |
@@ -26,7 +31,8 @@ Les commandes se lancent depuis la racine du projet.
 | `camera.py` | Caméra calée sur la narration : étapes `image.camera` proposées par Gemini Flash (vision), contrôlées, planche-contact. |
 | `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. |
 | `carte.py` | Fonds de carte des épisodes (Natural Earth, domaine public) : `src/data/diaporamas/fonds/<nom>.json`. |
-| `verifier.py` | Contrôle d'une période avant publication. |
+| `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
+| `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques »). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
@@ -78,6 +84,10 @@ python3 scripts/diaporamas/voix.py revolution --segments lecture:sieyes episode:
 python3 scripts/diaporamas/voix.py revolution --mots
 # Fonds de carte des épisodes
 python3 scripts/diaporamas/carte.py
+
+# Insérer des diapositives (groupes {"apres": n actuel, "diapositives": […]}) et tout renuméroter ;
+# --essai affiche la correspondance sans rien écrire. Puis images.py, voix.py, camera.py.
+python3 scripts/diaporamas/renumeroter.py revolution --inserer ajouts.json --essai
 
 # Contrôle final (code de sortie 1 en cas d'erreur ; --hors-ligne : textes des lectures
 # comparés au cache Wikisource au lieu de la page téléchargée à neuf)
@@ -219,6 +229,9 @@ l'arrangeur est identifié (étiquette du disque, catalogue) et dans le domaine 
 - Fond : 1 à 3 pistes par acte, jouées dans l'ordre depuis le début de l'acte, enchaînées en
   fondu, en boucle si l'acte est plus long. Ne garder (`fin`) que la durée utile de l'acte :
   c'est le gros du poids (~25 Mo par période).
+- Intermèdes musicaux (spec 12, « Arts et techniques ») : 1 ou 2 par période, en plus des chants,
+  après une diapositive qui présente une œuvre instrumentale ; `"instrumental": true` et
+  `"paroles": []` : le lecteur masque le sous-titre et le livre d'images dit « Intermède musical ».
 - Intermèdes : 3 à 6 par période, 15 à 25 s, après la diapositive `apres`, dont la narration
   annonce le chant (son titre y figure : `verifier.py` le contrôle) ; le lecteur l'insère
   dans la durée et la barre de progression. `paroles` : `[instant dans l'extrait, vers]`,

@@ -4,7 +4,7 @@ Usage :
     python3 scripts/diaporamas/verifier.py revolution
     python3 scripts/diaporamas/verifier.py --tous
 
-Vérifie : nombre de diapositives (90 à 110) et d'actes (6 à 10), numérotation continue,
+Vérifie : nombre de diapositives (110 à 130 depuis la révision « Arts et techniques ») et d'actes (6 à 10), numérotation continue,
 actes cohérents (débuts croissants, titre et dates du carton d'acte : « 1787-1789 »,
 « juillet-octobre 1789 »), chaque image et chaque audio présents dans public/diaporamas/<slug>/,
 licences libres (relevées par images.py depuis l'API Commons), métadonnées complètes
@@ -22,7 +22,8 @@ avertissement (pour relecture) ; le nombre de surimpressions de la frise est aff
 Musique (si le champ `musique` existe ; voir musique.py) : chaque fichier présent, licence relevée
 par musique.py pour la source actuelle et admise (domaine public, CC0, CC BY, CC BY-SA ; jamais
 NC ni ND), crédits complets (titre, compositeur ou auteur, date, interprète, licence, source),
-1 à 3 pistes de fond par acte, 3 à 6 intermèdes chantés de 15 à 25 s, chacun après une
+1 à 3 pistes de fond par acte, 3 à 6 intermèdes chantés (et 1 ou 2 intermèdes musicaux,
+`instrumental`, sans paroles) de 15 à 25 s, chacun après une
 diapositive existante dont la narration annonce le chant (son titre y figure), paroles
 horodatées dans l'ordre et dans la durée de l'extrait. Uniquement de vrais enregistrements
 (source `commons` ou `archive`) : une piste issue d'un MIDI ou sans enregistrement réel est
@@ -243,7 +244,12 @@ def controler_musique(d: dict, dossier) -> tuple[list[str], list[str], float]:
             if titre and titre not in _sans_accents(narrations[n]):
                 avert.append(f'{q} : la narration de la diapositive {n} n’annonce pas « {p.get("titre")} »')
         par = p.get('paroles') or []
-        if not par:
+        if p.get('instrumental'):
+            # Intermède musical (œuvre instrumentale, spec 12, « Arts et techniques ») : pas de
+            # paroles, le lecteur masque le sous-titre.
+            if par:
+                erreurs.append(f'{q} : intermède instrumental avec des paroles')
+        elif not par:
             erreurs.append(f'{q} : paroles absentes')
         elif any(not (isinstance(x, list) and len(x) == 2 and isinstance(x[0], (int, float)) and str(x[1]).strip()) for x in par) \
                 or [x[0] for x in par] != sorted(x[0] for x in par) or par[0][0] < 0 or par[-1][0] >= duree:
@@ -253,8 +259,11 @@ def controler_musique(d: dict, dossier) -> tuple[list[str], list[str], float]:
         if not 1 <= k <= 3:
             erreurs.append(f"musique : acte « {a['titre']} » : {k} piste(s) de fond (1 à 3)")
     inter = m.get('intermedes', [])
-    if not 3 <= len(inter) <= 6:
-        avert.append(f'musique : {len(inter)} intermède(s) chanté(s) (3 à 6 visés)')
+    chantes = [p for p in inter if not p.get('instrumental')]
+    if not 3 <= len(chantes) <= 6:
+        avert.append(f'musique : {len(chantes)} intermède(s) chanté(s) (3 à 6 visés)')
+    if len(inter) - len(chantes) > 2:
+        avert.append(f'musique : {len(inter) - len(chantes)} intermèdes musicaux (1 ou 2 au plus)')
     if len({p.get('apres') for p in inter}) != len(inter):
         erreurs.append('musique : deux intermèdes après la même diapositive')
     if 'moteur' in m:
@@ -497,8 +506,8 @@ def verifier(slug: str) -> bool:
     erreurs, avert = [], []
     diapos = d['diapositives']
 
-    if not 90 <= len(diapos) <= 110:
-        erreurs.append(f'{len(diapos)} diapositives (attendu : 90 à 110)')
+    if not 110 <= len(diapos) <= 130:
+        erreurs.append(f'{len(diapos)} diapositives (attendu : 110 à 130)')
     if not 6 <= len(d['actes']) <= 10:
         erreurs.append(f"{len(d['actes'])} actes (attendu : 6 à 10)")
     if [x['n'] for x in diapos] != list(range(1, len(diapos) + 1)):
@@ -604,7 +613,9 @@ def verifier(slug: str) -> bool:
     m = d.get('musique') or {}
     if m:
         poids = sum(f.stat().st_size for f in (dossier / 'musique').glob('*.m4a')) if (dossier / 'musique').is_dir() else 0
-        print(f"Musique : {len(m.get('fond', []))} pistes de fond, {len(m.get('intermedes', []))} intermède(s) chanté(s) "
+        n_instr = sum(1 for p in m.get('intermedes', []) if p.get('instrumental'))
+        print(f"Musique : {len(m.get('fond', []))} pistes de fond, {len(m.get('intermedes', [])) - n_instr} intermède(s) chanté(s), "
+              f"{n_instr} intermède(s) musical(aux) "
               f"({duree_chants:.0f} s, pauses comprises), {poids / 1e6:.1f} Mo.")
     if d.get('lectures') or d.get('episodes'):
         print(f"Lectures et épisodes : {len(d.get('lectures', []))} lecture(s), {len(d.get('episodes', []))} épisode(s) "

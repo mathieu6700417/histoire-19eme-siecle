@@ -15,43 +15,43 @@
       "id": "ete-1789",
       "titre": "L'été 1789",
       "dates": "juillet-octobre 1789",
-      "debut": 14
+      "debut": 15
     },
     {
       "id": "monarchie-constitutionnelle",
       "titre": "La monarchie constitutionnelle",
       "dates": "1789-1791",
-      "debut": 28
+      "debut": 31
     },
     {
       "id": "chute-monarchie",
       "titre": "La chute de la monarchie",
       "dates": "1792-1793",
-      "debut": 42
+      "debut": 46
     },
     {
       "id": "republique-en-guerre",
       "titre": "La République en guerre",
       "dates": "1793",
-      "debut": 55
+      "debut": 61
     },
     {
       "id": "terreur",
       "titre": "La Terreur",
       "dates": "1793-1794",
-      "debut": 68
+      "debut": 77
     },
     {
       "id": "thermidor",
       "titre": "Thermidor",
       "dates": "1794-1795",
-      "debut": 83
+      "debut": 97
     },
     {
       "id": "directoire",
       "titre": "Le Directoire",
       "dates": "1795-1799",
-      "debut": 94
+      "debut": 111
     }
   ],
   "diapositives": [
@@ -326,12 +326,65 @@
       }
     },
     {
+      "narration": "Les arts annoncent déjà ce climat. Au Salon de 1785, la grande exposition de peinture du Louvre, le Serment des Horaces de David fait sensation. Trois frères y jurent devant leur père de vaincre ou de mourir pour Rome : la toile exalte la vertu civique, que les révolutionnaires nommeront patriotisme.",
+      "image": {
+        "commons": "File:Le Serment des Horaces - Jacques-Louis David - Musée du Louvre Peintures INV 3692 ; MR 1432.jpg",
+        "titre": "Le Serment des Horaces",
+        "auteur": "Jacques-Louis David",
+        "date": "1784-1785",
+        "technique": "huile sur toile",
+        "conservation": "Paris, musée du Louvre (INV 3692)",
+        "fichier": "006.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1241,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.04,
+              0.26,
+              0.65,
+              0.96
+            ],
+            "quand": "Trois frères y jurent devant leur père"
+          }
+        ]
+      },
       "n": 6,
+      "audio": {
+        "fichier": "006.m4a",
+        "duree": 18.44,
+        "phrases": [
+          [
+            0.0,
+            1.76
+          ],
+          [
+            2.43,
+            9.0
+          ],
+          [
+            9.73,
+            18.44
+          ]
+        ]
+      }
+    },
+    {
+      "n": 7,
       "narration": "En décembre 1788, le roi accorde au tiers autant de députés qu'aux deux autres ordres réunis. En janvier 1789, l'abbé Sieyès publie un pamphlet qui fait sensation : « Qu'est-ce que le tiers état ? Tout. Qu'a-t-il été jusqu'à présent dans l'ordre politique ? Rien. Que demande-t-il ? À y devenir quelque chose. »",
       "date": "1788-12",
       "date_fin": "1789-01",
       "image": {
-        "fichier": "006.webp",
+        "fichier": "007.webp",
         "commons": "File:Emanuel Joseph Sieyes député de la Ville de Paris, élu Président de l'Assemblée Nationale, G.39628.jpg",
         "titre": "Emmanuel Joseph Sieyès, député de la Ville de Paris, élu président de l'Assemblée nationale",
         "auteur": "Jean-Baptiste Vérité",
@@ -368,7 +421,7 @@
         ]
       },
       "audio": {
-        "fichier": "006.m4a",
+        "fichier": "007.m4a",
         "duree": 20.85,
         "phrases": [
           [
@@ -403,12 +456,12 @@
       }
     },
     {
-      "n": 7,
+      "n": 8,
       "narration": "Au printemps 1789, chaque paroisse rédige son cahier de doléances pour les états généraux. Voici celui d'Andel, en Bretagne : on s'y plaint des impôts, de la dîme ou des droits seigneuriaux, tout en disant son attachement au roi. Des dizaines de milliers de cahiers sont ainsi rédigés.",
       "date": "1789-03",
       "date_fin": "1789-04",
       "image": {
-        "fichier": "007.webp",
+        "fichier": "008.webp",
         "commons": "File:Cahier de doléances de la commune d'Andel (Côtes-d'Armor), 1788-1789 (page 1).jpg",
         "titre": "Cahier de doléances de la paroisse d'Andel, première page",
         "auteur": "Habitants de la paroisse d'Andel",
@@ -439,7 +492,7 @@
         ]
       },
       "audio": {
-        "fichier": "007.m4a",
+        "fichier": "008.m4a",
         "duree": 16.8,
         "phrases": [
           [
@@ -459,11 +512,11 @@
       "camera_manuelle": true
     },
     {
-      "n": 8,
+      "n": 9,
       "narration": "Le 28 avril 1789, le faubourg Saint-Antoine se soulève contre Réveillon, fabricant de papiers peints accusé d'avoir souhaité une baisse des salaires. Sa maison, la Folie Titon, est pillée. La troupe tire sur la foule et fait des dizaines de morts, dans un Paris où le prix du pain s'envole.",
       "date": "1789-04-28",
       "image": {
-        "fichier": "008.webp",
+        "fichier": "009.webp",
         "commons": "File:Le saccage de la Folie Titon-Pillage de la maison Réveillon au faubourg Saint-Antoine le 28 avril 1789, G.13486 (1 of 3).jpg",
         "titre": "Le saccage de la Folie Titon : pillage de la maison Réveillon au faubourg Saint-Antoine, le 28 avril 1789",
         "auteur": "Attribué à Laurent Guyot",
@@ -494,7 +547,7 @@
         ]
       },
       "audio": {
-        "fichier": "008.m4a",
+        "fichier": "009.m4a",
         "duree": 17.82,
         "phrases": [
           [
@@ -513,11 +566,11 @@
       }
     },
     {
-      "n": 9,
+      "n": 10,
       "narration": "Le 4 mai 1789, les députés défilent dans Versailles pavoisée. Le tiers état ouvre la marche, tout de noir vêtu ; viennent ensuite la noblesse, en habits brodés d'or, puis le clergé. Cette hiérarchie affichée blesse les députés du tiers, qui représentent pourtant l'immense majorité du royaume.",
       "date": "1789-05-04",
       "image": {
-        "fichier": "009.webp",
+        "fichier": "010.webp",
         "commons": "File:Procession des Etats Généraux à Versailles, le 4 mai 1789. G.23659.jpg",
         "titre": "Vue de la procession des états généraux, à Versailles, le 4 mai 1789",
         "auteur": "Anonyme, chez Basset",
@@ -548,7 +601,7 @@
         ]
       },
       "audio": {
-        "fichier": "009.m4a",
+        "fichier": "010.m4a",
         "duree": 18.56,
         "phrases": [
           [
@@ -567,11 +620,11 @@
       }
     },
     {
-      "n": 10,
+      "n": 11,
       "narration": "Le 5 mai, Louis XVI ouvre les états généraux dans la salle des Menus-Plaisirs, devant plus de mille députés. Mais le roi, puis Necker dans un discours de près de trois heures, ne leur parlent que de finances. Les grandes questions politiques ne sont pas même abordées, et la déception est vive.",
       "date": "1789-05-05",
       "image": {
-        "fichier": "010.webp",
+        "fichier": "011.webp",
         "commons": "File:Ouverture des États généraux, à Versailles, le 5 mai 1789 - estampe - btv1b6942664k.jpg",
         "titre": "Ouverture des états généraux, à Versailles, le 5 mai 1789",
         "auteur": "Isidore-Stanislas Helman, d'après Charles Monnet",
@@ -608,7 +661,7 @@
         ]
       },
       "audio": {
-        "fichier": "010.m4a",
+        "fichier": "011.m4a",
         "duree": 16.26,
         "phrases": [
           [
@@ -627,11 +680,11 @@
       }
     },
     {
-      "n": 11,
+      "n": 12,
       "narration": "Pendant six semaines, une question bloque tout : vote-t-on par ordre, ce qui avantage les privilégiés, ou par tête ? Le 17 juin 1789, le tiers état, rejoint par quelques curés, se proclame Assemblée nationale. Il affirme représenter seul la Nation, sans attendre l'accord du roi.",
       "date": "1789-06-17",
       "image": {
-        "fichier": "011.webp",
+        "fichier": "012.webp",
         "commons": "File:Constitution de l'Assemblée Nationale - Et Serment des Députés qui la composent à Versailles - le 17 Juin 1789. - (estampe) (Édition sans la liste des députés) - btv1b6942682h.jpg",
         "titre": "Constitution de l'Assemblée nationale et serment des députés qui la composent, à Versailles, le 17 juin 1789",
         "auteur": "D'après Jean-Michel Moreau le Jeune",
@@ -668,7 +721,7 @@
         ]
       },
       "audio": {
-        "fichier": "011.m4a",
+        "fichier": "012.m4a",
         "duree": 18.36,
         "phrases": [
           [
@@ -687,11 +740,11 @@
       }
     },
     {
-      "n": 12,
+      "n": 13,
       "narration": "Le 20 juin, les députés trouvent leur salle fermée. Ils se réunissent dans une salle de jeu de paume voisine, où l'on jouait à l'ancêtre du tennis. Tournés vers leur président, l'astronome Bailly, ils jurent de ne jamais se séparer avant d'avoir donné une constitution au royaume.",
       "date": "1789-06-20",
       "image": {
-        "fichier": "012.webp",
+        "fichier": "013.webp",
         "commons": "File:Révolution française Planche nº 1 des Tableaux historiques de la Révolution française 1791-1804, le Serment du jeu de Pa, G.27649.jpg",
         "titre": "Le Serment du Jeu de paume",
         "auteur": "Pierre-Gabriel Berthault, d'après Jean-Louis Prieur",
@@ -722,7 +775,7 @@
         ]
       },
       "audio": {
-        "fichier": "012.m4a",
+        "fichier": "013.m4a",
         "duree": 15.97,
         "phrases": [
           [
@@ -741,12 +794,12 @@
       }
     },
     {
-      "n": 13,
+      "n": 14,
       "narration": "Le 23 juin, le roi ordonne aux députés de siéger par ordre. Au maître des cérémonies venu les faire sortir, Mirabeau aurait répondu qu'ils sont là « par la volonté du peuple ». Le 27 juin, Louis XVI cède et invite les deux autres ordres à rejoindre l'Assemblée.",
       "date": "1789-06-23",
       "date_fin": "1789-06-27",
       "image": {
-        "fichier": "013.webp",
+        "fichier": "014.webp",
         "commons": "File:Mirabeau répondant à Dreux-Brézé.jpg",
         "titre": "Mirabeau devant Dreux-Brézé (23 juin 1789)",
         "auteur": "Alexandre-Évariste Fragonard",
@@ -777,7 +830,7 @@
         ]
       },
       "audio": {
-        "fichier": "013.m4a",
+        "fichier": "014.m4a",
         "duree": 17.82,
         "phrases": [
           [
@@ -796,12 +849,12 @@
       }
     },
     {
-      "n": 14,
+      "n": 15,
       "narration": "Mais le roi fait venir près de vingt mille soldats autour de Paris, et le 11 juillet, il renvoie Necker. Le lendemain, au jardin du Palais-Royal, l'avocat Camille Desmoulins, monté sur une table, appelle la foule à prendre les armes. On arrache des feuilles aux arbres pour s'en faire des cocardes vertes.",
       "date": "1789-07-11",
       "date_fin": "1789-07-12",
       "image": {
-        "fichier": "014.webp",
+        "fichier": "015.webp",
         "commons": "File:Motion au jardin du Palais-Royal, Camille Desmoulins appelle le peuple à la résistance, le 12 juillet 1789. D.9066.jpg",
         "titre": "Motion au jardin du Palais-Royal : Camille Desmoulins appelle le peuple à la résistance, le 12 juillet 1789",
         "auteur": "Jean-Baptiste Lesueur",
@@ -832,7 +885,7 @@
         ]
       },
       "audio": {
-        "fichier": "014.m4a",
+        "fichier": "015.m4a",
         "duree": 16.77,
         "phrases": [
           [
@@ -851,11 +904,11 @@
       }
     },
     {
-      "n": 15,
+      "n": 16,
       "narration": "Le 13 juillet, Paris s'enfièvre : les barrières de l'octroi, où l'on taxait les marchandises entrant dans la ville, sont incendiées. La foule force aussi le couvent de Saint-Lazare, où l'on croit trouver du grain caché. À l'Hôtel de Ville, les électeurs parisiens forment une milice bourgeoise.",
       "date": "1789-07-13",
       "image": {
-        "fichier": "015.webp",
+        "fichier": "016.webp",
         "commons": "File:Pillage par les brigands de la prison de Saint-Lazare, le 13 juillet 1789, actuel 107, rue du Faubourg Saint-Denis, 10èm, G.27732.jpg",
         "titre": "Pillage de la maison de Saint-Lazare, le lundi 13 juillet 1789",
         "auteur": "Pierre-Gabriel Berthault, d'après Jean-Louis Prieur",
@@ -886,7 +939,7 @@
         ]
       },
       "audio": {
-        "fichier": "015.m4a",
+        "fichier": "016.m4a",
         "duree": 18.87,
         "phrases": [
           [
@@ -905,11 +958,11 @@
       }
     },
     {
-      "n": 16,
+      "n": 17,
       "narration": "Au matin du 14 juillet, la foule envahit l'hôtel des Invalides, sans que les régiments campés tout près interviennent. Elle s'empare de près de trente mille fusils et de quelques canons. Mais il manque la poudre : elle a été transférée à la Bastille, la vieille forteresse qui domine le faubourg Saint-Antoine.",
       "date": "1789-07-14",
       "image": {
-        "fichier": "016.webp",
+        "fichier": "017.webp",
         "commons": "File:Jean-Baptiste Lallemand - Pillage des armes aux Invalides, le matin du 14 juillet 1789.jpg",
         "titre": "Le peuple de Paris sort des Invalides, le matin du 14 juillet 1789",
         "auteur": "Jean-Baptiste Lallemand",
@@ -940,7 +993,7 @@
         ]
       },
       "audio": {
-        "fichier": "016.m4a",
+        "fichier": "017.m4a",
         "duree": 17.05,
         "phrases": [
           [
@@ -959,11 +1012,11 @@
       }
     },
     {
-      "n": 17,
+      "n": 18,
       "narration": "L'après-midi, des milliers d'insurgés, rejoints par des gardes françaises et leurs canons, assiègent la Bastille. Forteresse et prison d'État, elle symbolise l'arbitraire royal, même si elle ne renferme ce jour-là que sept prisonniers. Après plusieurs heures de combat, vers cinq heures du soir, le gouverneur de Launay capitule.",
       "date": "1789-07-14",
       "image": {
-        "fichier": "017.webp",
+        "fichier": "018.webp",
         "commons": "File:Prise de la Bastille clean.jpg",
         "titre": "La Prise de la Bastille",
         "auteur": "Jean-Pierre Houël",
@@ -994,7 +1047,7 @@
         ]
       },
       "audio": {
-        "fichier": "017.m4a",
+        "fichier": "018.m4a",
         "duree": 18.4,
         "phrases": [
           [
@@ -1013,11 +1066,11 @@
       }
     },
     {
-      "n": 18,
+      "n": 19,
       "narration": "Le combat a fait une centaine de morts parmi les assaillants. Le gouverneur de Launay est massacré sur le chemin de l'Hôtel de Ville, tout comme le prévôt des marchands Flesselles, accusé de trahison. Leurs têtes sont promenées au bout de piques, et cette estampe célèbre la vengeance populaire contre les traîtres.",
       "date": "1789-07-14",
       "image": {
-        "fichier": "018.webp",
+        "fichier": "019.webp",
         "commons": "File:Cest ainsi qu'on se venge des traîtres. G.27823.jpg",
         "titre": "C'est ainsi qu'on se venge des traîtres",
         "auteur": "Anonyme",
@@ -1054,7 +1107,7 @@
         ]
       },
       "audio": {
-        "fichier": "018.m4a",
+        "fichier": "019.m4a",
         "duree": 15.49,
         "phrases": [
           [
@@ -1074,11 +1127,11 @@
       "camera_manuelle": true
     },
     {
-      "n": 19,
+      "n": 20,
       "narration": "Dès le 15 juillet, la démolition commence, sous les yeux de curieux venus en foule. Les tours éventrées ressemblent aux ruines d'un monde qui s'effondre. À Versailles, le roi aurait demandé si c'était une révolte ; le duc de La Rochefoucauld-Liancourt aurait répondu : « Non, Sire, c'est une révolution. »",
       "date": "1789-07-15",
       "image": {
-        "fichier": "019.webp",
+        "fichier": "020.webp",
         "commons": "File:The Bastille in the first days of its demolition, by Hubert Robert.jpg",
         "titre": "La Bastille dans les premiers jours de sa démolition",
         "auteur": "Hubert Robert",
@@ -1109,7 +1162,7 @@
         ]
       },
       "audio": {
-        "fichier": "019.m4a",
+        "fichier": "020.m4a",
         "duree": 17.65,
         "phrases": [
           [
@@ -1128,10 +1181,10 @@
       }
     },
     {
-      "n": 20,
+      "n": 21,
       "narration": "L'entrepreneur Palloy, chargé de la démolition, fait de la forteresse un commerce patriotique. Il fait tailler dans ses pierres des maquettes de la Bastille, comme celle-ci, et les offre aux départements. Médailles et objets suivent : ces reliques de la liberté répandent dans toute la France le souvenir du 14 juillet.",
       "image": {
-        "fichier": "020.webp",
+        "fichier": "021.webp",
         "commons": "File:La Bastille (oeuvre exécutée dans un bloc de pierre provenant de la Bastille), S503(04).jpg",
         "titre": "La Bastille, maquette taillée dans une pierre de la forteresse",
         "auteur": "Sculpteur anonyme, sur commande de Pierre-François Palloy",
@@ -1153,7 +1206,7 @@
         ]
       },
       "audio": {
-        "fichier": "020.m4a",
+        "fichier": "021.m4a",
         "duree": 15.53,
         "phrases": [
           [
@@ -1172,11 +1225,11 @@
       }
     },
     {
-      "n": 21,
+      "n": 22,
       "narration": "Le 17 juillet, Louis XVI se rend à Paris. À l'Hôtel de Ville, il accepte la cocarde bleue et rouge de Paris, à laquelle on associe le blanc de la monarchie. Il paraît à la fenêtre sous les acclamations, mais son frère, le comte d'Artois, a déjà pris le chemin de l'exil.",
       "date": "1789-07-17",
       "image": {
-        "fichier": "021.webp",
+        "fichier": "022.webp",
         "commons": "File:Louis XVI arborant la cocarde nationale à l'une des fenêtres de la grande salle de l'Hôtel de Ville, le 17 juillet 1789.jpg",
         "titre": "Louis XVI arborant la cocarde nationale à l'une des fenêtres de la grande salle de l'Hôtel de Ville, le 17 juillet 1789",
         "auteur": "Jean-François Janinet",
@@ -1207,7 +1260,7 @@
         ]
       },
       "audio": {
-        "fichier": "021.m4a",
+        "fichier": "022.m4a",
         "duree": 16.44,
         "phrases": [
           [
@@ -1226,11 +1279,11 @@
       }
     },
     {
-      "n": 22,
+      "n": 23,
       "narration": "Partout, de nouveaux pouvoirs naissent. L'astronome Bailly devient maire de Paris, et le marquis de La Fayette, héros de la guerre d'Indépendance américaine, prend la tête de la garde nationale. Cette milice de citoyens, qui s'équipent à leurs frais, doit défendre à la fois la Révolution et l'ordre public.",
       "date": "1789-07",
       "image": {
-        "fichier": "022.webp",
+        "fichier": "023.webp",
         "commons": "File:Mr le m.is de La Fayette - maréchal de camp et commendant général de la Garde nationale parisienne - estampe - gravé par Darcis de Demiere - btv1b6943006c.jpg",
         "titre": "M. le marquis de La Fayette, maréchal de camp et commandant général de la garde nationale parisienne",
         "auteur": "Louis Darcis",
@@ -1267,7 +1320,7 @@
         ]
       },
       "audio": {
-        "fichier": "022.m4a",
+        "fichier": "023.m4a",
         "duree": 16.48,
         "phrases": [
           [
@@ -1286,12 +1339,12 @@
       }
     },
     {
-      "n": 23,
+      "n": 24,
       "narration": "D'autres nobles suivent Artois dans l'émigration. Dans les campagnes, fin juillet, la rumeur d'un complot aristocratique et de brigands payés pour détruire les récoltes déclenche la Grande Peur. Les paysans s'arment, attaquent des châteaux et brûlent les terriers, ces registres où sont inscrits les droits seigneuriaux.",
       "date": "1789-07",
       "date_fin": "1789-08",
       "image": {
-        "fichier": "023.webp",
+        "fichier": "024.webp",
         "commons": "File:Insurrection paysanne, émigration des Princes et des Courtisans de leurs Châteaux de Campagne brulés en août 1789. 30ème, G.27914.jpg",
         "titre": "Émigration des princes, des courtisans ; les châteaux de campagne brûlés (août 1789)",
         "auteur": "Philippe Joseph Maillart",
@@ -1322,7 +1375,7 @@
         ]
       },
       "audio": {
-        "fichier": "023.m4a",
+        "fichier": "024.m4a",
         "duree": 16.89,
         "phrases": [
           [
@@ -1341,11 +1394,11 @@
       }
     },
     {
-      "n": 24,
+      "n": 25,
       "narration": "Pour ramener le calme, l'Assemblée agit dans la nuit du 4 août : nobles et prélats montent tour à tour à la tribune. Dans l'enthousiasme, ils renoncent à leurs privilèges, à la dîme et aux droits seigneuriaux. Mais beaucoup de droits féodaux devront être rachetés par les paysans, qui refuseront souvent de payer.",
       "date": "1789-08-04",
       "image": {
-        "fichier": "024.webp",
+        "fichier": "025.webp",
         "commons": "File:Assemblée nationale - abandon de tous les privilèges à Versailles, séance de la nuit du 4 au 5 août 1789.jpg",
         "titre": "Assemblée nationale : abandon de tous les privilèges, à Versailles, séance de la nuit du 4 au 5 août 1789",
         "auteur": "Isidore-Stanislas Helman, d'après Charles Monnet",
@@ -1376,7 +1429,7 @@
         ]
       },
       "audio": {
-        "fichier": "024.m4a",
+        "fichier": "025.m4a",
         "duree": 18.43,
         "phrases": [
           [
@@ -1395,11 +1448,74 @@
       }
     },
     {
-      "n": 25,
+      "date": "1789-08-25",
+      "narration": "Le 25 août 1789, au Salon, David expose son Brutus, le consul romain qui a fait exécuter ses fils, complices des rois chassés de Rome. Assis dans l'ombre, il tourne le dos à sa femme et à ses filles en larmes. On y lira bientôt une leçon républicaine : la patrie avant la famille.",
+      "image": {
+        "commons": "File:Les Licteurs rapportent à Brutus les corps de ses fils - Jacques-Louis David - Musée du Louvre Peintures INV 3693 ; MR 1430.jpg",
+        "titre": "Les Licteurs rapportent à Brutus les corps de ses fils",
+        "auteur": "Jacques-Louis David",
+        "date": "1789",
+        "technique": "huile sur toile",
+        "conservation": "Paris, musée du Louvre (INV 3693)",
+        "fichier": "026.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1208,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.05,
+              0.43,
+              0.38,
+              0.96
+            ],
+            "quand": "Assis dans l'ombre"
+          },
+          {
+            "cadre": [
+              0.55,
+              0.35,
+              0.88,
+              0.88
+            ],
+            "quand": "sa femme et à ses filles en larmes"
+          }
+        ]
+      },
+      "n": 26,
+      "audio": {
+        "fichier": "026.m4a",
+        "duree": 18.96,
+        "phrases": [
+          [
+            0.0,
+            9.7
+          ],
+          [
+            10.57,
+            14.21
+          ],
+          [
+            14.99,
+            18.96
+          ]
+        ]
+      }
+    },
+    {
+      "n": 27,
       "narration": "Le 26 août 1789, l'Assemblée adopte la Déclaration des droits de l'homme et du citoyen. Son premier article proclame que « les hommes naissent et demeurent libres et égaux en droits ». Présentée ici comme de nouvelles tables de la Loi, elle fonde la souveraineté de la Nation et l'égalité devant la loi.",
       "date": "1789-08-26",
       "image": {
-        "fichier": "025.webp",
+        "fichier": "027.webp",
         "commons": "File:Jean-Jacques Le Barbier - Déclaration des droits de l'homme et du citoyen - P708 - Musée Carnavalet.jpg",
         "titre": "Déclaration des droits de l'homme et du citoyen",
         "auteur": "Jean-Jacques-François Le Barbier",
@@ -1430,7 +1546,7 @@
         ]
       },
       "audio": {
-        "fichier": "025.m4a",
+        "fichier": "027.m4a",
         "duree": 17.44,
         "phrases": [
           [
@@ -1449,11 +1565,11 @@
       }
     },
     {
-      "n": 26,
+      "n": 28,
       "narration": "Mais le pain reste cher, et le roi tarde à approuver la Déclaration. Le 5 octobre, des milliers de Parisiennes marchent sur Versailles, certaines traînant des canons. Paris s'indigne aussi d'un banquet du 1er octobre, où des officiers ont acclamé le roi au son de l'air « Ô Richard, ô mon roi ».",
       "date": "1789-10-05",
       "image": {
-        "fichier": "026.webp",
+        "fichier": "028.webp",
         "commons": "File:A Versailles, à Versailles du 5 Octobre 1789 - estampe - non identifié - btv1b8410839z.jpg",
         "titre": "À Versailles, à Versailles, du 5 octobre 1789",
         "auteur": "Anonyme",
@@ -1466,25 +1582,25 @@
         "camera": [
           {
             "cadre": [
-              0.07,
-              0.12,
-              0.83,
-              0.78
+              0.08,
+              0.23,
+              0.82,
+              0.76
             ]
           },
           {
             "cadre": [
-              0.15,
-              0.33,
-              0.61,
-              0.77
+              0.12,
+              0.32,
+              0.6,
+              0.76
             ],
             "quand": "certaines traînant des canons"
           }
         ]
       },
       "audio": {
-        "fichier": "026.m4a",
+        "fichier": "028.m4a",
         "duree": 18.87,
         "phrases": [
           [
@@ -1503,11 +1619,11 @@
       }
     },
     {
-      "n": 27,
+      "n": 29,
       "narration": "Le 6 octobre au matin, des manifestants envahissent le château et tuent deux gardes du corps. Le roi doit accepter de s'installer à Paris. La famille royale est ramenée aux Tuileries au milieu d'une foule immense, qui crie, dit-on : « Nous ramenons le boulanger, la boulangère et le petit mitron ! »",
       "date": "1789-10-06",
       "image": {
-        "fichier": "027.webp",
+        "fichier": "029.webp",
         "commons": "File:Arrivée de la famille royale à Paris, le 6 octobre 1789, escorte et accueil d'une foule aux abords du couvent et de l'ab, G.27985.jpg",
         "titre": "Le roi arrivant à Paris avec sa famille, escorté de plus de trente mille âmes, le 6 octobre 1789",
         "auteur": "Pierre-Gabriel Berthault, d'après Jean-Louis Prieur",
@@ -1544,7 +1660,7 @@
         ]
       },
       "audio": {
-        "fichier": "027.m4a",
+        "fichier": "029.m4a",
         "duree": 17.3,
         "phrases": [
           [
@@ -1563,12 +1679,66 @@
       }
     },
     {
-      "n": 28,
+      "date": "1789-10",
+      "narration": "Les journées d'octobre font fuir bien des proches de la cour. La portraitiste attitrée de Marie-Antoinette, Élisabeth Vigée Le Brun, quitte Paris avec sa fille et gagne l'Italie. En exil, elle se peint le pinceau à la main, devant un portrait de la reine : son absence durera douze ans.",
+      "image": {
+        "commons": "File:Self-portrait (by Elisabeth Vigée-Lebrun) – Galleria degli Uffizi, Florence.jpg",
+        "titre": "Autoportrait",
+        "auteur": "Élisabeth Vigée Le Brun",
+        "date": "1790",
+        "technique": "huile sur toile",
+        "conservation": "Florence, galerie des Offices",
+        "fichier": "030.webp",
+        "licence": "Domaine public",
+        "largeur": 1253,
+        "hauteur": 1600,
+        "camera": [
+          {
+            "cadre": [
+              0.36,
+              0.05,
+              0.85,
+              0.64
+            ]
+          },
+          {
+            "cadre": [
+              0.0,
+              0.03,
+              0.45,
+              0.58
+            ],
+            "quand": "devant un portrait de la reine"
+          }
+        ]
+      },
+      "n": 30,
+      "audio": {
+        "fichier": "030.m4a",
+        "duree": 14.49,
+        "phrases": [
+          [
+            0.0,
+            2.45
+          ],
+          [
+            3.2,
+            8.59
+          ],
+          [
+            9.29,
+            14.49
+          ]
+        ]
+      }
+    },
+    {
+      "n": 31,
       "narration": "En 1790, l'Assemblée constituante réorganise tout le royaume. Les vieilles provinces, avec leurs coutumes et leurs privilèges, cèdent la place à quatre-vingt-trois départements, découpés en districts et en communes. On les veut assez petits pour que chacun puisse gagner le chef-lieu en une journée de cheval.",
       "date": "1790-02",
       "date_fin": "1790-03",
       "image": {
-        "fichier": "028.webp",
+        "fichier": "031.webp",
         "commons": "File:Nouvelle Carte de la France Divisée en 83 Départements et en Districts - par M. Mentelle... - btv1b53100068j.jpg",
         "titre": "Nouvelle carte de la France divisée en 83 départements et en districts",
         "auteur": "Edme Mentelle",
@@ -1599,7 +1769,7 @@
         ]
       },
       "audio": {
-        "fichier": "028.m4a",
+        "fichier": "031.m4a",
         "duree": 17.7,
         "phrases": [
           [
@@ -1618,11 +1788,11 @@
       }
     },
     {
-      "n": 29,
+      "n": 32,
       "narration": "Reste la dette : en novembre 1789, les biens de l'Église sont mis à la disposition de la Nation, puis vendus comme biens nationaux. L'assignat, d'abord un titre gagé sur ces biens, devient un papier-monnaie. Imprimé en masse, il perdra sa valeur, mais les acheteurs de biens nationaux s'attacheront à la Révolution.",
       "date": "1789-11-02",
       "image": {
-        "fichier": "029.webp",
+        "fichier": "032.webp",
         "commons": "File:Assignat de 10 livres, série 1490me, 1791, GB300.jpg",
         "titre": "Assignat de 10 livres, série 1490e",
         "auteur": "Caisse de l'Extraordinaire, gravure de Nicolas-Marie Gatteaux",
@@ -1653,7 +1823,7 @@
         ]
       },
       "audio": {
-        "fichier": "029.m4a",
+        "fichier": "032.m4a",
         "duree": 18.32,
         "phrases": [
           [
@@ -1672,12 +1842,12 @@
       }
     },
     {
-      "n": 30,
+      "n": 33,
       "narration": "En 1790, la constitution civile du clergé fait élire curés et évêques et les paie comme des fonctionnaires. Le serment exigé des prêtres, puis la condamnation du pape, coupent le clergé en deux : jureurs d'un côté, réfractaires de l'autre. Cette caricature se moque d'un réfractaire en fuite ; la fracture religieuse sera durable.",
       "date": "1790-07",
       "date_fin": "1791-04",
       "image": {
-        "fichier": "030.webp",
+        "fichier": "033.webp",
         "commons": "File:Pretre aristocrate fuyant le serment civique - estampe - non identifié - btv1b8411247r.jpg",
         "titre": "Prêtre aristocrate fuyant le serment civique",
         "auteur": "Anonyme",
@@ -1714,7 +1884,7 @@
         ]
       },
       "audio": {
-        "fichier": "030.m4a",
+        "fichier": "033.m4a",
         "duree": 20.84,
         "phrases": [
           [
@@ -1733,11 +1903,11 @@
       }
     },
     {
-      "n": 31,
+      "n": 34,
       "narration": "Pour le premier anniversaire du 14 juillet, il faut transformer le Champ-de-Mars en immense amphithéâtre. Les ouvriers ne suffisant pas, des milliers de Parisiens de toutes conditions viennent manier la pelle et la brouette, hommes et femmes, bourgeois et moines. Cet élan joyeux dit l'espoir d'une nation réconciliée.",
       "date": "1790-07",
       "image": {
-        "fichier": "031.webp",
+        "fichier": "034.webp",
         "commons": "File:Les Travaux du Champ de Mars en 1790. G.28128.jpg",
         "titre": "Les travaux du Champ-de-Mars en 1790",
         "auteur": "Abraham Girardet",
@@ -1774,7 +1944,7 @@
         ]
       },
       "audio": {
-        "fichier": "031.m4a",
+        "fichier": "034.m4a",
         "duree": 18.29,
         "phrases": [
           [
@@ -1793,11 +1963,11 @@
       }
     },
     {
-      "n": 32,
+      "n": 35,
       "narration": "Le 14 juillet 1790, la fête de la Fédération rassemble au Champ-de-Mars des gardes nationaux venus de toute la France. Talleyrand, évêque d'Autun, célèbre la messe sur l'autel de la patrie. La Fayette prête serment, puis le roi jure fidélité à la Nation et à la loi.",
       "date": "1790-07-14",
       "image": {
-        "fichier": "032.webp",
+        "fichier": "035.webp",
         "commons": "File:Charles Thévenin - La fête de la Fédération, le 14 juillet 1790, au Champ-de-Mars, actuel 7ème arrondissement - La Fête de la Fédération, le 14 juillet 1790, au Champ-de-Mars - Musée Carnavalet - 2.jpg",
         "titre": "La fête de la Fédération, le 14 juillet 1790, au Champ-de-Mars",
         "auteur": "Charles Thévenin",
@@ -1828,7 +1998,7 @@
         ]
       },
       "audio": {
-        "fichier": "032.m4a",
+        "fichier": "035.m4a",
         "duree": 17.42,
         "phrases": [
           [
@@ -1847,10 +2017,10 @@
       }
     },
     {
-      "n": 33,
+      "n": 36,
       "narration": "La vie politique se joue aussi dans les clubs. Aux Jacobins, installés dans un ancien couvent de la rue Saint-Honoré, les patriotes débattent des lois avant leur vote. Des sociétés affiliées essaiment dans toute la France, et un avocat d'Arras, encore peu connu, s'y fait entendre : Maximilien Robespierre.",
       "image": {
-        "fichier": "033.webp",
+        "fichier": "036.webp",
         "commons": "File:D039- club des jacobins - Liv3-Ch16.png",
         "titre": "Société des amis de la Constitution (club des Jacobins)",
         "auteur": "Henri Nicolas Vangorp",
@@ -1881,7 +2051,7 @@
         ]
       },
       "audio": {
-        "fichier": "033.m4a",
+        "fichier": "036.m4a",
         "duree": 17.09,
         "phrases": [
           [
@@ -1900,11 +2070,11 @@
       }
     },
     {
-      "n": 34,
+      "n": 37,
       "narration": "Le 2 avril 1791, Mirabeau meurt au sommet de sa gloire. L'église Sainte-Geneviève devient alors le Panthéon, consacré aux grands hommes, et ses funérailles grandioses l'y conduisent le premier. On découvrira plus tard qu'il conseillait secrètement le roi contre de l'argent : ses restes en seront retirés en 1794.",
       "date": "1791-04-02",
       "image": {
-        "fichier": "034.webp",
+        "fichier": "037.webp",
         "commons": "File:Pompe funèbre de Mirabeau le 4 Avril 1791. G.28347.jpg",
         "titre": "Pompe funèbre de Mirabeau, le 4 avril 1791",
         "auteur": "Pierre-Gabriel Berthault d'après Jean-Louis Prieur",
@@ -1935,7 +2105,7 @@
         ]
       },
       "audio": {
-        "fichier": "034.m4a",
+        "fichier": "037.m4a",
         "duree": 20.32,
         "phrases": [
           [
@@ -1954,12 +2124,71 @@
       }
     },
     {
-      "n": 35,
+      "narration": "Ces cérémonies ont leur musique. Gossec, maître de musique de la garde nationale, écrit des hymnes et des marches pour orchestres d'instruments à vent, faits pour sonner en plein air. Sa Marche lugubre, composée en 1790 pour honorer les morts de l'affaire de Nancy, accompagne Mirabeau jusqu'au Panthéon, puis Voltaire en juillet.",
+      "image": {
+        "commons": "File:Gossec-portrait-big.jpg",
+        "titre": "Portrait de François-Joseph Gossec",
+        "auteur": "Antoine Vestier",
+        "date": "1791",
+        "technique": "huile sur toile",
+        "conservation": "Paris, musée de la Musique",
+        "recadrage": [
+          0.09,
+          0.04,
+          0.93,
+          0.91
+        ],
+        "fichier": "038.webp",
+        "licence": "Domaine public",
+        "largeur": 1219,
+        "hauteur": 1600,
+        "camera": [
+          {
+            "cadre": [
+              0.18,
+              0.18,
+              0.65,
+              0.72
+            ]
+          },
+          {
+            "cadre": [
+              0.58,
+              0.46,
+              0.98,
+              0.76
+            ],
+            "quand": "Sa Marche lugubre"
+          }
+        ]
+      },
+      "n": 38,
+      "audio": {
+        "fichier": "038.m4a",
+        "duree": 18.37,
+        "phrases": [
+          [
+            0.0,
+            1.44
+          ],
+          [
+            1.93,
+            9.37
+          ],
+          [
+            10.17,
+            18.37
+          ]
+        ]
+      }
+    },
+    {
+      "n": 39,
       "narration": "Dans la nuit du 20 au 21 juin 1791, la famille royale s'enfuit des Tuileries sous des déguisements, pour rejoindre des troupes fidèles dans l'Est. Reconnu en chemin par le maître de poste Drouet, le roi est arrêté à Varennes, en Argonne. Cette fuite montre à tous qu'il rejette la Révolution.",
       "date": "1791-06-20",
       "date_fin": "1791-06-21",
       "image": {
-        "fichier": "035.webp",
+        "fichier": "039.webp",
         "commons": "File:Arrestation de Louis XVI à Varennes, 21-22 juin 1791. D.9095.jpg",
         "titre": "Arrestation de Louis XVI à Varennes",
         "auteur": "Jean-Baptiste Lesueur",
@@ -1990,7 +2219,7 @@
         ]
       },
       "audio": {
-        "fichier": "035.m4a",
+        "fichier": "039.m4a",
         "duree": 17.73,
         "phrases": [
           [
@@ -2009,11 +2238,11 @@
       }
     },
     {
-      "n": 36,
+      "n": 40,
       "narration": "Le 25 juin, la berline royale rentre à Paris sous escorte. Des affiches avaient prévenu que quiconque applaudirait le roi serait bastonné, et quiconque l'insulterait, pendu. La foule le regarde donc passer en silence, le chapeau sur la tête : la confiance est brisée.",
       "date": "1791-06-25",
       "image": {
-        "fichier": "036.webp",
+        "fichier": "040.webp",
         "commons": "File:Retour de Varennes. Arrivée de Louis Capet à Paris. le 25 Juin 1791. G.28388.jpg",
         "titre": "Retour de Varennes. Arrivée de Louis Capet à Paris, le 25 juin 1791",
         "auteur": "Pierre-Gabriel Berthault d'après Jean-Louis Prieur",
@@ -2044,7 +2273,7 @@
         ]
       },
       "audio": {
-        "fichier": "036.m4a",
+        "fichier": "040.m4a",
         "duree": 16.01,
         "phrases": [
           [
@@ -2063,10 +2292,10 @@
       }
     },
     {
-      "n": 37,
+      "n": 41,
       "narration": "Les caricaturistes se déchaînent : celle-ci représente la famille royale en cochons, ramenés à l'étable. Le roi sacré, qu'on avait proclamé deux ans plus tôt restaurateur de la liberté française, devient un objet de moquerie publique. Pour beaucoup, il n'est plus qu'un traître qui a voulu rejoindre l'ennemi.",
       "image": {
-        "fichier": "037.webp",
+        "fichier": "041.webp",
         "commons": "File:La famille des Cochons ramenée dans l'étable (The family of pigs pulled to the stable) MET DP818672.jpg",
         "titre": "La famille des cochons ramenée dans l'étable",
         "auteur": "Anonyme",
@@ -2097,7 +2326,7 @@
         ]
       },
       "audio": {
-        "fichier": "037.m4a",
+        "fichier": "041.m4a",
         "duree": 17.44,
         "phrases": [
           [
@@ -2116,11 +2345,11 @@
       }
     },
     {
-      "n": 38,
+      "n": 42,
       "narration": "Le 11 juillet 1791, malgré la crise, la Révolution honore le philosophe des Lumières : les restes de Voltaire entrent au Panthéon. Cette estampe détaille l'ordre du cortège, avec son char triomphal tiré par des chevaux blancs. Des milliers de Parisiens accompagnent celui qui avait combattu l'intolérance et l'arbitraire.",
       "date": "1791-07-11",
       "image": {
-        "fichier": "038.webp",
+        "fichier": "042.webp",
         "commons": "File:Ordre du Cortege pour la Translation des Manes de Voltaire le lundi 11 Juillet 1791. G.29482.jpg",
         "titre": "Ordre du cortège pour la translation des mânes de Voltaire le lundi 11 juillet 1791",
         "auteur": "Anonyme, chez Basset",
@@ -2157,7 +2386,7 @@
         ]
       },
       "audio": {
-        "fichier": "038.m4a",
+        "fichier": "042.m4a",
         "duree": 19.98,
         "phrases": [
           [
@@ -2176,11 +2405,11 @@
       }
     },
     {
-      "n": 39,
+      "n": 43,
       "narration": "L'Assemblée préfère croire à un enlèvement du roi, mais le 17 juillet, au Champ-de-Mars, des pétitionnaires réunis par le club des Cordeliers réclament sa déchéance. La garde nationale tire sur la foule : de douze à cinquante morts selon les sources. Le journal démocrate qui publie cette gravure parle de massacre.",
       "date": "1791-07-17",
       "image": {
-        "fichier": "039.webp",
+        "fichier": "043.webp",
         "commons": "File:Malheureuse journée du 17 juillet 1791.jpg",
         "titre": "Malheureuse journée du 17 juillet 1791",
         "auteur": "Anonyme, pour les Révolutions de Paris",
@@ -2211,7 +2440,7 @@
         ]
       },
       "audio": {
-        "fichier": "039.m4a",
+        "fichier": "043.m4a",
         "duree": 20.28,
         "phrases": [
           [
@@ -2231,11 +2460,11 @@
       "camera_manuelle": true
     },
     {
-      "n": 40,
+      "n": 44,
       "narration": "En septembre 1791, le roi accepte la Constitution : la France devient une monarchie constitutionnelle, avec une assemblée unique élue. Le roi garde un droit de veto suspensif. Seuls votent les citoyens actifs, qui paient un impôt égal à trois journées de travail, soit environ quatre millions d'hommes.",
       "date": "1791-09",
       "image": {
-        "fichier": "040.webp",
+        "fichier": "044.webp",
         "commons": "File:La Constitution Française, G.12574 (2 of 2).jpg",
         "titre": "La Constitution française",
         "auteur": "Louis Le Coeur",
@@ -2257,7 +2486,7 @@
         ]
       },
       "audio": {
-        "fichier": "040.m4a",
+        "fichier": "044.m4a",
         "duree": 17.77,
         "phrases": [
           [
@@ -2276,11 +2505,11 @@
       }
     },
     {
-      "n": 41,
+      "n": 45,
       "narration": "Ces droits sont réservés aux hommes. La même année, Olympe de Gouges, qui sera guillotinée en 1793, publie la Déclaration des droits de la femme et de la citoyenne. Elle y écrit : « La femme a le droit de monter sur l'échafaud ; elle doit avoir également celui de monter à la tribune. »",
       "date": "1791-09",
       "image": {
-        "fichier": "041.webp",
+        "fichier": "045.webp",
         "commons": "File:Olympe de Gouges - portrait.jpg",
         "titre": "Portrait de Marie Olympe de Gouges",
         "auteur": "Anonyme",
@@ -2302,7 +2531,7 @@
         ]
       },
       "audio": {
-        "fichier": "041.m4a",
+        "fichier": "045.m4a",
         "duree": 16.45,
         "phrases": [
           [
@@ -2321,11 +2550,11 @@
       }
     },
     {
-      "n": 42,
+      "n": 46,
       "narration": "Le 20 avril 1792, la France déclare la guerre au roi de Bohême et de Hongrie, c'est-à-dire à l'Autriche. Les Girondins veulent porter la liberté aux peuples ; le roi et la reine espèrent une défaite qui leur rendrait le pouvoir. Robespierre, presque seul, s'y oppose : « Personne n'aime les missionnaires armés. »",
       "date": "1792-04-20",
       "image": {
-        "fichier": "042.webp",
+        "fichier": "046.webp",
         "commons": "File:Franckreichs Kriegserklärung gegen den König von Ungarn und Böhmen, am 20 April 1792 - estampe - gez von C. Heydeloff ; gest. von J.C. Bock - btv1b84115345.jpg",
         "titre": "La France déclare la guerre au roi de Hongrie et de Bohême, le 20 avril 1792",
         "auteur": "Johann Carl Bock d'après C. Heydeloff",
@@ -2362,7 +2591,7 @@
         ]
       },
       "audio": {
-        "fichier": "042.m4a",
+        "fichier": "046.m4a",
         "duree": 18.34,
         "phrases": [
           [
@@ -2381,11 +2610,11 @@
       }
     },
     {
-      "n": 43,
+      "n": 47,
       "narration": "À Strasbourg, en avril 1792, l'officier Rouget de Lisle compose un chant de guerre pour l'armée du Rhin. On l'imagine ici l'entonnant pour la première fois dans le salon du maire, Dietrich. Repris par les volontaires marseillais montés à Paris pendant l'été, ce chant prendra leur nom : la Marseillaise.",
       "date": "1792-04-25",
       "image": {
-        "fichier": "043.webp",
+        "fichier": "047.webp",
         "commons": "File:Pils rouget lisle chantant marseillaise mb (Musée).jpg",
         "titre": "Rouget de Lisle chantant pour la première fois la Marseillaise chez Dietrich, maire de Strasbourg",
         "auteur": "Isidore Pils",
@@ -2416,7 +2645,7 @@
         ]
       },
       "audio": {
-        "fichier": "043.m4a",
+        "fichier": "047.m4a",
         "duree": 19.81,
         "phrases": [
           [
@@ -2435,11 +2664,65 @@
       }
     },
     {
-      "n": 44,
+      "date": "1792-04-25",
+      "narration": "Le 25 avril 1792, à Paris, une machine nouvelle sert pour la première fois. Le député Guillotin voulait une même mort pour tous, rapide : un couperet lesté tombe entre deux montants et tranche le cou d'un coup. Cette estampe en montre une première idée ; la guillotine deviendra le symbole de la Terreur.",
+      "image": {
+        "commons": "File:Révolution française Présentation de la guillotine. G.23500.jpg",
+        "titre": "Machine proposée à l'Assemblée nationale pour le supplice des criminels par M. Guillotin",
+        "auteur": "anonyme",
+        "date": "vers 1791-1792",
+        "technique": "eau-forte",
+        "conservation": "Paris, musée Carnavalet (G.23500)",
+        "fichier": "048.webp",
+        "licence": "Domaine public",
+        "largeur": 985,
+        "hauteur": 1600,
+        "camera": [
+          {
+            "cadre": [
+              0.03,
+              0.3,
+              0.96,
+              0.76
+            ]
+          },
+          {
+            "cadre": [
+              0.43,
+              0.3,
+              0.78,
+              0.72
+            ],
+            "quand": "un couperet lesté tombe entre deux montants"
+          }
+        ]
+      },
+      "n": 48,
+      "audio": {
+        "fichier": "048.m4a",
+        "duree": 19.95,
+        "phrases": [
+          [
+            0.0,
+            5.77
+          ],
+          [
+            6.83,
+            14.76
+          ],
+          [
+            15.54,
+            19.95
+          ]
+        ]
+      }
+    },
+    {
+      "n": 49,
       "narration": "Les premières défaites inquiètent, et le roi bloque par son veto des décrets contre les prêtres réfractaires. Le 20 juin 1792, les sans-culottes, militants des quartiers populaires, envahissent les Tuileries. Ils pénètrent jusqu'au roi pour exiger qu'il retire son veto et rappelle les ministres girondins qu'il vient de renvoyer.",
       "date": "1792-06-20",
       "image": {
-        "fichier": "044.webp",
+        "fichier": "049.webp",
         "commons": "File:Journée du 20 Juin 1792 Au château des Tuileries. G.29493.jpg",
         "titre": "Journée du 20 juin 1792, au château des Tuileries",
         "auteur": "Jean-Baptiste Vérité d'après Pierre Bouillon",
@@ -2479,7 +2762,7 @@
         ]
       },
       "audio": {
-        "fichier": "044.m4a",
+        "fichier": "049.m4a",
         "duree": 20.1,
         "phrases": [
           [
@@ -2498,11 +2781,11 @@
       }
     },
     {
-      "n": 45,
+      "n": 50,
       "narration": "Pendant des heures, Louis XVI fait face à la foule avec calme. Il coiffe le bonnet rouge, symbole de liberté, et boit à la santé de la Nation, mais il ne cède pas sur son veto. La journée échoue, et l'humiliation infligée au roi lui vaut même un moment de sympathie.",
       "date": "1792-06-20",
       "image": {
-        "fichier": "045.webp",
+        "fichier": "050.webp",
         "commons": "File:Louis seize coiffé du bonnet rouge le 20 juin 1792 - vive la nation - dessin - D. Berthault 1792 - btv1b8411563w.jpg",
         "titre": "Louis XVI coiffé du bonnet rouge le 20 juin 1792 : « Vive la nation »",
         "auteur": "D. Berthault",
@@ -2539,7 +2822,7 @@
         ]
       },
       "audio": {
-        "fichier": "045.m4a",
+        "fichier": "050.m4a",
         "duree": 16.79,
         "phrases": [
           [
@@ -2558,12 +2841,66 @@
       }
     },
     {
-      "n": 46,
+      "date": "1792-06",
+      "narration": "Cet été-là, deux astronomes, Delambre et Méchain, partent mesurer la méridienne de Dunkerque à Barcelone. L'Assemblée constituante a décidé, en 1791, que le mètre vaudrait le dix-millionième de la distance du pôle à l'équateur. Avec ce cercle répétiteur, ils visent clochers et sommets, et calculent les distances par une chaîne de triangles.",
+      "image": {
+        "commons": "File:Cercle répétiteur azimutal.jpg",
+        "titre": "Cercle répétiteur en position pour les observations azimutales",
+        "auteur": "planche de la Base du système métrique décimal de Jean-Baptiste Delambre",
+        "date": "1807",
+        "technique": "gravure",
+        "conservation": "Base du système métrique décimal, tome II, planche VII (livre imprimé)",
+        "fichier": "051.webp",
+        "licence": "Domaine public",
+        "largeur": 1020,
+        "hauteur": 1600,
+        "camera": [
+          {
+            "cadre": [
+              0.05,
+              0.04,
+              0.95,
+              0.96
+            ]
+          },
+          {
+            "cadre": [
+              0.1,
+              0.04,
+              0.9,
+              0.38
+            ],
+            "quand": "Avec ce cercle répétiteur, ils visent"
+          }
+        ]
+      },
+      "n": 51,
+      "audio": {
+        "fichier": "051.m4a",
+        "duree": 19.01,
+        "phrases": [
+          [
+            0.0,
+            5.6
+          ],
+          [
+            6.25,
+            12.35
+          ],
+          [
+            13.18,
+            19.01
+          ]
+        ]
+      }
+    },
+    {
+      "n": 52,
       "narration": "Le 11 juillet 1792, l'Assemblée proclame la patrie en danger. Sur les places de Paris, on dresse des estrades où les volontaires viennent s'enrôler, au son du canon. Bientôt, le duc de Brunswick menace Paris d'« une vengeance exemplaire et à jamais mémorable » si l'on touche à la famille royale.",
       "date": "1792-07-11",
       "date_fin": "1792-07-25",
       "image": {
-        "fichier": "046.webp",
+        "fichier": "052.webp",
         "commons": "File:Révolution française journée du 22 juillet 1792. Enrolement de volontaires sur une place publique à Paris. nº159, p.13, G.28499.jpg",
         "titre": "Amphithéâtres d'enrôlement dressés dans les places publiques",
         "auteur": "Anonyme, pour les Révolutions de Paris",
@@ -2594,7 +2931,7 @@
         ]
       },
       "audio": {
-        "fichier": "046.m4a",
+        "fichier": "052.m4a",
         "duree": 21.03,
         "phrases": [
           [
@@ -2613,11 +2950,11 @@
       }
     },
     {
-      "n": 47,
+      "n": 53,
       "narration": "Ce manifeste enflamme Paris au lieu de l'effrayer : le 10 août 1792, les sections parisiennes et les fédérés prennent d'assaut les Tuileries. Le roi s'est réfugié avec sa famille à l'Assemblée, mais les gardes suisses défendent le château. Les morts se comptent par centaines dans les deux camps.",
       "date": "1792-08-10",
       "image": {
-        "fichier": "047.webp",
+        "fichier": "053.webp",
         "commons": "File:Siège et prise des tuileries le 10 août 1792.jpg",
         "titre": "Dix août 1792. Siège et prise du château des Tuileries",
         "auteur": "Pierre-Gabriel Berthault d'après Jean-Louis Prieur",
@@ -2648,7 +2985,7 @@
         ]
       },
       "audio": {
-        "fichier": "047.m4a",
+        "fichier": "053.m4a",
         "duree": 17.3,
         "phrases": [
           [
@@ -2667,12 +3004,12 @@
       }
     },
     {
-      "n": 48,
+      "n": 54,
       "narration": "Le jour même, l'Assemblée suspend le roi et fait élire, par presque tous les hommes adultes, une nouvelle assemblée, la Convention. Le 13 août, la famille royale est conduite à la prison du Temple, sous la garde de la Commune insurrectionnelle de Paris. Pour la monarchie, c'est la fin.",
       "date": "1792-08-10",
       "date_fin": "1792-08-13",
       "image": {
-        "fichier": "048.webp",
+        "fichier": "054.webp",
         "commons": "File:Révolution française journée du 13 août 1792. Translation de Louis XVI et de la famille royale au Temple. Rue du Templ, G.28549.jpg",
         "titre": "Translation de Louis XVI et de sa famille au Temple, le 13 août 1792",
         "auteur": "Pierre-Gabriel Berthault d'après Jacques François Joseph Swebach-Desfontaines",
@@ -2703,7 +3040,7 @@
         ]
       },
       "audio": {
-        "fichier": "048.m4a",
+        "fichier": "054.m4a",
         "duree": 18.38,
         "phrases": [
           [
@@ -2722,12 +3059,12 @@
       }
     },
     {
-      "n": 49,
+      "n": 55,
       "narration": "Fin août, les Prussiens prennent Longwy et assiègent Verdun ; à Paris, on craint que les prisonniers ne se soulèvent dès le départ des volontaires. Du 2 au 6 septembre, des bandes envahissent les prisons. Après des simulacres de jugement, plus de mille détenus sont massacrés, souvent de simples prisonniers de droit commun.",
       "date": "1792-09-02",
       "date_fin": "1792-09-06",
       "image": {
-        "fichier": "049.webp",
+        "fichier": "055.webp",
         "commons": "File:Tribunal de prison lors des massacres de septembre 1792, à Paris. D.9097.jpg",
         "titre": "Tribunal de prison au 2 et 3 septembre",
         "auteur": "Jean-Baptiste Lesueur",
@@ -2767,7 +3104,7 @@
         ]
       },
       "audio": {
-        "fichier": "049.m4a",
+        "fichier": "055.m4a",
         "duree": 18.12,
         "phrases": [
           [
@@ -2786,11 +3123,11 @@
       }
     },
     {
-      "n": 50,
+      "n": 56,
       "narration": "Le 20 septembre 1792, à Valmy, l'armée de Dumouriez et de Kellermann arrête les Prussiens, au cri de « Vive la Nation ! ». La bataille, surtout une canonnade, est modeste, mais son effet immense. Goethe, présent côté prussien, écrira : « De ce lieu et de ce jour date une nouvelle époque de l'histoire du monde. »",
       "date": "1792-09-20",
       "image": {
-        "fichier": "050.webp",
+        "fichier": "056.webp",
         "commons": "File:Valmy Battle painting.jpg",
         "titre": "Bataille de Valmy, le 20 septembre 1792",
         "auteur": "Horace Vernet",
@@ -2812,7 +3149,7 @@
         ]
       },
       "audio": {
-        "fichier": "050.m4a",
+        "fichier": "056.m4a",
         "duree": 20.14,
         "phrases": [
           [
@@ -2831,12 +3168,12 @@
       }
     },
     {
-      "n": 51,
+      "n": 57,
       "narration": "Le lendemain, la Convention se réunit et abolit la royauté : la République commence. En novembre, on découvre aux Tuileries une armoire de fer, pleine de papiers secrets du roi. En décembre, Louis Capet, comme on appelle désormais l'ancien roi, comparaît à la barre de la Convention, accusé de conspiration contre la liberté.",
       "date": "1792-09-21",
       "date_fin": "1792-12-11",
       "image": {
-        "fichier": "051.webp",
+        "fichier": "057.webp",
         "commons": "File:Le Ci-devant roi à la barre de la Convention nationale - mardi XI décembre 1792, Louis Capet dernier roi des Français fut traduit de la tour du Temple... - estampe - non identifié - btv1b8411694s.jpg",
         "titre": "Le ci-devant roi à la barre de la Convention nationale, mardi 11 décembre 1792",
         "auteur": "Anonyme, pour les Révolutions de Paris",
@@ -2873,7 +3210,7 @@
         ]
       },
       "audio": {
-        "fichier": "051.m4a",
+        "fichier": "057.m4a",
         "duree": 19.48,
         "phrases": [
           [
@@ -2892,12 +3229,12 @@
       }
     },
     {
-      "n": 52,
+      "n": 58,
       "narration": "Louis est déclaré coupable à la quasi-unanimité, puis condamné à mort à une faible majorité, sans sursis. Son cousin, le duc d'Orléans, devenu Philippe Égalité, vote la mort. Le 20 janvier 1793, au Temple, il fait ses adieux à sa femme, à sa sœur et à ses enfants.",
       "date": "1793-01-15",
       "date_fin": "1793-01-20",
       "image": {
-        "fichier": "052.webp",
+        "fichier": "058.webp",
         "commons": "File:Jean-Jacques Hauer - Les adieux de Louis XVI à sa famille, le 20 janvier 1793 - P1988 - Musée Carnavalet.jpg",
         "titre": "Les adieux de Louis XVI à sa famille, le 20 janvier 1793",
         "auteur": "Jean-Jacques Hauer",
@@ -2928,7 +3265,7 @@
         ]
       },
       "audio": {
-        "fichier": "052.m4a",
+        "fichier": "058.m4a",
         "duree": 19.21,
         "phrases": [
           [
@@ -2947,11 +3284,11 @@
       }
     },
     {
-      "n": 53,
+      "n": 59,
       "narration": "Le 21 janvier 1793 au matin, Louis XVI est guillotiné place de la Révolution, l'actuelle place de la Concorde, au milieu des troupes. Le bourreau Sanson montre sa tête à la foule. En tuant le roi, les révolutionnaires rendent tout retour en arrière impossible : ils sont désormais des régicides.",
       "date": "1793-01-21",
       "image": {
-        "fichier": "053.webp",
+        "fichier": "059.webp",
         "commons": "File:Execution of Louis XVI.jpg",
         "titre": "Journée du 21 janvier 1793 : la mort de Louis Capet sur la place de la Révolution",
         "auteur": "Isidore Stanislas Helman d'après Charles Monnet",
@@ -2982,7 +3319,7 @@
         ]
       },
       "audio": {
-        "fichier": "053.m4a",
+        "fichier": "059.m4a",
         "duree": 18.07,
         "phrases": [
           [
@@ -3001,12 +3338,12 @@
       }
     },
     {
-      "n": 54,
+      "n": 60,
       "narration": "Cette estampe révolutionnaire brandit la tête du roi devant les souverains d'Europe, avec ce vers de la Marseillaise : « Qu'un sang impur abreuve nos sillons ». Contre la République régicide, la guerre s'étend à l'Angleterre, à la Hollande et à l'Espagne. Elles rejoignent l'Autriche et la Prusse dans une première coalition.",
       "date": "1793-02",
       "date_fin": "1793-03",
       "image": {
-        "fichier": "054.webp",
+        "fichier": "060.webp",
         "commons": "File:MATIERE A REFLECTION POUR LES JONGLEURS COURONNEES. qu'un sang impur abreuve nos sillons. G.22985.jpg",
         "titre": "Matière à réflexion pour les jongleurs couronnés",
         "auteur": "Villeneuve",
@@ -3034,7 +3371,7 @@
         ]
       },
       "audio": {
-        "fichier": "054.m4a",
+        "fichier": "060.m4a",
         "duree": 18.21,
         "phrases": [
           [
@@ -3053,11 +3390,11 @@
       }
     },
     {
-      "n": 55,
+      "n": 61,
       "narration": "En février 1793, face à une grande partie de l'Europe, la Convention décrète la levée de trois cent mille hommes, désignés parmi les célibataires. Dans bien des villages, la levée suscite colère et résistances. Sur l'image, le départ des volontaires est joyeux, comme celui que célébrera en 1794 le Chant du départ.",
       "date": "1793-02-24",
       "image": {
-        "fichier": "055.webp",
+        "fichier": "061.webp",
         "commons": "File:Levee en masse.jpg",
         "titre": "Joyeux départ des volontaires aux armées",
         "auteur": "Jean-Baptiste Lesueur",
@@ -3079,16 +3416,16 @@
           {
             "cadre": [
               0.01,
-              0.16,
+              0.17,
               0.39,
-              0.86
+              0.78
             ],
             "quand": "le départ des volontaires est joyeux"
           }
         ]
       },
       "audio": {
-        "fichier": "055.m4a",
+        "fichier": "061.m4a",
         "duree": 19.38,
         "phrases": [
           [
@@ -3107,11 +3444,11 @@
       }
     },
     {
-      "n": 56,
+      "n": 62,
       "narration": "En mars 1793, l'Ouest refuse la levée. En Vendée et dans les Mauges, des paysans attachés à leurs prêtres réfractaires prennent les armes, au nom de Dieu et du roi. Ils choisissent des chefs parmi les nobles, mais aussi dans le peuple, comme le voiturier Jacques Cathelineau, surnommé le saint de l'Anjou.",
       "date": "1793-03",
       "image": {
-        "fichier": "056.webp",
+        "fichier": "062.webp",
         "commons": "File:Cathelineau (BM 1915,0508.257).jpg",
         "titre": "Cathelineau",
         "auteur": "Henri Grevedon, d'après Anne-Louis Girodet ; imprimé par Delpech",
@@ -3148,7 +3485,7 @@
         ]
       },
       "audio": {
-        "fichier": "056.m4a",
+        "fichier": "062.m4a",
         "duree": 18.65,
         "phrases": [
           [
@@ -3167,11 +3504,11 @@
       }
     },
     {
-      "n": 57,
+      "n": 63,
       "narration": "La guerre de Vendée devient une guerre civile impitoyable. Cette scène héroïque, née de la mémoire royaliste, montre la bataille de Cholet, perdue par les Vendéens en octobre. Leur jeune chef, Henri de La Rochejaquelein, aurait lancé à ses hommes : « Si j'avance, suivez-moi ; si je recule, tuez-moi ; si je meurs, vengez-moi ! »",
       "date": "1793-10-17",
       "image": {
-        "fichier": "057.webp",
+        "fichier": "063.webp",
         "commons": "File:La Rochejacquelein Cholet.jpg",
         "titre": "Henri de La Rochejaquelein au combat de Cholet (17 octobre 1793)",
         "auteur": "Paul-Émile Boutigny",
@@ -3202,7 +3539,7 @@
         ]
       },
       "audio": {
-        "fichier": "057.m4a",
+        "fichier": "063.m4a",
         "duree": 18.33,
         "phrases": [
           [
@@ -3221,12 +3558,12 @@
       }
     },
     {
-      "n": 58,
+      "n": 64,
       "narration": "À Paris, la Convention se déchire. Les Girondins, autour du journaliste Brissot et de l'orateur Vergniaud, se méfient de la pression des sans-culottes parisiens. Leurs rivaux, les Montagnards, assis en haut des gradins, s'appuient sur Paris, sa Commune et ses clubs, tandis que les députés de la Plaine hésitent.",
       "date": "1792-09",
       "date_fin": "1793-05",
       "image": {
-        "fichier": "058.webp",
+        "fichier": "064.webp",
         "commons": "File:François Bonneville - Portrait de Jacques-Pierre Brissot de Warville (1754-1793), journaliste et conventionnel - P2608 - Musée Carnavalet.jpg",
         "titre": "Portrait de Jacques-Pierre Brissot de Warville (1754-1793), journaliste et conventionnel",
         "auteur": "François Bonneville",
@@ -3248,7 +3585,7 @@
         ]
       },
       "audio": {
-        "fichier": "058.m4a",
+        "fichier": "064.m4a",
         "duree": 19.0,
         "phrases": [
           [
@@ -3267,10 +3604,10 @@
       }
     },
     {
-      "n": 59,
+      "n": 65,
       "narration": "Parmi les Montagnards, Jean-Paul Marat, médecin devenu journaliste, est le plus redouté. Dans son journal, longtemps intitulé L'Ami du peuple, il dénonce sans relâche les traîtres et appelle à frapper sans pitié les ennemis de la Révolution. Les Girondins voient en lui un buveur de sang ; les sans-culottes, leur meilleur défenseur.",
       "image": {
-        "fichier": "059.webp",
+        "fichier": "065.webp",
         "commons": "File:Joseph Boze - Portrait de Jean-Paul Marat (1743-1793), homme politique - P28 - Musée Carnavalet.jpg",
         "titre": "Portrait de Jean-Paul Marat (1743-1793), homme politique",
         "auteur": "Joseph Boze",
@@ -3292,7 +3629,7 @@
         ]
       },
       "audio": {
-        "fichier": "059.m4a",
+        "fichier": "065.m4a",
         "duree": 21.26,
         "phrases": [
           [
@@ -3311,11 +3648,11 @@
       }
     },
     {
-      "n": 60,
+      "n": 66,
       "narration": "En avril 1793, les Girondins traduisent Marat devant le Tribunal révolutionnaire, créé un mois plus tôt pour juger les ennemis de la République. Il est acquitté le 24 avril. Couronné de lauriers, il est porté en triomphe par les sans-culottes jusqu'à la Convention : l'offensive girondine a échoué.",
       "date": "1793-04-24",
       "image": {
-        "fichier": "060.webp",
+        "fichier": "066.webp",
         "commons": "File:Le triomphe de Marat.jpg",
         "titre": "Le Triomphe de Marat, 24 avril 1793",
         "auteur": "Jean-Baptiste Lesueur",
@@ -3346,7 +3683,7 @@
         ]
       },
       "audio": {
-        "fichier": "060.m4a",
+        "fichier": "066.m4a",
         "duree": 16.95,
         "phrases": [
           [
@@ -3365,11 +3702,11 @@
       }
     },
     {
-      "n": 61,
+      "n": 67,
       "narration": "Le 2 juin 1793, les sections parisiennes passent à l'offensive : des dizaines de milliers de gardes nationaux cernent la Convention avec leurs canons. Les députés doivent voter l'arrestation de vingt-neuf Girondins. La Montagne domine désormais l'Assemblée, mais plusieurs départements se révoltent contre ce coup de force parisien.",
       "date": "1793-06-02",
       "image": {
-        "fichier": "061.webp",
+        "fichier": "067.webp",
         "commons": "File:Planche nº 80, numérotée 89, des Tableaux historiques de la Révolution française (1791-1804). Journées des 31 mai, 1er e, G.28784.jpg",
         "titre": "Journées des 31 mai, 1er et 2 juin 1793, ou 12, 13 et 14 prairial an Ier de la République",
         "auteur": "Pierre-Gabriel Berthault, d'après Jacques-François Swebach-Desfontaines",
@@ -3406,7 +3743,7 @@
         ]
       },
       "audio": {
-        "fichier": "061.m4a",
+        "fichier": "067.m4a",
         "duree": 16.44,
         "phrases": [
           [
@@ -3425,11 +3762,65 @@
       }
     },
     {
-      "n": 62,
+      "date": "1793-06-10",
+      "narration": "Au milieu de ces luttes, le 10 juin 1793, la Convention transforme le Jardin du roi en Muséum national d'histoire naturelle. Douze professeurs égaux y enseignent au public, parmi lesquels Lamarck et Geoffroy Saint-Hilaire. Serres et collections s'ouvrent à tous, et une ménagerie accueille bientôt les animaux de celle de Versailles.",
+      "image": {
+        "commons": "File:Jardin du Roy. La nouvelle serre prise du Jardin de Botanique - dessin - JB hilair - btv1b52517072v (1 of 2) (cropped).jpg",
+        "titre": "Jardin du Roy, la nouvelle serre prise du jardin de botanique",
+        "auteur": "Jean-Baptiste Hilaire",
+        "date": "vers 1794",
+        "technique": "dessin aquarellé",
+        "conservation": "Paris, Bibliothèque nationale de France, Estampes",
+        "fichier": "068.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1102,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.0,
+              0.35,
+              0.44,
+              0.75
+            ],
+            "quand": "Serres et collections s'ouvrent à tous"
+          }
+        ]
+      },
+      "n": 68,
+      "audio": {
+        "fichier": "068.m4a",
+        "duree": 20.21,
+        "phrases": [
+          [
+            0.0,
+            8.32
+          ],
+          [
+            9.05,
+            14.23
+          ],
+          [
+            14.96,
+            20.21
+          ]
+        ]
+      }
+    },
+    {
+      "n": 69,
       "narration": "Le 13 juillet 1793, une jeune Normande, Charlotte Corday, se fait recevoir chez Marat. Elle prétend lui livrer des noms de traîtres, puis le poignarde dans sa baignoire, où il soignait une maladie de peau. La scène est aussitôt gravée et diffusée dans tout Paris.",
       "date": "1793-07-13",
       "image": {
-        "fichier": "062.webp",
+        "fichier": "069.webp",
         "commons": "File:Assassinat de J.P. Marat - le 13 juillet 1793 - estampe - dessiné par Desray ; gravé par Marchand - btv1b6949781m.jpg",
         "titre": "Assassinat de J.-P. Marat, le 13 juillet 1793",
         "auteur": "Jacques Marchand, d'après Claude-Louis Desrais",
@@ -3466,7 +3857,7 @@
         ]
       },
       "audio": {
-        "fichier": "062.m4a",
+        "fichier": "069.m4a",
         "duree": 16.76,
         "phrases": [
           [
@@ -3485,10 +3876,10 @@
       }
     },
     {
-      "n": 63,
+      "n": 70,
       "narration": "Député montagnard et ami de Marat, le peintre David en fait un martyr. Le corps paisible, une blessure discrète, la plume encore à la main : rien ne rappelle l'homme violent ni la meurtrière. C'est une image de propagande d'une force saisissante, au service d'un véritable culte rendu à Marat.",
       "image": {
-        "fichier": "063.webp",
+        "fichier": "070.webp",
         "commons": "File:Death of Marat by David.jpg",
         "titre": "La Mort de Marat (Marat assassiné)",
         "auteur": "Jacques-Louis David",
@@ -3528,7 +3919,7 @@
         ]
       },
       "audio": {
-        "fichier": "063.m4a",
+        "fichier": "070.m4a",
         "duree": 17.46,
         "phrases": [
           [
@@ -3547,11 +3938,11 @@
       }
     },
     {
-      "n": 64,
+      "n": 71,
       "narration": "Charlotte Corday croyait sauver la République des excès de la Montagne. Condamnée à mort, elle pose dans sa cellule pour ce portrait, quelques heures avant d'être guillotinée, le 17 juillet 1793. À son procès, elle avait déclaré : « J'ai tué un homme pour en sauver cent mille. »",
       "date": "1793-07-17",
       "image": {
-        "fichier": "064.webp",
+        "fichier": "071.webp",
         "commons": "File:Charlotte Corday.PNG",
         "titre": "Marie-Anne-Charlotte de Corday, dite Charlotte Corday (1768-1793)",
         "auteur": "Jean-Jacques Hauer",
@@ -3573,7 +3964,7 @@
         ]
       },
       "audio": {
-        "fichier": "064.m4a",
+        "fichier": "071.m4a",
         "duree": 17.42,
         "phrases": [
           [
@@ -3592,12 +3983,12 @@
       }
     },
     {
-      "n": 65,
+      "n": 72,
       "narration": "Durant l'été 1793, plusieurs grandes villes se soulèvent contre la Convention montagnarde, comme Lyon, Marseille, Bordeaux ou Toulon : c'est la révolte fédéraliste. Lyon, assiégée pendant deux mois par les troupes républicaines, est bombardée et tombe le 9 octobre. La Convention décrète alors sa destruction.",
       "date": "1793-06",
       "date_fin": "1793-10",
       "image": {
-        "fichier": "065.webp",
+        "fichier": "072.webp",
         "commons": "File:Siège de Lyon - dessin - Béricourt - btv1b8411980s.jpg",
         "titre": "Siège de Lyon",
         "auteur": "E. Béricourt",
@@ -3628,7 +4019,7 @@
         ]
       },
       "audio": {
-        "fichier": "065.m4a",
+        "fichier": "072.m4a",
         "duree": 18.11,
         "phrases": [
           [
@@ -3647,10 +4038,127 @@
       }
     },
     {
-      "n": 66,
+      "date": "1793-08-10",
+      "narration": "Le 10 août 1793, pour l'anniversaire de la chute du roi, David orchestre la fête de l'Unité et de l'Indivisibilité. Sur les ruines de la Bastille, une Nature à l'égyptienne fait jaillir l'eau de ses seins, où boivent tour à tour les délégués des départements. L'art se fait propagande, pour souder une République menacée.",
+      "image": {
+        "commons": "File:Antoine-Jean Duclos after Charles Monnet, La Fontaine de la Regeneration sur les debris de la Bastille, le 10 avril 1793, probably 1794, NGA 9184.jpg",
+        "titre": "La Fontaine de la Régénération sur les débris de la Bastille, le 10 août 1793",
+        "auteur": "Antoine-Jean Duclos, d'après Charles Monnet",
+        "date": "probablement 1794",
+        "technique": "eau-forte",
+        "conservation": "Washington, National Gallery of Art",
+        "fichier": "073.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1017,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.48,
+              0.17,
+              0.85,
+              0.63
+            ],
+            "quand": "une Nature à l'égyptienne fait jaillir l'eau"
+          }
+        ]
+      },
+      "n": 73,
+      "audio": {
+        "fichier": "073.m4a",
+        "duree": 19.45,
+        "phrases": [
+          [
+            0.0,
+            7.78
+          ],
+          [
+            8.84,
+            15.67
+          ],
+          [
+            16.27,
+            19.45
+          ]
+        ]
+      }
+    },
+    {
+      "date": "1793-08-10",
+      "narration": "Le même jour, le Louvre ouvre au public : c'est le Muséum central des arts. Les tableaux des rois, puis les œuvres saisies aux églises et aux émigrés, appartiennent désormais à la Nation : chacun peut venir les voir. Ce projet imagine la Grande Galerie éclairée par des verrières percées dans la voûte.",
+      "image": {
+        "commons": "File:Hubert Robert - Projet d'aménagement de la Grande Galerie du Louvre (1796).JPG",
+        "titre": "Projet d'aménagement de la Grande Galerie du Louvre",
+        "auteur": "Hubert Robert",
+        "date": "1796",
+        "technique": "huile sur toile",
+        "conservation": "Paris, musée du Louvre (RF 1975-10)",
+        "fichier": "074.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1271,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.55,
+              0.2,
+              1.0,
+              0.92
+            ],
+            "quand": "chacun peut venir les voir"
+          },
+          {
+            "cadre": [
+              0.2,
+              0.0,
+              0.58,
+              0.45
+            ],
+            "quand": "verrières percées dans la voûte"
+          }
+        ]
+      },
+      "n": 74,
+      "audio": {
+        "fichier": "074.m4a",
+        "duree": 19.12,
+        "phrases": [
+          [
+            0.0,
+            4.98
+          ],
+          [
+            5.84,
+            14.05
+          ],
+          [
+            14.91,
+            19.12
+          ]
+        ]
+      }
+    },
+    {
+      "n": 75,
       "narration": "Le sans-culotte devient la figure du peuple en révolution : pantalon rayé des travailleurs plutôt que culotte des aristocrates, bonnet rouge et parfois sabots. Il tutoie, se dit citoyen et réclame la taxation des prix. Ici, le chanteur Chenard pose dans ce costume, drapeau en main.",
       "image": {
-        "fichier": "066.webp",
+        "fichier": "075.webp",
         "commons": "File:Louis Léopold Boilly - Portrait du chanteur Simon Chenard (1758-1832), en costume de sans-culotte, portant un drapeau à la - P8 - Musée Carnavalet.jpg",
         "titre": "Portrait du chanteur Simon Chenard en costume de sans-culotte, portant un drapeau à la fête de la liberté de la Savoie, le 14 octobre 1792",
         "auteur": "Louis-Léopold Boilly",
@@ -3681,7 +4189,7 @@
         ]
       },
       "audio": {
-        "fichier": "066.m4a",
+        "fichier": "075.m4a",
         "duree": 16.05,
         "phrases": [
           [
@@ -3701,12 +4209,12 @@
       "camera_manuelle": true
     },
     {
-      "n": 67,
+      "n": 76,
       "narration": "Des femmes aussi se réunissent en clubs et débattent des lois. Les Citoyennes républicaines révolutionnaires, fondées en mai 1793, réclament le droit de porter les armes. Mais en octobre, la Convention interdit les clubs féminins : selon le député Amar, les femmes ne sont pas faites pour la vie publique.",
       "date": "1793-05",
       "date_fin": "1793-10",
       "image": {
-        "fichier": "067.webp",
+        "fichier": "076.webp",
         "commons": "File:Lesueur - Club Patriotique de Femmes.jpg",
         "titre": "Club patriotique de femmes",
         "auteur": "Jean-Baptiste ou Pierre-Étienne Lesueur",
@@ -3728,7 +4236,7 @@
         ]
       },
       "audio": {
-        "fichier": "067.m4a",
+        "fichier": "076.m4a",
         "duree": 19.1,
         "phrases": [
           [
@@ -3747,12 +4255,12 @@
       }
     },
     {
-      "n": 68,
+      "n": 77,
       "narration": "Le 5 septembre 1793, les sans-culottes envahissent la Convention et obtiennent que la Terreur soit mise à l'ordre du jour. Le 17, la loi des suspects permet d'arrêter quiconque paraît hostile à la Révolution. Dans chaque quartier, des comités révolutionnaires comme celui-ci dressent les listes et délivrent les certificats de civisme.",
       "date": "1793-09-05",
       "date_fin": "1793-09-17",
       "image": {
-        "fichier": "068.webp",
+        "fichier": "077.webp",
         "commons": "File:Intérieur d'un Comité révolutionnaire en 1793 - dessin - dessiné par M. Louis René Boquet, ancien inspecteur des menus-plaisirs du Roi et dessinateur de L'académie Royale de musique - btv1b10303242t.jpg",
         "titre": "Intérieur d'un comité révolutionnaire en 1793",
         "auteur": "Louis-René Boquet",
@@ -3789,7 +4297,7 @@
         ]
       },
       "audio": {
-        "fichier": "068.m4a",
+        "fichier": "077.m4a",
         "duree": 18.35,
         "phrases": [
           [
@@ -3808,12 +4316,12 @@
       }
     },
     {
-      "n": 69,
+      "n": 78,
       "narration": "La Révolution veut aussi changer le temps. Le calendrier républicain, adopté à l'automne 1793, fait commencer l'an I au 22 septembre 1792, jour de la République. Les mois de trente jours portent des noms de saison, comme brumaire ou germinal, et le décadi, tous les dix jours, remplace le dimanche.",
       "date": "1793-10",
       "date_fin": "1793-11",
       "image": {
-        "fichier": "069.webp",
+        "fichier": "078.webp",
         "commons": "File:Calendrier Républicain, G.4140.jpg",
         "titre": "Calendrier républicain (an II)",
         "auteur": "Philibert-Louis Debucourt",
@@ -3844,7 +4352,7 @@
         ]
       },
       "audio": {
-        "fichier": "069.m4a",
+        "fichier": "078.m4a",
         "duree": 19.97,
         "phrases": [
           [
@@ -3863,11 +4371,11 @@
       }
     },
     {
-      "n": 70,
+      "n": 79,
       "narration": "Le 16 octobre 1793, Marie-Antoinette est conduite à l'échafaud, les mains liées dans le dos. Ce croquis pris sur le vif la montre les cheveux coupés, le dos droit, le visage fermé. Jugée en deux jours, accusée même d'inceste par Hébert, elle a gardé sa dignité jusqu'au bout.",
       "date": "1793-10-16",
       "image": {
-        "fichier": "070.webp",
+        "fichier": "079.webp",
         "commons": "File:Marie Antoinette Adult13.jpg",
         "titre": "Marie-Antoinette conduite au supplice",
         "auteur": "Jacques-Louis David",
@@ -3904,7 +4412,7 @@
         ]
       },
       "audio": {
-        "fichier": "070.m4a",
+        "fichier": "079.m4a",
         "duree": 19.41,
         "phrases": [
           [
@@ -3923,12 +4431,12 @@
       }
     },
     {
-      "n": 71,
+      "n": 80,
       "narration": "Le 31 octobre, vingt et un députés girondins, dont Brissot et Vergniaud, sont guillotinés. Cette estampe parle de Brissot et de ses complices : le vocabulaire est celui des vainqueurs. Madame Roland les suit le 8 novembre ; elle aurait lancé : « Ô Liberté, que de crimes on commet en ton nom ! »",
       "date": "1793-10-31",
       "date_fin": "1793-11-08",
       "image": {
-        "fichier": "071.webp",
+        "fichier": "080.webp",
         "commons": "File:Brissot et 20 de ses complices à la guillotine - le 10 brumaire de l'an 2.eme de la République française une et indivisible, Brissot et 20 de ses complices subirent leur jugement sur la place de la Révolution -... - btv1b8412027m.jpg",
         "titre": "Brissot et 20 de ses complices à la guillotine, le 10 brumaire de l'an II",
         "auteur": "Anonyme",
@@ -3974,7 +4482,7 @@
         ]
       },
       "audio": {
-        "fichier": "071.m4a",
+        "fichier": "080.m4a",
         "duree": 17.56,
         "phrases": [
           [
@@ -3993,11 +4501,65 @@
       }
     },
     {
-      "n": 72,
+      "date": "1793-10",
+      "narration": "Dès août 1793, la Convention fait détruire les tombeaux des rois à Saint-Denis. En octobre, les cercueils sont ouverts et les restes jetés dans des fosses communes. Gardien d'un dépôt d'œuvres saisies, Alexandre Lenoir sauve une partie des monuments funéraires.",
+      "image": {
+        "commons": "File:Hubert Robert - La Violation des caveaux des rois dans la basilique de Saint-Denis, en octobre 1793 - P1477 - Musée Carnavalet.jpg",
+        "titre": "La Violation des caveaux des rois dans la basilique de Saint-Denis, en octobre 1793",
+        "auteur": "Hubert Robert",
+        "date": "1793",
+        "technique": "huile sur toile",
+        "conservation": "Paris, musée Carnavalet (P.1477)",
+        "fichier": "081.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1350,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.15,
+              0.68,
+              0.55,
+              0.98
+            ],
+            "quand": "les cercueils sont ouverts"
+          }
+        ]
+      },
+      "n": 81,
+      "audio": {
+        "fichier": "081.m4a",
+        "duree": 16.85,
+        "phrases": [
+          [
+            0.0,
+            5.44
+          ],
+          [
+            6.28,
+            10.99
+          ],
+          [
+            11.64,
+            16.85
+          ]
+        ]
+      }
+    },
+    {
+      "n": 82,
       "narration": "Contre l'Église, des révolutionnaires lancent la déchristianisation : églises fermées, cloches fondues, prêtres poussés à abandonner leur état. Le 10 novembre 1793, Notre-Dame de Paris devient un temple de la Raison, où une actrice figure la Liberté. Robespierre désapprouve ce mouvement, qui heurte la foi des campagnes.",
       "date": "1793-11-10",
       "image": {
-        "fichier": "072.webp",
+        "fichier": "082.webp",
         "commons": "File:Rèv. de Paris. - Fête de la Raison - N º215 P.210. G.28910.jpg",
         "titre": "Fête de la Raison donnée dans la cathédrale Notre-Dame, 10 novembre 1793 (20 brumaire an II)",
         "auteur": "Anonyme, pour les Révolutions de Paris",
@@ -4028,7 +4590,7 @@
         ]
       },
       "audio": {
-        "fichier": "072.m4a",
+        "fichier": "082.m4a",
         "duree": 18.13,
         "phrases": [
           [
@@ -4047,12 +4609,12 @@
       }
     },
     {
-      "n": 73,
+      "n": 83,
       "narration": "En province, les représentants en mission disposent de pouvoirs presque illimités. À Nantes, pendant l'hiver 1793, Carrier fait noyer plusieurs milliers de prisonniers dans la Loire, entassés sur des bateaux que l'on coule. Cette gravure, parue bien après, le qualifie de féroce : Carrier sera lui-même guillotiné en décembre 1794.",
       "date": "1793-11",
       "date_fin": "1794-02",
       "image": {
-        "fichier": "073.webp",
+        "fichier": "083.webp",
         "commons": "File:Noyades dans la Loire, par ordre du féroce Carrier - les 6 et 7 décembre 1793, ou 5 et 6 frimaire an 2.eme de la République - estampe - Duplessis Bertaux inv. & del. ; Duplessis Bertaux aqua forti ; Berthault... - btv1b69506328.jpg",
         "titre": "Noyades dans la Loire, par ordre du féroce Carrier, les 6 et 7 décembre 1793",
         "auteur": "Pierre-Gabriel Berthault, d'après Jean Duplessis-Bertaux",
@@ -4089,7 +4651,7 @@
         ]
       },
       "audio": {
-        "fichier": "073.m4a",
+        "fichier": "083.m4a",
         "duree": 19.49,
         "phrases": [
           [
@@ -4109,12 +4671,12 @@
       "camera_manuelle": true
     },
     {
-      "n": 74,
+      "n": 84,
       "narration": "À Lyon, Collot d'Herbois et Fouché dirigent la répression. Les condamnés sont si nombreux qu'on en mitraille certains au canon, dans la plaine des Brotteaux. Près de deux mille Lyonnais sont exécutés, des quartiers entiers sont démolis, et la ville rebelle est rebaptisée Commune-Affranchie.",
       "date": "1793-11",
       "date_fin": "1794-04",
       "image": {
-        "fichier": "074.webp",
+        "fichier": "084.webp",
         "commons": "File:Fusillade à Lyon (Rhône) dirigée par Collot-d'Herbois et Fouché, 14 décembre 1793.jpg",
         "titre": "Fusillades de Lyon, 14 décembre 1793",
         "auteur": "Philippe-Joseph Maillart et G. Jacowick (graveurs), d'après Jean-François Lorent",
@@ -4145,7 +4707,7 @@
         ]
       },
       "audio": {
-        "fichier": "074.m4a",
+        "fichier": "084.m4a",
         "duree": 16.43,
         "phrases": [
           [
@@ -4164,11 +4726,11 @@
       }
     },
     {
-      "n": 75,
+      "n": 85,
       "narration": "Toulon, livré aux Anglais par les royalistes à la fin de l'été, est repris le 19 décembre 1793. En partant, les Anglais incendient une partie de la flotte et de l'arsenal. Un jeune officier d'artillerie s'y fait remarquer et devient général à vingt-quatre ans : Napoléon Bonaparte.",
       "date": "1793-12-19",
       "image": {
-        "fichier": "075.webp",
+        "fichier": "085.webp",
         "commons": "File:Incendie des vaisseaux français a Toulon 1793.jpg",
         "titre": "Incendie des vaisseaux français à Toulon (décembre 1793)",
         "auteur": "Anonyme",
@@ -4199,7 +4761,7 @@
         ]
       },
       "audio": {
-        "fichier": "075.m4a",
+        "fichier": "085.m4a",
         "duree": 15.64,
         "phrases": [
           [
@@ -4218,11 +4780,11 @@
       }
     },
     {
-      "n": 76,
+      "n": 86,
       "narration": "Le 4 février 1794, la Convention abolit l'esclavage dans toutes les colonies françaises. Elle confirme ainsi la libération déjà proclamée à Saint-Domingue, où les esclaves s'étaient soulevés en 1791. Les trois députés de l'île, un Blanc, un métis et un ancien esclave, sont accueillis dans l'enthousiasme.",
       "date": "1794-02-04",
       "image": {
-        "fichier": "076.webp",
+        "fichier": "086.webp",
         "commons": "File:L’abolition de l’esclavage proclamé à la Convention, D.6008.jpg",
         "titre": "L'abolition de l'esclavage proclamée à la Convention",
         "auteur": "Attribué à Nicolas-André Monsiau",
@@ -4253,7 +4815,7 @@
         ]
       },
       "audio": {
-        "fichier": "076.m4a",
+        "fichier": "086.m4a",
         "duree": 18.64,
         "phrases": [
           [
@@ -4272,10 +4834,10 @@
       }
     },
     {
-      "n": 77,
+      "n": 87,
       "narration": "Voici l'un d'eux, Jean-Baptiste Belley, né selon ses dires à Gorée, au Sénégal, vendu comme esclave puis affranchi. Accoudé au buste de Raynal, philosophe hostile à l'esclavage, il incarne l'égalité nouvelle. Mais Bonaparte rétablira l'esclavage en 1802, et il ne sera aboli définitivement qu'en 1848.",
       "image": {
-        "fichier": "077.webp",
+        "fichier": "087.webp",
         "commons": "File:Girodet le cytoyen Belley 1798.jpg",
         "titre": "Portrait du citoyen Belley, ex-représentant des colonies",
         "auteur": "Anne-Louis Girodet",
@@ -4306,7 +4868,7 @@
         ]
       },
       "audio": {
-        "fichier": "077.m4a",
+        "fichier": "087.m4a",
         "duree": 20.38,
         "phrases": [
           [
@@ -4325,12 +4887,66 @@
       }
     },
     {
-      "n": 78,
+      "date": "1794-03",
+      "narration": "La guerre dévore la poudre, et le salpêtre de l'Inde n'arrive plus. Ce sel se forme dans la terre humide des caves : on la lessive, puis on fait évaporer l'eau. Des jeunes gens venus de toute la France apprennent à Paris à l'extraire et à fondre les canons, puis défilent jusqu'à la Convention.",
+      "image": {
+        "commons": "File:Délégation d'aspirants armuriers de divers départements, se rendant à la Convention à l'occasion de la fête du Salpêtre,, D.9103.jpg",
+        "titre": "Délégation d'aspirants armuriers de divers départements se rendant à la Convention à l'occasion de la fête du Salpêtre",
+        "auteur": "Jean-Baptiste Lesueur",
+        "date": "1794",
+        "technique": "gouache sur papier découpé",
+        "conservation": "Paris, musée Carnavalet (D.9103)",
+        "fichier": "088.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1085,
+        "camera": [
+          {
+            "cadre": [
+              0.04,
+              0.16,
+              0.96,
+              0.72
+            ]
+          },
+          {
+            "cadre": [
+              0.42,
+              0.22,
+              0.85,
+              0.71
+            ],
+            "quand": "fondre les canons"
+          }
+        ]
+      },
+      "n": 88,
+      "audio": {
+        "fichier": "088.m4a",
+        "duree": 16.5,
+        "phrases": [
+          [
+            0.0,
+            3.43
+          ],
+          [
+            4.3,
+            9.15
+          ],
+          [
+            9.88,
+            16.5
+          ]
+        ]
+      }
+    },
+    {
+      "n": 89,
       "narration": "En 1794, le Comité de salut public frappe à gauche puis à droite. Les hébertistes, partisans d'une terreur accrue, sont guillotinés en mars, puis les Indulgents, qui demandent la clémence. Le 5 avril, Danton monte à l'échafaud ; il aurait dit au bourreau : « Tu montreras ma tête au peuple, elle en vaut la peine. »",
       "date": "1794-03-24",
       "date_fin": "1794-04-05",
       "image": {
-        "fichier": "078.webp",
+        "fichier": "089.webp",
         "commons": "File:Danton Wille Carnavalet.jpg",
         "titre": "Danton conduit au supplice",
         "auteur": "Attribué à Pierre-Alexandre Wille (Wille fils)",
@@ -4361,7 +4977,7 @@
         ]
       },
       "audio": {
-        "fichier": "078.m4a",
+        "fichier": "089.m4a",
         "duree": 21.8,
         "phrases": [
           [
@@ -4380,12 +4996,110 @@
       }
     },
     {
-      "n": 79,
+      "narration": "Parmi les victimes de 1794 figure Antoine Lavoisier, le plus grand chimiste du temps. Dans son Traité élémentaire de chimie, paru en 1789, il pèse tout ce qui entre dans une expérience et en sort : rien ne se perd. Il montre ainsi que l'eau est faite de deux gaz, l'hydrogène et l'oxygène.",
+      "image": {
+        "commons": "File:Traité élémentaire de chimie - présenté dans un ordre nouveau et d'après les découvertes modernes; avec figures (1789) (14594914840).jpg",
+        "titre": "Traité élémentaire de chimie, planche XI",
+        "auteur": "Marie-Anne Paulze-Lavoisier, pour le traité d'Antoine-Laurent Lavoisier",
+        "date": "1789",
+        "technique": "gravure",
+        "conservation": "Boston, Countway Library of Medicine (exemplaire numérisé)",
+        "fichier": "090.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1070,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              0.93
+            ]
+          }
+        ]
+      },
+      "n": 90,
+      "audio": {
+        "fichier": "090.m4a",
+        "duree": 20.84,
+        "phrases": [
+          [
+            0.0,
+            6.17
+          ],
+          [
+            7.25,
+            15.51
+          ],
+          [
+            16.39,
+            20.84
+          ]
+        ]
+      }
+    },
+    {
+      "date": "1794-05-08",
+      "narration": "Sa femme, qui dessinait les planches de ses traités, pose à ses côtés. Mais Lavoisier était aussi fermier général, chargé de lever des impôts pour le roi : il est guillotiné le 8 mai 1794. Le mathématicien Lagrange aurait dit : « Il ne leur a fallu qu'un moment pour faire tomber cette tête. »",
+      "image": {
+        "commons": "File:Antoine-Laurent Lavoisier (1743–1794) and His Wife (Marie-Anne-Pierrette Paulze, 1758–1836) MET DT1992.jpg",
+        "titre": "Antoine-Laurent Lavoisier et sa femme, Marie-Anne Pierrette Paulze",
+        "auteur": "Jacques-Louis David",
+        "date": "1788",
+        "technique": "huile sur toile",
+        "conservation": "New York, Metropolitan Museum of Art (1977.10)",
+        "fichier": "091.webp",
+        "licence": "Domaine public",
+        "largeur": 1212,
+        "hauteur": 1600,
+        "camera": [
+          {
+            "cadre": [
+              0.18,
+              0.25,
+              0.76,
+              0.82
+            ]
+          },
+          {
+            "cadre": [
+              0.46,
+              0.33,
+              0.82,
+              0.68
+            ],
+            "quand": "Mais Lavoisier était aussi fermier général"
+          }
+        ]
+      },
+      "n": 91,
+      "audio": {
+        "fichier": "091.m4a",
+        "duree": 17.94,
+        "phrases": [
+          [
+            0.0,
+            3.82
+          ],
+          [
+            4.49,
+            12.19
+          ],
+          [
+            12.73,
+            17.94
+          ]
+        ]
+      }
+    },
+    {
+      "n": 92,
       "narration": "Le 8 juin 1794, Robespierre, président de la Convention, conduit la fête de l'Être suprême. Ce culte civique honore un Dieu sans Église et l'immortalité de l'âme. Deux jours plus tard, la loi du 22 prairial ouvre la Grande Terreur : à Paris, plus de mille trois cents exécutions en sept semaines.",
       "date": "1794-06-08",
       "date_fin": "1794-06-10",
       "image": {
-        "fichier": "079.webp",
+        "fichier": "092.webp",
         "commons": "File:Fête de l'Etre suprême 2.jpg",
         "titre": "La Fête de l'Être suprême au Champ-de-Mars",
         "auteur": "Pierre-Antoine Demachy",
@@ -4407,7 +5121,7 @@
         ]
       },
       "audio": {
-        "fichier": "079.m4a",
+        "fichier": "092.m4a",
         "duree": 19.4,
         "phrases": [
           [
@@ -4426,11 +5140,71 @@
       }
     },
     {
-      "n": 80,
+      "date": "1794-06-26",
+      "narration": "Le 26 juin 1794, à Fleurus, l'armée de Jourdan bat les Autrichiens et rouvre la route de la Belgique. Au-dessus du champ de bataille, un ballon captif, gonflé d'hydrogène tiré de l'eau sur du fer chauffé au rouge, observe l'ennemi. Avec la victoire, l'invasion s'éloigne, et la Terreur paraît moins nécessaire.",
+      "image": {
+        "commons": "File:Wonderful Balloon Ascents, 1870 - Employment of a Balloon at the Battle of Fleurus.jpg",
+        "titre": "Emploi d'un ballon à la bataille de Fleurus",
+        "auteur": "illustration du livre de Fulgence Marion, Wonderful Balloon Ascents",
+        "date": "1870",
+        "technique": "gravure sur bois",
+        "conservation": "Wonderful Balloon Ascents, Londres, 1870 (livre imprimé)",
+        "fichier": "093.webp",
+        "licence": "Domaine public",
+        "largeur": 820,
+        "hauteur": 1600,
+        "recadrage": [
+          0.0,
+          0.0,
+          0.83,
+          1.0
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.12,
+              0.58,
+              0.98,
+              0.9
+            ]
+          },
+          {
+            "cadre": [
+              0.08,
+              0.01,
+              0.55,
+              0.27
+            ],
+            "quand": "un ballon captif"
+          }
+        ]
+      },
+      "n": 93,
+      "audio": {
+        "fichier": "093.m4a",
+        "duree": 21.04,
+        "phrases": [
+          [
+            0.0,
+            7.04
+          ],
+          [
+            8.07,
+            15.25
+          ],
+          [
+            16.42,
+            21.04
+          ]
+        ]
+      }
+    },
+    {
+      "n": 94,
       "narration": "Le 9 thermidor an II, 27 juillet 1794, des députés menacés se liguent contre Robespierre, qui est décrété d'arrestation. Libéré par la Commune, il se réfugie à l'Hôtel de Ville. Dans la nuit, les troupes de la Convention l'investissent, et il est blessé à la mâchoire, peut-être en tentant de se tuer.",
       "date": "1794-07-27",
       "image": {
-        "fichier": "080.webp",
+        "fichier": "094.webp",
         "commons": "File:La nuit du 9 au 10 Thermidor An II. G.24616.jpg",
         "titre": "La nuit du 9 au 10 thermidor an II",
         "auteur": "Jean-Joseph-François Tassaert, d'après Fulchran-Jean Harriet",
@@ -4461,7 +5235,7 @@
         ]
       },
       "audio": {
-        "fichier": "080.m4a",
+        "fichier": "094.m4a",
         "duree": 19.86,
         "phrases": [
           [
@@ -4480,11 +5254,11 @@
       }
     },
     {
-      "n": 81,
+      "n": 95,
       "narration": "Ramené aux Tuileries, il est étendu sur une table du Comité de salut public, la mâchoire bandée, sous les regards et les insultes. Le lendemain, il est guillotiné avec Saint-Just, Couthon et une vingtaine de fidèles. Dans les jours qui suivent, plus de quatre-vingts membres de la Commune les suivent.",
       "date": "1794-07-28",
       "image": {
-        "fichier": "081.webp",
+        "fichier": "095.webp",
         "commons": "File:Robespierre étendu sur la table du Comité de salut public, le 9 thermidor an II (27 juillet 1794).jpg",
         "titre": "Robespierre étendu sur la table du Comité de salut public, le 9 thermidor an II",
         "auteur": "Anonyme",
@@ -4506,7 +5280,7 @@
         ]
       },
       "audio": {
-        "fichier": "081.m4a",
+        "fichier": "095.m4a",
         "duree": 16.53,
         "phrases": [
           [
@@ -4525,10 +5299,10 @@
       }
     },
     {
-      "n": 82,
+      "n": 96,
       "narration": "Aussitôt, les vainqueurs rejettent sur Robespierre toute la Terreur, dont beaucoup d'entre eux avaient pourtant été les acteurs. Cette caricature le montre guillotinant le bourreau lui-même, après avoir fait exécuter tous les Français. On l'accuse même d'avoir voulu se faire roi : c'est la naissance d'une légende noire.",
       "image": {
-        "fichier": "082.webp",
+        "fichier": "096.webp",
         "commons": "File:Robespierre guillotinant le boureau après avoir fait guillot.r tous les Français - estampe - btv1b6950785r.jpg",
         "titre": "Robespierre guillotinant le bourreau après avoir fait guillotiner tous les Français",
         "auteur": "Anonyme",
@@ -4565,7 +5339,7 @@
         ]
       },
       "audio": {
-        "fichier": "082.m4a",
+        "fichier": "096.m4a",
         "duree": 15.6,
         "phrases": [
           [
@@ -4584,12 +5358,12 @@
       }
     },
     {
-      "n": 83,
+      "n": 97,
       "narration": "Après Thermidor, la Terreur se défait : les prisons s'ouvrent peu à peu, la loi de prairial est abrogée, et Carrier est jugé. En novembre 1794, sous la pression de jeunes antijacobins, le club des Jacobins est fermé. Les Girondins emprisonnés retrouvent bientôt leur siège à la Convention.",
       "date": "1794-08",
       "date_fin": "1795-03",
       "image": {
-        "fichier": "083.webp",
+        "fichier": "097.webp",
         "commons": "File:Révolution française Nuit du 12 au 13 Thermidor An II (27 au 28 juillet 1794 Fermeture du Club des Jacobins par les , G.29033.jpg",
         "titre": "Fermeture du club des Jacobins",
         "auteur": "D'après Jean Duplessi-Bertaux, gravé par Reinier Vinkeles et Daniel Vrijdag",
@@ -4626,7 +5400,7 @@
         ]
       },
       "audio": {
-        "fichier": "083.m4a",
+        "fichier": "097.m4a",
         "duree": 18.95,
         "phrases": [
           [
@@ -4645,10 +5419,10 @@
       }
     },
     {
-      "n": 84,
+      "n": 98,
       "narration": "Cette jeunesse dorée, hostile aux Jacobins, fait la loi dans les rues. Les Incroyables, que la caricature moque ici, portent des chapeaux énormes, des cravates qui montent jusqu'au menton. On dit qu'ils affectent de ne pas prononcer les r, ce qui leur vaut leur surnom.",
       "image": {
-        "fichier": "084.webp",
+        "fichier": "098.webp",
         "commons": "File:Les Incroyables - estampe - C.s Vernet pinxit ; Darcis sculp. - btv1b8412776h.jpg",
         "titre": "Les Incroyables",
         "auteur": "Louis Darcis, d'après Carle Vernet",
@@ -4685,7 +5459,7 @@
         ]
       },
       "audio": {
-        "fichier": "084.m4a",
+        "fichier": "098.m4a",
         "duree": 15.57,
         "phrases": [
           [
@@ -4704,10 +5478,10 @@
       }
     },
     {
-      "n": 85,
+      "n": 99,
       "narration": "Leurs compagnes, les Merveilleuses, portent des robes légères et transparentes, à l'antique, et parfois des perruques blondes. Après les années de peur, Paris danse, s'amuse et affiche son luxe, autour de figures comme Thérésa Tallien ou Joséphine de Beauharnais. Ce luxe insolent contraste avec la misère du peuple.",
       "image": {
-        "fichier": "085.webp",
+        "fichier": "099.webp",
         "commons": "File:Les Merveilleuses, G.4404.jpg",
         "titre": "Les Merveilleuses",
         "auteur": "Louis Darcis, d'après Carle Vernet",
@@ -4738,7 +5512,7 @@
         ]
       },
       "audio": {
-        "fichier": "085.m4a",
+        "fichier": "099.m4a",
         "duree": 18.01,
         "phrases": [
           [
@@ -4757,10 +5531,10 @@
       }
     },
     {
-      "n": 86,
+      "n": 100,
       "narration": "Une mode macabre circule : cheveux courts et nuque dégagée, dits à la victime, rappellent les condamnés préparés pour la guillotine. On racontera que des bals des victimes étaient réservés aux parents de guillotinés ; leur existence reste discutée par les historiens. Cette mode dit à sa manière le traumatisme de la Terreur.",
       "image": {
-        "fichier": "086.webp",
+        "fichier": "100.webp",
         "commons": "File:Chemise à la victime - pour faire suite aux costumes des modes françaises - elle est composée d'une pièce sur le devant attachée derrière par le milieu du corps, bretelles à l'anglaises pantalon de nanquin -... - btv1b6948831r.jpg",
         "titre": "Chemise à la victime",
         "auteur": "Anonyme",
@@ -4797,7 +5571,7 @@
         ]
       },
       "audio": {
-        "fichier": "086.m4a",
+        "fichier": "100.m4a",
         "duree": 17.77,
         "phrases": [
           [
@@ -4816,12 +5590,180 @@
       }
     },
     {
-      "n": 87,
+      "date": "1794-08-15",
+      "narration": "Désormais, le télégraphe de Claude Chappe dresse, sur des tours espacées d'une dizaine de kilomètres, un bras articulé dont chaque position code un signe. Chaque poste lit le signal à la longue-vue et le répète au suivant. Mi-août 1794, la Convention apprend ainsi le jour même la reprise du Quesnoy.",
+      "image": {
+        "commons": "File:T2- d056 - Fig. 18. — Télégraphe de Chappe.png",
+        "titre": "Télégraphe de Chappe",
+        "auteur": "Louis Figuier, Les Merveilles de la science",
+        "date": "1868",
+        "technique": "gravure sur bois",
+        "conservation": "Les Merveilles de la science, tome II, figure 18 (livre imprimé)",
+        "fichier": "101.webp",
+        "licence": "Domaine public",
+        "largeur": 787,
+        "hauteur": 1600,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.05,
+              0.0,
+              0.88,
+              0.49
+            ],
+            "quand": "un bras articulé dont chaque position"
+          }
+        ]
+      },
+      "n": 101,
+      "audio": {
+        "fichier": "101.m4a",
+        "duree": 17.56,
+        "phrases": [
+          [
+            0.0,
+            7.65
+          ],
+          [
+            8.3,
+            11.43
+          ],
+          [
+            12.31,
+            17.56
+          ]
+        ]
+      }
+    },
+    {
+      "date": "1794-08-31",
+      "narration": "Fin août 1794, l'abbé Grégoire dénonce à la Convention les destructions d'œuvres d'art, qu'il nomme vandalisme, un mot qu'il dit avoir inventé. Lenoir rassemble alors aux Petits-Augustins les tombeaux sauvés. En 1795, ce dépôt devient le musée des Monuments français, rangé siècle par siècle.",
+      "image": {
+        "commons": "File:Jean-Lubin Vauzelle - La Salle d'introduction du musée des Monuments français.jpg",
+        "titre": "La Salle d'introduction du musée des Monuments français",
+        "auteur": "Jean-Lubin Vauzelle",
+        "date": "1804",
+        "technique": "huile sur toile",
+        "conservation": "Paris, musée Carnavalet (P.2074)",
+        "fichier": "102.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1300,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.1,
+              0.06,
+              0.56,
+              0.92
+            ],
+            "quand": "les tombeaux sauvés"
+          },
+          {
+            "cadre": [
+              0.35,
+              0.15,
+              0.98,
+              0.88
+            ],
+            "quand": "le musée des Monuments français"
+          }
+        ]
+      },
+      "n": 102,
+      "audio": {
+        "fichier": "102.m4a",
+        "duree": 18.99,
+        "phrases": [
+          [
+            0.0,
+            9.52
+          ],
+          [
+            10.28,
+            12.97
+          ],
+          [
+            13.47,
+            18.99
+          ]
+        ]
+      }
+    },
+    {
+      "date": "1794-10",
+      "narration": "À l'automne 1794, la Convention fonde en hâte des écoles pour former ingénieurs et professeurs. L'École centrale des travaux publics, future Polytechnique, ouvre en décembre : Monge y enseigne la géométrie descriptive, l'art de représenter sur le papier machines et fortifications. Naissent aussi le Conservatoire des arts et métiers et l'École normale.",
+      "image": {
+        "commons": "File:Portrait de Gaspard Monge, G.20828-116.jpg",
+        "titre": "Portrait de Gaspard Monge",
+        "auteur": "André Dutertre",
+        "date": "entre 1798 et 1801",
+        "technique": "eau-forte et aquatinte",
+        "conservation": "Paris, musée Carnavalet (G.20828-116)",
+        "fichier": "103.webp",
+        "licence": "Domaine public",
+        "largeur": 1411,
+        "hauteur": 1600,
+        "recadrage": [
+          0.16,
+          0.12,
+          0.86,
+          0.96
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.07,
+              0.1,
+              0.85,
+              0.88
+            ]
+          }
+        ]
+      },
+      "n": 103,
+      "audio": {
+        "fichier": "103.m4a",
+        "duree": 21.53,
+        "phrases": [
+          [
+            0.0,
+            6.38
+          ],
+          [
+            7.17,
+            17.12
+          ],
+          [
+            17.53,
+            21.53
+          ]
+        ]
+      }
+    },
+    {
+      "n": 104,
       "narration": "Mais la misère est grande : en décembre 1794, la Convention supprime le maximum, qui plafonnait les prix. L'assignat s'effondre : on imprime désormais des billets de dix mille francs, comme celui-ci. L'hiver, d'une rigueur exceptionnelle, aggrave la disette, et le prix du pain flambe dans les villes.",
       "date": "1794-12",
       "date_fin": "1795-03",
       "image": {
-        "fichier": "087.webp",
+        "fichier": "104.webp",
         "commons": "File:Assignat vérificateur de 10000 francs, série 2. n° 81, 18 nivôse an 3, GB152.jpg",
         "titre": "Assignat de 10 000 francs, 18 nivôse an III",
         "auteur": "Caisse de l'Extraordinaire ; graveurs Nicolas Marie Gatteaux et Augustin Dupré",
@@ -4852,7 +5794,7 @@
         ]
       },
       "audio": {
-        "fichier": "087.m4a",
+        "fichier": "104.m4a",
         "duree": 18.39,
         "phrases": [
           [
@@ -4872,11 +5814,11 @@
       "camera_manuelle": true
     },
     {
-      "n": 88,
+      "n": 105,
       "narration": "Le 20 mai 1795, 1er prairial an III, les faubourgs affamés envahissent la Convention aux cris de « Du pain et la Constitution de 1793 ! ». Le député Féraud est tué, et sa tête, plantée sur une pique, est présentée au président de l'assemblée, Boissy d'Anglas, qui la salue, impassible.",
       "date": "1795-05-20",
       "image": {
-        "fichier": "088.webp",
+        "fichier": "105.webp",
         "commons": "File:1er prairial an III.jpg",
         "titre": "Journée du 1er prairial de l'an III : Féraud, représentant du peuple, assassiné dans la Convention nationale",
         "auteur": "Isidore-Stanislas Helman et Jean Duplessi-Bertaux, d'après Charles Monnet",
@@ -4907,7 +5849,7 @@
         ]
       },
       "audio": {
-        "fichier": "088.m4a",
+        "fichier": "105.m4a",
         "duree": 17.64,
         "phrases": [
           [
@@ -4922,11 +5864,11 @@
       }
     },
     {
-      "n": 89,
+      "n": 106,
       "narration": "Cette fois, l'armée écrase l'insurrection et désarme le faubourg Saint-Antoine. Les sans-culottes disparaissent pour longtemps de la scène politique. Cette caricature oppose le Jacobin du premier jour, fier et menaçant, au même homme, piteux, trois jours plus tard : la peur a changé de camp.",
       "date": "1795-05-23",
       "image": {
-        "fichier": "089.webp",
+        "fichier": "106.webp",
         "commons": "File:Le Jacobin du 1.ier prairial ; Le Jacobin du 4.ime prairial - estampe - non identifié - btv1b6950709c.jpg",
         "titre": "Le Jacobin du 1er prairial ; le Jacobin du 4e prairial",
         "auteur": "Anonyme",
@@ -4966,7 +5908,7 @@
         ]
       },
       "audio": {
-        "fichier": "089.m4a",
+        "fichier": "106.m4a",
         "duree": 16.32,
         "phrases": [
           [
@@ -4985,12 +5927,12 @@
       }
     },
     {
-      "n": 90,
+      "n": 107,
       "narration": "Dans le Midi et la vallée du Rhône, c'est la Terreur blanche. Des bandes royalistes, comme les compagnons de Jéhu, traquent et massacrent d'anciens Jacobins, jusque dans les prisons de Lyon ou de Marseille. Cette caricature dénonce ces tueurs qui se disent amis de la justice et de l'humanité.",
       "date": "1795-04",
       "date_fin": "1795-06",
       "image": {
-        "fichier": "090.webp",
+        "fichier": "107.webp",
         "commons": "File:Terreur blanche 1795.jpg",
         "titre": "L'Ami de la justice et de l'humanité, ou le Jacobin déguisé",
         "auteur": "Anonyme",
@@ -5030,7 +5972,7 @@
         ]
       },
       "audio": {
-        "fichier": "090.m4a",
+        "fichier": "107.m4a",
         "duree": 15.88,
         "phrases": [
           [
@@ -5049,12 +5991,12 @@
       }
     },
     {
-      "n": 91,
+      "n": 108,
       "narration": "En juin 1795, des émigrés débarquent à Quiberon avec l'aide anglaise, pour soulever les chouans, ces insurgés royalistes de Bretagne. Le général Hoche les écrase en juillet. Plus de sept cents prisonniers sont ensuite fusillés, ce que cette image de victoire se garde de montrer.",
       "date": "1795-06-27",
       "date_fin": "1795-07-21",
       "image": {
-        "fichier": "091.webp",
+        "fichier": "108.webp",
         "commons": "File:N°127 Victoire remportée par les Français, à Quiberon, le 21 juillet 1795 ou 3 Thermidor An 3ème de la République. G.23536.jpg",
         "titre": "Victoire remportée par les Français à Quiberon, le 21 juillet 1795 (3 thermidor an III)",
         "auteur": "D'après Jacques François Joseph Swebach-Desfontaines, gravé par Charles-Louis Malapeau",
@@ -5076,7 +6018,7 @@
         ]
       },
       "audio": {
-        "fichier": "091.m4a",
+        "fichier": "108.m4a",
         "duree": 17.64,
         "phrases": [
           [
@@ -5096,11 +6038,11 @@
       "camera_manuelle": true
     },
     {
-      "n": 92,
+      "n": 109,
       "narration": "En août 1795, la Convention adopte une nouvelle constitution, celle de l'an III. Pour éviter la dictature d'un homme ou d'une assemblée, le pouvoir est partagé entre deux conseils et cinq directeurs. Le vote redevient réservé aux contribuables, et la Déclaration qui précède le texte ajoute aux droits des devoirs.",
       "date": "1795-08-22",
       "image": {
-        "fichier": "092.webp",
+        "fichier": "109.webp",
         "commons": "File:Constitution de la République Française du 5 fructidor an 3 (22 août 1795). Déclaration des Droits et des Devoirs de l'Homme et du Citoyen.jpg",
         "titre": "Constitution de la République française du 5 fructidor an III. Déclaration des droits et des devoirs de l'homme et du citoyen",
         "auteur": "Bénard, graveur en lettres",
@@ -5131,7 +6073,7 @@
         ]
       },
       "audio": {
-        "fichier": "092.m4a",
+        "fichier": "109.m4a",
         "duree": 18.67,
         "phrases": [
           [
@@ -5150,11 +6092,11 @@
       }
     },
     {
-      "n": 93,
+      "n": 110,
       "narration": "Pour garder le pouvoir, les conventionnels imposent que les deux tiers des futurs députés soient choisis parmi eux. Les royalistes, indignés, marchent sur la Convention le 5 octobre 1795, 13 vendémiaire an IV. Devant l'église Saint-Roch, ils sont dispersés au canon par le jeune général Bonaparte, qu'on surnomme désormais le général Vendémiaire.",
       "date": "1795-10-05",
       "image": {
-        "fichier": "093.webp",
+        "fichier": "110.webp",
         "commons": "File:Journée du treize vendémiaire an 4 - épisode de Saint-Roch - estampe - non identifié - btv1b8412476g.jpg",
         "titre": "Journée du 13 vendémiaire an IV : épisode de Saint-Roch",
         "auteur": "Anonyme",
@@ -5185,7 +6127,7 @@
         ]
       },
       "audio": {
-        "fichier": "093.m4a",
+        "fichier": "110.m4a",
         "duree": 20.92,
         "phrases": [
           [
@@ -5204,12 +6146,12 @@
       }
     },
     {
-      "n": 94,
+      "n": 111,
       "narration": "Fin octobre 1795, la Convention se sépare. Les cinq directeurs, dont Barras, s'installent au palais du Luxembourg, avec un cérémonial et des costumes neufs pour asseoir leur autorité. Le régime doit gouverner entre deux menaces, les royalistes et les Jacobins, dans un pays épuisé par la guerre et la crise financière.",
       "date": "1795-10",
       "date_fin": "1795-11",
       "image": {
-        "fichier": "094.webp",
+        "fichier": "111.webp",
         "commons": "File:Audience du Directoire en Costume. Le 30 Brumaire An 4ème de la République. G.29136(2).jpg",
         "titre": "Audience du Directoire en costume, le 30 brumaire an IV",
         "auteur": "Pierre-Gabriel Berthault, d'après Jean Duplessi-Bertaux",
@@ -5246,7 +6188,7 @@
         ]
       },
       "audio": {
-        "fichier": "094.m4a",
+        "fichier": "111.m4a",
         "duree": 19.08,
         "phrases": [
           [
@@ -5265,12 +6207,12 @@
       }
     },
     {
-      "n": 95,
+      "n": 112,
       "narration": "À gauche, Gracchus Babeuf rêve d'une société des Égaux, où la propriété privée serait abolie et les biens mis en commun. Sa conspiration est dénoncée et découverte en mai 1796, et Babeuf est guillotiné un an plus tard. On voit souvent en lui l'un des précurseurs du communisme.",
       "date": "1796-05-10",
       "date_fin": "1797-05-27",
       "image": {
-        "fichier": "095.webp",
+        "fichier": "112.webp",
         "commons": "File:François-Noël Babeuf.jpg",
         "titre": "Gracchus Babeuf, âgé de 34 ans",
         "auteur": "François Bonneville",
@@ -5292,7 +6234,7 @@
         ]
       },
       "audio": {
-        "fichier": "095.m4a",
+        "fichier": "112.m4a",
         "duree": 17.25,
         "phrases": [
           [
@@ -5311,12 +6253,12 @@
       }
     },
     {
-      "n": 96,
+      "n": 113,
       "narration": "La guerre continue contre l'Autriche : nommé en 1796 à la tête de l'armée d'Italie, Bonaparte enchaîne les victoires. Au pont d'Arcole, en novembre, il s'élance drapeau en main sous la mitraille, du moins selon sa légende. Ce portrait héroïque, jeune général aux cheveux au vent, sert à merveille sa propagande.",
       "date": "1796-03",
       "date_fin": "1796-11",
       "image": {
-        "fichier": "096.webp",
+        "fichier": "113.webp",
         "commons": "File:Antoine-Jean Gros - Bonaparte au pont d'Arcole(1796).jpg",
         "titre": "Bonaparte au pont d'Arcole (esquisse)",
         "auteur": "Antoine-Jean Gros",
@@ -5347,7 +6289,7 @@
         ]
       },
       "audio": {
-        "fichier": "096.m4a",
+        "fichier": "113.m4a",
         "duree": 20.77,
         "phrases": [
           [
@@ -5366,12 +6308,56 @@
       }
     },
     {
-      "n": 97,
+      "narration": "Au printemps 1797, l'opéra-comique Le Jeune Henri, de Méhul, raconte la jeunesse d'Henri IV. Le public siffle le livret, mais fait rejouer l'ouverture, une chasse aux sonneries de cor qui fera le tour de l'Europe. Méhul est l'un des inspecteurs du Conservatoire, fondé en 1795 : écoutons cette Chasse du jeune Henri.",
+      "image": {
+        "commons": "File:Étienne-Henri Méhul, attribué à Antoine Gros, 1799.jpg",
+        "titre": "Portrait d'Étienne Méhul",
+        "auteur": "attribué à Antoine-Jean Gros",
+        "date": "1799",
+        "technique": "huile sur toile",
+        "conservation": "Paris, musée Carnavalet",
+        "fichier": "114.webp",
+        "licence": "Domaine public",
+        "largeur": 1312,
+        "hauteur": 1600,
+        "camera": [
+          {
+            "cadre": [
+              0.11,
+              0.06,
+              0.84,
+              0.8
+            ]
+          }
+        ]
+      },
+      "n": 114,
+      "audio": {
+        "fichier": "114.m4a",
+        "duree": 21.27,
+        "phrases": [
+          [
+            0.0,
+            6.82
+          ],
+          [
+            7.66,
+            14.58
+          ],
+          [
+            15.18,
+            21.27
+          ]
+        ]
+      }
+    },
+    {
+      "n": 115,
       "narration": "En octobre 1797, la paix de Campo-Formio avec l'Autriche consacre ses conquêtes : la France garde la Belgique et domine l'Italie du Nord. En décembre, le Directoire reçoit Bonaparte en triomphe au palais du Luxembourg. Populaire et ambitieux, le général victorieux devient pour le régime un allié aussi précieux que dangereux.",
       "date": "1797-10-17",
       "date_fin": "1797-12-10",
       "image": {
-        "fichier": "097.webp",
+        "fichier": "115.webp",
         "commons": "File:Fête donnée au Luxembourg le 20 Frimaire an VI (11 décembre 1795) Bonaparte remet au Directoire le traité de Campo For, D.6037(2).jpg",
         "titre": "Fête donnée au Luxembourg le 20 frimaire an VI : Bonaparte remet au Directoire le traité de Campo-Formio",
         "auteur": "Attribué à Jacques François Joseph Swebach-Desfontaines",
@@ -5402,7 +6388,7 @@
         ]
       },
       "audio": {
-        "fichier": "097.m4a",
+        "fichier": "115.m4a",
         "duree": 20.49,
         "phrases": [
           [
@@ -5421,11 +6407,11 @@
       }
     },
     {
-      "n": 98,
+      "n": 116,
       "narration": "La République reste fragile : au printemps 1797, les royalistes gagnent les élections. Le 4 septembre, 18 fructidor an V, trois directeurs font occuper Paris par l'armée du général Augereau. Les élections sont annulées dans des dizaines de départements, et des députés et des journalistes sont condamnés à la déportation en Guyane.",
       "date": "1797-09-04",
       "image": {
-        "fichier": "098.webp",
+        "fichier": "116.webp",
         "commons": "File:N°139 Journée célèbre du 18 Fructidor, An 5eme. de la République. G.29188(2).jpg",
         "titre": "Journée célèbre du 18 fructidor an V",
         "auteur": "Pierre-Gabriel Berthault, d'après Abraham Girardet",
@@ -5471,7 +6457,7 @@
         ]
       },
       "audio": {
-        "fichier": "098.m4a",
+        "fichier": "116.m4a",
         "duree": 20.81,
         "phrases": [
           [
@@ -5490,10 +6476,10 @@
       }
     },
     {
-      "n": 99,
+      "n": 117,
       "narration": "Pour remplacer le catholicisme, des républicains essaient des cultes nouveaux, fondés sur la nature et la morale. La théophilanthropie, soutenue par le directeur La Révellière-Lépeaux, honore un Dieu bienveillant avec des hymnes et des fleurs. Mais ces cultes restent l'affaire d'une petite élite, et la plupart des fidèles restent catholiques.",
       "image": {
-        "fichier": "099.webp",
+        "fichier": "117.webp",
         "commons": "File:Le culte naturel.jpg",
         "titre": "Le Culte naturel",
         "auteur": "Jean-Baptiste Mallet",
@@ -5524,7 +6510,7 @@
         ]
       },
       "audio": {
-        "fichier": "099.m4a",
+        "fichier": "117.m4a",
         "duree": 19.48,
         "phrases": [
           [
@@ -5543,12 +6529,74 @@
       }
     },
     {
-      "n": 100,
+      "narration": "La médecine change aussi de regard. Nommé à Bicêtre en 1793, puis à la Salpêtrière en 1795, Philippe Pinel veut soigner les aliénés par la douceur plutôt que par les chaînes. Ce tableau, peint bien plus tard, en fait une légende : c'est d'abord son surveillant, Jean-Baptiste Pussin, qui fit retirer les fers.",
+      "image": {
+        "commons": "File:Philippe Pinel à la Salpêtrière .jpg",
+        "titre": "Pinel, médecin en chef de la Salpêtrière, délivrant les aliénés de leurs chaînes",
+        "auteur": "Tony Robert-Fleury",
+        "date": "1876",
+        "technique": "huile sur toile",
+        "conservation": "Paris, hôpital de la Salpêtrière",
+        "fichier": "118.webp",
+        "licence": "Domaine public",
+        "largeur": 1400,
+        "hauteur": 971,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.16,
+              0.17,
+              0.52,
+              0.92
+            ],
+            "quand": "Philippe Pinel veut soigner les aliénés"
+          },
+          {
+            "cadre": [
+              0.34,
+              0.24,
+              0.68,
+              0.98
+            ],
+            "quand": "surveillant, Jean-Baptiste Pussin, qui fit retirer"
+          }
+        ]
+      },
+      "n": 118,
+      "audio": {
+        "fichier": "118.m4a",
+        "duree": 20.85,
+        "phrases": [
+          [
+            0.0,
+            1.84
+          ],
+          [
+            2.6,
+            12.39
+          ],
+          [
+            13.37,
+            20.85
+          ]
+        ]
+      }
+    },
+    {
+      "n": 119,
       "narration": "En juillet 1798, une grande fête accueille à Paris les œuvres d'art saisies en Italie. Tableaux, statues antiques et chevaux de bronze de Saint-Marc de Venise défilent sur des chars, comme lors d'un triomphe romain. La République se veut l'héritière de Rome et fait du Louvre le musée de l'Europe.",
       "date": "1798-07-27",
       "date_fin": "1798-07-28",
       "image": {
-        "fichier": "100.webp",
+        "fichier": "119.webp",
         "commons": "File:Entrée triomphale des monuments des sciences et arts en France, fête à ce sujet les 9 et 10 thermidor an 6.e de la République - estampe - Girardet inv. et del. ; Berthault sculp. - btv1b53284309s.jpg",
         "titre": "Entrée triomphale des monuments des sciences et arts en France, fête à ce sujet les 9 et 10 thermidor an VI",
         "auteur": "Pierre-Gabriel Berthault, d'après Abraham Girardet",
@@ -5585,7 +6633,7 @@
         ]
       },
       "audio": {
-        "fichier": "100.m4a",
+        "fichier": "119.m4a",
         "duree": 18.76,
         "phrases": [
           [
@@ -5604,10 +6652,10 @@
       }
     },
     {
-      "n": 101,
-      "narration": "Le Directoire poursuit l'œuvre savante de la Révolution : le mètre est défini à partir de la mesure du méridien, entre Dunkerque et Barcelone. Le litre et le gramme doivent remplacer des centaines de mesures qui variaient d'une province à l'autre. Cette estampe enseigne leurs usages, mais les vieilles habitudes résisteront longtemps.",
+      "n": 120,
+      "narration": "Le Directoire achève l'œuvre savante de la Révolution : en juin 1799, la méridienne enfin mesurée, un mètre-étalon en platine est déposé aux Archives. Le litre et le gramme doivent remplacer des centaines de mesures qui variaient d'une province à l'autre. Cette estampe enseigne leurs usages, mais les vieilles habitudes résisteront longtemps.",
       "image": {
-        "fichier": "101.webp",
+        "fichier": "120.webp",
         "commons": "File:Usages des Nouvelles Mesures - estampe - J. P. Delion G... inv. ; Labrousse Sculp. - btv1b8412951c.jpg",
         "titre": "Usages des nouvelles mesures",
         "auteur": "Louis-François Labrousse, chez Delion",
@@ -5634,48 +6682,39 @@
           },
           {
             "cadre": [
-              0.52,
+              0.11,
               0.08,
-              0.88,
-              0.51
-            ],
-            "quand": "le mètre est défini"
-          },
-          {
-            "cadre": [
-              0.1,
-              0.08,
-              0.6,
-              0.51
+              0.58,
+              0.5
             ],
             "quand": "Le litre et le gramme"
           }
         ]
       },
       "audio": {
-        "fichier": "101.m4a",
-        "duree": 19.34,
+        "fichier": "120.m4a",
+        "duree": 20.82,
         "phrases": [
           [
             0.0,
-            8.5
+            10.07
           ],
           [
-            9.27,
-            14.04
+            10.92,
+            15.51
           ],
           [
-            14.87,
-            19.34
+            16.24,
+            20.82
           ]
         ]
       }
     },
     {
-      "n": 102,
+      "n": 121,
       "narration": "Les arts renaissent. Dans l'atelier du miniaturiste Isabey se pressent une trentaine de peintres, de musiciens et d'acteurs, dont les peintres Gérard et Girodet. Le Salon, ouvert à tous les artistes depuis 1791, attire les foules au Louvre, et l'Institut, fondé en 1795, réunit savants, écrivains et artistes.",
       "image": {
-        "fichier": "102.webp",
+        "fichier": "121.webp",
         "commons": "File:Réunion d'artistes dans l'atelier d'Isabey - Louis-Léopold Boilly - Musée du Louvre Peintures RF 1290bis.jpg",
         "titre": "Réunion d'artistes dans l'atelier d'Isabey",
         "auteur": "Louis-Léopold Boilly",
@@ -5697,7 +6736,7 @@
         ]
       },
       "audio": {
-        "fichier": "102.m4a",
+        "fichier": "121.m4a",
         "duree": 22.6,
         "phrases": [
           [
@@ -5716,12 +6755,12 @@
       }
     },
     {
-      "n": 103,
+      "n": 122,
       "narration": "En 1798, pour frapper l'Angleterre sur la route des Indes, Bonaparte part pour l'Égypte avec une armée et plus de cent cinquante savants. Le 21 juillet, il bat les Mamelouks au pied des pyramides. Mais début août, l'amiral Nelson détruit la flotte française à Aboukir : l'armée est prise au piège.",
       "date": "1798-05-19",
       "date_fin": "1798-08-02",
       "image": {
-        "fichier": "103.webp",
+        "fichier": "122.webp",
         "commons": "File:Battle of the Pyramids (by Louis-François Lejeune).jpg",
         "titre": "Vue générale de la bataille des Pyramides, le 21 juillet 1798",
         "auteur": "Louis-François Lejeune",
@@ -5752,7 +6791,7 @@
         ]
       },
       "audio": {
-        "fichier": "103.m4a",
+        "fichier": "122.m4a",
         "duree": 17.61,
         "phrases": [
           [
@@ -5771,12 +6810,12 @@
       }
     },
     {
-      "n": 104,
+      "n": 123,
       "narration": "En France, le régime s'use : défaites militaires, impôts impopulaires, brigandage. Entré au Directoire en mai 1799, Sieyès, l'auteur du pamphlet de 1789, juge la constitution impuissante et cherche, dit-on, « une épée ». Son choix se porte finalement sur Bonaparte, qui a quitté l'Égypte et débarque en France en octobre.",
       "date": "1799-05-16",
       "date_fin": "1799-10-09",
       "image": {
-        "fichier": "104.webp",
+        "fichier": "123.webp",
         "commons": "File:SIEYES - Membre du Directoire Executif.. en Grand Costume. G.31924(2).jpg",
         "titre": "Sieyès, membre du Directoire exécutif, en grand costume",
         "auteur": "François Bonneville",
@@ -5807,7 +6846,7 @@
         ]
       },
       "audio": {
-        "fichier": "104.m4a",
+        "fichier": "123.m4a",
         "duree": 21.76,
         "phrases": [
           [
@@ -5826,12 +6865,12 @@
       }
     },
     {
-      "n": 105,
+      "n": 124,
       "narration": "Le 18 brumaire an VIII, 9 novembre 1799, sous prétexte d'un complot jacobin, les conseils sont transférés à Saint-Cloud. Le lendemain, Bonaparte entre au Conseil des Cinq-Cents. Les députés l'entourent et le bousculent aux cris de « Hors la loi ! » ; c'est son frère Lucien, président de l'assemblée, qui le tire d'affaire.",
       "date": "1799-11-09",
       "date_fin": "1799-11-10",
       "image": {
-        "fichier": "105.webp",
+        "fichier": "124.webp",
         "commons": "File:Coup d'Etat des 18-19 brumaire an VIII Bonaparte menacé par les députés du Conseil des Cinq-Cents, Saint Cloud, le 10 , D.14433.jpg",
         "titre": "La Séance de Saint-Cloud : Bonaparte menacé par les députés du Conseil des Cinq-Cents",
         "auteur": "Jean-Baptiste Lesueur",
@@ -5859,7 +6898,7 @@
         ]
       },
       "audio": {
-        "fichier": "105.m4a",
+        "fichier": "124.m4a",
         "duree": 20.88,
         "phrases": [
           [
@@ -5879,11 +6918,11 @@
       "camera_manuelle": true
     },
     {
-      "n": 106,
+      "n": 125,
       "narration": "Lucien fait entrer les grenadiers, qui dispersent les députés. Le soir, une poignée d'entre eux confie le pouvoir à trois consuls : Bonaparte, Sieyès et Roger Ducos. Ce tableau, peint bien plus tard, montre un Bonaparte bousculé mais maître de lui : la légende napoléonienne a déjà réécrit la scène.",
       "date": "1799-11-10",
       "image": {
-        "fichier": "106.webp",
+        "fichier": "125.webp",
         "commons": "File:Bouchot - Le general Bonaparte au Conseil des Cinq-Cents.jpg",
         "titre": "Le Général Bonaparte au Conseil des Cinq-Cents, à Saint-Cloud, 10 novembre 1799",
         "auteur": "François Bouchot",
@@ -5914,7 +6953,7 @@
         ]
       },
       "audio": {
-        "fichier": "106.m4a",
+        "fichier": "125.m4a",
         "duree": 18.75,
         "phrases": [
           [
@@ -5933,11 +6972,65 @@
       }
     },
     {
-      "n": 107,
+      "date": "1799-12",
+      "narration": "Au même moment, David, emprisonné deux fois après Thermidor, livre une autre leçon. Ses Sabines, exposées au Louvre en décembre 1799, montrent Hersilie se jetant entre son père et son époux pour arrêter le combat. Après dix ans de guerres civiles, le peintre de Marat appelle à la réconciliation.",
+      "image": {
+        "commons": "File:The Intervention of the Sabine Women - David (Louvre INV 3691).jpg",
+        "titre": "Les Sabines",
+        "auteur": "Jacques-Louis David",
+        "date": "1799",
+        "technique": "huile sur toile",
+        "conservation": "Paris, musée du Louvre (INV 3691)",
+        "fichier": "126.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1203,
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.03,
+              0.37,
+              0.82,
+              0.96
+            ],
+            "quand": "montrent Hersilie se jetant entre son père"
+          }
+        ]
+      },
+      "n": 126,
+      "audio": {
+        "fichier": "126.m4a",
+        "duree": 18.93,
+        "phrases": [
+          [
+            0.0,
+            4.91
+          ],
+          [
+            5.65,
+            13.75
+          ],
+          [
+            14.71,
+            18.93
+          ]
+        ]
+      }
+    },
+    {
+      "n": 127,
       "narration": "En décembre 1799, une nouvelle constitution donne l'essentiel du pouvoir au Premier consul, Bonaparte. Les consuls proclament : « Citoyens, la Révolution est fixée aux principes qui l'ont commencée. Elle est finie. » Après dix années de tumulte, un général gouverne la France : commencent le Consulat, puis l'Empire.",
       "date": "1799-12",
       "image": {
-        "fichier": "107.webp",
+        "fichier": "127.webp",
         "commons": "File:François Gérard - Napoléon Bonaparte Premier Consul - Google Art Project.jpg",
         "titre": "Portrait de Bonaparte, Premier consul",
         "auteur": "François Gérard",
@@ -5959,7 +7052,7 @@
         ]
       },
       "audio": {
-        "fichier": "107.m4a",
+        "fichier": "127.m4a",
         "duree": 22.63,
         "phrases": [
           [
@@ -6213,7 +7306,7 @@
     "intermedes": [
       {
         "id": "chant-o-richard",
-        "apres": 26,
+        "apres": 28,
         "fichier": "musique/chant-o-richard.m4a",
         "titre": "Ô Richard, ô mon roi",
         "auteur": "Grétry et Sedaine, Richard Cœur de Lion",
@@ -6245,7 +7338,7 @@
       },
       {
         "id": "chant-marseillaise",
-        "apres": 43,
+        "apres": 47,
         "fichier": "musique/chant-marseillaise.m4a",
         "titre": "La Marseillaise",
         "auteur": "Rouget de Lisle",
@@ -6287,7 +7380,7 @@
       },
       {
         "id": "chant-du-depart",
-        "apres": 55,
+        "apres": 61,
         "fichier": "musique/chant-du-depart.m4a",
         "titre": "Le Chant du départ",
         "auteur": "Méhul et Marie-Joseph Chénier",
@@ -6321,13 +7414,34 @@
           ]
         ],
         "duree": 25.6
+      },
+      {
+        "id": "musique-jeune-henri",
+        "apres": 114,
+        "fichier": "musique/musique-jeune-henri.m4a",
+        "titre": "La Chasse du jeune Henri",
+        "auteur": "Méhul, ouverture du Jeune Henri",
+        "date": "1797",
+        "interprete": "orchestre dirigé par Roger Désormière",
+        "enregistrement": "1951",
+        "source": {
+          "type": "commons",
+          "fichier": "File:Méhul Desormière - Chasse du jeune Henri.flac"
+        },
+        "licence": "Domaine public (enregistrement publié avant 1963)",
+        "debut": 0.9,
+        "fin": 25,
+        "fondu_sortie": 2.0,
+        "instrumental": true,
+        "paroles": [],
+        "duree": 24.1
       }
     ]
   },
   "lectures": [
     {
       "id": "sieyes",
-      "apres": 6,
+      "apres": 7,
       "date": "1789-01",
       "auteur": {
         "nom": "Emmanuel-Joseph Sieyès",
@@ -6347,7 +7461,7 @@
         "Qui donc oserait dire que le tiers état n’a pas en lui tout ce qu’il faut pour former une nation complète ? Il est l’homme fort et robuste dont un bras est encore enchaîné. Si l’on ôtait l’ordre privilégié, la nation ne serait pas quelque chose de moins, mais quelque chose de plus. Ainsi, qu’est-ce que le tiers ? Tout, mais un tout entravé et opprimé. Que serait-il sans l’ordre privilégié ? Tout, mais un tout libre et florissant. Rien ne peut aller sans lui, tout irait infiniment mieux sans les autres."
       ],
       "portrait": {
-        "diapositive": 6,
+        "diapositive": 7,
         "cadre": [
           0.3,
           0.1,
@@ -6754,7 +7868,7 @@
     },
     {
       "id": "gouges",
-      "apres": 41,
+      "apres": 45,
       "date": "1791-09",
       "auteur": {
         "nom": "Olympe de Gouges",
@@ -7129,7 +8243,7 @@
     },
     {
       "id": "saint-just",
-      "apres": 51,
+      "apres": 57,
       "date": "1792-11-13",
       "auteur": {
         "nom": "Louis-Antoine de Saint-Just",
@@ -7484,7 +8598,7 @@
     },
     {
       "id": "la-rochejaquelein",
-      "apres": 56,
+      "apres": 62,
       "date": "1793-03",
       "auteur": {
         "nom": "Victoire de Donnissan, marquise de La Rochejaquelein",
@@ -7873,7 +8987,7 @@
     },
     {
       "id": "robespierre",
-      "apres": 68,
+      "apres": 77,
       "date": "1794-02-05",
       "auteur": {
         "nom": "Maximilien Robespierre",
@@ -8264,7 +9378,7 @@
     },
     {
       "id": "chenier",
-      "apres": 79,
+      "apres": 92,
       "date": "1794",
       "auteur": {
         "nom": "André Chénier",
@@ -8848,7 +9962,7 @@
     },
     {
       "id": "republique-assiegee",
-      "apres": 65,
+      "apres": 72,
       "titre": "La République assiégée",
       "date": "1793-08",
       "narration": "À l’été 1793, la République paraît encerclée. Aux frontières, presque toute l’Europe monarchique est en guerre contre elle. Au nord, les Autrichiens et les Anglais prennent Valenciennes fin juillet. À l’est, les Prussiens reprennent Mayence. Les Espagnols ont franchi les Pyrénées, et les Piémontais attaquent la Savoie. À l’intérieur, l’Ouest est en feu : la Vendée militaire tient tête aux armées républicaines. Des dizaines de départements ont protesté contre l’arrestation des Girondins, et Lyon, Marseille, Bordeaux ou Caen sont entrées en rébellion. Fin août, Toulon se livre même à la flotte anglaise. Pour faire face, la Convention décrète le 23 août la levée en masse : tous les Français sont mis en réquisition pour le service des armées. En un an, l’armée de la République dépasse sept cent mille hommes, du jamais vu en Europe.",
@@ -9141,7 +10255,7 @@
     },
     {
       "id": "accapareurs",
-      "apres": 66,
+      "apres": 75,
       "titre": "Le pain et la loi",
       "date": "1793-07-26",
       "narration": "Dans les villes, la colère vient du ventre. L’assignat perd sa valeur, les paysans gardent leur grain, et le pain manque. Les sans-culottes accusent les accapareurs, ces marchands soupçonnés de cacher les denrées pour faire monter les prix. Le 26 juillet 1793, la Convention cède à leur pression et vote ce décret, affiché dans toute la France. Article premier : « L’accaparement est un crime capital. » Le pain, la viande, le vin, le bois ou le savon deviennent des denrées de première nécessité. Le marchand qui ne déclare pas ses stocks sera réputé accapareur et puni de mort. Et tout citoyen qui dénonce un accapareur recevra le tiers des marchandises saisies. Fin septembre, la loi du maximum général va plus loin : elle plafonne les prix de ces denrées, et les salaires.",
@@ -9266,7 +10380,7 @@
     },
     {
       "id": "chiffres-terreur",
-      "apres": 82,
+      "apres": 96,
       "titre": "La Terreur en chiffres",
       "date": "1794-07",
       "narration": "Que fut la Terreur, en chiffres ? Les historiens s’appuient encore sur l’étude de l’Américain Donald Greer, publiée en 1935. De mars 1793 à août 1794, les tribunaux prononcent environ dix-sept mille condamnations à mort. Il faut y ajouter les exécutions sans jugement et les morts en prison : sans doute trente-cinq à quarante mille victimes en tout. Plusieurs centaines de milliers de suspects sont emprisonnés. Contrairement à une idée reçue, les nobles et les prêtres ne forment qu’un condamné sur sept. Plus de la moitié sont des paysans et des gens du peuple des villes, ouvriers et artisans. La plupart sont jugés dans les régions en guerre civile, l’Ouest et la vallée du Rhône, bien plus qu’à Paris. Le Tribunal révolutionnaire de Paris prononce tout de même plus de deux mille six cents condamnations à mort. Et ces chiffres laissent de côté la guerre de Vendée, plus meurtrière encore.",
@@ -9392,7 +10506,7 @@
     },
     {
       "id": "assignat",
-      "apres": 87,
+      "apres": 104,
       "titre": "La chute de l’assignat",
       "date": "1795",
       "narration": "Suivons la chute de l’assignat à Paris. En janvier 1791, cent livres en assignats s’échangent encore contre plus de quatre-vingt-onze livres en espèces. La guerre oblige à imprimer toujours plus de billets, et à l’été 1793, les cent livres n’en valent plus qu’une trentaine. Sous la Terreur, qui punit ceux qui refusent le papier, l’assignat remonte un moment, jusqu’à près de cinquante livres. Mais après Thermidor, la confiance s’effondre. La fin du maximum, en décembre 1794, libère les prix, et l’on imprime sans compter. En juillet 1795, cent livres d’assignats ne valent plus que trois livres et demie, et à la fin de l’année, moins d’une demi-livre. Plus de quarante milliards ont été imprimés. En février 1796, le Directoire fait briser la planche aux assignats : ceux qui ont été payés en papier sont ruinés.",

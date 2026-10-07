@@ -383,6 +383,65 @@ formulations prudentes (charte du site).
 les horodate ; `verifier.py` contrôle extraits (mot pour mot), sources, licences, `quand`
 exacts, données des graphiques sourcées ; README à jour.
 
+## Arbitrages après le pilote (2026-10-07)
+
+Décisions de l'utilisateur, relayées par la session qui a produit le pilote :
+
+- **Œuvres conservées hors de France admises** (le sujet reste la France ; le lieu de
+  conservation n'est pas un critère).
+- **Images violentes gardées** quand elles documentent les faits (massacres, exécutions), sans
+  complaisance dans la narration.
+- **Lectures d'époque à voix de femme** (Gemini, voix Aoede) par défaut dans `voix.py`.
+- **Production des 8 autres périodes une par une**, pas en parallèle : chacune est regardée
+  par l'utilisateur avant la suivante.
+
+## Arts et techniques (révision du 2026-10-07)
+
+Constat de l'utilisateur après le pilote : l'histoire des **techniques** et celle des **arts**
+ne sont pas couvertes. Décisions (ne pas rediscuter) :
+
+- **Intégrées aux diaporamas existants**, **mêlées à la narration** : pas d'acte à part, pas de
+  section séparée.
+- **Dose** : **~20 diapositives par période** (~10 d'arts, ~10 de techniques), **ajoutées** au
+  récit politique, qui garde son ampleur. Chaque période passe de ~100 à **~120 diapositives**
+  (fourchette admise : 110 à 130 ; `verifier.py` est mis à jour en conséquence).
+- **Placement au fil du récit** : chaque diapositive entre là où elle tient à l'histoire (le
+  télégraphe Chappe avec la guerre de 1794, le *Serment des Horaces* avec la crise de 1789, le
+  Louvre avec les biens nationaux et les saisies). Groupes de **1 à 3 diapositives d'affilée au
+  plus**. Les narrations voisines sont retouchées pour que les transitions coulent (fil continu).
+- **Aucun repère visuel** : ni étiquette « arts » ou « techniques » dans le cartouche, ni marque
+  propre sur la frise. Ces diapositives se fondent dans le récit (la frise reçoit seulement les
+  événements qu'elle aurait reçus de toute façon, avec le style ordinaire).
+- **Arts** : peinture, sculpture, gravure, et leurs institutions (Salon, Académie, Louvre et
+  musées, prix de Rome) ; architecture et urbanisme ; musique et spectacle (opéra, compositeurs,
+  théâtre, fêtes) ; arts décoratifs et mode (mobilier, costume, affiche, styles). On montre
+  l'œuvre elle-même, et la caméra va sur le détail dont parle la voix.
+- **Techniques** : machines et industrie (vapeur, textile, métallurgie, chemin de fer,
+  navigation, moteurs, électricité) ; communication et image (télégraphes, presse, lithographie,
+  photographie, téléphone, cinéma) ; sciences et médecine (système métrique, chimie, Pasteur,
+  hygiène) ; vie quotidienne et agriculture (éclairage, conserve, engrais, grands magasins).
+- **Profondeur technique** : **le principe en une phrase, puis l'effet** (ce que ça change pour
+  l'économie, la guerre, la vie quotidienne). On s'appuie volontiers sur des **planches
+  techniques d'époque** (Encyclopédie et son recueil de planches, brevets, Figuier *Les
+  Merveilles de la science* pour une technique antérieure à sa date de parution, relevés
+  d'ingénieurs), dont la caméra suit les pièces. Règle des images inchangée : documents
+  d'époque, domaine public, Commons. Une planche publiée après la période est admise comme une
+  toile peinte après les faits, si elle est du XIXe siècle et si la légende donne sa date.
+- **Musique des œuvres** : quand une diapositive parle d'une œuvre musicale, on la fait
+  entendre par un **intermède musical** de 15 à 25 s joué juste après (même mécanique que les
+  intermèdes chantés : premier plan, cartouche, passable, compté dans la durée), **1 ou 2 par
+  période, en plus** des 3 à 6 intermèdes chantés. Seulement s'il existe un enregistrement
+  libre (mêmes règles de droits que la section « Musique ») ; sinon, on en parle sans la faire
+  entendre. Pour une œuvre instrumentale, pas de paroles en sous-titre : le sous-titre est
+  masqué pendant l'intermède.
+- **Équilibre et exactitude** : mêmes règles que le reste de la narration. On dit quand un art
+  sert la propagande (David et les fêtes révolutionnaires, par exemple).
+- **Pilote** : on enrichit d'abord **la Révolution** (107 → ~127), l'utilisateur juge, puis la
+  règle s'applique aux 8 autres périodes. L'insertion **renumérote** les diapositives : les
+  fichiers `NNN.webp` / `NNN.m4a`, les `apres` des lectures, épisodes et intermèdes, les
+  débuts d'actes, la frise et tout autre renvoi par numéro sont recalculés par script, sans
+  régénérer les voix inchangées (l'empreinte du texte fait foi).
+
 ## Portail (`/diaporamas/`)
 
 Titre « Le siècle en images ». Une courte présentation (voix de synthèse, images du domaine

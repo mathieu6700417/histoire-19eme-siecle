@@ -130,7 +130,7 @@ const donnees = {
     // Segment joué après la voix : intermède chanté, lecture d'époque ou épisode.
     suite: intermedeApres.has(x.n) ? (() => {
       const c = intermedeApres.get(x.n)!;
-      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheChant(c), paroles: c.paroles.map(([s, v]) => [s, t(v)]) };
+      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheChant(c), paroles: c.paroles.map(([s, v]) => [s, t(v)]), instrumental: !!c.instrumental };
     })() : lectureApres.has(x.n) ? (() => {
       const l = lectureApres.get(x.n)!;
       const m = minutageLecture(l);
@@ -247,8 +247,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
               <p>{t(x.narration)}</p>
               {intermedeApres.has(x.n) && (
                 <div class="livre__chant">
-                  <p class="livre__chant-titre" set:html={`Intermède chanté : ${cartoucheChant(intermedeApres.get(x.n)!).replace(/<span[^>]*>/g, ' — ').replace(/<\/span>/g, '')}`} />
-                  <p class="livre__paroles">{intermedeApres.get(x.n)!.paroles.map(([, v], k) => <Fragment>{k > 0 && <br />}{t(v)}</Fragment>)}</p>
+                  <p class="livre__chant-titre" set:html={`${intermedeApres.get(x.n)!.instrumental ? 'Intermède musical' : 'Intermède chanté'} : ${cartoucheChant(intermedeApres.get(x.n)!).replace(/<span[^>]*>/g, ' — ').replace(/<\/span>/g, '')}`} />
+                  {intermedeApres.get(x.n)!.paroles.length > 0 && <p class="livre__paroles">{intermedeApres.get(x.n)!.paroles.map(([, v], k) => <Fragment>{k > 0 && <br />}{t(v)}</Fragment>)}</p>}
                 </div>
               )}
               {lectureApres.has(x.n) && (
@@ -287,7 +287,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     suite: Suite | null;
   }
   /** Intermède chanté : paroles [instant, vers]. */
-  interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string][] }
+  interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string][]; instrumental: boolean }
   /** Lecture d'époque : instant de début de chaque mot (alignement forcé, ou prorata) et, pour
    *  chaque phrase, [début (s), premier mot, mot suivant le dernier]. */
   interface SuiteLecture { type: 'lecture'; id: string; src: string; duree: number; mots: number[]; phrases: [number, number, number][]; date: DateFrise | null }
@@ -915,6 +915,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (c.type === 'chant') {
         changerCartouche({ legende: c.legende } as Diapo);
         vers = -2;
+        // Intermède musical (œuvre instrumentale) : pas de paroles, sous-titre masqué.
+        lecteur.classList.toggle('en-instrumental', c.instrumental);
       } else {
         ov = (c.type === 'lecture' ? cartes : panneaux).get(c.id) ?? null;
         if (ov) { preparer(ov, c); ov.classList.add('est-visible'); ov.setAttribute('aria-hidden', 'false'); }
@@ -936,7 +938,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (!enSuite) return;
       enSuite = false;
       suiteFini = true;
-      lecteur.classList.remove('en-chant');
+      lecteur.classList.remove('en-chant', 'en-instrumental');
       majSuite();
       musique();
       majTemps();
@@ -948,7 +950,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       enSuite = false;
       suiteFini = false;
       sa.pause();
-      lecteur.classList.remove('en-chant', 'en-citation', 'en-episode');
+      lecteur.classList.remove('en-chant', 'en-instrumental', 'en-citation', 'en-episode');
       if (ov) { ov.classList.remove('est-visible'); ov.setAttribute('aria-hidden', 'true'); ov = null; }
     }
     /** Mise à jour du segment en cours d'après l'horloge de son audio. */
@@ -1908,6 +1910,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .lecteur:fullscreen :global(.episode--lecteur) { padding-top: 2.4rem; }
   /* Intermède chanté : paroles en italique, troisième ligne du cartouche (interprète). */
   .lecteur.en-chant .lecteur__soustitre { font-style: italic; }
+  .lecteur.en-instrumental .lecteur__soustitre { visibility: hidden; }
   .lecteur__legende :global(.lecteur__legende-voix) { font-variant: normal; font-style: italic; letter-spacing: 0; font-size: 0.8rem; }
 
   /* Plein écran : fond blanc cassé ; légende et contrôles s'effacent après inactivité. */
