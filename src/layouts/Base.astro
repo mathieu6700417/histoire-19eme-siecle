@@ -40,6 +40,7 @@ const chemin = Astro.url.pathname;
             <li><a href={base} aria-current={chemin === base ? 'page' : undefined}>Accueil</a></li>
             <li><a href={`${base}#lecons`}>Leçons</a></li>
             <li><a href={`${base}ecrivains/`} aria-current={chemin.startsWith(`${base}ecrivains/`) ? 'page' : undefined}>Écrivains</a></li>
+            <li><a href={`${base}diaporamas/`} aria-current={chemin.startsWith(`${base}diaporamas/`) ? 'page' : undefined}>Images</a></li>
           </ul>
         </nav>
       </div>

@@ -5,6 +5,7 @@ import { themes } from '../data/themes';
 import { typographie } from '../utils/typographie.mjs';
 import { enfantsDe, lienLecon, premierNiveau } from '../utils/lecons';
 import BlocEcrivains from '../components/BlocEcrivains.astro';
+import BlocDiaporamas from '../components/BlocDiaporamas.astro';
 
 // Toutes les entrées (sous-pages comprises) ; seules celles de premier niveau ont une carte.
 const toutes = await getCollection('lecons');
@@ -63,6 +64,7 @@ const groupes = themes
     </section>
 
     <BlocEcrivains />
+    <BlocDiaporamas />
   </div>
 </Base>
 

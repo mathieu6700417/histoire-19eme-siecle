@@ -1,0 +1,2107 @@
+---
+// Lecteur d'un diaporama narré de la section « Le siècle en images » (spec 12).
+//
+// Usage : <Diaporama diaporama={d} />, où `d` est le contenu d'un fichier
+// src/data/diaporamas/NN-<slug>.json (voir src/utils/diaporamas.ts pour le format).
+// Images et voix sont servies depuis public/diaporamas/<slug>/ (préparées par
+// scripts/diaporamas/).
+//
+// - Image en couleur (exception de la spec 11 : c'est une visionneuse), fondu enchaîné ;
+//   tout le reste est monochrome. Caméra calée sur la narration (spec 12, révision du
+//   2026-10-07) : chaque diapositive porte 1 à 3 cadres ; la caméra rejoint chacun à l'instant
+//   où la voix en parle. L'horloge est `audio.currentTime` (aucune minuterie propre) : pause,
+//   saut, redimensionnement et plein écran restent justes.
+// - Cartouche (titre, auteur, date) en haut à gauche de l'image, sous-titres (activables, choix mémorisé), barre de progression
+//   découpée en actes, clavier (espace, ← →, F, S), plein écran, balayage sur téléphone,
+//   reprise mémorisée (localStorage, toujours dans un try/catch).
+// - Animations d'entrée (spec 12, révision du 2026-10-07) : fondu enchaîné avec révélation
+//   gris → couleur, léger recul (composé avec la caméra, sans la décaler), cartouche décalé,
+//   sous-titre en fondu croisé, carton de changement d'acte (2 s, compté dans la durée totale,
+//   passable d'un clic, de Entrée ou de →). Le carton se fige avec la pause ; l'entrée
+//   d'une image (1,8 s au plus) va toujours à son terme.
+// - Frise du temps (spec 12, révision du 2026-10-07) : la période graduée par année, les actes
+//   en segments, un curseur daté. Dans chaque carton d'acte, le curseur glisse de la date
+//   précédente au début du nouvel acte ; entre deux cartons, la frise passe 3,6 s en
+//   surimpression au bas de l'image quand la date saute de plus de 3 mois en avant ou revient
+//   en arrière. « Date précédente » : celle de la dernière diapositive affichée, si bien que
+//   les sauts manuels restent justes ; positions en %, donc indifférentes à la taille.
+// - Rien ne joue sans clic. Sans JavaScript, la page est un livre d'images : la liste des
+//   diapositives avec image, légende et narration.
+import { typographie } from '../utils/typographie.mjs';
+import CarteCitation from './CarteCitation.astro';
+import EpisodeVisuels from './EpisodeVisuels.astro';
+import { CARTON, PAUSE, SAUT_JOURS, etapesCamera, friseDe, minutageLecture, phrasesDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
+
+interface Props { diaporama: Diaporama }
+const { diaporama: d } = Astro.props;
+
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const t = (s?: string) => (s ? typographie(s.trim()) : '');
+
+/** Légende de notice : auteur, *titre*, date, technique. Conservation. (HTML échappé) */
+function legende(x: Diaporama['diapositives'][number]) {
+  const i = x.image;
+  const tete = [i.auteur && esc(t(i.auteur)), `<cite>${esc(t(i.titre))}</cite>`, i.date && esc(t(i.date)), i.technique && esc(t(i.technique))]
+    .filter(Boolean).join(', ');
+  const lieu = i.conservation ? ` ${esc(t(i.conservation))}.` : '';
+  return `<span class="notice">${tete}.${lieu}</span> <a class="notice__commons" href="${esc(urlCommons(i.commons))}" rel="noopener" target="_blank">Commons</a>`;
+}
+
+/** Cartouche du lecteur : *titre*, puis auteur et date (HTML échappé). */
+function cartouche(x: Diaporama['diapositives'][number]) {
+  const i = x.image;
+  const sous = [i.auteur && esc(t(i.auteur)), i.date && esc(t(i.date))].filter(Boolean).join(', ');
+  return `<cite>${esc(t(i.titre))}</cite>${sous ? `<span>${sous}</span>` : ''}`;
+}
+
+/** Cartouche d'un intermède chanté : *titre*, auteur et date, interprète et enregistrement. */
+function cartoucheChant(c: Intermede) {
+  const sous = [c.auteur && esc(t(c.auteur)), c.date && esc(t(c.date))].filter(Boolean).join(', ');
+  const voix = [c.interprete && esc(t(c.interprete)), c.enregistrement && esc(t(c.enregistrement))].filter(Boolean).join(', ');
+  return `<cite>${esc(t(c.titre))}</cite>${sous ? `<span>${sous}</span>` : ''}${voix ? `<span class="lecteur__legende-voix">${voix}</span>` : ''}`;
+}
+/** Cartouche de la musique de fond, sur une ligne : titre court, nom du compositeur, année.
+ *  « Symphonie nᵒ 40 en sol mineur : Finale… » → « Symphonie nᵒ 40 en sol mineur » ;
+ *  « Wolfgang Amadeus Mozart (compositeur autrichien) » → « Mozart ». L'interprète n'apparaît
+ *  qu'au survol (et dans les crédits). */
+function cartoucheMusique(p: PisteFond) {
+  const titre = p.titre.replace(/\s*\([^)]*\)/g, '').split(' : ')[0].trim();
+  const nom = p.compositeur.split(/ \(|, /)[0].trim().split(' ').pop() ?? '';
+  const auteur = [nom, p.date].filter(Boolean).join(', ');
+  const voix = p.interprete ? `<span class="m-voix">${esc(t(p.interprete))}</span>` : '';
+  return `<span class="m-ligne"><cite>${esc(t(titre))}</cite>${auteur ? `<span class="m-auteur"> · ${esc(t(auteur))}</span>` : ''}</span>${voix}`;
+}
+const intermedeApres = new Map((d.musique?.intermedes ?? []).filter((c) => c.duree).map((c) => [c.apres, c]));
+// Lectures d'époque et épisodes (spec 12, révision du 2026-10-07) : insérés après la voix d'une
+// diapositive, comme les intermèdes chantés (un seul segment après une diapositive donnée).
+const lectureApres = new Map((d.lectures ?? []).filter((l) => l.audio?.duree).map((l) => [l.apres, l]));
+const episodeApres = new Map((d.episodes ?? []).filter((e) => e.audio?.duree).map((e) => [e.apres, e]));
+const fonds: Record<string, FondCarte> = Object.fromEntries(
+  Object.values(import.meta.glob<{ default: FondCarte }>('../data/diaporamas/fonds/*.json', { eager: true })).map((m) => [m.default.nom, m.default]));
+
+/** Portrait d'une lecture : l'image d'une diapositive (recadrée) ou son propre fichier. */
+function portraitDe(l: Lecture) {
+  const p = l.portrait;
+  if (!p) return null;
+  if (p.diapositive) {
+    const x = d.diapositives.find((y) => y.n === p.diapositive);
+    if (!x) return null;
+    return { src: urlMedia(d.slug, x.image.fichier), largeur: x.image.largeur ?? 1000, hauteur: x.image.hauteur ?? 1300, cadre: p.cadre,
+      credit: [x.image.auteur, x.image.date].filter(Boolean).join(', ') };
+  }
+  if (!p.fichier || !p.largeur) return null;
+  return { src: urlMedia(d.slug, p.fichier), largeur: p.largeur, hauteur: p.hauteur ?? p.largeur, cadre: p.cadre,
+    credit: [p.auteur, p.date].filter(Boolean).join(', ') };
+}
+/** Image du moment d'une lecture (fond flou de sa carte) : celle de la diapositive qu'elle suit. */
+function fondDe(l: Lecture) {
+  const x = d.diapositives.find((y) => y.n === l.apres);
+  return x ? urlMedia(d.slug, x.image.fichier) : undefined;
+}
+/** Phrases horodatées d'un épisode, avec leur texte (sous-titres). */
+function phrasesEpisode(e: Episode) {
+  const bornes = phrasesDe(e.narration);
+  const ph = e.audio?.phrases ?? [];
+  if (ph.length !== bornes.length) return [[0, e.audio?.duree ?? 0, t(e.narration)]];
+  return bornes.map((b, k) => [ph[k][0], ph[k][1], t(e.narration.slice(b.d, b.f))]);
+}
+
+const acteDe = (n: number) => [...d.actes].reverse().find((a) => a.debut <= n) ?? d.actes[0];
+const frise = friseDe(d);
+
+// Données transmises au script (textes déjà mis en typographie française).
+const donnees = {
+  slug: d.slug,
+  pause: PAUSE,
+  carton: CARTON,
+  actes: d.actes.map((a) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut })),
+  diapos: d.diapositives.map((x, k) => ({
+    n: x.n,
+    img: urlMedia(d.slug, x.image.fichier),
+    l: x.image.largeur ?? 1600,
+    h: x.image.hauteur ?? 1200,
+    alt: t(x.image.titre),
+    legende: cartouche(x),
+    texte: t(x.narration),
+    audio: x.audio ? urlMedia(d.slug, x.audio.fichier) : '',
+    duree: x.audio?.duree ?? 0,
+    camera: etapesCamera(x),
+    date: frise ? { ...frise.diapos[k], libelle: t(frise.diapos[k].libelle) } : null,
+    // Segment joué après la voix : intermède chanté, lecture d'époque ou épisode.
+    suite: intermedeApres.has(x.n) ? (() => {
+      const c = intermedeApres.get(x.n)!;
+      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheChant(c), paroles: c.paroles.map(([s, v]) => [s, t(v)]) };
+    })() : lectureApres.has(x.n) ? (() => {
+      const l = lectureApres.get(x.n)!;
+      const m = minutageLecture(l);
+      return { type: 'lecture', id: l.id, src: urlMedia(d.slug, l.audio!.fichier), duree: l.audio!.duree, mots: m.mots, phrases: m.phrases,
+        date: frise && l.date ? { ...frise.dater(l.date), libelle: t(frise.dater(l.date).libelle) } : null };
+    })() : episodeApres.has(x.n) ? (() => {
+      const e = episodeApres.get(x.n)!;
+      return { type: 'episode', id: e.id, src: urlMedia(d.slug, e.audio!.fichier), duree: e.audio!.duree, phrases: phrasesEpisode(e),
+        date: frise && e.date ? { ...frise.dater(e.date), libelle: t(frise.dater(e.date).libelle) } : null };
+    })() : null,
+  })),
+  saut: SAUT_JOURS,
+  // Musique de fond : les pistes de chaque acte (dans l'ordre des actes), enchaînées en fondu.
+  fond: d.actes.map((a) => (d.musique?.fond ?? []).filter((p) => p.acte === a.id && p.duree)
+    .map((p) => ({ src: urlMedia(d.slug, p.fichier), duree: p.duree!, volume: p.volume ?? 1, info: cartoucheMusique(p) }))),
+};
+const premiere = d.diapositives[0];
+
+/** Frise du temps (deux exemplaires : dans le carton d'acte, en surimpression). Monochrome :
+ *  actes en filets alternés, crans des années, curseur (trait ou court segment) et sa date. */
+function friseHtml(classe: string) {
+  if (!frise) return '';
+  const pc = (v: number) => `${v}%`;
+  const actes = frise.actes.map((a, k) => `<span class="frise-t__acte${k % 2 ? ' frise-t__acte--pair' : ''}" data-k="${k}" style="left:${pc(a.x0)};width:${pc(Math.max(0, a.x1 - a.x0))}"></span>`).join('');
+  const crans = [...frise.annees.map((a) => a.x0), 100].map((x) => `<span class="frise-t__cran" style="left:${pc(x)}"></span>`).join('');
+  const annees = frise.annees.map((a) => `<span class="frise-t__annee" data-a="${a.a}" style="left:${pc((a.x0 + a.x1) / 2)}">${a.a}</span>`).join('');
+  return `<div class="frise-t ${classe}" aria-hidden="true"><div class="frise-t__piste"><span class="frise-t__date"></span>${actes}${crans}<span class="frise-t__curseur"></span></div><div class="frise-t__annees">${annees}</div></div>`;
+}
+const sectionsLivre = d.actes.map((a, i) => ({
+  ...a,
+  diapos: d.diapositives.filter((x) => x.n >= a.debut && (i === d.actes.length - 1 || x.n < d.actes[i + 1].debut)),
+}));
+---
+
+<div class="diaporama" data-slug={d.slug}>
+  <script is:inline>document.currentScript.parentElement.classList.add('avec-js');</script>
+  <script type="application/json" class="diaporama__donnees" set:html={JSON.stringify(donnees).replace(/</g, '\\u003c')} />
+
+  <div class="lecteur" role="region" aria-label={typographie(`Diaporama : ${d.titre}`)}>
+    <p class="lecteur__acte" aria-hidden="true"><span class="lecteur__acte-titre">{t(acteDe(1).titre)}</span> <span class="lecteur__acte-dates">{t(acteDe(1).dates)}</span></p>
+    <div class="lecteur__scene">
+      <div class="lecteur__calque est-visible"><img src={urlMedia(d.slug, premiere.image.fichier)} alt={t(premiere.image.titre)} width={premiere.image.largeur} height={premiere.image.hauteur} decoding="async" /></div>
+      <div class="lecteur__calque"><img alt="" decoding="async" /></div>
+      <p class="lecteur__legende est-visible" set:html={cartouche(premiere)} />
+      <p class="lecteur__musique" aria-live="off"></p>
+      <div class="lecteur__carton" data-action="passer" aria-hidden="true" title="Passer (Entrée)">
+        <p class="lecteur__carton-titre"></p>
+        <span class="lecteur__carton-filet"></span>
+        <p class="lecteur__carton-dates"></p>
+        {frise && <Fragment set:html={friseHtml('frise-t--carton')} />}
+      </div>
+      {[...lectureApres.values()].map((l) => <CarteCitation lecture={l} portrait={portraitDe(l)} fond={fondDe(l)} mode="lecteur" />)}
+      {[...episodeApres.values()].map((e) => <EpisodeVisuels episode={e} slug={d.slug} fonds={fonds} mode="lecteur" />)}
+      {frise && <Fragment set:html={friseHtml('frise-t--surimpression')} />}
+      <div class="lecteur__depart">
+        <button type="button" class="lecteur__bouton-depart" data-action="lancer">Lancer le diaporama</button>
+        <button type="button" class="lecteur__bouton-depart lecteur__reprendre" data-action="reprendre" hidden></button>
+      </div>
+    </div>
+    <p class="lecteur__soustitre"><span class="st">{t(premiere.narration)}</span></p>
+
+    <div class="lecteur__progression" aria-label="Actes du diaporama">
+      <div class="lecteur__piste">
+        {d.actes.map((a) => (
+          <button type="button" class="lecteur__segment" data-debut={a.debut} title={t(`${a.titre} (${a.dates})`)} aria-label={typographie(`Aller à l'acte : ${a.titre} (${a.dates})`)}>
+            <span class="lecteur__rempli"></span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="lecteur__controles">
+      <div class="lecteur__groupe">
+        <button type="button" class="lecteur__btn" data-action="precedent" aria-label="Diapositive précédente" title="Précédente (←)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M19 5l-10 7 10 7z" /></svg>
+        </button>
+        <button type="button" class="lecteur__btn lecteur__btn--lecture" data-action="basculer" aria-label="Lecture" title="Lecture / pause (espace)">
+          <svg class="icone-lecture" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5l13 7.5-13 7.5z" /></svg>
+          <svg class="icone-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" /></svg>
+        </button>
+        <button type="button" class="lecteur__btn" data-action="suivant" aria-label="Diapositive suivante" title="Suivante (→)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M5 5l10 7-10 7z" /></svg>
+        </button>
+      </div>
+      <p class="lecteur__compteur" aria-live="polite"><span class="sr-only">Diapositive </span><span class="lecteur__n">1</span> / {d.diapositives.length}</p>
+      <p class="lecteur__temps"><span class="lecteur__ecoule">0:00</span> / <span class="lecteur__total"></span></p>
+      <div class="lecteur__groupe lecteur__groupe--options">
+        {d.musique && (
+          <span class="lecteur__reglage-musique">
+            <button type="button" class="lecteur__option" data-action="musique" aria-pressed="true" title="Musique de fond (M)">Musique</button>
+            <input type="range" class="lecteur__volume" min="0" max="100" step="5" value="80" aria-label="Volume de la musique de fond" title="Volume de la musique de fond" />
+          </span>
+        )}
+        <button type="button" class="lecteur__option" data-action="sous-titres" aria-pressed="true" title="Sous-titres (S)">Sous-titres</button>
+        <button type="button" class="lecteur__option" data-action="plein-ecran" title="Plein écran (F)">Plein écran</button>
+      </div>
+    </div>
+    <audio class="lecteur__audio" preload="auto"></audio>
+    <audio class="lecteur__suite" preload="auto"></audio>
+  </div>
+
+  <div class="livre">
+    <p class="livre__note">{typographie('Le lecteur a besoin de JavaScript ; voici le diaporama sous forme de livre d\'images, avec le texte de la voix off.')}</p>
+    {sectionsLivre.map((a) => (
+      <section class="livre__acte">
+        <h2>{t(a.titre)} <span class="livre__dates">{t(a.dates)}</span></h2>
+        <ol start={a.debut}>
+          {a.diapos.map((x) => (
+            <li>
+              <figure>
+                <img src={urlMedia(d.slug, x.image.fichier)} alt={t(x.image.titre)} width={x.image.largeur} height={x.image.hauteur} loading="lazy" decoding="async" />
+                <figcaption set:html={legende(x)} />
+              </figure>
+              <p>{t(x.narration)}</p>
+              {intermedeApres.has(x.n) && (
+                <div class="livre__chant">
+                  <p class="livre__chant-titre" set:html={`Intermède chanté : ${cartoucheChant(intermedeApres.get(x.n)!).replace(/<span[^>]*>/g, ' — ').replace(/<\/span>/g, '')}`} />
+                  <p class="livre__paroles">{intermedeApres.get(x.n)!.paroles.map(([, v], k) => <Fragment>{k > 0 && <br />}{t(v)}</Fragment>)}</p>
+                </div>
+              )}
+              {lectureApres.has(x.n) && (
+                <div class="livre__lecture">
+                  <p class="livre__segment-titre">Lecture</p>
+                  <CarteCitation lecture={lectureApres.get(x.n)!} portrait={portraitDe(lectureApres.get(x.n)!)} mode="livre" />
+                </div>
+              )}
+              {episodeApres.has(x.n) && (() => {
+                const e = episodeApres.get(x.n)!;
+                return (
+                  <section class="livre__episode">
+                    <h3 class="livre__segment-titre">Épisode · {t(e.titre)}</h3>
+                    <p>{t(e.narration)}</p>
+                    <EpisodeVisuels episode={e} slug={d.slug} fonds={fonds} mode="livre" />
+                    <p class="livre__sources">{t(`Sources : ${e.sources.join(' ; ')}.`)}</p>
+                  </section>
+                );
+              })()}
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </div>
+</div>
+
+<script>
+  type Rect = [number, number, number, number]; // x0, y0, x1, y1 (fractions de l'image)
+  interface Diapo {
+    n: number; img: string; l: number; h: number; alt: string; legende: string; texte: string;
+    audio: string; duree: number; camera: { c: Rect; t: number }[];
+    /** Frise : jours (depuis 1970) du premier et du dernier jour daté, positions en %, libellé. */
+    date: DateFrise | null;
+    /** Segment joué après la voix (et sa pause) : intermède chanté, lecture ou épisode. */
+    suite: Suite | null;
+  }
+  /** Intermède chanté : paroles [instant, vers]. */
+  interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string][] }
+  /** Lecture d'époque : instant de début de chaque mot (alignement forcé, ou prorata) et, pour
+   *  chaque phrase, [début (s), premier mot, mot suivant le dernier]. */
+  interface SuiteLecture { type: 'lecture'; id: string; src: string; duree: number; mots: number[]; phrases: [number, number, number][]; date: DateFrise | null }
+  /** Épisode : phrases [début, fin (s), texte du sous-titre]. */
+  interface SuiteEpisode { type: 'episode'; id: string; src: string; duree: number; phrases: [number, number, string][]; date: DateFrise | null }
+  type Suite = SuiteChant | SuiteLecture | SuiteEpisode;
+  interface Piste { src: string; duree: number; volume: number; info: string }
+  interface DateFrise { j0: number; j1: number; x0: number; x1: number; libelle: string }
+  interface Donnees {
+    slug: string; pause: number; carton: number; saut: number;
+    actes: { titre: string; dates: string; debut: number }[]; diapos: Diapo[];
+    /** Musique de fond : les pistes de chaque acte. */
+    fond: Piste[][];
+  }
+
+  // Caméra : transition douce vers chaque cadre, commencée un peu avant le passage, puis
+  // dérive très lente (resserrement de ~3 %) jusqu'à l'étape suivante.
+  const TRANSITION = 2.5; // s
+  const AVANCE = 0.6;     // s : la transition commence un peu avant le passage
+  const DERIVE = 0.03;
+  // Entrée d'une image (spec 12, « Animations d'entrée ») : fondu enchaîné, révélation
+  // gris → couleur, recul de ~4 % jusqu'au cadre de la caméra. Horloge propre à l'entrée,
+  // indépendante de l'audio : la caméra n'est jamais décalée. L'entrée est une transition
+  // visuelle courte : elle va toujours à son terme, même en pause (jamais d'image à demi
+  // entrée bloquée si la voix ne démarre pas).
+  const FONDU = 1.2;        // s
+  const REVELATION = 1.8;   // s : les couleurs montent
+  const RECUL = 0.04;       // agrandissement de départ
+  const DUREE_RECUL = 1.5;  // s
+  const FONDU_REDUIT = 0.3; // s, prefers-reduced-motion : fondu simple, ni recul ni gris
+  // Frise du temps en surimpression : durée d'affichage (le curseur glisse de 0,5 à 1,5 s, cf. CSS).
+  const SURIMPRESSION = 3.6; // s
+  const adoucir = (t: number) => { const u = Math.min(1, Math.max(0, t)); return u * u * (3 - 2 * u); };
+  const melanger = (a: Rect, b: Rect, t: number) => a.map((v, k) => v + (b[k] - v) * t) as Rect;
+  /** Le cadre agrandi (k > 1) ou resserré (k < 1) autour de son centre. */
+  function echelle([x0, y0, x1, y1]: Rect, k: number): Rect {
+    const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, w = ((x1 - x0) * k) / 2, h = ((y1 - y0) * k) / 2;
+    return [cx - w, cy - h, cx + w, cy + h];
+  }
+  const CLE_ST = 'diaporamas-sous-titres';
+  const CLE_MUSIQUE = 'diaporamas-musique';
+  const CLE_VOLUME = 'diaporamas-musique-volume';
+  // Musique de fond (spec 12, « Musique ») : gain selon l'état du lecteur, relatif au volume
+  // réglé (80 % par défaut = valeurs ci-dessous). Fichiers normalisés à -20 LUFS, voix vers
+  // -19,5 LUFS : sous la voix, la musique est ~20 dB plus bas ; un peu plus présente dans les
+  // respirations ; elle remonte pendant les cartons d'acte et se tait pendant un intermède chanté.
+  const GAINS = { arret: 0, chant: 0, voix: 0.1, respiration: 0.3, carton: 0.6 } as const;
+  type EtatMusique = keyof typeof GAINS;
+  const VOLUME_DEFAUT = 0.8;
+  const FONDU_PISTE = 3;   // s : enchaînement de deux pistes d'un même acte (fondus inclus dans les fichiers)
+  const FONDU_ACTE = 2;    // s : changement d'acte (pendant le carton) ou saut vers un autre acte
+  const lire = (cle: string) => { try { return localStorage.getItem(cle); } catch { return null; } };
+  const ecrire = (cle: string, v: string | null) => {
+    try { v === null ? localStorage.removeItem(cle) : localStorage.setItem(cle, v); } catch { /* stockage indisponible */ }
+  };
+  const mouvementReduit = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const maintenant = () => performance.now() / 1000;
+
+  function mmss(s: number) {
+    s = Math.max(0, Math.floor(s));
+    const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = String(s % 60).padStart(2, '0');
+    return h ? `${h}:${String(m).padStart(2, '0')}:${sec}` : `${m}:${sec}`;
+  }
+
+  /** Chronomètre qu'on peut figer et relancer (carton d'acte ; entrée d'une image). */
+  class Chrono {
+    ecoule = 0; depuis = 0; // `depuis` : instant de la dernière relance (0 = figé)
+    get t() { return this.ecoule + (this.depuis ? maintenant() - this.depuis : 0); }
+    get tourne() { return this.depuis > 0; }
+    zero() { this.ecoule = 0; this.depuis = 0; }
+    relancer() { if (!this.depuis) this.depuis = maintenant(); }
+    figer() { if (this.depuis) { this.ecoule += maintenant() - this.depuis; this.depuis = 0; } }
+  }
+
+  function monter(racine: HTMLElement) {
+    const D: Donnees = JSON.parse(racine.querySelector('.diaporama__donnees')!.textContent!);
+    const $ = <T extends HTMLElement = HTMLElement>(s: string) => racine.querySelector(s) as T;
+    const lecteur = $('.lecteur');
+    const scene = $('.lecteur__scene');
+    const calques = [...racine.querySelectorAll<HTMLElement>('.lecteur__calque')];
+    const audio = $<HTMLAudioElement>('.lecteur__audio');
+    const sa = $<HTMLAudioElement>('.lecteur__suite'); // lecteur des segments (chant, lecture, épisode)
+    const elActe = $('.lecteur__acte'), elLegende = $('.lecteur__legende'), elSt = $('.lecteur__soustitre');
+    const elMusique = $('.lecteur__musique');
+    const elActeTitre = $('.lecteur__acte-titre'), elActeDates = $('.lecteur__acte-dates');
+    const elCarton = $('.lecteur__carton'), elCartonTitre = $('.lecteur__carton-titre'), elCartonDates = $('.lecteur__carton-dates');
+    const elN = $('.lecteur__n'), elEcoule = $('.lecteur__ecoule'), elTotal = $('.lecteur__total');
+    const depart = $('.lecteur__depart'), btnReprendre = $<HTMLButtonElement>('.lecteur__reprendre');
+    const btnLecture = $<HTMLButtonElement>('.lecteur__btn--lecture');
+    const btnSt = $<HTMLButtonElement>('[data-action="sous-titres"]');
+    const btnPe = $<HTMLButtonElement>('[data-action="plein-ecran"]');
+    const btnMusique = racine.querySelector<HTMLButtonElement>('[data-action="musique"]');
+    const curseurVolume = racine.querySelector<HTMLInputElement>('.lecteur__volume');
+    const segments = [...racine.querySelectorAll<HTMLButtonElement>('.lecteur__segment')];
+    const CLE_POS = `diaporama:${D.slug}`;
+    const N = D.diapos.length;
+
+    // Acte de chaque diapositive ; un carton précède la première diapositive de chaque acte.
+    const acteDe = D.diapos.map((x) => { let a = 0; D.actes.forEach((y, k) => { if (y.debut <= x.n) a = k; }); return a; });
+    const prelude = D.diapos.map((_, k) => (k === 0 || acteDe[k] !== acteDe[k - 1] ? D.carton : 0));
+
+    // Durées : chaque diapositive dure son carton éventuel + sa voix + la pause (6 s si la
+    // voix manque).
+    const voixEtPause = D.diapos.map((x) => (x.duree || 6) + D.pause);
+    // Segment éventuel après la voix (intermède chanté, lecture, épisode), suivi lui aussi de la pause.
+    const suiteEtPause = D.diapos.map((x) => (x.suite ? x.suite.duree + D.pause : 0));
+    const durees = D.diapos.map((_, k) => prelude[k] + voixEtPause[k] + suiteEtPause[k]);
+    const debuts: number[] = [];
+    durees.reduce((s, x, i) => ((debuts[i] = s), s + x), 0);
+    const total = debuts[N - 1] + durees[N - 1];
+    elTotal.textContent = mmss(total);
+
+    // Barre de progression : un segment par acte, de largeur proportionnelle à sa durée.
+    const bornes = D.actes.map((a, i) => {
+      const de = D.diapos.findIndex((x) => x.n >= a.debut);
+      const fin = i < D.actes.length - 1 ? D.diapos.findIndex((x) => x.n >= D.actes[i + 1].debut) : N;
+      return { de, fin, t0: debuts[de], t1: fin < N ? debuts[fin] : total };
+    });
+    segments.forEach((s, i) => (s.style.flexGrow = String(bornes[i].t1 - bornes[i].t0)));
+
+    let i = 0;            // diapositive courante (index)
+    let lance = false;    // le diaporama a-t-il démarré ?
+    let joue = false;     // lecture en cours ?
+    let visible = 0;      // calque visible (au-dessus)
+    let sortant = -1;     // calque qui s'efface pendant un fondu enchaîné (-1 : aucun)
+    let minuterie = 0;    // carton, pause entre deux diapositives, ou durée sans voix
+    let debutSansVoix = 0, ecouleSansVoix = 0;
+    // Ce que montre chaque calque : la diapositive et le dernier cadre rendu.
+    const couches: { x: Diapo | null; r: Rect }[] = [{ x: D.diapos[0], r: [0, 0, 1, 1] }, { x: null, r: [0, 0, 1, 1] }];
+    // Carton d'acte en cours (horloge figée par la pause).
+    let enCarton = false;
+    const chronoCarton = new Chrono();
+    // Entrée de l'image visible (fondu, gris → couleur, recul).
+    let enEntree = false;
+    const chronoEntree = new Chrono();
+    // Segment après la voix (intermède chanté, lecture, épisode) : en cours, ou terminé (pause
+    // avant la diapositive suivante).
+    let enSuite = false, suiteFini = false;
+
+    // --- Image : taille, caméra, entrée ----------------------------------------------------
+    // L'image couvre toute la scène (recadrée, jamais de bandes vides) ; la caméra montre le
+    // cadre visé en entier dans la zone que ne couvrent ni le cartouche ni les bandeaux.
+    function cadre(c: HTMLElement, x: Diapo) {
+      const W = scene.clientWidth, H = scene.clientHeight;
+      const s = Math.max(W / x.l, H / x.h);
+      c.style.width = `${W}px`;
+      c.style.height = `${H}px`;
+      const img = c.querySelector('img')!;
+      img.style.width = `${x.l * s}px`;
+      img.style.height = `${x.h * s}px`;
+    }
+
+    // Hauteurs couvertes en haut (cartouche, acte en plein écran) et en bas (sous-titre,
+    // progression et contrôles en plein écran) : le cadre visé est placé entre les deux.
+    // Le cartouche est mesuré sans sa transformation (glissement d'entrée) : offsetTop/Height.
+    let marges = { haut: 0, bas: 0 };
+    const surimpressions = [elActe, elLegende, elMusique, elSt, $('.lecteur__progression'), $('.lecteur__controles')];
+    function mesurerMarges() {
+      const s = scene.getBoundingClientRect();
+      let haut = 0, bas = 0;
+      for (const el of surimpressions) {
+        let r: { top: number; bottom: number; left: number; right: number; width: number; height: number } = el.getBoundingClientRect();
+        if (el === elMusique && !el.classList.contains('est-visible')) continue;
+        if (el === elLegende || el === elMusique) {
+          const top = s.top + scene.clientTop + el.offsetTop, left = s.left + scene.clientLeft + el.offsetLeft;
+          r = { top, left, bottom: top + el.offsetHeight, right: left + el.offsetWidth, width: el.offsetWidth, height: el.offsetHeight };
+        }
+        if (!r.height || !r.width || r.bottom <= s.top || r.top >= s.bottom || r.right <= s.left || r.left >= s.right) continue;
+        if ((r.top + r.bottom) / 2 < s.top + s.height / 2) haut = Math.max(haut, r.bottom - s.top + 4);
+        else bas = Math.max(bas, s.bottom - r.top + 4);
+      }
+      // La zone utile garde au moins 55 % de la hauteur.
+      const k = Math.min(1, (0.45 * s.height) / Math.max(1, haut + bas));
+      marges = { haut: haut * k, bas: bas * k };
+      // La frise en surimpression se pose au-dessus des bandeaux du bas (plein écran).
+      scene.style.setProperty('--frise-bas', `${Math.round(bas)}px`);
+    }
+
+    /** Transformation CSS qui montre `r` en entier dans la zone utile, l'image couvrant toujours
+     *  la scène. Un cadre trop haut pour la zone est montré depuis son bord supérieur (têtes).
+     *  `f` ≥ 1 : agrandissement supplémentaire (recul d'entrée) autour du centre de la zone
+     *  utile ; il se compose avec la caméra et garde la scène couverte. */
+    function transformation(c: HTMLElement, r: Rect, f = 1) {
+      const W = c.clientWidth, H = c.clientHeight;
+      const img = c.querySelector('img')!;
+      const iw = img.offsetWidth || W, ih = img.offsetHeight || H;
+      const T = marges.haut, Hs = Math.max(1, H - marges.haut - marges.bas);
+      const rx = r[0] * iw, ry = r[1] * ih, rw = Math.max(1, (r[2] - r[0]) * iw), rh = Math.max(1, (r[3] - r[1]) * ih);
+      const z = Math.max(1, Math.min(W / rw, Hs / rh));
+      let tx = W / 2 - z * (rx + rw / 2);
+      let ty = z * rh <= Hs + 0.5 ? T + Hs / 2 - z * (ry + rh / 2) : T - z * ry;
+      tx = Math.min(0, Math.max(W - z * iw, tx));
+      ty = Math.min(0, Math.max(H - z * ih, ty));
+      // Agrandir autour d'un point de la scène garde l'image couvrante (f ≥ 1).
+      const px = W / 2, py = T + Hs / 2;
+      tx = px + f * (tx - px); ty = py + f * (ty - py);
+      return `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${(z * f).toFixed(4)})`;
+    }
+
+    /** Cadre montré à l'instant `t` (secondes dans l'audio) d'une diapositive. */
+    function cadreA(x: Diapo, t: number): Rect {
+      const E = x.camera;
+      const fin = (x.duree || 6) + D.pause;
+      if (mouvementReduit.matches) {
+        // Premier cadre fixe, puis coupe sèche vers les suivants.
+        let k = 0;
+        while (k + 1 < E.length && E[k + 1].t <= t) k++;
+        return E[k].c;
+      }
+      // Une seule étape : zoom lent et léger vers ce cadre pendant toute la diapositive.
+      if (E.length === 1) return echelle(E[0].c, 1.06 - 0.09 * Math.min(1, Math.max(0, t / fin)));
+      const fen: { de: number; a: number }[] = [];
+      E.forEach((e, k) => {
+        if (k === 0) return fen.push({ de: 0, a: 0 });
+        const place = Math.min(TRANSITION, Math.max(0.8, (e.t - E[k - 1].t) * 0.8));
+        // Pas avant la fin de la transition précédente.
+        const de = Math.max(fen[k - 1].a, e.t - AVANCE);
+        fen.push({ de, a: de + place });
+      });
+      const tenue = (k: number, u: number) => {
+        const suivante = k + 1 < E.length ? fen[k + 1].de : fin;
+        return echelle(E[k].c, 1 - DERIVE * Math.min(1, Math.max(0, (u - fen[k].a) / Math.max(0.001, suivante - fen[k].a))));
+      };
+      for (let k = E.length - 1; k >= 1; k--) {
+        if (t >= fen[k].a) return tenue(k, t);
+        if (t >= fen[k].de) return melanger(tenue(k - 1, fen[k].de), E[k].c, adoucir((t - fen[k].de) / (fen[k].a - fen[k].de)));
+      }
+      return tenue(0, t);
+    }
+
+    /** Instant courant de la voix de la diapositive : l'audio fait foi. */
+    function instant() {
+      return D.diapos[i].audio
+        ? audio.currentTime || 0
+        : ecouleSansVoix + (joue && debutSansVoix ? (performance.now() - debutSansVoix) / 1000 : 0);
+    }
+
+    /** Pose un calque figé sur son dernier cadre (calque sortant, ou image d'avant un carton). */
+    function poser(k: number) {
+      const x = couches[k].x;
+      if (!x) return;
+      calques[k].querySelector('img')!.style.transform = transformation(calques[k], couches[k].r);
+    }
+
+    /** Rendu de l'image visible : caméra (horloge de l'audio) × entrée (horloge propre). */
+    function rendre(t = instant()) {
+      const c = calques[visible], x = couches[visible].x;
+      if (x !== D.diapos[i]) return; // carton : l'image de la diapositive n'est pas encore entrée
+      const img = c.querySelector('img')!;
+      const reduit = mouvementReduit.matches;
+      const e = enEntree ? chronoEntree.t : Infinity;
+      const opacite = adoucir(e / (reduit ? FONDU_REDUIT : FONDU));
+      const gris = reduit ? 0 : 1 - adoucir(e / REVELATION);
+      const f = reduit ? 1 : 1 + RECUL * (1 - adoucir(e / DUREE_RECUL));
+      const r = cadreA(x, t);
+      couches[visible].r = r;
+      img.style.transform = transformation(c, r, f);
+      img.style.filter = gris > 0.002 ? `grayscale(${gris.toFixed(3)})` : '';
+      c.style.opacity = opacite.toFixed(3);
+      if (opacite >= 1 && sortant >= 0) {
+        calques[sortant].style.opacity = '0';
+        calques[sortant].classList.remove('est-visible');
+        sortant = -1;
+      }
+      if (enEntree && e >= (reduit ? FONDU_REDUIT : Math.max(FONDU, REVELATION, DUREE_RECUL))) {
+        enEntree = false;
+        chronoEntree.zero();
+      }
+    }
+
+    let raf = 0;
+    function boucle() {
+      rendre();
+      if (enCarton) majTemps();
+      if (enSuite) majSuite();
+      raf = joue || (enEntree && chronoEntree.tourne) ? requestAnimationFrame(boucle) : 0;
+    }
+    function animer() { if (!raf) raf = requestAnimationFrame(boucle); }
+    // Onglet en arrière-plan (requestAnimationFrame suspendu) : l'état final de l'entrée est
+    // posé quand même.
+    let filet = 0;
+    function assurerFin() {
+      clearTimeout(filet);
+      filet = window.setTimeout(() => { rendre(); if (enEntree && chronoEntree.tourne) assurerFin(); }, 2000);
+    }
+
+    /** Met l'image de la diapositive courante à l'écran ; `fondu` : avec l'entrée animée. */
+    function montrerImage(x: Diapo, fondu: boolean) {
+      const ancien = visible;
+      const k = fondu ? 1 - visible : visible;
+      const c = calques[k];
+      const img = c.querySelector('img')!;
+      cadre(c, x);
+      if (img.getAttribute('src') !== x.img) img.src = x.img;
+      img.alt = x.alt;
+      couches[k] = { x, r: cadreA(x, 0) };
+      if (fondu) {
+        // Le calque entrant passe au-dessus ; l'ancien reste opaque dessous, figé.
+        if (sortant >= 0 && sortant !== ancien) calques[sortant].style.opacity = '0';
+        const a = calques[ancien];
+        a.style.zIndex = '0';
+        a.style.opacity = '1';
+        a.querySelector('img')!.alt = '';
+        c.style.zIndex = '1';
+        c.style.opacity = '0';
+        c.classList.add('est-visible');
+        visible = k;
+        sortant = ancien;
+        enEntree = true;
+        chronoEntree.zero();
+        chronoEntree.relancer();
+        animer();
+        assurerFin();
+      } else {
+        enEntree = false;
+        chronoEntree.zero();
+      }
+      rendre();
+    }
+
+    // --- Frise du temps -----------------------------------------------------------------------
+    const friseCarton = racine.querySelector<HTMLElement>('.frise-t--carton');
+    const friseSur = racine.querySelector<HTMLElement>('.frise-t--surimpression');
+    const ORIGINE: DateFrise = { j0: 0, j1: 0, x0: 0, x1: 0, libelle: '' };
+    let derniere = -1;     // dernière diapositive affichée : sa date est la « date précédente »
+    let minuterieFrise = 0;
+
+    /** Saut notable : plus de 3 mois vers l'avant, ou tout retour en arrière (même règle que
+     *  verifier.py). */
+    const sautNotable = (de: DateFrise, a: DateFrise) => a.j1 < de.j0 || a.j0 - de.j1 > D.saut;
+
+    /** Étiquettes des années : toutes, ou une sur 2, 5 ou 10 selon la place. */
+    function graduer(f: HTMLElement) {
+      const w = f.clientWidth;
+      const annees = [...f.querySelectorAll<HTMLElement>('.frise-t__annee')];
+      if (!w || !annees.length) return;
+      const besoin = Math.max(...annees.slice(0, 3).map((e) => e.offsetWidth)) * 1.6;
+      const pas = [1, 2, 5, 10].find((p) => (p * w) / annees.length >= besoin) ?? 10;
+      annees.forEach((e) => e.classList.toggle('est-masquee', Number(e.dataset.a) % pas !== 0));
+    }
+    /** Date du curseur, centrée sur lui mais gardée dans la frise. */
+    function placerDate(f: HTMLElement, dt: DateFrise) {
+      const el = f.querySelector<HTMLElement>('.frise-t__date')!;
+      const w = f.clientWidth, demi = w ? (el.offsetWidth / 2 / w) * 100 : 0;
+      el.style.left = `${Math.min(100 - demi, Math.max(demi, (dt.x0 + dt.x1) / 2)).toFixed(3)}%`;
+    }
+    /** Curseur sur `dt` (trait, ou court segment pour une durée). */
+    function poserCurseur(f: HTMLElement, dt: DateFrise, transition: boolean) {
+      const c = f.querySelector<HTMLElement>('.frise-t__curseur')!, el = f.querySelector<HTMLElement>('.frise-t__date')!;
+      c.style.transition = el.style.transition = transition ? '' : 'none';
+      c.style.left = `${dt.x0}%`;
+      c.style.width = `${Math.max(0, dt.x1 - dt.x0)}%`;
+      el.textContent = dt.libelle;
+      placerDate(f, dt);
+    }
+    /** Le curseur glisse de `de` à `a` (CSS, ~1 s, ease-in-out) ; segment de l'acte `k` marqué. */
+    function glisser(f: HTMLElement, de: DateFrise, a: DateFrise, k: number) {
+      graduer(f);
+      f.querySelectorAll('.frise-t__acte').forEach((e, j) => e.classList.toggle('est-courant', j === k));
+      poserCurseur(f, de, false);
+      void f.offsetWidth;
+      const bouge = !mouvementReduit.matches && (de.x0 !== a.x0 || de.x1 !== a.x1);
+      poserCurseur(f, a, bouge);
+    }
+    function cacherFrise() {
+      clearTimeout(minuterieFrise);
+      friseSur?.classList.remove('est-visible');
+    }
+    /** Surimpression 3,6 s au bas de l'image ; horloge murale (éphémère, indépendante de la
+     *  voix : une pause ne la fige pas). */
+    function montrerFrise(de: DateFrise, a: DateFrise, k: number) {
+      if (!friseSur) return;
+      clearTimeout(minuterieFrise);
+      friseSur.classList.remove('est-visible');
+      void friseSur.offsetWidth;
+      friseSur.classList.add('est-visible');
+      glisser(friseSur, de, a, k);
+      minuterieFrise = window.setTimeout(cacherFrise, SURIMPRESSION * 1000);
+    }
+    /** Après un redimensionnement : graduation et date recalées (le curseur est en %). */
+    function ajusterFrises() {
+      for (const f of [friseCarton, friseSur]) {
+        if (!f) continue;
+        graduer(f);
+        const x = D.diapos[i].date;
+        if (x && f.querySelector('.frise-t__date')!.textContent) placerDate(f, x);
+      }
+    }
+
+    // --- Textes et compteurs ---------------------------------------------------------------
+    /** Cartouche : l'ancien s'efface, le nouveau entre ~0,6 s après l'image (CSS). */
+    /** Bandeaux (cartouches de l'image et de la musique) : bien visibles quelques secondes à
+     *  chaque changement, puis presque effacés ; le survol ou la pause les ramène (CSS). */
+    const ESTOMPE = 5000; // ms
+    const minuteriesEstompe = new Map<HTMLElement, number>();
+    function estomperPlusTard(el: HTMLElement) {
+      el.classList.remove('est-discret');
+      clearTimeout(minuteriesEstompe.get(el));
+      minuteriesEstompe.set(el, window.setTimeout(() => el.classList.add('est-discret'), ESTOMPE));
+    }
+    function changerCartouche(x: Diapo) {
+      racine.querySelectorAll('.lecteur__legende--sortant').forEach((e) => e.remove());
+      if (elLegende.classList.contains('est-visible')) {
+        const copie = elLegende.cloneNode(true) as HTMLElement;
+        copie.setAttribute('aria-hidden', 'true');
+        elLegende.after(copie);
+        void copie.offsetWidth;
+        copie.classList.add('lecteur__legende--sortant');
+        window.setTimeout(() => copie.remove(), 500);
+      }
+      elLegende.innerHTML = x.legende;
+      elLegende.classList.remove('est-visible');
+      void elLegende.offsetWidth;
+      elLegende.classList.add('est-visible');
+      estomperPlusTard(elLegende);
+    }
+    /** Sous-titre en fondu croisé ; l'ancien texte, sorti du flux, ne change pas la hauteur. */
+    function changerSousTitre(texte: string) {
+      elSt.querySelectorAll('.st--sortant').forEach((e) => e.remove());
+      const ancien = elSt.querySelector<HTMLElement>('.st');
+      if (ancien && ancien.textContent === texte) return;
+      if (ancien) {
+        ancien.classList.add('st--sortant');
+        ancien.setAttribute('aria-hidden', 'true');
+        window.setTimeout(() => ancien.remove(), 700);
+      }
+      const s = document.createElement('span');
+      s.className = 'st st--entrant';
+      s.textContent = texte;
+      elSt.append(s);
+      void s.offsetWidth;
+      s.classList.remove('st--entrant');
+    }
+
+    /** Instant courant dans tout le diaporama (cartons, voix, pauses, intermèdes). */
+    function tempsCourant() {
+      if (!lance) return debuts[i];
+      if (enCarton) return debuts[i] + Math.min(chronoCarton.t, prelude[i]);
+      const base = debuts[i] + prelude[i];
+      if (enSuite || suiteFini) {
+        const c = suiteFini ? suiteEtPause[i] : Math.min(sa.currentTime || 0, suiteEtPause[i]);
+        return base + voixEtPause[i] + c;
+      }
+      return base + Math.min(instant(), voixEtPause[i]);
+    }
+
+    function majTemps() {
+      const t = tempsCourant();
+      elEcoule.textContent = mmss(Math.min(total, t));
+      bornes.forEach((b, k) => {
+        const p = Math.max(0, Math.min(1, (t - b.t0) / (b.t1 - b.t0)));
+        (segments[k].firstElementChild as HTMLElement).style.transform = `scaleX(${p})`;
+        segments[k].classList.toggle('est-courant', i >= b.de && i < b.fin);
+      });
+    }
+
+    function precharger(k: number) {
+      for (const j of [k, k + 1, k + 2]) {
+        const x = D.diapos[j];
+        if (!x) continue;
+        new Image().src = x.img;
+        if (j > k && x.audio) { const a = new Audio(); a.preload = 'auto'; a.src = x.audio; }
+        if (x.suite && j <= k + 1) { const a = new Audio(); a.preload = 'auto'; a.src = x.suite.src; }
+      }
+    }
+
+    // --- Carton de changement d'acte ---------------------------------------------------------
+    function lancerCarton() {
+      if (!enCarton || chronoCarton.tourne) return;
+      chronoCarton.relancer();
+      arreterMinuterie();
+      minuterie = window.setTimeout(finCarton, Math.max(0, prelude[i] - chronoCarton.t) * 1000);
+      animer();
+    }
+    /** Fin du carton (temps écoulé, ou passé d'un clic ou d'une touche) : l'image entre, puis
+     *  la voix démarre si la lecture est en cours. */
+    function finCarton() {
+      if (!enCarton) return;
+      arreterMinuterie();
+      enCarton = false;
+      chronoCarton.zero();
+      lecteur.classList.remove('en-carton');
+      elCarton.setAttribute('aria-hidden', 'true');
+      entrerImage(true);
+      if (joue) demarrer();
+      majTemps();
+      musique();
+    }
+
+    // --- Lecture -----------------------------------------------------------------------------
+    function arreterMinuterie() { clearTimeout(minuterie); minuterie = 0; }
+
+    /** Cartouche, sous-titre puis image de la diapositive courante (marges mesurées entre-temps). */
+    function entrerImage(fondu: boolean) {
+      const x = D.diapos[i];
+      changerCartouche(x);
+      changerSousTitre(x.texte);
+      mesurerMarges();
+      montrerImage(x, fondu);
+    }
+
+    function afficher(k: number, fondu = true) {
+      arreterMinuterie();
+      arreterSuite();
+      i = Math.max(0, Math.min(N - 1, k));
+      const x = D.diapos[i];
+      const a = D.actes[acteDe[i]];
+      // Date précédente : celle de la dernière diapositive affichée (sauts manuels compris).
+      const datePrec = derniere >= 0 ? D.diapos[derniere].date : null;
+      if (lance) derniere = i;
+      elActeTitre.textContent = a.titre;
+      elActeDates.textContent = a.dates;
+      elN.textContent = String(x.n);
+      audio.pause();
+      if (x.audio) audio.src = x.audio; else audio.removeAttribute('src');
+      ecouleSansVoix = 0; debutSansVoix = 0;
+      if (lance) ecrire(CLE_POS, String(x.n));
+      precharger(i);
+      chronoCarton.zero();
+      if (lance && prelude[i]) {
+        // Carton d'acte : il couvre la scène ; l'image d'avant reste figée dessous.
+        enCarton = true;
+        enEntree = false;
+        chronoEntree.zero();
+        elCartonTitre.textContent = a.titre;
+        elCartonDates.textContent = a.dates;
+        elCarton.setAttribute('aria-hidden', 'false');
+        cacherFrise();
+        // Frise du carton : de la date précédente (ou du début de la période) au début de l'acte.
+        if (friseCarton && x.date) glisser(friseCarton, datePrec ?? ORIGINE, x.date, acteDe[i]);
+        // Retirer puis remettre la classe relance l'animation des textes du carton.
+        lecteur.classList.remove('en-carton');
+        void elCarton.offsetWidth;
+        lecteur.classList.add('en-carton');
+        majTemps();
+        if (joue) demarrer();
+        musique();
+        return;
+      }
+      enCarton = false;
+      lecteur.classList.remove('en-carton');
+      elCarton.setAttribute('aria-hidden', 'true');
+      entrerImage(fondu);
+      // Entre deux cartons : la frise en surimpression si la date fait un saut notable.
+      if (lance && datePrec && x.date && sautNotable(datePrec, x.date)) montrerFrise(datePrec, x.date, acteDe[i]);
+      else cacherFrise();
+      majTemps();
+      if (joue) demarrer();
+      musique();
+    }
+
+    function demarrer() {
+      const x = D.diapos[i];
+      joue = true;
+      lecteur.classList.add('en-lecture');
+      btnLecture.setAttribute('aria-label', 'Pause');
+      animer();
+      musique();
+      if (enCarton) return lancerCarton();
+      if (enSuite) {
+        sa.play().catch((e) => { if (e?.name !== 'AbortError') finSuite(); });
+        return;
+      }
+      if (suiteFini) {
+        minuterie = window.setTimeout(suivantAuto, D.pause * 1000);
+        return;
+      }
+      if (x.audio) {
+        if (audio.ended) return finDeVoix();
+        if (audio.error) return finDeVoix();
+        // AbortError : la source a changé avant le début de la lecture (saut rapide).
+        audio.play().catch((e) => { if (e?.name !== 'AbortError') pause(); });
+      } else {
+        debutSansVoix = performance.now();
+        minuterie = window.setTimeout(suivantAuto, (voixEtPause[i] - ecouleSansVoix) * 1000);
+      }
+    }
+    function pause() {
+      joue = false;
+      lecteur.classList.remove('en-lecture');
+      btnLecture.setAttribute('aria-label', 'Lecture');
+      audio.pause();
+      sa.pause();
+      if (minuterie && debutSansVoix && !enCarton) ecouleSansVoix += (performance.now() - debutSansVoix) / 1000;
+      debutSansVoix = 0;
+      arreterMinuterie();
+      chronoCarton.figer();
+      if (raf && !(enEntree && chronoEntree.tourne)) { cancelAnimationFrame(raf); raf = 0; }
+      rendre();
+      majTemps();
+      montrerControles();
+      musique();
+    }
+    function finDeVoix() {
+      if (!joue || enCarton || enSuite) return;
+      arreterMinuterie();
+      minuterie = window.setTimeout(apresVoix, D.pause * 1000);
+    }
+    /** Après la voix et sa pause : l'intermède chanté s'il y en a un, sinon la suite. */
+    function apresVoix() {
+      minuterie = 0;
+      const c = D.diapos[i].suite;
+      if (c && !suiteFini) return lancerSuite();
+      suivantAuto();
+    }
+
+    // --- Segments après la voix : intermède chanté, lecture d'époque, épisode -----------------------
+    // La voix s'est tue. Intermède : le chant est joué au premier plan sur l'image du moment (la
+    // musique de fond se tait), avec son cartouche et ses paroles en sous-titre. Lecture : la carte
+    // de citation couvre l'image (floue, voilée, immobile) et le texte y apparaît mot par mot au
+    // rythme de la voix de lecture. Épisode : un panneau couvre la scène et ses visuels suivent la narration. L'horloge
+    // est `sa.currentTime` (pause, reprise et sauts justes). → passe le segment.
+    const cartes = new Map([...racine.querySelectorAll<HTMLElement>('.citation--lecteur')].map((e) => [e.dataset.lecture!, e]));
+    const panneaux = new Map([...racine.querySelectorAll<HTMLElement>('.episode--lecteur')].map((e) => [e.dataset.episode!, e]));
+    let ov: HTMLElement | null = null; // carte ou panneau affiché
+    const CLASSES_SUITE = { chant: 'en-chant', lecture: 'en-citation', episode: 'en-episode' } as const;
+    let vers = -2;
+    function lancerSuite() {
+      const c = D.diapos[i].suite!;
+      enSuite = true;
+      suiteFini = false;
+      lecteur.classList.add(CLASSES_SUITE[c.type]);
+      if (sa.getAttribute('src') !== c.src) sa.src = c.src;
+      try { sa.currentTime = 0; } catch { /* métadonnées pas encore chargées */ }
+      if (c.type === 'chant') {
+        changerCartouche({ legende: c.legende } as Diapo);
+        vers = -2;
+      } else {
+        ov = (c.type === 'lecture' ? cartes : panneaux).get(c.id) ?? null;
+        if (ov) { preparer(ov, c); ov.classList.add('est-visible'); ov.setAttribute('aria-hidden', 'false'); }
+        changerSousTitre('');
+        // Pas de frise en surimpression : la carte ou le panneau en tient lieu ; la date du
+        // segment (champ `date`) reste celle de son récit, et la frise reprend à la diapositive
+        // suivante, comparée à celle-ci.
+        cacherFrise();
+      }
+      majSuite();
+      musique();
+      if (joue) sa.play().catch((e) => { if (e?.name !== 'AbortError') finSuite(); });
+      animer();
+      majTemps();
+    }
+    /** Fin naturelle du segment (ou erreur) : pause, puis diapositive suivante. La carte ou le
+     *  panneau reste, complet, jusqu'au fondu vers l'image suivante. */
+    function finSuite() {
+      if (!enSuite) return;
+      enSuite = false;
+      suiteFini = true;
+      lecteur.classList.remove('en-chant');
+      majSuite();
+      musique();
+      majTemps();
+      if (joue) { arreterMinuterie(); minuterie = window.setTimeout(suivantAuto, D.pause * 1000); }
+    }
+    /** Sortie du segment par un saut (le cartouche et le sous-titre sont alors remplacés). */
+    function arreterSuite() {
+      if (!enSuite && !suiteFini) return;
+      enSuite = false;
+      suiteFini = false;
+      sa.pause();
+      lecteur.classList.remove('en-chant', 'en-citation', 'en-episode');
+      if (ov) { ov.classList.remove('est-visible'); ov.setAttribute('aria-hidden', 'true'); ov = null; }
+    }
+    /** Mise à jour du segment en cours d'après l'horloge de son audio. */
+    function majSuite() {
+      const c = D.diapos[i].suite;
+      if (!c || (!enSuite && !suiteFini)) return;
+      const t = suiteFini ? c.duree + 2 : sa.currentTime || 0;
+      if (c.type === 'chant') { if (enSuite) majParoles(); return; }
+      if (!ov) return;
+      if (c.type === 'lecture') majCitation(ov, c, t);
+      else majEpisode(ov, c, t);
+    }
+    /** Le vers en cours (un léger avance pour l'œil) ; rien avant le premier. */
+    function majParoles() {
+      const c = D.diapos[i].suite;
+      if (!enSuite || !c || c.type !== 'chant') return;
+      const t = (sa.currentTime || 0) + 0.15;
+      let k = -1;
+      while (k + 1 < c.paroles.length && c.paroles[k + 1][0] <= t) k++;
+      if (k === vers) return;
+      vers = k;
+      changerSousTitre(k >= 0 ? c.paroles[k][1] : '');
+    }
+
+    // Éléments de chaque carte et panneau, relevés une fois (à leur premier affichage).
+    interface Anim { el: Element & ElementCSSInlineStyle; t: number; d: number; p: number }
+    interface EtatSegment {
+      mots?: HTMLElement[][]; zone?: HTMLElement; defile?: HTMLElement; lu?: number; cour?: number; y?: number; hz?: number;
+      ev?: { el: HTMLElement; t: number }[]; anims?: Anim[]; actif?: number; phrase?: number;
+      traces?: { el: SVGRectElement; l: number; trace: [number, number][]; x: number }[];
+      docs?: { el: HTMLElement; page: HTMLElement; l: number; h: number; vues: number[][] }[];
+    }
+    const etats = new WeakMap<HTMLElement, EtatSegment>();
+    function preparer(el: HTMLElement, c: SuiteLecture | SuiteEpisode) {
+      let e = etats.get(el);
+      if (!e) {
+        e = {};
+        if (c.type === 'lecture') {
+          e.zone = el.querySelector<HTMLElement>('.citation__texte')!;
+          e.defile = el.querySelector<HTMLElement>('.citation__defile')!;
+          // Éléments de chaque mot (rang `data-k` ; la ponctuation et les coupures suivent un mot).
+          e.mots = c.mots.map(() => []);
+          el.querySelectorAll<HTMLElement>('[data-k]').forEach((x) => e!.mots![Number(x.dataset.k)]?.push(x));
+          // Fond flou : l'image du moment, chargée seulement à la première lecture.
+          const f = el.querySelector<HTMLElement>('.citation__fond[data-fond]');
+          if (f?.dataset.fond && !f.style.backgroundImage) f.style.backgroundImage = `url("${f.dataset.fond}")`;
+        } else {
+          e.ev = [...el.querySelectorAll<HTMLElement>('.ev')].map((x) => ({ el: x, t: Number(x.dataset.t) }));
+          e.anims = [...el.querySelectorAll<HTMLElement>('.anim')].map((x) => ({ el: x, t: Number(x.dataset.t), d: Number(x.dataset.d || 1), p: -1 }));
+          e.traces = [...el.querySelectorAll<SVGRectElement>('[data-trace]')].map((x) => ({ el: x, l: Number(x.dataset.l), trace: JSON.parse(x.dataset.trace!), x: -1 }));
+          e.docs = [...el.querySelectorAll<HTMLElement>('.ev-doc[data-vues]')].map((x) => ({
+            el: x, page: x.querySelector<HTMLElement>('.ev-doc__page')!, l: Number(x.dataset.l), h: Number(x.dataset.h), vues: JSON.parse(x.dataset.vues!) }));
+        }
+        etats.set(el, e);
+      }
+      // Remise à zéro : tout sera recalculé au premier rendu.
+      e.lu = -1; e.cour = -1; e.y = -1; e.hz = -1; e.actif = -1; e.phrase = -2;
+      e.mots?.forEach((l) => l.forEach((x) => x.classList.remove('est-lu', 'est-courant')));
+      if (e.defile) e.defile.style.transform = '';
+      e.anims?.forEach((a) => (a.p = -1));
+      e.traces?.forEach((x) => (x.x = -1));
+      if (e.zone) e.zone.scrollTop = 0;
+    }
+
+    /** Lecture : le texte apparaît mot par mot au rythme exact de la voix (instants de
+     *  l'alignement forcé) : le mot en cours en noir, les mots lus en gris foncé, les suivants
+     *  invisibles mais à leur place. Mouvement réduit : par phrase. Le texte qui dépasse la place
+     *  défile en douceur pour garder la ligne en cours dans le bas de la zone. */
+    const AVANCE_MOT = 0.06; // s : le mot paraît au moment où la voix l'attaque
+    function majCitation(el: HTMLElement, c: SuiteLecture, t: number) {
+      const e = etats.get(el)!;
+      const N = c.mots.length;
+      let lu = 0, cour = 0; // mots [0, lu) lus, [lu, cour) en cours, la suite invisible
+      if (suiteFini) { lu = N; cour = N; }
+      else if (mouvementReduit.matches) {
+        for (const [t0, k0, k1] of c.phrases) if (t0 <= t + AVANCE_MOT) { lu = k0; cour = k1; }
+      } else {
+        while (cour < N && c.mots[cour] <= t + AVANCE_MOT) cour++;
+        lu = Math.max(0, cour - 1);
+      }
+      if (lu !== e.lu || cour !== e.cour) {
+        e.mots!.forEach((els, k) => {
+          const etat = k < lu ? 1 : k < cour ? 2 : 0;
+          for (const x of els) {
+            x.classList.toggle('est-lu', etat === 1);
+            x.classList.toggle('est-courant', etat === 2);
+          }
+        });
+        e.lu = lu; e.cour = cour;
+      }
+      // Défilement : recalculé aussi quand la zone change de taille (plein écran, rotation).
+      const z = e.zone!, hz = z.clientHeight;
+      const repere = e.mots![Math.max(0, Math.min(N - 1, cour - 1))]?.[0];
+      const H = e.defile!.offsetHeight;
+      let y = 0;
+      if (repere && H > hz + 1 && cour > 0) {
+        const bas = repere.offsetTop + repere.offsetHeight;
+        y = Math.max(0, Math.min(H - hz, bas - hz * 0.74));
+        // Dépassement infime (marge, jambages) : on ne bouge pas pour si peu.
+        if (y < repere.offsetHeight * 0.4) y = 0;
+      }
+      y = Math.round(y);
+      if (y !== e.y || hz !== e.hz) {
+        e.defile!.style.transform = y ? `translateY(${-y}px)` : '';
+        z.classList.toggle('deborde', y > 0);
+        e.y = y; e.hz = hz;
+      }
+    }
+
+    /** Épisode : visuel actif, éléments animés (--p), tracés, zoom du document, sous-titre. */
+    const AVANCE_EPISODE = 0.3; // s : l'œil devance un peu l'oreille
+    function majEpisode(el: HTMLElement, c: SuiteEpisode, t: number) {
+      const e = etats.get(el)!;
+      const reduit = mouvementReduit.matches;
+      const ta = t + AVANCE_EPISODE;
+      let k = 0;
+      e.ev!.forEach((v, j) => { if (v.t <= ta) k = j; });
+      if (k !== e.actif) { e.ev!.forEach((v, j) => v.el.classList.toggle('est-actif', j === k)); e.actif = k; }
+      for (const a of e.anims!) {
+        const p = reduit ? (ta >= a.t ? 1 : 0) : adoucir((ta - a.t) / a.d);
+        if (Math.abs(p - a.p) > 0.002) { a.el.style.setProperty('--p', p.toFixed(3)); a.p = p; }
+      }
+      for (const x of e.traces!) {
+        const tr = x.trace;
+        let f = 0;
+        if (ta >= tr[0][0]) {
+          let j = 0;
+          while (j + 1 < tr.length && tr[j + 1][0] <= ta) j++;
+          f = j + 1 < tr.length && !reduit ? tr[j][1] + (tr[j + 1][1] - tr[j][1]) * ((ta - tr[j][0]) / Math.max(0.001, tr[j + 1][0] - tr[j][0])) : tr[j][1];
+        }
+        if (Math.abs(f - x.x) > 0.0005) { x.el.setAttribute('width', (f * x.l).toFixed(1)); x.x = f; }
+      }
+      for (const doc of e.docs!) majDocument(doc, ta, reduit);
+      // Sous-titre : la phrase en cours.
+      let ph = -1;
+      c.phrases.forEach(([t0], j) => { if (t0 <= t + 0.1) ph = j; });
+      if (suiteFini) ph = -1;
+      if (ph !== e.phrase) { e.phrase = ph; changerSousTitre(ph >= 0 ? c.phrases[ph][2] : ''); }
+    }
+    /** Document : la page entière, puis un zoom doux (1,4 s) sur chaque ligne lue. */
+    function majDocument(doc: { el: HTMLElement; page: HTMLElement; l: number; h: number; vues: number[][] }, ta: number, reduit: boolean) {
+      const W = doc.el.clientWidth, H = doc.el.clientHeight;
+      if (!W || !H) return;
+      const s0 = Math.min(W / doc.l, H / doc.h);
+      const pw = doc.l * s0, ph = doc.h * s0;
+      const entiere: Rect = [0, 0, 1, 1];
+      let k = -1;
+      doc.vues.forEach((v, j) => { if (v[0] <= ta + 0.4) k = j; });
+      let r = entiere;
+      if (k >= 0) {
+        const de = (k > 0 ? doc.vues[k - 1].slice(1) : entiere) as Rect;
+        const a = doc.vues[k].slice(1) as Rect;
+        r = reduit ? a : melanger(de, a, adoucir((ta + 0.4 - doc.vues[k][0]) / 1.4));
+      }
+      const rw = (r[2] - r[0]) * pw, rh = (r[3] - r[1]) * ph;
+      const z = Math.min(W / rw, H / rh);
+      const tx = W / 2 - z * ((r[0] + r[2]) / 2) * pw, ty = H / 2 - z * ((r[1] + r[3]) / 2) * ph;
+      doc.page.style.width = `${pw.toFixed(1)}px`;
+      doc.page.style.height = `${ph.toFixed(1)}px`;
+      doc.page.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${z.toFixed(4)})`;
+    }
+    /** Saut direct vers le segment d'une diapositive (clic dans la barre de progression) : la
+     *  diapositive s'affiche, sans sa voix ni son carton, puis le segment commence. */
+    function allerSuite(j: number) {
+      aller(j);
+      if (enCarton) {
+        arreterMinuterie();
+        enCarton = false;
+        chronoCarton.zero();
+        lecteur.classList.remove('en-carton');
+        elCarton.setAttribute('aria-hidden', 'true');
+        entrerImage(false);
+      }
+      arreterMinuterie();
+      audio.pause();
+      try { audio.currentTime = Math.max(0, D.diapos[i].duree - 0.05); } catch { /* pas encore chargé */ }
+      lancerSuite();
+    }
+    function suivantAuto() {
+      minuterie = 0;
+      if (i >= N - 1) { pause(); ecrire(CLE_POS, null); return; }
+      afficher(i + 1);
+    }
+    function lancer(k = 0) {
+      deverrouillerAudio();
+      lance = true;
+      depart.hidden = true;
+      joue = true;
+      afficher(k, k !== i);
+      estomperPlusTard(elLegende);
+      btnLecture.focus({ preventScroll: true });
+      // Le lecteur entier à l'écran, s'il dépasse.
+      const r = lecteur.getBoundingClientRect();
+      if (r.top < 0 || r.bottom > window.innerHeight) lecteur.scrollIntoView({ behavior: mouvementReduit.matches ? 'auto' : 'smooth', block: 'start' });
+    }
+    function basculer() {
+      deverrouillerAudio();
+      if (!lance) return lancer(i);
+      joue ? pause() : demarrer();
+    }
+    function aller(k: number) {
+      k = Math.max(0, Math.min(N - 1, k));
+      if (!lance) { lance = true; depart.hidden = true; }
+      if (k === i && !prelude[i] && !enCarton) {
+        // Retour au début de la diapositive courante (sans carton).
+        arreterMinuterie();
+        if (enSuite || suiteFini) {
+          arreterSuite();
+          changerCartouche(D.diapos[i]);
+          changerSousTitre(D.diapos[i].texte);
+        }
+        audio.currentTime = 0; ecouleSansVoix = 0; debutSansVoix = 0;
+        rendre(0);
+        musique();
+        if (joue) demarrer();
+        majTemps();
+        return;
+      }
+      afficher(k);
+    }
+    /** « Suivant » : passe le carton s'il est affiché, sinon diapositive suivante. */
+    function suivant() {
+      if (enCarton) return finCarton();
+      aller(i + 1);
+    }
+
+    audio.addEventListener('ended', finDeVoix);
+    for (const ev of ['play', 'playing', 'pause', 'ended', 'waiting']) audio.addEventListener(ev, () => appliquerEtat());
+    sa.addEventListener('ended', finSuite);
+    for (const ev of ['play', 'playing', 'pause', 'ended', 'waiting']) sa.addEventListener(ev, () => appliquerEtat());
+    sa.addEventListener('error', () => { if (enSuite && sa.getAttribute('src')) finSuite(); });
+    sa.addEventListener('timeupdate', () => { majSuite(); majTemps(); });
+    sa.addEventListener('seeked', () => majSuite());
+    // timeupdate (et seeked) recalent aussi la caméra : utile après un saut en pause, et quand
+    // requestAnimationFrame est suspendu (onglet en arrière-plan).
+    audio.addEventListener('timeupdate', () => { if (!enCarton) { majTemps(); rendre(); } });
+    audio.addEventListener('seeked', () => rendre());
+    audio.addEventListener('error', () => { if (joue && !enCarton && audio.getAttribute('src')) finDeVoix(); });
+
+    // --- Musique de fond (Web Audio API) ---------------------------------------------------------
+    // Deux lecteurs <audio> (fondu enchaîné entre deux pistes) passent chacun par un gain de
+    // fondu, puis par un gain commun de « ducking » réglé selon l'état du diaporama (voix,
+    // respiration, carton, intermède, arrêt) et le volume choisi. L'AudioContext est créé et
+    // débloqué au premier clic (« Lancer », lecture) : exigence d'iOS. Sans Web Audio, le
+    // volume des éléments est réglé directement (sans rampe).
+    // Position : les pistes d'un acte s'enchaînent depuis le début de l'acte (et bouclent) ;
+    // après un saut vers un autre acte, la piste et l'instant sont déduits du temps du
+    // diaporama. Dans un même acte, la musique continue sans à-coup (pause, sauts, reprise).
+    const aFond = D.fond.some((l) => l.length > 0);
+    let musiqueOn = lire(CLE_MUSIQUE) !== 'non';
+    let volume = (() => { const v = Number(lire(CLE_VOLUME)); return lire(CLE_VOLUME) !== null && v >= 0 && v <= 1 ? v : VOLUME_DEFAUT; })();
+    interface LecteurFond { el: HTMLAudioElement; g: GainNode | null; acte: number; piste: number; v: number; enchaine: boolean; arret: number }
+    const fonds: LecteurFond[] = [0, 1].map(() => {
+      const el = new Audio();
+      el.preload = 'auto';
+      return { el, g: null, acte: -1, piste: -1, v: 0, enchaine: false, arret: 0 };
+    });
+    let courant = -1;            // lecteur de fond actif (-1 : aucun)
+    let ctx: AudioContext | null = null;
+    let maitre: GainNode | null = null;
+    let duck = 0;                 // gain de ducking visé (repli sans Web Audio)
+    let etatMusique: EtatMusique = 'arret';
+    let arretMusique = 0;
+    let deverrouille = false;
+
+    function deverrouillerAudio() {
+      if (deverrouille) { void ctx?.resume(); return; }
+      deverrouille = true;
+      if (aFond) {
+        try {
+          const AC = window.AudioContext || (window as any).webkitAudioContext;
+          ctx = new AC();
+          maitre = ctx.createGain();
+          maitre.gain.value = 0;
+          maitre.connect(ctx.destination);
+          for (const f of fonds) {
+            f.g = ctx.createGain();
+            f.g.gain.value = 0;
+            ctx.createMediaElementSource(f.el).connect(f.g).connect(maitre);
+          }
+          void ctx.resume();
+        } catch { ctx = null; maitre = null; fonds.forEach((f) => (f.g = null)); }
+      }
+      // iOS : chaque élément <audio> doit avoir été lancé une fois pendant un geste de
+      // l'utilisateur. On amorce, en silence, le second lecteur de fond et celui des chants.
+      const amorcer = (el: HTMLAudioElement, src: string | undefined) => {
+        if (!src || !el.paused) return;
+        if (!el.getAttribute('src')) el.src = src;
+        el.muted = true;
+        el.play().then(() => { if (el !== sa || !enSuite) el.pause(); el.muted = false; }).catch(() => { el.muted = false; });
+      };
+      amorcer(sa, D.diapos.find((x) => x.suite)?.suite?.src);
+      amorcer(fonds[1].el, D.fond.find((l) => l.length > 1)?.[1]?.src ?? D.fond.find((l) => l.length)?.[0]?.src);
+    }
+
+    function etatCourant(): EtatMusique {
+      if (!lance || !joue) return 'arret';
+      if (enSuite) {
+        // Intermède : la musique de fond se tait ; lecture et épisode : baissée comme sous la voix.
+        if (D.diapos[i].suite?.type === 'chant') return 'chant';
+        return !sa.paused && !sa.ended ? 'voix' : 'respiration';
+      }
+      if (enCarton) return 'carton';
+      if (D.diapos[i].audio && !audio.paused && !audio.ended) return 'voix';
+      return 'respiration';
+    }
+
+    /** Gain d'un lecteur de fond (fondu enchaîné), en rampe linéaire sur `duree` secondes. */
+    function fondre(f: LecteurFond, cible: number, duree: number) {
+      if (ctx && f.g) {
+        const t = ctx.currentTime, g = f.g.gain;
+        g.cancelScheduledValues(t);
+        g.setValueAtTime(g.value, t);
+        g.linearRampToValueAtTime(cible, t + Math.max(0.02, duree));
+      }
+      f.v = cible;
+      if (!ctx) f.el.volume = Math.min(1, Math.max(0, cible * duck));
+    }
+
+    /** Cartouche de la musique de fond (en haut à droite) : visible tant qu'une piste de fond
+     *  est en cours et la musique activée ; masqué pendant un chant (son propre cartouche). */
+    function afficherMusique() {
+      const f = courant >= 0 ? fonds[courant] : null;
+      const p = f && f.acte >= 0 ? D.fond[f.acte]?.[f.piste] : null;
+      const oui = Boolean(p && musiqueOn && lance && !(enSuite && D.diapos[i].suite?.type === 'chant'));
+      if (p && elMusique.dataset.src !== p.src) {
+        elMusique.dataset.src = p.src;
+        elMusique.classList.remove('est-visible');
+        void elMusique.offsetWidth;
+        elMusique.innerHTML = p.info;
+        estomperPlusTard(elMusique);
+      }
+      elMusique.classList.toggle('est-visible', oui);
+    }
+
+    /** Ducking : gain commun selon l'état (voix, respiration, carton, intermède, arrêt). À
+     *  l'arrêt (pause, musique coupée), les lecteurs sont mis en pause après le fondu. */
+    function appliquerEtat() {
+      if (!aFond) return;
+      etatMusique = etatCourant();
+      afficherMusique();
+      const cible = musiqueOn ? Math.min(1, GAINS[etatMusique] * (volume / VOLUME_DEFAUT)) : 0;
+      const baisse = cible < duck;
+      duck = cible;
+      if (ctx && maitre) {
+        const t = ctx.currentTime, g = maitre.gain;
+        g.cancelScheduledValues(t);
+        g.setValueAtTime(g.value, t);
+        // La musique s'efface vite quand la voix entre, remonte plus doucement ensuite.
+        g.setTargetAtTime(cible, t, baisse ? 0.12 : 0.5);
+      } else {
+        fonds.forEach((f) => (f.el.volume = Math.min(1, Math.max(0, f.v * duck))));
+      }
+      clearTimeout(arretMusique);
+      if (cible === 0) {
+        arretMusique = window.setTimeout(() => { if (duck === 0) fonds.forEach((f) => f.el.pause()); }, 700);
+      }
+    }
+
+    /** Piste et instant de fond pour l'instant `t` du diaporama (acte de la diapositive courante). */
+    function positionFond(t: number) {
+      const a = acteDe[i], liste = D.fond[a];
+      if (!liste?.length) return null;
+      const total = liste.reduce((s, p) => s + p.duree, 0);
+      let o = Math.max(0, t - bornes[a].t0) % total, j = 0;
+      while (j < liste.length - 1 && o >= liste[j].duree) { o -= liste[j].duree; j++; }
+      return { a, j, o: Math.min(o, Math.max(0, liste[j].duree - FONDU_PISTE - 0.5)) };
+    }
+
+    function jouerPiste(a: number, j: number, o: number, fondu: number) {
+      const sortant = courant >= 0 ? fonds[courant] : null;
+      const k = courant >= 0 ? 1 - courant : 0;
+      const f = fonds[k], p = D.fond[a][j];
+      clearTimeout(f.arret);
+      f.acte = a; f.piste = j; f.enchaine = false;
+      if (f.el.getAttribute('src') !== p.src) f.el.src = p.src;
+      const caler = () => { try { f.el.currentTime = o; } catch { /* pas encore prêt */ } };
+      if (f.el.readyState >= 1) caler(); else f.el.addEventListener('loadedmetadata', caler, { once: true });
+      if (ctx && f.g) { f.g.gain.cancelScheduledValues(ctx.currentTime); f.g.gain.setValueAtTime(0, ctx.currentTime); }
+      f.v = 0;
+      f.el.play().catch(() => { /* bloqué ou interrompu : resynchronisé au prochain geste */ });
+      fondre(f, p.volume, fondu);
+      if (sortant) {
+        fondre(sortant, 0, fondu);
+        clearTimeout(sortant.arret);
+        sortant.arret = window.setTimeout(() => { if (fonds[courant] !== sortant) sortant.el.pause(); }, fondu * 1000 + 150);
+      }
+      courant = k;
+      afficherMusique();
+    }
+
+    /** Musique à jour : état (ducking), piste de l'acte courant, lecture ou arrêt. */
+    function musique() {
+      if (!aFond) return;
+      appliquerEtat();
+      if (!musiqueOn || !lance || !joue) return;
+      const cur = courant >= 0 ? fonds[courant] : null;
+      if (cur && cur.acte === acteDe[i] && cur.el.getAttribute('src')) {
+        // Même acte : la musique continue (ou reprend là où elle s'était arrêtée).
+        if (cur.el.paused) { cur.el.play().catch(() => {}); fondre(cur, D.fond[cur.acte][cur.piste].volume, 0.3); }
+        return;
+      }
+      const pos = positionFond(tempsCourant());
+      if (!pos) {
+        if (cur) { fondre(cur, 0, FONDU_ACTE); cur.acte = -1; }
+        afficherMusique();
+        return;
+      }
+      jouerPiste(pos.a, pos.j, pos.o, cur && !cur.el.paused ? FONDU_ACTE : 0.6);
+    }
+
+    // Fin d'une piste : la suivante de l'acte (ou la première, en boucle) en fondu enchaîné.
+    fonds.forEach((f, k) => {
+      const suite = () => {
+        if (k !== courant || f.enchaine || f.acte < 0 || !joue) return;
+        const liste = D.fond[f.acte];
+        if (!liste?.length) return;
+        f.enchaine = true;
+        jouerPiste(f.acte, (f.piste + 1) % liste.length, 0, FONDU_PISTE);
+      };
+      f.el.addEventListener('timeupdate', () => {
+        if (f.el.duration && f.el.duration - f.el.currentTime < FONDU_PISTE) suite();
+      });
+      f.el.addEventListener('ended', suite);
+    });
+
+    function basculerMusique(oui = !musiqueOn) {
+      if (!btnMusique) return;
+      musiqueOn = oui;
+      btnMusique.setAttribute('aria-pressed', String(oui));
+      if (curseurVolume) curseurVolume.disabled = !oui;
+      ecrire(CLE_MUSIQUE, oui ? 'oui' : 'non');
+      if (oui) deverrouillerAudio();
+      musique();
+    }
+    if (btnMusique) basculerMusique(musiqueOn);
+    if (curseurVolume) {
+      curseurVolume.value = String(Math.round(volume * 100));
+      curseurVolume.addEventListener('input', () => {
+        volume = Number(curseurVolume.value) / 100;
+        ecrire(CLE_VOLUME, String(volume));
+        appliquerEtat();
+      });
+    }
+    // Pour les tests (onglet en arrière-plan : on lit l'état et les gains calculés).
+    // Pour les tests : saut vers une diapositive (par son numéro) ou vers son segment.
+    (racine as any).__aller = (n: number, segment = false) => {
+      const k = D.diapos.findIndex((x) => x.n === n);
+      if (k < 0) return;
+      deverrouillerAudio();
+      return segment ? allerSuite(k) : aller(k);
+    };
+    (racine as any).__musique = () => ({
+      etat: etatMusique, duck, musiqueOn, volume, courant, ctx: ctx?.state ?? null,
+      maitre: maitre?.gain.value ?? null, enSuite, suiteFini, suite: D.diapos[i].suite?.type ?? null, i, t: tempsCourant(), total,
+      fonds: fonds.map((f) => ({ src: f.el.getAttribute('src'), acte: f.acte, piste: f.piste, v: f.v, g: f.g?.gain.value ?? null, paused: f.el.paused, t: f.el.currentTime })),
+    });
+
+    // --- Contrôles ---------------------------------------------------------------------------
+    racine.addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLElement>('[data-action]');
+      if (!b || !racine.contains(b)) return;
+      const action = b.dataset.action;
+      if (action === 'lancer') lancer(0);
+      else if (action === 'reprendre') lancer(Number(b.dataset.index));
+      else if (action === 'basculer') basculer();
+      else if (action === 'precedent') aller(i - 1);
+      else if (action === 'suivant') suivant();
+      else if (action === 'passer') finCarton();
+      else if (action === 'sous-titres') sousTitres(!lecteur.classList.contains('avec-st'));
+      else if (action === 'plein-ecran') pleinEcran();
+      else if (action === 'musique') basculerMusique();
+    });
+    segments.forEach((s) => s.addEventListener('click', (e) => {
+      // Clic dans un segment : on saute à l'endroit visé ; clavier : au début de l'acte.
+      const ev = e as MouseEvent;
+      if (ev.detail === 0) return aller(D.diapos.findIndex((x) => x.n >= Number(s.dataset.debut)));
+      const r = s.getBoundingClientRect();
+      const k = segments.indexOf(s);
+      const t = bornes[k].t0 + ((ev.clientX - r.left) / r.width) * (bornes[k].t1 - bornes[k].t0);
+      let j = bornes[k].de;
+      while (j + 1 < bornes[k].fin && debuts[j + 1] <= t) j++;
+      // Dans la part d'un segment (chant, lecture, épisode) : directement au segment.
+      if (D.diapos[j].suite && t >= debuts[j] + prelude[j] + voixEtPause[j]) return allerSuite(j);
+      aller(j);
+    }));
+
+    function sousTitres(oui: boolean) {
+      lecteur.classList.toggle('avec-st', oui);
+      btnSt.setAttribute('aria-pressed', String(oui));
+      mesurerMarges();
+      rendre();
+      ecrire(CLE_ST, oui ? 'oui' : 'non');
+    }
+    sousTitres(lire(CLE_ST) !== 'non');
+
+    // Plein écran (API Fullscreen ; caché si le navigateur ne la permet pas, ex. iPhone).
+    const peDispo = document.fullscreenEnabled || (document as any).webkitFullscreenEnabled;
+    if (!peDispo) btnPe.hidden = true;
+    function pleinEcran() {
+      const el = document.fullscreenElement ?? (document as any).webkitFullscreenElement;
+      if (el) (document.exitFullscreen ?? (document as any).webkitExitFullscreen).call(document);
+      else (lecteur.requestFullscreen ?? (lecteur as any).webkitRequestFullscreen).call(lecteur);
+    }
+    // Après un changement de taille, la caméra est recalculée pour l'instant courant ; les
+    // calques figés (sortant d'un fondu, image sous un carton) sont reposés sur leur cadre.
+    function recadrer() {
+      couches.forEach((c, k) => { if (c.x) cadre(calques[k], c.x); });
+      mesurerMarges();
+      couches.forEach((c, k) => { if (c.x && (k !== visible || c.x !== D.diapos[i])) poser(k); });
+      rendre();
+      ajusterFrises();
+      majSuite();
+    }
+    const auRedimensionnement = () => {
+      recadrer();
+      btnPe.setAttribute('aria-pressed', String(Boolean(document.fullscreenElement)));
+      montrerControles();
+    };
+    document.addEventListener('fullscreenchange', auRedimensionnement);
+    new ResizeObserver(recadrer).observe(scene);
+
+    // En plein écran, légende et contrôles s'effacent après 3 s d'inactivité.
+    let inactivite = 0;
+    function montrerControles() {
+      lecteur.classList.remove('inactif');
+      clearTimeout(inactivite);
+      inactivite = window.setTimeout(() => {
+        if (joue && document.fullscreenElement === lecteur) lecteur.classList.add('inactif');
+      }, 3000);
+    }
+    for (const ev of ['mousemove', 'touchstart', 'keydown']) lecteur.addEventListener(ev, montrerControles, { passive: true });
+
+    // Clavier : espace, ← →, F, S, Entrée (passer le carton) — sauf dans un champ de saisie.
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      const cible = e.target instanceof Element ? e.target : document.body;
+      if (cible.closest('input, textarea, select, [contenteditable]')) return;
+      if (e.key === ' ' || e.key === 'Spacebar') {
+        if (cible.closest('button, a')) return; // le bouton s'active de lui-même
+        e.preventDefault(); basculer();
+      } else if (e.key === 'ArrowLeft') { e.preventDefault(); aller(i - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); suivant(); }
+      else if (e.key === 'Enter') {
+        // Pendant un carton, Entrée le passe (même si le focus est sur le bouton de lecture).
+        const bouton = cible.closest('button, a');
+        if (!enCarton || (bouton && bouton !== btnLecture)) return;
+        e.preventDefault(); finCarton();
+      }
+      else if (e.key === 'f' || e.key === 'F') { if (peDispo) pleinEcran(); }
+      else if (e.key === 's' || e.key === 'S') sousTitres(!lecteur.classList.contains('avec-st'));
+      else if ((e.key === 'm' || e.key === 'M') && btnMusique) basculerMusique();
+    });
+
+    // Balayage gauche/droite sur l'image.
+    let x0 = 0, y0 = 0;
+    scene.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    scene.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > 1.5 * Math.abs(dy)) dx < 0 ? suivant() : aller(i - 1);
+    }, { passive: true });
+
+    // Reprise : « Reprendre à la diapositive 37 ».
+    const memo = Number(lire(CLE_POS));
+    const k = D.diapos.findIndex((x) => x.n === memo);
+    if (k > 0) {
+      btnReprendre.hidden = false;
+      btnReprendre.dataset.index = String(k);
+      btnReprendre.textContent = `Reprendre à la diapositive ${memo}`;
+    }
+
+    cadre(calques[0], D.diapos[0]);
+    mesurerMarges();
+    rendre(0);
+    majTemps();
+    precharger(0);
+  }
+
+  for (const r of document.querySelectorAll<HTMLElement>('.diaporama')) monter(r);
+</script>
+
+<style>
+  .diaporama { margin-top: var(--e-3); }
+
+  /* Sans JavaScript : le livre d'images ; avec : le lecteur. */
+  .diaporama:not(.avec-js) .lecteur { display: none; }
+  .diaporama.avec-js .livre { display: none; }
+
+  .lecteur { display: flex; flex-direction: column; background: var(--c-fond); }
+  .lecteur__acte {
+    margin: 0 0 var(--e-2);
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    color: var(--c-texte-doux);
+    text-align: center;
+    min-height: 1.6em;
+  }
+  .lecteur__acte-dates { font-variant: normal; font-variant-numeric: oldstyle-nums; letter-spacing: 0; }
+  .lecteur__acte-dates::before { content: '· '; }
+  .lecteur__acte-dates:empty { display: none; }
+
+  /* Scène : fond blanc cassé à peine plus soutenu, filet fin, pas de noir de cinéma. */
+  .lecteur__scene {
+    position: relative;
+    /* La scène et ses commandes tiennent dans la fenêtre une fois le lecteur en haut. */
+    height: clamp(260px, calc(100vh - 310px), 720px);
+    height: clamp(260px, calc(100svh - 310px), 720px);
+    background: #f1efea;
+    border: 1px solid var(--c-filet);
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+  .lecteur__calque {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    overflow: hidden;
+    opacity: 0;
+  }
+  /* Opacité, filtre et transformation sont ensuite posés à chaque image par le script
+     (fondu enchaîné, révélation gris → couleur, recul d'entrée, caméra). */
+  .lecteur__calque.est-visible { opacity: 1; }
+  .lecteur__calque img {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: none;
+    transform-origin: 0 0;
+    will-change: transform, filter;
+  }
+
+  .lecteur__depart {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--e-2);
+    background: rgba(251, 250, 247, 0.55);
+  }
+  .lecteur__depart[hidden] { display: none; }
+  .lecteur__bouton-depart {
+    font: inherit;
+    font-size: 1.15rem;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    min-height: 44px;
+    padding: var(--e-2) var(--e-4);
+    color: var(--c-texte);
+    background: var(--c-fond);
+    border: 1px solid var(--c-texte);
+    border-radius: 0;
+    cursor: pointer;
+  }
+  .lecteur__bouton-depart:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+  .lecteur__reprendre { border-color: var(--c-texte-doux); color: var(--c-texte-doux); font-size: 1rem; }
+  .lecteur__bouton-depart:focus-visible, .lecteur__btn:focus-visible, .lecteur__option:focus-visible,
+  .lecteur__segment:focus-visible { outline: 1px solid var(--c-texte); outline-offset: 2px; }
+
+  /* Légende de notice et sous-titre. */
+  /* Cartouche en haut à gauche de l'image : titre, auteur, date. */
+  .lecteur__legende {
+    position: absolute;
+    top: var(--e-2);
+    left: var(--e-2);
+    z-index: 1;
+    max-width: min(26rem, 45%);
+    margin: 0;
+    padding: 0.35rem 0.7rem 0.4rem;
+    background: rgba(251, 250, 247, 0.88);
+    line-height: 1.3;
+    pointer-events: none;
+    /* Entrée décalée : fondu et petit glissement ~0,6 s après l'image ; sortie en fondu court
+       (copie temporaire de l'ancien cartouche). */
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  .lecteur__legende.est-visible {
+    opacity: 1;
+    transform: none;
+    transition: opacity 600ms ease 600ms, transform 700ms cubic-bezier(0.2, 0.6, 0.3, 1) 600ms;
+  }
+  .lecteur__legende.lecteur__legende--sortant { opacity: 0; transform: none; transition: opacity 300ms ease; }
+  @media (prefers-reduced-motion: reduce) {
+    .lecteur__legende { transform: none; }
+    .lecteur__legende.est-visible { transition: opacity 200ms ease 150ms; }
+    .lecteur__legende.lecteur__legende--sortant { transition-duration: 150ms; }
+  }
+
+  /* Cartouche de la musique de fond, en haut à droite : une seule ligne fine, sans encadré
+     (bien distinct du cartouche de l'image) ; l'interprète n'apparaît qu'au survol. */
+  .lecteur__musique {
+    position: absolute;
+    top: var(--e-2);
+    right: var(--e-2);
+    z-index: 1;
+    max-width: min(28rem, 42%);
+    margin: 0;
+    padding: 0.15rem 0.6rem 0.2rem;
+    background: rgba(251, 250, 247, 0.78);
+    border-bottom: 1px solid var(--c-texte-doux);
+    line-height: 1.25;
+    text-align: right;
+    font-size: 0.82rem;
+    color: var(--c-texte-doux);
+    hyphens: none;
+    -webkit-hyphens: none;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 400ms ease, transform 400ms ease;
+  }
+  .lecteur__musique.est-visible {
+    opacity: 1;
+    transform: none;
+    transition: opacity 700ms ease 300ms, transform 800ms cubic-bezier(0.2, 0.6, 0.3, 1) 300ms;
+  }
+  .lecteur__musique :global(.m-ligne) { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lecteur__musique :global(.m-ligne)::before { content: '♪ '; }
+  .lecteur__musique :global(cite) { font-style: italic; color: var(--c-texte); }
+  .lecteur__musique :global(.m-auteur) { font-variant: small-caps; letter-spacing: 0.04em; }
+  .lecteur__musique :global(.m-voix) { display: none; font-style: italic; font-size: 0.92em; }
+  .lecteur__musique:hover :global(.m-voix) { display: block; }
+  .lecteur__musique:hover :global(.m-ligne) { white-space: normal; }
+  @media (prefers-reduced-motion: reduce) {
+    .lecteur__musique, .lecteur__musique.est-visible { transform: none; transition: opacity 200ms ease; }
+  }
+
+  /* Estompage : après quelques secondes, les deux cartouches s'effacent presque ; le survol
+     et la pause les ramènent. */
+  .lecteur__legende, .lecteur__musique { pointer-events: auto; hyphens: none; -webkit-hyphens: none; }
+  .lecteur__legende.est-visible.est-discret, .lecteur__musique.est-visible.est-discret {
+    opacity: 0.15;
+    transition: opacity 1200ms ease;
+  }
+  .lecteur__legende.est-visible.est-discret:hover, .lecteur__musique.est-visible.est-discret:hover,
+  .lecteur:not(.en-lecture) .lecteur__legende.est-visible.est-discret,
+  .lecteur:not(.en-lecture) .lecteur__musique.est-visible.est-discret {
+    opacity: 1;
+    transition: opacity 250ms ease;
+  }
+
+  /* Carton de changement d'acte : blanc cassé, titre en petites capitales, filet, dates. */
+  .lecteur__carton {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--e-2);
+    padding: var(--e-3);
+    background: var(--c-fond);
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 450ms ease, visibility 0s linear 650ms;
+  }
+  .en-carton .lecteur__carton {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 450ms ease, visibility 0s;
+  }
+  /* À la sortie, le carton s'efface pendant que l'image entre. */
+  .lecteur:not(.en-carton) .lecteur__carton { transition: opacity 650ms ease, visibility 0s linear 650ms; }
+  .lecteur__carton-titre {
+    margin: 0;
+    max-width: 30ch;
+    font-family: var(--f-titre);
+    font-size: clamp(1.35rem, 3.2vw, 2.1rem);
+    font-variant: small-caps;
+    letter-spacing: 0.12em;
+    line-height: 1.25;
+    color: var(--c-texte);
+  }
+  .lecteur__carton-filet { display: block; width: 4.5rem; height: 0; border-top: 1px solid var(--c-texte-doux); }
+  .lecteur__carton-dates {
+    margin: 0;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-style: italic;
+    font-variant-numeric: oldstyle-nums;
+    letter-spacing: 0.04em;
+    color: var(--c-texte-doux);
+  }
+  .en-carton .lecteur__carton-titre, .en-carton .lecteur__carton-filet, .en-carton .lecteur__carton-dates {
+    animation: carton-entree 900ms cubic-bezier(0.2, 0.6, 0.3, 1) both;
+  }
+  .en-carton .lecteur__carton-filet { animation-name: carton-filet; animation-delay: 150ms; }
+  .en-carton .lecteur__carton-dates { animation-delay: 300ms; }
+  @keyframes carton-entree { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+  @keyframes carton-filet { from { transform: scaleX(0); } to { transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .lecteur__carton, .en-carton .lecteur__carton, .lecteur:not(.en-carton) .lecteur__carton { transition: none; }
+    .en-carton .lecteur__carton-titre, .en-carton .lecteur__carton-filet, .en-carton .lecteur__carton-dates { animation: none; }
+  }
+  .lecteur.en-carton .lecteur__acte, .lecteur.en-carton .lecteur__soustitre { opacity: 0; }
+
+  .lecteur__legende :global(cite) { display: block; font-style: italic; font-size: 1rem; color: var(--c-texte); }
+  .lecteur__legende :global(span) {
+    display: block;
+    font-size: 0.85rem;
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    color: var(--c-texte-doux);
+  }
+  .livre figcaption {
+    margin: var(--e-2) 0 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--c-texte-doux);
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    min-height: 2.8em;
+  }
+  .livre figcaption :global(cite) { font-style: italic; font-variant: normal; letter-spacing: 0; }
+  .livre figcaption :global(.notice__commons) {
+    color: var(--c-texte-doux);
+    font-size: 0.92em;
+  }
+  .lecteur__soustitre {
+    position: relative;
+    overflow: hidden;
+    transition: opacity 400ms ease;
+    margin: var(--e-2) 0 0;
+    font-size: 1.2rem;
+    line-height: 1.45;
+    color: var(--c-texte);
+    min-height: 4.35em;
+    max-width: 46rem;
+  }
+  .lecteur:not(.avec-st) .lecteur__soustitre { visibility: hidden; min-height: 0; height: 0; margin: 0; }
+  /* Fondu croisé : l'ancien texte sort du flux (même place, mêmes marges) et s'efface. */
+  .lecteur__soustitre :global(.st) { display: block; transition: opacity 500ms ease; }
+  .lecteur__soustitre :global(.st--entrant) { opacity: 0; }
+  .lecteur__soustitre :global(.st--sortant) { position: absolute; top: 0; left: 0; right: 0; padding: inherit; opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    .lecteur__soustitre :global(.st) { transition-duration: 200ms; }
+  }
+
+  /* Barre de progression : un segment par acte, filets fins. */
+  .lecteur__progression { margin-top: var(--e-3); }
+  .lecteur__piste { display: flex; gap: 3px; }
+  .lecteur__segment {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 6px;
+    height: 22px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .lecteur__segment::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; top: 10px;
+    height: 1px;
+    background: var(--c-texte-doux);
+    opacity: 0.45;
+  }
+  .lecteur__rempli {
+    position: absolute;
+    left: 0; right: 0; top: 9px;
+    height: 3px;
+    background: var(--c-texte);
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+  .lecteur__segment:hover::before, .lecteur__segment.est-courant::before { opacity: 1; }
+
+  .lecteur__controles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e-1) var(--e-4);
+    margin-top: var(--e-1);
+  }
+  .lecteur__groupe { display: flex; align-items: center; gap: var(--e-1); }
+  .lecteur__groupe--options { margin-left: auto; gap: var(--e-3); }
+  .lecteur__btn {
+    width: 44px;
+    height: 44px;
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    color: var(--c-texte);
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .lecteur__btn:hover { border-color: var(--c-filet); }
+  .lecteur__btn svg { width: 22px; height: 22px; fill: currentColor; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+  .lecteur__btn--lecture { border-color: var(--c-texte-doux); }
+  .lecteur__btn--lecture .icone-pause, .en-lecture .lecteur__btn--lecture .icone-lecture { display: none; }
+  .en-lecture .lecteur__btn--lecture .icone-pause { display: block; }
+  .lecteur__compteur, .lecteur__temps {
+    margin: 0;
+    color: var(--c-texte-doux);
+    font-variant-numeric: lining-nums tabular-nums;
+    font-size: 1rem;
+  }
+  .lecteur__option {
+    font: inherit;
+    font-size: 1rem;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    min-height: 44px;
+    padding: 0 var(--e-1);
+    color: var(--c-texte-doux);
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+  .lecteur__option[aria-pressed='true'] {
+    color: var(--c-texte);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
+  }
+  .lecteur__option[hidden] { display: none; }
+  .lecteur__option { white-space: nowrap; hyphens: none; -webkit-hyphens: none; }
+
+  /* Musique de fond : bouton et réglage discret du volume (filet fin, curseur noir). */
+  .lecteur__reglage-musique { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .lecteur__volume {
+    width: 4.5rem;
+    height: 44px;
+    margin: 0;
+    background: transparent;
+    accent-color: var(--c-texte);
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .lecteur__volume::-webkit-slider-runnable-track { height: 1px; background: var(--c-texte-doux); }
+  .lecteur__volume::-moz-range-track { height: 1px; background: var(--c-texte-doux); }
+  .lecteur__volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 9px; height: 9px; margin-top: -4px;
+    border-radius: 50%;
+    background: var(--c-texte);
+    border: 0;
+  }
+  .lecteur__volume::-moz-range-thumb { width: 9px; height: 9px; border-radius: 50%; background: var(--c-texte); border: 0; }
+  .lecteur__volume:disabled { opacity: 0.35; cursor: default; }
+  .lecteur__volume:focus-visible { outline: 1px solid var(--c-texte); outline-offset: 2px; }
+
+  /* Lecture et épisode : la carte ou le panneau couvre l'image ; le cartouche de l'image s'efface
+     (la carte et le panneau donnent leurs sources). En plein écran, ils évitent les bandeaux. */
+  .lecteur.en-citation .lecteur__legende, .lecteur.en-episode .lecteur__legende { visibility: hidden; }
+  .lecteur:fullscreen :global(.citation__page) { padding-top: max(3rem, 7cqh); }
+  /* Pendant une lecture, le texte est sur la carte : le bandeau vide du sous-titre s'efface. */
+  .lecteur:fullscreen.en-citation .lecteur__soustitre { background: transparent; }
+  .lecteur:fullscreen :global(.episode--lecteur) { padding-top: 2.4rem; }
+  /* Intermède chanté : paroles en italique, troisième ligne du cartouche (interprète). */
+  .lecteur.en-chant .lecteur__soustitre { font-style: italic; }
+  .lecteur__legende :global(.lecteur__legende-voix) { font-variant: normal; font-style: italic; letter-spacing: 0; font-size: 0.8rem; }
+
+  /* Plein écran : fond blanc cassé ; légende et contrôles s'effacent après inactivité. */
+  /* L'image occupe tout l'écran ; acte, légende, sous-titre et contrôles se superposent
+     en bandeaux voilés, compacts, en haut et en bas. */
+  .lecteur:fullscreen {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr auto auto auto auto;
+    height: 100vh;
+    padding: 0;
+    overflow: hidden;
+  }
+  .lecteur:fullscreen > * { grid-column: 1; position: relative; z-index: 1; margin: 0; }
+  .lecteur:fullscreen .lecteur__scene { grid-row: 1 / -1; z-index: 0; height: auto; min-height: 0; border: 0; }
+  .lecteur:fullscreen .lecteur__acte,
+  .lecteur:fullscreen .lecteur__soustitre,
+  .lecteur:fullscreen .lecteur__progression,
+  .lecteur:fullscreen .lecteur__controles { background: rgba(251, 250, 247, 0.88); padding-inline: var(--gouttiere); }
+  .lecteur:fullscreen .lecteur__acte { grid-row: 1; justify-self: center; padding-block: 0.3rem; font-size: 0.9rem; }
+  .lecteur:fullscreen .lecteur__legende { top: var(--e-3); left: var(--gouttiere); max-width: min(32rem, 40%); }
+  .lecteur:fullscreen .lecteur__musique { top: var(--e-3); right: var(--gouttiere); max-width: min(32rem, 36%); font-size: 0.92rem; }
+  .lecteur:fullscreen .lecteur__legende :global(cite) { font-size: 1.2rem; }
+  .lecteur:fullscreen .lecteur__legende :global(span) { font-size: 1rem; }
+  .lecteur:fullscreen .lecteur__carton { gap: var(--e-3); }
+  .lecteur:fullscreen .lecteur__carton-titre { font-size: clamp(1.8rem, 3.6vw, 3rem); }
+  .lecteur:fullscreen .lecteur__carton-filet { width: 6rem; }
+  .lecteur:fullscreen .lecteur__carton-dates { font-size: clamp(1.15rem, 2vw, 1.6rem); }
+  .lecteur:fullscreen .lecteur__soustitre {
+    grid-row: 4;
+    max-width: none;
+    min-height: 0;
+    padding-block: 0.3rem;
+    font-size: 1.05rem;
+    line-height: 1.35;
+    text-align: center;
+  }
+  .lecteur:fullscreen .lecteur__progression { grid-row: 5; }
+  .lecteur:fullscreen .lecteur__controles { grid-row: 6; padding-bottom: 0.2rem; }
+  .lecteur .lecteur__progression, .lecteur .lecteur__controles, .lecteur .lecteur__acte {
+    transition: opacity 400ms ease;
+  }
+  .lecteur:fullscreen.en-carton .lecteur__acte, .lecteur:fullscreen.en-carton .lecteur__soustitre { visibility: hidden; }
+  .lecteur.inactif { cursor: none; }
+  .lecteur.inactif .lecteur__progression,
+  .lecteur.inactif .lecteur__controles, .lecteur.inactif .lecteur__acte { opacity: 0; }
+
+  /* Téléphone : image pleine largeur, contrôles sous l'image. */
+  @media (max-width: 699px) {
+    .lecteur__scene { height: min(58svh, 100vw); margin-inline: calc(-1 * var(--gouttiere)); border-inline: 0; }
+    .lecteur__soustitre { font-size: 1.1rem; min-height: 5.8em; }
+    .lecteur__legende { max-width: 75%; padding: 0.25rem 0.5rem; }
+    .lecteur__legende :global(cite) { font-size: 0.9rem; }
+    .lecteur__legende :global(span) { font-size: 0.78rem; }
+    /* Téléphone : la musique passe en bas à droite de l'image, réduite au titre et au compositeur. */
+    .lecteur__musique { top: auto; bottom: var(--e-1); right: var(--e-1); max-width: 80%; font-size: 0.75rem; }
+    .lecteur__controles { gap: var(--e-1) var(--e-3); }
+    .lecteur__groupe--options { margin-left: 0; width: 100%; justify-content: flex-start; }
+  }
+
+  /* Livre d'images (sans JavaScript). */
+  .livre__note { color: var(--c-texte-doux); font-style: italic; }
+  .livre__acte h2 {
+    font-size: 1.1rem;
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    color: var(--c-texte-doux);
+    border-bottom: 1px solid var(--c-filet);
+    padding-bottom: var(--e-1);
+  }
+  .livre__dates { font-style: italic; font-variant: normal; letter-spacing: 0.02em; font-variant-numeric: oldstyle-nums; }
+  .livre__dates::before { content: '· '; font-style: normal; }
+  .livre ol { list-style: none; padding: 0; }
+  .livre li { margin: 0 0 var(--e-5); max-width: var(--l-lecture); }
+  .livre figure { margin: 0; }
+  .livre img { display: block; max-width: 100%; height: auto; border: 1px solid var(--c-filet); }
+  .livre li > p { margin-top: var(--e-2); }
+  .livre__chant { margin-top: var(--e-2); padding-left: var(--e-3); border-left: 1px solid var(--c-filet); }
+  .livre__chant-titre { margin: 0; font-size: 0.95rem; color: var(--c-texte-doux); }
+  .livre__paroles { margin: var(--e-1) 0 0; font-style: italic; }
+  .livre__lecture, .livre__episode { margin-top: var(--e-3); }
+  .livre__segment-titre {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: normal;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: var(--c-texte-doux);
+  }
+  .livre__episode { padding-left: var(--e-3); border-left: 1px solid var(--c-filet); }
+  .livre__sources { font-size: 0.9rem; color: var(--c-texte-doux); }
+</style>
+
+<!-- Frise du temps : son HTML est injecté (set:html), d'où des styles globaux, préfixés par .diaporama. -->
+<style is:global>
+  /* Frise du temps : la période graduée par année, les actes en filets alternés (gris clair /
+     gris moyen, l'acte courant en noir), crans des années, curseur noir (trait fin, ou court
+     segment pour une durée) et sa date en petites capitales. Strictement monochrome. */
+  .diaporama .frise-t { --frise-glisse: 1s; width: 100%; font-variant-numeric: oldstyle-nums; }
+  .diaporama .frise-t__piste { position: relative; height: 2.6rem; }
+  .diaporama .frise-t__acte {
+    position: absolute;
+    bottom: 0.45rem;
+    height: 2px;
+    background: #a9a69f;
+    border-right: 2px solid var(--c-fond);
+  }
+  .diaporama .frise-t__acte--pair { background: #75726c; }
+  .diaporama .frise-t__acte.est-courant { background: var(--c-texte); height: 3px; bottom: calc(0.45rem - 0.5px); }
+  .diaporama .frise-t__cran {
+    position: absolute;
+    bottom: calc(0.45rem - 3px);
+    width: 1px;
+    height: 8px;
+    margin-left: -0.5px;
+    background: #a9a69f;
+  }
+  .diaporama .frise-t__curseur {
+    position: absolute;
+    bottom: calc(0.45rem - 7px);
+    height: 16px;
+    min-width: 1.5px;
+    border-inline: 1px solid var(--c-texte);
+    background: linear-gradient(var(--c-texte), var(--c-texte)) center / 100% 3px no-repeat;
+    transform: translateX(-1px);
+    transition: left var(--frise-glisse) ease-in-out 0.5s, width var(--frise-glisse) ease-in-out 0.5s;
+  }
+  .diaporama .frise-t__date {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    font-variant: small-caps;
+    font-variant-numeric: oldstyle-nums;
+    letter-spacing: 0.04em;
+    color: var(--c-texte);
+    transition: left var(--frise-glisse) ease-in-out 0.5s;
+  }
+  .diaporama .frise-t__annees { position: relative; height: 1.2rem; }
+  .diaporama .frise-t__annee {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    line-height: 1.2;
+    color: var(--c-texte-doux);
+  }
+  .diaporama .frise-t__annee.est-masquee { visibility: hidden; }
+
+  /* Dans le carton : sous le titre et les dates ; le curseur glisse à partir de 0,6 s. */
+  .diaporama .frise-t--carton { max-width: min(38rem, 100%); margin-top: var(--e-3); text-align: left; }
+  .diaporama .frise-t--carton .frise-t__curseur { transition-delay: 0.6s; }
+  .diaporama .frise-t--carton .frise-t__date { transition-delay: 0.6s; }
+  .diaporama .en-carton .frise-t--carton { animation: frise-entree 900ms cubic-bezier(0.2, 0.6, 0.3, 1) 300ms both; }
+  @keyframes frise-entree { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  /* En surimpression : bandeau blanc cassé voilé, fin, centré au bas de l'image (au-dessus des
+     bandeaux du bas en plein écran : --frise-bas, posé par le script). Éphémère. */
+  .diaporama .frise-t--surimpression {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--frise-bas, 0px) + var(--e-2));
+    z-index: 2;
+    width: min(40rem, calc(100% - 2 * var(--e-3)));
+    padding: 0.35rem 1.1rem 0.15rem;
+    background: rgba(251, 250, 247, 0.88);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 4px);
+    transition: opacity 600ms ease, transform 600ms ease, visibility 0s linear 600ms;
+  }
+  .diaporama .frise-t--surimpression.est-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition: opacity 400ms ease, transform 400ms ease, visibility 0s;
+  }
+  .diaporama .lecteur.en-carton .frise-t--surimpression { visibility: hidden; }
+  @media (prefers-reduced-motion: reduce) {
+    .diaporama .frise-t__curseur, .diaporama .frise-t__date { transition: none !important; }
+    .diaporama .en-carton .frise-t--carton { animation: none; }
+    .diaporama .frise-t--surimpression, .diaporama .frise-t--surimpression.est-visible {
+      transform: translate(-50%, 0);
+      transition: opacity 200ms ease, visibility 0s linear 200ms;
+    }
+    .diaporama .frise-t--surimpression.est-visible { transition: opacity 200ms ease, visibility 0s; }
+  }
+  .diaporama .lecteur:fullscreen .frise-t--carton { max-width: min(46rem, 100%); }
+  @media (max-width: 699px) {
+    .diaporama .frise-t--surimpression { width: 100%; bottom: var(--frise-bas, 0px); padding-inline: var(--gouttiere); }
+    .diaporama .frise-t__date { font-size: 0.88rem; }
+    .diaporama .frise-t__annee { font-size: 0.75rem; }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+// Bloc de l'accueil présentant la section « Le siècle en images » (spec 12).
+import { diaporamas, dureeTotale, formaterDuree, planDiaporamas, urlSectionDiaporamas } from '../utils/diaporamas';
+import { typographie } from '../utils/typographie.mjs';
+
+const nb = planDiaporamas().length;
+const total = diaporamas.reduce((s, d) => s + dureeTotale(d), 0);
+---
+
+<section class="bloc-images" aria-labelledby="titre-images">
+  <h2 id="titre-images">Le siècle en images</h2>
+  <p>
+    {typographie("Le siècle raconté par ses images : tableaux, gravures, caricatures, affiches et photographies d'époque, une centaine par période, commentées par une voix off. Des diaporamas à regarder et à écouter.")}
+  </p>
+  <p class="bloc-images__etat">{typographie(`${diaporamas.length} période${diaporamas.length > 1 ? 's' : ''} sur ${nb} disponible${diaporamas.length > 1 ? 's' : ''} · ${formaterDuree(total)}`)}</p>
+  <p><a class="bloc-images__lien" href={urlSectionDiaporamas}>Voir les diaporamas →</a></p>
+</section>
+
+<style>
+  .bloc-images {
+    margin-top: var(--e-6);
+    padding: var(--e-3) 0 0;
+    border-top: 1px solid var(--c-texte-doux);
+  }
+  .bloc-images h2 { margin-top: 0; }
+  .bloc-images__etat { font-variant: small-caps; letter-spacing: 0.08em; color: var(--c-texte-doux); }
+  .bloc-images__lien { font-family: var(--f-titre); font-size: 1.15rem; }
+  .bloc-images p:last-child { margin-bottom: 0; }
+</style>

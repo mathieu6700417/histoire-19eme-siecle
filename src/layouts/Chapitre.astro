@@ -5,6 +5,7 @@ import { typographie } from '../utils/typographie.mjs';
 import { urlSection, urlAuteurs } from '../utils/ecrivains';
 import { auteurs } from '../data/auteurs';
 import { libelleChapitre } from '../data/chapitres-ecrivains';
+import { diaporamaDe, dureeTotale, formaterDuree, urlDiaporama } from '../utils/diaporamas';
 
 interface Sommaire {
   parties: { id: string; titre: string; extraits: { id: string; titre: string; auteur: string }[] }[];
@@ -24,6 +25,8 @@ interface Props {
 }
 
 const { titre, numero, periode, resume, dureeLecture, sommaire, precedent, suivant } = Astro.props;
+// Diaporama narré de la même période (spec 12), s'il existe.
+const diaporama = diaporamaDe(numero);
 const nbExtraits = sommaire.parties.reduce((n, p) => n + p.extraits.length, 0);
 // Numérotation continue d'une partie à l'autre.
 const debuts = sommaire.parties.map((_, i) => 1 + sommaire.parties.slice(0, i).reduce((n, p) => n + p.extraits.length, 0));
@@ -208,6 +211,9 @@ const duree = dureeLecture < 60
       </p>
       <h1>{typographie(titre)}</h1>
       <p class="chapitre__resume">{typographie(resume)}</p>
+      {diaporama && (
+        <p class="chapitre__diaporama"><a href={urlDiaporama(diaporama.slug)}>{typographie(`La même période en images : diaporama narré, ${diaporama.diapositives.length} images, ${formaterDuree(dureeTotale(diaporama))} →`)}</a></p>
+      )}
     </header>
 
     {nbExtraits > 0 && (
@@ -289,6 +295,8 @@ const duree = dureeLecture < 60
   }
   .chapitre__surtitre a { color: var(--c-texte-doux); }
   .chapitre__surtitre a:hover { text-decoration: underline; }
+  .chapitre__diaporama { margin: calc(-1 * var(--e-2)) 0 var(--e-4); font-variant: small-caps; letter-spacing: 0.04em; font-size: 1rem; }
+  .chapitre__diaporama a { color: var(--c-texte-doux); }
   .chapitre__resume {
     font-size: 1.25rem;
     font-style: italic;

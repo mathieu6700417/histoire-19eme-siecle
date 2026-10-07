@@ -1,0 +1,365 @@
+---
+// Carte de citation d'une lecture d'époque (spec 12, « Lectures d'époque et épisodes », révision
+// « journal télévisé » du 2026-10-07), en édition savante monochrome.
+//
+// - mode « lecteur » : posée sur la scène du diaporama, cachée ; le script de Diaporama.astro
+//   l'affiche pendant la lecture. Fond : l'image du moment, floue et voilée (en gris) ; portrait
+//   grand sur un côté (couleur atténuée), grand guillemet ouvrant, texte en gros caractères
+//   révélé mot par mot au rythme exact de la voix (chaque mot porte `data-k`, son rang dans
+//   `motsLus(texteLu(l))` ; la ponctuation isolée suit le mot voisin) ; bandeau inférieur fin
+//   (nom, dates, nature, *œuvre*, année, crédit du portrait).
+// - mode « livre » : la même lecture, statique, dans le livre d'images sans JavaScript.
+import { typographie } from '../utils/typographie.mjs';
+import { urlWikisource, type Lecture } from '../utils/diaporamas';
+
+interface Props {
+  lecture: Lecture;
+  /** Image du portrait (URL servie), ses dimensions, et le crédit à afficher. */
+  portrait?: { src: string; largeur: number; hauteur: number; cadre?: [number, number, number, number]; credit: string } | null;
+  /** Image du moment (fond flou de la carte, mode lecteur). */
+  fond?: string;
+  mode: 'lecteur' | 'livre';
+}
+const { lecture: l, portrait, fond: imageFond, mode } = Astro.props;
+const t = (s?: string) => (s ? typographie(s.trim()) : '');
+
+/** Portrait recadré sur le visage : taille et position du fond pour couvrir une case 3/4. */
+function fond(p: NonNullable<Props['portrait']>) {
+  const [x0, y0, x1, y1] = p.cadre ?? [0, 0, 1, 1];
+  const L = p.largeur, H = p.hauteur, bw = 1, bh = 4 / 3;
+  const s = Math.max(bw / ((x1 - x0) * L), bh / ((y1 - y0) * H));
+  const W = L * s, Hh = H * s;
+  const pos = (centre: number, total: number, case_: number) =>
+    total - case_ <= 1e-6 ? 50 : (Math.min(total - case_, Math.max(0, centre - case_ / 2)) / (total - case_)) * 100;
+  const px = pos(((x0 + x1) / 2) * W, W, bw), py = pos(((y0 + y1) / 2) * Hh, Hh, bh);
+  return `background-image:url("${p.src}");background-size:${((W / bw) * 100).toFixed(1)}% auto;background-position:${px.toFixed(1)}% ${py.toFixed(1)}%`;
+}
+const nomFamille = l.auteur.nom.split(',')[0].replace(/^(.*\s)?(de |d’|du )?/, '').trim();
+const initiale = (nomFamille || l.auteur.nom).charAt(0).toUpperCase();
+
+// --- Mode lecteur : le texte découpé en mots ------------------------------------------------
+// Un jeton = une suite sans espace. Un jeton avec lettre ou chiffre est un mot (rang k, même
+// découpage que `motsLus`) ; la ponctuation isolée suit le mot précédent (« ? », « : », « » »),
+// ou le suivant si elle ouvre (« « », « ( »). Les espaces deviennent insécables comme dans
+// `typographie` (avant : ; ? ! », après «) ; les retours à la ligne des vers sont gardés.
+type Jeton = { mot: string; k: number } | { espace: string };
+const OUVRANTS = /^[«(\[—–“]+$/;
+let rang = 0;
+const blocs = l.texte.map((b) => {
+  if (b.trim() === '[…]') return { coupe: true as const, k: rang - 1 };
+  const brut = b.split(/(\s+)/).filter((x) => x !== '');
+  const jetons: Jeton[] = [];
+  brut.forEach((x, j) => {
+    if (/^\s+$/.test(x)) {
+      const suivant = brut[j + 1] ?? '', precedent = brut[j - 1] ?? '';
+      let e = x;
+      if (!x.includes('\n')) {
+        if (/^[;?!]/.test(suivant)) e = ' ';
+        else if (/^[:»]/.test(suivant) || /«$/.test(precedent)) e = ' ';
+        else e = ' ';
+      }
+      jetons.push({ espace: e });
+      return;
+    }
+    const mot = x.replace(/'/g, '’');
+    if (/[\p{L}\p{N}]/u.test(x)) jetons.push({ mot, k: rang++ });
+    else jetons.push({ mot, k: OUVRANTS.test(x) ? rang : Math.max(0, rang - 1) });
+  });
+  return { coupe: false as const, jetons };
+});
+const dernier = rang - 1;
+// Bandeau : nature et œuvre, sans redite (« Mémoires · Mémoires »).
+const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ? '' : l.nature;
+---
+
+{mode === 'lecteur' ? (
+  <div class={`citation citation--lecteur${l.poeme ? ' citation--poeme' : ''}${portrait ? '' : ' citation--sans-portrait'}`} data-lecture={l.id} aria-hidden="true">
+    <div class="citation__fond" data-fond={imageFond}></div>
+    <div class="citation__page">
+    <div class="citation__plan">
+      {portrait
+        ? <div class="citation__portrait" style={fond(portrait)} role="img" aria-label={t(`Portrait de ${l.auteur.nom}`)}></div>
+        : <div class="citation__portrait citation__portrait--initiale" aria-hidden="true"><span>{initiale}</span></div>}
+      <div class="citation__corps">
+        <div class="citation__bloc">
+        <span class="citation__guillemet" aria-hidden="true">«</span>
+        <div class="citation__texte">
+          <div class="citation__defile">
+            {blocs.map((b) => b.coupe
+              ? <p class="citation__coupe" data-k={b.k}>[…]</p>
+              : <p>{b.jetons.map((j, n) => 'espace' in j
+                  ? j.espace
+                  : <span class="m" data-k={j.k}>{j.mot}{!l.poeme && j.k === dernier && n === b.jetons.length - 1 && !j.mot.endsWith('»') ? ' »' : ''}</span>)}</p>)}
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="citation__bandeau">
+      <p class="citation__qui"><span class="citation__nom">{t(l.auteur.nom)}</span> <span class="citation__vie">{l.auteur.dates}</span></p>
+      <p class="citation__quoi">{nature && <span class="citation__nature">{t(nature)} · </span>}<cite>{t(l.oeuvre)}</cite>{t(`, ${l.annee}`)}</p>
+      {portrait && <p class="citation__credit">{t(`Portrait : ${portrait.credit}`)}</p>}
+    </div>
+    </div>
+  </div>
+) : (
+  <div class={`citation citation--livre${l.poeme ? ' citation--poeme' : ''}`} data-lecture={l.id}>
+    <div class="citation__auteur">
+      {portrait
+        ? <div class="citation__portrait" style={fond(portrait)} role="img" aria-label={t(`Portrait de ${l.auteur.nom}`)}></div>
+        : <div class="citation__portrait citation__portrait--initiale" aria-hidden="true"><span>{initiale}</span></div>}
+      <p class="citation__nom">{t(l.auteur.nom)}</p>
+      <p class="citation__vie">{l.auteur.dates}</p>
+      {portrait && <p class="citation__credit">{t(`Portrait : ${portrait.credit}`)}</p>}
+    </div>
+    <div class="citation__corps">
+      <p class="citation__nature">{t(l.nature)}</p>
+      <div class="citation__texte">
+        {l.texte.map((b) => b.trim() === '[…]' ? <p class="citation__coupe">[…]</p> : <p>{t(b)}</p>)}
+      </div>
+      <p class="citation__source">
+        <cite>{t(l.oeuvre)}</cite>{t(`, ${[l.annee, l.reference, l.source.edition].filter(Boolean).join(' ; ')}.`)}
+        <a href={urlWikisource(l.source.page)} rel="noopener" target="_blank">Wikisource</a>
+      </p>
+    </div>
+  </div>
+)}
+
+<style>
+  /* Édition savante, monochrome : petites capitales grises, filets fins, serif. */
+  .citation__portrait {
+    background-color: #e4e1da;
+    background-repeat: no-repeat;
+  }
+  .citation__portrait--initiale {
+    display: grid;
+    place-items: center;
+    font-family: var(--f-titre);
+    color: var(--c-texte-doux);
+  }
+  .citation__coupe { color: var(--c-texte-doux); }
+
+  /* ---- Lecteur : citation de journal télévisé, sobre ---------------------------------------
+     La carte couvre la scène ; elle est dimensionnée sur elle (unités de conteneur cqw/cqh). */
+  .citation--lecteur {
+    --c-lu: #555;              /* mots déjà lus : gris foncé */
+    --c-guillemet: #cfccc4;       /* grand guillemet décoratif */
+    --taille: clamp(1.1rem, min(3.15cqw, 5.4cqh), 2.45rem);
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    container-type: size;
+    overflow: hidden;
+    background: #f4f2ed;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 700ms ease, visibility 0s linear 700ms;
+  }
+  .citation--lecteur.est-visible { opacity: 1; visibility: visible; transition: opacity 700ms ease, visibility 0s; }
+
+  /* Fond : l'image du moment, floue, en gris, voilée de blanc cassé, immobile (posée par le
+     script à la première lecture, `data-fond`, pour ne pas charger d'avance). */
+  .citation__fond {
+    position: absolute;
+    inset: -48px;
+    background-position: center;
+    background-size: cover;
+    filter: blur(16px) grayscale(1);
+  }
+  .citation__fond::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(251, 250, 247, 0.84);
+  }
+
+  /* La page de la carte (les unités cqw/cqh se rapportent à la carte, qui est le conteneur). */
+  .citation__page {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: max(var(--e-3), 6cqh) max(var(--e-3), 6cqw) 0;
+  }
+  .citation__plan {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: auto minmax(0, 46rem);
+    grid-template-rows: minmax(0, 100%);
+    justify-content: center;
+    column-gap: clamp(1.8rem, 6.5cqw, 5.5rem);
+    padding-bottom: clamp(0.8rem, 3cqh, 2rem);
+  }
+  /* Portrait : en pleine hauteur de la zone utile, recadré sur le visage, en couleur atténuée ;
+     il entre par un léger fondu glissé, en montant du gris vers sa couleur. */
+  .citation--lecteur .citation__portrait {
+    height: min(100%, 44cqw);
+    aspect-ratio: 3 / 4;
+    align-self: center;
+    filter: saturate(0.72) contrast(0.96);
+    opacity: 0;
+  }
+  .citation--lecteur.est-visible .citation__portrait { animation: portrait-entree 1100ms cubic-bezier(0.2, 0.7, 0.2, 1) 120ms both; }
+  @keyframes portrait-entree {
+    from { opacity: 0; transform: translateX(-1.6rem); filter: saturate(0) contrast(0.96); }
+    to { opacity: 1; transform: none; filter: saturate(0.72) contrast(0.96); }
+  }
+  .citation--lecteur .citation__portrait--initiale {
+    font-size: min(30cqh, 22cqw);
+    line-height: 1;
+    border-right: 1px solid var(--c-filet);
+    padding-right: clamp(1rem, 4cqw, 3rem);
+    aspect-ratio: auto;
+    height: auto;
+    filter: none;
+  }
+
+  .citation--lecteur .citation__corps {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    font-size: var(--taille);
+    line-height: 1.42;
+  }
+  .citation__bloc { position: relative; display: flex; flex-direction: column; min-height: 0; max-height: 100%; }
+  /* Grand guillemet ouvrant, suspendu dans la marge, en haut à gauche du texte. */
+  .citation__guillemet {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    margin-right: 0.1em;
+    transform: translateY(-0.12em);
+    font-size: 2.9em;
+    line-height: 0.9;
+    color: var(--c-guillemet);
+    pointer-events: none;
+    user-select: none;
+  }
+  .citation--lecteur .citation__texte {
+    position: relative;
+    min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+    hyphens: none;
+    -webkit-hyphens: none;
+  }
+  /* Texte plus haut que la place : il défile en douceur, le haut s'efface en dégradé. */
+  .citation--lecteur .citation__texte.deborde {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2.2em);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 2.2em);
+  }
+  .citation__defile { position: relative; transition: transform 900ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .citation--lecteur .citation__texte p { margin: 0 0 0.45em; }
+  .citation--lecteur .citation__texte p:last-child { margin-bottom: 0; }
+  .citation--poeme .citation__texte p { white-space: pre-line; font-style: italic; }
+  .citation--lecteur.citation--poeme .citation__texte p { margin-bottom: 0.6em; }
+
+  /* Mots : invisibles mais à leur place (pas de saut de mise en page), puis le mot en cours en
+     noir, qui apparaît en fondu, et les mots lus en gris foncé. */
+  .citation--lecteur .m { opacity: 0; color: var(--c-texte); transition: opacity 260ms ease-out, color 600ms ease; }
+  .citation--lecteur .m.est-courant { opacity: 1; }
+  .citation--lecteur .m.est-lu { opacity: 1; color: var(--c-lu); }
+  .citation--lecteur .citation__coupe { opacity: 0; transition: opacity 400ms ease; }
+  .citation--lecteur .citation__coupe.est-lu, .citation--lecteur .citation__coupe.est-courant { opacity: 1; }
+
+  /* Bandeau inférieur fin (« lower third ») : filet, NOM et dates, nature, œuvre et année. */
+  .citation__bandeau {
+    position: relative;
+    flex: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--e-3);
+    align-items: baseline;
+    margin-bottom: max(var(--e-3), calc(var(--frise-bas, 0px) + 3.5cqh));
+    padding-top: 0.45rem;
+    border-top: 1px solid var(--c-texte);
+    font-size: clamp(0.8rem, min(1.9cqw, 3.2cqh), 1.15rem);
+    line-height: 1.3;
+    hyphens: none;
+    -webkit-hyphens: none;
+    opacity: 0;
+  }
+  .citation--lecteur.est-visible .citation__bandeau { animation: bandeau-entree 700ms ease 450ms both; }
+  @keyframes bandeau-entree { from { opacity: 0; transform: translateY(0.4rem); } to { opacity: 1; transform: none; } }
+  .citation__qui, .citation__quoi { margin: 0; grid-column: 1; }
+  .citation__nom { font-variant: small-caps; letter-spacing: 0.08em; font-size: 1.18em; color: var(--c-texte); }
+  .citation__vie { margin-left: 0.35em; color: var(--c-texte-doux); font-variant-numeric: oldstyle-nums; }
+  .citation__quoi { color: var(--c-texte-doux); }
+  .citation__quoi cite { font-style: italic; color: var(--c-texte); }
+  .citation__nature { font-variant: small-caps; letter-spacing: 0.06em; }
+  .citation--lecteur .citation__credit {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: end;
+    max-width: 18rem;
+    margin: 0;
+    font-size: 0.62rem;
+    line-height: 1.3;
+    text-align: right;
+    color: var(--c-texte-doux);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .citation--lecteur, .citation--lecteur.est-visible { transition-duration: 200ms; }
+    .citation--lecteur.est-visible .citation__portrait,
+    .citation--lecteur.est-visible .citation__bandeau { animation: none; opacity: 1; }
+    .citation--lecteur .m, .citation--lecteur .citation__coupe { transition: opacity 200ms linear; }
+    .citation__defile { transition: none; }
+  }
+
+  /* Scène étroite (téléphone) : portrait en vignette au-dessus du texte, bandeau compact. */
+  @container (max-width: 600px) {
+    .citation__page { padding: 0.8rem var(--gouttiere) 0; }
+    .citation__corps { --taille: clamp(0.98rem, min(4.4cqw, 4.6cqh), 1.25rem); }
+    .citation__plan { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); row-gap: 0.4rem; padding-bottom: 0.5rem; }
+    .citation--lecteur .citation__portrait { height: auto; width: clamp(2.8rem, 15cqw, 4.2rem); align-self: start; }
+    .citation--lecteur .citation__portrait--initiale { width: auto; font-size: 2.6rem; border: 0; padding: 0; justify-self: start; }
+    .citation--lecteur .citation__corps { justify-content: flex-start; }
+    .citation__guillemet { right: auto; left: calc(clamp(2.8rem, 15cqw, 4.2rem) + 0.5rem); margin: 0; transform: translateY(-100%); font-size: 3.6em; }
+    .citation__bandeau { margin-bottom: max(0.5rem, var(--frise-bas, 0px)); padding-top: 0.3rem; font-size: 0.82rem; grid-template-columns: minmax(0, 1fr); }
+    .citation__nom { font-size: 1.08em; }
+    .citation--lecteur .citation__credit { display: none; }
+    .citation__nature { display: none; }
+  }
+
+  /* ---- Livre : un encadré sobre, filet à gauche ---------------------------------------------- */
+  .citation--livre {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    align-items: start;
+    gap: var(--e-3);
+    margin: var(--e-3) 0;
+    padding-left: var(--e-3);
+    border-left: 1px solid var(--c-filet);
+  }
+  .citation--livre .citation__auteur { text-align: center; }
+  .citation--livre .citation__portrait { width: 100%; aspect-ratio: 3 / 4; border: 1px solid var(--c-filet); }
+  .citation--livre .citation__portrait--initiale { font-size: 4rem; }
+  .citation--livre .citation__nom { margin: var(--e-2) 0 0; font-variant: small-caps; letter-spacing: 0.05em; line-height: 1.25; font-size: 0.9rem; }
+  .citation--livre .citation__vie { margin: 0; font-size: 0.85rem; }
+  .citation--livre .citation__credit { margin: var(--e-1) 0 0; font-size: 0.72rem; line-height: 1.3; color: var(--c-texte-doux); }
+  .citation--livre .citation__nature { margin: 0 0 var(--e-2); letter-spacing: 0.1em; color: var(--c-texte-doux); }
+  .citation--livre .citation__texte p { margin: 0 0 0.6em; }
+  .citation--livre .citation__texte p:last-child { margin-bottom: 0; }
+  .citation--livre:not(.citation--poeme) .citation__texte p:not(.citation__coupe):first-child::before { content: '« '; }
+  .citation--livre:not(.citation--poeme) .citation__texte p:not(.citation__coupe):last-child::after { content: '\00a0»'; }
+  .citation__source {
+    margin: var(--e-2) 0 0;
+    padding-top: var(--e-1);
+    border-top: 1px solid var(--c-filet);
+    font-size: 0.9rem;
+    hyphens: none;
+    -webkit-hyphens: none;
+    color: var(--c-texte-doux);
+  }
+  .citation__source cite { font-style: italic; color: var(--c-texte); }
+  .citation__source a { margin-left: 0.3em; color: var(--c-texte-doux); }
+  @media (max-width: 699px) {
+    .citation--livre { grid-template-columns: 4rem minmax(0, 1fr); }
+  }
+</style>

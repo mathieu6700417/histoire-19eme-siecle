@@ -1,0 +1,455 @@
+---
+// Visuels d'un épisode (spec 12, « Lectures d'époque et épisodes ») : cartons typographiques,
+// chiffres, barres, courbe, carte et document d'époque surligné, tous monochromes, rendus en
+// HTML/SVG à partir des données du JSON de la période.
+//
+// Synchronisation : chaque élément animé porte `data-t` (instant de départ, en secondes dans
+// l'audio de l'épisode : le passage `quand` de la narration, situé dans sa phrase horodatée) et
+// `data-d` (durée de l'animation). Le script de Diaporama.astro pose, d'après `audio.currentTime`,
+// la variable CSS `--p` (0 → 1) sur chacun ; tout le rendu se règle sur `--p` : pause, reprise et
+// sauts restent justes. Une courbe porte `data-trace` ([instant, fraction de l'axe], …) ; un
+// document, `data-vues` (cadres de zoom successifs). En mode « livre » (sans JavaScript), tout est
+// posé à `--p: 1` et les visuels sont empilés.
+import { typographie } from '../utils/typographie.mjs';
+import { bornesDate, instantPassage, urlCommons, urlMedia, type Episode, type FondCarte, type VisuelEpisode, type ElementCarte } from '../utils/diaporamas';
+
+interface Props { episode: Episode; slug: string; fonds: Record<string, FondCarte>; mode: 'lecteur' | 'livre' }
+const { episode: e, slug, fonds, mode } = Astro.props;
+const t = (s?: string) => (s ? typographie(s.trim()) : '');
+const duree = e.audio?.duree ?? 30;
+/** Instant d'un passage de la narration (0 si absent ou non donné). */
+const T = (q?: string, defaut = 0) => (q ? instantPassage(e.narration, q, duree, e.audio?.phrases) ?? defaut : defaut);
+const r2 = (x: number) => Math.round(x * 100) / 100;
+
+const debuts = e.visuels.map((v, k) => (k === 0 ? 0 : T(v.quand)));
+/** Instant d'un élément : son passage, sinon un peu après l'entrée de son visuel (en cascade). */
+const quandEl = (k: number, q: string | undefined, rang: number) => r2(q ? T(q, debuts[k] + 0.5) : debuts[k] + 0.5 + rang * 0.35);
+const uid = `ep-${e.id}`;
+
+// --- Courbe -----------------------------------------------------------------------------------
+const C = { l: 64, r: 584, h: 34, b: 262, W: 600, H: 300 };
+function courbe(v: Extract<VisuelEpisode, { type: 'courbe' }>, k: number) {
+  const jours = v.points.map(([d]) => bornesDate(d)[0]);
+  const a0 = new Date(Date.UTC(1970, 0, 1 + jours[0])).getUTCFullYear();
+  const a1 = new Date(Date.UTC(1970, 0, 1 + jours.at(-1)!)).getUTCFullYear() + 1;
+  const j0 = Date.UTC(a0, 0, 1) / 864e5, j1 = Date.UTC(a1, 0, 1) / 864e5;
+  const X = (j: number) => C.l + ((j - j0) / (j1 - j0)) * (C.r - C.l);
+  const Y = (y: number) => C.b - (y / v.ymax) * (C.b - C.h);
+  const d = v.points.map(([, y], i) => `${i ? 'L' : 'M'}${X(jours[i]).toFixed(1)},${Y(y).toFixed(1)}`).join('');
+  const frac = (j: number) => r2((X(j) - C.l) / (C.r - C.l));
+  // Le tracé atteint chaque repère quand la voix le nomme ; puis il finit en 2 s.
+  const trace: [number, number][] = [[r2(debuts[k] + 0.4), frac(jours[0])]];
+  for (const rp of v.reperes) if (rp.quand) trace.push([T(rp.quand), frac(bornesDate(rp.date)[0])]);
+  trace.sort((a, b) => a[0] - b[0]);
+  trace.push([r2(trace.at(-1)![0] + 2), 1]);
+  const annees = Array.from({ length: a1 - a0 + 1 }, (_, i) => a0 + i);
+  return { d, X, Y, trace, annees, jours: (s: string) => bornesDate(s)[0] };
+}
+
+// --- Carte ------------------------------------------------------------------------------------
+function projeter(f: FondCarte, [lon, lat]: [number, number]): [number, number] {
+  const { cadre, echelle, cx } = f.projection;
+  return [r2((lon - cadre[0]) * cx * echelle), r2((cadre[3] - lat) * echelle)];
+}
+/** Position d'une étiquette autour d'un point : décalage et ancrage du texte. */
+function etiquette(p: [number, number], position = 'droite', ecart = 16) {
+  const [x, y] = p;
+  if (position === 'gauche') return { x: x - ecart, y: y + 10, ancre: 'end' };
+  if (position === 'haut') return { x, y: y - ecart - 2, ancre: 'middle' };
+  if (position === 'bas') return { x, y: y + ecart + 26, ancre: 'middle' };
+  return { x: x + ecart, y: y + 10, ancre: 'start' };
+}
+function centre(pts: [number, number][]): [number, number] {
+  return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length];
+}
+const fleche = (f: FondCarte, el: Extract<ElementCarte, { type: 'fleche' }>) => {
+  const [x0, y0] = projeter(f, el.de), [x1, y1] = projeter(f, el.a);
+  // Légère courbe (point de contrôle décalé perpendiculairement).
+  const mx = (x0 + x1) / 2 - (y1 - y0) * 0.18, my = (y0 + y1) / 2 + (x1 - x0) * 0.18;
+  // Pointe : triangle à l'arrivée, orienté selon la tangente (du point de contrôle à l'arrivée).
+  const n = Math.hypot(x1 - mx, y1 - my) || 1, ux = (x1 - mx) / n, uy = (y1 - my) / n, L = 26, l = 13;
+  const pointe = `M${(x1 + ux * 6).toFixed(1)},${(y1 + uy * 6).toFixed(1)} L${(x1 - ux * L + uy * l).toFixed(1)},${(y1 - uy * L - ux * l).toFixed(1)} L${(x1 - ux * L - uy * l).toFixed(1)},${(y1 - uy * L + ux * l).toFixed(1)}Z`;
+  return { d: `M${x0},${y0} Q${mx.toFixed(1)},${my.toFixed(1)} ${x1},${y1}`, pointe, depart: [x0, y0] as [number, number] };
+};
+
+// --- Document ---------------------------------------------------------------------------------
+/** Vue de zoom autour d'une ligne : le cadre élargi (contexte), assez grand pour rester net. */
+function vue([x0, y0, x1, y1]: [number, number, number, number], ratio: number): [number, number, number, number] {
+  let w = Math.max(0.42, (x1 - x0) * 1.5), h = Math.max((y1 - y0) * 3, w * ratio * 0.62);
+  w = Math.min(1, w); h = Math.min(1, h);
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  const a = Math.min(1 - w, Math.max(0, cx - w / 2)), b = Math.min(1 - h, Math.max(0, cy - h / 2));
+  return [r2(a), r2(b), r2(a + w), r2(b + h)].map((x) => Math.round(x * 1000) / 1000) as [number, number, number, number];
+}
+const statique = mode === 'livre';
+---
+
+<div class={`episode episode--${mode}`} data-episode={e.id} aria-hidden={mode === 'lecteur' ? 'true' : undefined}>
+  {mode === 'lecteur' && <p class="episode__titre"><span class="episode__marque">Épisode</span> {t(e.titre)}</p>}
+  <div class="episode__visuels">
+    {e.visuels.map((v, k) => (
+      <div class={`ev ev--${v.type}${k === 0 && statique ? ' est-actif' : ''}`} data-t={debuts[k]}>
+        {v.type === 'carton' && (
+          <div class="ev-carton">
+            <p class="ev-carton__texte anim" data-t={r2(debuts[k] + 0.1)} data-d="1.2">{t(v.texte)}</p>
+            <span class="ev-carton__filet anim" data-t={r2(debuts[k] + 0.4)} data-d="1"></span>
+            {v.sous && <p class="ev-carton__sous anim" data-t={r2(debuts[k] + 0.7)} data-d="1">{t(v.sous)}</p>}
+          </div>
+        )}
+
+        {v.type === 'chiffres' && (
+          <Fragment>
+            {v.titre && <p class="ev-titre">{t(v.titre)}</p>}
+            <div class={`ev-chiffres ev-chiffres--${v.items.length}`}>
+              {v.items.map((it, j) => (
+                <div class={`ev-chiffre anim${it.accent ? ' est-accent' : ''}${it.valeur.length > 8 ? ' est-long' : ''}`} data-t={quandEl(k, it.quand, j)} data-d="1">
+                  <span class="ev-chiffre__valeur">{t(it.valeur)}</span>
+                  {it.unite && <span class="ev-chiffre__unite">{t(it.unite)}</span>}
+                  <span class="ev-chiffre__libelle">{t(it.libelle)}</span>
+                </div>
+              ))}
+            </div>
+            {v.source && <p class="ev-source">{t(`Source : ${v.source}`)}</p>}
+          </Fragment>
+        )}
+
+        {v.type === 'barres' && (
+          <Fragment>
+            <p class="ev-titre">{t(v.titre)} <span class="ev-titre__unite">{t(`en ${v.unite === '%' ? 'pourcentage' : v.unite}`)}</span></p>
+            <div class="ev-barres">
+              {v.barres.map((b, j) => (
+                <div class={`ev-barre anim${b.accent ? ' est-accent' : ''}`} data-t={quandEl(k, b.quand, j)} data-d="1.2" style={`--v:${(b.valeur / v.max).toFixed(4)}`}>
+                  <span class="ev-barre__libelle">{t(b.libelle)}</span>
+                  <span class="ev-barre__piste"><span class="ev-barre__rempli"></span></span>
+                  <span class="ev-barre__valeur">{t(b.affichage ?? String(b.valeur))}{b.note && <Fragment> <em>{t(b.note)}</em></Fragment>}</span>
+                </div>
+              ))}
+            </div>
+            <p class="ev-source">{t(`Source : ${v.source}`)}</p>
+          </Fragment>
+        )}
+
+        {v.type === 'courbe' && (() => {
+          const c = courbe(v, k);
+          return (
+            <Fragment>
+              <p class="ev-titre">{t(v.titre)} <span class="ev-titre__unite">{t(`en ${v.unite}`)}</span></p>
+              <svg class="ev-courbe" viewBox={`0 0 ${C.W} ${C.H}`} role="img" aria-label={t(v.titre)}>
+                <defs><clipPath id={`${uid}-trace-${k}`}><rect class="ev-courbe__masque" x={C.l - 6} y="0" height={C.H} width={statique ? C.r - C.l + 12 : 0} data-l={C.r - C.l + 12} data-trace={statique ? undefined : JSON.stringify(c.trace)} /></clipPath></defs>
+                {[0, 25, 50, 75, 100].filter((y) => y <= v.ymax).map((y) => (
+                  <g class="ev-courbe__grille"><line x1={C.l} x2={C.r} y1={c.Y(y)} y2={c.Y(y)} /><text x={C.l - 10} y={c.Y(y) + 6} text-anchor="end">{y}</text></g>
+                ))}
+                {c.annees.map((a, i) => (
+                  <g class="ev-courbe__axe">
+                    <line x1={c.X(Date.UTC(a, 0, 1) / 864e5)} x2={c.X(Date.UTC(a, 0, 1) / 864e5)} y1={C.b} y2={C.b + 7} />
+                    {i < c.annees.length - 1 && <text x={c.X(Date.UTC(a, 6, 1) / 864e5)} y={C.b + 28} text-anchor="middle">{a}</text>}
+                  </g>
+                ))}
+                <path class="ev-courbe__ligne" d={c.d} clip-path={`url(#${uid}-trace-${k})`} />
+                {v.reperes.map((rp, j) => {
+                  const j0 = c.jours(rp.date);
+                  const y = v.points.find(([d]) => d === rp.date)?.[1] ?? 0;
+                  const x = c.X(j0), yy = c.Y(y);
+                  const haut = yy > C.h + 40;
+                  const [dx, dy] = rp.etiquette ?? [0, haut ? -14 : 26];
+                  const tx = Math.min(C.r - 4, Math.max(C.l + 4, x + dx));
+                  return (
+                    <g class="ev-courbe__repere anim" data-t={quandEl(k, rp.quand, j)} data-d="0.8">
+                      <circle cx={x} cy={yy} r="5" />
+                      <text x={tx} y={yy + dy} text-anchor={rp.ancre ?? (tx > C.r - 60 ? 'end' : tx < C.l + 60 ? 'start' : 'middle')}>{rp.libelle}</text>
+                    </g>
+                  );
+                })}
+              </svg>
+              <p class="ev-source">{t(`Source : ${v.source}`)}</p>
+            </Fragment>
+          );
+        })()}
+
+        {v.type === 'carte' && (() => {
+          const f = fonds[v.fond];
+          if (!f) return null;
+          return (
+            <Fragment>
+              <p class="ev-titre">{t(v.titre)}</p>
+              <div class="ev-carte">
+                <svg class="ev-carte__svg" viewBox={`0 0 ${f.largeur} ${f.hauteur}`} role="img" aria-label={t(v.titre)}>
+                  <defs>
+                    <pattern id={`${uid}-hachures`} width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="14" /></pattern>
+                  </defs>
+                  <path class="ev-carte__terres" d={f.terres} />
+                  <path class="ev-carte__france" d={f.france} />
+                  {f.fleuves.map((d) => <path class="ev-carte__fleuve" d={d} />)}
+                  {v.elements.map((el, j) => {
+                    const tj = quandEl(k, el.quand, j);
+                    if (el.type === 'zone') {
+                      const pts = el.points.map((p) => projeter(f, p));
+                      const [cx, cy] = centre(pts);
+                      return (
+                        <g class="ev-carte__zone anim" data-t={tj} data-d="1.2">
+                          <path d={`M${pts.map((p) => p.join(',')).join(' L')}Z`} fill={`url(#${uid}-hachures)`} />
+                          <text x={cx} y={cy + 70} text-anchor="middle">{t(el.libelle)}</text>
+                        </g>
+                      );
+                    }
+                    if (el.type === 'fleche') {
+                      const fl = fleche(f, el);
+                      const et = etiquette(fl.depart, el.position ?? 'haut', 14);
+                      return (
+                        <g class="ev-carte__fleche anim" data-t={tj} data-d="1.4">
+                          <path class="ev-carte__trait" d={fl.d} pathLength="1" />
+                          <path class="ev-carte__pointe" d={fl.pointe} />
+                          <text x={et.x} y={et.y} text-anchor={et.ancre}>{t(el.libelle)}</text>
+                        </g>
+                      );
+                    }
+                    const p = projeter(f, el.lieu);
+                    const et = etiquette(p, el.position);
+                    return (
+                      <g class={`ev-carte__ville anim${el.capitale ? ' est-capitale' : ''}${el.rebelle ? ' est-rebelle' : ''}`} data-t={tj} data-d="0.7">
+                        {el.capitale ? <rect x={p[0] - 7} y={p[1] - 7} width="14" height="14" /> : <circle cx={p[0]} cy={p[1]} r={el.rebelle ? 10 : 7} />}
+                        <text x={et.x} y={et.y} text-anchor={et.ancre}>{t(el.libelle)}</text>
+                      </g>
+                    );
+                  })}
+                </svg>
+                {v.legende && (
+                  <ul class="ev-carte__legende">
+                    {v.legende.map(([cle, lib]) => <li><span class={`ev-signe ev-signe--${cle}`}></span>{t(lib)}</li>)}
+                  </ul>
+                )}
+              </div>
+              <p class="ev-source">{t(`${v.source}`)}</p>
+            </Fragment>
+          );
+        })()}
+
+        {v.type === 'document' && (() => {
+          const i = v.image;
+          const L = i.largeur ?? 1000, H = i.hauteur ?? 1300;
+          const vues = v.lignes.map((l, j) => [quandEl(k, l.quand, j), ...vue(l.cadre, H / L)]);
+          return (
+            <Fragment>
+              <div class="ev-doc" data-vues={statique ? undefined : JSON.stringify(vues)} data-l={L} data-h={H}>
+                <div class="ev-doc__page" style={`aspect-ratio:${L}/${H}`}>
+                  <img src={urlMedia(slug, i.fichier)} alt={t(i.titre)} width={L} height={H} loading="lazy" decoding="async" />
+                  {v.lignes.map((l, j) => (
+                    <span class="ev-doc__surligne anim" data-t={quandEl(k, l.quand, j)} data-d="1.4"
+                      style={`left:${(l.cadre[0] * 100).toFixed(2)}%;top:${(l.cadre[1] * 100).toFixed(2)}%;width:${((l.cadre[2] - l.cadre[0]) * 100).toFixed(2)}%;height:${((l.cadre[3] - l.cadre[1]) * 100).toFixed(2)}%`}></span>
+                  ))}
+                </div>
+              </div>
+              <p class="ev-source">{t(`${i.titre}, ${i.auteur}, ${i.date}, ${i.conservation}.`)} <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a></p>
+              {statique && (
+                <ul class="ev-doc__lignes">{v.lignes.map((l) => <li>« {t(l.texte)} »</li>)}</ul>
+              )}
+            </Fragment>
+          );
+        })()}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  /* Tout est monochrome : noir, gris, blanc cassé ; hachures et styles de trait. Les animations
+     se règlent sur --p (0 → 1), posé par le script du lecteur. */
+  .episode { --p-defaut: 0; }
+  .episode--lecteur {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    container-type: size;
+    display: flex;
+    flex-direction: column;
+    padding: 0.6rem max(var(--e-3), 4cqw) max(0.5rem, calc(var(--frise-bas, 0px) + 0.4rem));
+    background: var(--c-fond);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 600ms ease, visibility 0s linear 600ms;
+  }
+  .episode--lecteur.est-visible { opacity: 1; visibility: visible; transition: opacity 600ms ease, visibility 0s; }
+  .episode__titre {
+    flex: none;
+    margin: 0 auto;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--c-filet);
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-size: clamp(0.85rem, 2.4cqw, 1.15rem);
+    text-align: center;
+    color: var(--c-texte);
+  }
+  .episode__marque { color: var(--c-texte-doux); }
+  .episode__marque::after { content: ' ·'; }
+  .episode--lecteur .episode__visuels { position: relative; flex: 1; min-height: 0; margin-top: 0.4rem; }
+  .episode--lecteur .ev {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 600ms ease;
+  }
+  .episode--lecteur .ev.est-actif { opacity: 1; }
+  .episode--lecteur .ev--carte, .episode--lecteur .ev--courbe, .episode--lecteur .ev--document { justify-content: flex-start; }
+  @media (prefers-reduced-motion: reduce) { .episode--lecteur .ev, .episode--lecteur { transition-duration: 150ms; } }
+
+  .anim { --p: var(--p-defaut); }
+  .episode--livre .anim { --p: 1; }
+
+  .ev-titre {
+    margin: 0 0 0.7rem;
+    font-size: clamp(0.95rem, 2.8cqw, 1.5rem);
+    text-align: center;
+    font-style: italic;
+  }
+  .ev-titre__unite { font-style: normal; font-variant: small-caps; letter-spacing: 0.05em; color: var(--c-texte-doux); font-size: 0.85em; }
+  .ev-source {
+    flex: none;
+    max-width: 46rem;
+    margin: 0.5rem 0 0;
+    font-size: clamp(0.68rem, 1.6cqw, 0.85rem);
+    line-height: 1.3;
+    hyphens: none;
+    -webkit-hyphens: none;
+    color: var(--c-texte-doux);
+    text-align: center;
+  }
+  .ev-source a { color: inherit; }
+
+  /* Carton typographique : comme une page de titre. */
+  .ev-carton { text-align: center; }
+  .ev-carton__texte {
+    margin: 0;
+    font-family: var(--f-titre);
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-size: clamp(1.4rem, 6cqw, 3rem);
+    line-height: 1.2;
+    opacity: var(--p);
+    transform: translateY(calc((1 - var(--p)) * 6px));
+  }
+  .ev-carton__filet { display: block; width: 5rem; margin: 0.9rem auto; border-top: 1px solid var(--c-texte-doux); transform: scaleX(var(--p)); }
+  .ev-carton__sous { margin: 0; font-style: italic; color: var(--c-texte-doux); font-size: clamp(0.95rem, 2.4cqw, 1.3rem); opacity: var(--p); }
+
+  /* Gros chiffres. */
+  .ev-chiffres { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem clamp(1rem, 5cqw, 3.5rem); max-width: 100%; }
+  .ev-chiffre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 16rem;
+    text-align: center;
+    opacity: var(--p);
+    transform: translateY(calc((1 - var(--p)) * 8px));
+  }
+  .ev-chiffre__valeur {
+    font-family: var(--f-titre);
+    font-size: clamp(1.8rem, 9cqw, 5rem);
+    line-height: 1.05;
+    font-variant-numeric: lining-nums;
+    color: var(--c-texte-doux);
+  }
+  .ev-chiffre.est-accent .ev-chiffre__valeur { color: var(--c-texte); }
+  .ev-chiffre.est-long { max-width: 22rem; }
+  .ev-chiffre.est-long .ev-chiffre__valeur { font-size: clamp(1.4rem, 6cqw, 3.4rem); white-space: nowrap; }
+  .ev-chiffre__unite { font-variant: small-caps; letter-spacing: 0.06em; color: var(--c-texte-doux); font-size: clamp(0.8rem, 2cqw, 1.1rem); }
+  .ev-chiffre__libelle { font-size: clamp(0.85rem, 2.4cqw, 1.3rem); line-height: 1.3; }
+  .ev-chiffre.est-accent .ev-chiffre__libelle { border-top: 1px solid var(--c-texte); padding-top: 0.15rem; }
+
+  /* Barres horizontales : libellé, piste fine, barre grise (noire si accent), valeur. */
+  .ev-barres { width: min(56rem, 100%); display: grid; gap: clamp(0.3rem, 2.4cqh, 1.1rem); }
+  .ev-barre {
+    display: grid;
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.4rem 0.8rem;
+    font-size: clamp(0.8rem, 2.4cqw, 1.3rem);
+    opacity: calc(0.25 + 0.75 * min(1, var(--p) * 3));
+  }
+  .ev-barre__libelle { text-align: right; line-height: 1.2; }
+  .ev-barre__piste { position: relative; height: clamp(0.8rem, 4.5cqh, 2rem); border-left: 1px solid var(--c-texte); }
+  .ev-barre__rempli {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 100%;
+    background: #8f8c85;
+    transform-origin: 0 50%;
+    transform: scaleX(calc(var(--v) * var(--p)));
+  }
+  .ev-barre.est-accent .ev-barre__rempli { background: var(--c-texte); }
+  .ev-barre__valeur { min-width: 4.5em; font-variant-numeric: lining-nums tabular-nums; opacity: var(--p); white-space: nowrap; }
+  .ev-barre__valeur em { color: var(--c-texte-doux); }
+
+  /* Courbe : grille légère, axe des années, tracé noir qui se dessine (masque), repères. */
+  .ev--courbe .ev-courbe { width: 100%; flex: 1 1 0; min-height: 0; overflow: visible; font-family: inherit; }
+  .ev-courbe text { font-size: 17px; fill: var(--c-texte-doux); }
+  .ev-courbe__grille line { stroke: #d6d3cc; stroke-width: 1; }
+  .ev-courbe__axe line { stroke: var(--c-texte-doux); }
+  .ev-courbe__ligne { fill: none; stroke: var(--c-texte); stroke-width: 2.5; stroke-linejoin: round; }
+  .ev-courbe__repere { opacity: var(--p); }
+  .ev-courbe__repere circle { fill: var(--c-fond); stroke: var(--c-texte); stroke-width: 2; }
+  .ev-courbe__repere text { fill: var(--c-texte); font-size: 18px; }
+
+  /* Carte : terres en gris très clair, France un peu plus soutenue ; zones hachurées, flèches
+     en trait plein qui se dessinent, villes rebelles en points noirs cerclés. */
+  .ev-carte { display: flex; align-items: center; justify-content: center; gap: 1rem; min-height: 0; flex: 1 1 0; width: 100%; }
+  .ev-carte__svg { height: 100%; width: auto; max-width: 100%; min-height: 0; overflow: hidden; font-family: inherit; }
+  .ev-carte__terres { fill: #ebe9e4; stroke: #c9c6bf; stroke-width: 1; }
+  .ev-carte__france { fill: #dcd9d1; stroke: #5e5b55; stroke-width: 2.2; stroke-linejoin: round; }
+  .ev-carte__fleuve { fill: none; stroke: #b4b1aa; stroke-width: 2; }
+  .ev-carte__svg text { font-size: 38px; fill: var(--c-texte); paint-order: stroke; stroke: rgba(251, 250, 247, 0.85); stroke-width: 6px; stroke-linejoin: round; }
+  .ev-carte__svg pattern line { stroke: #3d3b37; stroke-width: 2.5; }
+  .ev-carte__zone { opacity: var(--p); }
+  .ev-carte__zone path { stroke: #3d3b37; stroke-width: 2; stroke-dasharray: 6 5; }
+  .ev-carte__zone text { font-style: italic; }
+  .ev-carte__trait { fill: none; stroke: var(--c-texte); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
+  .ev-carte__pointe { fill: var(--c-texte); opacity: clamp(0, calc((var(--p) - 0.85) * 7), 1); }
+  .ev-carte__fleche text { opacity: var(--p); font-variant: small-caps; letter-spacing: 0.04em; }
+  .ev-carte__ville { opacity: var(--p); }
+  .ev-carte__ville circle, .ev-carte__ville rect { fill: var(--c-fond); stroke: var(--c-texte); stroke-width: 3; }
+  .ev-carte__ville.est-rebelle circle { fill: var(--c-texte); stroke: var(--c-fond); stroke-width: 3; }
+  .ev-carte__ville.est-capitale rect { fill: var(--c-texte); }
+  .ev-carte__legende { flex: none; margin: 0; padding: 0; list-style: none; font-size: clamp(0.72rem, 1.8cqw, 0.9rem); color: var(--c-texte-doux); line-height: 1.8; }
+  .ev-signe { display: inline-block; width: 1.4em; height: 0.8em; margin-right: 0.45em; vertical-align: -0.05em; }
+  .ev-signe--fleche { height: 0; border-top: 3px solid var(--c-texte); vertical-align: 0.25em; }
+  .ev-signe--rebelle { width: 0.75em; height: 0.75em; border-radius: 50%; background: var(--c-texte); margin-inline: 0.3em 0.8em; }
+  .ev-signe--zone { border: 1px dashed #3d3b37; background: repeating-linear-gradient(45deg, #3d3b37 0 1.5px, transparent 1.5px 5px); }
+
+  /* Document d'époque : la page entière, puis un léger zoom sur la ligne lue, qui se surligne
+     (fond gris par transparence et trait noir dessous, qui s'étendent de gauche à droite). */
+  .ev-doc { position: relative; flex: 1 1 auto; min-height: 0; width: 100%; overflow: hidden; }
+  .ev-doc__page { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+  .ev-doc__page img { display: block; width: 100%; height: 100%; border: 1px solid var(--c-filet); }
+  .ev-doc__surligne {
+    position: absolute;
+    background: rgba(40, 38, 34, 0.13);
+    border-bottom: 1px solid var(--c-texte);
+    transform-origin: 0 50%;
+    transform: scaleX(var(--p));
+    mix-blend-mode: multiply;
+  }
+  .ev-doc__lignes { margin: var(--e-2) 0 0; padding-left: var(--e-3); font-style: italic; }
+
+  /* Livre d'images (sans JavaScript) : visuels empilés, statiques. */
+  .episode--livre .ev { margin: var(--e-3) 0; }
+  .episode--livre .ev-carton { padding: var(--e-3) 0; }
+  .episode--livre .ev-carte__svg { width: min(30rem, 100%); height: auto; }
+  .episode--livre .ev-carte { flex-wrap: wrap; justify-content: flex-start; }
+  .episode--livre .ev-doc { overflow: visible; }
+  .episode--livre .ev-doc__page { position: relative; width: min(30rem, 100%); height: auto; }
+  .episode--livre .ev-titre, .episode--livre .ev-source { text-align: left; }
+
+  /* Scène étroite (téléphone) : libellés des barres au-dessus, légende de carte masquée. */
+  @container (max-width: 560px) {
+    .ev-barre { grid-template-columns: minmax(0, 1fr) auto; gap: 0 0.5rem; }
+    .ev-barre__libelle { grid-column: 1 / -1; text-align: left; font-size: 0.82em; }
+    .ev-carte__legende { display: none; }
+    .ev-chiffres { flex-direction: column; align-items: center; gap: 0.35rem; }
+    .ev-chiffre__valeur { font-size: clamp(1.5rem, 8cqw, 2.2rem); }
+  }
+</style>

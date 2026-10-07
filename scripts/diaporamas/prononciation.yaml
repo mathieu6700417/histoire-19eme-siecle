@@ -1,0 +1,39 @@
+# Lexique de prononciation des diaporamas (spec 12).
+# « Mot: graphie » : la graphie remplace le mot (mot entier, sensible à la casse) dans le
+# texte envoyé à la voix de synthèse SEULEMENT ; les sous-titres gardent le texte du script.
+# Repris de ~/ai-projects/histoire-19eme-siecle/collections/xix-france/prononciation.yaml,
+# puis enrichi à l'écoute.
+Talleyrand: Tal-ran
+Cambacérès: Kan-ba-cé-rèss
+Guizot: Gui-zo
+# Numéros de rois et de papes : lus « seize », jamais « quinze cents » ni « X V I ».
+Louis XIV: Louis quatorze
+Louis XV: Louis quinze
+Louis XVI: Louis seize
+Louis XVII: Louis dix-sept
+Louis XVIII: Louis dix-huit
+Pie VI: Pie six
+Pie VII: Pie sept
+# Siècles.
+XVIIIe siècle: dix-huitième siècle
+XIXe siècle: dix-neuvième siècle
+# Calendrier républicain : an II, an III… lus en toutes lettres.
+an Ier: an un
+an I: an un
+an II: an deux
+an III: an trois
+an IV: an quatre
+an V: an cinq
+an VI: an six
+an VII: an sept
+an VIII: an huit
+# Noms propres.
+Saint-Just: Saint-Juste
+Desmoulins: Dé-moulin
+Barnave: Bar-nave
+# Ordinaux.
+1er: premier
+Longwy: Lon-oui
+Gracchus: Grakus
+Boissy d'Anglas: Boissy d'Anglasse
+Caen: Kan

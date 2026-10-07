@@ -1,0 +1,167 @@
+---
+// Lecteur d'une période de la section « Le siècle en images » (spec 12).
+import Base from '../../layouts/Base.astro';
+import Diaporama from '../../components/Diaporama.astro';
+import { typographie } from '../../utils/typographie.mjs';
+import { libelleChapitre } from '../../data/chapitres-ecrivains';
+import { planComplet, urlChapitre } from '../../utils/ecrivains';
+import {
+  diaporamas, dureeTotale, formaterDuree, nomSourceMusique, planDiaporamas, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
+  type Diaporama as D,
+} from '../../utils/diaporamas';
+
+export function getStaticPaths() {
+  return diaporamas.map((d) => ({ params: { slug: d.slug }, props: { d } }));
+}
+
+const { d } = Astro.props as { d: D };
+const plan = planDiaporamas();
+const voisin = (numero: number) => plan.find((p) => p.numero === numero);
+const precedent = voisin(d.numero - 1);
+const suivant = voisin(d.numero + 1);
+const chapitre = (await planComplet()).find((p) => p.numero === d.numero)?.chapitre;
+const duree = formaterDuree(dureeTotale(d));
+
+// Crédits des musiques : fond par acte (sans doublon), puis intermèdes chantés.
+const t = (x?: string) => (x ? typographie(x) : '');
+const fond = (d.musique?.fond ?? []).filter((p) => p.duree);
+const actesMusique = d.actes.map((a) => ({ titre: a.titre, pistes: fond.filter((p) => p.acte === a.id) })).filter((a) => a.pistes.length);
+const chants = (d.musique?.intermedes ?? []).filter((p) => p.duree);
+/** Licence en milieu de phrase : minuscule initiale, sauf sigle (CC0, CC BY…). */
+const licence = (x: string) => t(/^[A-ZÀ-Ý][a-zà-ÿ]/.test(x) ? x.charAt(0).toLowerCase() + x.slice(1) : x);
+/** Lien vers le texte d'une licence Creative Commons (CC BY 3.0, CC BY-SA 4.0…), exigé par l'attribution. */
+const urlLicence = (x: string) => {
+  const m = /^CC (BY(?:-SA)?) (\d\.\d)/.exec(x);
+  return m ? `https://creativecommons.org/licenses/${m[1].toLowerCase()}/${m[2]}/deed.fr` : '';
+};
+---
+
+<Base title={`${d.titre} (${d.periode}) · Le siècle en images`} description={d.resume}>
+  <article class="conteneur page-diaporama">
+    <header class="entete-diaporama">
+      <p class="surtitre-savant">
+        <a href={urlSectionDiaporamas}>Le siècle en images</a>
+        <span aria-hidden="true"> · </span>{libelleChapitre(d.numero)}
+        <span aria-hidden="true"> · </span>{d.periode}
+        <span aria-hidden="true"> · </span>{d.diapositives.length} images
+        <span aria-hidden="true"> · </span>{duree}
+      </p>
+      <h1>{typographie(d.titre)}</h1>
+      <p class="chapeau">{typographie(d.resume)}</p>
+    </header>
+
+    <Diaporama diaporama={d} />
+
+    <p class="credits">
+      {typographie("Voix off de synthèse (Gemini, voix Charon), texte relu ; images du domaine public, de Wikimedia Commons. Clavier : espace (lecture, pause), flèches (précédente, suivante), F (plein écran), S (sous-titres), M (musique), Entrée (passer le carton d'un acte) ; flèche droite pour passer un chant.")}
+    </p>
+    {(actesMusique.length > 0 || chants.length > 0) && (
+      <section class="musiques" aria-labelledby="titre-musiques">
+        <h2 id="titre-musiques">Musiques</h2>
+        {chants.length > 0 && (
+          <Fragment>
+            <h3>Chants</h3>
+            <ul>
+              {chants.map((p) => (
+                <li>
+                  <cite>{t(p.titre)}</cite>, {t(p.auteur)}, {t(p.date)}. {t(p.interprete)}, {t(p.enregistrement)}.
+                  {' '}<a href={urlSourceMusique(p.source)} rel="noopener" target="_blank">{nomSourceMusique(p.source)}</a>, {urlLicence(p.licence) ? <a href={urlLicence(p.licence)} rel="noopener license" target="_blank">{licence(p.licence)}</a> : licence(p.licence)}.
+                </li>
+              ))}
+            </ul>
+          </Fragment>
+        )}
+        <h3>Musique de fond</h3>
+        <ul>
+          {actesMusique.map((a) => (
+            <li>
+              <span class="musiques__acte">{t(a.titre)}</span>
+              {a.pistes.map((p) => (
+                <span class="musiques__piste">
+                  {t(p.compositeur)}, <cite>{t(p.titre)}</cite> ({t(p.date)}), {t(p.interprete)}.{' '}
+                  <a href={urlSourceMusique(p.source)} rel="noopener" target="_blank">{nomSourceMusique(p.source)}</a>, {urlLicence(p.licence) ? <a href={urlLicence(p.licence)} rel="noopener license" target="_blank">{licence(p.licence)}</a> : licence(p.licence)}.
+                </span>
+              ))}
+            </li>
+          ))}
+        </ul>
+        {d.musique?.note && <p class="musiques__note">{t(d.musique.note)}</p>}
+      </section>
+    )}
+    {chapitre && (
+      <p class="lien-ecrivains">
+        <a href={urlChapitre(chapitre)}>{typographie(`Lire la même période dans « Le siècle raconté par ses écrivains » : ${chapitre.data.titre} →`)}</a>
+      </p>
+    )}
+
+    <nav class="voisins" aria-label="Autres périodes">
+      {precedent?.diaporama ? (
+        <a class="voisin" href={urlDiaporama(precedent.diaporama.slug)}>
+          <span class="voisin__sens">← {libelleChapitre(precedent.numero)}</span>
+          <span class="voisin__titre">{typographie(precedent.titre)}</span>
+        </a>
+      ) : precedent ? (
+        <p class="voisin voisin--avenir">
+          <span class="voisin__sens">← {libelleChapitre(precedent.numero)} (à venir)</span>
+          <span class="voisin__titre">{typographie(precedent.titre)}</span>
+        </p>
+      ) : <a class="voisin" href={urlSectionDiaporamas}><span class="voisin__sens">← Toutes les périodes</span><span class="voisin__titre">Le siècle en images</span></a>}
+      {suivant?.diaporama ? (
+        <a class="voisin voisin--suiv" href={urlDiaporama(suivant.diaporama.slug)}>
+          <span class="voisin__sens">{libelleChapitre(suivant.numero)} →</span>
+          <span class="voisin__titre">{typographie(suivant.titre)}</span>
+        </a>
+      ) : suivant ? (
+        <p class="voisin voisin--suiv voisin--avenir">
+          <span class="voisin__sens">{libelleChapitre(suivant.numero)} (à venir)</span>
+          <span class="voisin__titre">{typographie(suivant.titre)}</span>
+        </p>
+      ) : <a class="voisin voisin--suiv" href={urlSectionDiaporamas}><span class="voisin__sens">Toutes les périodes →</span><span class="voisin__titre">Le siècle en images</span></a>}
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .page-diaporama { max-width: calc(1040px + 2 * var(--gouttiere)); }
+  .entete-diaporama { padding-top: var(--e-4); max-width: var(--l-lecture); }
+  .entete-diaporama .surtitre-savant { margin-bottom: var(--e-2); }
+  .entete-diaporama .surtitre-savant a { color: var(--c-texte-doux); }
+  .entete-diaporama h1 { margin-bottom: var(--e-2); }
+  .chapeau { font-size: 1.15rem; font-style: italic; color: var(--c-texte-doux); margin-bottom: var(--e-3); }
+  .credits { margin-top: var(--e-5); font-size: var(--t-petit); color: var(--c-texte-doux); max-width: var(--l-lecture); }
+  .lien-ecrivains { font-size: 1.05rem; }
+
+  /* Crédits des musiques : sobre, petit, monochrome. */
+  .musiques { margin-top: var(--e-4); max-width: var(--l-lecture); font-size: var(--t-petit); color: var(--c-texte-doux); }
+  .musiques h2 {
+    font-size: 1rem;
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-weight: normal;
+    color: var(--c-texte-doux);
+    border-bottom: 1px solid var(--c-filet);
+    padding-bottom: var(--e-1);
+    margin-bottom: var(--e-2);
+  }
+  .musiques h3 { font-size: 0.95rem; font-weight: normal; font-style: italic; margin: var(--e-2) 0 var(--e-1); color: var(--c-texte-doux); }
+  .musiques ul { list-style: none; padding: 0; margin: 0; }
+  .musiques li { margin-bottom: var(--e-1); line-height: 1.45; }
+  .musiques a { color: var(--c-texte-doux); }
+  .musiques__acte { display: block; font-variant: small-caps; letter-spacing: 0.04em; }
+  .musiques__piste { display: block; padding-left: var(--e-2); }
+  .musiques__note { margin-top: var(--e-2); }
+
+  .voisins {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--e-3);
+    margin-top: var(--e-5);
+    padding-top: var(--e-4);
+    border-top: 1px solid var(--c-filet);
+  }
+  .voisin { display: flex; flex-direction: column; text-decoration: none; max-width: 48%; margin: 0; }
+  .voisin--suiv { text-align: right; margin-left: auto; }
+  .voisin--avenir { color: var(--c-texte-doux); }
+  .voisin__sens { font-variant: small-caps; color: var(--c-texte-doux); }
+  .voisin__titre { font-family: var(--f-titre); }
+</style>
