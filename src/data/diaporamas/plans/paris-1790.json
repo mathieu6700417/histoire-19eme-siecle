@@ -1,0 +1,105 @@
+{
+  "nom": "paris-1790",
+  "fichier": "fonds/paris-1790.webp",
+  "largeur": 2000,
+  "hauteur": 1193,
+  "titre": "Plan de la ville de Paris avec sa nouvelle enceinte",
+  "auteur": "Edme Verniquet",
+  "date": "1790 (levé de 1785-1791 ; fac-similé)",
+  "credit": "Plan de Verniquet, 1790",
+  "commons": "File:1790 Plan de Verniquet.jpg",
+  "licence": "Domaine public",
+  "licence_relevee": "Public domain",
+  "slugs": [
+    "prologue",
+    "revolution"
+  ],
+  "calage": {
+    "u": [
+      8.778121308929025,
+      0.14029103787617153,
+      -26.90833233355911
+    ],
+    "v": [
+      -0.05846521132194242,
+      -22.162676530777624,
+      1083.3527693459666
+    ],
+    "metres_par_pixel": 4.19,
+    "ecart_moyen_m": 15,
+    "points": [
+      [
+        "Observatoire (méridienne × perpendiculaire)",
+        2700,
+        4018,
+        48.836389,
+        2.337229,
+        29
+      ],
+      [
+        "Notre-Dame (milieu de l’édifice)",
+        3372,
+        2756,
+        48.853,
+        2.3498,
+        16
+      ],
+      [
+        "Dôme des Invalides",
+        1503,
+        2606,
+        48.855,
+        2.3125,
+        15
+      ],
+      [
+        "Place Vendôme (statue)",
+        2346,
+        1670,
+        48.8675,
+        2.32944,
+        12
+      ],
+      [
+        "Place des Victoires (statue)",
+        2932,
+        1798,
+        48.86583,
+        2.34111,
+        11
+      ],
+      [
+        "Place Royale, auj. des Vosges (statue)",
+        4145,
+        2558,
+        48.85556,
+        2.36556,
+        11
+      ],
+      [
+        "Sainte-Geneviève, auj. Panthéon",
+        3182,
+        3270,
+        48.8462,
+        2.34611,
+        16
+      ],
+      [
+        "Saint-Sulpice",
+        2622,
+        2914,
+        48.851,
+        2.33492,
+        11
+      ],
+      [
+        "Chapelle de la Salpêtrière",
+        4070,
+        3815,
+        48.83888,
+        2.36413,
+        7
+      ]
+    ]
+  }
+}

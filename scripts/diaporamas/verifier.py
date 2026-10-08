@@ -10,8 +10,14 @@ actes cohérents (débuts croissants, titre et dates du carton d'acte : « 1787-
 licences libres (relevées par images.py depuis l'API Commons), métadonnées complètes
 (titre, auteur, date, technique, conservation), une même œuvre deux fois au plus,
 durées (14 à 24 s par diapositive en principe, ~18 s en moyenne), phrases horodatées
-(`audio.phrases`), caméra (`image.camera` : 1 à 3 étapes, cadres valides et assez grands,
-passages `quand` exacts et dans l'ordre ; plus de champ `cadrage`), contrôle de fidélité
+(`audio.phrases`), caméra (`image.camera` : 1 à 4 étapes, cadres valides et assez grands,
+passages `quand` exacts et dans l'ordre ; plus de champ `cadrage` ; `image.ouverture`, détail
+zoomé découvert à la sortie du carton d'acte : cadre valide, seulement sur la première diapositive
+d'un acte, avertissement s'il est trop serré ou à peine plus serré que le premier cadre), zone utile
+(`image.utile`, spec 12 « Sans bordures » : présente, valide, 25 % de l'image au moins ; cadres de la
+caméra, ouverture et cadre d'intermède dans la zone, ou la recouvrant à 50 % au moins), titre court du cartouche
+(`image.titre_court`, 60 caractères au plus) et cartouche rédigé de chaque piste de musique
+(`cartouche` : oeuvre, compositeur), contrôle de fidélité
 passé pour le texte actuel (empreinte de voix.py), narrations de 2 à 3 phrases et ~40 à
 55 mots, phrases de 25 mots au plus, sans parenthèses ni abréviations courantes.
 Frise du temps : `date` (et `date_fin` facultatif) au format AAAA, AAAA-MM ou AAAA-MM-JJ, date
@@ -28,6 +34,7 @@ diapositive existante dont la narration annonce le chant (son titre y figure), p
 horodatées dans l'ordre et dans la durée de l'extrait. Uniquement de vrais enregistrements
 (source `commons` ou `archive`) : une piste issue d'un MIDI ou sans enregistrement réel est
 refusée, de même qu'un fichier orphelin dans musique/. La durée totale compte les intermèdes.
+Avertissement quand un acte dure plus que ses pistes de fond enchaînées (elles boucleraient).
 Lectures et épisodes (spec 12, « Lectures d'époque et épisodes ») : champs complets, `apres`
 désignant une diapositive sans autre segment (intermède, lecture, épisode), audio présent et à
 jour (empreinte de voix.py, voix de lecture comprise), fidélité, phrases horodatées, durées
@@ -39,9 +46,16 @@ de la narration (phrases de 25 mots au plus, ni parenthèses ni abréviations), 
 exacts, sources des chiffres, graphiques et cartes, fond de carte et sa licence, fac-similé sous
 licence libre, cadres valides et citations du document (relevées sur le fac-similé).
 `--hors-ligne` : textes des lectures comparés au cache de scripts/ecrivains (sans réseau).
+Cartes de lieu et citations en surimpression (spec 12, 2026-10-07) : un médaillon au plus par
+diapositive, avec 1 à 5 lieux (révision du 2026-10-08 : passages dans l'ordre de la narration,
+instants croissants, fond cohérent, points dans le cadre calculé et assez écartés) ; `lieux` : nom, `quand` (passage exact), lon/lat dans le cadre du fond (`france`,
+`voisins`, `europe`, `monde` : fonds de carte.py ; `paris` : sur le plan d'époque de la période,
+plans/<nom>.json) ; `citations` : `texte` sous-chaîne exacte de la narration, entre « », 25 mots
+au plus, auteur ; instants (`instant`, `mots`) présents, dans l'audio et à jour (empreinte de
+surimpressions.py), sinon avertissement (le lecteur se replie au prorata).
 Code de sortie 1 en cas d'erreur ; les avertissements n'en sont pas.
 """
-import argparse, calendar, datetime, json, re, sys, unicodedata
+import argparse, calendar, datetime, json, math, re, sys, unicodedata
 from collections import Counter
 
 import commun as c
@@ -63,7 +77,35 @@ def _ecrivains():
 
 CAMERA_RATIO = 1.6
 PAUSE = 0.6     # pause entre deux diapositives (s) ; mêmes valeurs que src/utils/diaporamas.ts
-CARTON = 2.0    # carton de changement d'acte (s), compté dans la durée totale
+CARTON = 12.0   # carton de changement d'acte (s), compté dans la durée totale
+APRES_CITATION = 2.0  # la citation en surimpression reste ~2 s après son dernier mot
+
+
+def pause_apres(x: dict) -> float:
+    """Pause après la voix : PAUSE, allongée quand la narration finit par une citation en
+    surimpression (max(PAUSE, fin du dernier mot + 2 s − durée de la voix)) ; même calcul que
+    `pauseApres` dans src/utils/diaporamas.ts (ici d'après `mots` ; sans eux, au prorata)."""
+    ci = (x.get('citations') or [None])[0]
+    du = (x.get('audio') or {}).get('duree') or 6
+    if not ci or ci.get('texte', '') not in x['narration']:
+        return PAUSE
+    if ci.get('mots') and len(ci['mots']) == len(c.mots_lus(ci['texte'])):
+        fin = ci['mots'][-1][1]
+    else:  # prorata des caractères sur la phrase horodatée (comme le lecteur)
+        t, pos = x['narration'], x['narration'].index(ci['texte']) + len(ci['texte'])
+        ph = (x.get('audio') or {}).get('phrases') or []
+        debuts = [0]
+        for q in c.phrases(t)[:-1]:
+            debuts.append(t.index(q, debuts[-1]) + len(q))
+        if len(ph) != len(debuts):
+            fin = pos / max(1, len(t)) * du
+        else:
+            j = max(k for k, v in enumerate(debuts) if v <= pos)
+            f_car = debuts[j + 1] if j + 1 < len(debuts) else len(t)
+            fin = ph[j][0] + (pos - debuts[j]) / max(1, f_car - debuts[j]) * (ph[j][1] - ph[j][0])
+    return max(PAUSE, round(fin + APRES_CITATION - du, 2))
+
+
 CHAMPS = ('titre', 'auteur', 'date', 'technique', 'conservation')
 SAUT_JOURS = 92  # frise : saut notable vers l'avant au-delà de 3 mois (même valeur que diaporamas.ts)
 MOIS = ('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre',
@@ -147,13 +189,13 @@ def controler_dates(d: dict) -> tuple[list[str], list[str], list[int]]:
 
 
 def controler_camera(x: dict) -> list[str]:
-    """Étapes `image.camera` : 1 à 3, cadres dans [0, 1] et assez grands, la première sans
+    """Étapes `image.camera` : 1 à 4, cadres dans [0, 1] et assez grands, la première sans
     `quand`, les suivantes avec un passage exact de la narration, dans l'ordre."""
     etapes = x['image'].get('camera')
     if not etapes:
         return ['caméra absente (camera.py)']
-    if not isinstance(etapes, list) or not 1 <= len(etapes) <= 3:
-        return [f'caméra : {len(etapes)} étape(s) (1 à 3)']
+    if not isinstance(etapes, list) or not 1 <= len(etapes) <= 4:
+        return [f'caméra : {len(etapes)} étape(s) (1 à 4)']
     erreurs, apres = [], 0
     L, H = x['image'].get('largeur') or 1600, x['image'].get('hauteur') or 1200
     for k, e in enumerate(etapes, 1):
@@ -177,9 +219,323 @@ def controler_camera(x: dict) -> list[str]:
     return erreurs
 
 
+def controler_ouverture(x: dict, debut_acte: bool) -> tuple[list[str], list[str]]:
+    """`image.ouverture` (spec 12, « Sortie du carton d'acte en deux volets ») : cadre
+    [x0, y0, x1, y1] dans [0, 1], seulement sur la première diapositive d'un acte. Avertissement
+    s'il est trop serré (image floue : moins de ~400 px de l'original) ou s'il ne zoome pas au moins
+    ×1,6 par rapport au premier cadre de la caméra."""
+    i = x['image']
+    if 'ouverture' not in i:
+        return [], []
+    r = i['ouverture']
+    if not (isinstance(r, list) and len(r) == 4 and all(isinstance(v, (int, float)) for v in r)
+            and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
+        return [f'ouverture : cadre invalide ({r}) : [x0, y0, x1, y1] entre 0 et 1, x0 < x1 et y0 < y1'], []
+    if not debut_acte:
+        return ['ouverture : seulement sur la première diapositive d\'un acte'], []
+    L, H = i.get('largeur') or 1600, i.get('hauteur') or 1200
+    avert = []
+    taille = lambda c: max((c[2] - c[0]) * L, (c[3] - c[1]) * H * CAMERA_RATIO)
+    if taille(r) < 400:
+        avert.append(f'ouverture : cadre très serré ({r}, {taille(r):.0f} px), image floue')
+    cam = i.get('camera') or []
+    c0 = cam[0].get('cadre') if cam else [0, 0, 1, 1]
+    if isinstance(c0, list) and len(c0) == 4 and taille(c0) < 1.6 * taille(r):
+        avert.append(f'ouverture : zoom faible (×{taille(c0) / taille(r):.1f} par rapport au premier cadre ; ×2 visé)')
+    return [], avert
+
+
+UTILE_AIRE_MIN = 0.25     # zone utile plus petite : erreur (moins de 50 % : avertissement, sauf saisie à la main)
+UTILE_RECOUVRE = 0.5      # part d'un cadre (caméra, ouverture, intermède) dans la zone utile : en deçà, erreur
+UTILE_RECOUVRE_AVERT = 0.75
+
+
+def controler_utile(x: dict, cadre_inter: list | None = None) -> tuple[list[str], list[str]]:
+    """`image.utile` (spec 12, « Sans bordures ») : présente, valide, pas absurde ; les cadres de
+    la caméra, l'ouverture et le cadre d'un intermède contenus dans la zone, ou au moins la
+    recouvrant largement (le lecteur les y ramène)."""
+    i = x['image']
+    u = i.get('utile')
+    if u is None:
+        return ['zone utile absente (utile.py)'], []
+    if not (isinstance(u, list) and len(u) == 4 and all(isinstance(v, (int, float)) for v in u)
+            and 0 <= u[0] < u[2] <= 1 and 0 <= u[1] < u[3] <= 1):
+        return [f'zone utile invalide ({u}) : [x0, y0, x1, y1] entre 0 et 1, x0 < x1 et y0 < y1'], []
+    erreurs, avert = [], []
+    aire = (u[2] - u[0]) * (u[3] - u[1])
+    if aire < UTILE_AIRE_MIN:
+        erreurs.append(f'zone utile absurde ({u} : {aire * 100:.0f} % de l\'image)')
+    elif aire < 0.5 and not i.get('utile_manuel'):
+        avert.append(f'zone utile petite ({u} : {aire * 100:.0f} % de l\'image) : à relire, puis « utile_manuel »')
+    cadres = [(f'caméra, étape {k}', e.get('cadre')) for k, e in enumerate(i.get('camera') or [], 1)]
+    if i.get('ouverture'):
+        cadres.append(('ouverture', i['ouverture']))
+    if cadre_inter:
+        cadres.append(('cadre de l\'intermède', cadre_inter))
+    for nom, r in cadres:
+        if not (isinstance(r, list) and len(r) == 4) or list(r) == [0, 0, 1, 1]:
+            continue  # déjà signalé par les contrôles de la caméra ; ou vue d'ensemble (toute la zone)
+        a = max(1e-9, (r[2] - r[0]) * (r[3] - r[1]))
+        dedans = max(0, min(r[2], u[2]) - max(r[0], u[0])) * max(0, min(r[3], u[3]) - max(r[1], u[1])) / a
+        if dedans < UTILE_RECOUVRE:
+            erreurs.append(f'{nom} : cadre {r} à {dedans * 100:.0f} % dans la zone utile {u}')
+        elif dedans < UTILE_RECOUVRE_AVERT:
+            avert.append(f'{nom} : cadre {r} à {dedans * 100:.0f} % dans la zone utile (ramené dedans par le lecteur)')
+    return erreurs, avert
+
+
+FONDS_LIEU = ('paris', 'france', 'voisins', 'europe', 'monde')
+
+
+def plan_paris(slug: str) -> dict | None:
+    """Plan de Paris d'époque de la période (src/data/diaporamas/plans/*.json, carte.py)."""
+    for f in sorted((c.DONNEES / 'plans').glob('*.json')):
+        p = json.loads(f.read_text())
+        if slug in p.get('slugs', []):
+            return p
+    return None
+
+
+_FRANCE = None
+
+
+def en_france(lon: float, lat: float) -> bool:
+    """Le point est-il en France métropolitaine (contour Natural Earth du cache de carte.py) ?"""
+    global _FRANCE
+    if _FRANCE is None:
+        f = c.CACHE / 'natural-earth' / 'ne_50m_admin_0_countries.geojson'
+        _FRANCE = []
+        if f.exists():
+            for ft in json.loads(f.read_text())['features']:
+                if ft['properties'].get('ADM0_A3') == 'FRA':
+                    g = ft['geometry']
+                    polys = g['coordinates'] if g['type'] == 'MultiPolygon' else [g['coordinates']]
+                    _FRANCE = [p[0] for p in polys if -6 <= p[0][0][0] <= 10 and 41 <= p[0][0][1] <= 52]
+    dedans = False
+    for anneau in _FRANCE:
+        for (x0, y0), (x1, y1) in zip(anneau, anneau[1:] + anneau[:1]):
+            if (y0 > lat) != (y1 > lat) and lon < x0 + (lat - y0) * (x1 - x0) / (y1 - y0):
+                dedans = not dedans
+    return dedans
+
+
+MAX_LIEUX = 5            # lieux d'un médaillon (MAX_LIEUX de src/utils/diaporamas.ts)
+ORDRE_FONDS = FONDS_LIEU  # du plus étroit au plus large
+RATIO_MULTI, EMPRISE_POINTS, LARGEUR_MIN_FOND = 4 / 3, 0.6, 0.45  # mêmes valeurs que diaporamas.ts
+VUE_PARIS_M = 2000
+ECART_MIN = 0.045        # fraction de la largeur du cadre : deux points plus proches se touchent
+
+
+def cadre_multiple(lieux: list[dict], plan: dict | None) -> tuple[str, list[tuple[str, float, float]], list[str]] | None:
+    """Médaillon à plusieurs lieux, calculé comme `medaillonMultiple` (diaporamas.ts) : fond retenu,
+    points (nom, x, y en fractions du cadre) et remarques (fond élargi, lieux de Paris fondus)."""
+    notes = []
+    if all(li.get('fond') == 'paris' for li in lieux):
+        if not plan:
+            return None
+        u, v = plan['calage']['u'], plan['calage']['v']
+        px = [((u[0] * li['lon'] + u[1] * li['lat'] + u[2]) * plan['largeur'],
+               (v[0] * li['lon'] + v[1] * li['lat'] + v[2]) * plan['hauteur']) for li in lieux]
+        L, H, w_min, noms, fond = plan['largeur'], plan['hauteur'], VUE_PARIS_M / plan['calage']['metres_par_pixel'], [li['nom'] for li in lieux], 'paris'
+    else:
+        k = max(1, *[ORDRE_FONDS.index(li['fond']) for li in lieux if li.get('fond') in ORDRE_FONDS])
+        demande = ORDRE_FONDS[k]
+
+        def charge(nom):
+            f = c.DONNEES / 'fonds' / f'{nom}.json'
+            return json.loads(f.read_text()) if f.is_file() else None
+
+        def dedans(f):
+            x0, y0, x1, y1 = f['projection']['cadre']
+            mx, my = (x1 - x0) * 0.03, (y1 - y0) * 0.03
+            return all(x0 + mx <= li['lon'] <= x1 - mx and y0 + my <= li['lat'] <= y1 - my for li in lieux)
+        f = charge(ORDRE_FONDS[k])
+        while k < len(ORDRE_FONDS) - 1 and (not f or not dedans(f)):
+            k += 1
+            f = charge(ORDRE_FONDS[k])
+        if not f:
+            return None
+        fond = ORDRE_FONDS[k]
+        if fond != demande:
+            notes.append(f'fond élargi de « {demande} » à « {fond} » pour englober tous les lieux')
+        retenus, vus = [], set()
+        for li in lieux:
+            nom = 'Paris' if li['fond'] == 'paris' else li['nom']
+            if nom in vus:
+                notes.append(f'deux lieux de Paris sur la carte « {fond} » : ils se confondent (un seul point « Paris »)')
+                continue
+            vus.add(nom)
+            retenus.append((nom, li))
+        cx0, _, _, cy1 = f['projection']['cadre']
+        e, cx = f['projection']['echelle'], f['projection']['cx']
+        px = [((li['lon'] - cx0) * cx * e, (cy1 - li['lat']) * e) for _, li in retenus]
+        L, H, w_min, noms = f['largeur'], f['hauteur'], f['largeur'] * LARGEUR_MIN_FOND, [n for n, _ in retenus]
+    xs, ys = [p[0] for p in px], [p[1] for p in px]
+    w = max(w_min, (max(xs) - min(xs)) / EMPRISE_POINTS, (max(ys) - min(ys)) / EMPRISE_POINTS * RATIO_MULTI)
+    w = min(w, L, H * RATIO_MULTI)
+    h = w / RATIO_MULTI
+    x0 = min(L - w, max(0, (min(xs) + max(xs)) / 2 - w / 2))
+    y0 = min(H - h, max(0, (min(ys) + max(ys)) / 2 - h / 2))
+    return fond, [(n, (x - x0) / w, (y - y0) / h) for n, (x, y) in zip(noms, px)], notes
+
+
+def controler_medaillon_multiple(p: str, t: str, lieux: list[dict], plan: dict | None) -> tuple[list[str], list[str]]:
+    """Plusieurs lieux sur une diapositive (spec 12, révision du 2026-10-08) : passages dans l'ordre
+    de la narration, instants croissants, fond cohérent (Paris seul ou fonds SVG ; un seul lieu de
+    Paris sur une carte plus large), points tous dans le cadre et assez écartés."""
+    erreurs, avert = [], []
+    depuis = 0
+    for li in lieux:
+        pos = t.find(li.get('quand') or '\0', depuis)
+        if pos < 0:
+            erreurs.append(f"{p} : lieu « {li.get('nom')} » : passage « {li.get('quand')} » absent après le lieu précédent "
+                           f"(les lieux suivent l'ordre de la narration)")
+            return erreurs, avert
+        depuis = pos + 1
+    inst = [li.get('instant') for li in lieux]
+    if all(isinstance(v, (int, float)) for v in inst) and any(inst[k] >= inst[k + 1] for k in range(len(inst) - 1)):
+        erreurs.append(f'{p} : instants des lieux non croissants ({", ".join(f"{v:.2f}" for v in inst)})')
+    if any(li.get('fond') not in FONDS_LIEU or not isinstance(li.get('lon'), (int, float)) or not isinstance(li.get('lat'), (int, float)) for li in lieux):
+        return erreurs, avert  # signalé lieu par lieu
+    m = cadre_multiple(lieux, plan)
+    if not m:
+        erreurs.append(f'{p} : médaillon à plusieurs lieux sans fond (plan de Paris ou carte.py)')
+        return erreurs, avert
+    fond, pts, notes = m
+    for n in notes:
+        (erreurs if 'confondent' in n else avert).append(f'{p} : {n}')
+    for nom, x, y in pts:
+        if not (0.02 <= x <= 0.98 and 0.02 <= y <= 0.98):
+            erreurs.append(f'{p} : « {nom} » hors du cadre calculé ({fond})')
+    for i in range(len(pts)):
+        for j in range(i + 1, len(pts)):
+            if math.hypot(pts[i][1] - pts[j][1], (pts[i][2] - pts[j][2]) / RATIO_MULTI) < ECART_MIN:
+                avert.append(f'{p} : « {pts[i][0]} » et « {pts[j][0]} » presque confondus sur la carte « {fond} »')
+    return erreurs, avert
+
+
+def controler_surimpressions(d: dict) -> tuple[list[str], list[str], int, int]:
+    """Cartes de lieu et citations : erreurs, avertissements, nombres de lieux et de citations."""
+    erreurs, avert = [], []
+    plan = plan_paris(d['slug'])
+    cache_f = c.CACHE / d['slug'] / 'surimpressions.json'
+    cache = json.loads(cache_f.read_text()) if cache_f.exists() else {}
+    nl = nc = 0
+    from surimpressions import empreinte_audio
+    for x in d['diapositives']:
+        p, t = f"{x['n']:3d}", x['narration']
+        lieux, citations = x.get('lieux') or [], x.get('citations') or []
+        if not lieux and not citations:
+            continue
+        a = x.get('audio') or {}
+        du = a.get('duree') or 0
+        fa = c.PUBLIC / d['slug'] / a.get('fichier', '')
+        a_jour = fa.is_file() and cache.get(str(x['n']), {}).get('empreinte') == empreinte_audio(fa, t)
+        if len(lieux) > MAX_LIEUX:
+            erreurs.append(f'{p} : {len(lieux)} lieux ({MAX_LIEUX} au plus dans le médaillon)')
+        if len(lieux) > 1:
+            e_m, a_m = controler_medaillon_multiple(p, t, lieux, plan)
+            erreurs += e_m
+            avert += a_m
+        for li in lieux:
+            nl += 1
+            q = f"{p} : lieu « {li.get('nom')} »"
+            if not str(li.get('nom') or '').strip():
+                erreurs.append(f'{q} : nom manquant')
+            if not li.get('quand') or li['quand'] not in t:
+                erreurs.append(f"{q} : passage « {li.get('quand')} » absent de la narration")
+            lon, lat, fond = li.get('lon'), li.get('lat'), li.get('fond')
+            if not isinstance(lon, (int, float)) or not isinstance(lat, (int, float)):
+                erreurs.append(f'{q} : coordonnées manquantes')
+                continue
+            if fond not in FONDS_LIEU:
+                erreurs.append(f'{q} : fond inconnu ({fond} ; {", ".join(FONDS_LIEU)})')
+            elif fond == 'paris':
+                if not plan:
+                    erreurs.append(f'{q} : aucun plan de Paris pour cette période (carte.py, PLANS)')
+                else:
+                    u, v = plan['calage']['u'], plan['calage']['v']
+                    fu, fv = u[0] * lon + u[1] * lat + u[2], v[0] * lon + v[1] * lat + v[2]
+                    if not (0.02 <= fu <= 0.98 and 0.02 <= fv <= 0.98):
+                        erreurs.append(f'{q} : hors du plan de Paris ({lat}, {lon})')
+            else:
+                ff = c.DONNEES / 'fonds' / f'{fond}.json'
+                if not ff.is_file():
+                    erreurs.append(f'{q} : fond {fond} absent (carte.py)')
+                else:
+                    x0, y0, x1, y1 = json.loads(ff.read_text())['projection']['cadre']
+                    mx, my = (x1 - x0) * 0.03, (y1 - y0) * 0.03
+                    if not (x0 + mx <= lon <= x1 - mx and y0 + my <= lat <= y1 - my):
+                        erreurs.append(f'{q} : coordonnées hors du cadre « {fond} » ({lat}, {lon})')
+                    elif fond != 'france' and en_france(lon, lat):
+                        avert.append(f'{q} : lieu en France sur le fond « {fond} » (« france » suffit ?)')
+            if 'instant' not in li:
+                avert.append(f'{q} : instant non calé, repli au prorata (surimpressions.py)')
+            elif not a_jour:
+                erreurs.append(f'{q} : instant périmé (voix ou texte changés : surimpressions.py)')
+            elif not 0 <= li['instant'] <= du:
+                erreurs.append(f"{q} : instant hors de l'audio ({li['instant']})")
+        for ci in citations:
+            nc += 1
+            texte = ci.get('texte') or ''
+            q = f"{p} : citation « {texte[:30]}… »"
+            pos = t.find(texte) if texte else -1
+            if pos < 0:
+                erreurs.append(f'{q} : texte absent de la narration (sous-chaîne exacte)')
+                continue
+            avant = t[:pos]
+            if avant.rfind('«') <= avant.rfind('»') or '»' not in t[pos + len(texte):]:
+                erreurs.append(f'{q} : texte hors des guillemets « »')
+            if c.nb_mots(texte) > 25:
+                erreurs.append(f'{q} : {c.nb_mots(texte)} mots (citation courte : 20 environ, 25 au plus)')
+            if not str(ci.get('auteur') or '').strip():
+                erreurs.append(f'{q} : auteur manquant')
+            if 'prudence' in ci and not isinstance(ci['prudence'], bool):
+                erreurs.append(f'{q} : « prudence » doit valoir true ou false')
+            mots = ci.get('mots')
+            if not mots:
+                avert.append(f'{q} : mots non minutés, repli au prorata (surimpressions.py)')
+                continue
+            if len(mots) != len(c.mots_lus(texte)):
+                erreurs.append(f'{q} : {len(mots)} mots minutés pour {len(c.mots_lus(texte))} (surimpressions.py)')
+            elif not a_jour:
+                erreurs.append(f'{q} : instants périmés (voix ou texte changés : surimpressions.py)')
+            elif any(not (0 <= m[0] <= m[1] <= du + 0.05) for m in mots) or any(mots[k][0] > mots[k + 1][0] for k in range(len(mots) - 1)):
+                erreurs.append(f'{q} : instants des mots incohérents')
+    return erreurs, avert, nl, nc
+
+
 def _sans_accents(t: str) -> str:
     t = unicodedata.normalize('NFKD', t.lower().replace('’', "'"))
     return ' '.join(re.findall(r"[a-z0-9']+", ''.join(ch for ch in t if not unicodedata.combining(ch))))
+
+
+FONDU_PISTE = 3.0  # s : chevauchement de deux pistes de fond d'un acte (FONDU_PISTE de Diaporama.astro)
+
+
+def controler_boucles(d: dict) -> list[str]:
+    """Musique de fond (spec 12, retours du 2026-10-07) : avertit quand un acte dure plus que ses
+    pistes enchaînées (le lecteur les ferait boucler). Durée de l'acte : carton, diapositives et
+    tout ce qui suit l'une d'elles (intermèdes, lectures, épisodes), pauses comprises."""
+    m = d.get('musique') or {}
+    apres: dict[int, float] = {}
+    for s in m.get('intermedes', []):
+        apres[s.get('apres')] = apres.get(s.get('apres'), 0) + (s.get('duree') or 0) + PAUSE
+    for s in d.get('lectures', []) + d.get('episodes', []):
+        apres[s.get('apres')] = apres.get(s.get('apres'), 0) + ((s.get('audio') or {}).get('duree') or 0) + PAUSE
+    avert, actes = [], d['actes']
+    for k, a in enumerate(actes):
+        fin = actes[k + 1]['debut'] if k + 1 < len(actes) else float('inf')
+        duree = CARTON + sum((x.get('audio') or {}).get('duree', 0) + pause_apres(x) + apres.get(x['n'], 0)
+                             for x in d['diapositives'] if a['debut'] <= x['n'] < fin)
+        pistes = [p.get('duree') or 0 for p in m.get('fond', []) if p.get('acte') == a['id']]
+        if not pistes:
+            continue
+        musique = sum(pistes) - FONDU_PISTE * (len(pistes) - 1)
+        if duree > musique:
+            avert.append(f"musique : l'acte {a['id']} dure {duree:.0f} s, ses pistes de fond {musique:.0f} s "
+                         f"(fondus déduits) : elles boucleraient ; allonger une piste (« fin ») ou en ajouter une")
+    return avert
 
 
 def controler_musique(d: dict, dossier) -> tuple[list[str], list[str], float]:
@@ -200,6 +556,12 @@ def controler_musique(d: dict, dossier) -> tuple[list[str], list[str], float]:
         if pid in ids:
             erreurs.append(f'{q} : identifiant en double')
         ids.add(pid)
+        # Cartouche du lecteur rédigé à la main : deux lignes, sans troncature (spec 12).
+        k = p.get('cartouche') or {}
+        if not (str(k.get('oeuvre') or '').strip() and str(k.get('compositeur') or '').strip()):
+            erreurs.append(f'{q} : cartouche (oeuvre, compositeur) manquant')
+        elif max(len(k['oeuvre']), len(k['compositeur'])) > 60:
+            erreurs.append(f'{q} : cartouche trop long (60 caractères par ligne au plus)')
         champs = ('titre', 'auteur' if chant else 'compositeur', 'date', 'interprete', 'licence', 'fichier')
         manquants = [k for k in champs if not str(p.get(k) or '').strip()]
         if chant and not str(p.get('enregistrement') or '').strip():
@@ -254,6 +616,13 @@ def controler_musique(d: dict, dossier) -> tuple[list[str], list[str], float]:
         elif any(not (isinstance(x, list) and len(x) == 2 and isinstance(x[0], (int, float)) and str(x[1]).strip()) for x in par) \
                 or [x[0] for x in par] != sorted(x[0] for x in par) or par[0][0] < 0 or par[-1][0] >= duree:
             erreurs.append(f'{q} : paroles mal horodatées ({par})')
+        # Cadre facultatif de la caméra pendant l'intermède (spec 12, « Caméra calme et lente ») :
+        # rectangle normalisé de l'image de la diapositive `apres`.
+        if 'cadre' in p:
+            r = p['cadre']
+            if not (isinstance(r, list) and len(r) == 4 and all(isinstance(v, (int, float)) for v in r)
+                    and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
+                erreurs.append(f'{q} : cadre invalide ({r}) : [x0, y0, x1, y1] entre 0 et 1, x0 < x1 et y0 < y1')
     for a in d['actes']:
         k = sum(1 for p in m.get('fond', []) if p.get('acte') == a['id'])
         if not 1 <= k <= 3:
@@ -459,6 +828,11 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
                     dates = {x[0] for x in pts}
                     if any(r.get('date') not in dates for r in v.get('reperes', [])):
                         erreurs.append(f'{qv} : repère sans point correspondant')
+                    # Graphiques des épisodes : le dernier point a son étiquette ; valeurs en clair.
+                    if pts and pts[-1][0] not in {r.get('date') for r in v.get('reperes', [])}:
+                        erreurs.append(f'{qv} : le dernier point n’a pas de repère (étiquette)')
+                    if any(re.search(r'\d\s*[lsd]\.', r.get('libelle') or '') for r in v.get('reperes', [])):
+                        erreurs.append(f'{qv} : étiquette en notation d’époque (l. s. d.) : écrire la valeur en clair')
             elif tv == 'carte':
                 f = fonds_dir / f"{v.get('fond')}.json"
                 if not f.is_file():
@@ -556,9 +930,21 @@ def verifier(slug: str) -> bool:
         r = i.get('recadrage')
         if r is not None and not (isinstance(r, list) and len(r) == 4 and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
             erreurs.append(f'{p} : recadrage invalide ({r})')
+        tc = (i.get('titre_court') or '').strip()
+        if not tc:
+            erreurs.append(f'{p} : titre court (titre_court) manquant pour le cartouche')
+        elif len(tc) > 60:
+            erreurs.append(f'{p} : titre court trop long ({len(tc)} caractères, 60 au plus)')
         if 'cadrage' in i:
             erreurs.append(f'{p} : champ « cadrage » supprimé (remplacé par « camera »)')
         erreurs += [f'{p} : {e}' for e in controler_camera(x)]
+        e_ouv, a_ouv = controler_ouverture(x, n in debuts)
+        erreurs += [f'{p} : {e}' for e in e_ouv]
+        avert += [f'{p} : {e}' for e in a_ouv]
+        cadre_inter = next((s.get('cadre') for s in (d.get('musique') or {}).get('intermedes', []) if s.get('apres') == n), None)
+        e_ut, a_ut = controler_utile(x, cadre_inter)
+        erreurs += [f'{p} : {e}' for e in e_ut]
+        avert += [f'{p} : {e}' for e in a_ut]
 
         a = x.get('audio') or {}
         if not a.get('fichier') or not (dossier / a['fichier']).is_file():
@@ -603,8 +989,14 @@ def verifier(slug: str) -> bool:
     e_seg, a_seg, duree_segments = controler_segments(d, dossier, voix, img, lexique)
     erreurs += e_seg
     avert += a_seg
+    avert += controler_boucles(d)
+    e_sur, a_sur, n_lieux, n_cit = controler_surimpressions(d)
+    erreurs += e_sur
+    avert += a_sur
 
-    total = sum(durees) + PAUSE * len(diapos) + CARTON * len(d['actes']) + duree_chants + duree_segments
+    pauses = [pause_apres(x) for x in diapos]
+    longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
+    total = sum(durees) + sum(pauses) + CARTON * len(d['actes']) + duree_chants + duree_segments
     print(f"{d['titre']} ({d['periode']}) : {len(diapos)} diapositives, {len(d['actes'])} actes, "
           f"{len(oeuvres)} œuvres différentes.")
     if durees:
@@ -620,6 +1012,9 @@ def verifier(slug: str) -> bool:
     if d.get('lectures') or d.get('episodes'):
         print(f"Lectures et épisodes : {len(d.get('lectures', []))} lecture(s), {len(d.get('episodes', []))} épisode(s) "
               f"({duree_segments / 60:.1f} min, pauses comprises).")
+    if n_lieux or n_cit:
+        print(f'Surimpressions : {n_lieux} lieu(x) dans {sum(1 for x in d["diapositives"] if x.get("lieux"))} médaillon(s) de carte, {n_cit} citation(s) ; pause allongée après la voix '
+              f"(citation finale) : {', '.join(f'{n} ({q:.2f} s)' for n, q in longues) or 'aucune'}.")
     datees = sum(1 for x in diapos if 'date' in x)
     print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} surimpression(s) '
           f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")

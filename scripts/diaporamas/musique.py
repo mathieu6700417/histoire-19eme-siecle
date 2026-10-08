@@ -21,7 +21,8 @@ Pour chaque piste :
      et la licence de l'item ne doit être ni NC ni ND.
    NC et ND sont toujours refusés ; CC BY et BY-SA sont admis (crédit affiché par le lecteur).
 2. **Découpe** [debut, fin], fondus (fond : 3 s ; chant : court), filtres 78 tours éventuels
-   (`filtres: "78tours"` : coupe-bas, coupe-haut, débruitage léger), **normalisation** de sonie
+   (`filtres: "78tours"` : coupe-bas, coupe-haut, débruitage léger ; `"microsillon"` : coupe-bas
+   doux, craquements ôtés, souffle à peine réduit), **normalisation** de sonie
    (ffmpeg loudnorm : -20 LUFS pour le fond, que le lecteur baisse encore sous la voix ;
    -16 LUFS pour les chants), encodage AAC stéréo (96 kb/s fond, 128 kb/s chants) dans
    public/diaporamas/<slug>/musique/. La durée est écrite dans le JSON.
@@ -81,7 +82,12 @@ def telecharger(url: str, dest: Path, ua: str = c.UA) -> Path:
 # --- Sources et licences -----------------------------------------------------------------
 
 def nom_cache(s: str) -> str:
-    return re.sub(r'[^\w.-]+', '_', s)[:150]
+    n = re.sub(r'[^\w.-]+', '_', s)
+    if len(n) <= 150:
+        return n
+    # Nom trop long : début lisible, empreinte (deux pistes d'un même disque ne se confondent
+    # pas) et extension conservée.
+    return f'{n[:120]}-{hashlib.sha256(n.encode()).hexdigest()[:10]}{Path(n).suffix[:6]}'
 
 
 def source_commons(src: dict) -> tuple[Path, dict]:
@@ -140,6 +146,10 @@ def filtres_piste(p: dict, chant: bool, duree: float) -> str:
     if p.get('filtres') == '78tours':
         # Coupe-bas (ronflement), coupe-haut (souffle), débruitage léger du crépitement.
         f += ['highpass=f=70', 'lowpass=f=8500', 'afftdn=nf=-30']
+    elif p.get('filtres') == 'microsillon':
+        # Premiers microsillons (années 1950) : coupe-bas doux, craquements ôtés (adeclick),
+        # souffle à peine réduit (afftdn léger) ; pas de coupe-haut, pour ne pas ternir le son.
+        f += ['highpass=f=35', 'adeclick=w=55:o=75:t=4', 'afftdn=nf=-45:nr=10:tn=1']
     entree = p.get('fondu_entree', 0.4 if chant else FONDU_FOND)
     sortie = p.get('fondu_sortie', 1.2 if chant else FONDU_FOND)
     if entree:
@@ -161,7 +171,7 @@ def preparer(audio: Path, p: dict, dest: Path, chant: bool) -> float:
     dest.parent.mkdir(parents=True, exist_ok=True)
     tmp = dest.with_name(dest.stem + '.tmp.m4a')
     subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', f'{debut:.3f}', '-t', f'{duree:.3f}',
-                    '-i', str(audio), '-af', filtres_piste(p, chant, duree), '-ac', '2',
+                    '-i', str(audio), '-vn', '-af', filtres_piste(p, chant, duree), '-ac', '2',
                     '-c:a', 'aac', '-b:a', '128k' if chant else '96k', '-movflags', '+faststart',
                     str(tmp)], check=True)
     tmp.replace(dest)

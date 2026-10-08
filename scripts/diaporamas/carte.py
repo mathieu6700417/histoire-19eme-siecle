@@ -12,8 +12,31 @@ longitudes corrigée à la latitude moyenne), découpées au cadre et simplifié
 et zones données en [longitude, latitude].
 
 Fichiers téléchargés une fois dans .cache/diaporamas/natural-earth/ (1:50 000 000).
+
+Cartes de lieu (spec 12, « Cartes de lieu et citations en surimpression ») : le médaillon du
+lecteur reprend ces fonds avec un cadre adapté au lieu (`fond` d'un lieu) : `france` (France
+seule, aussi utilisé par les épisodes), `voisins` (France et pays voisins : Fleurus, Mayence,
+Turin, Arcole, Campo-Formio), `europe` (Europe et Méditerranée, France repérée : Égypte,
+Moscou, Algérie), `monde` (Amériques et Afrique de l'Ouest comprises : Saint-Domingue, Gorée,
+Guyane). La France est toujours dessinée en plus soutenu : on voit où est le lieu par rapport
+à elle.
+
+Plans de Paris d'époque (`--plans`, ou sans argument : tout) : pour un lieu de Paris
+(`fond: paris`), le médaillon montre un plan du domaine public de la période (`PLANS`), en
+gris, zoomé sur le lieu. Le plan est téléchargé depuis Commons (licence contrôlée), recadré
+sur la ville, réduit (2 000 px de large), désaturé, papier blanchi (niveaux), puis écrit en
+WebP dans public/diaporamas/fonds/<nom>.webp ; ses métadonnées et son calage vont dans
+src/data/diaporamas/plans/<nom>.json.
+
+Calage (géoréférencement) : quelques monuments sont repérés à la main sur l'original (pixels,
+mesurés sur des agrandissements quadrillés) et associés à leurs coordonnées (Wikidata, P625 ;
+pour l'Observatoire, l'intersection de la méridienne de Paris, 2°20′14″ E, et de sa
+perpendiculaire, 48°50′11″ N, tracées sur le plan). Une transformation affine
+(lon, lat) → (x, y) est ajustée par moindres carrés sur ces points ; les écarts résiduels
+sont affichés et notés dans le JSON. Plan de Verniquet (1790) : 9 points, échelle ~1,47 m par
+pixel de l'original, écart quadratique moyen ~14 m, 30 m au plus (Observatoire).
 """
-import json, math, sys
+import json, math, sys, time
 from pathlib import Path
 
 import commun as c
@@ -25,6 +48,38 @@ FONDS = {
     # Cadre [lon0, lat0, lon1, lat1] ; échelle : unités SVG par degré de latitude.
     'france': {'cadre': [-5.6, 41.2, 10.2, 51.6], 'echelle': 100, 'tolerance': 1.1,
                'fleuves': ['Loire', 'Rhône', 'Seine', 'Garonne', 'Rhine']},
+    # Médaillons des cartes de lieu (le cadre `france` sert aussi).
+    'voisins': {'cadre': [-6.5, 40.4, 17.5, 55.4], 'echelle': 44, 'tolerance': 1.0,
+                'fleuves': ['Rhine', 'Rhône', 'Seine', 'Loire', 'Po']},
+    'europe': {'cadre': [-12.0, 26.0, 42.0, 60.5], 'echelle': 20, 'tolerance': 1.0, 'fleuves': []},
+    'monde': {'cadre': [-100.0, -12.0, 50.0, 64.0], 'echelle': 6, 'tolerance': 0.9, 'fleuves': []},
+}
+
+# Plans de Paris d'époque (domaine public, Commons) et leur calage : points
+# (nom, x, y en pixels de l'original, latitude, longitude). `slugs` : périodes qui les emploient.
+PLANS = {
+    'paris-1790': {
+        'commons': 'File:1790 Plan de Verniquet.jpg',
+        'titre': 'Plan de la ville de Paris avec sa nouvelle enceinte',
+        'auteur': 'Edme Verniquet',
+        'date': '1790 (levé de 1785-1791 ; fac-similé)',
+        'credit': 'Plan de Verniquet, 1790',
+        'slugs': ['prologue', 'revolution'],
+        # Partie gardée (pixels de l'original : la ville, sans les tables ni le titre) et largeur servie.
+        'recadrage': [100, 1050, 5800, 4450], 'largeur': 2000, 'qualite': 55,
+        # Pixels relevés sur l'original (6 179 × 4 849), plan orienté sur la méridienne de Paris.
+        'points': [
+            ('Observatoire (méridienne × perpendiculaire)', 2700, 4018, 48.836389, 2.337229),
+            ('Notre-Dame (milieu de l’édifice)', 3372, 2756, 48.85300, 2.34980),
+            ('Dôme des Invalides', 1503, 2606, 48.85500, 2.31250),
+            ('Place Vendôme (statue)', 2346, 1670, 48.86750, 2.32944),
+            ('Place des Victoires (statue)', 2932, 1798, 48.86583, 2.34111),
+            ('Place Royale, auj. des Vosges (statue)', 4145, 2558, 48.85556, 2.36556),
+            ('Sainte-Geneviève, auj. Panthéon', 3182, 3270, 48.84620, 2.34611),
+            ('Saint-Sulpice', 2622, 2914, 48.85100, 2.33492),
+            ('Chapelle de la Salpêtrière', 4070, 3815, 48.83888, 2.36413),
+        ],
+    },
 }
 
 
@@ -159,9 +214,88 @@ def fabriquer(nom: str, fond: dict) -> dict:
     }
 
 
+def resoudre3(m, v):
+    """Système 3 × 3 (Cramer)."""
+    det = lambda a: (a[0][0] * (a[1][1] * a[2][2] - a[1][2] * a[2][1]) - a[0][1] * (a[1][0] * a[2][2] - a[1][2] * a[2][0])
+                     + a[0][2] * (a[1][0] * a[2][1] - a[1][1] * a[2][0]))
+    d = det(m)
+    return [det([[v[i] if j == k else m[i][j] for j in range(3)] for i in range(3)]) / d for k in range(3)]
+
+
+def caler(points):
+    """Affine (lon, lat, 1) → x et → y par moindres carrés (équations normales)."""
+    A = [[p[4], p[3], 1.0] for p in points]
+    ata = [[sum(a[i] * a[j] for a in A) for j in range(3)] for i in range(3)]
+    cx = resoudre3(ata, [sum(a[i] * p[1] for a, p in zip(A, points)) for i in range(3)])
+    cy = resoudre3(ata, [sum(a[i] * p[2] for a, p in zip(A, points)) for i in range(3)])
+    return cx, cy
+
+
+def plan(nom: str, p: dict) -> dict:
+    """Plan d'époque : téléchargement (licence contrôlée), calage, WebP gris, métadonnées."""
+    from PIL import Image
+    Image.MAX_IMAGE_PIXELS = None
+    info = c.infos_fichiers([p['commons']])[p['commons']]
+    if info.get('manquant'):
+        raise SystemExit(f"{p['commons']} : introuvable sur Commons")
+    libre, licence = c.licence_libre(info)
+    if not libre:
+        raise SystemExit(f"{p['commons']} : licence refusée ({licence})")
+    dossier = c.CACHE / 'plans'
+    dossier.mkdir(parents=True, exist_ok=True)
+    original = dossier / f'{nom}{Path(info["url"]).suffix.lower()}'
+    if not original.exists():
+        original.write_bytes(c.http_get(info['url']))
+        time.sleep(1)
+    im = Image.open(original).convert('L')
+    cx, cy = caler(p['points'])
+    m_x = 111320 * math.cos(math.radians(48.85)) / math.hypot(cx[0], cy[0])  # mètres par pixel
+    m_y = 111200 / math.hypot(cx[1], cy[1])
+    residus = []
+    for q in p['points']:
+        ex = cx[0] * q[4] + cx[1] * q[3] + cx[2] - q[1]
+        ey = cy[0] * q[4] + cy[1] * q[3] + cy[2] - q[2]
+        residus.append((q[0], round(math.hypot(ex * m_x, ey * m_y))))
+    rms = math.sqrt(sum(r * r for _, r in residus) / len(residus))
+    x0, y0, x1, y1 = p['recadrage']
+    W = p['largeur']
+    H = round((y1 - y0) * W / (x1 - x0))
+    r = im.crop((x0, y0, x1, y1)).resize((W, H), Image.LANCZOS)
+    # Niveaux : le papier (gris ~205) devient blanc cassé, l'encre est un peu soutenue.
+    lut = [246 if v >= 198 else round(160 + (v - 178) * 86 / 20) if v >= 178 else round(v * 160 / 178) for v in range(256)]
+    sortie = c.PUBLIC / 'fonds' / f'{nom}.webp'
+    sortie.parent.mkdir(parents=True, exist_ok=True)
+    r.point(lut).save(sortie, 'WEBP', quality=p['qualite'], method=6)
+    # (lon, lat) → fractions (u, v) de l'image servie.
+    su, sv = 1 / (x1 - x0), 1 / (y1 - y0)
+    return {
+        'nom': nom, 'fichier': f'fonds/{nom}.webp', 'largeur': W, 'hauteur': H,
+        'titre': p['titre'], 'auteur': p['auteur'], 'date': p['date'], 'credit': p['credit'],
+        'commons': info['titre_fichier'], 'licence': 'Domaine public', 'licence_relevee': licence,
+        'slugs': p['slugs'],
+        'calage': {
+            'u': [cx[0] * su, cx[1] * su, (cx[2] - x0) * su], 'v': [cy[0] * sv, cy[1] * sv, (cy[2] - y0) * sv],
+            'metres_par_pixel': round(W and (m_x + m_y) / 2 * (x1 - x0) / W, 2),
+            'ecart_moyen_m': round(rms), 'points': [[q[0], q[1], q[2], q[3], q[4], e] for q, (_, e) in zip(p['points'], residus)],
+        },
+    }
+
+
 def main() -> int:
     dossier = c.DONNEES / 'fonds'
     dossier.mkdir(parents=True, exist_ok=True)
+    seulement_plans = '--plans' in sys.argv
+    for nom, p in PLANS.items():
+        d = plan(nom, p)
+        f = c.DONNEES / 'plans' / f'{nom}.json'
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(json.dumps(d, ensure_ascii=False, indent=2) + '\n')
+        w = c.PUBLIC / d['fichier']
+        print(f"{w.relative_to(c.RACINE)} : {d['largeur']}×{d['hauteur']}, {w.stat().st_size // 1024} Ko ; "
+              f"calage : écart moyen {d['calage']['ecart_moyen_m']} m, "
+              f"au plus {max(q[5] for q in d['calage']['points'])} m ({len(p['points'])} points)")
+    if seulement_plans:
+        return 0
     for nom, fond in FONDS.items():
         d = fabriquer(nom, fond)
         f = dossier / f'{nom}.json'

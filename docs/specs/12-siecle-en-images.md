@@ -442,6 +442,304 @@ ne sont pas couvertes. Décisions (ne pas rediscuter) :
   débuts d'actes, la frise et tout autre renvoi par numéro sont recalculés par script, sans
   régénérer les voix inchangées (l'empreinte du texte fait foi).
 
+### Retours sur la Révolution enrichie (2026-10-07)
+
+- **Formules prudentes gardées** (Lagrange « aurait dit », « mi-août 1794 » pour le Quesnoy,
+  « un mot qu'il dit avoir inventé » pour Grégoire). La citation de Lagrange est donnée **en
+  entier** (« … et cent années peut-être ne suffiront pas pour en reproduire une semblable »).
+- **Un seul intermède musical** dans la Révolution (Méhul) ; pas de second.
+- **Images à remplacer** quand Commons offre mieux : la guillotine (diapositive 48, estampe d'une
+  machine imaginée à hache) par une vraie gravure d'exécution de 1792-1793 ; le ballon de Fleurus
+  (diapositive 93, livre anglais de 1870) par une estampe d'époque. Métadonnées incertaines :
+  « attribué à » ou lieu de conservation omis plutôt qu'avancé sans source.
+- **Musique de fond** : un acte plus long que ses pistes reçoit un morceau de plus (même règle
+  de droits et d'époque, enchaîné en fondu) plutôt que de boucler. Vaut pour toutes les périodes.
+- **Reprise** : la position est mémorisée par une clé stable de la diapositive (son image
+  Commons), pas par son numéro, pour survivre aux renumérotations.
+
+### Moins de tenues statiques (2026-10-07)
+
+Retour de l'utilisateur : l'image paraît statique quand la caméra reste longtemps sur la même
+partie. Décision, en deux volets :
+
+- **Respiration dans le lecteur** : au-delà de ~5 s de tenue sur un même cadre, la dérive de 3 %
+  laisse place à un mouvement lent et continu : resserrement puis léger recul (~8 % d'amplitude
+  au total), avec un petit glissement latéral ou vertical, sans jamais sortir du cadre visé ni
+  des bords de l'image, toujours doux (pas d'à-coup, vitesse constante ou ease-in-out long).
+  Désactivé si `prefers-reduced-motion`.
+- **Étapes supplémentaires** : `camera.py` peut proposer **jusqu'à 4 étapes** ; une tenue
+  prévue de plus de ~7 s appelle une étape de plus, calée sur un passage de la narration (un
+  détail, un personnage, un objet dont parle la voix). On ne crée pas d'étape sans lien avec la
+  voix : dans ce cas, la respiration suffit.
+
+### Cartouches lisibles et cartons plus longs (2026-10-07)
+
+Retours de l'utilisateur : les cartouches de l'image et de la musique sont « peu lisibles et pas
+assez bien formatés au niveau du contenu » ; et au changement d'acte, « y rester plus longtemps
+pour écouter un peu de musique ». Ces décisions remplacent ce qui précède sur ces points.
+
+- **Cartouche de l'image, contenu** : trois lignes.
+  1. un **titre court rédigé** (`image.titre_court`, 60 caractères au plus, en italique),
+     fidèle à l'œuvre mais lisible (« La guillotine place du Carrousel » pour « Guillotine élevée
+     en place du Carrousel, le 13 août 1792, servant à punir… ») ; le titre officiel reste dans
+     `image.titre`, affiché dans le livre d'images et en `alt` ; pour un titre déjà court, le
+     titre court est le titre même ;
+  2. l'**auteur** (« d'après … » peut passer sur la ligne suivante proprement ; « anonyme » en
+     minuscule et l'éditeur à part si utile) ;
+  3. **date · technique** (« 1792 · estampe »).
+- **Cartouche de la musique, contenu** : deux lignes, **rédigées à la main** pour chaque piste
+  (`cartouche: { oeuvre, compositeur }` dans la piste), **sans troncature automatique** ni points
+  de suspension : « ♪ Symphonie nº 87, menuet » / « Joseph Haydn, 1785 ». L'interprète reste
+  dans les crédits et au survol. Même chose pour les intermèdes (titre court rédigé).
+- **Style des deux cartouches** (même famille) : fond blanc cassé presque opaque (~95 %), filet
+  fin, titre en noir à ~1 rem, lignes 2 et 3 en gris foncé lisible (petites capitales, jamais
+  de gris pâle), interlignage aéré, pas de césure. **Disparition** (révisé le même jour) : pleinement
+  visibles **~12 s** après chaque changement, puis **disparition complète** en fondu lent
+  (opacité 0). Le **survol du coin haut gauche** (image) ou **haut droit** (musique) les fait
+  réapparaître : zone de survol invisible un peu plus large que le cartouche, qui reste active
+  même quand il est caché. La pause les ramène aussi. Téléphone : un toucher sur l'image les
+  ramène quelques secondes. Téléphone : taille
+  plancher lisible, aucune troncature.
+- **Guillotine (diapositive 48), nouveau retour** : l'estampe du Carrousel montre mal la
+  machine (« on voit pas trop »). La remplacer par une image d'époque où la guillotine est
+  **grande et nette** (gravure ou dessin centré sur la machine, ou exécution vue de près), de
+  bonne définition ; caméra sur la machine.
+- **Documents d'époque des épisodes** (retour du 2026-10-08) : la ligne lue n'est plus surlignée par un rectangle gris et un trait, mais **éclairée d'un halo doux aux bords flous** (papier éclairci, texte plus contrasté, ellipse qui déborde un peu de la ligne), qui apparaît en fondu.
+- **Graphiques des épisodes** (retour sur la courbe des assignats) : chaque point mis en valeur
+  porte une étiquette **date · valeur en clair** (« janv. 1791 · 91,5 livres », « juil. 1795 ·
+  moins d'une demi-livre »), jamais en notation d'époque non expliquée (l. s. d.) ; l'unité est
+  dite une fois sous le titre ; les étiquettes ne chevauchent jamais la courbe ni les axes ; le
+  dernier point a la sienne. Règle valable pour tous les graphiques de toutes les périodes.
+- **Carton d'acte** (retour du 2026-10-08) : le **titre s'écrit lettre par lettre** (~120 ms par lettre, fondu de 0,6 s par lettre, mots insécables, figé en pause), puis le filet et les dates ; le **cartouche de la musique reste visible** au-dessus du carton, sans estompage.
+- **Sortie du carton d'acte en deux volets** (2026-10-08) : le carton se coupe à mi-hauteur ; la moitié haute glisse vers le haut, la basse vers le bas (~1,4 s, ease-in-out doux, `transform` seul, filet fin gris au bord de la coupe) et découvrent l'image déjà posée et décodée dessous. Même animation si l'on passe le carton (→, clic, Entrée) ; figée en pause ; `prefers-reduced-motion` : fondu court (0,3 s).
+  **Révision du 2026-10-08** : ouverture **beaucoup plus longue (~3,5 s)**, qui découvre un **détail zoomé bien choisi** de la première image de l'acte (un visage, un geste, un objet fort : champ `image.ouverture`, cadre `[x0, y0, x1, y1]` sur la première diapositive de chaque acte). Ensuite la caméra **recule lentement (~5 s)** vers le premier cadre de la diapositive pendant que la voix commence (exception admise au plafond de vitesse pour ce recul, toujours doux aux deux bouts). Sans `ouverture`, comportement précédent, avec des volets eux aussi à 3,5 s.
+  *Minutage* : les 3,5 s d'ouverture sont **prises sur les 12 s du carton** (≈ 8,5 s de carton fixe, puis l'ouverture, qui finit au bout des 12 s, quand la voix commence) : durée totale, barre de progression et minutage inchangés. Passé (→, clic, Entrée), le carton joue aussitôt son ouverture (l'horloge du carton saute à son début, même en pause) et la voix démarre à sa fin ; passé une seconde fois pendant l'ouverture, il finit tout de suite. Volets et entrée suivent l'horloge du carton : figés en pause, justes après une reprise.
+  *Valeurs retenues* : volets 3,5 s, courbe `cubic-bezier(0.45, 0, 0.2, 1)` (départ doux, longue fin apaisée). Sur un détail : l'image est posée sous le carton déjà cadrée sur le détail ; pendant l'ouverture, poussée de 2,5 % (départ et arrêt doux) et révélation gris → couleur étalée sur les 3,5 s (pas de recul d'entrée de 4 %) ; puis recul de 5 s (au plus la moitié de la voix) vers la première vue, en homothétie, rampes de 2 s à chaque bout : position et vitesse continues à la fin de l'ouverture (vitesse nulle) et à la fin du recul, où la respiration prend le relais. Aucune étape de caméra ne commence pendant le recul (la tenue minimale court à partir de sa fin). Détail cadré au rapport ~2,4:1 (proportions de la zone utile sur ordinateur) et ~40 % de la largeur de l'image : zoom ×2,1 à ×2,5 sur ordinateur, ×1,5 à ×2,3 sur téléphone, sans flou (~640 px de l'original pour ~1 000 px d'écran). `prefers-reduced-motion` : fondu court et premier cadre directement. `verifier.py` contrôle le cadre (valide, seulement sur la première diapositive d'un acte ; avertissement s'il est très serré ou zoome moins de ×1,6).
+- **Carton d'acte : ~12 s** au lieu de 2 s, **musique au premier plan** (gain plein, fondu de
+  descente quand la voix reprend). Passable (→, clic). Compté dans la durée et la barre de
+  progression. `prefers-reduced-motion` : même durée, sans animation.
+
+### Cartes de lieu et citations en surimpression (2026-10-07)
+
+Demandes de l'utilisateur : « quand un lieu est mentionné dans la narration, faire apparaître
+une carte qui montre où cela se passe » ; « quand une citation courte de quelqu'un est faite,
+que ses mots s'ajoutent en gros en surimpression sur l'image ». Les deux sont **toujours
+actifs** (pas de bouton).
+
+**Cartes de lieu (médaillon)**
+- **Forme** : un médaillon (environ un quart de la hauteur de la scène) qui apparaît en fondu
+  **en bas à droite** au moment où la voix prononce le lieu : fond de carte monochrome, un point
+  qui pulse doucement, le nom du lieu en petites capitales. Il reste ~5 s puis s'efface. L'image
+  et la caméra continuent derrière ; la caméra tient compte du médaillon (zone couverte) comme
+  des autres bandeaux. Une carte au plus par diapositive. Téléphone : médaillon réduit, lisible.
+- **Quels lieux** : villes, régions, champs de bataille **et lieux de Paris** (Bastille,
+  Tuileries, Champ-de-Mars, place de la Révolution…), à leur **première mention** dans la
+  période ; pas à chaque « à Paris ». Environ 40 à 50 par période.
+- **Fonds** :
+  - **France et étranger** : le fond SVG simplifié des épisodes (`carte.py`, Natural Earth),
+    avec un **cadre adapté au lieu** : France seule, France et voisins pour un lieu proche
+    (Fleurus, Mayence, Turin), Europe-Méditerranée avec la France repérée pour un lieu lointain
+    (Égypte, Moscou, Algérie), monde si nécessaire (Mexique). On voit toujours où c'est par
+    rapport à la France.
+  - **Paris** : un **plan d'époque du domaine public** (Commons), choisi pour la période
+    (plan de Verniquet, vers 1790, pour la Révolution ; plans des années 1830, 1860 et 1890
+    ensuite), désaturé en gris, recadré et zoomé sur le lieu, avec le point. Le plan est
+    crédité (cartouche discret dans le médaillon ou crédits de la page).
+- **Données** : `lieux` dans la diapositive : `{ nom, quand, lon, lat, fond }` (`quand` =
+  passage exact de la narration ; `fond` = `paris`, `france`, `voisins`, `europe` ou `monde`).
+  Coordonnées vérifiées ; pour Paris, position sur le plan d'époque (calage du plan documenté
+  dans le script). `verifier.py` contrôle les `quand` exacts, les coordonnées et une carte au
+  plus par diapositive.
+
+- **Plusieurs lieux sur une diapositive** (révision du 2026-10-08) : la règle « une carte au plus
+  par diapositive » devient « **un médaillon au plus** ». Quand la voix nomme plusieurs lieux
+  (jusqu'à 4 ou 5), le médaillon a un cadre qui **les englobe tous** (calculé, avec une marge) ;
+  chaque point apparaît avec son nom **au moment où la voix le dit**, les précédents restent. Le
+  médaillon reste ~3 s après le dernier nom. Si Paris et la province se mêlent, on prend la
+  carte de France (ou le cadre plus large qui convient) ; les noms ne se chevauchent pas.
+
+**Citations en surimpression**
+- **Quand** : chaque citation courte (en gros 20 mots au plus) **attribuée à une personne** et
+  dite entre guillemets « » dans la narration. On garde la prudence du texte (« aurait dit » :
+  l'attribution porte alors « attribué à »).
+- **Rendu** : les mots s'inscrivent **mot à mot, calés sur la voix** (alignement des mots,
+  comme les lectures d'époque), en grand (serif italique, guillemets « », noir sur un voile
+  blanc cassé léger), centrés dans le tiers inférieur ; puis l'auteur en petites capitales
+  (« — Mirabeau »). La citation reste ~2 s après le dernier mot puis s'efface. Le sous-titre est
+  masqué pendant ce temps. Un médaillon de carte et une citation ne se montrent jamais en même
+  temps sans place pour les deux (la citation l'emporte, le médaillon attend ou passe).
+- **Données** : `citations` dans la diapositive : `{ texte, auteur, prudence? }` (le `texte`
+  est une sous-chaîne exacte de la narration) ; instants des mots calculés par la chaîne
+  (`alignement.py`). `prefers-reduced-motion` : la citation apparaît entière, sans animation.
+- **Pause allongée** (décision de l'utilisateur, 2026-10-07) : quand la narration se termine par
+  une citation en surimpression, la pause après la voix passe de 0,6 s à ~2 s, calculée sans
+  rien fixer par diapositive : max(0,6 s, fin du dernier mot de la citation + 2 s − durée de la
+  voix). Elle compte dans la durée totale, la barre de progression et l'enchaînement
+  (`pauseApres` dans `src/utils/diaporamas.ts`, même calcul dans `verifier.py`).
+
+### Musique : compositeurs français d'abord (2026-10-08)
+
+Demande de l'utilisateur : de la musique de compositeurs français de l'époque plutôt que Mozart
+ou Haydn. Décisions, qui précisent la section « Musique » :
+
+- **Compositeurs** : ceux **actifs en France** pendant la période : Français (pour la Révolution :
+  Gossec, Méhul, Grétry, Dalayrac, Boieldieu, Lesueur, Catel, Devienne, le chevalier de
+  Saint-Georges, Kreutzer…) et étrangers qui font leur carrière à Paris (Cherubini, Viotti,
+  Pleyel). Un compositeur d'ailleurs (Mozart, Haydn) n'est gardé qu'en **dernier recours**,
+  quand aucun enregistrement libre d'un compositeur actif en France ne convient pour l'acte.
+- **Enregistrements anciens admis, et préférés à un compositeur étranger** : disques publiés
+  **avant 1963** (domaine public en Europe ; vérifier l'année de publication), son mono accepté,
+  nettoyé légèrement (filtre du souffle et des craquements sans dénaturer, normalisation).
+  Sources : Internet Archive (78 tours et premiers microsillons), Commons, IMSLP, Musopen,
+  Gallica (si la réutilisation est libre). Les règles de droits restent strictes (œuvre ET
+  enregistrement libres, arrangeur identifié et dans le domaine public, ni NC ni ND, pas de MIDI).
+- Les crédits de la page nomment l'interprète et l'année de l'enregistrement.
+
+### Caméra calme et lente (2026-10-08)
+
+Retour de l'utilisateur : les mouvements sont « un peu rapides et saccadés parfois », ils
+« donnent un peu le mal de mer ». Décisions, qui remplacent les valeurs de « Caméra calée sur la
+narration » et de « Moins de tenues statiques » quand elles diffèrent :
+
+- **Transitions** : durée **proportionnelle à l'ampleur** du mouvement (rapport de zoom et
+  distance parcourue), **3 à 6 s**, commencée assez tôt pour arriver au passage ; courbe
+  ease-in-out douce. **Vitesse maximale plafonnée** (zoom et déplacement), quitte à arriver un
+  peu après le passage.
+- **Zoom logarithmique** : l'échelle est interpolée en logarithme (vitesse perçue constante),
+  et le déplacement est couplé au zoom pour que le point visé avance régulièrement (pas d'arc
+  ni d'accélération en fin de course).
+- **Respiration à sens unique** : plus d'aller-retour. Une seule direction par tenue, zoom de
+  **4 % au plus**, glissement latéral réduit (environ un tiers de la marge libre), vitesse très
+  faible et constante après une mise en route douce.
+- **Étapes** : **au moins 5 s** entre deux étapes ; une étape trop proche de la précédente ou
+  dont le cadre diffère très peu (micro-déplacement) est ignorée par le lecteur (filtre au
+  rendu, les données restent intactes).
+- **Fluidité** : animation composée par le GPU (`transform` seul, `will-change`, pas de filtre
+  coûteux recalculé à chaque image pendant le mouvement) ; mesure des images par seconde.
+- `prefers-reduced-motion` : inchangé.
+- **Valeurs retenues** (lecteur, `plan` et `souffle`) : plafonds 0,22 en log d'échelle par seconde
+  et 0,3 scène par seconde (au plus fort) ; arrivée visée 1 s après le passage ; rampes de mise
+  en route et d'arrêt d'un tiers de la transition (2,5 s au plus) ; micro-déplacement : zoom et
+  déplacement sous 0,12 ; respiration de 0,5 % par seconde au plus (4 % au plus). Un long
+  glissement le long d'une image très large peut dépasser 6 s pour tenir le plafond.
+
+### Sans bordures, et médaillon plus grand (2026-10-08)
+
+- **Bordures** : retour de l'utilisateur, en plein écran sur ordinateur « les images montrent
+  souvent les bordures ». On ne montre **jamais rien qui ne soit pas l'image** : liserés de
+  numérisation (blancs ou noirs), cadres de tableau photographiés, marges de papier des gravures,
+  et la **légende gravée** sous les estampes (le titre est déjà dans le cartouche). Chaque image
+  porte une **zone utile** `image.utile: [x0, y0, x1, y1]`, détectée par script (analyse des bords :
+  bandes uniformes, papier, cadre ; puis contrôle par un modèle de vision pour les marges de
+  papier et les légendes gravées) et relue. Le lecteur borne toute vue (caméra, respiration,
+  ouverture, cadres d'intermède) à cette zone, quelle que soit la forme de l'écran (plein écran
+  16/9 ou 16/10 compris) ; un cadre qui en déborde est ramené dedans. Les cadres existants
+  restent exprimés dans l'image entière.
+- **Médaillon de carte à plusieurs lieux** : agrandi (~240 × 180 px sur ordinateur, au lieu de
+  160 × 120), lisible sur téléphone ; un médaillon à un seul lieu garde sa taille.
+- **Horloge lissée** : la caméra suit `audio.currentTime`, qui avance par crans irréguliers ;
+  l'instant est lissé (interpolation par l'horloge de l'écran entre deux mises à jour de l'audio,
+  recalée sans saut) pour que tout mouvement soit parfaitement fluide.
+- **Valeurs retenues** (mise en œuvre du 2026-10-08) :
+  - zone utile : `scripts/diaporamas/utile.py` (analyse des bords puis Gemini Flash, intersection
+    des deux, garde de 0,4 % ; zone de moins de 50 % de l'image ou bord rentré de plus de ~30 %
+    refusés puis saisis à la main après relecture de la planche, `utile_manuel: true`) ; sur la
+    Révolution, 100 images rognées sur 127, 24 % de l'aire retirés en moyenne ; les portraits en
+    médaillon au-dessus d'un cartouche gravé descendent à 30-45 % de l'image ; un médaillon rond
+    garde le rectangle de sa scène (coins de papier compris) ; un objet photographié sur fond de
+    studio garde son fond. Les fac-similés des épisodes (montrés en entier) et les portraits des
+    lectures ne passent pas par la caméra : pas de zone utile.
+  - lecteur : les cadres restent exprimés dans l'image entière ; ils sont convertis dans la zone
+    utile et ramenés dedans (déplacés s'ils y tiennent, sinon réduits à leur partie commune) ; la
+    zone couvre toujours la scène. `verifier.py` exige qu'un cadre recouvre la zone à 50 % au
+    moins (avertissement sous 75 %).
+  - **zones couvertes constantes** : la place du médaillon de lieu est réservée pour toute la
+    diapositive qui en a un (et non plus prise et rendue en 0,9 s autour de son affichage : ce
+    changement de zone en cours de route recalculait la caméra et la faisait bondir, jusqu'à dix
+    fois le plafond de vitesse ; c'était la principale cause des à-coups signalés).
+  - **recul de l'ouverture** : 5 s, allongé si l'ampleur l'exige pour rester sous les plafonds
+    au plus fort (la moitié de la voix au plus).
+  - **horloge lissée** : vitesse corrigée de ±5 % au plus, écart filtré à chaque mise à jour de
+    l'audio (résorbé en ~1 s) ; l'instant de l'audio exactement en pause, au départ (attente du
+    premier pas de l'audio) et après un saut de plus de 0,3 s.
+  - médaillon à plusieurs lieux : 1,5 fois la taille d'un médaillon simple (~240 × 180 px au lieu
+    de 160 × 120 sur ordinateur), 300 px de haut au plus, dans la limite de 40 % de la hauteur et
+    de la moitié de la largeur de la scène (téléphone compris).
+
+### Portraits des personnes nommées (2026-10-08)
+
+Demande de l'utilisateur : quand une personne est nommée par la narration mais que l'image ne la
+montre pas, montrer son portrait. Décisions :
+
+- **Forme** : **médaillon ovale** à bord fin (façon camée ou miniature), recadré sur le visage,
+  **en couleur** (exception des images du diaporama) ; dessous, le **nom** en petites capitales
+  et les **dates** (« Danton · 1759-1794 »), monochromes.
+- **Qui** : **à chaque mention** d'une personne, **si elle n'est pas visible sur l'image**
+  (contrôle par modèle de vision, relu). Un portrait d'époque fiable doit exister : œuvre du
+  domaine public sur Commons, faite du vivant de la personne ou peu après, identifiée sans doute
+  (sinon, pas de portrait). Le même portrait sert à toutes les mentions de la personne.
+- **Où et quand** : **en bas à gauche** (symétrique de la carte, peut coexister avec elle),
+  apparition en fondu au moment où la voix dit le nom. **Plusieurs personnes** : une **rangée
+  d'ovales** côte à côte, chacun paraissant à son nom, les précédents restent, **4 au plus** ;
+  la rangée reste ~3 s après le dernier nom (5 s au moins). Une citation de la personne
+  s'accompagne de son portrait. La zone est réservée pour la caméra sans la faire bouger
+  brusquement (voir la correction de la régression de caméra). Téléphone : ovales plus petits,
+  en rangée.
+- **Données** : `personnes` dans la diapositive : `{ id, quand }` (passage exact) ; un registre
+  par période ou commun, `src/data/diaporamas/portraits.json` : `{ id, nom, dates, fichier,
+  commons, auteur, date, cadre_visage }` ; images recadrées en webp dans
+  `public/diaporamas/portraits/`. Crédits des portraits sur la page. `verifier.py` : `quand`
+  exacts, licences, 4 au plus, instants croissants, personne absente de l'image.
+
+### Paroles des chants façon clip (2026-10-08)
+
+Demande de l'utilisateur : pendant un intermède chanté (la Marseillaise par exemple), les mots
+s'affichent « un peu comme dans un clip, en gros au milieu par-dessus l'image ». Décisions, qui
+remplacent les paroles en sous-titre pendant les intermèdes chantés :
+
+- **Vers par vers, mot à mot** : chaque vers s'inscrit en grand au centre de l'image, mot après
+  mot au rythme du chant (serif, grande taille, guillemets inutiles) ; le vers suivant remplace
+  le précédent en fondu. Pas de sous-titre en bas pendant ce temps.
+- **Blanc cassé sur voile sombre**, toujours : l'image s'assombrit doucement pendant le chant
+  (voile noir semi-transparent, l'image reste visible derrière, la caméra continue), texte
+  blanc cassé. Retour au normal en fondu à la fin. Monochrome.
+- **Calage** : instants de chaque mot chanté, calculés automatiquement (alignement forcé sur
+  l'enregistrement, en isolant la voix si utile) puis **vérifiés et corrigés** ; données dans
+  l'intermède (`paroles` : vers avec leurs mots horodatés). Si le calage au mot est impossible
+  pour un chant, repli : vers entiers en fondu à leur début.
+- Pause, reprise, sauts et passage (→) justes ; `prefers-reduced-motion` : vers entiers sans
+  animation. Téléphone : taille adaptée, aucune coupure de mot. Les intermèdes instrumentaux ne
+  changent pas.
+
+### Enrichissements visuels (2026-10-08)
+
+Demande de l'utilisateur : « intéresser un peu plus visuellement ». Pistes retenues, toutes dans
+la règle des documents d'époque du domaine public (Commons), monochromes hors images :
+
+1. **Objets de musée** : photo d'un objet d'époque (cocarde, bonnet, assignat, pique, montre
+   décimale, faïence révolutionnaire, maquette de la Bastille taillée dans une de ses pierres…),
+   **détouré** sur fond neutre, posé en surimpression quand la voix en parle, avec une légende
+   courte (objet, date, musée). Photo d'objet du domaine public ou sous licence libre admise
+   (CC BY / BY-SA avec crédit ; l'objet est d'époque, la photo peut être récente).
+2. **Manuscrits et signatures** : une lettre, un acte ou un registre d'époque en surimpression,
+   avec zoom et halo doux sur la signature ou la phrase dont parle la voix (même halo que les
+   documents d'épisode).
+3. **Avant / après** : volet glissant lent entre deux images d'un même lieu ou d'un même sujet à
+   deux moments (place Louis-XV / place de la Révolution, Sainte-Geneviève / Panthéon…), avec le
+   cartouche de chacune.
+4. **Chiffres clés et dates** : un nombre en grand qui s'écrit sur l'image quand la voix le dit
+   (« 7 prisonniers »), et la correspondance d'une date du calendrier républicain (« 9 thermidor
+   an II » → « 27 juillet 1794 »), discrète. Chiffres exacts et sourcés.
+5. **Mosaïque puis plongée** : 4 à 6 images d'un même événement apparaissent en grille, puis la
+   caméra plonge dans l'une d'elles, qui devient l'image de la diapositive.
+6. **Parallaxe 2,5D** : les plans d'un tableau séparés par estimation de profondeur glissent très
+   lentement l'un sur l'autre. **Banc d'essai d'abord** sur 3 ou 4 images de la Révolution ; on
+   ne généralise (une par acte) que si l'utilisateur valide le rendu.
+
+**Dosage, par période** : ~10 objets, ~8 chiffres ou dates, 3 à 4 avant/après, 3 à 4
+manuscrits, 2 mosaïques, ~8 parallaxes (si validées). **Deux surimpressions au plus à la fois** ;
+l'image reste le sujet. Les zones couvertes ne font jamais bouger la caméra brusquement.
+
 ## Portail (`/diaporamas/`)
 
 Titre « Le siècle en images ». Une courte présentation (voix de synthèse, images du domaine

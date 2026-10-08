@@ -1,0 +1,391 @@
+---
+// Cartes de lieu et citations en surimpression sur la scène du diaporama (spec 12, « Cartes de
+// lieu et citations en surimpression », 2026-10-07). Rendu au build, caché ; le script de
+// Diaporama.astro remplit et montre ces deux éléments d'après l'instant de l'audio.
+//
+// - Médaillon de lieu, en bas à droite : un fond par cadre employé dans la période (SVG Natural
+//   Earth : France seule, voisins, Europe, monde ; la France en plus soutenu) ou le plan de Paris
+//   d'époque (en gris, zoomé sur le lieu, crédité), un point qui pulse doucement, le nom en
+//   petites capitales.
+// - Citation : centrée dans le tiers inférieur, grand serif italique noir sur un voile blanc cassé
+//   léger ; les mots (`.m`, rang `data-k`) s'inscrivent un à un au rythme de la voix, puis
+//   l'auteur (« — Mirabeau », « — attribué à Danton »).
+//
+// Plusieurs lieux sur une diapositive (révision du 2026-10-08) : un seul médaillon, au cadre
+// calculé qui les englobe (surimpressionsDe) ; le script ci-dessous, propre à ce composant, y pose
+// un point et un nom par lieu, chaque point paraissant quand la voix dit son nom (les précédents
+// restent), les noms placés sans se chevaucher (à droite, à gauche, au-dessus, en dessous, ou plus
+// loin avec un filet). L'horloge est l'audio de la voix : pause, reprise et sauts restent justes.
+import type { Diaporama, FondCarte, PlanParis } from '../utils/diaporamas';
+import { surimpressionsDe, urlMedia } from '../utils/diaporamas';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props { diaporama: Diaporama; fonds: Record<string, FondCarte>; plan?: PlanParis }
+const { diaporama: d, fonds, plan } = Astro.props;
+const employes = [...new Set(d.diapositives.flatMap((x) => (x.lieux ?? []).map((l) => l.fond)))];
+const svgs = employes.filter((f) => f !== 'paris' && fonds[f]).map((f) => fonds[f]);
+const urlPlan = plan ? urlMedia('fonds', plan.fichier.replace(/^fonds\//, '')) : '';
+// Médaillons à plusieurs lieux, repérés par l'audio de la diapositive (ce que joue le lecteur).
+const multiples: Record<string, { points: { nom: string; x: number; y: number; t: number }[]; vb?: string }> = {};
+for (const x of d.diapositives) {
+  if ((x.lieux?.length ?? 0) < 2 || !x.audio) continue;
+  const L = surimpressionsDe(x, fonds, plan).lieu;
+  if (L?.points?.length) multiples[urlMedia(d.slug, x.audio.fichier)] = { points: L.points.map((p) => ({ ...p, nom: typographie(p.nom) })), vb: L.vb };
+}
+---
+
+{employes.length > 0 && (
+  <div class="lieu" aria-hidden="true">
+    <div class="lieu__carte">
+      {svgs.map((f) => (
+        <svg class="lieu__fond" data-fond={f.nom} viewBox={`0 0 ${f.largeur} ${f.hauteur}`} preserveAspectRatio="none">
+          <path class="lieu__terres" d={f.terres} />
+          <path class="lieu__france" d={f.france} />
+          {f.fleuves.map((p) => <path class="lieu__fleuve" d={p} />)}
+        </svg>
+      ))}
+      {plan && <div class="lieu__fond lieu__plan" data-fond="paris" data-src={urlPlan}></div>}
+      <span class="lieu__point"></span>
+    </div>
+    <p class="lieu__nom"></p>
+    <p class="lieu__credit"></p>
+  </div>
+)}
+{Object.keys(multiples).length > 0 && (
+  <script type="application/json" class="lieu__multiples" set:html={JSON.stringify(multiples).replace(/</g, '\\u003c')} />
+)}
+{d.diapositives.some((x) => x.citations?.length) && (
+  <div class="mots" aria-hidden="true">
+    <p class="mots__texte"></p>
+    <p class="mots__auteur"></p>
+  </div>
+)}
+
+<style>
+  /* Médaillon : blanc cassé presque opaque, filet fin (même famille que les cartouches). Taille
+     posée par le script (~un quart de la hauteur de la scène) ; au-dessus des bandeaux du bas en
+     plein écran (--frise-bas). */
+  .lieu {
+    position: absolute;
+    right: var(--e-2);
+    bottom: calc(var(--frise-bas, 0px) + var(--e-2));
+    z-index: 2;
+    padding: 0.3rem 0.3rem 0.25rem;
+    background: rgba(251, 250, 247, 0.95);
+    border: 1px solid rgba(26, 26, 26, 0.22);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity 600ms ease, transform 600ms ease, visibility 0s linear 600ms;
+  }
+  .lieu.est-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 500ms ease, transform 600ms cubic-bezier(0.2, 0.6, 0.3, 1), visibility 0s, bottom 500ms ease;
+  }
+  .lieu__carte { position: relative; overflow: hidden; width: 160px; height: 150px; background: #f6f5f1; }
+  .lieu__fond { display: none; position: absolute; inset: 0; width: 100%; height: 100%; }
+  .lieu__fond.est-actif { display: block; }
+  .lieu__terres { fill: #e6e4de; stroke: #bdbab3; stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .lieu__france { fill: #cfccc4; stroke: #4a4843; stroke-width: 1.4; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+  .lieu__fleuve { fill: none; stroke: #aeaba4; stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .lieu__plan { background-repeat: no-repeat; background-color: #f6f5f1; }
+  /* Point : noir cerclé de blanc ; un anneau gris s'élargit et s'efface doucement. */
+  .lieu__point {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    margin: -4.5px 0 0 -4.5px;
+    border-radius: 50%;
+    background: var(--c-texte);
+    box-shadow: 0 0 0 2px var(--c-fond);
+  }
+  .lieu__point::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 1.5px solid #555;
+    animation: lieu-pouls 2s ease-out infinite;
+  }
+  @keyframes lieu-pouls { from { transform: scale(1); opacity: 0.9; } to { transform: scale(3.4); opacity: 0; } }
+  .lieu__nom {
+    margin: 0.2rem 0.1rem 0;
+    max-width: 100%;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    color: var(--c-texte);
+    text-align: center;
+    hyphens: none;
+    -webkit-hyphens: none;
+  }
+  .lieu__credit { margin: 0; font-size: 0.68rem; font-style: italic; line-height: 1.2; color: #5a5853; text-align: center; }
+  .lieu__credit:empty { display: none; }
+  /* Plusieurs lieux : pas de nom sous la carte (les noms sont sur la carte), le point unique du
+     lecteur cède la place aux points posés par le script. */
+  .lieu__nom:empty { display: none; }
+  .lieu.est-multiple .lieu__point { display: none; }
+  .lieu :global(.lieu__pts) { position: absolute; inset: 0; pointer-events: none; }
+  .lieu :global(.lieu__pt) {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    margin: -3.5px 0 0 -3.5px;
+    border-radius: 50%;
+    background: var(--c-texte);
+    box-shadow: 0 0 0 1.5px var(--c-fond);
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 350ms ease, transform 450ms cubic-bezier(0.2, 0.6, 0.3, 1);
+  }
+  .lieu :global(.lieu__pt.est-dit) { opacity: 1; transform: none; }
+  /* Le dernier point dit pulse doucement ; les précédents restent fixes. */
+  .lieu :global(.lieu__pt.est-dernier)::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 1.5px solid #555;
+    animation: lieu-pouls 2s ease-out infinite;
+  }
+  .lieu :global(.lieu__etiquette) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: max-content;
+    max-width: 8.5em;
+    padding: 0 0.18em;
+    font-size: 0.74rem;
+    line-height: 1.08;
+    font-variant: small-caps;
+    letter-spacing: 0.03em;
+    color: var(--c-texte);
+    background: rgba(246, 245, 241, 0.82);
+    text-wrap: balance;
+    hyphens: none;
+    -webkit-hyphens: none;
+    opacity: 0;
+    transition: opacity 350ms ease;
+  }
+  .lieu :global(.lieu__etiquette.est-dit), .lieu :global(.lieu__filet.est-dit) { opacity: 1; }
+  .lieu :global(.lieu__filet) { position: absolute; height: 1px; background: #6a6862; transform-origin: 0 50%; opacity: 0; transition: opacity 350ms ease; }
+
+  /* Citation : voile léger, grand serif italique, centrée dans le tiers inférieur. */
+  .mots {
+    position: absolute;
+    left: 50%;
+    bottom: calc(var(--frise-bas, 0px) + 7%);
+    z-index: 2;
+    width: max-content;
+    max-width: min(46rem, calc(100% - 2 * var(--e-3)));
+    padding: 0.55rem 1.3rem 0.6rem;
+    background: rgba(251, 250, 247, 0.86);
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, 4px);
+    transition: opacity 700ms ease, transform 700ms ease, visibility 0s linear 700ms;
+  }
+  .mots.est-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+    transition: opacity 300ms ease, transform 500ms ease, visibility 0s;
+  }
+  .mots__texte {
+    margin: 0;
+    font-family: var(--f-titre);
+    font-style: italic;
+    font-size: clamp(1.25rem, 2.6vw, 2rem);
+    line-height: 1.3;
+    color: var(--c-texte);
+    text-wrap: balance;
+    hyphens: none;
+    -webkit-hyphens: none;
+  }
+  .mots__texte::before { content: '«\00a0'; }
+  /* Les mots à venir sont à leur place mais invisibles : la mise en page ne bouge pas. */
+  .mots__texte :global(.m) { opacity: 0; transition: opacity 260ms ease; }
+  .mots__texte :global(.m.est-dit) { opacity: 1; }
+  .mots__auteur {
+    margin: 0.25rem 0 0;
+    font-size: 0.95rem;
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    color: #3a3a3a;
+    opacity: 0;
+    transition: opacity 500ms ease;
+  }
+  .mots.est-signe .mots__auteur { opacity: 1; }
+
+  @media (max-width: 699px) {
+    .lieu { right: var(--e-1); bottom: calc(var(--frise-bas, 0px) + var(--e-1)); padding: 0.2rem; }
+    .lieu__nom { font-size: 0.82rem; }
+    .lieu :global(.lieu__etiquette) { font-size: 0.64rem; max-width: 7.5em; }
+    .mots { bottom: calc(var(--frise-bas, 0px) + 5%); max-width: calc(100% - 2 * var(--e-1)); padding: 0.4rem 0.8rem 0.45rem; }
+    .mots__texte { font-size: 1.12rem; }
+    .mots__auteur { font-size: 0.85rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lieu, .lieu.est-visible, .mots, .mots.est-visible { transform: translate(0, 0); transition: opacity 200ms ease, visibility 0s linear 200ms; }
+    .mots, .mots.est-visible { transform: translate(-50%, 0); }
+    .lieu.est-visible, .mots.est-visible { transition: opacity 200ms ease, visibility 0s; }
+    .lieu__point::after, .lieu :global(.lieu__pt.est-dernier)::after { animation: none; display: none; }
+    .lieu :global(.lieu__pt) { transition: none; transform: none; }
+    .lieu :global(.lieu__etiquette), .lieu :global(.lieu__filet) { transition: none; }
+    .mots__texte :global(.m) { transition: none; }
+  }
+</style>
+
+<script>
+  // Médaillons à plusieurs lieux (spec 12, révision du 2026-10-08). Le lecteur (Diaporama.astro)
+  // pose le fond, la fenêtre d'affichage et la zone couverte pour la caméra ; ce script ajoute les
+  // points et leurs noms quand le médaillon d'une diapositive à plusieurs lieux devient visible, et
+  // montre chaque point dès que l'audio de la voix atteint son instant.
+  type Point = { nom: string; x: number; y: number; t: number };
+  type Multiple = { points: Point[]; vb?: string };
+  type Rect = { x: number; y: number; w: number; h: number };
+
+  const ECART = 4;   // px : du bord du point au nom posé à côté
+  const LOIN = 15;   // px : nom décalé, relié au point par un filet
+  const RAYON = 5;   // px : point et son liseré
+
+  function aire(a: Rect, b: Rect) {
+    const w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x), h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+    return w > 0 && h > 0 ? w * h : 0;
+  }
+
+  /** Noms posés sans chevauchement, dans l'ordre de la voix : pour chacun, la première place libre
+   *  parmi (à droite, à gauche, au-dessus, en dessous, en biais) puis les mêmes plus loin, avec un
+   *  filet ; à défaut, la moins gênante (chevauchement, sortie du cadre). */
+  function placer(W: number, H: number, pts: { x: number; y: number }[], tailles: { w: number; h: number }[]) {
+    const poses: Rect[] = [];
+    const disques = pts.map((p) => ({ x: p.x - RAYON, y: p.y - RAYON, w: 2 * RAYON, h: 2 * RAYON }));
+    return pts.map((p, k) => {
+      const { w, h } = tailles[k];
+      // [x, y, filet, alignement du texte] ; un nom à gauche du point est aligné à droite.
+      const essais: [number, number, boolean, string][] = [];
+      for (const [d, filet] of [[ECART + RAYON, false], [LOIN + RAYON, true]] as [number, boolean][]) {
+        const dd = d * 0.72;
+        essais.push(
+          [p.x + d, p.y - h / 2, filet, 'left'], [p.x - d - w, p.y - h / 2, filet, 'right'],
+          [p.x - w / 2, p.y - d - h, filet, 'center'], [p.x - w / 2, p.y + d, filet, 'center'],
+          [p.x + dd, p.y - dd - h, filet, 'left'], [p.x + dd, p.y + dd, filet, 'left'],
+          [p.x - dd - w, p.y - dd - h, filet, 'right'], [p.x - dd - w, p.y + dd, filet, 'right']);
+      }
+      let mieux = { r: { x: essais[0][0], y: essais[0][1], w, h }, filet: false, aligne: 'left', cout: Infinity };
+      essais.forEach(([x, y, filet, aligne], j) => {
+        const r = { x, y, w, h };
+        const dehors = w * h - aire(r, { x: 1, y: 1, w: W - 2, h: H - 2 });
+        const gene = poses.reduce((s, q) => s + aire(r, { x: q.x - 2, y: q.y - 1, w: q.w + 4, h: q.h + 2 }), 0)
+          + disques.reduce((s, q) => s + aire(r, q), 0);
+        const cout = 50 * gene + 20 * dehors + j;
+        if (cout < mieux.cout) mieux = { r, filet, aligne, cout };
+      });
+      poses.push(mieux.r);
+      return mieux;
+    });
+  }
+
+  for (const racine of document.querySelectorAll<HTMLElement>('.diaporama')) {
+    const donnees = racine.querySelector('.lieu__multiples');
+    const elLieu = racine.querySelector<HTMLElement>('.lieu');
+    const audio = racine.querySelector<HTMLAudioElement>('.lecteur__audio');
+    if (!donnees || !elLieu || !audio) continue;
+    const multiples: Record<string, Multiple> = JSON.parse(donnees.textContent || '{}');
+    const carte = elLieu.querySelector<HTMLElement>('.lieu__carte')!;
+    const calque = document.createElement('div');
+    calque.className = 'lieu__pts';
+    carte.append(calque);
+    const viewBoxes = new Map<SVGSVGElement, string>();
+    for (const svg of carte.querySelectorAll<SVGSVGElement>('svg.lieu__fond')) viewBoxes.set(svg, svg.getAttribute('viewBox') || '');
+
+    let courant: Multiple | null = null;
+    let els: { pt: HTMLElement; nom: HTMLElement; filet: HTMLElement }[] = [];
+    let dits = -1;
+    let boucle = 0;
+
+    /** Pose les noms (mesurés dans le médaillon à sa taille du moment). */
+    function disposer() {
+      if (!courant) return;
+      const W = carte.clientWidth, H = carte.clientHeight;
+      if (!W || !H) return;
+      const pts = courant.points.map((p) => ({ x: (p.x / 100) * W, y: (p.y / 100) * H }));
+      const places = placer(W, H, pts, els.map((e) => ({ w: e.nom.offsetWidth, h: e.nom.offsetHeight })));
+      places.forEach(({ r, filet, aligne }, k) => {
+        const e = els[k];
+        e.nom.style.textAlign = aligne;
+        e.nom.style.left = `${Math.round(r.x)}px`;
+        e.nom.style.top = `${Math.round(r.y)}px`;
+        e.filet.hidden = !filet;
+        if (!filet) return;
+        // Filet du bord du point au point le plus proche du nom.
+        const p = pts[k];
+        const qx = Math.max(r.x, Math.min(p.x, r.x + r.w)), qy = Math.max(r.y, Math.min(p.y, r.y + r.h));
+        const dx = qx - p.x, dy = qy - p.y, l = Math.hypot(dx, dy);
+        const a = Math.atan2(dy, dx);
+        e.filet.style.left = `${p.x + Math.cos(a) * RAYON}px`;
+        e.filet.style.top = `${p.y + Math.sin(a) * RAYON}px`;
+        e.filet.style.width = `${Math.max(0, l - RAYON - 1)}px`;
+        e.filet.style.transform = `rotate(${a}rad)`;
+      });
+    }
+
+    /** Contenu du médaillon de la diapositive en cours (celle dont la voix est chargée). */
+    function preparer() {
+      courant = multiples[audio!.getAttribute('src') || ''] ?? null;
+      elLieu!.classList.toggle('est-multiple', !!courant);
+      calque.replaceChildren();
+      els = [];
+      dits = -1;
+      for (const [svg, vb] of viewBoxes) svg.setAttribute('viewBox', courant?.vb && svg.classList.contains('est-actif') ? courant.vb : vb);
+      if (!courant) return;
+      for (const p of courant.points) {
+        const pt = document.createElement('span'), nom = document.createElement('span'), filet = document.createElement('span');
+        pt.className = 'lieu__pt';
+        pt.style.left = `${p.x}%`;
+        pt.style.top = `${p.y}%`;
+        nom.className = 'lieu__etiquette';
+        nom.textContent = p.nom;
+        filet.className = 'lieu__filet';
+        calque.append(filet, pt, nom);
+        els.push({ pt, nom, filet });
+      }
+      disposer();
+      if (document.fonts?.status !== 'loaded') document.fonts?.ready.then(disposer);
+    }
+
+    /** Points dits à l'instant de l'audio (le point paraît quand la voix attaque le nom). */
+    function maj() {
+      if (!courant) return;
+      const t = audio!.currentTime || 0;
+      let n = 0;
+      while (n < courant.points.length && courant.points[n].t <= t + 0.06) n++;
+      // Le premier point est là dès l'entrée du médaillon (même s'il a été retardé par une citation).
+      n = Math.max(1, n);
+      if (n === dits) return;
+      dits = n;
+      els.forEach((e, k) => {
+        for (const el of [e.pt, e.nom, e.filet]) el.classList.toggle('est-dit', k < n);
+        e.pt.classList.toggle('est-dernier', k === n - 1);
+      });
+    }
+    function tourner() { maj(); boucle = requestAnimationFrame(tourner); }
+
+    // Le médaillon devient visible ou s'efface (classe posée par le lecteur).
+    let visible = false;
+    new MutationObserver(() => {
+      const v = elLieu.classList.contains('est-visible');
+      if (v === visible) return;
+      visible = v;
+      cancelAnimationFrame(boucle);
+      if (v) { preparer(); tourner(); }
+    }).observe(elLieu, { attributes: true, attributeFilter: ['class'] });
+    new ResizeObserver(() => { if (visible) disposer(); }).observe(carte);
+  }
+</script>

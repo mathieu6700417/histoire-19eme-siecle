@@ -29,8 +29,11 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `voix.py` | Synthèse Gemini (narrateur Charon ; voix de lecture pour les lectures d'époque), contrôle de fidélité, encodage m4a, durées, horodatage des phrases ; minutage mot par mot des lectures (`--mots`). Diapositives, lectures et épisodes. |
 | `alignement.py` | Alignement forcé d'un audio de lecture sur son texte (wav2vec2 français, torchaudio) : instants de chaque mot. Appelé par `voix.py`. |
 | `camera.py` | Caméra calée sur la narration : étapes `image.camera` proposées par Gemini Flash (vision), contrôlées, planche-contact. |
+| `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. |
 | `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. |
-| `carte.py` | Fonds de carte des épisodes (Natural Earth, domaine public) : `src/data/diaporamas/fonds/<nom>.json`. |
+| `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). |
+| `surimpressions.py` | Cartes de lieu et citations en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
+| `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
 | `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques »). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
@@ -70,6 +73,8 @@ python3 scripts/diaporamas/voix.py revolution --horodater
 python3 scripts/diaporamas/camera.py revolution
 python3 scripts/diaporamas/camera.py revolution --n 12 37
 python3 scripts/diaporamas/camera.py revolution --planche
+# Seulement les diapositives dont la caméra tient plus de 7 s un même cadre
+python3 scripts/diaporamas/camera.py revolution --tenues
 
 # Musique : ce qui manque ou a changé ; --force pour tout refaire ; --sources pour
 # télécharger et contrôler les licences seulement
@@ -82,8 +87,13 @@ python3 scripts/diaporamas/voix.py revolution --segments lecture:sieyes episode:
 # Lectures : minutage mot par mot des audios existants (fait aussi après chaque synthèse de
 # lecture) ; --segments lecture:<id> pour une seule
 python3 scripts/diaporamas/voix.py revolution --mots
-# Fonds de carte des épisodes
+# Fonds de carte (épisodes, médaillons de lieu) et plans de Paris d'époque ; --plans : plans seuls
 python3 scripts/diaporamas/carte.py
+# Cartes de lieu et citations : instants calés sur la voix (après voix.py) ; --relever : aide
+python3 scripts/diaporamas/surimpressions.py revolution
+python3 scripts/diaporamas/surimpressions.py revolution --relever
+# Médaillons à plusieurs lieux de la Révolution (idempotent), puis instants des lieux nouveaux
+python3 scripts/diaporamas/ajouter_lieux.py && python3 scripts/diaporamas/surimpressions.py revolution
 
 # Insérer des diapositives (groupes {"apres": n actuel, "diapositives": […]}) et tout renuméroter ;
 # --essai affiche la correspondance sans rien écrire. Puis images.py, voix.py, camera.py.
@@ -112,22 +122,98 @@ python3 scripts/diaporamas/verifier.py --tous
 3. `images.py <slug>` : refuse toute licence autre que domaine public / CC0 ; complète les
    champs vides depuis Commons (à relire : les champs Commons sont souvent bruts).
 4. Tester une voix (`voix.py <slug> --n 1`) puis lancer le reste.
-5. `camera.py <slug>`, puis relire les planches-contact (`.cache/diaporamas/<slug>/planche-*.jpg`)
+5. `utile.py <slug>`, puis relire la planche de contrôle (`.cache/diaporamas/<slug>/utile-*.jpg`)
+   et corriger à la main les zones fausses (voir « Zone utile » ci-dessous).
+   `camera.py <slug>`, puis relire les planches-contact (`.cache/diaporamas/<slug>/planche-*.jpg`)
    et corriger à la main les cadres faux (voir ci-dessous).
 6. Musique : écrire `musique` dans le JSON (voir ci-dessous), lancer `musique.py <slug>`,
    écouter les extraits, ajuster `debut`/`fin` et les paroles.
-7. `verifier.py <slug>` puis `npm run build`.
+7. Cartes de lieu et citations : remplir `lieux` et `citations` (voir ci-dessous), lancer
+   `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
+8. `verifier.py <slug>` puis `npm run build`.
+
+## Cartouches et graphiques
+
+- `image.titre_court` (60 caractères au plus) : titre rédigé du cartouche du lecteur (trois
+  lignes : titre court, auteur, « date · technique ») ; le titre officiel `image.titre` reste
+  dans le livre d'images et l'`alt`. Pour un titre déjà court, le recopier.
+- `cartouche: { oeuvre, compositeur }` dans chaque piste de fond et chaque intermède, rédigé à
+  la main (« Symphonie nº 87, menuet » / « Joseph Haydn, 1785 ») : deux lignes, sans troncature.
+- Courbes d'épisode : `unite` est dite une fois sous le titre ; chaque repère est étiqueté
+  automatiquement « date · valeur en clair » (`unite_point`, ou `libelle` rédigé en clair comme
+  « moins d'une demi-livre »), placé sans toucher la courbe ni les axes ; le dernier point a son
+  repère. `verifier.py` contrôle ces trois points.
+
+## Zone utile : format et pièges
+
+- `image.utile` : `[x0, y0, x1, y1]` (fractions de l'image **servie**, après `recadrage`), la partie
+  qui est l'œuvre. Le lecteur ne montre jamais rien en dehors (spec 12, « Sans bordures ») :
+  l'image est agrandie pour que la zone couvre la scène (pas de bandes, même en plein écran 16/9 ou
+  16/10), et tous les cadres (caméra, ouverture, intermède), qui restent exprimés dans l'image
+  entière, sont convertis dans la zone et ramenés dedans (déplacés s'ils y tiennent, sinon réduits
+  à leur partie commune : `versUtile` dans `src/utils/diaporamas.ts`).
+- `utile.py <slug>` : (1) analyse des bords : depuis chaque bord, les lignes « de bord » sont
+  retirées (bande unie et neutre : étendue des gris sous 10, saturation faible ; ou papier clair :
+  moyenne au-dessus de 140, étendue sous 24, saturation sous 80) ; un trait fin (cuvette, filet)
+  suivi de papier est franchi ; 30 % au plus par côté. Un fond peint sombre ou un ciel n'est pas
+  un bord. (2) Gemini Flash voit l'image avec une grille et rend le rectangle de l'œuvre sans marges,
+  cadre, ni légende gravée ou imprimée. On garde l'intersection des deux (la plus prudente), plus
+  une garde de 0,4 % sur les côtés rognés ; une zone de moins de 50 % de l'image ou un bord rentré
+  de plus de ~30 % est refusé (repli sur l'autre proposition, ou l'image entière).
+- **Relire la planche** : les refus concernent souvent des estampes à grande marge et légende
+  (portrait en médaillon au-dessus d'un cartouche gravé), dont la vraie zone fait 30 à 45 % de
+  l'image ; on la saisit à la main. Pièges vus sur la Révolution : un dessin au trait sur fond
+  blanc (la planche technique de la guillotine) pris pour du papier, des gouttes de sang sur une
+  marge claire coupées, un objet photographié sur fond de studio (le fond fait partie de la photo :
+  zone entière), un médaillon rond (on garde le rectangle de la scène, coins de papier compris).
+- **Correction à la main** : écrire `utile` et ajouter `"utile_manuel": true` dans `image` ;
+  `utile.py` ne la touchera plus. Cache : `.cache/diaporamas/<slug>/utile.json` (empreinte du
+  fichier servi et de `VERSION`).
+- Coût : un appel par image, ~0,35 $ pour 127 images (tarif Gemini Flash supposé).
+- `verifier.py` contrôle la présence et la validité de `utile` (25 % de l'image au moins ; moins de
+  50 % sans `utile_manuel` : avertissement) et que chaque cadre (caméra, ouverture, intermède) est
+  dans la zone à 50 % au moins (avertissement sous 75 % ; la vue d'ensemble `[0, 0, 1, 1]` est
+  toujours admise).
 
 ## Caméra : format et pièges
 
-- `image.camera` : 1 à 3 étapes `{"cadre": [x0, y0, x1, y1], "quand": "passage exact"}`, en
+- `image.camera` : 1 à 4 étapes `{"cadre": [x0, y0, x1, y1], "quand": "passage exact"}`, en
   fractions de l'image **servie** (le WebP, donc après `recadrage`). La première étape n'a pas
   de `quand`. Le lecteur situe chaque passage au prorata dans sa phrase horodatée
-  (`audio.phrases`) et lance la transition ~0,6 s avant ; une seule étape donne un zoom lent.
+  (`audio.phrases`).
+- **Rendu calme** (spec 12, « Caméra calme et lente » ; `plan`, `profil`, `trajet`, `souffle`
+  dans `Diaporama.astro`) : le lecteur **ignore** une étape dont le passage suit le précédent
+  retenu (ou le début) de moins de 5 s, une étape dont la vue diffère à peine de la précédente
+  (zoom et déplacement sous 0,12) et une étape dont la transition ne tient plus avant la fin de
+  la voix ; les données restent intactes. Transition : durée selon l'ampleur (3 à 6 s, plus pour
+  un long glissement le long d'une image très large), vitesse plafonnée (0,22 en log d'échelle
+  par seconde, 0,3 scène par seconde au plus fort), arrivée visée 1 s après le passage (plus
+  tard si le plafond l'impose) ; zoom logarithmique couplé au déplacement (homothétie : pas
+  d'arc) ; vitesse constante entre une mise en route et un arrêt doux. `__camera(n, t)` donne
+  aussi les étapes retenues (`plan`, `effectives`) pour les tests.
+- `image.ouverture` (première diapositive d'un acte seulement, saisi à la main) : détail
+  `[x0, y0, x1, y1]` (un visage, un geste, un objet) sur lequel s'ouvrent les volets du carton
+  d'acte, avant un recul de 5 s vers le premier cadre. Le cadrer au rapport ~2,4:1 en pixels et
+  sur ~40 % de la largeur de l'image (zoom ×2 au moins sur ordinateur, sans flou). Instants
+  négatifs de `__camera(n, t)` (−3,5 à 0) : l'ouverture, avant la voix.
+- **Tenues longues** : une tenue de plus de 7 s sur un même cadre déclenche une relance du
+  modèle (texte dit pendant la tenue à l'appui) pour une étape de plus, seulement si la voix
+  nomme alors un élément visible. Sinon, le lecteur fait « respirer » l'image : resserrement à
+  sens unique de 4 % au plus (0,5 % par seconde au plus), glissement d'un tiers de la marge,
+  arrêt doux en fin de tenue. `camera.py` refuse désormais, dès la proposition du modèle, un
+  passage à moins de 5 s du précédent et un micro-déplacement (contrôles hors empreinte : les
+  caméras en cache ne sont pas recalculées).
 - Le lecteur montre le cadre en entier **sous le cartouche** (en haut à gauche) et, en plein
   écran, au-dessus des bandeaux du bas ; un cadre trop haut pour l'écran est montré depuis son
   bord supérieur (on garde les têtes). L'image couvre toujours toute la scène : un grand cadre
-  peut donc passer en partie sous le cartouche.
+  peut donc passer en partie sous le cartouche. Les zones couvertes sont **constantes pendant une
+  diapositive** : la place du médaillon de lieu est réservée pour toute la diapositive qui en a un
+  (une zone qui varie en cours de route faisait bouger la caméra d'un coup).
+- **Horloge lissée** : la caméra et les surimpressions suivent `audio.currentTime` lissé
+  (`HorlogeLissee` dans `Diaporama.astro`) : entre deux mises à jour de l'audio, l'instant avance
+  avec `performance.now()` × `playbackRate` ; l'écart est résorbé en modulant la vitesse de ±5 % au
+  plus ; jamais de recul ni de saut ; en pause, après un saut ou au départ, l'instant de l'audio
+  exactement. `__instant()` donne l'instant lissé et brut (tests).
 - Taille minimale : porté aux proportions 16/10, un cadre fait au moins 30 % du plus grand
   côté de l'image (`camera.ajuster`) ; `verifier.py` tolère 25 % pour les corrections à la main.
 - **Correction à la main** : modifier les étapes et ajouter `"camera_manuelle": true` à la
@@ -224,11 +310,17 @@ l'arrangeur est identifié (étiquette du disque, catalogue) et dans le domaine 
 - `duree` est écrite par `musique.py`. `debut`/`fin` : extrait (s) dans la source.
   `fondu_entree`/`fondu_sortie` (s) : 3 s pour le fond, 0,4 et 1,2 s pour les chants par
   défaut. `filtres: "78tours"` : coupe-bas, coupe-haut, débruitage léger.
+  `filtres: "microsillon"` (premiers 33 tours, années 1950) : coupe-bas doux, craquements ôtés
+  (`adeclick`), souffle à peine réduit, sans coupe-haut. Les fichiers des microsillons de
+  l'Internet Archive (`lp_…`, `disc1/…`) portent une image de pochette : `musique.py` l'ignore (`-vn`).
 - Sonie : fond à -20 LUFS (le lecteur le baisse encore), chants à -16 LUFS (la voix est vers
   -19,5 LUFS). AAC stéréo 96 kb/s (fond), 128 kb/s (chants).
 - Fond : 1 à 3 pistes par acte, jouées dans l'ordre depuis le début de l'acte, enchaînées en
   fondu, en boucle si l'acte est plus long. Ne garder (`fin`) que la durée utile de l'acte :
   c'est le gros du poids (~25 Mo par période).
+  Aucun morceau ne doit boucler dans un acte (retours du 2026-10-07) : `verifier.py` avertit quand
+  un acte dure plus que ses pistes enchaînées (fondus de 3 s déduits) ; allonger `fin` ou ajouter
+  une piste.
 - Intermèdes musicaux (spec 12, « Arts et techniques ») : 1 ou 2 par période, en plus des chants,
   après une diapositive qui présente une œuvre instrumentale ; `"instrumental": true` et
   `"paroles": []` : le lecteur masque le sous-titre et le livre d'images dit « Intermède musical ».
@@ -346,3 +438,78 @@ les retire au saut suivant. Musique baissée comme sous la voix. Un clic dans la
 progression sur la part d'un segment y mène directement. Le livre d'images (sans JavaScript)
 montre les cartes et les visuels, statiques, avec les sources. Pour les tests :
 `document.querySelector('.diaporama').__aller(n, true)` saute au segment de la diapositive `n`.
+
+## Cartes de lieu et citations en surimpression
+
+Spec 12, « Cartes de lieu et citations en surimpression » (2026-10-07). Toujours actives dans le
+lecteur ; rien dans le livre d'images.
+
+```json
+{ "n": 56, "narration": "Le 20 septembre 1792, à Valmy, …",
+  "lieux": [{ "nom": "Valmy", "quand": "à Valmy", "lon": 4.76737, "lat": 49.07972, "fond": "france", "instant": 1.5 }],
+  "citations": [{ "texte": "De ce lieu et de ce jour date une nouvelle époque de l'histoire du monde.",
+                  "auteur": "Goethe", "mots": [[16.82, 16.95], …] }] }
+```
+
+**Lieux** (un médaillon au plus par diapositive, 1 à 5 lieux) : villes, régions, champs de bataille et lieux de
+Paris, à leur première mention dans la période (pas à chaque « à Paris ») ; ~40 à 50 par période.
+- `quand` : passage exact de la narration ; le médaillon (en bas à droite, ~5 s) entre quand la
+  voix l'attaque (`instant`, écrit par `surimpressions.py` ; à défaut, prorata des phrases). Un
+  lieu dit dans les toutes dernières secondes est montré un peu plus tôt pour rester ~4 s.
+- `lon`, `lat` : coordonnées vérifiées (Wikidata, propriété P625, plutôt que de mémoire ; pour
+  un édifice disparu, sa position relevée sur le plan d'époque, ex. la forteresse de la
+  Bastille, 48,8532 N, 2,3680 E, à l'ouest de l'actuelle colonne).
+- `fond` : `france` (lieu en France), `voisins` (Belgique, Rhénanie, Italie du Nord : Fleurus,
+  Arcole, Campo-Formio), `europe` (Égypte, Russie, Algérie), `monde` (Antilles, Guyane, Afrique
+  de l'Ouest), `paris` (plan d'époque zoomé sur ~2 km). La France est toujours repérée.
+  `verifier.py` contrôle le cadre (et avertit d'un lieu en France sur un autre fond).
+- Plans de Paris : `PLANS` dans `carte.py` (fichier Commons, recadrage, points de calage) ; un plan
+  sert les périodes de son champ `slugs`. Calage : 6 à 10 monuments repérés sur l'original
+  (pixels lus sur des agrandissements quadrillés) et leurs coordonnées Wikidata, transformation
+  affine par moindres carrés ; `carte.py` affiche l'écart (Verniquet 1790 : ~15 m en moyenne,
+  29 m au plus). Le crédit (« Plan de Verniquet, 1790 ») est dans le médaillon. Image servie :
+  2 000 px, gris, papier blanchi, ~440 Ko, chargée à la première diapositive qui en a besoin.
+
+**Plusieurs lieux sur une diapositive** (révision du 2026-10-08) : quand la voix nomme plusieurs
+lieux utiles sur un même écran (départ des Tuileries et arrestation à Varennes ; Lyon, Marseille,
+Bordeaux, Toulon…), `lieux` en porte jusqu'à 5, **dans l'ordre de la narration** (chaque `quand`
+est cherché après le début du précédent : « de Dunkerque à Barcelone » puis « à Barcelone »).
+- Un seul médaillon, au **cadre calculé** (`medaillonMultiple`, `src/utils/diaporamas.ts`) : les
+  points occupent au plus 60 % du cadre (le reste est la marge des noms), rapport 4/3. Tous les
+  lieux à Paris : le plan d'époque recadré sur eux (2 km de large au moins). Sinon : le fond SVG
+  le plus large demandé (`france` < `voisins` < `europe` < `monde`), élargi si un point en sort,
+  recadré sans descendre sous 45 % de sa largeur (la France reste reconnaissable) ; un lieu de
+  Paris y devient le point « Paris » (un seul : deux lieux de Paris s'y confondraient). Dans les
+  données, un lieu de Paris mêlé à la province s'écrit d'ailleurs `nom: "Paris"`, `fond: "france"`.
+- Chaque point paraît avec son nom quand la voix le dit (`instant` de chaque lieu), les précédents
+  restent, le dernier pulse ; le médaillon s'ouvre au premier nom et reste ~3 s après le dernier
+  (5 s au moins). Pas de nom sous la carte : les noms sont posés sur la carte, sans chevauchement
+  (à droite, à gauche, au-dessus, en dessous, en biais, puis plus loin avec un filet fin).
+- Rendu : le lecteur (`Diaporama.astro`) pose le fond, la fenêtre et la zone couverte comme pour un
+  lieu seul ; `Surimpressions.astro` ajoute points et noms d'après l'instant de l'audio (pause,
+  reprise et sauts justes), et refait la disposition des noms quand le médaillon change de taille.
+- `verifier.py` : 5 lieux au plus, passages dans l'ordre, instants croissants, fond cohérent
+  (fond élargi signalé, deux lieux de Paris sur une carte plus large refusés), points dans le
+  cadre calculé, avertissement si deux points se touchent.
+
+**Citations** : chaque citation courte (≈ 20 mots, 25 au plus) attribuée à une personne et dite
+entre « » ; pas les cris d'une foule ni les titres d'œuvres. `texte` : sous-chaîne exacte de la
+narration, sans les guillemets (attention aux espaces insécables avant `? ; ! :` du texte) ;
+`prudence: true` quand la narration dit « aurait dit », « dit-on » : l'attribution devient
+« — attribué à … ». Les mots s'inscrivent un à un au rythme de la voix (`mots`, alignement), le
+sous-titre est masqué, l'auteur paraît après le dernier mot ; la citation reste ~2 s. Quand elle
+finit la narration, la pause après la voix est allongée d'autant (max(0,6 s, fin du dernier mot
++ 2 s − durée de la voix), `pauseApres` / `pause_apres`), comptée dans la durée totale, la barre
+de progression et l'enchaînement ; la citation s'efface en fondu avec l'image. Mouvement réduit :
+la citation entière d'un coup.
+
+**Arbitrage** (fait au build, `surimpressionsDe` dans `src/utils/diaporamas.ts`) : une citation et
+un médaillon ne se montrent jamais ensemble ; le médaillon passe après la citation s'il reste
+~3 s, sinon avant s'il tient ~2,5 s, sinon il est omis. Le médaillon est une zone couverte pour
+la caméra (prise et rendue en ~0,9 s) ; sur téléphone, il masque le temps de son passage le
+cartouche de la musique (même coin) ; il monte au-dessus de la frise quand elle s'affiche.
+
+**Chaîne** : `surimpressions.py <slug>` aligne chaque narration concernée (texte dit, lexique
+compris, modèle d'alignement des lectures, ~0,5 s par diapositive), écrit `instant` et `mots`, et
+garde en cache (`.cache/diaporamas/<slug>/surimpressions.json`) les instants des mots avec
+l'empreinte de l'audio : après une nouvelle voix, `verifier.py` signale les instants périmés.

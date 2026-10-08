@@ -43,7 +43,78 @@ function courbe(v: Extract<VisuelEpisode, { type: 'courbe' }>, k: number) {
   trace.sort((a, b) => a[0] - b[0]);
   trace.push([r2(trace.at(-1)![0] + 2), 1]);
   const annees = Array.from({ length: a1 - a0 + 1 }, (_, i) => a0 + i);
-  return { d, X, Y, trace, annees, jours: (s: string) => bornesDate(s)[0] };
+  return { d, X, Y, trace, annees, jours: (s: string) => bornesDate(s)[0], etiquettes: placerEtiquettes(v, X, Y, jours) };
+}
+
+// Étiquettes des repères (spec 12, « Graphiques des épisodes ») : « date · valeur en clair »
+// (« janv. 1791 · 91,5 livres »), jamais de notation d'époque non expliquée ; placées
+// automatiquement là où elles ne touchent ni la courbe, ni les axes, ni les autres repères.
+const MOIS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+/** « janv. 1791 » (« 1791 » pour une année seule). */
+function dateCourte(d: string) {
+  const [a, m] = d.split('-');
+  return m ? `${MOIS[Number(m) - 1]} ${a}` : a;
+}
+/** Valeur en clair : nombre à la française (une ou deux décimales au plus) et unité du point
+ *  (`unite_point`, sinon le premier mot de `unite`). `libelle` du repère, s'il est donné, la
+ *  remplace (formulation rédigée : « moins d'une demi-livre »). */
+function valeurClaire(v: Extract<VisuelEpisode, { type: 'courbe' }>, y: number) {
+  const unite = v.unite_point ?? v.unite.split(' ')[0];
+  const n = Math.abs(y) >= 10 ? Math.round(y * 10) / 10 : Math.round(y * 100) / 100;
+  return `${String(n).replace('.', ',')} ${unite}`;
+}
+const LARGEUR_CAR = 8.8, HAUT_TEXTE = 15, BAS_TEXTE = 5; // texte à 18 px (estimation prudente)
+function placerEtiquettes(v: Extract<VisuelEpisode, { type: 'courbe' }>, X: (j: number) => number, Y: (y: number) => number, jours: number[]) {
+  const pts = v.points.map(([, y], i) => [X(jours[i]), Y(y)] as [number, number]);
+  const pris: [number, number, number, number][] = [];
+  const reperes = v.reperes.map((rp) => {
+    const y = v.points.find(([d]) => d === rp.date)?.[1] ?? 0;
+    return { rp, x: X(bornesDate(rp.date)[0]), y: Y(y), texte: `${dateCourte(rp.date)} · ${rp.libelle ?? valeurClaire(v, y)}` };
+  });
+  // Un rectangle (marge de 4 px) touche-t-il la courbe, un repère ou une étiquette déjà posée ?
+  const touche = ([x0, y0, x1, y1]: [number, number, number, number], soi: { x: number; y: number }) => {
+    const a = [x0 - 4, y0 - 4, x1 + 4, y1 + 4];
+    const dedans = (x: number, y: number) => x >= a[0] && x <= a[2] && y >= a[1] && y <= a[3];
+    for (let i = 1; i < pts.length; i++) {
+      const [p, q] = [pts[i - 1], pts[i]], n = Math.ceil(Math.hypot(q[0] - p[0], q[1] - p[1]) / 2) + 1;
+      for (let k = 0; k <= n; k++) if (dedans(p[0] + ((q[0] - p[0]) * k) / n, p[1] + ((q[1] - p[1]) * k) / n)) return true;
+    }
+    for (const r of reperes) if (Math.abs(r.x - (x0 + x1) / 2) < (x1 - x0) / 2 + 8 && Math.abs(r.y - (y0 + y1) / 2) < (y1 - y0) / 2 + 8) return true;
+    for (const b of pris) if (!(x1 + 6 < b[0] || x0 - 6 > b[2] || y1 + 4 < b[1] || y0 - 4 > b[3])) return true;
+    return false;
+  };
+  return reperes.map((r) => {
+    const l = r.texte.length * LARGEUR_CAR;
+    // Positions candidates (décalage de la ligne de base, ancrage), de la plus naturelle à la plus lointaine.
+    const essais: [number, number, 'start' | 'middle' | 'end'][] = [];
+    // Au-delà de ~40 px, un filet relie l'étiquette à son point.
+    for (let e = 0; e <= 200; e += 16) {
+      essais.push([0, -14 - e, 'middle'], [0, 28 + e, 'middle'], [12, -12 - e, 'start'], [-12, -12 - e, 'end'],
+        [12, 26 + e, 'start'], [-12, 26 + e, 'end'], [14 + e, 6, 'start'], [-14 - e, 6, 'end']);
+    }
+    let choix: [number, number, number, number, number, number, string] | null = null;
+    for (const [dx, dy, ancre] of essais) {
+      const bx = r.x + dx, by = r.y + dy;
+      const x0 = ancre === 'start' ? bx : ancre === 'end' ? bx - l : bx - l / 2;
+      const rect: [number, number, number, number] = [x0, by - HAUT_TEXTE, x0 + l, by + BAS_TEXTE];
+      // Dans la zone du graphique : ni sur les graduations (gauche, bas), ni hors du cadre.
+      if (rect[0] < C.l + 2 || rect[2] > C.W - 2 || rect[1] < 2 || rect[3] > C.b - 4) continue;
+      if (touche(rect, r)) continue;
+      choix = [bx, by, ...rect, ancre];
+      break;
+    }
+    // Repli (aucune place libre) : au-dessus, ancré pour rester dans le cadre.
+    if (!choix) {
+      const ancre = r.x + l / 2 > C.W - 2 ? 'end' : r.x - l / 2 < C.l + 2 ? 'start' : 'middle';
+      const x0 = ancre === 'start' ? r.x : ancre === 'end' ? r.x - l : r.x - l / 2;
+      choix = [r.x, r.y - 16, x0, r.y - 31, x0 + l, r.y - 11, ancre];
+    }
+    pris.push([choix[2], choix[3], choix[4], choix[5]]);
+    const loin = Math.abs(choix[1] - r.y) > 44;
+    // Filet vertical du point vers le bord le plus proche de l'étiquette.
+    const filet = loin ? (choix[1] < r.y ? [r.y - 8, choix[5] + 3] : [r.y + 8, choix[3] - 3]) : null;
+    return { x: r.x, y: r.y, tx: choix[0], ty: choix[1], ancre: choix[6], texte: r.texte, rp: r.rp, filet };
+  });
 }
 
 // --- Carte ------------------------------------------------------------------------------------
@@ -146,20 +217,13 @@ const statique = mode === 'livre';
                   </g>
                 ))}
                 <path class="ev-courbe__ligne" d={c.d} clip-path={`url(#${uid}-trace-${k})`} />
-                {v.reperes.map((rp, j) => {
-                  const j0 = c.jours(rp.date);
-                  const y = v.points.find(([d]) => d === rp.date)?.[1] ?? 0;
-                  const x = c.X(j0), yy = c.Y(y);
-                  const haut = yy > C.h + 40;
-                  const [dx, dy] = rp.etiquette ?? [0, haut ? -14 : 26];
-                  const tx = Math.min(C.r - 4, Math.max(C.l + 4, x + dx));
-                  return (
-                    <g class="ev-courbe__repere anim" data-t={quandEl(k, rp.quand, j)} data-d="0.8">
-                      <circle cx={x} cy={yy} r="5" />
-                      <text x={tx} y={yy + dy} text-anchor={rp.ancre ?? (tx > C.r - 60 ? 'end' : tx < C.l + 60 ? 'start' : 'middle')}>{rp.libelle}</text>
-                    </g>
-                  );
-                })}
+                {c.etiquettes.map((et, j) => (
+                  <g class="ev-courbe__repere anim" data-t={quandEl(k, et.rp.quand, j)} data-d="0.8">
+                    {et.filet && <line class="ev-courbe__filet" x1={et.x} x2={et.x} y1={et.filet[0].toFixed(1)} y2={et.filet[1].toFixed(1)} />}
+                    <circle cx={et.x} cy={et.y} r="5" />
+                    <text x={et.tx.toFixed(1)} y={et.ty.toFixed(1)} text-anchor={et.ancre}>{t(et.texte)}</text>
+                  </g>
+                ))}
               </svg>
               <p class="ev-source">{t(`Source : ${v.source}`)}</p>
             </Fragment>
@@ -307,7 +371,8 @@ const statique = mode === 'livre';
     text-align: center;
     font-style: italic;
   }
-  .ev-titre__unite { font-style: normal; font-variant: small-caps; letter-spacing: 0.05em; color: var(--c-texte-doux); font-size: 0.85em; }
+  /* L'unité est dite une fois, sous le titre. */
+  .ev-titre__unite { display: block; margin-top: 0.15em; font-style: normal; font-variant: small-caps; letter-spacing: 0.05em; color: var(--c-texte-doux); font-size: 0.85em; }
   .ev-source {
     flex: none;
     max-width: 46rem;
@@ -394,6 +459,7 @@ const statique = mode === 'livre';
   .ev-courbe__repere { opacity: var(--p); }
   .ev-courbe__repere circle { fill: var(--c-fond); stroke: var(--c-texte); stroke-width: 2; }
   .ev-courbe__repere text { fill: var(--c-texte); font-size: 18px; }
+  .ev-courbe__filet { stroke: var(--c-texte-doux); stroke-width: 1; }
 
   /* Carte : terres en gris très clair, France un peu plus soutenue ; zones hachurées, flèches
      en trait plein qui se dessinent, villes rebelles en points noirs cerclés. */
@@ -420,18 +486,24 @@ const statique = mode === 'livre';
   .ev-signe--rebelle { width: 0.75em; height: 0.75em; border-radius: 50%; background: var(--c-texte); margin-inline: 0.3em 0.8em; }
   .ev-signe--zone { border: 1px dashed #3d3b37; background: repeating-linear-gradient(45deg, #3d3b37 0 1.5px, transparent 1.5px 5px); }
 
-  /* Document d'époque : la page entière, puis un léger zoom sur la ligne lue, qui se surligne
-     (fond gris par transparence et trait noir dessous, qui s'étendent de gauche à droite). */
+  /* Document d'époque : la page entière, puis un léger zoom sur la ligne lue, qui s'éclaire
+     d'un halo doux (papier éclairci et texte plus contrasté, bords flous) plutôt qu'un
+     rectangle net. Le halo déborde un peu du cadre de la ligne. */
   .ev-doc { position: relative; flex: 1 1 auto; min-height: 0; width: 100%; overflow: hidden; }
   .ev-doc__page { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
   .ev-doc__page img { display: block; width: 100%; height: 100%; border: 1px solid var(--c-filet); }
   .ev-doc__surligne {
     position: absolute;
-    background: rgba(40, 38, 34, 0.13);
-    border-bottom: 1px solid var(--c-texte);
-    transform-origin: 0 50%;
-    transform: scaleX(var(--p));
-    mix-blend-mode: multiply;
+    margin: -1.2% -3%;
+    padding: 1.2% 3%;
+    box-sizing: content-box;
+    opacity: var(--p);
+    -webkit-backdrop-filter: brightness(1.22) contrast(1.25);
+    backdrop-filter: brightness(1.22) contrast(1.25);
+    -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
   }
   .ev-doc__lignes { margin: var(--e-2) 0 0; padding-left: var(--e-3); font-style: italic; }
 

@@ -16,8 +16,10 @@
 //   reprise mémorisée (localStorage, toujours dans un try/catch).
 // - Animations d'entrée (spec 12, révision du 2026-10-07) : fondu enchaîné avec révélation
 //   gris → couleur, léger recul (composé avec la caméra, sans la décaler), cartouche décalé,
-//   sous-titre en fondu croisé, carton de changement d'acte (2 s, compté dans la durée totale,
-//   passable d'un clic, de Entrée ou de →). Le carton se fige avec la pause ; l'entrée
+//   sous-titre en fondu croisé, carton de changement d'acte (12 s, musique au premier plan, compté dans la durée totale,
+//   passable d'un clic, de Entrée ou de →). Ses 3,5 dernières secondes sont l'ouverture en deux
+//   volets, sur un détail zoomé de l'image (`image.ouverture`) puis un recul de 5 s avec la voix ;
+//   passé, le carton joue aussitôt son ouverture. Le carton se fige avec la pause ; l'entrée
 //   d'une image (1,8 s au plus) va toujours à son terme.
 // - Frise du temps (spec 12, révision du 2026-10-07) : la période graduée par année, les actes
 //   en segments, un curseur daté. Dans chaque carton d'acte, le curseur glisse de la date
@@ -30,7 +32,8 @@
 import { typographie } from '../utils/typographie.mjs';
 import CarteCitation from './CarteCitation.astro';
 import EpisodeVisuels from './EpisodeVisuels.astro';
-import { CARTON, PAUSE, SAUT_JOURS, etapesCamera, friseDe, minutageLecture, phrasesDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
+import Surimpressions from './Surimpressions.astro';
+import { CARTON, PAUSE, SAUT_JOURS, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
 
 interface Props { diaporama: Diaporama }
 const { diaporama: d } = Astro.props;
@@ -47,29 +50,35 @@ function legende(x: Diaporama['diapositives'][number]) {
   return `<span class="notice">${tete}.${lieu}</span> <a class="notice__commons" href="${esc(urlCommons(i.commons))}" rel="noopener" target="_blank">Commons</a>`;
 }
 
-/** Cartouche du lecteur : *titre*, puis auteur et date (HTML échappé). */
+/** Cartouche du lecteur (spec 12, « Cartouches lisibles ») : trois lignes, *titre court*,
+ *  auteur, « date · technique » (HTML échappé). Le titre officiel reste dans le livre et l'`alt`. */
 function cartouche(x: Diaporama['diapositives'][number]) {
   const i = x.image;
-  const sous = [i.auteur && esc(t(i.auteur)), i.date && esc(t(i.date))].filter(Boolean).join(', ');
-  return `<cite>${esc(t(i.titre))}</cite>${sous ? `<span>${sous}</span>` : ''}`;
+  const quand = [i.date && esc(t(i.date)), i.technique && esc(t(i.technique))].filter(Boolean).join(' · ');
+  return `<cite>${esc(t(i.titre_court || i.titre))}</cite>${i.auteur ? `<span>${esc(t(i.auteur))}</span>` : ''}${quand ? `<span>${quand}</span>` : ''}`;
 }
 
+/** Cartouche d'un intermède dans le lecteur : *œuvre* et compositeur rédigés à la main
+ *  (`cartouche`), sans troncature ; l'interprète au survol seulement. */
+function cartoucheIntermede(c: Intermede) {
+  if (!c.cartouche) return cartoucheChant(c);
+  const voix = [c.interprete && esc(t(c.interprete)), c.enregistrement && esc(t(c.enregistrement))].filter(Boolean).join(', ');
+  return `<cite>${esc(t(c.cartouche.oeuvre))}</cite><span>${esc(t(c.cartouche.compositeur))}</span>${voix ? `<span class="lecteur__legende-voix">${voix}</span>` : ''}`;
+}
 /** Cartouche d'un intermède chanté : *titre*, auteur et date, interprète et enregistrement. */
 function cartoucheChant(c: Intermede) {
   const sous = [c.auteur && esc(t(c.auteur)), c.date && esc(t(c.date))].filter(Boolean).join(', ');
   const voix = [c.interprete && esc(t(c.interprete)), c.enregistrement && esc(t(c.enregistrement))].filter(Boolean).join(', ');
   return `<cite>${esc(t(c.titre))}</cite>${sous ? `<span>${sous}</span>` : ''}${voix ? `<span class="lecteur__legende-voix">${voix}</span>` : ''}`;
 }
-/** Cartouche de la musique de fond, sur une ligne : titre court, nom du compositeur, année.
- *  « Symphonie nᵒ 40 en sol mineur : Finale… » → « Symphonie nᵒ 40 en sol mineur » ;
- *  « Wolfgang Amadeus Mozart (compositeur autrichien) » → « Mozart ». L'interprète n'apparaît
- *  qu'au survol (et dans les crédits). */
+/** Cartouche de la musique de fond, sur deux lignes rédigées à la main (`cartouche`) :
+ *  « Symphonie nº 87, menuet » / « Joseph Haydn, 1785 », sans troncature. À défaut, le titre et
+ *  le compositeur tels quels. L'interprète n'apparaît qu'au survol (et dans les crédits). */
 function cartoucheMusique(p: PisteFond) {
-  const titre = p.titre.replace(/\s*\([^)]*\)/g, '').split(' : ')[0].trim();
-  const nom = p.compositeur.split(/ \(|, /)[0].trim().split(' ').pop() ?? '';
-  const auteur = [nom, p.date].filter(Boolean).join(', ');
+  const oeuvre = p.cartouche?.oeuvre ?? p.titre;
+  const auteur = p.cartouche?.compositeur ?? [p.compositeur, p.date].filter(Boolean).join(', ');
   const voix = p.interprete ? `<span class="m-voix">${esc(t(p.interprete))}</span>` : '';
-  return `<span class="m-ligne"><cite>${esc(t(titre))}</cite>${auteur ? `<span class="m-auteur"> · ${esc(t(auteur))}</span>` : ''}</span>${voix}`;
+  return `<span class="m-ligne"><cite>${esc(t(oeuvre))}</cite></span><span class="m-auteur">${esc(t(auteur))}</span>${voix}`;
 }
 const intermedeApres = new Map((d.musique?.intermedes ?? []).filter((c) => c.duree).map((c) => [c.apres, c]));
 // Lectures d'époque et épisodes (spec 12, révision du 2026-10-07) : insérés après la voix d'une
@@ -109,6 +118,27 @@ function phrasesEpisode(e: Episode) {
 const acteDe = (n: number) => [...d.actes].reverse().find((a) => a.debut <= n) ?? d.actes[0];
 const frise = friseDe(d);
 
+// Cartes de lieu et citations en surimpression (spec 12, 2026-10-07) : fenêtres d'affichage
+// calculées au build ; la citation est découpée en mots (`.m`, rang `data-k` dans `motsLus` ; la
+// ponctuation détachée suit le mot précédent).
+const plan = planParis(d.slug);
+function surimpressions(x: Diaporama['diapositives'][number]) {
+  const s = surimpressionsDe(x, fonds, plan);
+  if (!s.citation) return { lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null, citation: null };
+  let k = 0;
+  // Le guillemet fermant fait corps avec le dernier mot : il paraît avec lui.
+  const jetons = t(s.citation.texte).split(/( +)/);
+  const dernier = jetons.findLastIndex((m) => m.trim());
+  const html = jetons.map((m, j) => (/^ +$/.test(m) ? ' '
+    : `<span class="m" data-k="${/[\p{L}\p{N}]/u.test(m) ? k++ : Math.max(0, k - 1)}">${esc(m)}${j === dernier ? '\u00a0»' : ''}</span>`)).join('');
+  const c = s.citation;
+  const mots = k === c.mots.length ? c.mots : Array(k).fill(c.mots[0]); // repli : tous ensemble
+  return {
+    lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null,
+    citation: { a: c.a, b: c.b, fin: c.fin, mots, html, auteur: t(`— ${c.prudence ? 'attribué à ' : ''}${c.auteur}`) },
+  };
+}
+
 // Données transmises au script (textes déjà mis en typographie française).
 const donnees = {
   slug: d.slug,
@@ -117,20 +147,31 @@ const donnees = {
   actes: d.actes.map((a) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut })),
   diapos: d.diapositives.map((x, k) => ({
     n: x.n,
+    // Clé stable de la reprise : le fichier Commons de l'image, qui survit aux renumérotations.
+    cle: x.image.commons,
     img: urlMedia(d.slug, x.image.fichier),
-    l: x.image.largeur ?? 1600,
-    h: x.image.hauteur ?? 1200,
+    // Zone utile (spec 12, « Sans bordures ») : le lecteur ne voit que cette partie de l'image ;
+    // `l` × `h` en sont les dimensions (px de l'image servie) et tous les cadres (caméra,
+    // ouverture, intermède) y sont exprimés, ramenés dedans.
+    u: zoneUtile(x),
+    l: (x.image.largeur ?? 1600) * (zoneUtile(x)[2] - zoneUtile(x)[0]),
+    h: (x.image.hauteur ?? 1200) * (zoneUtile(x)[3] - zoneUtile(x)[1]),
     alt: t(x.image.titre),
     legende: cartouche(x),
     texte: t(x.narration),
     audio: x.audio ? urlMedia(d.slug, x.audio.fichier) : '',
     duree: x.audio?.duree ?? 0,
-    camera: etapesCamera(x),
+    // Pause après la voix (allongée si la narration finit par une citation en surimpression).
+    pause: pauseApres(x),
+    camera: etapesCamera(x).map((e) => ({ ...e, c: versUtile(e.c, zoneUtile(x)) })),
+    // Détail zoomé découvert à la sortie du carton d'acte (première diapositive d'un acte).
+    ouv: x.image.ouverture ? versUtile(x.image.ouverture, zoneUtile(x)) : null,
     date: frise ? { ...frise.diapos[k], libelle: t(frise.diapos[k].libelle) } : null,
+    ...surimpressions(x),
     // Segment joué après la voix : intermède chanté, lecture d'époque ou épisode.
     suite: intermedeApres.has(x.n) ? (() => {
       const c = intermedeApres.get(x.n)!;
-      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheChant(c), paroles: c.paroles.map(([s, v]) => [s, t(v)]), instrumental: !!c.instrumental };
+      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheIntermede(c), paroles: c.paroles.map(([s, v]) => [s, t(v)]), instrumental: !!c.instrumental, cadre: c.cadre ? versUtile(c.cadre, zoneUtile(x)) : null };
     })() : lectureApres.has(x.n) ? (() => {
       const l = lectureApres.get(x.n)!;
       const m = minutageLecture(l);
@@ -185,6 +226,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       {[...lectureApres.values()].map((l) => <CarteCitation lecture={l} portrait={portraitDe(l)} fond={fondDe(l)} mode="lecteur" />)}
       {[...episodeApres.values()].map((e) => <EpisodeVisuels episode={e} slug={d.slug} fonds={fonds} mode="lecteur" />)}
       {frise && <Fragment set:html={friseHtml('frise-t--surimpression')} />}
+      <Surimpressions diaporama={d} fonds={fonds} plan={plan} />
       <div class="lecteur__depart">
         <button type="button" class="lecteur__bouton-depart" data-action="lancer">Lancer le diaporama</button>
         <button type="button" class="lecteur__bouton-depart lecteur__reprendre" data-action="reprendre" hidden></button>
@@ -279,15 +321,24 @@ const sectionsLivre = d.actes.map((a, i) => ({
 <script>
   type Rect = [number, number, number, number]; // x0, y0, x1, y1 (fractions de l'image)
   interface Diapo {
-    n: number; img: string; l: number; h: number; alt: string; legende: string; texte: string;
-    audio: string; duree: number; camera: { c: Rect; t: number }[];
+    /** `u` : zone utile (fractions de l'image) ; `l` × `h` : ses dimensions (px). Les cadres de la
+     *  caméra, l'ouverture et le cadre d'un intermède sont en fractions de la zone utile. */
+    n: number; cle: string; img: string; u: Rect; l: number; h: number; alt: string; legende: string; texte: string;
+    audio: string; duree: number; pause: number; camera: { c: Rect; t: number }[];
+    /** Détail zoomé sur lequel s'ouvre le carton d'acte (spec 12, « Sortie du carton d'acte »). */
+    ouv: Rect | null;
     /** Frise : jours (depuis 1970) du premier et du dernier jour daté, positions en %, libellé. */
     date: DateFrise | null;
     /** Segment joué après la voix (et sa pause) : intermède chanté, lecture ou épisode. */
     suite: Suite | null;
+    /** Carte de lieu : fenêtre [a, b) (s de l'audio), point (%) dans le fond, partie du plan de
+     *  Paris montrée (`vue` : taille ; position du fond CSS). */
+    lieu: { a: number; b: number; nom: string; fond: string; x: number; y: number; ratio: number; vue?: string; credit?: string; points?: unknown[] } | null;
+    /** Citation : fenêtre [a, b), début de chaque mot, fin du dernier, HTML des mots, auteur. */
+    citation: { a: number; b: number; fin: number; mots: number[]; html: string; auteur: string } | null;
   }
   /** Intermède chanté : paroles [instant, vers]. */
-  interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string][]; instrumental: boolean }
+  interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string][]; instrumental: boolean; cadre: Rect | null }
   /** Lecture d'époque : instant de début de chaque mot (alignement forcé, ou prorata) et, pour
    *  chaque phrase, [début (s), premier mot, mot suivant le dernier]. */
   interface SuiteLecture { type: 'lecture'; id: string; src: string; duree: number; mots: number[]; phrases: [number, number, number][]; date: DateFrise | null }
@@ -303,11 +354,28 @@ const sectionsLivre = d.actes.map((a, i) => ({
     fond: Piste[][];
   }
 
-  // Caméra : transition douce vers chaque cadre, commencée un peu avant le passage, puis
-  // dérive très lente (resserrement de ~3 %) jusqu'à l'étape suivante.
-  const TRANSITION = 2.5; // s
-  const AVANCE = 0.6;     // s : la transition commence un peu avant le passage
-  const DERIVE = 0.03;
+  // Caméra (spec 12, « Caméra calme et lente ») : chaque étape retenue est rejointe par une
+  // transition dont la durée suit l'ampleur du mouvement (3 à 6 s, vitesse plafonnée), arrivée
+  // peu après le passage ; entre deux transitions, la vue « respire » dans un seul sens.
+  // Toutes les vues sont des rectangles aux proportions de la zone utile (cf. `vue`) : entre deux
+  // d'entre elles, le chemin est une homothétie (zoom logarithmique, déplacement couplé), sans arc.
+  const VITESSE_ZOOM = 0.22;   // plafond, en log d'échelle par seconde (au plus fort)
+  const VITESSE_GLISSE = 0.3;  // plafond, en fraction de la scène par seconde (au plus fort)
+  // Les durées visent 5 % sous les plafonds : l'horloge lissée peut accélérer de 5 % pour
+  // rattraper l'audio, la vitesse réelle reste ainsi sous le plafond.
+  const VISE_ZOOM = VITESSE_ZOOM / 1.05, VISE_GLISSE = VITESSE_GLISSE / 1.05;
+  const DUREE_MIN = 3;         // s : une transition dure de 3 à 6 s selon son ampleur (plafonds ci-dessus)
+  const RETARD = 1;            // s : arrivée visée, après le passage
+  const TENUE_MIN = 1;         // s : arrêt minimal entre deux transitions
+  const ECART_MIN = 5;         // s : moins entre deux passages → l'étape est ignorée
+  const MICRO = 0.12;          // écart de zoom (log) et de position (fraction de la scène) en deçà duquel l'étape est ignorée
+  // Respiration (« Moins de tenues statiques », révisé) : resserrement à sens unique de 4 % au
+  // plus, glissement d'un tiers de la marge libre, vitesse constante après une mise en route douce
+  // (et arrêt doux, pour se raccorder sans à-coup à la transition suivante ou à la fin de la voix).
+  const SOUFFLE = 0.04;
+  const SOUFFLE_VITESSE = 0.005; // par seconde : une tenue courte respire moins
+  const GLISSE = 1 / 3;
+  const MISE_EN_ROUTE = 2.5;     // s (mise en route, et arrêt)
   // Entrée d'une image (spec 12, « Animations d'entrée ») : fondu enchaîné, révélation
   // gris → couleur, recul de ~4 % jusqu'au cadre de la caméra. Horloge propre à l'entrée,
   // indépendante de l'audio : la caméra n'est jamais décalée. L'entrée est une transition
@@ -318,6 +386,15 @@ const sectionsLivre = d.actes.map((a, i) => ({
   const RECUL = 0.04;       // agrandissement de départ
   const DUREE_RECUL = 1.5;  // s
   const FONDU_REDUIT = 0.3; // s, prefers-reduced-motion : fondu simple, ni recul ni gris
+  // Sortie du carton d'acte (spec 12, « Sortie du carton d'acte en deux volets », révision du
+  // 2026-10-08) : les volets s'ouvrent pendant les dernières secondes du carton (sa durée totale ne
+  // change pas) ; la voix commence à la fin de l'ouverture. Si la diapositive a un détail
+  // d'ouverture (`ouv`), l'image est découverte cadrée sur ce détail, avec une très légère
+  // poussée, puis la caméra recule lentement vers son premier cadre pendant que la voix commence.
+  const OUVERTURE = 3.5;        // s : ouverture des volets (prise sur la fin du carton)
+  const POUSSEE = 0.025;        // resserrement pendant l'ouverture (arrêt doux à la fin)
+  const RECUL_OUVERTURE = 5;    // s : recul du détail vers le premier cadre (après l'ouverture)
+  const RAMPE_RECUL = 0.4;      // part du recul en mise en route (et autant en arrêt)
   // Frise du temps en surimpression : durée d'affichage (le curseur glisse de 0,5 à 1,5 s, cf. CSS).
   const SURIMPRESSION = 3.6; // s
   const adoucir = (t: number) => { const u = Math.min(1, Math.max(0, t)); return u * u * (3 - 2 * u); };
@@ -327,6 +404,43 @@ const sectionsLivre = d.actes.map((a, i) => ({
     const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, w = ((x1 - x0) * k) / 2, h = ((y1 - y0) * k) / 2;
     return [cx - w, cy - h, cx + w, cy + h];
   }
+  /** Avancement (0 → 1) d'un mouvement de `d` secondes à l'instant `t` : vitesse constante, avec
+   *  mise en route et arrêt de `m` secondes (rampes en smoothstep : vitesse et accélération
+   *  continues). La vitesse au plus fort vaut 1 / (d − m). */
+  function profil(t: number, d: number, m: number) {
+    if (t <= 0 || d <= 0) return t >= d ? 1 : 0;
+    if (t >= d) return 1;
+    m = Math.min(m, d / 2);
+    const I = (u: number) => u * u * u - (u * u * u * u) / 2; // ∫ smoothstep, I(1) = 1/2
+    const tot = d - m;
+    if (t < m) return (m * I(t / m)) / tot;
+    if (t <= d - m) return (m / 2 + t - m) / tot;
+    return 1 - (m * I((d - t) / m)) / tot;
+  }
+  /** Entre deux vues de mêmes proportions : rapport de largeur `r`, et la part `s` (0 → 1) du
+   *  zoom logarithmique ramenée sur l'interpolation linéaire des bords (homothétie : le point
+   *  fixe reste immobile à l'écran, le centre avance à vitesse constante). */
+  const partLog = (r: number, s: number) => (Math.abs(r - 1) < 1e-4 ? s : (1 - Math.pow(r, s)) / (1 - r));
+  const trajet = (a: Rect, b: Rect, s: number) => melanger(a, b, partLog((b[2] - b[0]) / (a[2] - a[0]), s));
+  /** Ampleur d'un trajet : zoom (|log du rapport d'échelle|) et déplacement du centre de l'écran
+   *  (en fraction de la scène, constant le long du trajet). */
+  function ampleur(a: Rect, b: Rect) {
+    const wa = a[2] - a[0], ha = a[3] - a[1], r = (b[2] - b[0]) / wa, lr = Math.log(r);
+    const k = Math.abs(r - 1) < 1e-4 ? 1 : lr / (r - 1);
+    const g = Math.max(Math.abs((b[0] + b[2] - a[0] - a[2]) / 2) / wa, Math.abs((b[1] + b[3] - a[1] - a[3]) / 2) / ha) * k;
+    return { zoom: Math.abs(lr), glisse: g };
+  }
+  /** Vue respirante après `t` secondes d'une tenue de `d` secondes sur la vue `c` : resserrement
+   *  à sens unique, glissement dans une direction propre à la diapositive `n` et à l'étape `k`
+   *  (angle d'or). Le sous-cadre reste dans `c` (et donc dans l'image). */
+  function souffle(c: Rect, t: number, d: number, n: number, k: number): Rect {
+    const m = Math.min(MISE_EN_ROUTE, d / 2);
+    const serre = Math.min(SOUFFLE, SOUFFLE_VITESSE * Math.max(0, d - m));
+    if (serre <= 0) return c;
+    const a = n * 2.39996 + k * 1.7, g = (GLISSE * serre) / 2;
+    const r = echelle(c, 1 - serre), ox = Math.cos(a) * g * (c[2] - c[0]), oy = Math.sin(a) * g * (c[3] - c[1]);
+    return trajet(c, [r[0] + ox, r[1] + oy, r[2] + ox, r[3] + oy], profil(t, d, m));
+  }
   const CLE_ST = 'diaporamas-sous-titres';
   const CLE_MUSIQUE = 'diaporamas-musique';
   const CLE_VOLUME = 'diaporamas-musique-volume';
@@ -334,7 +448,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
   // réglé (80 % par défaut = valeurs ci-dessous). Fichiers normalisés à -20 LUFS, voix vers
   // -19,5 LUFS : sous la voix, la musique est ~20 dB plus bas ; un peu plus présente dans les
   // respirations ; elle remonte pendant les cartons d'acte et se tait pendant un intermède chanté.
-  const GAINS = { arret: 0, chant: 0, voix: 0.1, respiration: 0.3, carton: 0.6 } as const;
+  const GAINS = { arret: 0, chant: 0, voix: 0.1, respiration: 0.3, carton: 1 } as const;
   type EtatMusique = keyof typeof GAINS;
   const VOLUME_DEFAUT = 0.8;
   const FONDU_PISTE = 3;   // s : enchaînement de deux pistes d'un même acte (fondus inclus dans les fichiers)
@@ -360,6 +474,42 @@ const sectionsLivre = d.actes.map((a, i) => ({
     zero() { this.ecoule = 0; this.depuis = 0; }
     relancer() { if (!this.depuis) this.depuis = maintenant(); }
     figer() { if (this.depuis) { this.ecoule += maintenant() - this.depuis; this.depuis = 0; } }
+  }
+
+  /** Horloge lissée (spec 12, « Sans bordures… », 2026-10-08) : `audio.currentTime` avance par
+   *  crans irréguliers (mises à jour du moteur audio, ~10 à 250 ms), d'où une caméra saccadée. Entre
+   *  deux mises à jour, l'instant avance avec l'horloge de l'écran (`performance.now()` ×
+   *  `playbackRate`) ; l'écart à l'audio est rattrapé en douceur en modulant la vitesse (±5 % au
+   *  plus), sans jamais reculer ni sauter. En pause, à l'arrêt ou après un saut (écart de plus de
+   *  0,3 s), l'instant est celui de l'audio, exactement. */
+  class HorlogeLissee {
+    t = 0; brut = -1; p = 0; src = ''; ecart = 0; v = 1; jouait = false; parti = false;
+    /** Instant de l'image en cours (horodatage de requestAnimationFrame, s) : la caméra avance
+     *  alors d'exactement une image par image affichée, quel que soit le moment du calcul. */
+    image = 0;
+    lire(a: HTMLAudioElement) {
+      const perf = performance.now() / 1000;
+      const brut = a.currentTime || 0, r = a.playbackRate || 1;
+      const now = this.image && Math.abs(perf - this.image) < 0.1 ? this.image : perf;
+      const joue = !a.paused && !a.ended && !a.seeking;
+      if (!joue || !this.jouait || a.src !== this.src || now - this.p > 0.25 || Math.abs(brut - this.t) > 0.3) {
+        this.t = brut; this.ecart = 0; this.v = r; this.parti = false;
+      } else if (!this.parti) {
+        // L'audio n'a pas encore avancé depuis le départ (latence de démarrage) : on l'attend.
+        this.t = brut;
+        this.parti = brut !== this.brut;
+      } else {
+        this.t += Math.min(0.1, Math.max(0, now - this.p)) * this.v;
+        if (brut !== this.brut) {
+          // Nouvelle valeur de l'audio : écart filtré (la valeur lue a quelques ms de retard,
+          // variables), puis vitesse corrigée pour le résorber en ~1 s.
+          this.ecart += 0.25 * (brut - this.t - this.ecart);
+          this.v = r * (1 + Math.max(-0.05, Math.min(0.05, this.ecart)));
+        }
+      }
+      this.brut = brut; this.p = now; this.src = a.src; this.jouait = joue;
+      return this.t;
+    }
   }
 
   function monter(racine: HTMLElement) {
@@ -391,7 +541,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
 
     // Durées : chaque diapositive dure son carton éventuel + sa voix + la pause (6 s si la
     // voix manque).
-    const voixEtPause = D.diapos.map((x) => (x.duree || 6) + D.pause);
+    const voixEtPause = D.diapos.map((x) => (x.duree || 6) + x.pause);
     // Segment éventuel après la voix (intermède chanté, lecture, épisode), suivi lui aussi de la pause.
     const suiteEtPause = D.diapos.map((x) => (x.suite ? x.suite.duree + D.pause : 0));
     const durees = D.diapos.map((_, k) => prelude[k] + voixEtPause[k] + suiteEtPause[k]);
@@ -408,6 +558,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     });
     segments.forEach((s, i) => (s.style.flexGrow = String(bornes[i].t1 - bornes[i].t0)));
 
+    const horloge = new HorlogeLissee(), horlogeSuite = new HorlogeLissee();
     let i = 0;            // diapositive courante (index)
     let lance = false;    // le diaporama a-t-il démarré ?
     let joue = false;     // lecture en cours ?
@@ -420,9 +571,28 @@ const sectionsLivre = d.actes.map((a, i) => ({
     // Carton d'acte en cours (horloge figée par la pause).
     let enCarton = false;
     const chronoCarton = new Chrono();
+    // Ouverture du carton en cours (ses dernières secondes) : l'image est posée dessous, les volets
+    // s'écartent au rythme de l'horloge du carton.
+    let ouvre = false;
+    /** Secondes écoulées dans l'ouverture du carton (0 à OUVERTURE). */
+    const tempsOuverture = () => Math.min(OUVERTURE, Math.max(0, chronoCarton.t - (prelude[i] - OUVERTURE)));
     // Entrée de l'image visible (fondu, gris → couleur, recul).
     let enEntree = false;
     const chronoEntree = new Chrono();
+    // Entrée sous un écran couvrant (carton d'acte, carte de lecture, panneau d'épisode) : pas de
+    // fondu enchaîné depuis l'ancienne image (elle réapparaîtrait pendant que l'écran s'efface) ;
+    // la nouvelle est posée opaque dessous et l'écran ne se lève qu'une fois l'image décodée.
+    let entreeNette = false;
+    /** Attend que l'image soit décodée (au plus ~1,5 s) avant de lever l'écran qui la couvre. */
+    function quandPrete(img: HTMLImageElement, fn: () => void) {
+      let fait = false;
+      const une = () => { if (!fait) { fait = true; fn(); } };
+      window.setTimeout(une, 1500);
+      (img.complete && img.naturalWidth ? img.decode() : new Promise((ok) => {
+        img.addEventListener('load', ok, { once: true });
+        img.addEventListener('error', ok, { once: true });
+      }).then(() => img.decode())).catch(() => {}).then(une);
+    }
     // Segment après la voix (intermède chanté, lecture, épisode) : en cours, ou terminé (pause
     // avant la diapositive suivante).
     let enSuite = false, suiteFini = false;
@@ -432,18 +602,20 @@ const sectionsLivre = d.actes.map((a, i) => ({
     // cadre visé en entier dans la zone que ne couvrent ni le cartouche ni les bandeaux.
     function cadre(c: HTMLElement, x: Diapo) {
       const W = scene.clientWidth, H = scene.clientHeight;
+      // La zone utile couvre la scène (zoom au besoin) : jamais de bord ni de bande hors de l'œuvre.
       const s = Math.max(W / x.l, H / x.h);
       c.style.width = `${W}px`;
       c.style.height = `${H}px`;
       const img = c.querySelector('img')!;
-      img.style.width = `${x.l * s}px`;
-      img.style.height = `${x.h * s}px`;
+      img.style.width = `${(x.l * s) / (x.u[2] - x.u[0])}px`;
+      img.style.height = `${(x.h * s) / (x.u[3] - x.u[1])}px`;
     }
 
     // Hauteurs couvertes en haut (cartouche, acte en plein écran) et en bas (sous-titre,
     // progression et contrôles en plein écran) : le cadre visé est placé entre les deux.
     // Le cartouche est mesuré sans sa transformation (glissement d'entrée) : offsetTop/Height.
-    let marges = { haut: 0, bas: 0 };
+    let marges = { haut: 0, bas: 0 }; // zones couvertes, constantes pendant une diapositive
+    let basLieu = 0; // hauteur couverte en bas par le médaillon de lieu (s'il était affiché)
     const surimpressions = [elActe, elLegende, elMusique, elSt, $('.lecteur__progression'), $('.lecteur__controles')];
     function mesurerMarges() {
       const s = scene.getBoundingClientRect();
@@ -459,21 +631,30 @@ const sectionsLivre = d.actes.map((a, i) => ({
         if ((r.top + r.bottom) / 2 < s.top + s.height / 2) haut = Math.max(haut, r.bottom - s.top + 4);
         else bas = Math.max(bas, s.bottom - r.top + 4);
       }
-      // La zone utile garde au moins 55 % de la hauteur.
-      const k = Math.min(1, (0.45 * s.height) / Math.max(1, haut + bas));
-      marges = { haut: haut * k, bas: bas * k };
       // La frise en surimpression se pose au-dessus des bandeaux du bas (plein écran).
       scene.style.setProperty('--frise-bas', `${Math.round(bas)}px`);
+      // Médaillon de lieu : sa place est réservée pour toute la diapositive (et non le temps de son
+      // affichage) : une zone couverte qui change en cours de route ferait bouger la caméra d'un
+      // coup (mesures du 2026-10-08 : jusqu'à 10 fois le plafond de vitesse en 0,9 s).
+      basLieu = elLieu && D.diapos[i].lieu ? scene.clientHeight - elLieu.offsetTop + 4 : 0;
+      bas = Math.max(bas, basLieu);
+      // La zone libre garde au moins 55 % de la hauteur.
+      const k = Math.min(1, (0.45 * s.height) / Math.max(1, haut + bas));
+      marges = { haut: haut * k, bas: bas * k };
     }
 
     /** Transformation CSS qui montre `r` en entier dans la zone utile, l'image couvrant toujours
      *  la scène. Un cadre trop haut pour la zone est montré depuis son bord supérieur (têtes).
      *  `f` ≥ 1 : agrandissement supplémentaire (recul d'entrée) autour du centre de la zone
      *  utile ; il se compose avec la caméra et garde la scène couverte. */
-    function transformation(c: HTMLElement, r: Rect, f = 1) {
+    function transformation(c: HTMLElement, x: Diapo, r: Rect, f = 1) {
       const W = c.clientWidth, H = c.clientHeight;
       const img = c.querySelector('img')!;
-      const iw = img.offsetWidth || W, ih = img.offsetHeight || H;
+      // Taille posée par `cadre` (offsetWidth l'arrondirait au pixel : zoom faussé de quelques millièmes).
+      const IW = parseFloat(img.style.width) || img.offsetWidth || W, IH = parseFloat(img.style.height) || img.offsetHeight || H;
+      // Tout le calcul se fait dans la zone utile de l'image (`x.u`, sans bordure ni légende), qui
+      // couvre la scène : `r` y est exprimé, et la translation finale tient compte de son décalage.
+      const u = x.u, iw = IW * (u[2] - u[0]), ih = IH * (u[3] - u[1]);
       const T = marges.haut, Hs = Math.max(1, H - marges.haut - marges.bas);
       const rx = r[0] * iw, ry = r[1] * ih, rw = Math.max(1, (r[2] - r[0]) * iw), rh = Math.max(1, (r[3] - r[1]) * ih);
       const z = Math.max(1, Math.min(W / rw, Hs / rh));
@@ -484,44 +665,125 @@ const sectionsLivre = d.actes.map((a, i) => ({
       // Agrandir autour d'un point de la scène garde l'image couvrante (f ≥ 1).
       const px = W / 2, py = T + Hs / 2;
       tx = px + f * (tx - px); ty = py + f * (ty - py);
-      return `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${(z * f).toFixed(4)})`;
+      tx -= z * f * u[0] * IW; ty -= z * f * u[1] * IH;
+      // Sous-pixel et échelle fine : un mouvement très lent ne doit pas avancer par crans.
+      return `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${(z * f).toFixed(6)})`;
     }
 
-    /** Cadre montré à l'instant `t` (secondes dans l'audio) d'une diapositive. */
+    /** Partie de l'image réellement montrée pour le cadre `r` (mêmes calculs que
+     *  `transformation`) : le cadre porté aux proportions de la zone utile, borné à l'image (la
+     *  scène entière, bandeaux compris, reste couverte). La caméra ne travaille que sur ces vues :
+     *  toutes de mêmes proportions, elles s'enchaînent par homothétie, et `transformation` n'a
+     *  jamais à les rogner en cours de mouvement (un rognage brusque ferait un à-coup). */
+    function vue(x: Diapo, r: Rect): Rect {
+      const W = scene.clientWidth, H = scene.clientHeight;
+      if (!W || !H) return r;
+      const s = Math.max(W / x.l, H / x.h), iw = x.l * s, ih = x.h * s;
+      const Hs = Math.max(1, H - marges.haut - marges.bas);
+      const rw = Math.max(1, (r[2] - r[0]) * iw), rh = Math.max(1, (r[3] - r[1]) * ih);
+      const z = Math.max(1, Math.min(W / rw, Hs / rh));
+      const w = Math.min(1, W / z / iw), h = Math.min(1, Hs / z / ih);
+      // Bandeaux couverts au-dessus et au-dessous de la zone utile, en fraction de l'image.
+      const dh = marges.haut / z / ih, db = marges.bas / z / ih;
+      // Un cadre trop haut pour la zone est montré depuis son bord supérieur (têtes).
+      const x0 = Math.min(Math.max((r[0] + r[2]) / 2 - w / 2, 0), 1 - w);
+      const y0 = Math.max(Math.min(z * rh <= Hs + 0.5 ? (r[1] + r[3]) / 2 - h / 2 : r[1], 1 - h - db), Math.min(dh, 1 - h));
+      return [x0, y0, x0 + w, y0 + h];
+    }
+
+    /** Étapes retenues au rendu (spec 12, « Caméra calme et lente ») et fenêtre de chaque
+     *  transition : [de, a] (s de l'audio). Une étape est ignorée si son passage suit le précédent
+     *  retenu de moins de 5 s, si sa vue diffère à peine de la précédente, ou si sa transition ne
+     *  tient plus avant la fin de la voix. Les données ne changent pas. */
+    function plan(x: Diapo) {
+      const E = x.camera, finVoix = x.duree || 6;
+      // Après un détail d'ouverture, la première vue n'est atteinte qu'à la fin du recul : aucune
+      // étape ne commence avant (la tenue minimale court à partir de là).
+      const etapes = [{ v: vue(x, E[0].c), t: 0, de: 0, a: x.ouv ? dureeRecul(x) : 0 }];
+      for (let k = 1; k < E.length; k++) {
+        const p = etapes[etapes.length - 1], v = vue(x, E[k].c);
+        if (E[k].t - p.t < ECART_MIN) continue;
+        const { zoom, glisse } = ampleur(p.v, v);
+        if (zoom < MICRO && glisse < MICRO) continue;
+        // Durée : celle qui tient les plafonds (au plus fort, la vitesse vaut 1 / (d − rampe)) ;
+        // 3 à 6 s d'ordinaire, davantage pour un long glissement le long d'une image très large.
+        const u = Math.max(zoom / VISE_ZOOM, glisse / VISE_GLISSE);
+        const besoin = Math.max(DUREE_MIN, u <= 2 * MISE_EN_ROUTE ? 1.5 * u : u + MISE_EN_ROUTE);
+        const tot = p.a + TENUE_MIN;
+        // Arrivée visée peu après le passage ; plus tard si la transition précédente l'impose.
+        const a = Math.min(finVoix, Math.max(E[k].t + RETARD, tot + besoin));
+        const d = Math.min(besoin, a - tot);
+        // Fin de voix trop proche : une transition un peu plus vive (×1,5 au plus) ou aucune.
+        if (d < Math.max(DUREE_MIN, besoin / 1.5)) continue;
+        etapes.push({ v, t: E[k].t, de: a - d, a });
+      }
+      return etapes;
+    }
+
+    /** Durée du recul depuis le détail d'ouverture : 5 s, davantage si l'ampleur l'exige pour
+     *  rester sous les plafonds de vitesse au plus fort (vitesse de pointe 1 / (d − rampe)), moins
+     *  si la voix est très courte (la moitié de la voix au plus). */
+    function dureeRecul(x: Diapo) {
+      let d = RECUL_OUVERTURE;
+      if (x.ouv) {
+        const { zoom, glisse } = ampleur(echelle(vue(x, x.ouv), 1 - POUSSEE), vue(x, x.camera[0].c));
+        d = Math.max(d, Math.max(zoom / VISE_ZOOM, glisse / VISE_GLISSE) / (1 - RAMPE_RECUL));
+      }
+      return Math.min(d, 0.5 * (x.duree || 6));
+    }
+
+    /** Cadre (vue) montré à l'instant `t` (secondes dans l'audio) d'une diapositive. Un instant
+     *  négatif (−OUVERTURE à 0) est l'ouverture du carton d'acte, avant la voix. */
     function cadreA(x: Diapo, t: number): Rect {
       const E = x.camera;
-      const fin = (x.duree || 6) + D.pause;
       if (mouvementReduit.matches) {
         // Premier cadre fixe, puis coupe sèche vers les suivants.
         let k = 0;
         while (k + 1 < E.length && E[k + 1].t <= t) k++;
         return E[k].c;
       }
-      // Une seule étape : zoom lent et léger vers ce cadre pendant toute la diapositive.
-      if (E.length === 1) return echelle(E[0].c, 1.06 - 0.09 * Math.min(1, Math.max(0, t / fin)));
-      const fen: { de: number; a: number }[] = [];
-      E.forEach((e, k) => {
-        if (k === 0) return fen.push({ de: 0, a: 0 });
-        const place = Math.min(TRANSITION, Math.max(0.8, (e.t - E[k - 1].t) * 0.8));
-        // Pas avant la fin de la transition précédente.
-        const de = Math.max(fen[k - 1].a, e.t - AVANCE);
-        fen.push({ de, a: de + place });
-      });
+      // La dernière tenue s'arrête (en douceur) à la fin de la voix : l'horloge s'y arrête.
+      const finVoix = x.duree || 6;
+      const P = plan(x);
+      if (x.ouv) {
+        // Détail d'ouverture : légère poussée pendant les volets (départ et arrêt doux), puis
+        // recul vers la première vue, doux aux deux bouts ; la respiration prend le relais à
+        // vitesse nulle (P[0].a = fin du recul) : position et vitesse continues partout.
+        const O = vue(x, x.ouv), Op = echelle(O, 1 - POUSSEE);
+        if (t < 0) return trajet(O, Op, profil(t + OUVERTURE, OUVERTURE, OUVERTURE / 2));
+        const dr = P[0].a;
+        if (t < dr) return trajet(Op, P[0].v, profil(t, dr, RAMPE_RECUL * dr));
+      }
       const tenue = (k: number, u: number) => {
-        const suivante = k + 1 < E.length ? fen[k + 1].de : fin;
-        return echelle(E[k].c, 1 - DERIVE * Math.min(1, Math.max(0, (u - fen[k].a) / Math.max(0.001, suivante - fen[k].a))));
+        const jusqua = k + 1 < P.length ? P[k + 1].de : finVoix;
+        return souffle(P[k].v, u - P[k].a, jusqua - P[k].a, x.n, k);
       };
-      for (let k = E.length - 1; k >= 1; k--) {
-        if (t >= fen[k].a) return tenue(k, t);
-        if (t >= fen[k].de) return melanger(tenue(k - 1, fen[k].de), E[k].c, adoucir((t - fen[k].de) / (fen[k].a - fen[k].de)));
+      for (let k = P.length - 1; k >= 1; k--) {
+        if (t >= P[k].a) return tenue(k, t);
+        if (t >= P[k].de) {
+          const d = P[k].a - P[k].de;
+          return trajet(tenue(k - 1, P[k].de), P[k].v, profil(t - P[k].de, d, Math.min(d / 3, MISE_EN_ROUTE)));
+        }
       }
       return tenue(0, t);
     }
 
-    /** Instant courant de la voix de la diapositive : l'audio fait foi. */
+    /** Cadre montré pendant un intermède qui porte un `cadre` (instant `ts` dans son audio) :
+     *  transition calme depuis la fin de la diapositive, puis respiration jusqu'à la fin. */
+    function cadreIntermede(x: Diapo, c: SuiteChant & { cadre: Rect }, ts: number): Rect {
+      if (mouvementReduit.matches) return c.cadre;
+      const A = cadreA(x, x.duree || 6), B = vue(x, c.cadre);
+      const { zoom, glisse } = ampleur(A, B);
+      const u = Math.max(zoom / VISE_ZOOM, glisse / VISE_GLISSE);
+      const d = Math.min(Math.max(DUREE_MIN, u <= 2 * MISE_EN_ROUTE ? 1.5 * u : u + MISE_EN_ROUTE), c.duree / 2);
+      if (ts < d) return trajet(A, B, profil(ts, d, Math.min(d / 3, MISE_EN_ROUTE)));
+      return souffle(B, ts - d, c.duree - d, x.n, 9);
+    }
+
+    /** Instant courant de la voix de la diapositive : l'audio fait foi, lissé (`horloge`). */
     function instant() {
       return D.diapos[i].audio
-        ? audio.currentTime || 0
+        ? horloge.lire(audio)
         : ecouleSansVoix + (joue && debutSansVoix ? (performance.now() - debutSansVoix) / 1000 : 0);
     }
 
@@ -529,22 +791,36 @@ const sectionsLivre = d.actes.map((a, i) => ({
     function poser(k: number) {
       const x = couches[k].x;
       if (!x) return;
-      calques[k].querySelector('img')!.style.transform = transformation(calques[k], couches[k].r);
+      calques[k].querySelector('img')!.style.transform = transformation(calques[k], x, couches[k].r);
     }
 
     /** Rendu de l'image visible : caméra (horloge de l'audio) × entrée (horloge propre). */
+    /** Durée de l'entrée d'une image : sur un détail d'ouverture, les couleurs montent pendant
+     *  toute l'ouverture des volets et la caméra fait le recul (pas d'agrandissement d'entrée). */
+    const revelation = (x: Diapo) => (x.ouv ? OUVERTURE : REVELATION);
+    const dureeEntree = (x: Diapo) => (mouvementReduit.matches ? FONDU_REDUIT : Math.max(FONDU, revelation(x), x.ouv ? 0 : DUREE_RECUL));
+
     function rendre(t = instant()) {
+      majVolets();
       const c = calques[visible], x = couches[visible].x;
       if (x !== D.diapos[i]) return; // carton : l'image de la diapositive n'est pas encore entrée
       const img = c.querySelector('img')!;
       const reduit = mouvementReduit.matches;
-      const e = enEntree ? chronoEntree.t : Infinity;
-      const opacite = adoucir(e / (reduit ? FONDU_REDUIT : FONDU));
-      const gris = reduit ? 0 : 1 - adoucir(e / REVELATION);
-      const f = reduit ? 1 : 1 + RECUL * (1 - adoucir(e / DUREE_RECUL));
-      const r = cadreA(x, t);
+      // Pendant l'ouverture du carton, l'entrée et la caméra suivent l'horloge du carton (figée
+      // en pause) ; la caméra y vit aux instants négatifs, juste avant la voix.
+      const ouv = enCarton && ouvre;
+      const e = ouv ? tempsOuverture() : enEntree ? chronoEntree.t : Infinity;
+      const opacite = entreeNette ? 1 : adoucir(e / (reduit ? FONDU_REDUIT : FONDU));
+      const gris = reduit ? 0 : 1 - adoucir(e / revelation(x));
+      const f = reduit || x.ouv ? 1 : 1 + RECUL * (1 - adoucir(e / DUREE_RECUL));
+      majSurimpressions(t);
+      // Intermède avec un cadre : la caméra suit l'horloge de l'intermède.
+      const su = x.suite;
+      const r = su?.type === 'chant' && su.cadre && (enSuite || suiteFini)
+        ? cadreIntermede(x, su as SuiteChant & { cadre: Rect }, suiteFini ? su.duree : horlogeSuite.lire(sa))
+        : cadreA(x, ouv ? tempsOuverture() - OUVERTURE : t);
       couches[visible].r = r;
-      img.style.transform = transformation(c, r, f);
+      img.style.transform = transformation(c, x, r, f);
       img.style.filter = gris > 0.002 ? `grayscale(${gris.toFixed(3)})` : '';
       c.style.opacity = opacite.toFixed(3);
       if (opacite >= 1 && sortant >= 0) {
@@ -552,18 +828,19 @@ const sectionsLivre = d.actes.map((a, i) => ({
         calques[sortant].classList.remove('est-visible');
         sortant = -1;
       }
-      if (enEntree && e >= (reduit ? FONDU_REDUIT : Math.max(FONDU, REVELATION, DUREE_RECUL))) {
+      if (enEntree && !ouv && e >= dureeEntree(x)) {
         enEntree = false;
         chronoEntree.zero();
       }
     }
 
     let raf = 0;
-    function boucle() {
+    function boucle(ts: number) {
+      horloge.image = horlogeSuite.image = ts / 1000;
       rendre();
       if (enCarton) majTemps();
       if (enSuite) majSuite();
-      raf = joue || (enEntree && chronoEntree.tourne) ? requestAnimationFrame(boucle) : 0;
+      raf = joue || (enEntree && chronoEntree.tourne) || chronoCarton.tourne ? requestAnimationFrame(boucle) : 0;
     }
     function animer() { if (!raf) raf = requestAnimationFrame(boucle); }
     // Onglet en arrière-plan (requestAnimationFrame suspendu) : l'état final de l'entrée est
@@ -575,7 +852,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     }
 
     /** Met l'image de la diapositive courante à l'écran ; `fondu` : avec l'entrée animée. */
-    function montrerImage(x: Diapo, fondu: boolean) {
+    function montrerImage(x: Diapo, fondu: boolean, couvert = false) {
       const ancien = visible;
       const k = fondu ? 1 - visible : visible;
       const c = calques[k];
@@ -584,18 +861,30 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (img.getAttribute('src') !== x.img) img.src = x.img;
       img.alt = x.alt;
       couches[k] = { x, r: cadreA(x, 0) };
+      entreeNette = fondu && couvert;
+      if (entreeNette) {
+        // Sous un écran couvrant : l'ancienne image disparaît tout de suite (jamais d'éclair à la
+        // levée de l'écran) ; la nouvelle, opaque, garde la révélation gris → couleur et le recul.
+        for (const [j, a] of calques.entries()) {
+          if (j === k) continue;
+          a.style.opacity = '0';
+          a.classList.remove('est-visible');
+          a.querySelector('img')!.alt = '';
+        }
+        sortant = -1;
+      }
       if (fondu) {
         // Le calque entrant passe au-dessus ; l'ancien reste opaque dessous, figé.
         if (sortant >= 0 && sortant !== ancien) calques[sortant].style.opacity = '0';
         const a = calques[ancien];
         a.style.zIndex = '0';
-        a.style.opacity = '1';
+        if (!entreeNette) a.style.opacity = '1';
         a.querySelector('img')!.alt = '';
         c.style.zIndex = '1';
-        c.style.opacity = '0';
+        c.style.opacity = entreeNette ? '1' : '0';
         c.classList.add('est-visible');
         visible = k;
-        sortant = ancien;
+        sortant = entreeNette ? -1 : ancien;
         enEntree = true;
         chronoEntree.zero();
         chronoEntree.relancer();
@@ -680,13 +969,18 @@ const sectionsLivre = d.actes.map((a, i) => ({
     // --- Textes et compteurs ---------------------------------------------------------------
     /** Cartouche : l'ancien s'efface, le nouveau entre ~0,6 s après l'image (CSS). */
     /** Bandeaux (cartouches de l'image et de la musique) : bien visibles quelques secondes à
-     *  chaque changement, puis presque effacés ; le survol ou la pause les ramène (CSS). */
-    const ESTOMPE = 5000; // ms
+     *  chaque changement (~12 s), puis cachés en fondu lent ; le survol ou la pause les ramène (CSS). */
+    const ESTOMPE = 12000;   // ms
+    const REAPPARITION = 4000; // ms : après un toucher sur l'image (téléphone)
     const minuteriesEstompe = new Map<HTMLElement, number>();
-    function estomperPlusTard(el: HTMLElement) {
+    function estomperPlusTard(el: HTMLElement, delai = ESTOMPE) {
       el.classList.remove('est-discret');
       clearTimeout(minuteriesEstompe.get(el));
-      minuteriesEstompe.set(el, window.setTimeout(() => el.classList.add('est-discret'), ESTOMPE));
+      minuteriesEstompe.set(el, window.setTimeout(() => el.classList.add('est-discret'), delai));
+    }
+    /** Toucher sur l'image : les cartouches cachés reviennent quelques secondes. */
+    function revelerCartouches() {
+      for (const el of [elLegende, elMusique]) if (el.classList.contains('est-discret')) estomperPlusTard(el, REAPPARITION);
     }
     function changerCartouche(x: Diapo) {
       racine.querySelectorAll('.lecteur__legende--sortant').forEach((e) => e.remove());
@@ -722,6 +1016,103 @@ const sectionsLivre = d.actes.map((a, i) => ({
       s.classList.remove('st--entrant');
     }
 
+    // --- Cartes de lieu et citations en surimpression (spec 12, 2026-10-07) ---------------------
+    // Contenu posé à l'entrée de l'image ; affichage dérivé de l'instant de l'audio (rendre) : pause,
+    // reprise et sauts restent justes. Médaillon ~5 s quand la voix dit le lieu (zone couverte pour
+    // la caméra) ; citation mot à mot (sous-titre masqué), qui l'emporte sur le médaillon (fenêtres
+    // déjà arbitrées au build). Au changement d'image, l'ancien contenu s'efface en fondu (copie).
+    const elLieu = racine.querySelector<HTMLElement>('.lieu');
+    const elPlan = elLieu?.querySelector<HTMLElement>('.lieu__plan') ?? null;
+    const elMots = racine.querySelector<HTMLElement>('.mots');
+    let motsEls: HTMLElement[][] = [];
+    let motsDits = -1;
+    /** Taille du médaillon : ~un quart de la hauteur de la scène (plancher lisible), selon le fond.
+     *  À plusieurs lieux (spec 12, « Sans bordures, et médaillon plus grand ») : une fois et demie
+     *  plus grand (~240 × 180 px au lieu de 160 × 120 sur ordinateur), dans la limite de la place
+     *  (40 % de la hauteur, la moitié de la largeur), téléphone compris. */
+    function tailleLieu() {
+      const L = D.diapos[i].lieu, c = elLieu?.querySelector<HTMLElement>('.lieu__carte');
+      if (!L || !c) return;
+      const H = scene.clientHeight, W = scene.clientWidth;
+      let h = Math.max(W < 700 ? 92 : 120, Math.min(230, H * 0.24));
+      const multiple = Boolean(L.points?.length);
+      if (multiple) h = Math.min(1.5 * h, 300, H * 0.4);
+      let w = h * L.ratio;
+      const lmax = W * (multiple ? 0.5 : 0.46);
+      if (w > lmax) { w = lmax; h = w / L.ratio; }
+      c.style.width = `${Math.round(w)}px`;
+      c.style.height = `${Math.round(h)}px`;
+      elLieu!.style.maxWidth = `${Math.round(w) + 12}px`;
+    }
+    /** Copie qui s'efface (transition CSS) pendant que l'original reçoit le contenu suivant. */
+    function effacer(el: HTMLElement) {
+      if (!el.classList.contains('est-visible')) return;
+      const copie = el.cloneNode(true) as HTMLElement;
+      el.after(copie);
+      void copie.offsetWidth;
+      copie.classList.remove('est-visible');
+      window.setTimeout(() => copie.remove(), 900);
+      el.classList.remove('est-visible');
+    }
+    function chargerSurimpressions(x: Diapo | null) {
+      if (elLieu) effacer(elLieu);
+      if (elMots) effacer(elMots);
+      lecteur.classList.remove('avec-citation', 'avec-lieu');
+      const L = x?.lieu;
+      if (elLieu && L) {
+        elLieu.querySelectorAll<HTMLElement>('.lieu__fond').forEach((f) => f.classList.toggle('est-actif', f.dataset.fond === L.fond));
+        if (L.fond === 'paris' && elPlan && L.vue) {
+          const [taille, position] = L.vue.split(';');
+          if (!elPlan.style.backgroundImage) elPlan.style.backgroundImage = `url("${elPlan.dataset.src}")`;
+          elPlan.style.backgroundSize = taille;
+          elPlan.style.backgroundPosition = position;
+        }
+        const pt = elLieu.querySelector<HTMLElement>('.lieu__point')!;
+        pt.style.left = `${L.x}%`;
+        pt.style.top = `${L.y}%`;
+        elLieu.querySelector('.lieu__nom')!.textContent = L.nom;
+        elLieu.querySelector('.lieu__credit')!.textContent = L.credit ?? '';
+        tailleLieu();
+      }
+      const C = x?.citation;
+      motsEls = [];
+      motsDits = -1;
+      if (elMots && !C) elMots.querySelector('.mots__texte')!.innerHTML = '';
+      if (elMots && C) {
+        elMots.classList.remove('est-signe');
+        elMots.querySelector('.mots__texte')!.innerHTML = C.html;
+        elMots.querySelector('.mots__auteur')!.textContent = C.auteur;
+        motsEls = C.mots.map(() => []);
+        elMots.querySelectorAll<HTMLElement>('.m').forEach((m) => motsEls[Number(m.dataset.k)]?.push(m));
+      }
+    }
+    /** Surimpressions possibles : lecture lancée, ni carton ni segment après la voix. */
+    const surimpressionsActives = () => lance && !enCarton && !enSuite && !suiteFini;
+    function majSurimpressions(t: number) {
+      const x = D.diapos[i], actif = surimpressionsActives();
+      const L = x.lieu, C = x.citation;
+      if (elLieu && L) {
+        const vu = actif && t >= L.a && t < L.b;
+        if (vu !== elLieu.classList.contains('est-visible')) { elLieu.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-lieu', vu); }
+      }
+      if (!elMots || !C) return;
+      const vu = actif && t >= C.a && t < C.b;
+      if (vu !== elMots.classList.contains('est-visible')) {
+        elMots.classList.toggle('est-visible', vu);
+        lecteur.classList.toggle('avec-citation', vu);
+        if (vu) cacherFrise();
+      }
+      // Mots dits (le mot paraît quand la voix l'attaque) ; mouvement réduit : la citation entière.
+      let n = 0;
+      if (mouvementReduit.matches) n = t >= C.a ? C.mots.length : 0;
+      else while (n < C.mots.length && C.mots[n] <= t + 0.06) n++;
+      if (n !== motsDits) {
+        motsEls.forEach((els, k) => els.forEach((m) => m.classList.toggle('est-dit', k < n)));
+        motsDits = n;
+      }
+      elMots.classList.toggle('est-signe', t >= C.fin || (mouvementReduit.matches && n > 0));
+    }
+
     /** Instant courant dans tout le diaporama (cartons, voix, pauses, intermèdes). */
     function tempsCourant() {
       if (!lance) return debuts[i];
@@ -744,11 +1135,21 @@ const sectionsLivre = d.actes.map((a, i) => ({
       });
     }
 
+    // Images à venir décodées d'avance (gardées en vie, sinon le décodage est perdu) : le fondu
+    // d'entrée ne commence pas par un décodage de la grande image, qui ferait sauter des images.
+    const decodees = new Map<string, HTMLImageElement>();
     function precharger(k: number) {
       for (const j of [k, k + 1, k + 2]) {
         const x = D.diapos[j];
         if (!x) continue;
-        new Image().src = x.img;
+        if (!decodees.has(x.img)) {
+          const im = new Image();
+          im.src = x.img;
+          im.decode().catch(() => {});
+          decodees.set(x.img, im);
+          for (const cle of decodees.keys()) if (decodees.size > 4) decodees.delete(cle);
+        }
+        if (x.lieu?.fond === 'paris' && elPlan?.dataset.src) new Image().src = elPlan.dataset.src;
         if (j > k && x.audio) { const a = new Audio(); a.preload = 'auto'; a.src = x.audio; }
         if (x.suite && j <= k + 1) { const a = new Audio(); a.preload = 'auto'; a.src = x.suite.src; }
       }
@@ -758,40 +1159,171 @@ const sectionsLivre = d.actes.map((a, i) => ({
     function lancerCarton() {
       if (!enCarton || chronoCarton.tourne) return;
       chronoCarton.relancer();
-      arreterMinuterie();
-      minuterie = window.setTimeout(finCarton, Math.max(0, prelude[i] - chronoCarton.t) * 1000);
+      programmerCarton();
       animer();
     }
-    /** Fin du carton (temps écoulé, ou passé d'un clic ou d'une touche) : l'image entre, puis
-     *  la voix démarre si la lecture est en cours. */
+    /** Volets possibles (sinon, fondu court à la fin du carton). */
+    const voletsPossibles = () => !mouvementReduit.matches && typeof elCarton.animate === 'function';
+    /** Prochaine échéance du carton qui tourne : début de l'ouverture, puis fin du carton. */
+    function programmerCarton() {
+      arreterMinuterie();
+      if (!enCarton || !chronoCarton.tourne) return;
+      const t = chronoCarton.t, debut = prelude[i] - OUVERTURE;
+      if (!ouvre && voletsPossibles()) {
+        if (t < debut) { minuterie = window.setTimeout(commencerOuverture, (debut - t) * 1000); return; }
+        return commencerOuverture();
+      }
+      minuterie = window.setTimeout(finCarton, Math.max(0, prelude[i] - t) * 1000);
+    }
+    /** Début de l'ouverture (dernières secondes du carton) : l'image est posée sous le carton,
+     *  cadrée sur son détail d'ouverture s'il y en a un ; les volets s'écartent une fois l'image
+     *  décodée, au rythme de l'horloge du carton. */
+    function commencerOuverture() {
+      if (!enCarton || ouvre) return;
+      ouvre = true;
+      programmerCarton();
+      entrerImage(true, true);
+      chronoEntree.zero(); // l'entrée suit l'horloge du carton (cf. rendre)
+      // Sans `will-change` pendant l'ouverture, Chrome rastérise l'image à l'échelle où elle est
+      // posée (le zoom le plus fort) au lieu de garder celle de l'image d'avant ; il est rétabli
+      // au début du recul (`finCarton`), qui ne fait que dézoomer.
+      calques[visible].querySelector('img')!.style.willChange = 'auto';
+      const k = i;
+      quandPrete(calques[visible].querySelector('img')!, () => {
+        if (k !== i || !enCarton || !ouvre) return; // saut ou carton passé entre-temps
+        ouvrirCarton();
+        rendre();
+        animer();
+      });
+    }
+    /** Passer le carton (→, clic, Entrée) : l'ouverture se joue tout de suite (l'horloge du
+     *  carton saute à son début, et tourne même en pause), la voix démarre à sa fin. Passé
+     *  pendant l'ouverture : le carton finit aussitôt. */
+    function passerCarton() {
+      if (!enCarton) return;
+      if (ouvre || !voletsPossibles()) return finCarton();
+      chronoCarton.figer();
+      chronoCarton.ecoule = Math.max(chronoCarton.ecoule, prelude[i] - OUVERTURE);
+      chronoCarton.relancer();
+      programmerCarton();
+      animer();
+    }
+    /** Fin du carton (fin de l'ouverture, ou passé) : la voix démarre si la lecture est en cours. */
+    function retablirWillChange() { for (const c of calques) c.querySelector('img')!.style.willChange = ''; }
     function finCarton() {
       if (!enCarton) return;
+      retablirWillChange();
       arreterMinuterie();
+      const ouvert = ouvre, e = tempsOuverture();
       enCarton = false;
+      ouvre = false;
       chronoCarton.zero();
-      lecteur.classList.remove('en-carton');
       elCarton.setAttribute('aria-hidden', 'true');
-      entrerImage(true);
-      if (joue) demarrer();
-      majTemps();
-      musique();
+      if (ouvert) {
+        // L'image est déjà là : la caméra passe de l'horloge du carton à celle de l'audio sans
+        // rupture (instant 0). Ouverture écourtée : l'entrée finit sur son horloge propre.
+        finirVolets();
+        lecteur.classList.remove('en-carton');
+        chronoEntree.zero();
+        chronoEntree.ecoule = e;
+        chronoEntree.relancer();
+        animer();
+        assurerFin();
+        if (joue) demarrer();
+        rendre();
+        majTemps();
+        musique();
+        return;
+      }
+      // Sans volets (prefers-reduced-motion) : l'image est posée sous le carton, qui s'efface
+      // une fois l'image décodée.
+      entrerImage(true, true);
+      const k = i;
+      quandPrete(calques[visible].querySelector('img')!, () => {
+        if (k !== i || enCarton) return; // saut entre-temps
+        ouvrirCarton();
+        chronoEntree.zero();
+        chronoEntree.relancer();
+        animer();
+        assurerFin();
+        if (joue) demarrer();
+        majTemps();
+        musique();
+      });
+    }
+
+    // Volets (spec 12, « Sortie du carton d'acte en deux volets ») : deux copies du carton,
+    // coupées à mi-hauteur par clip-path, s'écartent vers le haut et vers le bas et découvrent
+    // l'image déjà posée et décodée dessous. Le vrai carton disparaît d'un coup sous les volets
+    // (son fondu se verrait entre eux). Animation en transform seul, tenue en pause et placée à
+    // chaque image sur l'horloge du carton (figée en pause, juste après un saut).
+    const COURBE_VOLETS = 'cubic-bezier(0.45, 0, 0.2, 1)'; // départ doux, longue fin apaisée
+    let volets: { els: HTMLElement[]; anims: Animation[] } | null = null;
+    function finirVolets() {
+      if (!volets) return;
+      for (const a of volets.anims) a.cancel();
+      for (const el of volets.els) el.remove();
+      volets = null;
+    }
+    function majVolets() {
+      if (!volets || !enCarton) return;
+      const ms = tempsOuverture() * 1000;
+      for (const a of volets.anims) a.currentTime = ms;
+    }
+    function ouvrirCarton() {
+      finirVolets();
+      if (!voletsPossibles()) {
+        lecteur.classList.remove('en-carton'); // fondu court (CSS)
+        return;
+      }
+      const els = (['haut', 'bas'] as const).map((cote) => {
+        const v = elCarton.cloneNode(true) as HTMLElement;
+        v.classList.add('lecteur__volet', `lecteur__volet--${cote}`);
+        v.removeAttribute('data-action');
+        v.removeAttribute('title');
+        v.setAttribute('aria-hidden', 'true');
+        for (const n of v.querySelectorAll('[id]')) n.removeAttribute('id');
+        return v;
+      });
+      elCarton.after(...els);
+      elCarton.style.transition = 'none';
+      lecteur.classList.remove('en-carton');
+      void elCarton.offsetWidth;
+      elCarton.style.transition = '';
+      const anims = els.map((v, k) => v.animate(
+        [{ transform: 'translate3d(0, 0, 0)' }, { transform: `translate3d(0, ${k ? 51 : -51}%, 0)` }],
+        { duration: OUVERTURE * 1000, easing: COURBE_VOLETS, fill: 'forwards' }));
+      for (const a of anims) a.pause();
+      volets = { els, anims };
+      majVolets();
     }
 
     // --- Lecture -----------------------------------------------------------------------------
     function arreterMinuterie() { clearTimeout(minuterie); minuterie = 0; }
 
     /** Cartouche, sous-titre puis image de la diapositive courante (marges mesurées entre-temps). */
-    function entrerImage(fondu: boolean) {
+    function entrerImage(fondu: boolean, couvert = false) {
       const x = D.diapos[i];
       changerCartouche(x);
       changerSousTitre(x.texte);
+      chargerSurimpressions(x);
       mesurerMarges();
-      montrerImage(x, fondu);
+      montrerImage(x, fondu, couvert);
     }
 
     function afficher(k: number, fondu = true) {
+      finirVolets();
+      retablirWillChange();
+      // Écran couvrant l'image avant le changement : carton d'acte, carte ou panneau d'un segment.
+      // (Pendant l'ouverture des volets, l'image est déjà découverte : fondu enchaîné ordinaire.)
+      const sousCarton = enCarton && !ouvre;
+      const carte = ov && (enSuite || suiteFini) ? ov : null;
       arreterMinuterie();
-      arreterSuite();
+      arreterSuite(Boolean(carte));
+      /** Retire la carte (ou le panneau) gardée pendant le changement, sauf si elle a resservi. */
+      const leverCarte = () => {
+        if (carte && carte !== ov) { carte.classList.remove('est-visible'); carte.setAttribute('aria-hidden', 'true'); }
+      };
       i = Math.max(0, Math.min(N - 1, k));
       const x = D.diapos[i];
       const a = D.actes[acteDe[i]];
@@ -804,33 +1336,58 @@ const sectionsLivre = d.actes.map((a, i) => ({
       audio.pause();
       if (x.audio) audio.src = x.audio; else audio.removeAttribute('src');
       ecouleSansVoix = 0; debutSansVoix = 0;
-      if (lance) ecrire(CLE_POS, String(x.n));
+      if (lance) ecrire(CLE_POS, x.cle);
       precharger(i);
       chronoCarton.zero();
+      ouvre = false;
       if (lance && prelude[i]) {
         // Carton d'acte : il couvre la scène ; l'image d'avant reste figée dessous.
         enCarton = true;
         enEntree = false;
         chronoEntree.zero();
-        elCartonTitre.textContent = a.titre;
+        // Titre écrit lettre par lettre (mots insécables : pas de coupure au milieu d'un mot).
+        let n = 0;
+        elCartonTitre.replaceChildren(...a.titre.split(/(\s+)/).map((m) => {
+          if (/^\s+$/.test(m)) return document.createTextNode(m);
+          const mot = document.createElement('span');
+          mot.className = 'mot';
+          for (const c of m) { const l = document.createElement('span'); l.textContent = c; l.style.setProperty('--i', String(n++)); mot.append(l); }
+          return mot;
+        }));
+        elCartonTitre.setAttribute('aria-label', a.titre);
+        elCarton.style.setProperty('--lettres', String(n));
         elCartonDates.textContent = a.dates;
         elCarton.setAttribute('aria-hidden', 'false');
         cacherFrise();
+        chargerSurimpressions(null);
         // Frise du carton : de la date précédente (ou du début de la période) au début de l'acte.
         if (friseCarton && x.date) glisser(friseCarton, datePrec ?? ORIGINE, x.date, acteDe[i]);
         // Retirer puis remettre la classe relance l'animation des textes du carton.
         lecteur.classList.remove('en-carton');
         void elCarton.offsetWidth;
         lecteur.classList.add('en-carton');
+        // La carte d'un segment reste le temps que le carton monte (pas d'éclair de l'image dessous).
+        if (carte) window.setTimeout(leverCarte, 500);
         majTemps();
         if (joue) demarrer();
         musique();
         return;
       }
       enCarton = false;
-      lecteur.classList.remove('en-carton');
       elCarton.setAttribute('aria-hidden', 'true');
-      entrerImage(fondu);
+      const couvert = sousCarton || Boolean(carte);
+      entrerImage(fondu, couvert);
+      if (couvert && fondu) {
+        // L'écran couvrant ne se lève qu'une fois la nouvelle image décodée, posée dessous.
+        const j = i;
+        quandPrete(calques[visible].querySelector('img')!, () => {
+          leverCarte();
+          if (j === i && !enCarton) lecteur.classList.remove('en-carton');
+        });
+      } else {
+        leverCarte();
+        lecteur.classList.remove('en-carton');
+      }
       // Entre deux cartons : la frise en surimpression si la date fait un saut notable.
       if (lance && datePrec && x.date && sautNotable(datePrec, x.date)) montrerFrise(datePrec, x.date, acteDe[i]);
       else cacherFrise();
@@ -884,7 +1441,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     function finDeVoix() {
       if (!joue || enCarton || enSuite) return;
       arreterMinuterie();
-      minuterie = window.setTimeout(apresVoix, D.pause * 1000);
+      minuterie = window.setTimeout(apresVoix, D.diapos[i].pause * 1000);
     }
     /** Après la voix et sa pause : l'intermède chanté s'il y en a un, sinon la suite. */
     function apresVoix() {
@@ -914,6 +1471,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       try { sa.currentTime = 0; } catch { /* métadonnées pas encore chargées */ }
       if (c.type === 'chant') {
         changerCartouche({ legende: c.legende } as Diapo);
+        chargerSurimpressions(null);
         vers = -2;
         // Intermède musical (œuvre instrumentale) : pas de paroles, sous-titre masqué.
         lecteur.classList.toggle('en-instrumental', c.instrumental);
@@ -921,6 +1479,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
         ov = (c.type === 'lecture' ? cartes : panneaux).get(c.id) ?? null;
         if (ov) { preparer(ov, c); ov.classList.add('est-visible'); ov.setAttribute('aria-hidden', 'false'); }
         changerSousTitre('');
+        chargerSurimpressions(null);
         // Pas de frise en surimpression : la carte ou le panneau en tient lieu ; la date du
         // segment (champ `date`) reste celle de son récit, et la frise reprend à la diapositive
         // suivante, comparée à celle-ci.
@@ -945,13 +1504,15 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (joue) { arreterMinuterie(); minuterie = window.setTimeout(suivantAuto, D.pause * 1000); }
     }
     /** Sortie du segment par un saut (le cartouche et le sous-titre sont alors remplacés). */
-    function arreterSuite() {
+    function arreterSuite(garderCarte = false) {
       if (!enSuite && !suiteFini) return;
       enSuite = false;
       suiteFini = false;
       sa.pause();
       lecteur.classList.remove('en-chant', 'en-instrumental', 'en-citation', 'en-episode');
-      if (ov) { ov.classList.remove('est-visible'); ov.setAttribute('aria-hidden', 'true'); ov = null; }
+      // `garderCarte` : la carte reste affichée jusqu'à ce que l'image suivante soit prête (afficher).
+      if (ov && !garderCarte) { ov.classList.remove('est-visible'); ov.setAttribute('aria-hidden', 'true'); }
+      ov = null;
     }
     /** Mise à jour du segment en cours d'après l'horloge de son audio. */
     function majSuite() {
@@ -1119,6 +1680,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (enCarton) {
         arreterMinuterie();
         enCarton = false;
+        ouvre = false;
+        finirVolets();
         chronoCarton.zero();
         lecteur.classList.remove('en-carton');
         elCarton.setAttribute('aria-hidden', 'true');
@@ -1173,7 +1736,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     }
     /** « Suivant » : passe le carton s'il est affiché, sinon diapositive suivante. */
     function suivant() {
-      if (enCarton) return finCarton();
+      if (enCarton) return passerCarton();
       aller(i + 1);
     }
 
@@ -1290,6 +1853,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
      *  l'arrêt (pause, musique coupée), les lecteurs sont mis en pause après le fondu. */
     function appliquerEtat() {
       if (!aFond) return;
+      const avant = etatMusique;
       etatMusique = etatCourant();
       afficherMusique();
       const cible = musiqueOn ? Math.min(1, GAINS[etatMusique] * (volume / VOLUME_DEFAUT)) : 0;
@@ -1299,8 +1863,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
         const t = ctx.currentTime, g = maitre.gain;
         g.cancelScheduledValues(t);
         g.setValueAtTime(g.value, t);
-        // La musique s'efface vite quand la voix entre, remonte plus doucement ensuite.
-        g.setTargetAtTime(cible, t, baisse ? 0.12 : 0.5);
+        // La musique s'efface vite quand la voix entre, remonte plus doucement ensuite ; à la
+        // sortie d'un carton d'acte (musique au premier plan), la descente est un fondu (~2 s).
+        g.setTargetAtTime(cible, t, baisse ? (avant === 'carton' ? 0.6 : 0.12) : 0.5);
       } else {
         fonds.forEach((f) => (f.el.volume = Math.min(1, Math.max(0, f.v * duck))));
       }
@@ -1403,6 +1968,16 @@ const sectionsLivre = d.actes.map((a, i) => ({
       deverrouillerAudio();
       return segment ? allerSuite(k) : aller(k);
     };
+    // Contrôle de la caméra (tests) : cadre montré à l'instant `t` de la diapositive `n`.
+    // Horloge (tests) : dernier instant lissé rendu et valeur brute de l'audio.
+    (racine as any).__instant = () => ({ lisse: horloge.t, brut: audio.currentTime });
+    (racine as any).__camera = (n: number, t: number) => {
+      const x = D.diapos.find((d) => d.n === n);
+      if (!x) return null;
+      const r = cadreA(x, t);
+      return { cadre: r, vue: vue(x, r), utile: x.u, etapes: x.camera, duree: x.duree, effectives: mouvementReduit.matches ? x.camera.length : plan(x).length,
+        plan: plan(x).map((e, k, P) => ({ t: e.t, de: e.de, a: e.a, ...(k ? ampleur(P[k - 1].v, e.v) : {}) })) };
+    };
     (racine as any).__musique = () => ({
       etat: etatMusique, duck, musiqueOn, volume, courant, ctx: ctx?.state ?? null,
       maitre: maitre?.gain.value ?? null, enSuite, suiteFini, suite: D.diapos[i].suite?.type ?? null, i, t: tempsCourant(), total,
@@ -1419,7 +1994,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       else if (action === 'basculer') basculer();
       else if (action === 'precedent') aller(i - 1);
       else if (action === 'suivant') suivant();
-      else if (action === 'passer') finCarton();
+      else if (action === 'passer') passerCarton();
       else if (action === 'sous-titres') sousTitres(!lecteur.classList.contains('avec-st'));
       else if (action === 'plein-ecran') pleinEcran();
       else if (action === 'musique') basculerMusique();
@@ -1459,6 +2034,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     // calques figés (sortant d'un fondu, image sous un carton) sont reposés sur leur cadre.
     function recadrer() {
       couches.forEach((c, k) => { if (c.x) cadre(calques[k], c.x); });
+      tailleLieu();
       mesurerMarges();
       couches.forEach((c, k) => { if (c.x && (k !== visible || c.x !== D.diapos[i])) poser(k); });
       rendre();
@@ -1498,7 +2074,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
         // Pendant un carton, Entrée le passe (même si le focus est sur le bouton de lecture).
         const bouton = cible.closest('button, a');
         if (!enCarton || (bouton && bouton !== btnLecture)) return;
-        e.preventDefault(); finCarton();
+        e.preventDefault(); passerCarton();
       }
       else if (e.key === 'f' || e.key === 'F') { if (peDispo) pleinEcran(); }
       else if (e.key === 's' || e.key === 'S') sousTitres(!lecteur.classList.contains('avec-st'));
@@ -1511,15 +2087,22 @@ const sectionsLivre = d.actes.map((a, i) => ({
     scene.addEventListener('touchend', (e) => {
       const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
       if (Math.abs(dx) > 50 && Math.abs(dx) > 1.5 * Math.abs(dy)) dx < 0 ? suivant() : aller(i - 1);
+      else if (Math.abs(dx) < 12 && Math.abs(dy) < 12) revelerCartouches();
     }, { passive: true });
 
-    // Reprise : « Reprendre à la diapositive 37 ».
-    const memo = Number(lire(CLE_POS));
-    const k = D.diapos.findIndex((x) => x.n === memo);
+    // Reprise : « Reprendre à la diapositive 37 ». La position est mémorisée par la clé stable
+    // de la diapositive (son fichier Commons) ; un ancien numéro (format d'avant, chiffres
+    // seuls) est accepté une fois, puis réécrit sous forme de clé.
+    const memo = lire(CLE_POS);
+    let k = memo ? D.diapos.findIndex((x) => x.cle === memo) : -1;
+    if (k < 0 && memo && /^\d+$/.test(memo)) {
+      k = D.diapos.findIndex((x) => x.n === Number(memo));
+      ecrire(CLE_POS, k >= 0 ? D.diapos[k].cle : null);
+    }
     if (k > 0) {
       btnReprendre.hidden = false;
       btnReprendre.dataset.index = String(k);
-      btnReprendre.textContent = `Reprendre à la diapositive ${memo}`;
+      btnReprendre.textContent = `Reprendre à la diapositive ${D.diapos[k].n}`;
     }
 
     cadre(calques[0], D.diapos[0]);
@@ -1621,9 +2204,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
     z-index: 1;
     max-width: min(26rem, 45%);
     margin: 0;
-    padding: 0.35rem 0.7rem 0.4rem;
-    background: rgba(251, 250, 247, 0.88);
-    line-height: 1.3;
+    padding: 0.4rem 0.75rem 0.45rem;
+    background: rgba(251, 250, 247, 0.95);
+    border: 1px solid rgba(26, 26, 26, 0.22);
+    line-height: 1.35;
     pointer-events: none;
     /* Entrée décalée : fondu et petit glissement ~0,6 s après l'image ; sortie en fondu court
        (copie temporaire de l'ancien cartouche). */
@@ -1642,22 +2226,21 @@ const sectionsLivre = d.actes.map((a, i) => ({
     .lecteur__legende.lecteur__legende--sortant { transition-duration: 150ms; }
   }
 
-  /* Cartouche de la musique de fond, en haut à droite : une seule ligne fine, sans encadré
-     (bien distinct du cartouche de l'image) ; l'interprète n'apparaît qu'au survol. */
+  /* Cartouche de la musique de fond, en haut à droite : même famille que celui de l'image
+     (deux lignes, aucune troncature) ; l'interprète n'apparaît qu'au survol. */
   .lecteur__musique {
     position: absolute;
     top: var(--e-2);
     right: var(--e-2);
     z-index: 1;
-    max-width: min(28rem, 42%);
+    max-width: min(24rem, 40%);
     margin: 0;
-    padding: 0.15rem 0.6rem 0.2rem;
-    background: rgba(251, 250, 247, 0.78);
-    border-bottom: 1px solid var(--c-texte-doux);
-    line-height: 1.25;
+    padding: 0.4rem 0.75rem 0.45rem;
+    background: rgba(251, 250, 247, 0.95);
+    border: 1px solid rgba(26, 26, 26, 0.22);
+    line-height: 1.35;
     text-align: right;
-    font-size: 0.82rem;
-    color: var(--c-texte-doux);
+    color: #3a3a3a;
     hyphens: none;
     -webkit-hyphens: none;
     opacity: 0;
@@ -1669,23 +2252,30 @@ const sectionsLivre = d.actes.map((a, i) => ({
     transform: none;
     transition: opacity 700ms ease 300ms, transform 800ms cubic-bezier(0.2, 0.6, 0.3, 1) 300ms;
   }
-  .lecteur__musique :global(.m-ligne) { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .lecteur__musique :global(.m-ligne)::before { content: '♪ '; }
-  .lecteur__musique :global(cite) { font-style: italic; color: var(--c-texte); }
-  .lecteur__musique :global(.m-auteur) { font-variant: small-caps; letter-spacing: 0.04em; }
-  .lecteur__musique :global(.m-voix) { display: none; font-style: italic; font-size: 0.92em; }
+  .lecteur__musique :global(.m-ligne) { display: block; }
+  .lecteur__musique :global(.m-ligne)::before { content: '♪ '; color: var(--c-texte); }
+  .lecteur__musique :global(cite) { font-style: italic; font-size: 1rem; color: var(--c-texte); }
+  .lecteur__musique :global(.m-auteur) { display: block; font-size: 0.85rem; font-variant: small-caps; letter-spacing: 0.03em; }
+  .lecteur__musique :global(.m-voix) { display: none; font-style: italic; font-size: 0.8rem; }
   .lecteur__musique:hover :global(.m-voix) { display: block; }
-  .lecteur__musique:hover :global(.m-ligne) { white-space: normal; }
   @media (prefers-reduced-motion: reduce) {
     .lecteur__musique, .lecteur__musique.est-visible { transform: none; transition: opacity 200ms ease; }
   }
 
-  /* Estompage : après quelques secondes, les deux cartouches s'effacent presque ; le survol
-     et la pause les ramènent. */
+  /* Estompage : ~12 s après chaque changement, les deux cartouches disparaissent en fondu
+     lent ; le survol de leur coin (zone invisible un peu plus large, active même cachés : un
+     élément d'opacité 0 reçoit toujours le pointeur), la pause ou un toucher sur l'image
+     (téléphone) les ramènent. */
   .lecteur__legende, .lecteur__musique { pointer-events: auto; hyphens: none; -webkit-hyphens: none; }
+  .lecteur__legende.est-visible::before, .lecteur__musique.est-visible::before {
+    content: '';
+    position: absolute;
+    inset: -2rem -2rem -1.5rem;
+    z-index: -1;
+  }
   .lecteur__legende.est-visible.est-discret, .lecteur__musique.est-visible.est-discret {
-    opacity: 0.15;
-    transition: opacity 1200ms ease;
+    opacity: 0;
+    transition: opacity 2500ms ease;
   }
   .lecteur__legende.est-visible.est-discret:hover, .lecteur__musique.est-visible.est-discret:hover,
   .lecteur:not(.en-lecture) .lecteur__legende.est-visible.est-discret,
@@ -1741,15 +2331,53 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .en-carton .lecteur__carton-titre, .en-carton .lecteur__carton-filet, .en-carton .lecteur__carton-dates {
     animation: carton-entree 900ms cubic-bezier(0.2, 0.6, 0.3, 1) both;
   }
-  .en-carton .lecteur__carton-filet { animation-name: carton-filet; animation-delay: 150ms; }
-  .en-carton .lecteur__carton-dates { animation-delay: 300ms; }
+  /* Titre écrit lettre par lettre (~120 ms par lettre, chaque lettre en fondu de 0,6 s), puis le filet et les dates. */
+  .lecteur__carton-titre :global(.mot) { white-space: nowrap; }
+  .en-carton .lecteur__carton-titre { animation: none; }
+  .en-carton .lecteur__carton-titre :global(.mot > span) {
+    animation: carton-lettre 600ms ease both;
+    animation-delay: calc(300ms + var(--i) * 120ms);
+  }
+  .en-carton .lecteur__carton-filet { animation-name: carton-filet; animation-delay: calc(700ms + var(--lettres, 0) * 120ms); }
+  .en-carton .lecteur__carton-dates { animation-delay: calc(1000ms + var(--lettres, 0) * 120ms); }
+  @keyframes carton-lettre { from { opacity: 0; } to { opacity: 1; } }
+  /* En pause, l'écriture du titre se fige avec le carton. */
+  .lecteur:not(.en-lecture) .lecteur__carton *, .lecteur:not(.en-lecture) .lecteur__carton :global(.mot > span) { animation-play-state: paused; }
+  /* Le cartouche de la musique reste visible au-dessus du carton (musique au premier plan). */
+  .lecteur.en-carton .lecteur__musique { z-index: 4; }
+  .lecteur.en-carton .lecteur__musique.est-visible.est-discret { opacity: 1; }
   @keyframes carton-entree { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
   @keyframes carton-filet { from { transform: scaleX(0); } to { transform: none; } }
   @media (prefers-reduced-motion: reduce) {
     .lecteur__carton, .en-carton .lecteur__carton, .lecteur:not(.en-carton) .lecteur__carton { transition: none; }
     .en-carton .lecteur__carton-titre, .en-carton .lecteur__carton-filet, .en-carton .lecteur__carton-dates { animation: none; }
+    .en-carton .lecteur__carton-titre :global(.mot > span) { animation: none; }
   }
   .lecteur.en-carton .lecteur__acte, .lecteur.en-carton .lecteur__soustitre { opacity: 0; }
+  /* Volets de sortie du carton (copies posées par le script) : moitié haute et moitié basse,
+     un filet fin au bord de la coupe. */
+  .lecteur .lecteur__carton.lecteur__volet.lecteur__volet {
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    pointer-events: none;
+    will-change: transform;
+  }
+  .lecteur__volet--haut { clip-path: inset(0 0 50% 0); }
+  .lecteur__volet--bas { clip-path: inset(50% 0 0 0); }
+  .lecteur__volet::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--c-ocre-clair);
+  }
+  .lecteur__volet--haut::after { top: calc(50% - 1px); }
+  .lecteur__volet--bas::after { top: 50%; }
+  @media (prefers-reduced-motion: reduce) {
+    .lecteur:not(.en-carton) .lecteur__carton { transition: opacity 300ms ease, visibility 0s linear 300ms; }
+  }
 
   .lecteur__legende :global(cite) { display: block; font-style: italic; font-size: 1rem; color: var(--c-texte); }
   .lecteur__legende :global(span) {
@@ -1757,7 +2385,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     font-size: 0.85rem;
     font-variant: small-caps;
     letter-spacing: 0.03em;
-    color: var(--c-texte-doux);
+    color: #3a3a3a; /* gris foncé lisible sur le blanc cassé (jamais de gris pâle) */
   }
   .livre figcaption {
     margin: var(--e-2) 0 0;
@@ -1911,7 +2539,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
   /* Intermède chanté : paroles en italique, troisième ligne du cartouche (interprète). */
   .lecteur.en-chant .lecteur__soustitre { font-style: italic; }
   .lecteur.en-instrumental .lecteur__soustitre { visibility: hidden; }
-  .lecteur__legende :global(.lecteur__legende-voix) { font-variant: normal; font-style: italic; letter-spacing: 0; font-size: 0.8rem; }
+  /* Citation en surimpression : ses mots sont sur l'image, le sous-titre se tait. */
+  .lecteur.avec-citation .lecteur__soustitre { visibility: hidden; }
+  .lecteur__legende :global(.lecteur__legende-voix) { display: none; font-variant: normal; font-style: italic; letter-spacing: 0; font-size: 0.8rem; }
+  .lecteur__legende:hover :global(.lecteur__legende-voix) { display: block; }
 
   /* Plein écran : fond blanc cassé ; légende et contrôles s'effacent après inactivité. */
   /* L'image occupe tout l'écran ; acte, légende, sous-titre et contrôles se superposent
@@ -1932,7 +2563,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .lecteur:fullscreen .lecteur__controles { background: rgba(251, 250, 247, 0.88); padding-inline: var(--gouttiere); }
   .lecteur:fullscreen .lecteur__acte { grid-row: 1; justify-self: center; padding-block: 0.3rem; font-size: 0.9rem; }
   .lecteur:fullscreen .lecteur__legende { top: var(--e-3); left: var(--gouttiere); max-width: min(32rem, 40%); }
-  .lecteur:fullscreen .lecteur__musique { top: var(--e-3); right: var(--gouttiere); max-width: min(32rem, 36%); font-size: 0.92rem; }
+  .lecteur:fullscreen .lecteur__musique { top: var(--e-3); right: var(--gouttiere); max-width: min(30rem, 36%); }
+  .lecteur:fullscreen .lecteur__musique :global(cite) { font-size: 1.2rem; }
+  .lecteur:fullscreen .lecteur__musique :global(.m-auteur) { font-size: 1rem; }
   .lecteur:fullscreen .lecteur__legende :global(cite) { font-size: 1.2rem; }
   .lecteur:fullscreen .lecteur__legende :global(span) { font-size: 1rem; }
   .lecteur:fullscreen .lecteur__carton { gap: var(--e-3); }
@@ -1962,13 +2595,17 @@ const sectionsLivre = d.actes.map((a, i) => ({
   @media (max-width: 699px) {
     .lecteur__scene { height: min(58svh, 100vw); margin-inline: calc(-1 * var(--gouttiere)); border-inline: 0; }
     .lecteur__soustitre { font-size: 1.1rem; min-height: 5.8em; }
-    .lecteur__legende { max-width: 75%; padding: 0.25rem 0.5rem; }
-    .lecteur__legende :global(cite) { font-size: 0.9rem; }
-    .lecteur__legende :global(span) { font-size: 0.78rem; }
-    /* Téléphone : la musique passe en bas à droite de l'image, réduite au titre et au compositeur. */
-    .lecteur__musique { top: auto; bottom: var(--e-1); right: var(--e-1); max-width: 80%; font-size: 0.75rem; }
+    .lecteur__legende { max-width: 75%; padding: 0.3rem 0.55rem; }
+    .lecteur__legende :global(cite) { font-size: 0.95rem; }
+    .lecteur__legende :global(span) { font-size: 0.82rem; }
+    /* Téléphone : la musique passe en bas à droite de l'image, en entier (pas de troncature). */
+    .lecteur__musique { top: auto; bottom: var(--e-1); right: var(--e-1); max-width: 80%; padding: 0.3rem 0.55rem; }
+    .lecteur__musique :global(cite) { font-size: 0.95rem; }
+    .lecteur__musique :global(.m-auteur) { font-size: 0.82rem; }
     .lecteur__controles { gap: var(--e-1) var(--e-3); }
     .lecteur__groupe--options { margin-left: 0; width: 100%; justify-content: flex-start; }
+    /* Médaillon de lieu (même coin) : le cartouche de la musique s'efface le temps de la carte. */
+    .lecteur.avec-lieu .lecteur__musique { opacity: 0; }
   }
 
   /* Livre d'images (sans JavaScript). */
@@ -2092,6 +2729,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     transition: opacity 400ms ease, transform 400ms ease, visibility 0s;
   }
   .diaporama .lecteur.en-carton .frise-t--surimpression { visibility: hidden; }
+  /* Frise affichée en même temps qu'un médaillon de lieu : le médaillon monte au-dessus d'elle. */
+  .diaporama .frise-t--surimpression.est-visible ~ .lieu { bottom: calc(var(--frise-bas, 0px) + 5.4rem); }
   @media (prefers-reduced-motion: reduce) {
     .diaporama .frise-t__curseur, .diaporama .frise-t__date { transition: none !important; }
     .diaporama .en-carton .frise-t--carton { animation: none; }
@@ -2104,6 +2743,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .diaporama .lecteur:fullscreen .frise-t--carton { max-width: min(46rem, 100%); }
   @media (max-width: 699px) {
     .diaporama .frise-t--surimpression { width: 100%; bottom: var(--frise-bas, 0px); padding-inline: var(--gouttiere); }
+    .diaporama .frise-t--surimpression.est-visible ~ .lieu { bottom: calc(var(--frise-bas, 0px) + 4.6rem); }
     .diaporama .frise-t__date { font-size: 0.88rem; }
     .diaporama .frise-t__annee { font-size: 0.75rem; }
   }
