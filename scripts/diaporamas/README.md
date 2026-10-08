@@ -15,6 +15,10 @@ fichier ne décrit que les outils.
   séparation de la voix par Hybrid Demucs de torchaudio, ~320 Mo téléchargés une fois),
   **soundfile**, et **matplotlib** pour les planches de contrôle.
 - `GEMINI_API_KEY` dans `.env` à la racine (fichier non versionné).
+- Détourage des objets de musée (`objets.py`) : **rembg** dans un venv ignoré par git,
+  `python3 -m venv .cache/venv-rembg && .cache/venv-rembg/bin/pip install "rembg[cpu]" pillow`
+  (modèle `isnet-general-use`, ~180 Mo, téléchargé au premier usage dans `~/.rembg/models`) ; et
+  **scipy** (Anaconda) pour l'enveloppe convexe.
 
 Les commandes se lancent depuis la racine du projet.
 
@@ -35,7 +39,8 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. |
 | `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. |
 | `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). |
-| `surimpressions.py` | Cartes de lieu, citations et portraits en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
+| `surimpressions.py` | Cartes de lieu, citations, portraits, objets de musée et manuscrits en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
+| `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle, bilan des mentions. |
 | `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage proposé par Gemini Flash puis contrôlé, webp ovale), contrôle de visibilité des personnes sur les images, planche de contrôle. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
@@ -109,6 +114,12 @@ python3 scripts/diaporamas/portraits.py --registre            # tout le registre
 python3 scripts/diaporamas/portraits.py revolution --visibilite
 python3 scripts/diaporamas/portraits.py revolution --relever
 
+# Objets de musée et manuscrits : recherche, registre (détourage), planche à relire, bilan
+python3 scripts/diaporamas/objets.py --chercher "assiette révolutionnaire"
+python3 scripts/diaporamas/objets.py --registre               # ce qui manque (--id x y, --force)
+python3 scripts/diaporamas/objets.py --planche
+python3 scripts/diaporamas/objets.py revolution --relever
+
 # Insérer des diapositives (groupes {"apres": n actuel, "diapositives": […]}) et tout renuméroter ;
 # --essai affiche la correspondance sans rien écrire. Puis images.py, voix.py, camera.py.
 python3 scripts/diaporamas/renumeroter.py revolution --inserer ajouts.json --essai
@@ -143,7 +154,7 @@ python3 scripts/diaporamas/verifier.py --tous
 6. Musique : écrire `musique` dans le JSON (voir ci-dessous), lancer `musique.py <slug>`,
    écouter les extraits, ajuster `debut`/`fin` et les paroles, puis `paroles.py <slug> --ecoute`
    et relire ses planches (voir « Paroles des chants » ci-dessous).
-7. Cartes de lieu, citations et portraits : remplir `lieux`, `citations`, `personnes` et `personnes_vues` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité), lancer
+7. Cartes de lieu, citations, portraits, objets et manuscrits : remplir `lieux`, `citations`, `personnes`, `personnes_vues`, `objets` et `manuscrits` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité, `objets.py` pour le registre des objets), lancer
    `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
 8. `verifier.py <slug>` puis `npm run build`.
 
@@ -646,3 +657,66 @@ plus de 5 ans à la mort signalée), `quand` exacts et dans l'ordre, instants pr
 dans l'audio et à jour, 4 portraits au plus, personne montrée absente de l'image (jamais dans
 `personnes_vues` de la même diapositive ; désaccord avec le cache de vision en avertissement),
 personne citée accompagnée de son portrait.
+
+## Objets de musée et manuscrits
+
+Spec 12, « Enrichissements visuels », points 1 et 2 (2026-10-08). Toujours actifs dans le lecteur ;
+rien dans le livre d'images ; crédits dans la section « Objets et documents » de la page.
+
+```json
+{ "n": 22, "narration": "… il accepte la cocarde bleue et rouge de Paris, …",
+  "objets": [{ "id": "assiette-cocarde", "quand": "la cocarde bleue et rouge", "instant": 5.28 }] }
+{ "n": 94, "narration": "… Libéré par la Commune, il se réfugie à l'Hôtel de Ville. …",
+  "manuscrits": [{ "id": "appel-section-piques", "quand": "il se réfugie à l'Hôtel de Ville", "instant": 11.25 }] }
+```
+
+**Choix.** Objet : un objet d'époque dont la voix parle ou qu'elle évoque de près (« la cocarde »,
+« le bonnet rouge », « les représentants en mission », « Le litre et le gramme ») ; photo sur Commons
+du domaine public, CC0, CC BY ou CC BY-SA (jamais NC ni ND), le musée noté. Les collections de Paris
+Musées (Carnavalet, CC0, fond de studio) et les photos de Rama (Musée de l'Armée, CnAM, CC BY-SA, fond
+blanc ou noir) se détourent bien. Manuscrit : document d'époque (lettre, acte, décret, certificat)
+que la narration évoque, domaine public, métadonnées vérifiées sur la notice du musée ; `halo` sur la
+signature ou la phrase, relevé à la main sur l'image quadrillée et vérifié sur la planche.
+- `quand` : passage exact (première occurrence) ; `instant` écrit par `surimpressions.py` ;
+  `cote` : `droite` (défaut) ou `gauche`, choisi là où l'objet gêne le moins (pas le coin d'un
+  médaillon ou d'une rangée de portraits qui se montrerait en même temps).
+- Registre `src/data/diaporamas/objets.json` (commun à toutes les périodes) : `nom` (légende
+  courte, 50 caractères environ), `date`, `musee`, `inventaire`, `commons`, `recadrage`,
+  `detourage` (`convexe` pour une assiette ou une médaille), `halo` et `passage` (manuscrit) ;
+  `objets.py --registre` écrit `fichier`, `largeur`, `hauteur`, `licence`, `page`, `auteur_photo`
+  (licence CC BY : crédit obligatoire).
+- Détourage : rembg (`isnet-general-use`) sur l'image réduite à 2 000 px, masque durci (seuils 40
+  et 215), couleurs de l'original ; pour une faïence blanche, le modèle prend le blanc pour le fond :
+  `detourage: "convexe"` remplace le masque par son enveloppe convexe. Rogné sur l'objet (marge de
+  2 %), 720 px au plus, webp transparent (15 à 130 Ko). Relire `.cache/diaporamas/objets/planche.jpg`
+  (damier, gris, fond sombre ; halo des manuscrits en rouge). Manuscrits : webp 1 400 px au plus.
+
+**Lecteur** (`objetsDe` dans `src/utils/diaporamas.ts`, `Diaporama.astro`, styles dans
+`Surimpressions.astro`) :
+- objet : coin bas, cartouche blanc cassé à filet fin, objet en couleur (22 % de la hauteur de la
+  scène, 96 à 200 px ; 1,3 fois plus pour un objet très étroit ; 30 % de la largeur au plus),
+  légende « objet » puis « date · musée » ; fondu de 0,8 s et montée de 10 px ; ~5 s depuis le
+  passage (un passage dit dans les 4 dernières secondes avance l'entrée) ; place réservée pour la
+  caméra **toute la diapositive** (comme le médaillon et les portraits) ;
+- manuscrit : sur un côté, entre le cartouche et le bas occupé de ce côté (72 % de la hauteur, 40 % de
+  la largeur au plus), ~8 s ; 1 s après l'entrée, zoom doux (2,5 s, logarithmique, 2,4 fois au plus,
+  le passage sur ~80 % de la page) puis halo en 1,2 s (même effet que `ev-doc__surligne`) ; ne
+  réserve rien pour la caméra (comme la citation) ; mouvement réduit : pas de zoom, halo d'emblée ;
+- **deux surimpressions au plus à la fois**, priorités : citation > manuscrit > portraits = médaillon
+  de lieu > objet > frise du temps. Le manuscrit ne se montre jamais avec la citation, ni quand
+  médaillon et portraits sont déjà là ensemble (raccourci à 5 s au moins ou reporté) ; l'objet cède à
+  la citation, au manuscrit, à la surimpression de son coin et à tout moment où deux autres sont là
+  (raccourci à 3,5 s au moins, reporté ou omis) ; la frise cède dès que deux autres sont visibles ;
+- affichage dérivé de l'instant lissé de l'audio (pause, reprise, sauts justes).
+
+`verifier.py` : registre (champs, fichier, licence, crédit CC BY, halo, passage), mentions (une de
+chaque au plus, `quand` exact, instant présent, à jour, dans l'audio), fenêtres recalculées comme
+dans le lecteur (même code porté en Python : `fenetres_surimpressions`, contrôlé identique au lecteur
+sur les 127 diapositives de la Révolution) : jamais plus de deux surimpressions à la fois, jamais
+l'objet avec la surimpression de son coin ni le manuscrit avec la citation ; objet omis ou raccourci
+en avertissement.
+
+Révolution : 10 objets, 3 manuscrits (liste avec `objets.py revolution --relever`). Pas de pique ni de
+bonnet de laine d'époque photographiés librement sur Commons ; la dernière lettre de Marie-Antoinette
+n'y est qu'en fac-similé de 1872 et la narration ne l'évoque pas ; le procès-verbal du serment du Jeu
+de paume n'y est qu'en 1 000 px, signatures illisibles.

@@ -20,6 +20,12 @@
 // Portraits des personnes nommées (spec 12, 2026-10-08) : rangée d'ovales en bas à gauche
 // (symétrique du médaillon de lieu), en couleur, bord fin, nom en petites capitales et dates
 // dessous ; Diaporama.astro la remplit, la dimensionne (--ovale-h) et montre chaque ovale au nom.
+//
+// Objets de musée et manuscrits (spec 12, « Enrichissements visuels », 2026-10-08) : l'objet, détouré,
+// est posé dans un coin bas (à droite par défaut) sur un cartouche blanc cassé à filet fin, légende
+// courte dessous (objet ; date · musée) ; il entre en fondu avec une très légère montée. Le manuscrit
+// se pose sur un côté, entre le cartouche et le bas réservé ; Diaporama.astro règle son zoom sur le
+// passage et le halo (même effet que `ev-doc__surligne` des épisodes) d'après l'instant de l'audio.
 import type { Diaporama, FondCarte, PlanParis } from '../utils/diaporamas';
 import { surimpressionsDe, urlMedia } from '../utils/diaporamas';
 import { typographie } from '../utils/typographie.mjs';
@@ -59,6 +65,18 @@ for (const x of d.diapositives) {
   <script type="application/json" class="lieu__multiples" set:html={JSON.stringify(multiples).replace(/</g, '\\u003c')} />
 )}
 {d.diapositives.some((x) => x.personnes?.length) && <div class="portraits" aria-hidden="true"></div>}
+{d.diapositives.some((x) => x.objets?.length) && (
+  <figure class="objet" aria-hidden="true">
+    <span class="objet__image"><img alt="" decoding="async" /></span>
+    <figcaption><span class="objet__nom"></span><span class="objet__legende"></span></figcaption>
+  </figure>
+)}
+{d.diapositives.some((x) => x.manuscrits?.length) && (
+  <figure class="manuscrit" aria-hidden="true">
+    <div class="manuscrit__page"><div class="manuscrit__doc"><img alt="" decoding="async" /><span class="manuscrit__halo"></span></div></div>
+    <figcaption><span class="objet__nom"></span><span class="objet__legende"></span></figcaption>
+  </figure>
+)}
 {d.diapositives.some((x) => x.citations?.length) && (
   <div class="mots" aria-hidden="true">
     <p class="mots__texte"></p>
@@ -250,6 +268,93 @@ for (const x of d.diapositives) {
   .portraits.est-seul :global(.portrait__nom), .portraits.est-seul :global(.portrait__sep), .portraits.est-seul :global(.portrait__dates) { display: inline; }
   .portraits.est-seul :global(.portrait__sep) { color: #4a4843; }
 
+  /* Objet de musée : cartouche blanc cassé à filet fin (même famille que le médaillon de lieu), objet
+     détouré en couleur, légende monochrome. Taille posée par le lecteur (--objet-h, --objet-l). Entrée
+     en fondu avec une très légère montée ; la place est réservée pour la caméra toute la diapositive. */
+  .objet {
+    --objet-h: 150px;
+    --objet-l: 150px;
+    position: absolute;
+    right: var(--e-2);
+    bottom: calc(var(--frise-bas, 0px) + var(--e-2));
+    z-index: 2;
+    margin: 0;
+    padding: 0.45rem 0.55rem 0.3rem;
+    background: rgba(251, 250, 247, 0.95);
+    border: 1px solid rgba(26, 26, 26, 0.22);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 600ms ease, transform 600ms ease, visibility 0s linear 600ms;
+  }
+  .objet.est-gauche { right: auto; left: var(--e-2); }
+  .objet.est-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 800ms ease, transform 1400ms cubic-bezier(0.2, 0.6, 0.3, 1), visibility 0s, bottom 500ms ease;
+  }
+  .objet__image { display: block; width: var(--objet-l); height: var(--objet-h); margin: 0 auto; }
+  .objet__image img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .objet figcaption, .manuscrit figcaption {
+    max-width: max(var(--objet-l), 10em);
+    margin: 0.3rem auto 0;
+    text-align: center;
+    line-height: 1.18;
+    color: var(--c-texte);
+    hyphens: none;
+    -webkit-hyphens: none;
+    text-wrap: balance;
+  }
+  .objet__nom { display: block; font-size: 0.8rem; font-style: italic; }
+  .objet__legende { display: block; margin-top: 0.1rem; font-size: 0.72rem; font-variant: small-caps; letter-spacing: 0.04em; color: #4a4843; }
+
+  /* Manuscrit : la page entière sur un cartouche à filet fin, sur un côté de l'image (--ms-haut,
+     --ms-l, --ms-h posés par le lecteur) ; zoom doux sur le passage (transform de .manuscrit__doc) et
+     halo : même effet que les documents d'épisode (EpisodeVisuels.astro, .ev-doc__surligne). */
+  .manuscrit {
+    --ms-l: 200px;
+    --ms-h: 280px;
+    --objet-l: var(--ms-l);
+    position: absolute;
+    right: var(--e-2);
+    top: var(--ms-haut, 15%);
+    z-index: 2;
+    margin: 0;
+    padding: 0.35rem 0.35rem 0.3rem;
+    background: rgba(251, 250, 247, 0.96);
+    border: 1px solid rgba(26, 26, 26, 0.22);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 600ms ease, transform 600ms ease, visibility 0s linear 600ms;
+  }
+  .manuscrit.est-gauche { right: auto; left: var(--e-2); }
+  .manuscrit.est-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 800ms ease, transform 1200ms cubic-bezier(0.2, 0.6, 0.3, 1), visibility 0s;
+  }
+  .manuscrit__page { position: relative; overflow: hidden; margin: 0 auto; width: var(--ms-l); height: var(--ms-h); border: 1px solid var(--c-filet); }
+  .manuscrit__doc { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; will-change: transform; }
+  .manuscrit__doc img { display: block; width: 100%; height: 100%; }
+  .manuscrit__halo {
+    position: absolute;
+    margin: -1.2% -3%;
+    padding: 1.2% 3%;
+    box-sizing: content-box;
+    opacity: var(--p, 0);
+    -webkit-backdrop-filter: brightness(1.22) contrast(1.25);
+    backdrop-filter: brightness(1.22) contrast(1.25);
+    -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 62%, transparent 100%);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+
   /* Citation : voile léger, grand serif italique, centrée dans le tiers inférieur. */
   .mots {
     position: absolute;
@@ -311,6 +416,13 @@ for (const x of d.diapositives) {
     .portraits :global(.portrait__nom) { font-size: 0.66rem; letter-spacing: 0.02em; }
     .portraits :global(.portrait__dates) { font-size: 0.6rem; }
     .portraits.est-seul :global(.portrait) { max-width: 11em; }
+    .objet { bottom: calc(var(--frise-bas, 0px) + var(--e-1)); right: var(--e-1); padding: 0.25rem 0.3rem 0.2rem; }
+    .objet.est-gauche { left: var(--e-1); }
+    .manuscrit { right: var(--e-1); padding: 0.2rem; }
+    .manuscrit figcaption { max-width: max(var(--objet-l), 8em); }
+    .manuscrit.est-gauche { left: var(--e-1); }
+    .objet__nom { font-size: 0.66rem; }
+    .objet__legende { font-size: 0.6rem; letter-spacing: 0.02em; }
   }
   @media (prefers-reduced-motion: reduce) {
     .lieu, .lieu.est-visible, .mots, .mots.est-visible, .portraits, .portraits.est-visible { transform: translate(0, 0); transition: opacity 200ms ease, visibility 0s linear 200ms; }
@@ -322,6 +434,8 @@ for (const x of d.diapositives) {
     .lieu :global(.lieu__pt) { transition: none; transform: none; }
     .lieu :global(.lieu__etiquette), .lieu :global(.lieu__filet) { transition: none; }
     .mots__texte :global(.m) { transition: none; }
+    .objet, .objet.est-visible, .manuscrit, .manuscrit.est-visible { transform: none; transition: opacity 200ms ease, visibility 0s linear 200ms; }
+    .objet.est-visible, .manuscrit.est-visible { transition: opacity 200ms ease, visibility 0s; }
   }
 </style>
 

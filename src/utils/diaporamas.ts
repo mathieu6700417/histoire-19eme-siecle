@@ -3,6 +3,7 @@
 // durées et adresses.
 import { chapitresPrevus } from '../data/chapitres-ecrivains';
 import registrePortraits from '../data/diaporamas/portraits.json';
+import registreObjets from '../data/diaporamas/objets.json';
 
 export interface ImageDiapo {
   fichier: string;
@@ -57,6 +58,23 @@ export interface Diapositive {
   personnes?: PersonneDiapo[];
   /** Personnes nommées visibles sur l'image : pas de portrait (relevé gardé pour verifier.py). */
   personnes_vues?: PersonneDiapo[];
+  /** Objet de musée détouré posé en surimpression quand la voix en parle (spec 12,
+   *  « Enrichissements visuels », point 1) : un au plus, registre `objets.json`. */
+  objets?: MentionObjet[];
+  /** Manuscrit d'époque en surimpression, zoom et halo sur la signature ou la phrase (point 2). */
+  manuscrits?: MentionObjet[];
+}
+/** `id` : entrée du registre `objets.json` ; `quand` : passage exact (première occurrence) ;
+ *  `instant` (s) : son début dans l'audio (surimpressions.py) ; `cote` : coin bas (objet) ou côté
+ *  (manuscrit) où il se pose, à droite par défaut. */
+export interface MentionObjet { id: string; quand: string; instant?: number; cote?: 'gauche' | 'droite' }
+/** Registre des objets et manuscrits (scripts/diaporamas/objets.py), commun à toutes les périodes.
+ *  `fichier` : chemin dans public/diaporamas/ ; `halo` (manuscrit) : [x0, y0, x1, y1] en fractions
+ *  de l'image servie ; `passage` : transcription du passage éclairé. */
+export interface ObjetMusee {
+  id: string; type: 'objet' | 'manuscrit'; nom: string; date: string; musee: string; inventaire?: string;
+  commons: string; page?: string; licence?: string; auteur_photo?: string; fichier?: string; largeur?: number; hauteur?: number;
+  recadrage?: [number, number, number, number]; detourage?: string; halo?: [number, number, number, number]; passage?: string;
 }
 /** `id` : entrée du registre `portraits.json` ; `quand` : le nom tel qu'il est dit (cherché après
  *  le précédent) ; `instant` (s) : début du nom dans l'audio (surimpressions.py). */
@@ -250,9 +268,11 @@ export const PAUSE = 0.6;
  *  la durée totale ; même valeur dans scripts/diaporamas/verifier.py). */
 export const CARTON = 12;
 
-const fichiers = import.meta.glob<{ default: Diaporama }>(['../data/diaporamas/*.json', '!../data/diaporamas/portraits.json'], { eager: true });
+const fichiers = import.meta.glob<{ default: Diaporama }>(['../data/diaporamas/*.json', '!../data/diaporamas/portraits.json', '!../data/diaporamas/objets.json'], { eager: true });
 /** Registre des portraits des personnes nommées, commun à toutes les périodes. */
 export const portraits: Portrait[] = registrePortraits as Portrait[];
+/** Registre des objets de musée et des manuscrits, commun à toutes les périodes. */
+export const objetsMusee: ObjetMusee[] = registreObjets as ObjetMusee[];
 
 /** Les diaporamas écrits, par numéro de période. */
 export const diaporamas: Diaporama[] = Object.values(fichiers)
@@ -670,7 +690,10 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
   }
   const gens = portraitsDe(x, citation, fin);
   let lieu: null | LieuMedaillon = null;
-  if ((x.lieux?.length ?? 0) > 1) return { lieu: medaillonMultiple(x, fonds, plan, fin, citation), citation, portraits: gens };
+  if ((x.lieux?.length ?? 0) > 1) {
+    lieu = medaillonMultiple(x, fonds, plan, fin, citation);
+    return { lieu, citation, portraits: gens, ...objetsDe(x, fin, citation, lieu, gens) };
+  }
   const li = x.lieux?.[0];
   const t = li ? li.instant ?? instantPassage(x.narration, li.quand, duree, phrases) : null;
   if (li && t !== null) {
@@ -700,7 +723,7 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
       if (lieu) { lieu.x = Math.round(lieu.x * 10) / 10; lieu.y = Math.round(lieu.y * 10) / 10; lieu.ratio = Math.round(lieu.ratio * 1000) / 1000; }
     }
   }
-  return { lieu, citation, portraits: gens };
+  return { lieu, citation, portraits: gens, ...objetsDe(x, fin, citation, lieu, gens) };
 }
 
 // --- Portraits des personnes nommées (spec 12, 2026-10-08) --------------------------------------
@@ -753,4 +776,85 @@ export function portraitsDe(x: Diapositive, citation: null | { b: number; person
   let b = Math.max(dernier + APRES_PORTRAITS, a + DUREE_PORTRAITS);
   if (citation?.personne && gens.some((g) => g.id === citation.personne)) b = Math.max(b, citation.b);
   return { a: Math.round(a * 100) / 100, b: Math.round(b * 100) / 100, gens };
+}
+
+// --- Objets de musée et manuscrits (spec 12, « Enrichissements visuels », 2026-10-08) -----------
+
+/** Objet : ~5 s (3,5 s au moins s'il doit céder la place) ; manuscrit : ~8 s (5 s au moins), le
+ *  temps du fondu, du zoom (de 1 à 3,5 s après son entrée) et du halo. Mêmes valeurs dans
+ *  scripts/diaporamas/verifier.py. */
+export const DUREE_OBJET = 5;
+const MIN_OBJET = 3.5;
+export const DUREE_MANUSCRIT = 8;
+const MIN_MANUSCRIT = 5;
+/** Écart gardé avec une surimpression qui l'emporte (fondus de sortie et d'entrée). */
+const ECART_SURIMPRESSION = 0.5;
+type Fenetre = { a: number; b: number };
+const r2 = (v: number) => Math.round(v * 100) / 100;
+
+/** Première fenêtre [a, b) à partir de `a0` qui évite les intervalles `bloques` : longue de `duree`,
+ *  raccourcie jusqu'au prochain intervalle bloqué si elle garde `min`, sinon reportée après lui ;
+ *  `null` si elle ne tient plus avant `fin`. Même calcul que `placer` dans verifier.py. */
+function placer(a0: number, duree: number, min: number, fin: number, bloques: Fenetre[]): Fenetre | null {
+  const B = bloques.filter((f) => f.b > f.a).sort((p, q) => p.a - q.a);
+  let a = a0;
+  for (let essai = 0; essai < 12; essai++) {
+    if (a + min > fin) return null;
+    const dedans = B.find((f) => a >= f.a && a < f.b);
+    if (dedans) { a = dedans.b; continue; }
+    const suivant = B.find((f) => f.a > a);
+    const b = Math.min(a + duree, suivant ? suivant.a : Infinity);
+    if (b - a >= min) return { a: r2(a), b: r2(b) };
+    if (!suivant) return null;
+    a = suivant.b;
+  }
+  return null;
+}
+const elargir = (f: Fenetre | null, e = ECART_SURIMPRESSION) => (f ? [{ a: f.a - e, b: f.b + e }] : []);
+/** Intervalle où deux fenêtres se recouvrent (vide sinon). */
+const ensemble = (p: Fenetre | null, q: Fenetre | null) =>
+  (p && q && Math.min(p.b, q.b) > Math.max(p.a, q.a) ? [{ a: Math.max(p.a, q.a) - ECART_SURIMPRESSION, b: Math.min(p.b, q.b) + ECART_SURIMPRESSION }] : []);
+
+/** Objet montré par le lecteur : fenêtre, image, proportions, légende, coin. */
+export interface ObjetMontre { a: number; b: number; src: string; ratio: number; nom: string; legende: string; cote: 'gauche' | 'droite' }
+/** Manuscrit montré par le lecteur : fenêtre, image, proportions, halo (fractions), légende, côté. */
+export interface ManuscritMontre extends ObjetMontre { halo: [number, number, number, number] }
+
+/**
+ * Objet de musée et manuscrit d'une diapositive, placés après les autres surimpressions selon les
+ * priorités (spec 12, « Deux surimpressions au plus ») : citation > manuscrit > portraits = médaillon
+ * de lieu > objet > frise du temps.
+ * - Le manuscrit entre au passage `quand` (un peu plus tôt s'il est dit dans les dernières
+ *   secondes) ; il ne se montre jamais avec la citation (exclusifs, comme citation et médaillon), ni
+ *   pendant que médaillon et portraits sont déjà là ensemble : il est alors raccourci ou reporté.
+ * - L'objet entre au passage `quand` ; il cède à la citation, au manuscrit, à la surimpression de son
+ *   coin (médaillon à droite, portraits à gauche) et à tout moment où deux autres sont déjà là :
+ *   raccourci, reporté ou omis.
+ * Les fenêtres des autres surimpressions ne changent pas.
+ */
+export function objetsDe(x: Diapositive, fin: number, citation: Fenetre | null, lieu: Fenetre | null, gens: Fenetre | null) {
+  const parId = new Map(objetsMusee.map((o) => [o.id, o]));
+  const duree = x.audio?.duree ?? 6;
+  const instantDe = (m: MentionObjet) => m.instant ?? instantPassage(x.narration, m.quand, duree, x.audio?.phrases);
+  const montre = (m: MentionObjet, o: ObjetMusee, f: Fenetre) => ({
+    ...f, src: `${base}diaporamas/${o.fichier}`, ratio: Math.round(((o.largeur ?? 1) / (o.hauteur ?? 1)) * 1000) / 1000,
+    nom: o.nom, legende: `${o.date} · ${o.musee}`, cote: m.cote ?? 'droite' as const,
+  });
+  let manuscrit: ManuscritMontre | null = null;
+  const mm = x.manuscrits?.[0], om = mm && parId.get(mm.id), tm = mm ? instantDe(mm) : null;
+  if (mm && om?.fichier && om.halo && tm !== null) {
+    const a0 = Math.max(0.3, Math.min(tm - 0.1, fin - 6));
+    const f = placer(a0, DUREE_MANUSCRIT, MIN_MANUSCRIT, fin, [...elargir(citation), ...ensemble(lieu, gens)]);
+    if (f) manuscrit = { ...montre(mm, om, f), halo: om.halo };
+  }
+  let objet: ObjetMontre | null = null;
+  const mo = x.objets?.[0], oo = mo && parId.get(mo.id), to = mo ? instantDe(mo) : null;
+  if (mo && oo?.fichier && to !== null) {
+    const coin = (mo.cote ?? 'droite') === 'droite' ? lieu : gens;
+    const a0 = Math.max(0.3, Math.min(to - 0.1, fin - 4));
+    const f = placer(a0, DUREE_OBJET, MIN_OBJET, fin, [...elargir(citation), ...elargir(manuscrit), ...elargir(coin),
+      ...ensemble(lieu, gens), ...ensemble(lieu, manuscrit), ...ensemble(gens, manuscrit)]);
+    if (f) objet = montre(mo, oo, f);
+  }
+  return { objet, manuscrit };
 }

@@ -779,6 +779,27 @@ la règle des documents d'époque du domaine public (Commons), monochromes hors 
 manuscrits, 2 mosaïques, ~8 parallaxes (si validées). **Deux surimpressions au plus à la fois** ;
 l'image reste le sujet. Les zones couvertes ne font jamais bouger la caméra brusquement.
 
+**Valeurs retenues, points 1 et 2** (mise en œuvre du 2026-10-08 ; détail dans
+`scripts/diaporamas/README.md`, « Objets de musée et manuscrits ») :
+- données : `objets` et `manuscrits` dans la diapositive, `{ id, quand, instant, cote }` (un de chaque
+  au plus) ; registre commun `src/data/diaporamas/objets.json` ; `scripts/diaporamas/objets.py`
+  (licence par l'API : domaine public, CC0, CC BY, CC BY-SA ; détourage local par rembg
+  `isnet-general-use`, enveloppe convexe pour les faïences et médailles ; webp transparent de 720 px
+  au plus) ; crédits « Objets et documents » sur la page ;
+- objet : coin bas (droite par défaut), cartouche blanc cassé à filet fin, objet en couleur de 22 % de
+  la hauteur de la scène (96 à 200 px), légende « objet » / « date · musée » ; fondu de 0,8 s, montée
+  de 10 px ; ~5 s depuis le passage ; place réservée pour la caméra toute la diapositive ;
+- manuscrit : sur un côté, sous le cartouche, 72 % de la hauteur au plus ; ~8 s ; zoom doux 1 s après
+  l'entrée (2,5 s, 2,4 fois au plus), puis halo en 1,2 s, le même que les documents d'épisode ; ne
+  réserve rien pour la caméra ;
+- **priorités** : citation > manuscrit > portraits = médaillon de lieu > objet > frise ; jamais plus de
+  deux à la fois (contrôlé par `verifier.py`) ; l'élément de rang inférieur est raccourci, reporté ou
+  omis, la frise masquée ;
+- Révolution : 10 objets (Carnavalet, Musée de l'Armée, Archives nationales) et 3 manuscrits
+  (certificat de civisme de Brest, décret d'abolition de l'esclavage, appel à la section des Piques
+  signé « Ro ») ; caméra mesurée à nouveau sur ces 13 diapositives (1280 × 720, 1920 × 1080, 390 × 844) :
+  rien au-dessus des plafonds, aucun saut.
+
 ## Portail (`/diaporamas/`)
 
 Titre « Le siècle en images ». Une courte présentation (voix de synthèse, images du domaine

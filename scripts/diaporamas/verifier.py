@@ -61,6 +61,14 @@ personne au registre, `quand` exacts et dans l'ordre, instants présents, croiss
 et à jour, 4 portraits au plus, personne montrée absente de l'image (jamais aussi dans
 `personnes_vues` ; désaccord avec le contrôle de vision en cache : avertissement), personne
 citée (`citations[].personne`) accompagnée de son portrait.
+Objets de musée et manuscrits (spec 12, « Enrichissements visuels », 2026-10-08) : registre
+`objets.json` (type, nom, date, musée, fichier présent, page Commons, licence domaine public, CC0,
+CC BY ou CC BY-SA, auteur de la photo pour une licence CC BY ; manuscrit : halo valide et passage
+transcrit) ; dans chaque diapositive, un objet et un manuscrit au plus, au registre et du bon type,
+`quand` exact, côté valide, instant présent, dans l'audio et à jour ; objet omis ou raccourci par
+l'arbitrage : avertissement. Deux surimpressions au plus à la fois (citation, manuscrit, médaillon
+de lieu, portraits, objet ; fenêtres recalculées comme dans le lecteur), jamais l'objet avec la
+surimpression de son coin ni le manuscrit avec la citation.
 Code de sortie 1 en cas d'erreur ; les avertissements n'en sont pas.
 """
 import argparse, calendar, datetime, json, math, re, sys, unicodedata
@@ -628,6 +636,253 @@ def controler_portraits(d: dict) -> tuple[list[str], list[str], int, int]:
     return erreurs, avert, n_montres, len(montres)
 
 
+# --- Objets de musée et manuscrits ; deux surimpressions au plus (spec 12, 2026-10-08) -------------
+# Fenêtres d'affichage recalculées comme dans src/utils/diaporamas.ts (surimpressionsDe, portraitsDe,
+# medaillonMultiple, objetsDe) : mêmes constantes, mêmes arbitrages.
+DUREE_LIEU, APRES_LIEUX = 5.0, 3.0
+DUREE_PORTRAITS, APRES_PORTRAITS = 5.0, 3.0
+DUREE_OBJET, MIN_OBJET = 5.0, 3.5
+DUREE_MANUSCRIT, MIN_MANUSCRIT = 8.0, 5.0
+ECART_SURIMPRESSION = 0.5
+LICENCE_OBJET = re.compile(r'^(Domaine public|CC0|CC BY(-SA)? \d\.\d( [a-z]{2})?)$')
+
+
+def instant_caractere(x: dict, pos: int) -> float:
+    """Instant où la voix prononce le caractère `pos` (prorata dans sa phrase horodatée), comme
+    `instantCaractere` du lecteur."""
+    t = x['narration']
+    a = x.get('audio') or {}
+    du, ph = a.get('duree') or 6, a.get('phrases') or []
+    debuts = [0]
+    for q in c.phrases(t)[:-1]:
+        debuts.append(t.index(q, debuts[-1]) + len(q))
+    if len(ph) != len(debuts):
+        return pos / max(1, len(t)) * du
+    j = max(k for k, v in enumerate(debuts) if v <= pos)
+    f_car = debuts[j + 1] if j + 1 < len(debuts) else len(t)
+    return round(ph[j][0] + (pos - debuts[j]) / max(1, f_car - debuts[j]) * (ph[j][1] - ph[j][0]), 2)
+
+
+def instants_suivis(x: dict, liste: list[dict]) -> list[float | None]:
+    """Instants de mentions cherchées chacune après le début de la précédente (lieux, personnes)."""
+    depuis, sortie = 0, []
+    for m in liste:
+        pos = x['narration'].find(m.get('quand') or '\0', depuis)
+        if pos >= 0:
+            depuis = pos + 1
+        sortie.append(m['instant'] if 'instant' in m else (None if pos < 0 else instant_caractere(x, pos)))
+    return sortie
+
+
+def placer(a0: float, duree: float, mini: float, fin: float, bloques: list[tuple[float, float]]):
+    """Même calcul que `placer` de src/utils/diaporamas.ts."""
+    B = sorted((f for f in bloques if f[1] > f[0]), key=lambda f: f[0])
+    a = a0
+    for _ in range(12):
+        if a + mini > fin:
+            return None
+        dedans = next((f for f in B if f[0] <= a < f[1]), None)
+        if dedans:
+            a = dedans[1]
+            continue
+        suivant = next((f for f in B if f[0] > a), None)
+        b = min(a + duree, suivant[0] if suivant else math.inf)
+        if b - a >= mini:
+            return (round(a, 2), round(b, 2))
+        if not suivant:
+            return None
+        a = suivant[1]
+    return None
+
+
+def fenetres_surimpressions(x: dict, portraits_reg: dict, objets_reg: dict) -> dict:
+    """Fenêtres [a, b) (s de l'audio) de la citation, du médaillon de lieu, de la rangée de portraits,
+    du manuscrit et de l'objet d'une diapositive, arbitrées comme dans le lecteur."""
+    du = (x.get('audio') or {}).get('duree') or 6
+    fin = du + pause_apres(x)
+    t = x['narration']
+    F: dict[str, tuple[float, float] | None] = {'citation': None, 'lieu': None, 'portraits': None, 'manuscrit': None, 'objet': None}
+    ci = (x.get('citations') or [None])[0]
+    if ci and ci.get('texte') and ci['texte'] in t:
+        pos = t.index(ci['texte'])
+        mots = c.mots_lus(ci['texte'])
+        if ci.get('mots') and len(ci['mots']) == len(mots):
+            d0, dernier = ci['mots'][0][0], ci['mots'][-1][1]
+        else:
+            d0, dernier = instant_caractere(x, pos + mots[0][0]), instant_caractere(x, pos + len(ci['texte']))
+        F['citation'] = (max(0, d0 - 0.15), dernier + APRES_CITATION)
+    C = F['citation']
+    lieux = [v for v in instants_suivis(x, x.get('lieux') or []) if v is not None][:MAX_LIEUX]
+    if lieux:
+        a = max(0, min(lieux[0] - 0.1, fin - 4))
+        b = max(lieux[-1] + APRES_LIEUX, a + DUREE_LIEU) if len(x.get('lieux') or []) > 1 else a + DUREE_LIEU
+        if C and a < C[1] + 0.3 and b > C[0] - 0.5:
+            if C[1] + 0.3 + 3 <= fin:
+                a = C[1] + 0.3
+                b = a + DUREE_LIEU
+            elif C[0] - 0.5 - a >= 2.5 and (len(lieux) == 1 or any(v < C[0] - 1.5 for v in lieux)):
+                b = C[0] - 0.5
+            else:
+                a = b = None
+        if a is not None:
+            F['lieu'] = (round(a, 2), round(b, 2))
+    gens, dernier = [], -1.0
+    for m, v in zip(x.get('personnes') or [], instants_suivis(x, x.get('personnes') or [])):
+        if v is None or not portraits_reg.get(m.get('id'), {}).get('fichier'):
+            continue
+        if m['id'] in [g for g, _ in gens]:
+            dernier = max(dernier, v)
+            continue
+        if len(gens) >= MAX_PORTRAITS:
+            continue
+        gens.append((m['id'], v))
+        dernier = max(dernier, v)
+    if gens:
+        a = max(0, min(gens[0][1] - 0.1, fin - 4))
+        b = max(dernier + APRES_PORTRAITS, a + DUREE_PORTRAITS)
+        if C and ci.get('personne') in [g for g, _ in gens]:
+            b = max(b, C[1])
+        F['portraits'] = (round(a, 2), round(b, 2))
+
+    def elargir(f):
+        return [(f[0] - ECART_SURIMPRESSION, f[1] + ECART_SURIMPRESSION)] if f else []
+
+    def ensemble(p, q):
+        return [(max(p[0], q[0]) - ECART_SURIMPRESSION, min(p[1], q[1]) + ECART_SURIMPRESSION)] if p and q and min(p[1], q[1]) > max(p[0], q[0]) else []
+
+    def instant_de(m):
+        return m['instant'] if 'instant' in m else (instant_caractere(x, t.index(m['quand'])) if m.get('quand') in t else None)
+    mm = (x.get('manuscrits') or [None])[0]
+    if mm and objets_reg.get(mm.get('id'), {}).get('fichier') and instant_de(mm) is not None:
+        a0 = max(0.3, min(instant_de(mm) - 0.1, fin - 6))
+        F['manuscrit'] = placer(a0, DUREE_MANUSCRIT, MIN_MANUSCRIT, fin, elargir(C) + ensemble(F['lieu'], F['portraits']))
+    mo = (x.get('objets') or [None])[0]
+    if mo and objets_reg.get(mo.get('id'), {}).get('fichier') and instant_de(mo) is not None:
+        coin = F['lieu'] if mo.get('cote', 'droite') == 'droite' else F['portraits']
+        a0 = max(0.3, min(instant_de(mo) - 0.1, fin - 4))
+        L, P, M = F['lieu'], F['portraits'], F['manuscrit']
+        F['objet'] = placer(a0, DUREE_OBJET, MIN_OBJET, fin, elargir(C) + elargir(M) + elargir(coin)
+                            + ensemble(L, P) + ensemble(L, M) + ensemble(P, M))
+    return F
+
+
+def controler_objets(d: dict) -> tuple[list[str], list[str], int, int, int]:
+    """Objets de musée et manuscrits (registre objets.json, mentions des diapositives) et règle des
+    deux surimpressions au plus : erreurs, avertissements, nombres d'objets, de manuscrits montrés
+    et de diapositives où deux surimpressions se montrent ensemble."""
+    erreurs, avert = [], []
+    reg_f = c.DONNEES / 'objets.json'
+    registre = json.loads(reg_f.read_text()) if reg_f.exists() else []
+    if not registre and any(x.get('objets') or x.get('manuscrits') for x in d['diapositives']):
+        erreurs.append('objets.json absent (objets.py --registre)')
+    par_id: dict[str, dict] = {}
+    for o in registre:
+        q = f"objet « {o.get('id')} »"
+        if not o.get('id') or o['id'] in par_id:
+            erreurs.append(f'{q} : identifiant manquant ou en double')
+            continue
+        par_id[o['id']] = o
+        if o.get('type') not in ('objet', 'manuscrit'):
+            erreurs.append(f"{q} : type « {o.get('type')} » (objet ou manuscrit)")
+        for cle in ('nom', 'date', 'musee', 'commons', 'page', 'licence', 'fichier'):
+            if not str(o.get(cle) or '').strip():
+                erreurs.append(f'{q} : « {cle} » manquant (objets.py --registre)')
+        if len(o.get('nom') or '') > 64:
+            avert.append(f'{q} : légende longue ({len(o["nom"])} caractères ; 60 environ)')
+        if o.get('fichier') and not (c.PUBLIC / o['fichier']).is_file():
+            erreurs.append(f"{q} : fichier {o['fichier']} absent (objets.py --registre)")
+        lic = o.get('licence') or ''
+        if not LICENCE_OBJET.match(lic) or re.search(r'\bnc\b|\bnd\b', lic, re.I):
+            erreurs.append(f'{q} : licence non admise ({lic} ; domaine public, CC0, CC BY ou CC BY-SA)')
+        elif lic.startswith('CC BY') and not str(o.get('auteur_photo') or '').strip():
+            erreurs.append(f'{q} : licence {lic} sans auteur de la photo (crédit obligatoire)')
+        if o.get('type') == 'manuscrit':
+            h = o.get('halo')
+            if not (isinstance(h, list) and len(h) == 4 and 0 <= h[0] < h[2] <= 1 and 0 <= h[1] < h[3] <= 1):
+                erreurs.append(f'{q} : halo invalide ({h})')
+            if not str(o.get('passage') or '').strip():
+                erreurs.append(f'{q} : passage éclairé non transcrit')
+    portraits_reg = {p['id']: p for p in (json.loads((c.DONNEES / 'portraits.json').read_text()) if (c.DONNEES / 'portraits.json').exists() else []) if p.get('id')}
+    cache_f = c.CACHE / d['slug'] / 'surimpressions.json'
+    cache = json.loads(cache_f.read_text()) if cache_f.exists() else {}
+    from surimpressions import empreinte_audio
+    n_obj = n_man = n_deux = 0
+    for x in d['diapositives']:
+        p, t = f"{x['n']:3d}", x['narration']
+        a = x.get('audio') or {}
+        du = a.get('duree') or 0
+        fa = c.PUBLIC / d['slug'] / a.get('fichier', '')
+        for cle, genre in (('objets', 'objet'), ('manuscrits', 'manuscrit')):
+            liste = x.get(cle) or []
+            if len(liste) > 1:
+                erreurs.append(f'{p} : {len(liste)} {cle} (un au plus par diapositive)')
+            for m in liste:
+                q = f"{p} : {genre} « {m.get('id')} »"
+                o = par_id.get(m.get('id'))
+                if not o:
+                    erreurs.append(f'{q} : absent du registre objets.json')
+                elif o.get('type') != genre:
+                    erreurs.append(f"{q} : de type « {o.get('type')} » dans le registre")
+                if not m.get('quand') or m['quand'] not in t:
+                    erreurs.append(f"{q} : passage « {m.get('quand')} » absent de la narration")
+                    continue
+                if m.get('cote', 'droite') not in ('droite', 'gauche'):
+                    erreurs.append(f"{q} : côté « {m.get('cote')} » (droite ou gauche)")
+                if 'instant' not in m:
+                    avert.append(f'{q} : instant non calé, repli au prorata (surimpressions.py)')
+                elif not (fa.is_file() and cache.get(str(x['n']), {}).get('empreinte') == empreinte_audio(fa, t)):
+                    erreurs.append(f'{q} : instant périmé (voix ou texte changés : surimpressions.py)')
+                elif not 0 <= m['instant'] <= du:
+                    erreurs.append(f"{q} : instant hors de l'audio ({m['instant']})")
+                else:
+                    # Instant aligné : proche du prorata des phrases (sinon alignement à relire).
+                    pro = instant_caractere(x, t.index(m['quand']))
+                    if abs(pro - m['instant']) > 2.5:
+                        avert.append(f"{q} : instant {m['instant']:.2f} s loin du prorata ({pro:.2f} s) : alignement à relire")
+        if not any(x.get(k) for k in ('citations', 'lieux', 'personnes', 'objets', 'manuscrits')):
+            continue
+        F = fenetres_surimpressions(x, portraits_reg, par_id)
+        if x.get('objets'):
+            if F['objet']:
+                n_obj += 1
+                if F['objet'][1] - F['objet'][0] < DUREE_OBJET - 0.01:
+                    avert.append(f"{p} : objet raccourci à {F['objet'][1] - F['objet'][0]:.1f} s (il cède la place)")
+            else:
+                avert.append(f'{p} : objet omis faute de place (autres surimpressions)')
+        if x.get('manuscrits'):
+            if F['manuscrit']:
+                n_man += 1
+                if F['manuscrit'][1] - F['manuscrit'][0] < DUREE_MANUSCRIT - 0.01:
+                    avert.append(f"{p} : manuscrit raccourci à {F['manuscrit'][1] - F['manuscrit'][0]:.1f} s")
+            else:
+                avert.append(f'{p} : manuscrit omis faute de place (citation)')
+        # Deux surimpressions au plus à la fois (la frise du temps, éphémère, cède à l'exécution).
+        fins = (a.get('duree') or 6) + pause_apres(x)
+        actives = {k: v for k, v in F.items() if v}
+        pire, quand_pire = 0, 0.0
+        for k in range(int(fins / 0.05) + 1):
+            ti = k * 0.05
+            n = sum(1 for v in actives.values() if v[0] <= ti < v[1])
+            if n > pire:
+                pire, quand_pire = n, ti
+        if pire > 2:
+            erreurs.append(f"{p} : {pire} surimpressions à la fois vers {quand_pire:.1f} s ({', '.join(f'{k} {v[0]:.1f}-{v[1]:.1f}' for k, v in actives.items())})")
+        elif pire == 2:
+            n_deux += 1
+        o = F['objet']
+        coin = F['lieu'] if ((x.get('objets') or [{}])[0].get('cote', 'droite') == 'droite') else F['portraits']
+        if o and coin and min(o[1], coin[1]) > max(o[0], coin[0]) - ECART_SURIMPRESSION:
+            erreurs.append(f'{p} : objet et surimpression du même coin ensemble ({o} / {coin})')
+        if F['manuscrit'] and chevauchent(F['manuscrit'], F['citation']):
+            erreurs.append(f'{p} : manuscrit et citation ensemble')
+    return erreurs, avert, n_obj, n_man, n_deux
+
+
+def chevauchent(p, q) -> bool:
+    """Deux fenêtres [a, b) se recouvrent-elles ?"""
+    return bool(p and q and min(p[1], q[1]) > max(p[0], q[0]))
+
+
 def _sans_accents(t: str) -> str:
     t = unicodedata.normalize('NFKD', t.lower().replace('’', "'"))
     return ' '.join(re.findall(r"[a-z0-9']+", ''.join(ch for ch in t if not unicodedata.combining(ch))))
@@ -1157,6 +1412,9 @@ def verifier(slug: str) -> bool:
     e_por, a_por, n_portraits, n_gens = controler_portraits(d)
     erreurs += e_por
     avert += a_por
+    e_obj, a_obj, n_objets, n_manuscrits, n_deux = controler_objets(d)
+    erreurs += e_obj
+    avert += a_obj
 
     pauses = [pause_apres(x) for x in diapos]
     longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
@@ -1184,6 +1442,13 @@ def verifier(slug: str) -> bool:
         n_vues = sum(len(x.get('personnes_vues') or []) for x in diapos)
         print(f'Portraits : {n_ment} mention(s) de personnes, dont {n_vues} visibles sur l’image ; '
               f'{n_portraits} mention(s) avec portrait, {n_gens} personne(s) différente(s) montrée(s).')
+    if n_objets or n_manuscrits:
+        print(f'Objets et manuscrits : {n_objets} objet(s) de musée, {n_manuscrits} manuscrit(s) montrés (visés : ~10 et 3 à 4) ; '
+              f'deux surimpressions ensemble sur {n_deux} diapositive(s), jamais plus.')
+        if not 6 <= n_objets <= 14:
+            avert.append(f'{n_objets} objet(s) de musée (~10 visés par période)')
+        if not 3 <= n_manuscrits <= 4:
+            avert.append(f'{n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
     datees = sum(1 for x in diapos if 'date' in x)
     print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} surimpression(s) '
           f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")

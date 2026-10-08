@@ -6,7 +6,7 @@ import { typographie } from '../../utils/typographie.mjs';
 import { libelleChapitre } from '../../data/chapitres-ecrivains';
 import { planComplet, urlChapitre } from '../../utils/ecrivains';
 import {
-  diaporamas, dureeTotale, formaterDuree, nomSourceMusique, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
+  diaporamas, dureeTotale, formaterDuree, nomSourceMusique, objetsMusee, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
   type Diaporama as D,
 } from '../../utils/diaporamas';
 
@@ -31,12 +31,16 @@ const chants = (d.musique?.intermedes ?? []).filter((p) => p.duree);
 // dans l'ordre de leur première apparition.
 const idsPortraits = [...new Set(d.diapositives.flatMap((x) => (x.personnes ?? []).map((p) => p.id)))];
 const portraitsMontres = idsPortraits.map((id) => portraits.find((p) => p.id === id)).filter((p) => p?.fichier && p.page);
+// Crédits des objets de musée et des manuscrits (spec 12, « Enrichissements visuels ») : dans l'ordre
+// de leur apparition.
+const idsObjets = [...new Set(d.diapositives.flatMap((x) => [...(x.manuscrits ?? []), ...(x.objets ?? [])].map((o) => o.id)))];
+const objetsMontres = idsObjets.map((id) => objetsMusee.find((o) => o.id === id)).filter((o) => o?.fichier && o.page);
 /** Licence en milieu de phrase : minuscule initiale, sauf sigle (CC0, CC BY…). */
 const licence = (x: string) => t(/^[A-ZÀ-Ý][a-zà-ÿ]/.test(x) ? x.charAt(0).toLowerCase() + x.slice(1) : x);
 /** Lien vers le texte d'une licence Creative Commons (CC BY 3.0, CC BY-SA 4.0…), exigé par l'attribution. */
 const urlLicence = (x: string) => {
-  const m = /^CC (BY(?:-SA)?) (\d\.\d)/.exec(x);
-  return m ? `https://creativecommons.org/licenses/${m[1].toLowerCase()}/${m[2]}/deed.fr` : '';
+  const m = /^CC (BY(?:-SA)?) (\d\.\d)(?: ([a-z]{2}))?/.exec(x);
+  return m ? `https://creativecommons.org/licenses/${m[1].toLowerCase()}/${m[2]}/${m[3] ? `${m[3]}/` : ''}deed.fr` : '';
 };
 ---
 
@@ -57,7 +61,7 @@ const urlLicence = (x: string) => {
     <Diaporama diaporama={d} />
 
     <p class="credits">
-      {typographie("Voix off de synthèse (Gemini, voix Charon), texte relu ; images du domaine public, de Wikimedia Commons. Clavier : espace (lecture, pause), flèches (précédente, suivante), F (plein écran), S (sous-titres), M (musique), Entrée (passer le carton d'un acte) ; flèche droite pour passer un chant ou un intermède.")}
+      {typographie("Voix off de synthèse (Gemini, voix Charon), texte relu ; images du domaine public, de Wikimedia Commons (photographies de certains objets sous licence libre, créditées plus bas). Clavier : espace (lecture, pause), flèches (précédente, suivante), F (plein écran), S (sous-titres), M (musique), Entrée (passer le carton d'un acte) ; flèche droite pour passer un chant ou un intermède.")}
     </p>
     {(actesMusique.length > 0 || chants.length > 0) && (
       <section class="musiques" aria-labelledby="titre-musiques">
@@ -102,6 +106,23 @@ const urlLicence = (x: string) => {
               <span class="musiques__acte">{t(p!.nom)} ({p!.dates})</span>
               {' '}{t(p!.auteur)}{p!.date ? `, ${t(p!.date)}` : ''}.{' '}
               <a href={p!.page} rel="noopener" target="_blank">Commons</a>, {licence(p!.licence ?? '')}.
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+    {objetsMontres.length > 0 && (
+      <section class="musiques portraits-credits" aria-labelledby="titre-objets">
+        <h2 id="titre-objets">Objets et documents</h2>
+        <p>{typographie("Quand la voix parle d'un objet ou d'un document d'époque, sa photographie paraît sur l'image : l'objet détouré dans un coin, le manuscrit sur un côté, avec un halo sur la signature ou la phrase évoquée.")}</p>
+        <ul>
+          {objetsMontres.map((o) => (
+            <li>
+              <span class="musiques__acte">{t(o!.nom)}</span>{' '}({t(o!.date)}), {t(o!.musee)}{o!.inventaire ? `, ${t(o!.inventaire)}` : ''}.{' '}
+              {o!.passage && o!.passage.length > 3 && <Fragment>{t(`Passage éclairé : « ${o!.passage} ».`)}{' '}</Fragment>}
+              {o!.auteur_photo && <Fragment>{t(`Photographie : ${o!.auteur_photo}`)},{' '}</Fragment>}
+              <a href={o!.page} rel="noopener" target="_blank">Commons</a>,{' '}
+              {urlLicence(o!.licence ?? '') ? <a href={urlLicence(o!.licence ?? '')} rel="license noopener" target="_blank">{licence(o!.licence ?? '')}</a> : licence(o!.licence ?? '')}.
             </li>
           ))}
         </ul>

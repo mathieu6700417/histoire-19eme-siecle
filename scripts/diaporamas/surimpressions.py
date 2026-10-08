@@ -1,6 +1,6 @@
-"""Cartes de lieu, citations et portraits en surimpression : instants calés sur la voix (spec 12,
-« Cartes de lieu et citations en surimpression », 2026-10-07 ; « Portraits des personnes nommées »,
-2026-10-08).
+"""Cartes de lieu, citations, portraits, objets de musée et manuscrits en surimpression : instants
+calés sur la voix (spec 12, « Cartes de lieu et citations en surimpression », 2026-10-07 ; « Portraits
+des personnes nommées » et « Enrichissements visuels », 2026-10-08).
 
 Usage :
     python3 scripts/diaporamas/surimpressions.py revolution            # ce qui manque ou a changé
@@ -15,7 +15,9 @@ Pour chaque diapositive qui porte `lieux` ou `citations`, l'audio de la narratio
   apparaît alors (plusieurs lieux : un seul médaillon, chaque point paraît à son instant ; chaque
   passage est cherché après le début du précédent) ;
 - chaque personne nommée (`personnes`, portraits.py) reçoit `instant` de la même façon : début du
-  premier mot du nom tel qu'il est dit (`quand`), chaque passage cherché après le précédent.
+  premier mot du nom tel qu'il est dit (`quand`), chaque passage cherché après le précédent ;
+- chaque objet de musée et chaque manuscrit (`objets`, `manuscrits`, objets.py) reçoit `instant` :
+  début du premier mot de son passage `quand` (première occurrence).
 Le texte aligné est le texte DIT (lexique de prononciation appliqué à toute la narration, entrées
 de plusieurs mots comprises : « Louis XVI » → « Louis seize ») ; les mots affichés sont ensuite
 rattachés aux mots dits par correspondance de séquences (un mot réécrit par le lexique prend les
@@ -111,7 +113,7 @@ def main() -> int:
     dossier = c.PUBLIC / d['slug']
     faits = 0
     for x in d['diapositives']:
-        if not x.get('lieux') and not x.get('citations') and not x.get('personnes'):
+        if not any(x.get(k) for k in ('lieux', 'citations', 'personnes', 'objets', 'manuscrits')):
             continue
         n = str(x['n'])
         audio = dossier / (x.get('audio') or {}).get('fichier', '')
@@ -148,6 +150,14 @@ def main() -> int:
             depuis = pos + 1
             pe['instant'] = mots_du_passage(x['narration'], pe['quand'], inst, pos)[0][0]
             bilan.append(f"{pe['id']} {pe['instant']:.2f} s")
+        # Objets de musée et manuscrits (objets.py) : début du passage `quand` (première occurrence).
+        for cle in ('objets', 'manuscrits'):
+            for ob in x.get(cle, []):
+                if ob['quand'] not in x['narration']:
+                    print(f"{x['n']:3d} : passage « {ob['quand']} » introuvable, passé")
+                    continue
+                ob['instant'] = mots_du_passage(x['narration'], ob['quand'], inst)[0][0]
+                bilan.append(f"{ob['id']} {ob['instant']:.2f} s")
         print(f"{x['n']:3d} : " + ' ; '.join(bilan))
     cache_f.parent.mkdir(parents=True, exist_ok=True)
     cache_f.write_text(json.dumps(cache, ensure_ascii=False) + '\n')
@@ -158,7 +168,7 @@ def main() -> int:
         y = par_n.get(x['n'])
         if not y or y['narration'] != x['narration']:
             continue
-        for cle in ('lieux', 'citations', 'personnes'):
+        for cle in ('lieux', 'citations', 'personnes', 'objets', 'manuscrits'):
             if cle in x and cle in y and [z.get('texte', z.get('quand')) for z in x[cle]] == [z.get('texte', z.get('quand')) for z in y[cle]]:
                 for zx, zy in zip(x[cle], y[cle]):
                     for k in ('mots', 'instant'):
