@@ -690,6 +690,28 @@ montre pas, montrer son portrait. Décisions :
   commons, auteur, date, cadre_visage }` ; images recadrées en webp dans
   `public/diaporamas/portraits/`. Crédits des portraits sur la page. `verifier.py` : `quand`
   exacts, licences, 4 au plus, instants croissants, personne absente de l'image.
+- **Valeurs retenues** (mise en œuvre du 2026-10-08 ; détail dans `scripts/diaporamas/README.md`,
+  « Portraits ») :
+  - relevé : `personnes` (personne non visible, portrait) et `personnes_vues` (visible, pas de
+    portrait) dans chaque diapositive, `{ id, quand, instant }` ; « visible » = reconnaissable
+    (sujet, figure identifiable par le titre ou la composition, œuvre dans l'œuvre), pas une
+    silhouette dans une foule. Contrôle par Gemini Flash (`portraits.py --visibilite`), désaccords
+    tranchés à la main. Une citation porte `personne` : son portrait l'accompagne.
+  - registre : seules les personnes montrées ; une personne sans portrait fiable garde une `note`
+    et rien n'est montré. Pas de « portrait présumé ». Webp 240 × 300 px recadrée (visage à 58 %
+    de la hauteur), ovale tracé par le lecteur.
+  - lecteur : ovales de 17 % de la hauteur de la scène (78 à 118 px sur ordinateur, 50 px sur
+    téléphone), réduits si la rangée ne tient pas à côté du médaillon de lieu ; une personne par
+    ovale (première mention), le premier dès l'entrée de la rangée ; rangée du premier nom à 3 s
+    après le dernier, 5 s au moins, prolongée jusqu'à la fin de la citation de la personne ; zone
+    réservée pour toute la diapositive ; une personne seule : « Danton · 1759-1794 » sur une ligne.
+  - **priorités quand tout tombe ensemble** : citation > portraits = médaillon de lieu > frise du
+    temps. La citation exclut le médaillon (règle existante) et, si elle touche la rangée, monte
+    au-dessus d'elle pour toute la diapositive ; la frise cède quand médaillon et portraits sont là
+    ensemble (deux surimpressions au plus, sous-titre masqué pendant une citation) ; sur
+    téléphone, le cartouche de la musique s'efface le temps des portraits.
+  - Révolution : 135 mentions relevées, 58 visibles sur l'image, 71 avec portrait (48 personnes) ;
+    pas de portrait fiable pour Réveillon, Méchain, Amar, Lagrange, Claude Chappe et Pussin.
 
 ### Paroles des chants façon clip (2026-10-08)
 

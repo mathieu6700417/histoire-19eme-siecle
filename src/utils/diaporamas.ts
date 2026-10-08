@@ -2,6 +2,7 @@
 // de src/data/diaporamas/*.json, plan des neuf périodes (celles de la section écrivains),
 // durées et adresses.
 import { chapitresPrevus } from '../data/chapitres-ecrivains';
+import registrePortraits from '../data/diaporamas/portraits.json';
 
 export interface ImageDiapo {
   fichier: string;
@@ -51,13 +52,27 @@ export interface Diapositive {
   lieux?: LieuDiapo[];
   /** Citation courte attribuée, dite entre « » : inscrite mot à mot sur l'image. */
   citations?: CitationDiapo[];
+  /** Personnes nommées qui ne sont pas visibles sur l'image (spec 12, « Portraits des personnes
+   *  nommées ») : une mention par passage, dans l'ordre de la voix ; portrait du registre. */
+  personnes?: PersonneDiapo[];
+  /** Personnes nommées visibles sur l'image : pas de portrait (relevé gardé pour verifier.py). */
+  personnes_vues?: PersonneDiapo[];
+}
+/** `id` : entrée du registre `portraits.json` ; `quand` : le nom tel qu'il est dit (cherché après
+ *  le précédent) ; `instant` (s) : début du nom dans l'audio (surimpressions.py). */
+export interface PersonneDiapo { id: string; quand: string; instant?: number }
+/** Registre des portraits (commun à toutes les périodes, scripts/diaporamas/portraits.py) :
+ *  sans `fichier`, pas de portrait fiable (`note`). `fichier` : chemin dans public/diaporamas/. */
+export interface Portrait {
+  id: string; nom: string; dates: string; fichier?: string; commons?: string; page?: string;
+  auteur?: string; date?: string; licence?: string; cadre_visage?: [number, number, number, number]; note?: string;
 }
 /** `fond` : plan de Paris d'époque (`paris`) ou fond Natural Earth (carte.py) ; `instant` (s) :
  *  début du passage `quand` dans l'audio (surimpressions.py ; à défaut, prorata des phrases). */
 export interface LieuDiapo { nom: string; quand: string; lon: number; lat: number; fond: 'paris' | 'france' | 'voisins' | 'europe' | 'monde'; instant?: number }
 /** `texte` : sous-chaîne exacte de la narration (sans les guillemets) ; `prudence` : propos
  *  rapporté (« aurait dit ») ; `mots` : [début, fin] (s) de chaque mot de `motsLus(texte)`. */
-export interface CitationDiapo { texte: string; auteur: string; prudence?: boolean; mots?: [number, number][] }
+export interface CitationDiapo { texte: string; auteur: string; prudence?: boolean; mots?: [number, number][]; /** Personne citée (registre des portraits) : son portrait l'accompagne. */ personne?: string }
 /** `dates` : dates de l'acte, montrées par le carton de changement d'acte (« 1787-1789 »,
  *  « juillet-octobre 1789 »). */
 export interface Acte { id: string; titre: string; dates: string; debut: number }
@@ -231,7 +246,9 @@ export const PAUSE = 0.6;
  *  la durée totale ; même valeur dans scripts/diaporamas/verifier.py). */
 export const CARTON = 12;
 
-const fichiers = import.meta.glob<{ default: Diaporama }>('../data/diaporamas/*.json', { eager: true });
+const fichiers = import.meta.glob<{ default: Diaporama }>(['../data/diaporamas/*.json', '!../data/diaporamas/portraits.json'], { eager: true });
+/** Registre des portraits des personnes nommées, commun à toutes les périodes. */
+export const portraits: Portrait[] = registrePortraits as Portrait[];
 
 /** Les diaporamas écrits, par numéro de période. */
 export const diaporamas: Diaporama[] = Object.values(fichiers)
@@ -637,7 +654,7 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
   const duree = x.audio?.duree ?? 6;
   const phrases = x.audio?.phrases;
   const fin = duree + pauseApres(x);
-  let citation: null | { a: number; b: number; mots: number[]; fin: number; texte: string; auteur: string; prudence: boolean } = null;
+  let citation: null | { a: number; b: number; mots: number[]; fin: number; texte: string; auteur: string; prudence: boolean; personne?: string } = null;
   const ci = x.citations?.[0];
   const pos = ci ? x.narration.indexOf(ci.texte) : -1;
   if (ci && pos >= 0) {
@@ -645,10 +662,11 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
     const aligne = ci.mots?.length === mots.length;
     const debuts = aligne ? ci.mots!.map(([t0]) => t0) : mots.map((m) => instantCaractere(x.narration, pos + m.d, duree, phrases));
     const dernier = aligne ? ci.mots!.at(-1)![1] : instantCaractere(x.narration, pos + ci.texte.length, duree, phrases);
-    citation = { a: Math.max(0, debuts[0] - 0.15), b: dernier + APRES_CITATION, mots: debuts, fin: dernier, texte: ci.texte, auteur: ci.auteur, prudence: !!ci.prudence };
+    citation = { a: Math.max(0, debuts[0] - 0.15), b: dernier + APRES_CITATION, mots: debuts, fin: dernier, texte: ci.texte, auteur: ci.auteur, prudence: !!ci.prudence, personne: ci.personne };
   }
+  const gens = portraitsDe(x, citation, fin);
   let lieu: null | LieuMedaillon = null;
-  if ((x.lieux?.length ?? 0) > 1) return { lieu: medaillonMultiple(x, fonds, plan, fin, citation), citation };
+  if ((x.lieux?.length ?? 0) > 1) return { lieu: medaillonMultiple(x, fonds, plan, fin, citation), citation, portraits: gens };
   const li = x.lieux?.[0];
   const t = li ? li.instant ?? instantPassage(x.narration, li.quand, duree, phrases) : null;
   if (li && t !== null) {
@@ -678,5 +696,57 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
       if (lieu) { lieu.x = Math.round(lieu.x * 10) / 10; lieu.y = Math.round(lieu.y * 10) / 10; lieu.ratio = Math.round(lieu.ratio * 1000) / 1000; }
     }
   }
-  return { lieu, citation };
+  return { lieu, citation, portraits: gens };
+}
+
+// --- Portraits des personnes nommées (spec 12, 2026-10-08) --------------------------------------
+
+/** Rangée de portraits : 4 au plus ; elle reste ~3 s après le dernier nom, 5 s au moins (mêmes
+ *  valeurs dans scripts/diaporamas/verifier.py). */
+export const MAX_PORTRAITS = 4;
+const APRES_PORTRAITS = 3;
+const DUREE_PORTRAITS = 5;
+/** Portrait montré par le lecteur : nom et dates, image, instant (s) où il paraît. */
+export interface PortraitMontre { id: string; nom: string; dates: string; src: string; t: number }
+
+/**
+ * Instants des mentions d'une diapositive : `instant` (surimpressions.py), sinon début du nom au
+ * prorata ; chaque nom est cherché après le précédent (comme les lieux).
+ */
+export function instantsPersonnes(x: Diapositive) {
+  const duree = x.audio?.duree ?? 6;
+  let depuis = 0;
+  return (x.personnes ?? []).map((p) => {
+    const pos = x.narration.indexOf(p.quand, depuis);
+    if (pos >= 0) depuis = pos + 1;
+    return p.instant ?? (pos < 0 ? null : instantCaractere(x.narration, pos, duree, x.audio?.phrases));
+  });
+}
+
+/**
+ * Rangée de portraits d'une diapositive : une personne par ovale (dans l'ordre de leur première
+ * mention, 4 au plus, celles qui ont un portrait), chacune paraissant à son nom ; fenêtre [a, b)
+ * du premier nom à ~3 s après le dernier (5 s au moins), prolongée jusqu'à la fin de la citation
+ * quand la personne citée est dans la rangée. Les fenêtres des autres surimpressions ne changent
+ * pas : la rangée coexiste avec le médaillon de lieu (coin opposé) et avec la citation (qui monte
+ * au-dessus d'elle si elles se touchent, voir Diaporama.astro).
+ */
+export function portraitsDe(x: Diapositive, citation: null | { b: number; personne?: string }, fin: number) {
+  const parId = new Map(portraits.map((p) => [p.id, p]));
+  const instants = instantsPersonnes(x);
+  const gens: PortraitMontre[] = [];
+  let dernier = -1;
+  (x.personnes ?? []).forEach((m, k) => {
+    const p = parId.get(m.id), t = instants[k];
+    if (!p?.fichier || t === null) return;
+    if (gens.some((g) => g.id === m.id)) { dernier = Math.max(dernier, t); return; }
+    if (gens.length >= MAX_PORTRAITS) return;
+    gens.push({ id: p.id, nom: p.nom, dates: p.dates, src: `${base}diaporamas/${p.fichier}`, t: Math.round(t * 100) / 100 });
+    dernier = Math.max(dernier, t);
+  });
+  if (!gens.length) return null;
+  const a = Math.max(0, Math.min(gens[0].t - 0.1, fin - 4));
+  let b = Math.max(dernier + APRES_PORTRAITS, a + DUREE_PORTRAITS);
+  if (citation?.personne && gens.some((g) => g.id === citation.personne)) b = Math.max(b, citation.b);
+  return { a: Math.round(a * 100) / 100, b: Math.round(b * 100) / 100, gens };
 }

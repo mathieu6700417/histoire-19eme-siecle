@@ -1,0 +1,857 @@
+[
+  {
+    "id": "louis-xvi",
+    "nom": "Louis XVI",
+    "dates": "1754-1793",
+    "commons": "File:Duplessis - Louis XVI of France, oval, Versailles.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Duplessis_-_Louis_XVI_of_France,_oval,_Versailles.jpg",
+    "auteur": "Joseph-Siffred Duplessis",
+    "date": "vers 1774-1776",
+    "cadre_visage": [
+      0.28,
+      0.16,
+      0.63,
+      0.44
+    ],
+    "fichier": "portraits/louis-xvi.webp"
+  },
+  {
+    "id": "calonne",
+    "nom": "Calonne",
+    "dates": "1734-1802",
+    "commons": "File:Vigée-Lebrun, Elisabeth-Louise - Charles-Alexandre de Calonne (1734-1802) - Google Art Project.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Vig%C3%A9e-Lebrun,_Elisabeth-Louise_-_Charles-Alexandre_de_Calonne_(1734-1802)_-_Google_Art_Project.jpg",
+    "auteur": "Élisabeth Vigée Le Brun",
+    "date": "1784",
+    "cadre_visage": [
+      0.34,
+      0.22,
+      0.57,
+      0.38
+    ],
+    "fichier": "portraits/calonne.webp"
+  },
+  {
+    "id": "necker",
+    "nom": "Necker",
+    "dates": "1732-1804",
+    "commons": "File:Necker, Jacques - Duplessis.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Necker,_Jacques_-_Duplessis.jpg",
+    "auteur": "D'après Joseph-Siffred Duplessis",
+    "date": "vers 1781",
+    "cadre_visage": [
+      0.33,
+      0.14,
+      0.68,
+      0.46
+    ],
+    "fichier": "portraits/necker.webp"
+  },
+  {
+    "id": "david",
+    "nom": "Jacques-Louis David",
+    "dates": "1748-1825",
+    "commons": "File:David Self Portrait.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:David_Self_Portrait.jpg",
+    "auteur": "Jacques-Louis David",
+    "date": "1794",
+    "cadre_visage": [
+      0.33,
+      0.08,
+      0.74,
+      0.39
+    ],
+    "fichier": "portraits/david.webp"
+  },
+  {
+    "id": "sieyes",
+    "nom": "Sieyès",
+    "dates": "1748-1836",
+    "commons": "File:Emmanuel Joseph Sieyès, by Jacques Louis David.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Emmanuel_Joseph_Siey%C3%A8s,_by_Jacques_Louis_David.jpg",
+    "auteur": "Jacques-Louis David",
+    "date": "1817",
+    "cadre_visage": [
+      0.38,
+      0.15,
+      0.61,
+      0.4
+    ],
+    "fichier": "portraits/sieyes.webp"
+  },
+  {
+    "id": "reveillon",
+    "nom": "Réveillon",
+    "dates": "1725-1811",
+    "note": "Seul portrait sur Commons : une petite image anonyme et non datée (« Jean-Baptiste Réveillon.jpg », 320 × 281 px), sans notice de musée : identification non assurée."
+  },
+  {
+    "id": "bailly",
+    "nom": "Bailly",
+    "dates": "1736-1793",
+    "commons": "File:Jean Sylvain Bailly, Maire de Paris.png",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean_Sylvain_Bailly,_Maire_de_Paris.png",
+    "auteur": "Jean-Laurent Mosnier",
+    "date": "1789",
+    "cadre_visage": [
+      0.27,
+      0.11,
+      0.6,
+      0.39
+    ],
+    "fichier": "portraits/bailly.webp"
+  },
+  {
+    "id": "mirabeau",
+    "nom": "Mirabeau",
+    "dates": "1749-1791",
+    "commons": "File:Portrait of Honoré Gabriel Riqueti, comte de Mirabeau 1749-1791.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_of_Honor%C3%A9_Gabriel_Riqueti,_comte_de_Mirabeau_1749-1791.jpg",
+    "auteur": "Joseph Boze",
+    "date": "1789",
+    "cadre_visage": [
+      0.27,
+      0.17,
+      0.72,
+      0.55
+    ],
+    "fichier": "portraits/mirabeau.webp"
+  },
+  {
+    "id": "la-rochefoucauld-liancourt",
+    "nom": "La Rochefoucauld-Liancourt",
+    "dates": "1747-1827",
+    "commons": "File:Portret van François XII Alexandre Frédéric, hertog van La Rochefoucauld-Liancourt, RP-P-1913-885.jpg",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_Fran%C3%A7ois_XII_Alexandre_Fr%C3%A9d%C3%A9ric,_hertog_van_La_Rochefoucauld-Liancourt,_RP-P-1913-885.jpg",
+    "auteur": "Gravure anonyme (Rijksmuseum)",
+    "date": "1789",
+    "cadre_visage": [
+      0.37,
+      0.31,
+      0.57,
+      0.44
+    ],
+    "fichier": "portraits/la-rochefoucauld-liancourt.webp"
+  },
+  {
+    "id": "palloy",
+    "nom": "Palloy",
+    "dates": "1755-1835",
+    "commons": "File:P.F. Palloy, né à Paris le 23 Janvier 1755.. . - estampe - Peint par Mlle Pantin ; Gravé par Ruotte Fils - btv1b84117284.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:P.F._Palloy,_n%C3%A9_%C3%A0_Paris_le_23_Janvier_1755.._._-_estampe_-_Peint_par_Mlle_Pantin_;_Grav%C3%A9_par_Ruotte_Fils_-_btv1b84117284.jpg",
+    "auteur": "Louis-Charles Ruotte, d'après Mlle Pantin",
+    "date": "1792",
+    "cadre_visage": [
+      0.36,
+      0.22,
+      0.59,
+      0.36
+    ],
+    "fichier": "portraits/palloy.webp"
+  },
+  {
+    "id": "artois",
+    "nom": "Comte d'Artois",
+    "dates": "1757-1836",
+    "commons": "File:Comte d'Artois, later Charles X of France, by Henri Pierre Danloux.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Comte_d%27Artois,_later_Charles_X_of_France,_by_Henri_Pierre_Danloux.jpg",
+    "auteur": "Henri-Pierre Danloux",
+    "date": "1798",
+    "cadre_visage": [
+      0.32,
+      0.09,
+      0.65,
+      0.44
+    ],
+    "fichier": "portraits/artois.webp"
+  },
+  {
+    "id": "talleyrand",
+    "nom": "Talleyrand",
+    "dates": "1754-1838",
+    "commons": "File:Charles Maurice de Talleyrand-Périgord by François Gérard, 1808.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_Maurice_de_Talleyrand-P%C3%A9rigord_by_Fran%C3%A7ois_G%C3%A9rard,_1808.jpg",
+    "auteur": "François Gérard",
+    "date": "1808",
+    "cadre_visage": [
+      0.34,
+      0.21,
+      0.49,
+      0.32
+    ],
+    "fichier": "portraits/talleyrand.webp"
+  },
+  {
+    "id": "robespierre",
+    "nom": "Robespierre",
+    "dates": "1758-1794",
+    "commons": "File:Robespierre.jpg",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Robespierre.jpg",
+    "auteur": "Peintre anonyme (musée Carnavalet)",
+    "date": "vers 1790",
+    "cadre_visage": [
+      0.27,
+      0.2,
+      0.74,
+      0.52
+    ],
+    "fichier": "portraits/robespierre.webp"
+  },
+  {
+    "id": "voltaire",
+    "nom": "Voltaire",
+    "dates": "1694-1778",
+    "commons": "File:Nicolas de Largillière - Portrait de Voltaire (1694-1778) en 1718 - P208 - musée Carnavalet - 5 (cropped).jpg",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Nicolas_de_Largilli%C3%A8re_-_Portrait_de_Voltaire_(1694-1778)_en_1718_-_P208_-_mus%C3%A9e_Carnavalet_-_5_(cropped).jpg",
+    "auteur": "Nicolas de Largillierre",
+    "date": "vers 1718-1724",
+    "cadre_visage": [
+      0.36,
+      0.04,
+      0.69,
+      0.41
+    ],
+    "fichier": "portraits/voltaire.webp"
+  },
+  {
+    "id": "drouet",
+    "nom": "Drouet",
+    "dates": "1763-1824",
+    "commons": "File:Drouet maitre de la Post de Varinnes (sic) - estampe - L.C. Tyroff sc. - btv1b84113814.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Drouet_maitre_de_la_Post_de_Varinnes_(sic)_-_estampe_-_L.C._Tyroff_sc._-_btv1b84113814.jpg",
+    "auteur": "L. C. Tyroff",
+    "date": "1791",
+    "cadre_visage": [
+      0.33,
+      0.27,
+      0.465,
+      0.4
+    ],
+    "fichier": "portraits/drouet.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "guillotin",
+    "nom": "Guillotin",
+    "dates": "1738-1814",
+    "commons": "File:Anonymous - Portrait de Joseph-Ignace Guillotin (1738-1814), médecin et homme politique. - P1052 - Musée Carnavalet (cropped).jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Anonymous_-_Portrait_de_Joseph-Ignace_Guillotin_(1738-1814),_m%C3%A9decin_et_homme_politique._-_P1052_-_Mus%C3%A9e_Carnavalet_(cropped).jpg",
+    "auteur": "Peintre anonyme (musée Carnavalet)",
+    "date": "XVIIIe siècle",
+    "cadre_visage": [
+      0.22,
+      0.01,
+      0.78,
+      0.54
+    ],
+    "fichier": "portraits/guillotin.webp"
+  },
+  {
+    "id": "delambre",
+    "nom": "Delambre",
+    "dates": "1749-1822",
+    "commons": "File:Jean Baptiste Joseph Delambre.png",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean_Baptiste_Joseph_Delambre.png",
+    "auteur": "Julien-Léopold Boilly",
+    "date": "1820",
+    "cadre_visage": [
+      0.26,
+      0.02,
+      0.8,
+      0.57
+    ],
+    "fichier": "portraits/delambre.webp"
+  },
+  {
+    "id": "mechain",
+    "nom": "Méchain",
+    "dates": "1744-1804",
+    "note": "Portraits sur Commons tous posthumes (Narcisse Garnier, 1824 ; Hurle, 1882) : aucun fait de son vivant ou peu après."
+  },
+  {
+    "id": "brunswick",
+    "nom": "Duc de Brunswick",
+    "dates": "1735-1806",
+    "commons": "File:Carl Wilhelm Ferdinand von Braunschweig.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Carl_Wilhelm_Ferdinand_von_Braunschweig.jpg",
+    "auteur": "Pompeo Batoni",
+    "date": "1767",
+    "cadre_visage": [
+      0.35,
+      0.1,
+      0.59,
+      0.29
+    ],
+    "fichier": "portraits/brunswick.webp"
+  },
+  {
+    "id": "dumouriez",
+    "nom": "Dumouriez",
+    "dates": "1739-1823",
+    "commons": "File:Charles François Dumouriez. G.4206(2).jpg",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_Fran%C3%A7ois_Dumouriez._G.4206(2).jpg",
+    "auteur": "Pierre-Michel Alix",
+    "date": "fin du XVIIIe siècle",
+    "cadre_visage": [
+      0.34,
+      0.17,
+      0.6,
+      0.37
+    ],
+    "fichier": "portraits/dumouriez.webp"
+  },
+  {
+    "id": "goethe",
+    "nom": "Goethe",
+    "dates": "1749-1832",
+    "commons": "File:Goethe (Stieler 1828).jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Goethe_(Stieler_1828).jpg",
+    "auteur": "Joseph Karl Stieler",
+    "date": "1828",
+    "cadre_visage": [
+      0.34,
+      0.1,
+      0.62,
+      0.4
+    ],
+    "fichier": "portraits/goethe.webp"
+  },
+  {
+    "id": "philippe-egalite",
+    "nom": "Philippe Égalité",
+    "dates": "1747-1793",
+    "commons": "File:Portrait of Louis Philippe d'Orléans, Duke of Orléans (known as Philippe Égalité) in ceremonial robes of the Order of the Holy Spirit by Antoine François Callet.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_of_Louis_Philippe_d%27Orl%C3%A9ans,_Duke_of_Orl%C3%A9ans_(known_as_Philippe_%C3%89galit%C3%A9)_in_ceremonial_robes_of_the_Order_of_the_Holy_Spirit_by_Antoine_Fran%C3%A7ois_Callet.jpg",
+    "auteur": "Antoine-François Callet",
+    "date": "avant 1793",
+    "cadre_visage": [
+      0.437,
+      0.138,
+      0.565,
+      0.231
+    ],
+    "fichier": "portraits/philippe-egalite.webp"
+  },
+  {
+    "id": "brissot",
+    "nom": "Brissot",
+    "dates": "1754-1793",
+    "commons": "File:François Bonneville - Portrait de Jacques-Pierre Brissot de Warville (1754-1793), journaliste et conventionnel - P2608 - Musée Carnavalet.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Fran%C3%A7ois_Bonneville_-_Portrait_de_Jacques-Pierre_Brissot_de_Warville_(1754-1793),_journaliste_et_conventionnel_-_P2608_-_Mus%C3%A9e_Carnavalet.jpg",
+    "auteur": "François Bonneville",
+    "date": "1790",
+    "cadre_visage": [
+      0.3,
+      0.13,
+      0.69,
+      0.51
+    ],
+    "fichier": "portraits/brissot.webp"
+  },
+  {
+    "id": "vergniaud",
+    "nom": "Vergniaud",
+    "dates": "1753-1793",
+    "commons": "File:Pierre Victurnien Vergniaud.png",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pierre_Victurnien_Vergniaud.png",
+    "auteur": "Entourage d'Adélaïde Labille-Guiard",
+    "date": "1792",
+    "cadre_visage": [
+      0.33,
+      0.15,
+      0.62,
+      0.43
+    ],
+    "fichier": "portraits/vergniaud.webp"
+  },
+  {
+    "id": "marat",
+    "nom": "Marat",
+    "dates": "1743-1793",
+    "commons": "File:Jean-Paul Marat - portrait peint par Joseph Boze.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean-Paul_Marat_-_portrait_peint_par_Joseph_Boze.jpg",
+    "auteur": "Joseph Boze",
+    "date": "1793",
+    "cadre_visage": [
+      0.26,
+      0.21,
+      0.67,
+      0.56
+    ],
+    "fichier": "portraits/marat.webp"
+  },
+  {
+    "id": "lamarck",
+    "nom": "Lamarck",
+    "dates": "1744-1829",
+    "commons": "File:Jean-Baptiste de Lamarck.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean-Baptiste_de_Lamarck.jpg",
+    "auteur": "Charles Thévenin",
+    "date": "vers 1802-1803",
+    "cadre_visage": [
+      0.28,
+      0.11,
+      0.72,
+      0.58
+    ],
+    "fichier": "portraits/lamarck.webp"
+  },
+  {
+    "id": "geoffroy-saint-hilaire",
+    "nom": "Geoffroy Saint-Hilaire",
+    "dates": "1772-1844",
+    "commons": "File:Geoffroy Saint-Hilaire Étienne 1772-1844.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Geoffroy_Saint-Hilaire_%C3%89tienne_1772-1844.jpg",
+    "auteur": "Ambroise Tardieu",
+    "date": "1823",
+    "cadre_visage": [
+      0.29,
+      0.16,
+      0.68,
+      0.53
+    ],
+    "fichier": "portraits/geoffroy-saint-hilaire.webp"
+  },
+  {
+    "id": "amar",
+    "nom": "Amar",
+    "dates": "1755-1816",
+    "note": "Seul portrait sur Commons : « Jean-Baptiste Amar.jpg », école française du XIXe siècle, prénom discordant, sans notice : identification non assurée."
+  },
+  {
+    "id": "hebert",
+    "nom": "Hébert",
+    "dates": "1757-1794",
+    "commons": "File:Jacques René Hébert.JPG",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jacques_Ren%C3%A9_H%C3%A9bert.JPG",
+    "auteur": "Edme Bovinet, d'après François Bonneville",
+    "date": "1796",
+    "cadre_visage": [
+      0.4,
+      0.12,
+      0.69,
+      0.37
+    ],
+    "fichier": "portraits/hebert.webp"
+  },
+  {
+    "id": "roland",
+    "nom": "Madame Roland",
+    "dates": "1754-1793",
+    "commons": "File:Madame Roland - musée Lambinet.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Madame_Roland_-_mus%C3%A9e_Lambinet.jpg",
+    "auteur": "Peintre anonyme (musée Lambinet)",
+    "date": "vers 1790-1799",
+    "cadre_visage": [
+      0.31,
+      0.23,
+      0.6,
+      0.51
+    ],
+    "fichier": "portraits/roland.webp"
+  },
+  {
+    "id": "lenoir",
+    "nom": "Alexandre Lenoir",
+    "dates": "1761-1839",
+    "commons": "File:Alexandre Lenoir by Marie Bouliard.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Alexandre_Lenoir_by_Marie_Bouliard.jpg",
+    "auteur": "Marie-Geneviève Bouliard",
+    "date": "1796",
+    "cadre_visage": [
+      0.36,
+      0.25,
+      0.62,
+      0.44
+    ],
+    "fichier": "portraits/lenoir.webp"
+  },
+  {
+    "id": "carrier",
+    "nom": "Carrier",
+    "dates": "1756-1794",
+    "commons": "File:Jean-Baptiste-Carrier.jpeg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean-Baptiste-Carrier.jpeg",
+    "auteur": "François Bonneville",
+    "date": "1796",
+    "cadre_visage": [
+      0.31,
+      0.12,
+      0.68,
+      0.4
+    ],
+    "fichier": "portraits/carrier.webp"
+  },
+  {
+    "id": "collot-d-herbois",
+    "nom": "Collot d'Herbois",
+    "dates": "1749-1796",
+    "commons": "File:Jean Marie Collot d'Herbois.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean_Marie_Collot_d%27Herbois.jpg",
+    "auteur": "François Bonneville",
+    "date": "fin du XVIIIe siècle",
+    "cadre_visage": [
+      0.38,
+      0.15,
+      0.7,
+      0.38
+    ],
+    "fichier": "portraits/collot-d-herbois.webp"
+  },
+  {
+    "id": "fouche",
+    "nom": "Fouché",
+    "dates": "1759-1820",
+    "commons": "File:Fouché Joseph Duke of Otranto.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Fouch%C3%A9_Joseph_Duke_of_Otranto.jpg",
+    "auteur": "Claude-Marie Dubufe, d'après René-Théodore Berthon (1809)",
+    "date": "XIXe siècle",
+    "cadre_visage": [
+      0.41,
+      0.13,
+      0.6,
+      0.3
+    ],
+    "fichier": "portraits/fouche.webp"
+  },
+  {
+    "id": "bonaparte",
+    "nom": "Bonaparte",
+    "dates": "1769-1821",
+    "commons": "File:Jacques-Louis David 011.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jacques-Louis_David_011.jpg",
+    "auteur": "Jacques-Louis David",
+    "date": "1797-1798",
+    "cadre_visage": [
+      0.36,
+      0.11,
+      0.72,
+      0.38
+    ],
+    "fichier": "portraits/bonaparte.webp"
+  },
+  {
+    "id": "lavoisier",
+    "nom": "Lavoisier",
+    "dates": "1743-1794",
+    "commons": "File:David - Portrait of Monsieur Lavoisier (cropped).jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:David_-_Portrait_of_Monsieur_Lavoisier_(cropped).jpg",
+    "auteur": "Jacques-Louis David",
+    "date": "1788",
+    "cadre_visage": [
+      0.2,
+      0.12,
+      0.65,
+      0.5
+    ],
+    "fichier": "portraits/lavoisier.webp"
+  },
+  {
+    "id": "lagrange",
+    "nom": "Lagrange",
+    "dates": "1736-1813",
+    "note": "Sur Commons, les portraits libres de droits sont posthumes ou sans auteur ni date (gravures du XIXe siècle) ; les gravures anciennes de la Wellcome Collection sont sous CC BY, licence non admise."
+  },
+  {
+    "id": "jourdan",
+    "nom": "Jourdan",
+    "dates": "1762-1833",
+    "commons": "File:Le maréchal Jourdan.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Le_mar%C3%A9chal_Jourdan.jpg",
+    "auteur": "Copie d'après Joseph-Marie Vien (original avant 1809)",
+    "date": "milieu du XIXe siècle",
+    "cadre_visage": [
+      0.47,
+      0.17,
+      0.64,
+      0.28
+    ],
+    "fichier": "portraits/jourdan.webp"
+  },
+  {
+    "id": "saint-just",
+    "nom": "Saint-Just",
+    "dates": "1767-1794",
+    "commons": "File:Saint-Just-French anon-MBA Lyon 1955-2-IMG 0450.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Saint-Just-French_anon-MBA_Lyon_1955-2-IMG_0450.jpg",
+    "auteur": "Attribué à Pierre-Paul Prud'hon",
+    "date": "1793",
+    "fichier": "portraits/saint-just.webp",
+    "cadre_visage": [
+      0.22,
+      0.12,
+      0.62,
+      0.58
+    ]
+  },
+  {
+    "id": "couthon",
+    "nom": "Couthon",
+    "dates": "1755-1794",
+    "commons": "File:Georges-Auguste Couthon at the National Convention in 1793 MET DP810322.jpg",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Georges-Auguste_Couthon_at_the_National_Convention_in_1793_MET_DP810322.jpg",
+    "auteur": "Vivant Denon",
+    "date": "vers 1793",
+    "cadre_visage": [
+      0.2,
+      0.13,
+      0.58,
+      0.42
+    ],
+    "fichier": "portraits/couthon.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "tallien",
+    "nom": "Thérésa Tallien",
+    "dates": "1773-1835",
+    "commons": "File:Gerard - Madame Tallien.JPG",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Gerard_-_Madame_Tallien.JPG",
+    "auteur": "François Gérard",
+    "date": "vers 1804",
+    "cadre_visage": [
+      0.437,
+      0.155,
+      0.575,
+      0.258
+    ],
+    "fichier": "portraits/tallien.webp"
+  },
+  {
+    "id": "josephine",
+    "nom": "Joséphine de Beauharnais",
+    "dates": "1763-1814",
+    "commons": "File:Joséphine de Beauharnais vers 1809 Gros.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9phine_de_Beauharnais_vers_1809_Gros.jpg",
+    "auteur": "Antoine-Jean Gros",
+    "date": "vers 1809",
+    "cadre_visage": [
+      0.35,
+      0.09,
+      0.72,
+      0.49
+    ],
+    "fichier": "portraits/josephine.webp"
+  },
+  {
+    "id": "chappe",
+    "nom": "Claude Chappe",
+    "dates": "1763-1805",
+    "note": "Pas de portrait de son vivant sur Commons (le portrait du fonds des Archives, « Chappe (Claude, 1765-1828) », est d'un homonyme ou mal identifié, et tardif)."
+  },
+  {
+    "id": "gregoire",
+    "nom": "Abbé Grégoire",
+    "dates": "1750-1831",
+    "commons": "File:Henri Gregoire.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Henri_Gregoire.jpg",
+    "auteur": "Pierre Joseph Célestin François",
+    "date": "1800",
+    "cadre_visage": [
+      0.33,
+      0.13,
+      0.59,
+      0.32
+    ],
+    "fichier": "portraits/gregoire.webp"
+  },
+  {
+    "id": "boissy-d-anglas",
+    "nom": "Boissy d'Anglas",
+    "dates": "1756-1826",
+    "commons": "File:François Boissy d-Anglas.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Fran%C3%A7ois_Boissy_d-Anglas.jpg",
+    "auteur": "François Dumont",
+    "date": "vers 1794-1795",
+    "cadre_visage": [
+      0.35,
+      0.07,
+      0.64,
+      0.36
+    ],
+    "fichier": "portraits/boissy-d-anglas.webp"
+  },
+  {
+    "id": "hoche",
+    "nom": "Hoche",
+    "dates": "1768-1797",
+    "commons": "File:Lazare Hoche par David.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Lazare_Hoche_par_David.jpg",
+    "auteur": "École de Jacques-Louis David",
+    "date": "vers 1793",
+    "cadre_visage": [
+      0.23,
+      0.09,
+      0.55,
+      0.44
+    ],
+    "fichier": "portraits/hoche.webp"
+  },
+  {
+    "id": "barras",
+    "nom": "Barras",
+    "dates": "1755-1829",
+    "commons": "File:Compagnie M Paul Barras.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Compagnie_M_Paul_Barras.jpg",
+    "auteur": "Jean-Baptiste Compagnie, d'après François Bonneville",
+    "date": "1796",
+    "cadre_visage": [
+      0.35,
+      0.29,
+      0.66,
+      0.47
+    ],
+    "fichier": "portraits/barras.webp"
+  },
+  {
+    "id": "henri-iv",
+    "nom": "Henri IV",
+    "dates": "1553-1610",
+    "commons": "File:Henri-Pourbus.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Henri-Pourbus.jpg",
+    "auteur": "Frans Pourbus le Jeune",
+    "date": "1610",
+    "cadre_visage": [
+      0.46,
+      0.13,
+      0.59,
+      0.25
+    ],
+    "fichier": "portraits/henri-iv.webp"
+  },
+  {
+    "id": "augereau",
+    "nom": "Augereau",
+    "dates": "1757-1816",
+    "commons": "File:Anonymous - Portrait de Pierre-François-Charles Augereau (1757-1816), maréchal de France, duc de Castiglione, dé - P153 - Musée Carnavalet.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Anonymous_-_Portrait_de_Pierre-Fran%C3%A7ois-Charles_Augereau_(1757-1816),_mar%C3%A9chal_de_France,_duc_de_Castiglione,_d%C3%A9_-_P153_-_Mus%C3%A9e_Carnavalet.jpg",
+    "auteur": "Peintre anonyme (musée Carnavalet)",
+    "date": "1805-1812",
+    "cadre_visage": [
+      0.44,
+      0.21,
+      0.73,
+      0.49
+    ],
+    "fichier": "portraits/augereau.webp"
+  },
+  {
+    "id": "la-revelliere-lepeaux",
+    "nom": "La Révellière-Lépeaux",
+    "dates": "1753-1824",
+    "commons": "File:Louis-Marie de La Révellière-Lépeaux par Gérard.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis-Marie_de_La_R%C3%A9velli%C3%A8re-L%C3%A9peaux_par_G%C3%A9rard.jpg",
+    "auteur": "François Gérard",
+    "date": "1798",
+    "cadre_visage": [
+      0.23,
+      0.06,
+      0.6,
+      0.66
+    ],
+    "fichier": "portraits/la-revelliere-lepeaux.webp"
+  },
+  {
+    "id": "pussin",
+    "nom": "Pussin",
+    "dates": "1745-1811",
+    "note": "Aucun portrait connu sur Commons."
+  },
+  {
+    "id": "nelson",
+    "nom": "Nelson",
+    "dates": "1758-1805",
+    "commons": "File:HoratioNelson1.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:HoratioNelson1.jpg",
+    "auteur": "Lemuel Francis Abbott",
+    "date": "1799",
+    "cadre_visage": [
+      0.32,
+      0.22,
+      0.6,
+      0.41
+    ],
+    "fichier": "portraits/nelson.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "lucien-bonaparte",
+    "nom": "Lucien Bonaparte",
+    "dates": "1775-1840",
+    "commons": "File:Fabre - Lucien Bonaparte.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Fabre_-_Lucien_Bonaparte.jpg",
+    "auteur": "François-Xavier Fabre",
+    "date": "après 1800",
+    "cadre_visage": [
+      0.39,
+      0.05,
+      0.65,
+      0.31
+    ],
+    "fichier": "portraits/lucien-bonaparte.webp"
+  },
+  {
+    "id": "roger-ducos",
+    "nom": "Roger Ducos",
+    "dates": "1747-1816",
+    "commons": "File:Pierre Roger Ducos par Edme Quenedey.jpg",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pierre_Roger_Ducos_par_Edme_Quenedey.jpg",
+    "auteur": "Edme Quenedey",
+    "date": "fin du XVIIIe siècle",
+    "cadre_visage": [
+      0.28,
+      0.15,
+      0.6,
+      0.43
+    ],
+    "fichier": "portraits/roger-ducos.webp"
+  }
+]

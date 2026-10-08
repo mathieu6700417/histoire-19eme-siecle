@@ -53,6 +53,13 @@ instants croissants, fond cohérent, points dans le cadre calculé et assez éca
 plans/<nom>.json) ; `citations` : `texte` sous-chaîne exacte de la narration, entre « », 25 mots
 au plus, auteur ; instants (`instant`, `mots`) présents, dans l'audio et à jour (empreinte de
 surimpressions.py), sinon avertissement (le lecteur se replie au prorata).
+Portraits des personnes nommées (spec 12, 2026-10-08) : registre `portraits.json` (nom, dates,
+fichier présent, page Commons, auteur, date de l'œuvre, licence domaine public ou CC0, cadre du
+visage ; sans portrait : une note) ; dans chaque diapositive, `personnes` et `personnes_vues` :
+personne au registre, `quand` exacts et dans l'ordre, instants présents, croissants, dans l'audio
+et à jour, 4 portraits au plus, personne montrée absente de l'image (jamais aussi dans
+`personnes_vues` ; désaccord avec le contrôle de vision en cache : avertissement), personne
+citée (`citations[].personne`) accompagnée de son portrait.
 Code de sortie 1 en cas d'erreur ; les avertissements n'en sont pas.
 """
 import argparse, calendar, datetime, json, math, re, sys, unicodedata
@@ -503,6 +510,121 @@ def controler_surimpressions(d: dict) -> tuple[list[str], list[str], int, int]:
             elif any(not (0 <= m[0] <= m[1] <= du + 0.05) for m in mots) or any(mots[k][0] > mots[k + 1][0] for k in range(len(mots) - 1)):
                 erreurs.append(f'{q} : instants des mots incohérents')
     return erreurs, avert, nl, nc
+
+
+MAX_PORTRAITS = 4  # ovales de la rangée (MAX_PORTRAITS de src/utils/diaporamas.ts)
+
+
+def controler_portraits(d: dict) -> tuple[list[str], list[str], int, int]:
+    """Portraits des personnes nommées : erreurs, avertissements, nombres de mentions montrées et de
+    personnes différentes montrées."""
+    erreurs, avert = [], []
+    reg_f = c.DONNEES / 'portraits.json'
+    if not reg_f.exists():
+        if any(x.get('personnes') or x.get('personnes_vues') for x in d['diapositives']):
+            erreurs.append('portraits.json absent (portraits.py --registre)')
+        return erreurs, avert, 0, 0
+    registre = json.loads(reg_f.read_text())
+    par_id: dict[str, dict] = {}
+    for p in registre:
+        q = f"portrait « {p.get('id')} »"
+        if not p.get('id') or p['id'] in par_id:
+            erreurs.append(f'{q} : identifiant manquant ou en double')
+            continue
+        par_id[p['id']] = p
+        if not str(p.get('nom') or '').strip():
+            erreurs.append(f'{q} : nom manquant')
+        m = re.fullmatch(r'(\d{3,4})-(\d{4})', p.get('dates') or '')
+        if not m:
+            erreurs.append(f"{q} : dates « {p.get('dates')} » (attendu « 1759-1794 »)")
+        if not p.get('fichier'):
+            if not str(p.get('note') or '').strip():
+                erreurs.append(f'{q} : ni portrait ni note expliquant son absence')
+            continue
+        for cle in ('commons', 'page', 'auteur', 'date', 'licence'):
+            if not str(p.get(cle) or '').strip():
+                erreurs.append(f'{q} : « {cle} » manquant')
+        if not (c.PUBLIC / p['fichier']).is_file():
+            erreurs.append(f"{q} : fichier {p['fichier']} absent (portraits.py --registre)")
+        lic = p.get('licence') or ''
+        if not c.LICENCE_PD.match(lic) or re.search(r'\bcc[- ]by\b|by-sa|\bnc\b|\bnd\b|gfdl', lic, re.I):
+            erreurs.append(f'{q} : licence non admise ({lic} ; domaine public ou CC0)')
+        cv = p.get('cadre_visage')
+        if not (isinstance(cv, list) and len(cv) == 4 and 0 <= cv[0] < cv[2] <= 1 and 0 <= cv[1] < cv[3] <= 1):
+            erreurs.append(f'{q} : cadre du visage invalide ({cv})')
+        # Œuvre faite du vivant de la personne ou peu après : l'année de l'œuvre (premier nombre de
+        # quatre chiffres) ne dépasse pas la mort de plus de 5 ans, sinon avertissement à relire.
+        an = re.search(r'\b(1[5-9]\d\d)\b', p.get('date') or '')
+        if m and an and int(an.group(1)) > int(m.group(2)) + 5:
+            avert.append(f"{q} : œuvre datée {an.group(1)}, {int(an.group(1)) - int(m.group(2))} ans après la mort (copie d'un portrait d'après nature ? à relire)")
+    cache_f = c.CACHE / d['slug'] / 'surimpressions.json'
+    cache = json.loads(cache_f.read_text()) if cache_f.exists() else {}
+    vision_f = c.CACHE / d['slug'] / 'personnes.json'
+    vision = json.loads(vision_f.read_text()) if vision_f.exists() else {}
+    from surimpressions import empreinte_audio
+    n_montres, montres = 0, set()
+    for x in d['diapositives']:
+        gens, vues = x.get('personnes') or [], x.get('personnes_vues') or []
+        if not gens and not vues:
+            continue
+        p, t = f"{x['n']:3d}", x['narration']
+        a = x.get('audio') or {}
+        du = a.get('duree') or 0
+        fa = c.PUBLIC / d['slug'] / a.get('fichier', '')
+        a_jour = fa.is_file() and cache.get(str(x['n']), {}).get('empreinte') == empreinte_audio(fa, t)
+        for liste, nom_l in ((gens, 'personnes'), (vues, 'personnes_vues')):
+            depuis = 0
+            for pe in liste:
+                q = f"{p} : {nom_l} « {pe.get('id')} »"
+                if pe.get('id') not in par_id and nom_l == 'personnes':
+                    erreurs.append(f'{q} : absente du registre portraits.json')
+                pos = t.find(pe.get('quand') or '\0', depuis)
+                if not pe.get('quand') or pos < 0:
+                    erreurs.append(f"{q} : nom « {pe.get('quand')} » absent de la narration (ou hors de l'ordre)")
+                    continue
+                depuis = pos + 1
+        ids_vues = {pe.get('id') for pe in vues}
+        for pe in gens:
+            if pe.get('id') in ids_vues:
+                erreurs.append(f"{p} : « {pe['id']} » à la fois visible sur l'image et montrée en portrait")
+        rep_v = {r.get('id'): r for r in vision.get(str(x['n']), {}).get('reponse', [])}
+        for pe in {pe.get('id'): pe for pe in gens}.values():
+            r = rep_v.get(pe.get('id'))
+            if r and r.get('visible'):
+                avert.append(f"{p} : « {pe['id']} » montrée en portrait alors que le contrôle de vision la voit sur l'image "
+                             f"(relu à la main ? « {str(r.get('raison', ''))[:70]} »)")
+        for pe in {pe.get('id'): pe for pe in vues}.values():
+            r = rep_v.get(pe.get('id'))
+            if r and not r.get('visible'):
+                avert.append(f"{p} : « {pe['id']} » notée visible alors que le contrôle de vision ne la voit pas")
+        inst = [pe.get('instant') for pe in gens]
+        if gens and any(v is None for v in inst):
+            avert.append(f'{p} : instants des personnes non calés, repli au prorata (surimpressions.py)')
+        elif gens:
+            if not a_jour:
+                erreurs.append(f'{p} : instants des personnes périmés (voix ou texte changés : surimpressions.py)')
+            if any(not 0 <= v <= du for v in inst):
+                erreurs.append(f"{p} : instant d'une personne hors de l'audio")
+            if any(inst[k] > inst[k + 1] for k in range(len(inst) - 1)):
+                erreurs.append(f'{p} : instants des personnes non croissants ({", ".join(f"{v:.2f}" for v in inst)})')
+        avec = list(dict.fromkeys(pe['id'] for pe in gens if par_id.get(pe.get('id'), {}).get('fichier')))
+        if len(avec) > MAX_PORTRAITS:
+            erreurs.append(f'{p} : {len(avec)} portraits ({MAX_PORTRAITS} au plus dans la rangée)')
+        n_montres += sum(1 for pe in gens if pe.get('id') in avec[:MAX_PORTRAITS])
+        montres |= set(avec[:MAX_PORTRAITS])
+        for ci in x.get('citations') or []:
+            qui = ci.get('personne')
+            if not qui or qui in ids_vues:
+                continue
+            if qui not in {pe.get('id') for pe in gens}:
+                erreurs.append(f"{p} : la citation de « {qui} » n'est pas accompagnée de son portrait (absent de personnes)")
+            elif not par_id.get(qui, {}).get('fichier'):
+                avert.append(f"{p} : citation de « {qui} », sans portrait fiable au registre")
+    for x in d['diapositives']:
+        for ci in x.get('citations') or []:
+            if ci.get('personne') and not (x.get('personnes') or x.get('personnes_vues')):
+                erreurs.append(f"{x['n']:3d} : citation de « {ci['personne']} » sans relevé des personnes")
+    return erreurs, avert, n_montres, len(montres)
 
 
 def _sans_accents(t: str) -> str:
@@ -993,6 +1115,9 @@ def verifier(slug: str) -> bool:
     e_sur, a_sur, n_lieux, n_cit = controler_surimpressions(d)
     erreurs += e_sur
     avert += a_sur
+    e_por, a_por, n_portraits, n_gens = controler_portraits(d)
+    erreurs += e_por
+    avert += a_por
 
     pauses = [pause_apres(x) for x in diapos]
     longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
@@ -1015,6 +1140,11 @@ def verifier(slug: str) -> bool:
     if n_lieux or n_cit:
         print(f'Surimpressions : {n_lieux} lieu(x) dans {sum(1 for x in d["diapositives"] if x.get("lieux"))} médaillon(s) de carte, {n_cit} citation(s) ; pause allongée après la voix '
               f"(citation finale) : {', '.join(f'{n} ({q:.2f} s)' for n, q in longues) or 'aucune'}.")
+    if n_portraits:
+        n_ment = sum(len(x.get('personnes') or []) + len(x.get('personnes_vues') or []) for x in diapos)
+        n_vues = sum(len(x.get('personnes_vues') or []) for x in diapos)
+        print(f'Portraits : {n_ment} mention(s) de personnes, dont {n_vues} visibles sur l’image ; '
+              f'{n_portraits} mention(s) avec portrait, {n_gens} personne(s) différente(s) montrée(s).')
     datees = sum(1 for x in diapos if 'date' in x)
     print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} surimpression(s) '
           f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")
@@ -1035,7 +1165,7 @@ def main() -> int:
     global HORS_LIGNE
     HORS_LIGNE = a.hors_ligne
     if a.tous:
-        slugs = [f.stem for f in sorted(c.DONNEES.glob('*.json'))]
+        slugs = [f.stem for f in sorted(c.DONNEES.glob('*.json')) if re.match(r'\d+-', f.stem)]  # pas portraits.json
     elif a.slug:
         slugs = [a.slug]
     else:

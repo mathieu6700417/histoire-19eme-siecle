@@ -121,7 +121,13 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes_vues": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis XVI"
+        }
+      ]
     },
     {
       "n": 2,
@@ -192,7 +198,19 @@
             18.19
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "calonne",
+          "quand": "Calonne",
+          "instant": 12.03
+        },
+        {
+          "id": "calonne",
+          "quand": "Calonne",
+          "instant": 17.34
+        }
+      ]
     },
     {
       "n": 3,
@@ -332,7 +350,13 @@
             18.38
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "necker",
+          "quand": "Necker"
+        }
+      ]
     },
     {
       "n": 5,
@@ -464,7 +488,14 @@
             18.44
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "david",
+          "quand": "David",
+          "instant": 7.91
+        }
+      ]
     },
     {
       "n": 7,
@@ -560,7 +591,8 @@
               20.52,
               20.72
             ]
-          ]
+          ],
+          "personne": "sieyes"
         }
       ],
       "image": {
@@ -642,7 +674,13 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes_vues": [
+        {
+          "id": "sieyes",
+          "quand": "Sieyès"
+        }
+      ]
     },
     {
       "n": 8,
@@ -786,7 +824,14 @@
             17.82
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "reveillon",
+          "quand": "Réveillon",
+          "instant": 4.38
+        }
+      ]
     },
     {
       "n": 10,
@@ -933,7 +978,20 @@
             16.26
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "necker",
+          "quand": "Necker",
+          "instant": 8.37
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis XVI"
+        }
+      ]
     },
     {
       "n": 12,
@@ -1070,7 +1128,13 @@
             15.97
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "bailly",
+          "quand": "Bailly"
+        }
+      ]
     },
     {
       "n": 14,
@@ -1103,7 +1167,8 @@
               10.93,
               11.17
             ]
-          ]
+          ],
+          "personne": "mirabeau"
         }
       ],
       "image": {
@@ -1170,7 +1235,20 @@
             17.82
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis XVI",
+          "instant": 13.57
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "mirabeau",
+          "quand": "Mirabeau"
+        }
+      ]
     },
     {
       "n": 15,
@@ -1248,7 +1326,20 @@
             16.77
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "necker",
+          "quand": "Necker",
+          "instant": 5.7
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "desmoulins",
+          "quand": "Camille Desmoulins"
+        }
+      ]
     },
     {
       "n": 16,
@@ -1486,7 +1577,13 @@
             18.4
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "de-launay",
+          "quand": "de Launay"
+        }
+      ]
     },
     {
       "n": 19,
@@ -1554,7 +1651,17 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes_vues": [
+        {
+          "id": "de-launay",
+          "quand": "de Launay"
+        },
+        {
+          "id": "flesselles",
+          "quand": "Flesselles"
+        }
+      ]
     },
     {
       "n": 20,
@@ -1586,7 +1693,8 @@
               17.1,
               17.48
             ]
-          ]
+          ],
+          "personne": "la-rochefoucauld-liancourt"
         }
       ],
       "image": {
@@ -1644,7 +1752,14 @@
             17.65
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "la-rochefoucauld-liancourt",
+          "quand": "La Rochefoucauld-Liancourt",
+          "instant": 13.16
+        }
+      ]
     },
     {
       "n": 21,
@@ -1696,7 +1811,14 @@
             15.53
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "palloy",
+          "quand": "Palloy",
+          "instant": 0.86
+        }
+      ]
     },
     {
       "n": 22,
@@ -1757,7 +1879,20 @@
             16.44
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "artois",
+          "quand": "comte d'Artois",
+          "instant": 13.79
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis XVI"
+        }
+      ]
     },
     {
       "n": 23,
@@ -1825,7 +1960,20 @@
             16.48
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "bailly",
+          "quand": "Bailly",
+          "instant": 3.26
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "la-fayette",
+          "quand": "La Fayette"
+        }
+      ]
     },
     {
       "n": 24,
@@ -1897,7 +2045,14 @@
             16.89
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "artois",
+          "quand": "Artois",
+          "instant": 1.34
+        }
+      ]
     },
     {
       "n": 25,
@@ -2046,7 +2201,14 @@
             18.96
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "david",
+          "quand": "David",
+          "instant": 3.18
+        }
+      ]
     },
     {
       "n": 27,
@@ -2325,7 +2487,17 @@
             14.49
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "marie-antoinette",
+          "quand": "Marie-Antoinette"
+        },
+        {
+          "id": "vigee-le-brun",
+          "quand": "Élisabeth Vigée Le Brun"
+        }
+      ]
     },
     {
       "n": 31,
@@ -2697,7 +2869,20 @@
             17.42
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "talleyrand",
+          "quand": "Talleyrand",
+          "instant": 8.39
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "la-fayette",
+          "quand": "La Fayette"
+        }
+      ]
     },
     {
       "n": 36,
@@ -2784,7 +2969,14 @@
             17.09
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "robespierre",
+          "quand": "Maximilien Robespierre",
+          "instant": 15.91
+        }
+      ]
     },
     {
       "n": 37,
@@ -2855,7 +3047,14 @@
             20.32
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "mirabeau",
+          "quand": "Mirabeau",
+          "instant": 1.46
+        }
+      ]
     },
     {
       "narration": "Ces cérémonies ont leur musique. Gossec, maître de musique de la garde nationale, écrit des hymnes et des marches pour orchestres d'instruments à vent, faits pour sonner en plein air. Sa Marche lugubre, composée en 1790 pour honorer les morts de l'affaire de Nancy, accompagne Mirabeau jusqu'au Panthéon, puis Voltaire en juillet.",
@@ -2940,7 +3139,25 @@
             18.37
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "mirabeau",
+          "quand": "Mirabeau",
+          "instant": 15.59
+        },
+        {
+          "id": "voltaire",
+          "quand": "Voltaire",
+          "instant": 17.29
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "gossec",
+          "quand": "Gossec"
+        }
+      ]
     },
     {
       "n": 39,
@@ -3029,7 +3246,14 @@
             17.73
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "drouet",
+          "quand": "Drouet",
+          "instant": 11.51
+        }
+      ]
     },
     {
       "n": 40,
@@ -3226,7 +3450,14 @@
             19.98
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "voltaire",
+          "quand": "Voltaire",
+          "instant": 7.32
+        }
+      ]
     },
     {
       "n": 43,
@@ -3454,7 +3685,8 @@
               16.01,
               16.31
             ]
-          ]
+          ],
+          "personne": "olympe-de-gouges"
         }
       ],
       "image": {
@@ -3512,7 +3744,13 @@
             16.45
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "olympe-de-gouges",
+          "quand": "Olympe de Gouges"
+        }
+      ]
     },
     {
       "n": 46,
@@ -3543,7 +3781,8 @@
               18.03,
               18.25
             ]
-          ]
+          ],
+          "personne": "robespierre"
         }
       ],
       "image": {
@@ -3613,7 +3852,14 @@
             18.34
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "robespierre",
+          "quand": "Robespierre",
+          "instant": 13.62
+        }
+      ]
     },
     {
       "n": 47,
@@ -3700,7 +3946,17 @@
             19.81
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "rouget-de-lisle",
+          "quand": "Rouget de Lisle"
+        },
+        {
+          "id": "dietrich",
+          "quand": "Dietrich"
+        }
+      ]
     },
     {
       "date": "1792-04-25",
@@ -3768,7 +4024,14 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes": [
+        {
+          "id": "guillotin",
+          "quand": "Guillotin",
+          "instant": 6.82
+        }
+      ]
     },
     {
       "n": 49,
@@ -3914,7 +4177,13 @@
             16.79
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis XVI"
+        }
+      ]
     },
     {
       "date": "1792-06",
@@ -3993,7 +4262,19 @@
             19.01
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "delambre",
+          "quand": "Delambre",
+          "instant": 2.08
+        },
+        {
+          "id": "mechain",
+          "quand": "Méchain",
+          "instant": 2.52
+        }
+      ]
     },
     {
       "n": 52,
@@ -4033,7 +4314,8 @@
               18.65,
               19.09
             ]
-          ]
+          ],
+          "personne": "brunswick"
         }
       ],
       "image": {
@@ -4091,7 +4373,14 @@
             21.03
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "brunswick",
+          "quand": "duc de Brunswick",
+          "instant": 14.45
+        }
+      ]
     },
     {
       "n": 53,
@@ -4421,7 +4710,8 @@
               19.82,
               20.0
             ]
-          ]
+          ],
+          "personne": "goethe"
         }
       ],
       "image": {
@@ -4488,7 +4778,25 @@
             20.14
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "dumouriez",
+          "quand": "Dumouriez",
+          "instant": 3.5
+        },
+        {
+          "id": "goethe",
+          "quand": "Goethe",
+          "instant": 13.87
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "kellermann",
+          "quand": "Kellermann"
+        }
+      ]
     },
     {
       "n": 57,
@@ -4556,7 +4864,13 @@
             19.48
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis Capet"
+        }
+      ]
     },
     {
       "n": 58,
@@ -4618,7 +4932,20 @@
             19.21
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "philippe-egalite",
+          "quand": "duc d'Orléans",
+          "instant": 7.77
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis"
+        }
+      ]
     },
     {
       "n": 59,
@@ -4689,7 +5016,17 @@
             18.07
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis XVI"
+        },
+        {
+          "id": "sanson",
+          "quand": "Sanson"
+        }
+      ]
     },
     {
       "n": 60,
@@ -4894,7 +5231,13 @@
             18.65
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "cathelineau",
+          "quand": "Jacques Cathelineau"
+        }
+      ]
     },
     {
       "n": 63,
@@ -4960,7 +5303,8 @@
               17.77,
               18.19
             ]
-          ]
+          ],
+          "personne": "la-rochejaquelein"
         }
       ],
       "image": {
@@ -5018,7 +5362,13 @@
             18.33
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "la-rochejaquelein",
+          "quand": "Henri de La Rochejaquelein"
+        }
+      ]
     },
     {
       "n": 64,
@@ -5080,7 +5430,20 @@
             19.0
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "vergniaud",
+          "quand": "Vergniaud",
+          "instant": 5.94
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "brissot",
+          "quand": "Brissot"
+        }
+      ]
     },
     {
       "n": 65,
@@ -5131,7 +5494,13 @@
             21.26
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "marat",
+          "quand": "Jean-Paul Marat"
+        }
+      ]
     },
     {
       "n": 66,
@@ -5192,7 +5561,13 @@
             16.95
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "marat",
+          "quand": "Marat"
+        }
+      ]
     },
     {
       "n": 67,
@@ -5339,7 +5714,19 @@
             20.21
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "lamarck",
+          "quand": "Lamarck",
+          "instant": 12.66
+        },
+        {
+          "id": "geoffroy-saint-hilaire",
+          "quand": "Geoffroy Saint-Hilaire",
+          "instant": 13.42
+        }
+      ]
     },
     {
       "n": 69,
@@ -5415,7 +5802,17 @@
             16.76
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "corday",
+          "quand": "Charlotte Corday"
+        },
+        {
+          "id": "marat",
+          "quand": "Marat"
+        }
+      ]
     },
     {
       "n": 70,
@@ -5484,7 +5881,24 @@
             17.46
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "david",
+          "quand": "David",
+          "instant": 2.96
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "marat",
+          "quand": "Marat"
+        },
+        {
+          "id": "marat",
+          "quand": "Marat"
+        }
+      ]
     },
     {
       "n": 71,
@@ -5531,7 +5945,8 @@
               17.07,
               17.23
             ]
-          ]
+          ],
+          "personne": "corday"
         }
       ],
       "image": {
@@ -5580,7 +5995,13 @@
             17.42
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "corday",
+          "quand": "Charlotte Corday"
+        }
+      ]
     },
     {
       "n": 72,
@@ -5746,7 +6167,14 @@
             19.45
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "david",
+          "quand": "David",
+          "instant": 4.6
+        }
+      ]
     },
     {
       "date": "1793-08-10",
@@ -5886,7 +6314,13 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes_vues": [
+        {
+          "id": "chenard",
+          "quand": "Chenard"
+        }
+      ]
     },
     {
       "n": 76,
@@ -5939,7 +6373,14 @@
             19.1
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "amar",
+          "quand": "Amar",
+          "instant": 16.35
+        }
+      ]
     },
     {
       "n": 77,
@@ -6160,7 +6601,20 @@
             19.41
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "hebert",
+          "quand": "Hébert",
+          "instant": 16.77
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "marie-antoinette",
+          "quand": "Marie-Antoinette"
+        }
+      ]
     },
     {
       "n": 80,
@@ -6213,7 +6667,8 @@
               17.38,
               17.46
             ]
-          ]
+          ],
+          "personne": "roland"
         }
       ],
       "image": {
@@ -6286,7 +6741,29 @@
             17.56
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "brissot",
+          "quand": "Brissot",
+          "instant": 3.46
+        },
+        {
+          "id": "vergniaud",
+          "quand": "Vergniaud",
+          "instant": 3.94
+        },
+        {
+          "id": "brissot",
+          "quand": "Brissot",
+          "instant": 6.83
+        },
+        {
+          "id": "roland",
+          "quand": "Madame Roland",
+          "instant": 11.09
+        }
+      ]
     },
     {
       "date": "1793-10",
@@ -6356,7 +6833,14 @@
             16.85
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "lenoir",
+          "quand": "Alexandre Lenoir",
+          "instant": 13.95
+        }
+      ]
     },
     {
       "n": 82,
@@ -6436,7 +6920,14 @@
             18.13
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "robespierre",
+          "quand": "Robespierre",
+          "instant": 14.83
+        }
+      ]
     },
     {
       "n": 83,
@@ -6515,7 +7006,19 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes": [
+        {
+          "id": "carrier",
+          "quand": "Carrier",
+          "instant": 6.39
+        },
+        {
+          "id": "carrier",
+          "quand": "Carrier",
+          "instant": 16.26
+        }
+      ]
     },
     {
       "n": 84,
@@ -6586,7 +7089,19 @@
             16.43
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "collot-d-herbois",
+          "quand": "Collot d'Herbois",
+          "instant": 1.1
+        },
+        {
+          "id": "fouche",
+          "quand": "Fouché",
+          "instant": 1.94
+        }
+      ]
     },
     {
       "n": 85,
@@ -6657,7 +7172,14 @@
             15.64
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "bonaparte",
+          "quand": "Napoléon Bonaparte",
+          "instant": 14.66
+        }
+      ]
     },
     {
       "n": 86,
@@ -6816,7 +7338,24 @@
             20.38
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte",
+          "instant": 14.61
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "belley",
+          "quand": "Jean-Baptiste Belley"
+        },
+        {
+          "id": "raynal",
+          "quand": "Raynal"
+        }
+      ]
     },
     {
       "date": "1794-03",
@@ -6935,7 +7474,8 @@
               21.56,
               21.68
             ]
-          ]
+          ],
+          "personne": "danton"
         }
       ],
       "image": {
@@ -6993,7 +7533,13 @@
             21.8
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "danton",
+          "quand": "Danton"
+        }
+      ]
     },
     {
       "narration": "Parmi les victimes de 1794 figure Antoine Lavoisier, le plus grand chimiste du temps. Dans son Traité élémentaire de chimie, paru en 1789, il pèse tout ce qui entre dans une expérience et en sort : rien ne se perd. Il montre ainsi que l'eau est faite de deux gaz, l'hydrogène et l'oxygène.",
@@ -7062,7 +7608,14 @@
             20.84
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "lavoisier",
+          "quand": "Antoine Lavoisier",
+          "instant": 3.36
+        }
+      ]
     },
     {
       "date": "1794-05-08",
@@ -7169,7 +7722,8 @@
               21.59,
               21.99
             ]
-          ]
+          ],
+          "personne": "lagrange"
         }
       ],
       "image": {
@@ -7237,7 +7791,20 @@
             22.17
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "lagrange",
+          "quand": "Lagrange",
+          "instant": 13.22
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "lavoisier",
+          "quand": "Lavoisier"
+        }
+      ]
     },
     {
       "n": 92,
@@ -7299,7 +7866,14 @@
             19.4
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "robespierre",
+          "quand": "Robespierre",
+          "instant": 1.84
+        }
+      ]
     },
     {
       "date": "1794-06-26",
@@ -7377,7 +7951,14 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes": [
+        {
+          "id": "jourdan",
+          "quand": "Jourdan",
+          "instant": 4.1
+        }
+      ]
     },
     {
       "n": 94,
@@ -7447,7 +8028,13 @@
             19.86
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "robespierre",
+          "quand": "Robespierre"
+        }
+      ]
     },
     {
       "n": 95,
@@ -7508,7 +8095,19 @@
             16.53
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "saint-just",
+          "quand": "Saint-Just",
+          "instant": 9.81
+        },
+        {
+          "id": "couthon",
+          "quand": "Couthon",
+          "instant": 10.67
+        }
+      ]
     },
     {
       "n": 96,
@@ -7575,7 +8174,13 @@
             15.6
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "robespierre",
+          "quand": "Robespierre"
+        }
+      ]
     },
     {
       "n": 97,
@@ -7649,7 +8254,14 @@
             18.95
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "carrier",
+          "quand": "Carrier",
+          "instant": 7.12
+        }
+      ]
     },
     {
       "n": 98,
@@ -7784,7 +8396,19 @@
             18.01
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "tallien",
+          "quand": "Thérésa Tallien",
+          "instant": 12.21
+        },
+        {
+          "id": "josephine",
+          "quand": "Joséphine de Beauharnais",
+          "instant": 13.33
+        }
+      ]
     },
     {
       "n": 100,
@@ -7930,7 +8554,14 @@
             17.56
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "chappe",
+          "quand": "Claude Chappe",
+          "instant": 1.62
+        }
+      ]
     },
     {
       "date": "1794-08-31",
@@ -8010,7 +8641,19 @@
             18.99
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "gregoire",
+          "quand": "Grégoire",
+          "instant": 1.5
+        },
+        {
+          "id": "lenoir",
+          "quand": "Lenoir",
+          "instant": 10.37
+        }
+      ]
     },
     {
       "date": "1794-10",
@@ -8068,7 +8711,13 @@
             21.53
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "monge",
+          "quand": "Monge"
+        }
+      ]
     },
     {
       "n": 104,
@@ -8188,7 +8837,20 @@
             17.64
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "boissy-d-anglas",
+          "quand": "Boissy d'Anglas",
+          "instant": 15.1
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "feraud",
+          "quand": "Féraud"
+        }
+      ]
     },
     {
       "n": 106,
@@ -8411,7 +9073,14 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes": [
+        {
+          "id": "hoche",
+          "quand": "Hoche",
+          "instant": 10.23
+        }
+      ]
     },
     {
       "n": 109,
@@ -8552,7 +9221,14 @@
             20.92
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte",
+          "instant": 17.51
+        }
+      ]
     },
     {
       "n": 111,
@@ -8636,7 +9312,14 @@
             19.08
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "barras",
+          "quand": "Barras",
+          "instant": 5.24
+        }
+      ]
     },
     {
       "n": 112,
@@ -8689,7 +9372,17 @@
             17.25
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "babeuf",
+          "quand": "Gracchus Babeuf"
+        },
+        {
+          "id": "babeuf",
+          "quand": "Babeuf"
+        }
+      ]
     },
     {
       "n": 113,
@@ -8770,7 +9463,13 @@
             20.77
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte"
+        }
+      ]
     },
     {
       "narration": "Au printemps 1797, l'opéra-comique Le Jeune Henri, de Méhul, raconte la jeunesse d'Henri IV. Le public siffle le livret, mais fait rejouer l'ouverture, une chasse aux sonneries de cor qui fera le tour de l'Europe. Méhul est l'un des inspecteurs du Conservatoire, fondé en 1795 : écoutons cette Chasse du jeune Henri.",
@@ -8821,7 +9520,24 @@
             21.27
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "henri-iv",
+          "quand": "Henri IV",
+          "instant": 6.16
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "mehul",
+          "quand": "Méhul"
+        },
+        {
+          "id": "mehul",
+          "quand": "Méhul"
+        }
+      ]
     },
     {
       "n": 115,
@@ -8910,7 +9626,14 @@
             20.49
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte",
+          "instant": 11.67
+        }
+      ]
     },
     {
       "n": 116,
@@ -9004,7 +9727,14 @@
             20.81
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "augereau",
+          "quand": "Augereau",
+          "instant": 13.05
+        }
+      ]
     },
     {
       "n": 117,
@@ -9082,7 +9812,14 @@
             19.48
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "la-revelliere-lepeaux",
+          "quand": "La Révellière-Lépeaux",
+          "instant": 9.63
+        }
+      ]
     },
     {
       "narration": "La médecine change aussi de regard. Nommé à Bicêtre en 1793, puis à la Salpêtrière en 1795, Philippe Pinel veut soigner les aliénés par la douceur plutôt que par les chaînes. Ce tableau, peint bien plus tard, en fait une légende : c'est d'abord son surveillant, Jean-Baptiste Pussin, qui fit retirer les fers.",
@@ -9170,7 +9907,20 @@
             20.85
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "pussin",
+          "quand": "Jean-Baptiste Pussin",
+          "instant": 18.42
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "pinel",
+          "quand": "Philippe Pinel"
+        }
+      ]
     },
     {
       "n": 119,
@@ -9409,7 +10159,21 @@
             22.6
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "isabey",
+          "quand": "Isabey"
+        },
+        {
+          "id": "gerard",
+          "quand": "Gérard"
+        },
+        {
+          "id": "girodet",
+          "quand": "Girodet"
+        }
+      ]
     },
     {
       "n": 122,
@@ -9489,7 +10253,19 @@
             17.61
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte",
+          "instant": 4.17
+        },
+        {
+          "id": "nelson",
+          "quand": "Nelson",
+          "instant": 14.02
+        }
+      ]
     },
     {
       "n": 123,
@@ -9510,7 +10286,8 @@
               15.89,
               16.11
             ]
-          ]
+          ],
+          "personne": "sieyes"
         }
       ],
       "image": {
@@ -9577,7 +10354,20 @@
             21.76
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte",
+          "instant": 18.36
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "sieyes",
+          "quand": "Sieyès"
+        }
+      ]
     },
     {
       "n": 124,
@@ -9638,7 +10428,20 @@
           ]
         ]
       },
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "personnes": [
+        {
+          "id": "lucien-bonaparte",
+          "quand": "Lucien",
+          "instant": 18.09
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte"
+        }
+      ]
     },
     {
       "n": 125,
@@ -9699,7 +10502,30 @@
             18.75
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "lucien-bonaparte",
+          "quand": "Lucien",
+          "instant": 0.2
+        },
+        {
+          "id": "sieyes",
+          "quand": "Sieyès",
+          "instant": 8.53
+        },
+        {
+          "id": "roger-ducos",
+          "quand": "Roger Ducos",
+          "instant": 9.57
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte"
+        }
+      ]
     },
     {
       "date": "1799-12",
@@ -9760,7 +10586,19 @@
             18.93
           ]
         ]
-      }
+      },
+      "personnes": [
+        {
+          "id": "david",
+          "quand": "David",
+          "instant": 1.22
+        },
+        {
+          "id": "marat",
+          "quand": "Marat",
+          "instant": 17.1
+        }
+      ]
     },
     {
       "n": 127,
@@ -9872,7 +10710,13 @@
             22.63
           ]
         ]
-      }
+      },
+      "personnes_vues": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte"
+        }
+      ]
     }
   ],
   "musique": {

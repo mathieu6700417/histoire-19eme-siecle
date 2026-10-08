@@ -124,7 +124,9 @@ const frise = friseDe(d);
 const plan = planParis(d.slug);
 function surimpressions(x: Diaporama['diapositives'][number]) {
   const s = surimpressionsDe(x, fonds, plan);
-  if (!s.citation) return { lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null, citation: null };
+  // Portraits des personnes nommées (spec 12, 2026-10-08) : rangée en bas à gauche.
+  const portraits = s.portraits ? { ...s.portraits, gens: s.portraits.gens.map((g) => ({ ...g, nom: t(g.nom) })) } : null;
+  if (!s.citation) return { lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null, citation: null, portraits };
   let k = 0;
   // Le guillemet fermant fait corps avec le dernier mot : il paraît avec lui.
   const jetons = t(s.citation.texte).split(/( +)/);
@@ -136,6 +138,7 @@ function surimpressions(x: Diaporama['diapositives'][number]) {
   return {
     lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null,
     citation: { a: c.a, b: c.b, fin: c.fin, mots, html, auteur: t(`— ${c.prudence ? 'attribué à ' : ''}${c.auteur}`) },
+    portraits,
   };
 }
 
@@ -336,6 +339,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
     lieu: { a: number; b: number; nom: string; fond: string; x: number; y: number; ratio: number; vue?: string; credit?: string; points?: unknown[] } | null;
     /** Citation : fenêtre [a, b), début de chaque mot, fin du dernier, HTML des mots, auteur. */
     citation: { a: number; b: number; fin: number; mots: number[]; html: string; auteur: string } | null;
+    /** Portraits des personnes nommées : fenêtre [a, b) de la rangée, et pour chaque personne
+     *  (4 au plus) son nom, ses dates, l'image et l'instant où l'ovale paraît. */
+    portraits: { a: number; b: number; gens: { id: string; nom: string; dates: string; src: string; t: number }[] } | null;
   }
   /** Intermède chanté : paroles [instant, vers]. */
   interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string][]; instrumental: boolean; cadre: Rect | null }
@@ -637,7 +643,11 @@ const sectionsLivre = d.actes.map((a, i) => ({
       // affichage) : une zone couverte qui change en cours de route ferait bouger la caméra d'un
       // coup (mesures du 2026-10-08 : jusqu'à 10 fois le plafond de vitesse en 0,9 s).
       basLieu = elLieu && D.diapos[i].lieu ? scene.clientHeight - elLieu.offsetTop + 4 : 0;
-      bas = Math.max(bas, basLieu);
+      // Rangée de portraits (en bas à gauche) : même principe, place réservée pour toute la
+      // diapositive, mesurée sans la frise (qui la fait monter le temps de son passage).
+      const basPortraits = elPortraits && D.diapos[i].portraits
+        ? elPortraits.offsetHeight + (parseFloat(getComputedStyle(elPortraits).left) || 0) + bas + 4 : 0;
+      bas = Math.max(bas, basLieu, basPortraits);
       // La zone libre garde au moins 55 % de la hauteur.
       const k = Math.min(1, (0.45 * s.height) / Math.max(1, haut + bas));
       marges = { haut: haut * k, bas: bas * k };
@@ -1024,6 +1034,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
     const elLieu = racine.querySelector<HTMLElement>('.lieu');
     const elPlan = elLieu?.querySelector<HTMLElement>('.lieu__plan') ?? null;
     const elMots = racine.querySelector<HTMLElement>('.mots');
+    const elPortraits = racine.querySelector<HTMLElement>('.portraits');
+    let portraitsEls: HTMLElement[] = [];
+    let portraitsDits = -1;
     let motsEls: HTMLElement[][] = [];
     let motsDits = -1;
     /** Taille du médaillon : ~un quart de la hauteur de la scène (plancher lisible), selon le fond.
@@ -1044,6 +1057,30 @@ const sectionsLivre = d.actes.map((a, i) => ({
       c.style.height = `${Math.round(h)}px`;
       elLieu!.style.maxWidth = `${Math.round(w) + 12}px`;
     }
+    /** Rangée de portraits (spec 12, « Portraits des personnes nommées ») : ovales d'environ 17 %
+     *  de la hauteur de la scène (78 à 118 px de haut sur ordinateur, 50 sur téléphone), réduits si
+     *  la rangée ne tient pas à côté du médaillon de lieu (coin opposé). Puis la citation : si elle
+     *  touche la rangée, elle monte au-dessus d'elle, pour toute la diapositive (rien ne bouge
+     *  pendant qu'elle est lue). */
+    function taillePortraits() {
+      const P = D.diapos[i].portraits;
+      if (!elPortraits || !P) return;
+      const H = scene.clientHeight, W = scene.clientWidth;
+      const gauche = parseFloat(getComputedStyle(elPortraits).left) || 8;
+      let h = Math.max(W < 700 ? 50 : 78, Math.min(118, H * 0.17));
+      elPortraits.style.setProperty('--ovale-h', `${Math.round(h)}px`);
+      const lieu = D.diapos[i].lieu && elLieu ? elLieu.offsetWidth + gauche : 0;
+      const place = W - 2 * gauche - lieu;
+      if (elPortraits.offsetWidth > place && place > 0) {
+        h = Math.max(34, h * (place / elPortraits.offsetWidth));
+        elPortraits.style.setProperty('--ovale-h', `${Math.round(h)}px`);
+      }
+      if (elMots) elMots.style.bottom = '';
+      if (elMots && D.diapos[i].citation) {
+        const libre = (W - elMots.offsetWidth) / 2;
+        if (libre < gauche + elPortraits.offsetWidth + 8) elMots.style.bottom = `calc(var(--frise-bas, 0px) + ${Math.round(elPortraits.offsetHeight + gauche + 8)}px)`;
+      }
+    }
     /** Copie qui s'efface (transition CSS) pendant que l'original reçoit le contenu suivant. */
     function effacer(el: HTMLElement) {
       if (!el.classList.contains('est-visible')) return;
@@ -1057,7 +1094,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     function chargerSurimpressions(x: Diapo | null) {
       if (elLieu) effacer(elLieu);
       if (elMots) effacer(elMots);
-      lecteur.classList.remove('avec-citation', 'avec-lieu');
+      if (elPortraits) effacer(elPortraits);
+      lecteur.classList.remove('avec-citation', 'avec-lieu', 'avec-portraits');
       const L = x?.lieu;
       if (elLieu && L) {
         elLieu.querySelectorAll<HTMLElement>('.lieu__fond').forEach((f) => f.classList.toggle('est-actif', f.dataset.fond === L.fond));
@@ -1085,15 +1123,61 @@ const sectionsLivre = d.actes.map((a, i) => ({
         motsEls = C.mots.map(() => []);
         elMots.querySelectorAll<HTMLElement>('.m').forEach((m) => motsEls[Number(m.dataset.k)]?.push(m));
       }
+      // Portraits : tous les ovales sont posés d'emblée (invisibles), si bien que la rangée garde
+      // sa taille ; chacun paraît à son nom (majSurimpressions).
+      const P = x?.portraits;
+      portraitsEls = [];
+      portraitsDits = -1;
+      if (elPortraits) {
+        elPortraits.replaceChildren();
+        elPortraits.classList.toggle('est-seul', P?.gens.length === 1);
+        for (const g of P?.gens ?? []) {
+          const fig = document.createElement('figure');
+          fig.className = 'portrait';
+          const ovale = document.createElement('span');
+          ovale.className = 'portrait__ovale';
+          const img = document.createElement('img');
+          img.src = g.src;
+          img.alt = '';
+          img.decoding = 'async';
+          ovale.append(img);
+          const leg = document.createElement('figcaption');
+          const nom = document.createElement('span'), sep = document.createElement('span'), dates = document.createElement('span');
+          nom.className = 'portrait__nom'; nom.textContent = g.nom;
+          sep.className = 'portrait__sep'; sep.textContent = ' · ';
+          dates.className = 'portrait__dates'; dates.textContent = g.dates;
+          leg.append(nom, sep, dates);
+          fig.append(ovale, leg);
+          elPortraits.append(fig);
+          portraitsEls.push(fig);
+        }
+        taillePortraits();
+      }
     }
     /** Surimpressions possibles : lecture lancée, ni carton ni segment après la voix. */
     const surimpressionsActives = () => lance && !enCarton && !enSuite && !suiteFini;
     function majSurimpressions(t: number) {
       const x = D.diapos[i], actif = surimpressionsActives();
-      const L = x.lieu, C = x.citation;
+      const L = x.lieu, C = x.citation, P = x.portraits;
       if (elLieu && L) {
         const vu = actif && t >= L.a && t < L.b;
         if (vu !== elLieu.classList.contains('est-visible')) { elLieu.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-lieu', vu); }
+      }
+      if (elPortraits && P) {
+        const vu = actif && t >= P.a && t < P.b;
+        if (vu !== elPortraits.classList.contains('est-visible')) { elPortraits.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-portraits', vu); }
+        // Chaque ovale paraît quand la voix attaque le nom (le premier dès l'entrée de la rangée) ;
+        // les précédents restent.
+        let n = 0;
+        while (n < P.gens.length && P.gens[n].t <= t + 0.06) n++;
+        n = Math.max(1, n);
+        if (n !== portraitsDits) {
+          portraitsEls.forEach((e, k) => e.classList.toggle('est-dit', k < n));
+          portraitsDits = n;
+        }
+        // Deux surimpressions au plus (spec 12) : la frise du temps cède quand médaillon de lieu et
+        // portraits sont là ensemble (la citation, elle, la masque déjà).
+        if (vu && elLieu?.classList.contains('est-visible')) cacherFrise();
       }
       if (!elMots || !C) return;
       const vu = actif && t >= C.a && t < C.b;
@@ -1150,6 +1234,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
           for (const cle of decodees.keys()) if (decodees.size > 4) decodees.delete(cle);
         }
         if (x.lieu?.fond === 'paris' && elPlan?.dataset.src) new Image().src = elPlan.dataset.src;
+        for (const g of x.portraits?.gens ?? []) new Image().src = g.src;
         if (j > k && x.audio) { const a = new Audio(); a.preload = 'auto'; a.src = x.audio; }
         if (x.suite && j <= k + 1) { const a = new Audio(); a.preload = 'auto'; a.src = x.suite.src; }
       }
@@ -2035,6 +2120,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     function recadrer() {
       couches.forEach((c, k) => { if (c.x) cadre(calques[k], c.x); });
       tailleLieu();
+      taillePortraits();
       mesurerMarges();
       couches.forEach((c, k) => { if (c.x && (k !== visible || c.x !== D.diapos[i])) poser(k); });
       rendre();
@@ -2605,7 +2691,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     .lecteur__controles { gap: var(--e-1) var(--e-3); }
     .lecteur__groupe--options { margin-left: 0; width: 100%; justify-content: flex-start; }
     /* Médaillon de lieu (même coin) : le cartouche de la musique s'efface le temps de la carte. */
-    .lecteur.avec-lieu .lecteur__musique { opacity: 0; }
+    .lecteur.avec-lieu .lecteur__musique, .lecteur.avec-portraits .lecteur__musique { opacity: 0; }
   }
 
   /* Livre d'images (sans JavaScript). */
@@ -2730,7 +2816,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
   }
   .diaporama .lecteur.en-carton .frise-t--surimpression { visibility: hidden; }
   /* Frise affichée en même temps qu'un médaillon de lieu : le médaillon monte au-dessus d'elle. */
-  .diaporama .frise-t--surimpression.est-visible ~ .lieu { bottom: calc(var(--frise-bas, 0px) + 5.4rem); }
+  .diaporama .frise-t--surimpression.est-visible ~ .lieu,
+  .diaporama .frise-t--surimpression.est-visible ~ .portraits { bottom: calc(var(--frise-bas, 0px) + 5.4rem); }
   @media (prefers-reduced-motion: reduce) {
     .diaporama .frise-t__curseur, .diaporama .frise-t__date { transition: none !important; }
     .diaporama .en-carton .frise-t--carton { animation: none; }
@@ -2743,7 +2830,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .diaporama .lecteur:fullscreen .frise-t--carton { max-width: min(46rem, 100%); }
   @media (max-width: 699px) {
     .diaporama .frise-t--surimpression { width: 100%; bottom: var(--frise-bas, 0px); padding-inline: var(--gouttiere); }
-    .diaporama .frise-t--surimpression.est-visible ~ .lieu { bottom: calc(var(--frise-bas, 0px) + 4.6rem); }
+    .diaporama .frise-t--surimpression.est-visible ~ .lieu,
+    .diaporama .frise-t--surimpression.est-visible ~ .portraits { bottom: calc(var(--frise-bas, 0px) + 4.6rem); }
     .diaporama .frise-t__date { font-size: 0.88rem; }
     .diaporama .frise-t__annee { font-size: 0.75rem; }
   }

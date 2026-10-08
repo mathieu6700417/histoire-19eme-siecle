@@ -1,5 +1,6 @@
-"""Cartes de lieu et citations en surimpression : instants calés sur la voix (spec 12, « Cartes de
-lieu et citations en surimpression », 2026-10-07).
+"""Cartes de lieu, citations et portraits en surimpression : instants calés sur la voix (spec 12,
+« Cartes de lieu et citations en surimpression », 2026-10-07 ; « Portraits des personnes nommées »,
+2026-10-08).
 
 Usage :
     python3 scripts/diaporamas/surimpressions.py revolution            # ce qui manque ou a changé
@@ -12,7 +13,9 @@ Pour chaque diapositive qui porte `lieux` ou `citations`, l'audio de la narratio
   `commun.mots_lus(texte)` ; le lecteur inscrit les mots un à un au rythme de la voix ;
 - chaque lieu reçoit `instant` : début (s) du premier mot de son passage `quand` ; le médaillon
   apparaît alors (plusieurs lieux : un seul médaillon, chaque point paraît à son instant ; chaque
-  passage est cherché après le début du précédent).
+  passage est cherché après le début du précédent) ;
+- chaque personne nommée (`personnes`, portraits.py) reçoit `instant` de la même façon : début du
+  premier mot du nom tel qu'il est dit (`quand`), chaque passage cherché après le précédent.
 Le texte aligné est le texte DIT (lexique de prononciation appliqué à toute la narration, entrées
 de plusieurs mots comprises : « Louis XVI » → « Louis seize ») ; les mots affichés sont ensuite
 rattachés aux mots dits par correspondance de séquences (un mot réécrit par le lexique prend les
@@ -108,7 +111,7 @@ def main() -> int:
     dossier = c.PUBLIC / d['slug']
     faits = 0
     for x in d['diapositives']:
-        if not x.get('lieux') and not x.get('citations'):
+        if not x.get('lieux') and not x.get('citations') and not x.get('personnes'):
             continue
         n = str(x['n'])
         audio = dossier / (x.get('audio') or {}).get('fichier', '')
@@ -135,6 +138,16 @@ def main() -> int:
             depuis = pos + 1
             li['instant'] = mots_du_passage(x['narration'], li['quand'], inst, pos)[0][0]
             bilan.append(f"{li['nom']} {li['instant']:.2f} s")
+        # Personnes nommées (portraits) : même règle que les lieux.
+        depuis = 0
+        for pe in x.get('personnes', []):
+            pos = x['narration'].find(pe['quand'], depuis)
+            if pos < 0:
+                print(f"{x['n']:3d} : nom « {pe['quand']} » introuvable (après le précédent), passé")
+                continue
+            depuis = pos + 1
+            pe['instant'] = mots_du_passage(x['narration'], pe['quand'], inst, pos)[0][0]
+            bilan.append(f"{pe['id']} {pe['instant']:.2f} s")
         print(f"{x['n']:3d} : " + ' ; '.join(bilan))
     cache_f.parent.mkdir(parents=True, exist_ok=True)
     cache_f.write_text(json.dumps(cache, ensure_ascii=False) + '\n')
@@ -145,7 +158,7 @@ def main() -> int:
         y = par_n.get(x['n'])
         if not y or y['narration'] != x['narration']:
             continue
-        for cle in ('lieux', 'citations'):
+        for cle in ('lieux', 'citations', 'personnes'):
             if cle in x and cle in y and [z.get('texte', z.get('quand')) for z in x[cle]] == [z.get('texte', z.get('quand')) for z in y[cle]]:
                 for zx, zy in zip(x[cle], y[cle]):
                     for k in ('mots', 'instant'):

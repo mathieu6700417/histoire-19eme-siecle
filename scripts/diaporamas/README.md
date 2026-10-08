@@ -32,7 +32,8 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. |
 | `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. |
 | `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). |
-| `surimpressions.py` | Cartes de lieu et citations en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
+| `surimpressions.py` | Cartes de lieu, citations et portraits en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
+| `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage proposé par Gemini Flash puis contrôlé, webp ovale), contrôle de visibilité des personnes sur les images, planche de contrôle. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
 | `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques »). |
@@ -95,6 +96,12 @@ python3 scripts/diaporamas/surimpressions.py revolution --relever
 # Médaillons à plusieurs lieux de la Révolution (idempotent), puis instants des lieux nouveaux
 python3 scripts/diaporamas/ajouter_lieux.py && python3 scripts/diaporamas/surimpressions.py revolution
 
+# Portraits des personnes nommées : recherche, registre, visibilité, bilan (voir « Portraits »)
+python3 scripts/diaporamas/portraits.py --chercher "Charles Alexandre de Calonne"
+python3 scripts/diaporamas/portraits.py --registre            # tout le registre (--id x y, --force)
+python3 scripts/diaporamas/portraits.py revolution --visibilite
+python3 scripts/diaporamas/portraits.py revolution --relever
+
 # Insérer des diapositives (groupes {"apres": n actuel, "diapositives": […]}) et tout renuméroter ;
 # --essai affiche la correspondance sans rien écrire. Puis images.py, voix.py, camera.py.
 python3 scripts/diaporamas/renumeroter.py revolution --inserer ajouts.json --essai
@@ -128,7 +135,7 @@ python3 scripts/diaporamas/verifier.py --tous
    et corriger à la main les cadres faux (voir ci-dessous).
 6. Musique : écrire `musique` dans le JSON (voir ci-dessous), lancer `musique.py <slug>`,
    écouter les extraits, ajuster `debut`/`fin` et les paroles.
-7. Cartes de lieu et citations : remplir `lieux` et `citations` (voir ci-dessous), lancer
+7. Cartes de lieu, citations et portraits : remplir `lieux`, `citations`, `personnes` et `personnes_vues` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité), lancer
    `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
 8. `verifier.py <slug>` puis `npm run build`.
 
@@ -513,3 +520,91 @@ cartouche de la musique (même coin) ; il monte au-dessus de la frise quand elle
 compris, modèle d'alignement des lectures, ~0,5 s par diapositive), écrit `instant` et `mots`, et
 garde en cache (`.cache/diaporamas/<slug>/surimpressions.json`) les instants des mots avec
 l'empreinte de l'audio : après une nouvelle voix, `verifier.py` signale les instants périmés.
+
+## Portraits des personnes nommées
+
+Spec 12, « Portraits des personnes nommées » (2026-10-08). Toujours actifs dans le lecteur ; rien
+dans le livre d'images.
+
+```json
+{ "n": 125, "narration": "Lucien fait entrer les grenadiers, … trois consuls : Bonaparte, Sieyès et Roger Ducos. …",
+  "personnes": [{ "id": "lucien-bonaparte", "quand": "Lucien", "instant": 0.2 },
+                { "id": "sieyes", "quand": "Sieyès", "instant": 8.53 },
+                { "id": "roger-ducos", "quand": "Roger Ducos", "instant": 9.57 }],
+  "personnes_vues": [{ "id": "bonaparte", "quand": "Bonaparte" }] }
+```
+
+**Relevé** (à la main, dans l'ordre de la narration) : chaque mention d'une personne par son nom
+(« Robespierre », « le duc de Brunswick », « Lucien » ; pas « le roi » ni « la reine ») ; `quand` =
+le nom tel qu'il est dit, cherché après le précédent (une personne nommée deux fois a deux
+mentions). Les personnages antiques ou légendaires sujets d'une œuvre (Brutus, les Horaces,
+Hersilie) et les titres de chants (« Ô Richard ») ne comptent pas.
+- `personnes` : la personne **n'est pas visible** sur l'image ; `personnes_vues` : elle l'est (pas
+  de portrait ; gardé pour mémoire et pour `verifier.py`). « Visible » = représentée de façon
+  reconnaissable : sujet de l'œuvre, figure nettement identifiable (titre, légende gravée,
+  composition), ou œuvre dans l'œuvre (portrait sur un chevalet, buste) ; une silhouette
+  indistincte dans une foule, un cercueil, une œuvre de la personne ne comptent pas.
+- `portraits.py <slug> --visibilite` : Gemini Flash voit l'image, sa notice et la narration, et dit
+  pour chaque personne nommée si elle est visible ; le script liste les désaccords avec les
+  données, à trancher en regardant l'image (cache `.cache/diaporamas/<slug>/personnes.json`).
+  Sur la Révolution, deux verdicts du modèle ont été renversés après relecture : Calonne (2 : le
+  médaillon de l'estampe n'est pas identifié) et Barras (111 : un des cinq directeurs, indistinct).
+- `citations[].personne` : l'identifiant de la personne citée ; si elle n'est pas visible, elle doit
+  être dans `personnes` (son portrait accompagne la citation).
+
+**Registre** `src/data/diaporamas/portraits.json` (commun à toutes les périodes ; seules les
+personnes montrées au moins une fois y sont) : `{ id, nom, dates, commons, page, fichier, auteur,
+date, licence, cadre_visage }`. `nom` est le nom affiché (court : « Danton », « Madame Roland »,
+« Comte d'Artois »), `dates` « 1759-1794 ».
+- Choix du portrait : œuvre **d'époque**, faite du vivant de la personne ou peu après, **identifiée
+  sans doute** (notice du musée, titre explicite ; jamais un « portrait présumé »), domaine public ou
+  CC0 sur Commons (la licence est relevée par l'API ; CC BY refusé). `--chercher` aide : entité
+  Wikidata (dates, image P18 avec sa notice Commons) puis recherche Commons. Préférer une peinture
+  en couleur à une gravure, un original à une copie ; une copie d'un portrait d'après nature est
+  admise en le disant dans `auteur` (« Copie d'après Joseph-Marie Vien (original avant 1809) »).
+- `auteur` et `date` sont rédigés pour les crédits (les champs Commons sont souvent bruts).
+- **Sans portrait fiable** : l'entrée garde `id`, `nom`, `dates` et une `note` (pourquoi), sans
+  `commons` ni `fichier` ; le lecteur ne montre rien. Révolution : Réveillon, Méchain, Amar,
+  Lagrange, Claude Chappe, Pussin (voir leurs notes).
+- `portraits.py --registre` : licence par l'API (refus sinon), original téléchargé dans
+  `.cache/diaporamas/portraits/` (vignette de 2 400 px pour un très grand fichier), cadre du
+  visage proposé par Gemini Flash sur l'image quadrillée, recadrage 4:5 où le visage occupe 58 % de
+  la hauteur (son centre à 44 %), contrôle du recadrage par le modèle (« un seul visage entier,
+  centré ») ; webp 240 × 300 px, ~10 Ko. Un refus est signalé « à relire » : corriger
+  `cadre_visage` à la main et ajouter `"cadre_visage_manuel": true` (Révolution : Drouet, Nelson,
+  Couthon). Planche de contrôle : `.cache/diaporamas/portraits/planche.jpg` (ovales et noms).
+- Coût (Gemini Flash, tarif supposé) : ~0,12 $ pour la visibilité des 135 mentions de la
+  Révolution, ~0,15 $ pour les cadres et contrôles de 48 portraits.
+
+**Instants** : `surimpressions.py <slug>` écrit `instant` (début du nom dans l'audio) comme pour les
+lieux ; à relancer après toute nouvelle voix.
+
+**Lecteur** (`portraitsDe` dans `src/utils/diaporamas.ts`, `Diaporama.astro`, styles dans
+`Surimpressions.astro`) :
+- rangée d'ovales **en bas à gauche** (le médaillon de lieu est en bas à droite), en couleur, bord fin
+  (filet sombre et liseré clair), nom en petites capitales et dates dessous ; une personne seule :
+  « Danton · 1759-1794 » sur une ligne ;
+- une personne par ovale, dans l'ordre de la première mention, **4 au plus** ; chaque ovale paraît
+  au nom (le premier dès l'entrée de la rangée), les précédents restent ; la rangée va du premier
+  nom à 3 s après le dernier (5 s au moins ; un nom dit dans les 4 dernières secondes avance son
+  entrée), prolongée jusqu'à la fin de la citation de la personne ;
+- taille : ovales de 17 % de la hauteur de la scène (78 à 118 px de haut sur ordinateur, 50 sur
+  téléphone), réduits si la rangée ne tient pas à côté du médaillon de lieu ;
+- zone couverte pour la caméra : la hauteur de la rangée est réservée **pour toute la diapositive**
+  qui en a une (comme le médaillon de lieu) ; tous les ovales sont posés d'emblée (invisibles), la
+  rangée ne change jamais de taille ;
+- affichage dérivé de l'instant lissé de l'audio (pause, reprise, sauts justes) ; mouvement réduit :
+  fondu simple de 200 ms, sans glissement ;
+- **surimpressions ensemble**, par ordre de priorité : citation > portraits = médaillon de lieu >
+  frise du temps. La citation exclut déjà le médaillon (arbitrage existant) ; avec des portraits,
+  si elle touche la rangée, elle monte au-dessus d'elle pour toute la diapositive (rien ne bouge
+  pendant la lecture) ; la frise du temps cède (masquée) quand médaillon et portraits sont là
+  ensemble, et sinon les portraits montent au-dessus d'elle comme le médaillon ; sur téléphone, le
+  cartouche de la musique (même bande du bas) s'efface le temps des portraits ;
+- crédits : section « Portraits » de la page (nom, dates, auteur, date, lien Commons, licence).
+
+`verifier.py` : registre (champs, fichier présent, licence, cadre du visage, œuvre postérieure de
+plus de 5 ans à la mort signalée), `quand` exacts et dans l'ordre, instants présents, croissants,
+dans l'audio et à jour, 4 portraits au plus, personne montrée absente de l'image (jamais dans
+`personnes_vues` de la même diapositive ; désaccord avec le cache de vision en avertissement),
+personne citée accompagnée de son portrait.

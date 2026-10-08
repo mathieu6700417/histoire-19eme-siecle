@@ -6,7 +6,7 @@ import { typographie } from '../../utils/typographie.mjs';
 import { libelleChapitre } from '../../data/chapitres-ecrivains';
 import { planComplet, urlChapitre } from '../../utils/ecrivains';
 import {
-  diaporamas, dureeTotale, formaterDuree, nomSourceMusique, planDiaporamas, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
+  diaporamas, dureeTotale, formaterDuree, nomSourceMusique, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
   type Diaporama as D,
 } from '../../utils/diaporamas';
 
@@ -27,6 +27,10 @@ const t = (x?: string) => (x ? typographie(x) : '');
 const fond = (d.musique?.fond ?? []).filter((p) => p.duree);
 const actesMusique = d.actes.map((a) => ({ titre: a.titre, pistes: fond.filter((p) => p.acte === a.id) })).filter((a) => a.pistes.length);
 const chants = (d.musique?.intermedes ?? []).filter((p) => p.duree);
+// Crédits des portraits des personnes nommées (spec 12, 2026-10-08) : ceux que montre la période,
+// dans l'ordre de leur première apparition.
+const idsPortraits = [...new Set(d.diapositives.flatMap((x) => (x.personnes ?? []).map((p) => p.id)))];
+const portraitsMontres = idsPortraits.map((id) => portraits.find((p) => p.id === id)).filter((p) => p?.fichier && p.page);
 /** Licence en milieu de phrase : minuscule initiale, sauf sigle (CC0, CC BY…). */
 const licence = (x: string) => t(/^[A-ZÀ-Ý][a-zà-ÿ]/.test(x) ? x.charAt(0).toLowerCase() + x.slice(1) : x);
 /** Lien vers le texte d'une licence Creative Commons (CC BY 3.0, CC BY-SA 4.0…), exigé par l'attribution. */
@@ -86,6 +90,21 @@ const urlLicence = (x: string) => {
           ))}
         </ul>
         {d.musique?.note && <p class="musiques__note">{t(d.musique.note)}</p>}
+      </section>
+    )}
+    {portraitsMontres.length > 0 && (
+      <section class="musiques portraits-credits" aria-labelledby="titre-portraits">
+        <h2 id="titre-portraits">Portraits</h2>
+        <p>{typographie("Quand la voix nomme une personne que l'image ne montre pas, son portrait d'époque paraît en bas à gauche.")}</p>
+        <ul>
+          {portraitsMontres.map((p) => (
+            <li>
+              <span class="musiques__acte">{t(p!.nom)} ({p!.dates})</span>
+              {' '}{t(p!.auteur)}{p!.date ? `, ${t(p!.date)}` : ''}.{' '}
+              <a href={p!.page} rel="noopener" target="_blank">Commons</a>, {licence(p!.licence ?? '')}.
+            </li>
+          ))}
+        </ul>
       </section>
     )}
     {chapitre && (
@@ -150,6 +169,7 @@ const urlLicence = (x: string) => {
   .musiques__acte { display: block; font-variant: small-caps; letter-spacing: 0.04em; }
   .musiques__piste { display: block; padding-left: var(--e-2); }
   .musiques__note { margin-top: var(--e-2); }
+  .portraits-credits .musiques__acte { display: inline; }
 
   .voisins {
     display: flex;
