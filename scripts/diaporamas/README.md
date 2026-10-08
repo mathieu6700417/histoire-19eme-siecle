@@ -39,7 +39,7 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. |
 | `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. |
 | `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). |
-| `surimpressions.py` | Cartes de lieu, citations, portraits, objets de musée et manuscrits en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
+| `surimpressions.py` | Cartes de lieu, citations, portraits, objets de musée, manuscrits, chiffres clés et dates républicaines en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
 | `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle, bilan des mentions. |
 | `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage proposé par Gemini Flash puis contrôlé, webp ovale), contrôle de visibilité des personnes sur les images, planche de contrôle. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
@@ -154,7 +154,7 @@ python3 scripts/diaporamas/verifier.py --tous
 6. Musique : écrire `musique` dans le JSON (voir ci-dessous), lancer `musique.py <slug>`,
    écouter les extraits, ajuster `debut`/`fin` et les paroles, puis `paroles.py <slug> --ecoute`
    et relire ses planches (voir « Paroles des chants » ci-dessous).
-7. Cartes de lieu, citations, portraits, objets et manuscrits : remplir `lieux`, `citations`, `personnes`, `personnes_vues`, `objets` et `manuscrits` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité, `objets.py` pour le registre des objets), lancer
+7. Cartes de lieu, citations, portraits, objets, manuscrits, chiffres et dates : remplir `lieux`, `citations`, `personnes`, `personnes_vues`, `objets`, `manuscrits`, `chiffres` et `dates_republicaines` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité, `objets.py` pour le registre des objets), lancer
    `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
 8. `verifier.py <slug>` puis `npm run build`.
 
@@ -720,3 +720,71 @@ Révolution : 10 objets, 3 manuscrits (liste avec `objets.py revolution --releve
 bonnet de laine d'époque photographiés librement sur Commons ; la dernière lettre de Marie-Antoinette
 n'y est qu'en fac-similé de 1872 et la narration ne l'évoque pas ; le procès-verbal du serment du Jeu
 de paume n'y est qu'en 1 000 px, signatures illisibles.
+
+## Chiffres clés et dates républicaines
+
+Spec 12, « Enrichissements visuels », point 4 (2026-10-08). Toujours actifs dans le lecteur ; rien
+dans le livre d'images.
+
+```json
+{ "n": 92, "narration": "… la loi du 22 prairial ouvre la Grande Terreur : à Paris, plus de mille trois cents exécutions en sept semaines.",
+  "chiffres": [{ "quand": "plus de mille trois cents exécutions", "valeur": 1300, "prefixe": "plus de",
+                 "unite": "exécutions à Paris en sept semaines",
+                 "source": "Antoine Boulant, Le Tribunal révolutionnaire, 2018, p. 185 : 1 376 condamnations…", "instant": 16.91 }],
+  "dates_republicaines": [{ "quand": "22 prairial", "republicain": "22 prairial an II", "gregorien": "10 juin 1794",
+                            "relu": "« Deux jours plus tard » que la fête du 8 juin 1794 …", "instant": 13.11 }] }
+```
+
+**Chiffres** (un au plus par diapositive, ~8 par période) : les nombres les plus parlants **dits par la
+voix**, jamais un nombre qui n'y est pas. `quand` = le passage où le nombre est dit, prudence comprise
+(« plus de mille détenus ») ; `valeur` = ce nombre, contrôlé par `verifier.py` qui relit le nombre du
+`quand` (chiffres ou toutes lettres : `commun.nombre_dit`) ; `prefixe` = la prudence dite (« plus de »,
+« près de », « environ »…), obligatoire si elle est dite (le chiffre affiché ne doit pas être plus
+affirmatif que la voix) ; `unite` = courte ligne (45 caractères au plus) ; `source` = d'où vient le
+chiffre (référence vérifiée, non affichée). Un chiffre douteux ou contesté n'est pas montré.
+
+**Dates républicaines** (une au plus par diapositive) : chaque date du calendrier républicain dite par
+la voix (« 9 thermidor an II », « 18 brumaire an VIII », mais aussi « la loi du 22 prairial », « la
+constitution de l'an III »). `quand` = le passage dit ; `republicain` = la date complète affichée (année
+ajoutée si la voix la tait : « 22 prairial an II ») ou une année seule (« an III ») ; `gregorien` = sa
+correspondance, **écrite par `surimpressions.py`** (`commun.date_republicaine`) : jour grégorien du
+1er vendémiaire de l'an (an I : 22 septembre 1792, puis 365 jours, 366 après les années sextiles **III,
+VII et XI** réellement appliquées, règle de l'équinoxe et tables officielles), plus 30 jours par mois
+(13 pour les sans-culottides). La « règle de Romme » (sextiles multiples de 4), jamais adoptée, n'est
+pas employée : elle décalerait d'un jour les dates à partir de l'an IV. Une année seule donne
+« 22 septembre 1794 – 22 septembre 1795 ». `verifier.py` recalcule chaque correspondance, contrôle le
+calcul sur une table de concordance (1er vendémiaire des ans I à XIV) et des dates connues, et demande
+qu'elle soit confirmée par la voix, par la date de la diapositive ou par une note `relu` (pour une
+année seule : la date de la diapositive doit y tomber).
+
+**Lecteur** (`chiffresDe` dans `src/utils/diaporamas.ts`, `Diaporama.astro`, styles dans
+`Surimpressions.astro`) :
+- chiffre : centré dans le tiers inférieur (place de la citation), grand serif (15 % de la hauteur de
+  la scène, 54 à 112 px ; 40 px au moins sur téléphone), milliers séparés par une espace fine
+  insécable (« 300 000 »), prudence au-dessus et unité dessous en petites capitales, sur un voile
+  blanc cassé local aux bords fondus ; fondu de 0,6 s et montée de 6 px ; il défile de 0 à sa valeur
+  en 1,4 s (courbe qui ralentit, pas ronds de 1, 10 ou 1 000 selon sa grandeur) à partir de 20, sinon
+  il paraît en fondu ; ~4 s depuis le passage (3 s au moins) ; il ne réserve rien pour la caméra
+  (comme la citation). S'il se montre avec une surimpression de coin bas qui le toucherait, ou avec la
+  date, il monte au-dessus d'elle pour toute la diapositive ; avec la frise, au-dessus d'elle.
+  Chiffres elzéviriens demandés en CSS (`oldstyle-nums tabular-nums`) mais sans effet avec l'EB
+  Garamond de Google Fonts, qui n'a pas ces variantes : chiffres alignés ;
+- date : bandeau voilé fin au bas de l'image, au centre (place de la frise), petites capitales,
+  « 9 thermidor an II · 27 juillet 1794 » ; ~5 s depuis le passage (3 s au moins) ; au-dessus de la
+  frise quand elle s'affiche ; sur téléphone, le cartouche de la musique s'efface pendant le chiffre ou
+  la date ;
+- **priorités** : citation > manuscrit > portraits = médaillon de lieu > objet ≥ chiffre > date > frise
+  du temps. Le chiffre et la date ne se montrent jamais avec la citation ; ils n'entrent pas quand deux
+  autres surimpressions sont déjà là (raccourcis, reportés ou omis) ; l'objet, placé avant, garde sa
+  fenêtre ; la frise cède dès que deux autres sont visibles ;
+- mouvement réduit : ni défilement ni montée, fondu de 200 ms.
+
+`verifier.py` : champs, `quand` exacts, nombre du `quand` égal à `valeur`, prudence reprise, unité et
+source, conversions recalculées, instants présents, à jour et dans l'audio ; fenêtres recalculées
+comme dans le lecteur (même code porté en Python, contrôlé identique au lecteur sur les 127
+diapositives de la Révolution, 889 fenêtres) et comptées dans la règle des deux surimpressions ;
+chiffre ou date raccourcis ou omis en avertissement.
+
+Révolution : 8 chiffres (diapositives 18, 31, 55, 61, 67, 92, 108, 122) et 7 dates (92, 94, 105, 109,
+110, 116, 124) ; caméra mesurée à nouveau sur ces 14 diapositives (1280 × 720, 1920 × 1080, 390 × 844) :
+rien au-dessus des plafonds, aucun à-coup, rien hors de la zone utile.

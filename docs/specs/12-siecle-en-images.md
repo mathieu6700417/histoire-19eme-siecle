@@ -800,6 +800,30 @@ l'image reste le sujet. Les zones couvertes ne font jamais bouger la caméra bru
   signé « Ro ») ; caméra mesurée à nouveau sur ces 13 diapositives (1280 × 720, 1920 × 1080, 390 × 844) :
   rien au-dessus des plafonds, aucun saut.
 
+**Valeurs retenues, point 4** (mise en œuvre du 2026-10-08 ; détail dans `scripts/diaporamas/README.md`,
+« Chiffres clés et dates républicaines ») :
+- données : `chiffres` `{ quand, valeur, prefixe?, unite, source, instant }` et `dates_republicaines`
+  `{ quand, republicain, gregorien, relu?, instant }` dans la diapositive, un de chaque au plus ; seuls des
+  nombres dits par la voix, avec leur prudence (« plus de ») et une source vérifiée ; conversion par les
+  tables officielles (1er vendémiaire an I = 22 septembre 1792, années sextiles III, VII, XI ; pas la
+  règle de Romme), écrite par `surimpressions.py`, recalculée et confirmée par `verifier.py` ;
+- chiffre : centré dans le tiers inférieur, grand serif (15 % de la hauteur de la scène, 54 à 112 px),
+  « 300 000 » avec espace fine, prudence au-dessus et unité dessous en petites capitales, voile blanc
+  cassé local aux bords fondus ; défile de 0 à sa valeur en 1,4 s à partir de 20, sinon fondu ; ~4 s
+  (3 s au moins) ; ne réserve rien pour la caméra ; monte au-dessus d'une surimpression de coin ou de la
+  date qui se montre avec lui, pour toute la diapositive. Chiffres elzéviriens impossibles avec l'EB
+  Garamond de Google Fonts (pas de variante `onum`) : chiffres alignés ;
+- date : bandeau voilé fin en petites capitales au bas de l'image, au centre, « 9 thermidor an II ·
+  27 juillet 1794 » ; ~5 s (3 s au moins) ; au-dessus de la frise ;
+- **priorités** : citation > manuscrit > portraits = médaillon de lieu > objet ≥ chiffre > date > frise ;
+  jamais plus de deux à la fois ; ni le chiffre ni la date avec la citation ;
+- Révolution : 8 chiffres (7 prisonniers à la Bastille, 83 départements, plus de 1 000 détenus massacrés
+  en septembre 1792, 300 000 hommes à lever, 29 députés girondins arrêtés, plus de 1 300 exécutions de la
+  Grande Terreur, plus de 700 fusillés après Quiberon, plus de 150 savants en Égypte) et 7 dates
+  (22 prairial an II, 9 thermidor an II, 1er prairial an III, an III, 13 vendémiaire an IV, 18 fructidor
+  an V, 18 brumaire an VIII) ; caméra mesurée à nouveau sur ces 14 diapositives : rien au-dessus des
+  plafonds, aucun à-coup.
+
 ## Portail (`/diaporamas/`)
 
 Titre « Le siècle en images ». Une courte présentation (voix de synthèse, images du domaine

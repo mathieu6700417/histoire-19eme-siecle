@@ -69,6 +69,15 @@ transcrit) ; dans chaque diapositive, un objet et un manuscrit au plus, au regis
 l'arbitrage : avertissement. Deux surimpressions au plus à la fois (citation, manuscrit, médaillon
 de lieu, portraits, objet ; fenêtres recalculées comme dans le lecteur), jamais l'objet avec la
 surimpression de son coin ni le manuscrit avec la citation.
+Chiffres clés et dates républicaines (spec 12, « Enrichissements visuels », point 4, 2026-10-08) : un
+chiffre et une date au plus par diapositive ; chiffre : `quand` exact, nombre dit dans le `quand` égal à
+`valeur` (chiffres ou toutes lettres), prudence dite (« plus de », « près de »…) reprise dans `prefixe`,
+unité courte, source notée ; date : `quand` exact, `republicain` valide, `gregorien` recalculé (tables
+officielles : 1er vendémiaire de chaque an, années sextiles III, VII, XI ; calcul contrôlé sur une table
+de concordance et des dates connues), date confirmée par la narration ou par la date de la diapositive
+(sinon avertissement) ; instants présents, à jour, dans l'audio ; fenêtres recalculées comme dans le
+lecteur (`chiffresDe`) et comptées dans la règle des deux surimpressions ; jamais le chiffre ni la date
+avec la citation ; chiffre ou date omis ou raccourcis : avertissement.
 Code de sortie 1 en cas d'erreur ; les avertissements n'en sont pas.
 """
 import argparse, calendar, datetime, json, math, re, sys, unicodedata
@@ -643,6 +652,8 @@ DUREE_LIEU, APRES_LIEUX = 5.0, 3.0
 DUREE_PORTRAITS, APRES_PORTRAITS = 5.0, 3.0
 DUREE_OBJET, MIN_OBJET = 5.0, 3.5
 DUREE_MANUSCRIT, MIN_MANUSCRIT = 8.0, 5.0
+DUREE_CHIFFRE, MIN_CHIFFRE = 4.0, 3.0
+DUREE_DATE, MIN_DATE = 5.0, 3.0
 ECART_SURIMPRESSION = 0.5
 LICENCE_OBJET = re.compile(r'^(Domaine public|CC0|CC BY(-SA)? \d\.\d( [a-z]{2})?)$')
 
@@ -701,7 +712,7 @@ def fenetres_surimpressions(x: dict, portraits_reg: dict, objets_reg: dict) -> d
     du = (x.get('audio') or {}).get('duree') or 6
     fin = du + pause_apres(x)
     t = x['narration']
-    F: dict[str, tuple[float, float] | None] = {'citation': None, 'lieu': None, 'portraits': None, 'manuscrit': None, 'objet': None}
+    F: dict[str, tuple[float, float] | None] = {'citation': None, 'lieu': None, 'portraits': None, 'manuscrit': None, 'objet': None, 'chiffre': None, 'date': None}
     ci = (x.get('citations') or [None])[0]
     if ci and ci.get('texte') and ci['texte'] in t:
         pos = t.index(ci['texte'])
@@ -763,6 +774,19 @@ def fenetres_surimpressions(x: dict, portraits_reg: dict, objets_reg: dict) -> d
         L, P, M = F['lieu'], F['portraits'], F['manuscrit']
         F['objet'] = placer(a0, DUREE_OBJET, MIN_OBJET, fin, elargir(C) + elargir(M) + elargir(coin)
                             + ensemble(L, P) + ensemble(L, M) + ensemble(P, M))
+
+    # Chiffre clé puis date républicaine (chiffresDe) : ils cèdent à la citation et à tout instant où
+    # deux autres surimpressions sont déjà là.
+    def paires(fs):
+        return [b for k, p in enumerate(fs) for q in fs[k + 1:] for b in ensemble(p, q)]
+    mc = (x.get('chiffres') or [None])[0]
+    if mc and instant_de(mc) is not None:
+        a0 = max(0.3, min(instant_de(mc) - 0.1, fin - 3.5))
+        F['chiffre'] = placer(a0, DUREE_CHIFFRE, MIN_CHIFFRE, fin, elargir(C) + paires([F['lieu'], F['portraits'], F['objet'], F['manuscrit']]))
+    md = (x.get('dates_republicaines') or [None])[0]
+    if md and md.get('gregorien') and instant_de(md) is not None:
+        a0 = max(0.3, min(instant_de(md) - 0.1, fin - 3.5))
+        F['date'] = placer(a0, DUREE_DATE, MIN_DATE, fin, elargir(C) + paires([F['lieu'], F['portraits'], F['objet'], F['manuscrit'], F['chiffre']]))
     return F
 
 
@@ -839,7 +863,7 @@ def controler_objets(d: dict) -> tuple[list[str], list[str], int, int, int]:
                     pro = instant_caractere(x, t.index(m['quand']))
                     if abs(pro - m['instant']) > 2.5:
                         avert.append(f"{q} : instant {m['instant']:.2f} s loin du prorata ({pro:.2f} s) : alignement à relire")
-        if not any(x.get(k) for k in ('citations', 'lieux', 'personnes', 'objets', 'manuscrits')):
+        if not any(x.get(k) for k in ('citations', 'lieux', 'personnes', 'objets', 'manuscrits', 'chiffres', 'dates_republicaines')):
             continue
         F = fenetres_surimpressions(x, portraits_reg, par_id)
         if x.get('objets'):
@@ -875,7 +899,108 @@ def controler_objets(d: dict) -> tuple[list[str], list[str], int, int, int]:
             erreurs.append(f'{p} : objet et surimpression du même coin ensemble ({o} / {coin})')
         if F['manuscrit'] and chevauchent(F['manuscrit'], F['citation']):
             erreurs.append(f'{p} : manuscrit et citation ensemble')
+        for k, cle, duree in (('chiffre', 'chiffres', DUREE_CHIFFRE), ('date', 'dates_republicaines', DUREE_DATE)):
+            if F[k] and chevauchent(F[k], F['citation']):
+                erreurs.append(f'{p} : {k} et citation ensemble')
+            if x.get(cle):
+                if not F[k]:
+                    avert.append(f"{p} : {k} {'omis' if k == 'chiffre' else 'omise'} faute de place (autres surimpressions)")
+                elif F[k][1] - F[k][0] < duree - 0.01:
+                    avert.append(f"{p} : {k} {'raccourci' if k == 'chiffre' else 'raccourcie'} à {F[k][1] - F[k][0]:.1f} s (cède la place)")
     return erreurs, avert, n_obj, n_man, n_deux
+
+
+# --- Chiffres clés et dates républicaines (spec 12, « Enrichissements visuels », point 4) ---------
+# Table de concordance officielle : 1er vendémiaire de chaque an (an I à XIV), indépendante du calcul
+# de commun.premier_vendemiaire (qui ajoute la durée des années, sextiles III, VII et XI).
+PREMIER_VENDEMIAIRE = {1: '1792-09-22', 2: '1793-09-22', 3: '1794-09-22', 4: '1795-09-23', 5: '1796-09-22',
+                       6: '1797-09-22', 7: '1798-09-22', 8: '1799-09-23', 9: '1800-09-23', 10: '1801-09-23',
+                       11: '1802-09-23', 12: '1803-09-24', 13: '1804-09-23', 14: '1805-09-23'}
+# Dates connues (journées et lois célèbres, fin du calendrier).
+DATES_CONNUES = {'1er vendémiaire an I': '22 septembre 1792', '22 prairial an II': '10 juin 1794',
+                 '9 thermidor an II': '27 juillet 1794', '1er prairial an III': '20 mai 1795',
+                 '13 vendémiaire an IV': '5 octobre 1795', '18 fructidor an V': '4 septembre 1797',
+                 '18 brumaire an VIII': '9 novembre 1799', '10 nivôse an XIV': '31 décembre 1805'}
+PRUDENCES = ('plus de', 'près de', 'environ', 'moins de', 'quelque', 'presque')
+
+
+def _iso(texte: str) -> str:
+    """« 27 juillet 1794 » → « 1794-07-27 »."""
+    j, mo, an = texte.split(' ')
+    return f"{an}-{MOIS.index(mo) + 1:02d}-{1 if j == '1er' else int(j):02d}"
+
+
+def controler_chiffres(d: dict) -> tuple[list[str], list[str], int, int, int]:
+    """Chiffres clés et dates républicaines : erreurs, avertissements, nombre de chiffres, de dates et
+    de dates confirmées par la narration ou la date de la diapositive."""
+    erreurs, avert = [], []
+    for an, iso in PREMIER_VENDEMIAIRE.items():
+        if c.premier_vendemiaire(an).isoformat() != iso:
+            erreurs.append(f'calendrier républicain : 1er vendémiaire an {an} calculé {c.premier_vendemiaire(an)} (table : {iso})')
+    for rep, greg in DATES_CONNUES.items():
+        if (c.date_republicaine(rep) or ('', ''))[1] != greg:
+            erreurs.append(f'calendrier républicain : {rep} calculé {c.date_republicaine(rep)} (attendu : {greg})')
+    cache_f = c.CACHE / d['slug'] / 'surimpressions.json'
+    cache = json.loads(cache_f.read_text()) if cache_f.exists() else {}
+    from surimpressions import empreinte_audio
+    n_ch = n_da = n_conf = 0
+    for x in d['diapositives']:
+        p, t = f"{x['n']:3d}", x['narration']
+        a = x.get('audio') or {}
+        fa = c.PUBLIC / d['slug'] / a.get('fichier', '')
+        for cle, genre in (('chiffres', 'chiffre'), ('dates_republicaines', 'date')):
+            liste = x.get(cle) or []
+            if len(liste) > 1:
+                erreurs.append(f'{p} : {len(liste)} {cle} (un au plus par diapositive)')
+            for m in liste:
+                q = f"{p} : {genre} « {m.get('quand')} »"
+                if not m.get('quand') or m['quand'] not in t:
+                    erreurs.append(f'{q} : passage absent de la narration')
+                    continue
+                if 'instant' not in m:
+                    avert.append(f'{q} : instant non calé, repli au prorata (surimpressions.py)')
+                elif not (fa.is_file() and cache.get(str(x['n']), {}).get('empreinte') == empreinte_audio(fa, t)):
+                    erreurs.append(f'{q} : instant périmé (voix ou texte changés : surimpressions.py)')
+                elif not 0 <= m['instant'] <= (a.get('duree') or 0):
+                    erreurs.append(f"{q} : instant hors de l'audio ({m['instant']})")
+                elif abs(instant_caractere(x, t.index(m['quand'])) - m['instant']) > 2.5:
+                    avert.append(f"{q} : instant {m['instant']:.2f} s loin du prorata : alignement à relire")
+                if genre == 'chiffre':
+                    n_ch += 1
+                    dit = c.nombre_dit(m['quand'])
+                    if dit is None or dit != m.get('valeur'):
+                        erreurs.append(f"{q} : nombre dit {dit} ≠ valeur {m.get('valeur')}")
+                    prud = next((w for w in PRUDENCES if re.search(rf'\b{w}\b', m['quand'].lower())), '')
+                    if prud != (m.get('prefixe') or '').lower():
+                        erreurs.append(f"{q} : prudence « {prud} » dite, préfixe « {m.get('prefixe') or ''} »")
+                    if not str(m.get('unite') or '').strip() or len(m['unite']) > 45:
+                        erreurs.append(f'{q} : unité manquante ou trop longue (45 caractères au plus)')
+                    if not str(m.get('source') or '').strip():
+                        erreurs.append(f'{q} : source non notée')
+                    continue
+                n_da += 1
+                rep = m.get('republicain') or ''
+                # Le passage dit est le début de la date affichée (« 22 prairial » → « 22 prairial an II »).
+                if not rep.startswith(re.sub(r"^l'", '', m['quand'])):
+                    avert.append(f'{q} : date affichée « {rep} » éloignée du passage dit')
+                conv = c.date_republicaine(rep)
+                if not conv:
+                    erreurs.append(f'{q} : date républicaine « {rep} » illisible (« 9 thermidor an II », « an III »)')
+                elif conv[1] != m.get('gregorien'):
+                    erreurs.append(f"{q} : correspondance « {m.get('gregorien')} », recalculée « {conv[1]} »")
+                elif ' – ' in conv[1]:
+                    # Année seule : la date de la diapositive doit y tomber.
+                    d0, d1 = (_iso(v) for v in conv[1].split(' – '))
+                    if x.get('date') and not d0[:len(x['date'])] <= x['date'] <= d1:
+                        erreurs.append(f"{q} : date de la diapositive {x['date']} hors de {rep} ({conv[1]})")
+                    else:
+                        n_conf += 1
+                elif conv[1] in re.sub(r'[  ]', ' ', t) or x.get('date') == _iso(conv[1]) or str(m.get('relu') or '').strip():
+                    # Confirmée par la voix, par la date de la diapositive, ou relue (`relu` : pourquoi).
+                    n_conf += 1
+                else:
+                    avert.append(f'{q} : {conv[1]} ni dit par la narration ni date de la diapositive (à relire)')
+    return erreurs, avert, n_ch, n_da, n_conf
 
 
 def chevauchent(p, q) -> bool:
@@ -1415,6 +1540,9 @@ def verifier(slug: str) -> bool:
     e_obj, a_obj, n_objets, n_manuscrits, n_deux = controler_objets(d)
     erreurs += e_obj
     avert += a_obj
+    e_ch, a_ch, n_chiffres, n_dates, n_conf = controler_chiffres(d)
+    erreurs += e_ch
+    avert += a_ch
 
     pauses = [pause_apres(x) for x in diapos]
     longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
@@ -1449,6 +1577,9 @@ def verifier(slug: str) -> bool:
             avert.append(f'{n_objets} objet(s) de musée (~10 visés par période)')
         if not 3 <= n_manuscrits <= 4:
             avert.append(f'{n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
+    if n_chiffres or n_dates:
+        print(f'Chiffres clés et dates : {n_chiffres} chiffre(s) (~8 visés), {n_dates} date(s) républicaine(s), '
+              f'correspondances recalculées ({n_conf} confirmée(s) par la narration ou la date de la diapositive).')
     datees = sum(1 for x in diapos if 'date' in x)
     print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} surimpression(s) '
           f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")

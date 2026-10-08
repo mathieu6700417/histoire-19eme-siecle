@@ -129,7 +129,10 @@ function surimpressions(x: Diaporama['diapositives'][number]) {
   // Objet de musée et manuscrit (spec 12, « Enrichissements visuels ») : fenêtres déjà arbitrées.
   const objet = s.objet ? { ...s.objet, nom: t(s.objet.nom), legende: t(s.objet.legende) } : null;
   const manuscrit = s.manuscrit ? { ...s.manuscrit, nom: t(s.manuscrit.nom), legende: t(s.manuscrit.legende) } : null;
-  if (!s.citation) return { lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null, citation: null, portraits, objet, manuscrit };
+  // Chiffre clé et date républicaine (point 4) : fenêtres déjà arbitrées.
+  const chiffre = s.chiffre ? { ...s.chiffre, prefixe: t(s.chiffre.prefixe), unite: t(s.chiffre.unite) } : null;
+  const date = s.date ? { ...s.date, republicain: t(s.date.republicain), gregorien: t(s.date.gregorien) } : null;
+  if (!s.citation) return { lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null, citation: null, portraits, objet, manuscrit, chiffre, date };
   let k = 0;
   // Le guillemet fermant fait corps avec le dernier mot : il paraît avec lui.
   const jetons = t(s.citation.texte).split(/( +)/);
@@ -141,7 +144,7 @@ function surimpressions(x: Diaporama['diapositives'][number]) {
   return {
     lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null,
     citation: { a: c.a, b: c.b, fin: c.fin, mots, html, auteur: t(`— ${c.prudence ? 'attribué à ' : ''}${c.auteur}`) },
-    portraits, objet, manuscrit,
+    portraits, objet, manuscrit, chiffre, date,
   };
 }
 
@@ -352,6 +355,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
     objet: Objet | null;
     /** Manuscrit (côté `cote`) : même chose, plus le halo [x0, y0, x1, y1] (fractions de l'image). */
     manuscrit: (Objet & { halo: Rect }) | null;
+    /** Chiffre clé (point 4) : fenêtre [a, b), valeur, texte final, prudence, unité, défilement. */
+    chiffre: { a: number; b: number; valeur: number; texte: string; prefixe: string; unite: string; defile: boolean } | null;
+    /** Date républicaine et sa correspondance grégorienne : fenêtre [a, b). */
+    date: { a: number; b: number; republicain: string; gregorien: string } | null;
   }
   interface Objet { a: number; b: number; src: string; ratio: number; nom: string; legende: string; cote: 'gauche' | 'droite' }
   /** Intermède chanté : paroles [instant, vers, début de chaque mot (`motsLus`) ou null : vers
@@ -1172,6 +1179,51 @@ const sectionsLivre = d.actes.map((a, i) => ({
       msDoc.style.transform = tr;
       msHalo.style.setProperty('--p', op);
     }
+    // --- Chiffres clés et dates républicaines (spec 12, « Enrichissements visuels », point 4) --
+    const elChiffre = racine.querySelector<HTMLElement>('.chiffre');
+    const elChiffreValeur = elChiffre?.querySelector<HTMLElement>('.chiffre__valeur') ?? null;
+    const elDate = racine.querySelector<HTMLElement>('.date-rep');
+    const DEFILE = 1.4; // s : le chiffre défile jusqu'à sa valeur (courbe qui ralentit)
+    const ecrireNombre = (v: number) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f');
+    /** Chiffre : ~15 % de la hauteur de la scène (54 à 112 px ; 40 px au moins sur téléphone).
+     *  Centré dans le tiers inférieur ; s'il se montre en même temps qu'une surimpression de coin
+     *  bas qui le toucherait, ou que la date républicaine, il monte au-dessus d'elle pour toute la
+     *  diapositive (rien ne bouge pendant qu'il est là). Il ne réserve rien pour la caméra. */
+    function tailleChiffre() {
+      const x = D.diapos[i], C = x.chiffre;
+      if (!elChiffre || !C) return;
+      const H = scene.clientHeight, W = scene.clientWidth;
+      elChiffre.style.setProperty('--chiffre-t', `${Math.round(Math.max(W < 700 ? 40 : 54, Math.min(112, H * 0.15)))}px`);
+      elChiffre.style.removeProperty('--chiffre-bas');
+      const ensemble = (f: { a: number; b: number } | null) => !!f && Math.min(f.b, C.b) > Math.max(f.a, C.a);
+      const ecart = W < 700 ? 6 : 10;
+      let bas = H * (W < 700 ? 0.06 : 0.07);
+      const libre = (W - elChiffre.offsetWidth) / 2;
+      for (const [el, f] of [[elLieu, x.lieu], [elPortraits, x.portraits], [elObjet, x.objet]] as const) {
+        if (!el || !ensemble(f)) continue;
+        const cs = getComputedStyle(el);
+        const bord = Math.max(...[cs.left, cs.right].map((v) => parseFloat(v)).filter((v) => isFinite(v) && v >= 0 && v < W / 3), 0);
+        if (el.offsetWidth + bord + 8 > libre) bas = Math.max(bas, el.offsetHeight + bord + ecart);
+      }
+      if (elDate && ensemble(x.date)) {
+        const bord = W < 700 ? 8 : 12;
+        bas = Math.max(bas, elDate.offsetHeight + bord + ecart);
+      }
+      elChiffre.style.setProperty('--chiffre-bas', `${Math.round(bas)}px`);
+    }
+    /** Valeur du chiffre à l'instant `t` : de 0 à sa valeur en 1,4 s (par pas ronds : 1, 10 ou
+     *  1 000 selon sa grandeur), puis fixe ; sous 20, ou en mouvement réduit, la valeur d'emblée. */
+    let chiffreTexte = '';
+    function majChiffre(t: number) {
+      const C = D.diapos[i].chiffre;
+      if (!elChiffreValeur || !C) return;
+      const p = mouvementReduit.matches || !C.defile ? 1 : Math.max(0, Math.min(1, (t - C.a) / DEFILE));
+      const pas = Math.max(1, Math.pow(10, Math.floor(Math.log10(C.valeur)) - 2));
+      const v = p >= 1 ? C.valeur : Math.round((C.valeur * (1 - Math.pow(1 - p, 3))) / pas) * pas;
+      const texte = ecrireNombre(v);
+      if (texte !== chiffreTexte) { elChiffreValeur.textContent = texte; chiffreTexte = texte; }
+    }
+
     /** Copie qui s'efface (transition CSS) pendant que l'original reçoit le contenu suivant. */
     function effacer(el: HTMLElement) {
       if (!el.classList.contains('est-visible')) return;
@@ -1188,7 +1240,22 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (elPortraits) effacer(elPortraits);
       if (elObjet) effacer(elObjet);
       if (elManuscrit) effacer(elManuscrit);
-      lecteur.classList.remove('avec-citation', 'avec-lieu', 'avec-portraits', 'avec-objet', 'avec-manuscrit');
+      if (elChiffre) effacer(elChiffre);
+      if (elDate) effacer(elDate);
+      lecteur.classList.remove('avec-citation', 'avec-lieu', 'avec-portraits', 'avec-objet', 'avec-manuscrit', 'avec-chiffre', 'avec-date');
+      // Chiffre et date : contenu posé d'emblée (invisible).
+      const CH = x?.chiffre, DR = x?.date;
+      if (elChiffre && CH) {
+        elChiffre.querySelector('.chiffre__prefixe')!.textContent = CH.prefixe;
+        elChiffre.querySelector('.chiffre__mesure')!.textContent = CH.texte;
+        elChiffre.querySelector('.chiffre__unite')!.textContent = CH.unite;
+        chiffreTexte = '';
+        majChiffre(CH.a);
+      }
+      if (elDate && DR) {
+        elDate.querySelector('.date-rep__rep')!.textContent = DR.republicain;
+        elDate.querySelector('.date-rep__greg')!.textContent = DR.gregorien;
+      }
       // Objet et manuscrit : contenu posé d'emblée (invisible), si bien que la place réservée ne
       // change pas pendant la diapositive.
       const O = x?.objet, M = x?.manuscrit;
@@ -1262,6 +1329,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
         }
         taillePortraits();
       }
+      tailleChiffre();
     }
     /** Surimpressions possibles : lecture lancée, ni carton ni segment après la voix. */
     const surimpressionsActives = () => lance && !enCarton && !enSuite && !suiteFini;
@@ -1277,8 +1345,18 @@ const sectionsLivre = d.actes.map((a, i) => ({
         if (vu !== elManuscrit.classList.contains('est-visible')) { elManuscrit.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-manuscrit', vu); }
         majManuscrit(t);
       }
+      const CH = x.chiffre, DR = x.date;
+      if (elChiffre && CH) {
+        const vu = actif && t >= CH.a && t < CH.b;
+        if (vu !== elChiffre.classList.contains('est-visible')) { elChiffre.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-chiffre', vu); }
+        majChiffre(t);
+      }
+      if (elDate && DR) {
+        const vu = actif && t >= DR.a && t < DR.b;
+        if (vu !== elDate.classList.contains('est-visible')) { elDate.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-date', vu); }
+      }
       // Deux surimpressions au plus (spec 12) : la frise du temps cède dès que deux autres sont là.
-      if ([elLieu, elPortraits, elObjet, elManuscrit, elMots].filter((e) => e?.classList.contains('est-visible')).length >= 2) cacherFrise();
+      if ([elLieu, elPortraits, elObjet, elManuscrit, elMots, elChiffre, elDate].filter((e) => e?.classList.contains('est-visible')).length >= 2) cacherFrise();
       if (elLieu && L) {
         const vu = actif && t >= L.a && t < L.b;
         if (vu !== elLieu.classList.contains('est-visible')) { elLieu.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-lieu', vu); }
@@ -2289,6 +2367,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       taillePortraits();
       tailleObjet();
       mesurerMarges();
+      tailleChiffre();
       couches.forEach((c, k) => { if (c.x && (k !== visible || c.x !== D.diapos[i])) poser(k); });
       rendre();
       ajusterFrises();
@@ -2919,7 +2998,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     .lecteur__controles { gap: var(--e-1) var(--e-3); }
     .lecteur__groupe--options { margin-left: 0; width: 100%; justify-content: flex-start; }
     /* Médaillon de lieu (même coin) : le cartouche de la musique s'efface le temps de la carte. */
-    .lecteur.avec-lieu .lecteur__musique, .lecteur.avec-portraits .lecteur__musique, .lecteur.avec-objet .lecteur__musique { opacity: 0; }
+    .lecteur.avec-lieu .lecteur__musique, .lecteur.avec-portraits .lecteur__musique, .lecteur.avec-objet .lecteur__musique,
+    .lecteur.avec-chiffre .lecteur__musique, .lecteur.avec-date .lecteur__musique { opacity: 0; }
   }
 
   /* Livre d'images (sans JavaScript). */
@@ -3046,7 +3126,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
   /* Frise affichée en même temps qu'un médaillon de lieu : le médaillon monte au-dessus d'elle. */
   .diaporama .frise-t--surimpression.est-visible ~ .lieu,
   .diaporama .frise-t--surimpression.est-visible ~ .portraits,
-  .diaporama .frise-t--surimpression.est-visible ~ .objet { bottom: calc(var(--frise-bas, 0px) + 5.4rem); }
+  .diaporama .frise-t--surimpression.est-visible ~ .objet,
+  .diaporama .frise-t--surimpression.est-visible ~ .date-rep { bottom: calc(var(--frise-bas, 0px) + 5.4rem); }
+  .diaporama .frise-t--surimpression.est-visible ~ .chiffre { bottom: calc(var(--frise-bas, 0px) + max(var(--chiffre-bas, 7%), 5.4rem)); }
   @media (prefers-reduced-motion: reduce) {
     .diaporama .frise-t__curseur, .diaporama .frise-t__date { transition: none !important; }
     .diaporama .en-carton .frise-t--carton { animation: none; }
@@ -3061,7 +3143,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
     .diaporama .frise-t--surimpression { width: 100%; bottom: var(--frise-bas, 0px); padding-inline: var(--gouttiere); }
     .diaporama .frise-t--surimpression.est-visible ~ .lieu,
     .diaporama .frise-t--surimpression.est-visible ~ .portraits,
-    .diaporama .frise-t--surimpression.est-visible ~ .objet { bottom: calc(var(--frise-bas, 0px) + 4.6rem); }
+    .diaporama .frise-t--surimpression.est-visible ~ .objet,
+    .diaporama .frise-t--surimpression.est-visible ~ .date-rep { bottom: calc(var(--frise-bas, 0px) + 4.6rem); }
+    .diaporama .frise-t--surimpression.est-visible ~ .chiffre { bottom: calc(var(--frise-bas, 0px) + max(var(--chiffre-bas, 6%), 4.6rem)); }
     .diaporama .frise-t__date { font-size: 0.88rem; }
     .diaporama .frise-t__annee { font-size: 0.75rem; }
   }

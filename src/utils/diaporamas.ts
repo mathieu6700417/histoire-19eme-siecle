@@ -63,7 +63,22 @@ export interface Diapositive {
   objets?: MentionObjet[];
   /** Manuscrit d'époque en surimpression, zoom et halo sur la signature ou la phrase (point 2). */
   manuscrits?: MentionObjet[];
+  /** Chiffre clé écrit en grand quand la voix le dit (point 4) : un au plus. */
+  chiffres?: ChiffreDiapo[];
+  /** Date du calendrier républicain dite par la voix, avec sa correspondance grégorienne (point 4) :
+   *  une au plus. */
+  dates_republicaines?: DateRepublicaine[];
 }
+/** Chiffre clé (spec 12, « Enrichissements visuels », point 4) : `quand` = passage exact où la voix
+ *  dit le nombre (prudence comprise : « plus de mille détenus ») ; `valeur` = ce nombre ; `prefixe`
+ *  = la prudence dite (« plus de », « près de ») ; `unite` = courte ligne en petites capitales ;
+ *  `source` = d'où vient le chiffre (pour la relecture ; non affiché). */
+export interface ChiffreDiapo { quand: string; valeur: number; prefixe?: string; unite: string; source: string; instant?: number }
+/** Date républicaine : `quand` = passage dit ; `republicain` = la date complète (« 22 prairial an II »,
+ *  ou une année seule : « an III ») ; `gregorien` = sa correspondance, écrite par surimpressions.py
+ *  (commun.date_republicaine) et recalculée par verifier.py ; `relu` : pourquoi la correspondance est
+ *  sûre quand ni la voix ni la date de la diapositive ne la donnent (non affiché). */
+export interface DateRepublicaine { quand: string; republicain: string; gregorien: string; relu?: string; instant?: number }
 /** `id` : entrée du registre `objets.json` ; `quand` : passage exact (première occurrence) ;
  *  `instant` (s) : son début dans l'audio (surimpressions.py) ; `cote` : coin bas (objet) ou côté
  *  (manuscrit) où il se pose, à droite par défaut. */
@@ -692,7 +707,7 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
   let lieu: null | LieuMedaillon = null;
   if ((x.lieux?.length ?? 0) > 1) {
     lieu = medaillonMultiple(x, fonds, plan, fin, citation);
-    return { lieu, citation, portraits: gens, ...objetsDe(x, fin, citation, lieu, gens) };
+    return completer(x, fin, citation, lieu, gens);
   }
   const li = x.lieux?.[0];
   const t = li ? li.instant ?? instantPassage(x.narration, li.quand, duree, phrases) : null;
@@ -723,7 +738,13 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
       if (lieu) { lieu.x = Math.round(lieu.x * 10) / 10; lieu.y = Math.round(lieu.y * 10) / 10; lieu.ratio = Math.round(lieu.ratio * 1000) / 1000; }
     }
   }
-  return { lieu, citation, portraits: gens, ...objetsDe(x, fin, citation, lieu, gens) };
+  return completer(x, fin, citation, lieu, gens);
+}
+/** Ajoute aux fenêtres déjà arbitrées l'objet et le manuscrit, puis le chiffre clé et la date
+ *  républicaine (chacun après ceux de rang supérieur). */
+function completer<L extends Fenetre | null, C extends Fenetre | null, G extends Fenetre | null>(x: Diapositive, fin: number, citation: C, lieu: L, gens: G) {
+  const o = objetsDe(x, fin, citation, lieu, gens);
+  return { lieu, citation, portraits: gens, ...o, ...chiffresDe(x, fin, citation, lieu, gens, o.objet, o.manuscrit) };
 }
 
 // --- Portraits des personnes nommées (spec 12, 2026-10-08) --------------------------------------
@@ -857,4 +878,59 @@ export function objetsDe(x: Diapositive, fin: number, citation: Fenetre | null, 
     if (f) objet = montre(mo, oo, f);
   }
   return { objet, manuscrit };
+}
+
+// --- Chiffres clés et dates républicaines (spec 12, « Enrichissements visuels », point 4) ------
+
+/** Chiffre : ~4 s (3 s au moins) ; date républicaine : ~5 s (3 s au moins). Mêmes valeurs dans
+ *  scripts/diaporamas/verifier.py. */
+export const DUREE_CHIFFRE = 4;
+const MIN_CHIFFRE = 3;
+export const DUREE_DATE = 5;
+const MIN_DATE = 3;
+/** Le chiffre défile jusqu'à sa valeur (à partir de 20 ; en dessous il paraît en fondu). */
+export const DEFILE_DES = 20;
+
+/** Nombre en chiffres, milliers séparés par une espace fine insécable (« 300 000 »). */
+export const ecrireNombre = (v: number) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f');
+
+export interface ChiffreMontre { a: number; b: number; valeur: number; texte: string; prefixe: string; unite: string; defile: boolean }
+export interface DateMontree { a: number; b: number; republicain: string; gregorien: string }
+
+/** Pour chaque instant bloqué, toutes les paires des fenêtres données qui se recouvrent (deux
+ *  surimpressions déjà là : une troisième n'entre pas). */
+function paires(fs: (Fenetre | null)[]) {
+  const sortie: Fenetre[] = [];
+  for (let i = 0; i < fs.length; i++) for (let j = i + 1; j < fs.length; j++) sortie.push(...ensemble(fs[i], fs[j]));
+  return sortie;
+}
+
+/**
+ * Chiffre clé et date républicaine d'une diapositive, placés après les autres surimpressions.
+ * Priorités (spec 12, point 4) : citation > manuscrit > portraits = médaillon de lieu > objet ≥
+ * chiffre > date > frise du temps. Le chiffre (centré dans le tiers inférieur, comme la citation)
+ * ne se montre jamais avec la citation, ni quand deux autres surimpressions sont déjà là ; il
+ * coexiste avec une seule autre (au-dessus d'elle si elle est dans un coin bas). La date (bandeau
+ * discret au bas de l'image, au centre) cède de même à la citation et à tout moment où deux autres
+ * sont là (chiffre compris). Raccourcis, reportés ou omis ; les fenêtres des autres ne changent pas.
+ */
+export function chiffresDe(x: Diapositive, fin: number, citation: Fenetre | null, lieu: Fenetre | null, gens: Fenetre | null,
+  objet: Fenetre | null, manuscrit: Fenetre | null) {
+  const duree = x.audio?.duree ?? 6;
+  const instantDe = (m: { quand: string; instant?: number }) => m.instant ?? instantPassage(x.narration, m.quand, duree, x.audio?.phrases);
+  let chiffre: ChiffreMontre | null = null;
+  const mc = x.chiffres?.[0], tc = mc ? instantDe(mc) : null;
+  if (mc && tc !== null) {
+    const a0 = Math.max(0.3, Math.min(tc - 0.1, fin - 3.5));
+    const f = placer(a0, DUREE_CHIFFRE, MIN_CHIFFRE, fin, [...elargir(citation), ...paires([lieu, gens, objet, manuscrit])]);
+    if (f) chiffre = { ...f, valeur: mc.valeur, texte: ecrireNombre(mc.valeur), prefixe: mc.prefixe ?? '', unite: mc.unite, defile: mc.valeur >= DEFILE_DES };
+  }
+  let date: DateMontree | null = null;
+  const md = x.dates_republicaines?.[0], td = md ? instantDe(md) : null;
+  if (md && td !== null && md.gregorien) {
+    const a0 = Math.max(0.3, Math.min(td - 0.1, fin - 3.5));
+    const f = placer(a0, DUREE_DATE, MIN_DATE, fin, [...elargir(citation), ...paires([lieu, gens, objet, manuscrit, chiffre])]);
+    if (f) date = { ...f, republicain: md.republicain, gregorien: md.gregorien };
+  }
+  return { chiffre, date };
 }

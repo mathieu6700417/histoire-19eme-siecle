@@ -1583,6 +1583,15 @@
           "id": "de-launay",
           "quand": "de Launay"
         }
+      ],
+      "chiffres": [
+        {
+          "quand": "sept prisonniers",
+          "valeur": 7,
+          "unite": "prisonniers à la Bastille",
+          "source": "Jacques Godechot, La Prise de la Bastille, 1965 : sept détenus le 14 juillet 1789 (quatre faussaires, deux fous, le comte de Solages)",
+          "instant": 12.53
+        }
       ]
     },
     {
@@ -2586,7 +2595,16 @@
             17.7
           ]
         ]
-      }
+      },
+      "chiffres": [
+        {
+          "quand": "quatre-vingt-trois départements",
+          "valeur": 83,
+          "unite": "départements en 1790",
+          "source": "Décret de l'Assemblée constituante du 26 février 1790 (division de la France en 83 départements)",
+          "instant": 9.08
+        }
+      ]
     },
     {
       "n": 32,
@@ -4671,7 +4689,17 @@
             18.12
           ]
         ]
-      }
+      },
+      "chiffres": [
+        {
+          "quand": "plus de mille détenus",
+          "valeur": 1000,
+          "prefixe": "plus de",
+          "unite": "détenus massacrés en septembre 1792",
+          "source": "Pierre Caron, Les Massacres de septembre, 1935 : sans doute plus de 1 300 morts à Paris (bilan repris par l'article « Massacres de Septembre » de Wikipédia)",
+          "instant": 14.19
+        }
+      ]
     },
     {
       "n": 56,
@@ -5196,7 +5224,16 @@
             19.38
           ]
         ]
-      }
+      },
+      "chiffres": [
+        {
+          "quand": "trois cent mille hommes",
+          "valeur": 300000,
+          "unite": "hommes à lever en février 1793",
+          "source": "Décret de la Convention du 24 février 1793 (levée de 300 000 hommes)",
+          "instant": 5.7
+        }
+      ]
     },
     {
       "n": 62,
@@ -5676,7 +5713,16 @@
             16.44
           ]
         ]
-      }
+      },
+      "chiffres": [
+        {
+          "quand": "vingt-neuf Girondins",
+          "valeur": 29,
+          "unite": "députés girondins arrêtés",
+          "source": "Décret de la Convention du 2 juin 1793 (arrestation de 29 députés et de deux ministres, Clavière et Lebrun)",
+          "instant": 10.03
+        }
+      ]
     },
     {
       "date": "1793-06-10",
@@ -7945,6 +7991,25 @@
           "quand": "Robespierre",
           "instant": 1.84
         }
+      ],
+      "chiffres": [
+        {
+          "quand": "plus de mille trois cents exécutions",
+          "valeur": 1300,
+          "prefixe": "plus de",
+          "unite": "exécutions à Paris en sept semaines",
+          "source": "Antoine Boulant, Le Tribunal révolutionnaire, 2018, p. 185 : 1 376 condamnations à mort à Paris du 10 juin au 27 juillet 1794",
+          "instant": 16.91
+        }
+      ],
+      "dates_republicaines": [
+        {
+          "quand": "22 prairial",
+          "republicain": "22 prairial an II",
+          "gregorien": "10 juin 1794",
+          "instant": 13.11,
+          "relu": "« Deux jours plus tard » que la fête du 8 juin 1794 : la loi est bien du 10 juin."
+        }
       ]
     },
     {
@@ -8112,6 +8177,14 @@
           "id": "appel-section-piques",
           "quand": "il se réfugie à l'Hôtel de Ville",
           "instant": 11.25
+        }
+      ],
+      "dates_republicaines": [
+        {
+          "quand": "9 thermidor an II",
+          "republicain": "9 thermidor an II",
+          "gregorien": "27 juillet 1794",
+          "instant": 0.48
         }
       ]
     },
@@ -8936,6 +9009,14 @@
           "id": "feraud",
           "quand": "Féraud"
         }
+      ],
+      "dates_republicaines": [
+        {
+          "quand": "1er prairial an III",
+          "republicain": "1er prairial an III",
+          "gregorien": "20 mai 1795",
+          "instant": 2.14
+        }
       ]
     },
     {
@@ -9166,6 +9247,16 @@
           "quand": "Hoche",
           "instant": 10.23
         }
+      ],
+      "chiffres": [
+        {
+          "quand": "Plus de sept cents prisonniers",
+          "valeur": 700,
+          "prefixe": "plus de",
+          "unite": "prisonniers fusillés après Quiberon",
+          "source": "748 prisonniers fusillés après Quiberon (bilan de l'article « Expédition de Quiberon » de Wikipédia)",
+          "instant": 12.38
+        }
       ]
     },
     {
@@ -9227,7 +9318,15 @@
             18.67
           ]
         ]
-      }
+      },
+      "dates_republicaines": [
+        {
+          "quand": "l'an III",
+          "republicain": "an III",
+          "gregorien": "22 septembre 1794 – 22 septembre 1795",
+          "instant": 4.88
+        }
+      ]
     },
     {
       "n": 110,
@@ -9313,6 +9412,14 @@
           "id": "bonaparte",
           "quand": "Bonaparte",
           "instant": 17.51
+        }
+      ],
+      "dates_republicaines": [
+        {
+          "quand": "13 vendémiaire an IV",
+          "republicain": "13 vendémiaire an IV",
+          "gregorien": "5 octobre 1795",
+          "instant": 10.24
         }
       ]
     },
@@ -9819,6 +9926,14 @@
           "id": "augereau",
           "quand": "Augereau",
           "instant": 13.05
+        }
+      ],
+      "dates_republicaines": [
+        {
+          "quand": "18 fructidor an V",
+          "republicain": "18 fructidor an V",
+          "gregorien": "4 septembre 1797",
+          "instant": 7.83
         }
       ]
     },
@@ -10358,6 +10473,16 @@
           "quand": "Nelson",
           "instant": 14.02
         }
+      ],
+      "chiffres": [
+        {
+          "quand": "plus de cent cinquante savants",
+          "valeur": 150,
+          "prefixe": "plus de",
+          "unite": "savants de l'expédition d'Égypte",
+          "source": "Commission des sciences et des arts de l'armée d'Orient : 167 membres",
+          "instant": 6.33
+        }
       ]
     },
     {
@@ -10533,6 +10658,14 @@
         {
           "id": "bonaparte",
           "quand": "Bonaparte"
+        }
+      ],
+      "dates_republicaines": [
+        {
+          "quand": "18 brumaire an VIII",
+          "republicain": "18 brumaire an VIII",
+          "gregorien": "9 novembre 1799",
+          "instant": 0.24
         }
       ]
     },

@@ -231,3 +231,105 @@ def mots_lus(texte: str) -> list[tuple[int, int, str]]:
     src/utils/diaporamas.ts."""
     return [(m.start(), m.end(), m.group()) for m in re.finditer(r'\S+', texte)
             if any(ch.isalnum() for ch in m.group())]
+
+
+# --- Chiffres clés et dates du calendrier républicain (spec 12, « Enrichissements visuels »,
+# point 4, 2026-10-08) -------------------------------------------------------------------------
+
+_UNITES = {'zéro': 0, 'un': 1, 'une': 1, 'deux': 2, 'trois': 3, 'quatre': 4, 'cinq': 5, 'six': 6, 'sept': 7,
+           'huit': 8, 'neuf': 9, 'dix': 10, 'onze': 11, 'douze': 12, 'treize': 13, 'quatorze': 14,
+           'quinze': 15, 'seize': 16, 'vingt': 20, 'vingts': 20, 'trente': 30, 'quarante': 40,
+           'cinquante': 50, 'soixante': 60}
+_MULT = {'cent': 100, 'cents': 100, 'mille': 1000, 'million': 10 ** 6, 'millions': 10 ** 6,
+         'milliard': 10 ** 9, 'milliards': 10 ** 9}
+
+
+def nombre_dit(texte: str) -> int | None:
+    """Nombre écrit dans `texte`, en chiffres (« 1 300 », « 7 ») ou en toutes lettres (« trois cent
+    mille », « vingt-neuf », « quatre-vingt-trois », « mille trois cents ») : la première suite de
+    mots-nombres ; None s'il n'y en a pas."""
+    m = re.search(r'\d[\d   ]*\d|\d', texte)
+    mots = re.findall(r"[a-zà-ÿ]+", texte.lower().replace('-', ' '))
+    suite, vu = [], False
+    for w in mots:
+        if w in _UNITES or w in _MULT or (w == 'et' and vu):
+            suite.append(w)
+            vu = True
+        elif vu:
+            break
+    if not suite:
+        return int(re.sub(r'\D', '', m.group())) if m else None
+    total, courant = 0, 0
+    for w in suite:
+        if w == 'et':
+            continue
+        if w in _UNITES:
+            # « quatre vingt » : 4 × 20
+            if _UNITES[w] == 20 and courant in (4,):
+                courant *= 20
+            else:
+                courant += _UNITES[w]
+        elif _MULT[w] == 100:
+            courant = max(1, courant) * 100
+        else:
+            total += max(1, courant) * _MULT[w]
+            courant = 0
+    return total + courant
+
+
+MOIS_REPUBLICAINS = ('vendémiaire', 'brumaire', 'frimaire', 'nivôse', 'pluviôse', 'ventôse', 'germinal',
+                     'floréal', 'prairial', 'messidor', 'thermidor', 'fructidor')
+# Années sextiles réellement appliquées (règle de l'équinoxe, tables officielles de l'Annuaire) :
+# III, VII et XI (et XV, jamais atteinte). La « règle de Romme » (années multiples de 4), proposée
+# mais jamais adoptée, donnerait d'autres dates à partir de l'an IV : on ne l'emploie pas.
+ANS_SEXTILES = (3, 7, 11, 15)
+_ROMAINS = {'I': 1, 'V': 5, 'X': 10}
+
+
+def romain(texte: str) -> int:
+    v = [_ROMAINS[ch] for ch in texte]
+    return sum(-a if k + 1 < len(v) and a < v[k + 1] else a for k, a in enumerate(v))
+
+
+def premier_vendemiaire(an: int):
+    """Jour grégorien du 1er vendémiaire de l'an `an` (an I : 22 septembre 1792), en ajoutant la
+    durée des années précédentes (366 jours pour une année sextile, 365 sinon)."""
+    import datetime
+    j = datetime.date(1792, 9, 22)
+    for a in range(1, an):
+        j += datetime.timedelta(days=366 if a in ANS_SEXTILES else 365)
+    return j
+
+
+def vers_gregorien(jour: int, mois: int, an: int):
+    """Date grégorienne d'un jour républicain (`mois` de 1 à 12, 13 pour les sans-culottides)."""
+    import datetime
+    return premier_vendemiaire(an) + datetime.timedelta(days=30 * (mois - 1) + jour - 1)
+
+
+def _date_fr(j) -> str:
+    return f"{'1er' if j.day == 1 else j.day} {MOIS[j.month - 1]} {j.year}"
+
+
+MOIS = ('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre',
+        'octobre', 'novembre', 'décembre')
+
+
+def date_republicaine(texte: str) -> tuple[str, str] | None:
+    """(« 9 thermidor an II », « 27 juillet 1794 ») pour une date républicaine complète
+    (« 9 thermidor an II », « 1er prairial an III ») ; pour une année seule (« an III ») :
+    (« an III », « 22 septembre 1794 – 22 septembre 1795 »). None si le texte n'en est pas une."""
+    m = re.fullmatch(r'(?:(1er|\d{1,2}) (\w+) )?an ([IVX]+)', texte.strip())
+    if not m:
+        return None
+    an = romain(m.group(3))
+    if m.group(2) is None:
+        import datetime
+        d0, d1 = premier_vendemiaire(an), premier_vendemiaire(an + 1) - datetime.timedelta(days=1)
+        return texte.strip(), f'{_date_fr(d0)} – {_date_fr(d1)}'
+    if m.group(2) not in MOIS_REPUBLICAINS:
+        return None
+    jour = 1 if m.group(1) == '1er' else int(m.group(1))
+    if not 1 <= jour <= 30:
+        return None
+    return texte.strip(), _date_fr(vers_gregorien(jour, MOIS_REPUBLICAINS.index(m.group(2)) + 1, an))

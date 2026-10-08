@@ -17,7 +17,11 @@ Pour chaque diapositive qui porte `lieux` ou `citations`, l'audio de la narratio
 - chaque personne nommée (`personnes`, portraits.py) reçoit `instant` de la même façon : début du
   premier mot du nom tel qu'il est dit (`quand`), chaque passage cherché après le précédent ;
 - chaque objet de musée et chaque manuscrit (`objets`, `manuscrits`, objets.py) reçoit `instant` :
-  début du premier mot de son passage `quand` (première occurrence).
+  début du premier mot de son passage `quand` (première occurrence) ;
+- chaque chiffre clé (`chiffres`) et chaque date du calendrier républicain (`dates_republicaines`)
+  reçoit `instant` de même (« Enrichissements visuels », point 4) ; la date reçoit en plus
+  `gregorien`, sa correspondance calculée par `commun.date_republicaine` (tables officielles : années
+  sextiles III, VII, XI), écrite même sans alignement.
 Le texte aligné est le texte DIT (lexique de prononciation appliqué à toute la narration, entrées
 de plusieurs mots comprises : « Louis XVI » → « Louis seize ») ; les mots affichés sont ensuite
 rattachés aux mots dits par correspondance de séquences (un mot réécrit par le lexique prend les
@@ -32,6 +36,10 @@ passages au prorata des caractères dans les phrases horodatées (`audio.phrases
 import argparse, difflib, hashlib, json, re, sys, warnings
 
 import commun as c
+
+
+# Surimpressions dont les passages sont calés sur la voix.
+CLES = ('lieux', 'citations', 'personnes', 'objets', 'manuscrits', 'chiffres', 'dates_republicaines')
 
 
 def empreinte_audio(fichier, narration: str) -> str:
@@ -113,7 +121,11 @@ def main() -> int:
     dossier = c.PUBLIC / d['slug']
     faits = 0
     for x in d['diapositives']:
-        if not any(x.get(k) for k in ('lieux', 'citations', 'personnes', 'objets', 'manuscrits')):
+        for da in x.get('dates_republicaines', []):
+            conv = c.date_republicaine(da.get('republicain', ''))
+            if conv:
+                da['gregorien'] = conv[1]
+        if not any(x.get(k) for k in CLES):
             continue
         n = str(x['n'])
         audio = dossier / (x.get('audio') or {}).get('fichier', '')
@@ -151,13 +163,13 @@ def main() -> int:
             pe['instant'] = mots_du_passage(x['narration'], pe['quand'], inst, pos)[0][0]
             bilan.append(f"{pe['id']} {pe['instant']:.2f} s")
         # Objets de musée et manuscrits (objets.py) : début du passage `quand` (première occurrence).
-        for cle in ('objets', 'manuscrits'):
+        for cle in ('objets', 'manuscrits', 'chiffres', 'dates_republicaines'):
             for ob in x.get(cle, []):
                 if ob['quand'] not in x['narration']:
                     print(f"{x['n']:3d} : passage « {ob['quand']} » introuvable, passé")
                     continue
                 ob['instant'] = mots_du_passage(x['narration'], ob['quand'], inst)[0][0]
-                bilan.append(f"{ob['id']} {ob['instant']:.2f} s")
+                bilan.append(f"{ob.get('id', ob['quand'])} {ob['instant']:.2f} s")
         print(f"{x['n']:3d} : " + ' ; '.join(bilan))
     cache_f.parent.mkdir(parents=True, exist_ok=True)
     cache_f.write_text(json.dumps(cache, ensure_ascii=False) + '\n')
@@ -168,10 +180,10 @@ def main() -> int:
         y = par_n.get(x['n'])
         if not y or y['narration'] != x['narration']:
             continue
-        for cle in ('lieux', 'citations', 'personnes', 'objets', 'manuscrits'):
+        for cle in CLES:
             if cle in x and cle in y and [z.get('texte', z.get('quand')) for z in x[cle]] == [z.get('texte', z.get('quand')) for z in y[cle]]:
                 for zx, zy in zip(x[cle], y[cle]):
-                    for k in ('mots', 'instant'):
+                    for k in ('mots', 'instant', 'gregorien'):
                         if k in zy:
                             zx[k] = zy[k]
     c.ecrire(f2, frais)
