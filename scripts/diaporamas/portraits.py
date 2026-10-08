@@ -7,7 +7,7 @@ Usage :
     python3 scripts/diaporamas/portraits.py --infos "File:David Self Portrait.jpg"
 
     # Registre : licence relevée par l'API, téléchargement (cache), cadre du visage (proposé par
-    # le modèle de vision puis contrôlé sur le recadrage), webp ovale ~300 px de haut
+    # le modèle de vision puis contrôlé sur le recadrage), webp ovale ~450 px de haut
     python3 scripts/diaporamas/portraits.py --registre
     python3 scripts/diaporamas/portraits.py --registre --id danton calonne --force
     python3 scripts/diaporamas/portraits.py --planche          # planche de contrôle des recadrages
@@ -27,7 +27,7 @@ Données :
   `instant` écrit par surimpressions.py) ; `personnes_vues` = mentions d'une personne visible sur
   l'image (pas de portrait), gardées pour mémoire et pour verifier.py.
 - Images : `public/diaporamas/portraits/<id>.webp` (rectangle 4:5 recadré sur le visage, que le
-  lecteur montre en ovale), ~300 px de haut.
+  lecteur montre en ovale), ~450 px de haut.
 
 Visibilité : « visible » veut dire représentée de façon reconnaissable (sujet de l'œuvre, ou figure
 nettement identifiable par la scène ou le titre) ; une silhouette indistincte dans une foule ne
@@ -53,7 +53,7 @@ REGISTRE = c.DONNEES / 'portraits.json'
 SORTIE = c.PUBLIC / 'portraits'
 CACHE = c.CACHE / 'portraits'
 VERSION = 'p1'          # consignes du modèle (invalide le cache des cadres et des contrôles)
-HAUTEUR = 300           # px de haut de la webp
+HAUTEUR = 450           # px de haut de la webp (ovales jusqu’à 180 px, nets sur écran à densité 2 ; 300 avant le 2026-10-08)
 RATIO = 0.8             # largeur / hauteur du recadrage (ovale vertical)
 PART_VISAGE = 0.58      # hauteur du visage dans le recadrage
 QUALITE = 82

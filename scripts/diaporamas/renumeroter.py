@@ -12,7 +12,7 @@ la main) et les anciens numéros `n` servent de clés.
 
 Tout renvoi par numéro est recalculé : `n`, fichiers `NNN.webp` / `NNN.m4a` (renommés dans
 public/diaporamas/<slug>/, en deux temps pour éviter les collisions), `image.fichier` et
-`audio.fichier`, débuts d'actes, `apres` des intermèdes, lectures et épisodes,
+`audio.fichier` (et `NNN-apres.webp`, `NNN-mK.webp` des avant/après et mosaïques), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
 `portrait.diapositive` des lectures. Les états de .cache/diaporamas/<slug>/ indexés par numéro
 (images.json, voix.json, camera.json) sont réindexés : les voix, licences et cadrages inchangés
 restent reconnus, rien n'est resynthétisé (l'empreinte du texte fait foi). L'empreinte de
@@ -77,6 +77,18 @@ def main() -> int:
             if obj.get('fichier') == c.nom(o, ext) and o != nv:
                 renommages.append((dossier / c.nom(o, ext), dossier / c.nom(nv, ext)))
                 obj['fichier'] = c.nom(nv, ext)
+        # Image « après » d'un avant / après (NNN-apres.webp) et vignettes d'une mosaïque (NNN-mK.webp ;
+        # la principale reprend le fichier de l'image).
+        if o != nv:
+            autres = [x['image'].get('apres') or {}] + list((x.get('mosaique') or {}).get('vignettes', []))
+            for obj in autres:
+                f_ = obj.get('fichier') or ''
+                if f_.startswith(f'{o:03d}-'):
+                    neuf = f'{nv:03d}-' + f_[4:]
+                    renommages.append((dossier / f_, dossier / neuf))
+                    obj['fichier'] = neuf
+                elif f_ == c.nom(o, 'webp'):
+                    obj['fichier'] = c.nom(nv, 'webp')
     temporaires = []
     for src, dst in renommages:
         if src.exists():

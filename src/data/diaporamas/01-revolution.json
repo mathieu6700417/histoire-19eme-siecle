@@ -1592,7 +1592,104 @@
           "source": "Jacques Godechot, La Prise de la Bastille, 1965 : sept détenus le 14 juillet 1789 (quatre faussaires, deux fous, le comte de Solages)",
           "instant": 12.53
         }
-      ]
+      ],
+      "mosaique": {
+        "legende": "Cinq vues de la prise de la Bastille",
+        "principale": 1,
+        "vignettes": [
+          {
+            "commons": "File:Jean-Baptiste Lallemand - La prise de la Bastille, le 14 juillet 1789 - P1718 - Musée Carnavalet.jpg",
+            "titre": "La prise de la Bastille, le 14 juillet 1789",
+            "auteur": "Jean-Baptiste Lallemand",
+            "date": "1789",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée Carnavalet (P1718)",
+            "fichier": "018-m0.webp",
+            "licence": "Domaine public",
+            "largeur": 1000,
+            "hauteur": 777,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "commons": "File:Prise de la Bastille clean.jpg",
+            "fichier": "018.webp",
+            "titre": "La Prise de la Bastille",
+            "auteur": "Jean-Pierre Houël",
+            "date": "1789",
+            "technique": "aquarelle et gouache",
+            "conservation": "Paris, Bibliothèque nationale de France, département des Estampes",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1216,
+            "utile": [
+              0.016,
+              0.019,
+              0.984,
+              0.96
+            ]
+          },
+          {
+            "commons": "File:Anonymous - Prise de la Bastille.jpg",
+            "titre": "Prise de la Bastille et arrestation du gouverneur M. de Launay, le 14 juillet 1789",
+            "auteur": "Anonyme",
+            "date": "vers 1789",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national du château",
+            "fichier": "018-m2.webp",
+            "licence": "Domaine public",
+            "largeur": 1000,
+            "hauteur": 788,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "commons": "File:Prise de la Bastille, le 14 juillet 1789 - estampe - dessinée et gravée par C. Thevenin - btv1b6942830g.jpg",
+            "titre": "Prise de la Bastille, le 14 juillet 1789",
+            "auteur": "Charles Thévenin",
+            "date": "1790",
+            "technique": "eau-forte",
+            "conservation": "Paris, Bibliothèque nationale de France, Estampes",
+            "fichier": "018-m3.webp",
+            "licence": "Domaine public",
+            "largeur": 1000,
+            "hauteur": 763,
+            "utile": [
+              0.056,
+              0.075,
+              0.933,
+              0.8
+            ]
+          },
+          {
+            "commons": "File:Prise de la Bastille, le 14 juillet 1789 - estampe - dessiné par C. Monnet ; gravé par Helman, l'an 4.e ; (eau-forte de A.J. Duclos) - btv1b6942800b.jpg",
+            "titre": "Prise de la Bastille, le 14 juillet 1789",
+            "auteur": "Isidore-Stanislas Helman et Antoine-Jean Duclos d'après Charles Monnet",
+            "date": "1795-1796",
+            "technique": "eau-forte et burin",
+            "conservation": "Paris, Bibliothèque nationale de France, Estampes",
+            "fichier": "018-m4.webp",
+            "licence": "Domaine public",
+            "largeur": 1000,
+            "hauteur": 770,
+            "utile": [
+              0.185,
+              0.175,
+              0.812,
+              0.685
+            ],
+            "utile_manuel": true
+          }
+        ]
+      }
     },
     {
       "n": 19,
@@ -1674,7 +1771,7 @@
     },
     {
       "n": 20,
-      "narration": "Dès le 15 juillet, la démolition commence, sous les yeux de curieux venus en foule. Les tours éventrées ressemblent aux ruines d'un monde qui s'effondre. À Versailles, le roi aurait demandé si c'était une révolte ; le duc de La Rochefoucauld-Liancourt aurait répondu : « Non, Sire, c'est une révolution. »",
+      "narration": "La forteresse vaincue dresse encore ses huit tours, mais dès le 15 juillet, sa démolition commence sous les yeux des curieux. Ses tours éventrées ressemblent aux ruines d'un monde qui s'effondre. À Versailles, le roi aurait demandé si c'était une révolte ; le duc de La Rochefoucauld-Liancourt aurait répondu : « Non, Sire, c'est une révolution. »",
       "date": "1789-07-15",
       "citations": [
         {
@@ -1683,82 +1780,99 @@
           "prudence": true,
           "mots": [
             [
-              15.5,
-              15.58
+              19.58,
+              19.68
             ],
             [
-              15.88,
-              16.08
+              19.8,
+              19.98
             ],
             [
-              16.74,
-              16.86
+              20.62,
+              20.74
             ],
             [
-              16.94,
-              17.02
+              20.8,
+              20.88
             ],
             [
-              17.1,
-              17.48
+              20.96,
+              21.34
             ]
           ],
           "personne": "la-rochefoucauld-liancourt"
         }
       ],
       "image": {
-        "fichier": "020.webp",
-        "commons": "File:The Bastille in the first days of its demolition, by Hubert Robert.jpg",
-        "titre": "La Bastille dans les premiers jours de sa démolition",
-        "titre_court": "La Bastille dans les premiers jours de sa démolition",
-        "auteur": "Hubert Robert",
-        "date": "1789",
-        "technique": "huile sur toile",
-        "conservation": "Paris, musée Carnavalet",
+        "commons": "File:La Bastille vers 1780 - dessin - Jean Baptiste Lallemand - btv1b10302528g (1 of 2).jpg",
+        "titre": "La Bastille vers 1780",
+        "titre_court": "La Bastille vers 1780",
+        "auteur": "Jean-Baptiste Lallemand",
+        "date": "vers 1780",
+        "technique": "dessin à la plume et au lavis",
+        "conservation": "Paris, Bibliothèque nationale de France, Estampes",
         "licence": "Domaine public",
-        "largeur": 1600,
-        "hauteur": 1063,
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.25,
+              0.2,
+              0.93,
+              0.66
             ]
-          },
-          {
-            "cadre": [
-              0.13,
-              0.12,
-              0.8,
-              0.67
-            ],
-            "quand": "Les tours éventrées"
           }
         ],
+        "fichier": "020.webp",
+        "apres": {
+          "commons": "File:The Bastille in the first days of its demolition, by Hubert Robert.jpg",
+          "titre": "La Bastille dans les premiers jours de sa démolition",
+          "titre_court": "La Bastille dans les premiers jours de sa démolition",
+          "auteur": "Hubert Robert",
+          "date": "1789",
+          "technique": "huile sur toile",
+          "conservation": "Paris, musée Carnavalet",
+          "licence": "Domaine public",
+          "largeur": 1600,
+          "hauteur": 1063,
+          "utile": [
+            0.013,
+            0.016,
+            0.987,
+            0.991
+          ],
+          "fichier": "020-apres.webp",
+          "cadre": [
+            0.085,
+            0.09,
+            0.86,
+            0.58
+          ],
+          "quand": "sa démolition commence"
+        },
+        "largeur": 1600,
+        "hauteur": 989,
         "utile": [
-          0.014,
-          0.014,
-          0.986,
-          0.986
+          0.011,
+          0.022,
+          0.987,
+          0.956
         ]
       },
       "audio": {
         "fichier": "020.m4a",
-        "duree": 17.65,
+        "duree": 21.45,
         "phrases": [
           [
             0.0,
-            4.6
+            7.1
           ],
           [
-            5.41,
-            8.29
+            8.19,
+            11.33
           ],
           [
-            9.15,
-            17.65
+            12.31,
+            21.45
           ]
         ]
       },
@@ -1766,9 +1880,10 @@
         {
           "id": "la-rochefoucauld-liancourt",
           "quand": "La Rochefoucauld-Liancourt",
-          "instant": 13.16
+          "instant": 17.18
         }
-      ]
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 21,
@@ -4510,6 +4625,85 @@
             17.3
           ]
         ]
+      },
+      "mosaique": {
+        "legende": "Quatre vues de la prise des Tuileries",
+        "principale": 1,
+        "vignettes": [
+          {
+            "commons": "File:Jacques Bertaux - Der Tuileriensturm am 10. August 1792.jpg",
+            "titre": "Prise du palais des Tuileries, le 10 août 1792",
+            "auteur": "Jacques Bertaux",
+            "date": "1793",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national du château",
+            "fichier": "053-m0.webp",
+            "licence": "Domaine public",
+            "largeur": 1000,
+            "hauteur": 652,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "commons": "File:Siège et prise des tuileries le 10 août 1792.jpg",
+            "fichier": "053.webp",
+            "titre": "Dix août 1792. Siège et prise du château des Tuileries",
+            "auteur": "Pierre-Gabriel Berthault d'après Jean-Louis Prieur",
+            "date": "1802",
+            "technique": "eau-forte coloriée",
+            "conservation": "Paris, Archives nationales",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1286,
+            "utile": [
+              0.014,
+              0.014,
+              0.981,
+              0.927
+            ]
+          },
+          {
+            "commons": "File:Prise des Tuileries, le 10 août 1792. G.24935.jpg",
+            "titre": "Journée du 10 août 1792 : aux braves sans-culottes",
+            "auteur": "Anonyme, chez Villeneuve",
+            "date": "entre 1792 et 1797",
+            "technique": "aquatinte",
+            "conservation": "Paris, musée Carnavalet (G.24935)",
+            "fichier": "053-m2.webp",
+            "licence": "Domaine public",
+            "largeur": 1000,
+            "hauteur": 852,
+            "utile": [
+              0.068,
+              0.061,
+              0.932,
+              0.806
+            ]
+          },
+          {
+            "commons": "File:Anonymous - Prise des Tuileries, le 10 août 1792. - P707-2 - Musée Carnavalet.jpg",
+            "titre": "Prise des Tuileries, le 10 août 1792",
+            "auteur": "Anonyme",
+            "date": "entre 1792 et 1797",
+            "technique": "peinture",
+            "conservation": "Paris, musée Carnavalet (P707-2)",
+            "fichier": "053-m3.webp",
+            "licence": "Domaine public",
+            "largeur": 1000,
+            "hauteur": 859,
+            "utile": [
+              0.2,
+              0.19,
+              0.8,
+              0.81
+            ],
+            "utile_manuel": true
+          }
+        ]
       }
     },
     {
@@ -4874,48 +5068,74 @@
       "date": "1792-09-21",
       "date_fin": "1792-12-11",
       "image": {
-        "fichier": "057.webp",
-        "commons": "File:Le Ci-devant roi à la barre de la Convention nationale - mardi XI décembre 1792, Louis Capet dernier roi des Français fut traduit de la tour du Temple... - estampe - non identifié - btv1b8411694s.jpg",
-        "titre": "Le ci-devant roi à la barre de la Convention nationale, mardi 11 décembre 1792",
-        "titre_court": "Le roi à la barre de la Convention, 11 décembre 1792",
-        "auteur": "Anonyme, pour les Révolutions de Paris",
-        "date": "1792",
-        "technique": "estampe",
-        "conservation": "Paris, Bibliothèque nationale de France, Estampes",
+        "commons": "File:Antoine-François Callet - Louis XVI, roi de France et de Navarre (1754-1793), revêtu du grand costume royal en 1779 - Google Art Project.jpg",
+        "titre": "Louis XVI, roi de France et de Navarre, revêtu du grand costume royal en 1779",
+        "titre_court": "Louis XVI en grand costume royal",
+        "auteur": "Antoine-François Callet",
+        "date": "1779",
+        "technique": "huile sur toile",
+        "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "largeur": 1600,
-        "hauteur": 1038,
-        "recadrage": [
-          0.05,
-          0.03,
-          0.95,
-          0.78
+        "largeur": 1135,
+        "hauteur": 1600,
+        "utile": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
         ],
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.08,
-              0.95,
-              0.82
+              0.0,
+              0.1,
+              1.0,
+              0.9
             ]
           },
           {
             "cadre": [
-              0.25,
-              0.46,
-              0.75,
-              0.8
+              0.2,
+              0.15,
+              0.85,
+              0.55
             ],
-            "quand": "comparaît à la barre de la Convention"
+            "quand": "une armoire de fer"
           }
         ],
-        "utile": [
-          0.082,
-          0.073,
-          0.913,
-          0.832
-        ]
+        "fichier": "057.webp",
+        "apres": {
+          "commons": "File:Le Ci-devant roi à la barre de la Convention nationale - mardi XI décembre 1792, Louis Capet dernier roi des Français fut traduit de la tour du Temple... - estampe - non identifié - btv1b8411694s.jpg",
+          "titre": "Le ci-devant roi à la barre de la Convention nationale, mardi 11 décembre 1792",
+          "titre_court": "Le roi à la barre de la Convention, 11 décembre 1792",
+          "auteur": "Anonyme, pour les Révolutions de Paris",
+          "date": "1792",
+          "technique": "estampe",
+          "conservation": "Paris, Bibliothèque nationale de France, Estampes",
+          "licence": "Domaine public",
+          "largeur": 1600,
+          "hauteur": 1038,
+          "recadrage": [
+            0.05,
+            0.03,
+            0.95,
+            0.78
+          ],
+          "utile": [
+            0.082,
+            0.069,
+            0.915,
+            0.832
+          ],
+          "fichier": "057-apres.webp",
+          "cadre": [
+            0.315,
+            0.45,
+            0.775,
+            0.75
+          ],
+          "quand": "Louis Capet"
+        }
       },
       "audio": {
         "fichier": "057.m4a",
@@ -4940,7 +5160,8 @@
           "id": "louis-xvi",
           "quand": "Louis Capet"
         }
-      ]
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 58,
@@ -5019,7 +5240,7 @@
     },
     {
       "n": 59,
-      "narration": "Le 21 janvier 1793 au matin, Louis XVI est guillotiné place de la Révolution, l'actuelle place de la Concorde, au milieu des troupes. Le bourreau Sanson montre sa tête à la foule. En tuant le roi, les révolutionnaires rendent tout retour en arrière impossible : ils sont désormais des régicides.",
+      "narration": "Le 21 janvier 1793, Louis XVI est conduit sur l'ancienne place Louis-XV, dont la statue a été abattue. Devenue place de la Révolution, l'actuelle Concorde, elle voit sa tête tomber, et le bourreau Sanson la montre à la foule. En tuant le roi, les révolutionnaires deviennent des régicides : tout retour est impossible.",
       "date": "1793-01-21",
       "lieux": [
         {
@@ -5028,73 +5249,112 @@
           "lon": 2.32124,
           "lat": 48.86563,
           "fond": "paris",
-          "instant": 4.62
+          "instant": 7.97
         }
       ],
       "image": {
-        "fichier": "059.webp",
-        "commons": "File:Execution of Louis XVI.jpg",
-        "titre": "Journée du 21 janvier 1793 : la mort de Louis Capet sur la place de la Révolution",
-        "titre_court": "La mort de Louis Capet, 21 janvier 1793",
-        "auteur": "Isidore Stanislas Helman d'après Charles Monnet",
-        "date": "1794",
-        "technique": "eau-forte et burin",
-        "conservation": "Paris, Bibliothèque nationale de France",
+        "commons": "File:Vue de la Place de Louis XV. G.3862(3).jpg",
+        "titre": "Vue de la place de Louis XV",
+        "titre_court": "La place Louis-XV avant la Révolution",
+        "auteur": "Jean-François Janinet d'après Jean-Nicolas-Louis Durand",
+        "date": "vers 1787",
+        "technique": "gravure en couleurs",
+        "conservation": "Paris, musée Carnavalet (G.3862)",
         "licence": "Domaine public",
-        "largeur": 1600,
-        "hauteur": 957,
+        "recadrage": [
+          0.15,
+          0.28,
+          0.85,
+          0.75
+        ],
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.266,
+              0.341,
+              0.94,
+              0.865
             ]
-          },
-          {
-            "cadre": [
-              0.13,
-              0.4,
-              0.47,
-              0.82
-            ],
-            "quand": "Le bourreau Sanson montre sa tête"
           }
         ],
+        "fichier": "059.webp",
+        "apres": {
+          "commons": "File:Execution of Louis XVI.jpg",
+          "titre": "Journée du 21 janvier 1793 : la mort de Louis Capet sur la place de la Révolution",
+          "titre_court": "La mort de Louis Capet, 21 janvier 1793",
+          "auteur": "Isidore Stanislas Helman d'après Charles Monnet",
+          "date": "1794",
+          "technique": "eau-forte et burin",
+          "conservation": "Paris, Bibliothèque nationale de France",
+          "licence": "Domaine public",
+          "largeur": 1600,
+          "hauteur": 957,
+          "utile": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "fichier": "059-apres.webp",
+          "cadre": [
+            0.0,
+            0.259,
+            0.719,
+            0.76
+          ],
+          "quand": "Devenue place de la Révolution",
+          "camera": [
+            {
+              "cadre": [
+                0.13,
+                0.4,
+                0.47,
+                0.82
+              ],
+              "quand": "la montre à la foule"
+            }
+          ]
+        },
+        "largeur": 1600,
+        "hauteur": 857,
         "utile": [
-          0.0,
-          0.0,
-          1.0,
-          1.0
-        ]
+          0,
+          0,
+          1,
+          1
+        ],
+        "utile_manuel": true
       },
       "audio": {
         "fichier": "059.m4a",
-        "duree": 18.07,
+        "duree": 20.86,
         "phrases": [
           [
             0.0,
-            8.59
+            6.68
           ],
           [
-            9.16,
-            11.27
+            7.4,
+            14.16
           ],
           [
-            12.1,
-            18.07
+            15.39,
+            20.86
           ]
         ]
       },
       "personnes_vues": [
         {
-          "id": "louis-xvi",
-          "quand": "Louis XVI"
-        },
-        {
           "id": "sanson",
           "quand": "Sanson"
+        }
+      ],
+      "camera_manuelle": true,
+      "personnes": [
+        {
+          "id": "louis-xvi",
+          "quand": "Louis XVI",
+          "instant": 1.48
         }
       ]
     },

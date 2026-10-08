@@ -21,6 +21,9 @@ propre fichier Commons (`lectures[].portrait.commons` → lectures/<id>.webp, 64
 fac-similés des épisodes (`visuels[].image` des visuels « document » → episodes/<id>.webp,
 2400 px pour rester lisibles au zoom), avec le même contrôle de licence. Un portrait peut aussi
 reprendre l'image d'une diapositive (`portrait.diapositive`) : rien à télécharger.
+Avant / après et mosaïques (points 3 et 5 des « Enrichissements visuels ») : `image.apres` →
+NNN-apres.webp (1600 px, `recadrage` admis) ; `mosaique.vignettes` → NNN-mK.webp (1000 px), la
+vignette `principale` reprenant l'image de la diapositive. Même contrôle de licence et de largeur.
 """
 import argparse, hashlib, io, json, sys, time
 from pathlib import Path
@@ -33,6 +36,7 @@ LARGEUR_MIN = 1000
 GRAND_COTE = 1600
 COTE_PORTRAIT = 640
 COTE_DOCUMENT = 2400
+COTE_VIGNETTE = 1000   # vignettes d'une mosaïque (une case de la grille)
 QUALITE = 74
 
 
@@ -81,6 +85,25 @@ def annexes(d: dict, dossier: Path, etat: dict, force: bool) -> list[str]:
             if v.get('type') == 'document':
                 v['image'].setdefault('fichier', f"episodes/{e['id']}.webp")
                 a_faire.append((f"episode:{e['id']}:{k}", v['image'], COTE_DOCUMENT))
+    # Avant / après et mosaïques (spec 12, « Enrichissements visuels », points 3 et 5) : l'image
+    # « après » (NNN-apres.webp, 1600 px) et les vignettes d'une mosaïque (NNN-mK.webp, 1000 px ; la
+    # vignette principale est l'image de la diapositive, rien à télécharger). Clés d'état par
+    # fichier Commons : elles survivent aux renumérotations.
+    for x in d['diapositives']:
+        ap = x['image'].get('apres')
+        if ap and ap.get('commons'):
+            ap['fichier'] = c.nom(x['n'], 'webp').replace('.webp', '-apres.webp')
+            a_faire.append((f"apres:{ap['commons']}", ap, GRAND_COTE))
+        mo = x.get('mosaique')
+        for k, v in enumerate((mo or {}).get('vignettes', [])):
+            if k == mo.get('principale'):
+                v['fichier'] = x['image']['fichier']
+                for champ in ('titre', 'auteur', 'date', 'technique', 'conservation', 'licence', 'largeur', 'hauteur', 'utile'):
+                    if champ in x['image']:
+                        v[champ] = x['image'][champ]
+                continue
+            v['fichier'] = c.nom(x['n'], 'webp').replace('.webp', f'-m{k}.webp')
+            a_faire.append((f"vignette:{v['commons']}", v, COTE_VIGNETTE))
     if not a_faire:
         return []
     infos = c.infos_fichiers([img['commons'] for _, img, _ in a_faire])
@@ -97,14 +120,18 @@ def annexes(d: dict, dossier: Path, etat: dict, force: bool) -> list[str]:
         if not libre:
             echecs.append(f"{cle} : licence refusée ({licence}) : {img['commons']}")
             continue
+        if cle.startswith(('apres:', 'vignette:')) and (info['largeur'] or 0) < LARGEUR_MIN:
+            echecs.append(f"{cle} : image trop petite ({info['largeur']} px)")
         img['commons'] = info['titre_fichier']
         img['licence'] = 'Domaine public'
         sortie = dossier / img['fichier']
-        if sortie.exists() and not force and img.get('largeur') and ancien.get('commons') == img['commons']:
+        etat[cle]['recadrage'] = img.get('recadrage')
+        if sortie.exists() and not force and img.get('largeur') and ancien.get('commons') == img['commons'] \
+                and ancien.get('recadrage') == img.get('recadrage'):
             continue
         try:
-            infos_l = c.infos_fichiers([img['commons']], largeur=cote)[img['commons']]
-            largeur, hauteur = en_webp(telecharger(infos_l['vignette']), sortie, cote)
+            infos_l = c.infos_fichiers([img['commons']], largeur=max(cote, 2400 if cote == GRAND_COTE else cote))[img['commons']]
+            largeur, hauteur = en_webp(telecharger(infos_l['vignette']), sortie, cote, img.get('recadrage'))
         except Exception as e:  # noqa: BLE001
             echecs.append(f'{cle} : téléchargement ou conversion impossible ({e})')
             continue

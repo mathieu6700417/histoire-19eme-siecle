@@ -1410,6 +1410,136 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
     return erreurs, avert, duree
 
 
+
+# --- Avant / après et mosaïques (spec 12, « Enrichissements visuels », points 3 et 5) ------------
+VOLET = 3.5   # durée du volet (s) ; mêmes valeurs que src/utils/diaporamas.ts
+MOSAIQUE = {'apparition': 0.3, 'pas': 0.5, 'fondu': 0.8, 'tenue': 1.0}
+PLONGEE_MIN = 3.0  # durée minimale de la plongée (s) : le lecteur l'allonge selon l'ampleur (~5 s pour une grille de 2 lignes)
+
+
+def debut_plongee(n: int) -> float:
+    return MOSAIQUE['apparition'] + (n - 1) * MOSAIQUE['pas'] + MOSAIQUE['fondu'] + MOSAIQUE['tenue']
+
+
+def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[list[str], list[str], int, int]:
+    """Avant / après (`image.apres`) et mosaïques (`mosaique`) : fichiers, licences relevées par
+    images.py, métadonnées, zone utile, cadres, passages exacts et dans l'ordre, place du volet dans
+    la voix ; vignettes présentes (4 à 6), `principale` valide (l'image de la diapositive), pas sur
+    une diapositive d'ouverture d'acte, grille et plongée tenues dans la voix. Dosage : 3 à 4
+    avant/après et 2 mosaïques par période (avertissement sinon)."""
+    erreurs, avert = [], []
+    debuts = {a['debut'] for a in d['actes']}
+    inter = {i['apres'] for i in (d.get('musique') or {}).get('intermedes', []) if i.get('cadre')}
+    n_ap = n_mos = 0
+
+    def licence(q: str, cle: str, i: dict):
+        e = img_etat.get(cle)
+        if not e or e.get('commons') != i.get('commons'):
+            erreurs.append(f'{q} : licence non relevée pour ce fichier (relancer images.py)')
+        elif not e.get('libre'):
+            erreurs.append(f"{q} : licence refusée ({e.get('licence')})")
+        elif (e.get('largeur') or 0) < 1000:
+            avert.append(f"{q} : original étroit ({e.get('largeur')} px)")
+        if i.get('licence') != 'Domaine public':
+            erreurs.append(f'{q} : licence affichée absente')
+        if not i.get('fichier') or not (dossier / i['fichier']).is_file():
+            erreurs.append(f"{q} : image absente ({i.get('fichier')})")
+
+    for x in d['diapositives']:
+        n, t = x['n'], x['narration']
+        ap = x['image'].get('apres')
+        if ap is not None:
+            n_ap += 1
+            q = f'{n:3d} : avant/après'
+            licence(q, f"apres:{ap.get('commons')}", ap)
+            manquants = [k for k in CHAMPS if not (ap.get(k) or '').strip()]
+            if manquants:
+                erreurs.append(f"{q} : métadonnées manquantes de l'image après ({', '.join(manquants)})")
+            tc = (ap.get('titre_court') or '').strip()
+            if not tc or len(tc) > 60:
+                erreurs.append(f"{q} : titre court de l'image après manquant ou trop long")
+            if ap.get('commons') == x['image'].get('commons'):
+                erreurs.append(f'{q} : image après identique à l’image avant')
+            r = ap.get('cadre')
+            if not (isinstance(r, list) and len(r) == 4 and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
+                erreurs.append(f'{q} : cadre de raccord invalide ({r})')
+            pseudo = {'narration': t, 'image': {**ap, 'camera': [{'cadre': r}] + list(ap.get('camera') or [])}}
+            e_ut, a_ut = controler_utile(pseudo)
+            erreurs += [f'{q} (image après) : {e}' for e in e_ut]
+            avert += [f'{q} (image après) : {e}' for e in a_ut]
+            quand = ap.get('quand') or ''
+            pos = t.find(quand) if quand else -1
+            if pos < 0:
+                erreurs.append(f'{q} : passage du volet « {quand} » absent de la narration')
+                continue
+            # Les étapes de l'image avant précèdent le volet ; celles de l'image après le suivent.
+            for e in (x['image'].get('camera') or [])[1:]:
+                if e.get('quand') and t.find(e['quand']) >= pos:
+                    erreurs.append(f"{q} : étape « {e['quand']} » de l'image avant après le passage du volet")
+            apres = pos + len(quand)
+            for e in ap.get('camera') or []:
+                k = t.find(e.get('quand') or '\0', apres)
+                if not e.get('quand') or k < 0:
+                    erreurs.append(f"{q} : étape « {e.get('quand')} » de l'image après absente de la narration ou avant le volet")
+                else:
+                    apres = k + len(e['quand'])
+                rr = e.get('cadre')
+                if not (isinstance(rr, list) and len(rr) == 4 and 0 <= rr[0] < rr[2] <= 1 and 0 <= rr[1] < rr[3] <= 1):
+                    erreurs.append(f"{q} : cadre invalide sur l'image après ({rr})")
+            if len((x['image'].get('camera') or [])) + 1 + len(ap.get('camera') or []) > 5:
+                avert.append(f'{q} : beaucoup d’étapes de caméra pour une diapositive')
+            ti = instant_caractere(x, pos)
+            du = (x.get('audio') or {}).get('duree') or 0
+            if ti < 2:
+                avert.append(f"{q} : volet à {ti:.1f} s, l'image avant à peine vue")
+            if du and ti + VOLET > du - 1:
+                erreurs.append(f'{q} : volet ({ti:.1f} s + {VOLET} s) trop près de la fin de la voix ({du:.1f} s)')
+            if n in inter:
+                erreurs.append(f'{q} : avant/après et intermède cadré sur la même diapositive (non pris en charge)')
+        mo = x.get('mosaique')
+        if mo is not None:
+            n_mos += 1
+            q = f'{n:3d} : mosaïque'
+            V = mo.get('vignettes') or []
+            k = mo.get('principale')
+            if not 4 <= len(V) <= 6:
+                erreurs.append(f'{q} : {len(V)} vignettes (4 à 6)')
+            if not isinstance(k, int) or not 0 <= k < len(V):
+                erreurs.append(f'{q} : « principale » invalide ({k})')
+            elif V[k].get('commons') != x['image'].get('commons'):
+                erreurs.append(f"{q} : la vignette principale ({k}) n'est pas l'image de la diapositive")
+            leg = (mo.get('legende') or '').strip()
+            if not leg or len(leg) > 60:
+                erreurs.append(f'{q} : ligne du cartouche (« legende ») manquante ou trop longue')
+            if len({v.get('commons') for v in V}) != len(V):
+                erreurs.append(f'{q} : vignettes en double')
+            if x['image'].get('ouverture') or n in debuts:
+                erreurs.append(f"{q} : pas de mosaïque sur la première diapositive d'un acte (ouverture du carton)")
+            if x['image'].get('apres'):
+                erreurs.append(f'{q} : mosaïque et avant/après sur la même diapositive')
+            for j, v in enumerate(V):
+                if j == k:
+                    continue
+                qv = f'{q}, vignette {j}'
+                licence(qv, f"vignette:{v.get('commons')}", v)
+                manquants = [c_ for c_ in ('titre', 'auteur', 'date') if not (v.get(c_) or '').strip()]
+                if manquants:
+                    erreurs.append(f"{qv} : métadonnées manquantes ({', '.join(manquants)})")
+                u = v.get('utile')
+                if not (isinstance(u, list) and len(u) == 4 and 0 <= u[0] < u[2] <= 1 and 0 <= u[1] < u[3] <= 1):
+                    erreurs.append(f'{qv} : zone utile absente ou invalide (utile.py)')
+                elif (u[2] - u[0]) * (u[3] - u[1]) < UTILE_AIRE_MIN:
+                    erreurs.append(f'{qv} : zone utile absurde ({u})')
+            du = (x.get('audio') or {}).get('duree') or 0
+            if du and debut_plongee(len(V)) + PLONGEE_MIN + 3 > du:
+                erreurs.append(f'{q} : voix trop courte ({du:.1f} s) pour la grille et la plongée')
+    if n_ap and not 3 <= n_ap <= 4:
+        avert.append(f'{n_ap} avant/après (3 à 4 visés par période)')
+    if n_mos and n_mos != 2:
+        avert.append(f'{n_mos} mosaïque(s) (2 visées par période)')
+    return erreurs, avert, n_ap, n_mos
+
+
 def verifier(slug: str) -> bool:
     f, d = c.lire(slug)
     dossier = c.PUBLIC / d['slug']
@@ -1445,7 +1575,15 @@ def verifier(slug: str) -> bool:
         if not d.get(k) and d.get(k) != 0:
             erreurs.append(f'champ « {k} » manquant')
 
+    # Une même œuvre deux fois au plus, images après et vignettes de mosaïque comprises.
     oeuvres = Counter(x['image']['commons'] for x in diapos)
+    for x in diapos:
+        if x['image'].get('apres'):
+            oeuvres[x['image']['apres'].get('commons')] += 1
+        mo = x.get('mosaique') or {}
+        for j, v in enumerate(mo.get('vignettes', [])):
+            if j != mo.get('principale'):
+                oeuvres[v.get('commons')] += 1
     for oeuvre, n in oeuvres.items():
         if n > 2:
             erreurs.append(f'{oeuvre} utilisée {n} fois (2 au plus)')
@@ -1543,6 +1681,9 @@ def verifier(slug: str) -> bool:
     e_ch, a_ch, n_chiffres, n_dates, n_conf = controler_chiffres(d)
     erreurs += e_ch
     avert += a_ch
+    e_am, a_am, n_ap, n_mos = controler_avant_apres_mosaiques(d, img, dossier)
+    erreurs += e_am
+    avert += a_am
 
     pauses = [pause_apres(x) for x in diapos]
     longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
@@ -1580,6 +1721,9 @@ def verifier(slug: str) -> bool:
     if n_chiffres or n_dates:
         print(f'Chiffres clés et dates : {n_chiffres} chiffre(s) (~8 visés), {n_dates} date(s) républicaine(s), '
               f'correspondances recalculées ({n_conf} confirmée(s) par la narration ou la date de la diapositive).')
+    if n_ap or n_mos:
+        print(f"Avant/après et mosaïques : {n_ap} avant/après (diapositives {', '.join(str(x['n']) for x in diapos if x['image'].get('apres'))}), "
+              f"{n_mos} mosaïque(s) (diapositives {', '.join(str(x['n']) for x in diapos if x.get('mosaique'))}).")
     datees = sum(1 for x in diapos if 'date' in x)
     print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} surimpression(s) '
           f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")

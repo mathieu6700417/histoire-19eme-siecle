@@ -102,12 +102,12 @@ for (const x of d.diapositives) {
 
 <style>
   /* Médaillon : blanc cassé presque opaque, filet fin (même famille que les cartouches). Taille
-     posée par le script (~un quart de la hauteur de la scène) ; au-dessus des bandeaux du bas en
-     plein écran (--frise-bas). */
+     posée par le script (~un quart de la hauteur de la scène). Marges : celles des cartouches du haut
+     (--marge-x, --marge-y) ; au-dessus des bandeaux du bas visibles en plein écran (--surimp-bas). */
   .lieu {
     position: absolute;
-    right: var(--e-2);
-    bottom: calc(var(--frise-bas, 0px) + var(--e-2));
+    right: var(--marge-x, var(--e-2));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--marge-y, var(--e-2)));
     z-index: 2;
     padding: 0.3rem 0.3rem 0.25rem;
     background: rgba(251, 250, 247, 0.95);
@@ -220,8 +220,8 @@ for (const x of d.diapositives) {
   .portraits {
     --ovale-h: 96px;
     position: absolute;
-    left: var(--e-2);
-    bottom: calc(var(--frise-bas, 0px) + var(--e-2));
+    left: var(--marge-x, var(--e-2));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--marge-y, var(--e-2)));
     z-index: 2;
     display: flex;
     align-items: flex-start;
@@ -276,35 +276,35 @@ for (const x of d.diapositives) {
     -webkit-hyphens: none;
     text-wrap: balance;
   }
-  .portraits :global(.portrait__nom) { display: block; font-size: 0.82rem; font-variant: small-caps; letter-spacing: 0.04em; }
+  .portraits :global(.portrait__nom) { display: block; font-size: 0.95rem; font-variant: small-caps; letter-spacing: 0.04em; }
   .portraits :global(.portrait__sep) { display: none; }
-  .portraits :global(.portrait__dates) { display: block; font-size: 0.72rem; color: #4a4843; font-variant-numeric: lining-nums; }
+  .portraits :global(.portrait__dates) { display: block; font-size: 0.82rem; color: #4a4843; font-variant-numeric: lining-nums; }
   /* Une seule personne : « Danton · 1759-1794 » sur une ligne si la place le permet. */
   .portraits.est-seul :global(.portrait) { max-width: 14em; }
   .portraits.est-seul :global(.portrait__nom), .portraits.est-seul :global(.portrait__sep), .portraits.est-seul :global(.portrait__dates) { display: inline; }
   .portraits.est-seul :global(.portrait__sep) { color: #4a4843; }
 
-  /* Objet de musée : cartouche blanc cassé à filet fin (même famille que le médaillon de lieu), objet
-     détouré en couleur, légende monochrome. Taille posée par le lecteur (--objet-h, --objet-l). Entrée
-     en fondu avec une très légère montée ; la place est réservée pour la caméra toute la diapositive. */
+  /* Objet de musée (révision du 2026-10-08) : l'objet détouré est posé directement sur l'image, sans
+     carte ni fond ; il s'en détache par un halo clair diffus et une ombre très douce (pas de contour
+     net), la légende courte en dessous sur un voile léger. Taille posée par le lecteur (--objet-h,
+     --objet-l). Entrée en fondu avec une très légère montée ; la place est réservée pour la caméra
+     toute la diapositive. */
   .objet {
     --objet-h: 150px;
     --objet-l: 150px;
     position: absolute;
-    right: var(--e-2);
-    bottom: calc(var(--frise-bas, 0px) + var(--e-2));
+    right: var(--marge-x, var(--e-2));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--marge-y, var(--e-2)));
     z-index: 2;
     margin: 0;
-    padding: 0.45rem 0.55rem 0.3rem;
-    background: rgba(251, 250, 247, 0.95);
-    border: 1px solid rgba(26, 26, 26, 0.22);
+    padding: 0;
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
     transition: opacity 600ms ease, transform 600ms ease, visibility 0s linear 600ms;
   }
-  .objet.est-gauche { right: auto; left: var(--e-2); }
+  .objet.est-gauche { right: auto; left: var(--marge-x, var(--e-2)); }
   .objet.est-visible {
     opacity: 1;
     visibility: visible;
@@ -312,7 +312,19 @@ for (const x of d.diapositives) {
     transition: opacity 800ms ease, transform 1400ms cubic-bezier(0.2, 0.6, 0.3, 1), visibility 0s, bottom 500ms ease;
   }
   .objet__image { display: block; width: var(--objet-l); height: var(--objet-h); margin: 0 auto; }
-  .objet__image img { display: block; width: 100%; height: 100%; object-fit: contain; }
+  .objet__image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* Halo clair diffus puis ombre très douce : l'objet se lit sur une image claire comme sombre. */
+    filter: drop-shadow(0 0 7px rgba(251, 250, 247, 0.75)) drop-shadow(0 3px 9px rgba(26, 26, 26, 0.35));
+  }
+  .objet figcaption {
+    width: max-content;
+    padding: 0.12rem 0.45rem 0.15rem;
+    background: rgba(251, 250, 247, 0.82);
+  }
   .objet figcaption, .manuscrit figcaption {
     max-width: max(var(--objet-l), 10em);
     margin: 0.3rem auto 0;
@@ -334,7 +346,7 @@ for (const x of d.diapositives) {
     --ms-h: 280px;
     --objet-l: var(--ms-l);
     position: absolute;
-    right: var(--e-2);
+    right: var(--marge-x, var(--e-2));
     top: var(--ms-haut, 15%);
     z-index: 2;
     margin: 0;
@@ -347,7 +359,7 @@ for (const x of d.diapositives) {
     transform: translateY(8px);
     transition: opacity 600ms ease, transform 600ms ease, visibility 0s linear 600ms;
   }
-  .manuscrit.est-gauche { right: auto; left: var(--e-2); }
+  .manuscrit.est-gauche { right: auto; left: var(--marge-x, var(--e-2)); }
   .manuscrit.est-visible {
     opacity: 1;
     visibility: visible;
@@ -375,7 +387,7 @@ for (const x of d.diapositives) {
   .mots {
     position: absolute;
     left: 50%;
-    bottom: calc(var(--frise-bas, 0px) + 7%);
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + 7%);
     z-index: 2;
     width: max-content;
     max-width: min(46rem, calc(100% - 2 * var(--e-3)));
@@ -428,7 +440,7 @@ for (const x of d.diapositives) {
     --chiffre-t: 4.2rem;
     position: absolute;
     left: 50%;
-    bottom: calc(var(--frise-bas, 0px) + var(--chiffre-bas, 7%));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--chiffre-bas, 7%));
     z-index: 2;
     width: max-content;
     max-width: calc(100% - 2 * var(--e-3));
@@ -484,7 +496,7 @@ for (const x of d.diapositives) {
   .date-rep {
     position: absolute;
     left: 50%;
-    bottom: calc(var(--frise-bas, 0px) + var(--e-2));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--e-2));
     z-index: 2;
     width: max-content;
     max-width: calc(100% - 2 * var(--e-2));
@@ -516,26 +528,23 @@ for (const x of d.diapositives) {
   .date-rep__sep { color: #6a6862; }
 
   @media (max-width: 699px) {
-    .chiffre { padding: 0.35rem 1.6rem 0.4rem; bottom: calc(var(--frise-bas, 0px) + var(--chiffre-bas, 6%)); max-width: calc(100% - 2 * var(--e-1)); }
+    .chiffre { padding: 0.35rem 1.6rem 0.4rem; bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--chiffre-bas, 6%)); max-width: calc(100% - 2 * var(--e-1)); }
     .chiffre__prefixe { font-size: 0.78rem; }
     .chiffre__unite { font-size: 0.86rem; }
-    .date-rep { bottom: calc(var(--frise-bas, 0px) + var(--e-1)); font-size: 0.8rem; padding: 0.12rem 0.6rem 0.16rem; letter-spacing: 0.04em; max-width: calc(100% - 2 * var(--e-1)); }
-    .lieu { right: var(--e-1); bottom: calc(var(--frise-bas, 0px) + var(--e-1)); padding: 0.2rem; }
+    .date-rep { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--e-1)); font-size: 0.8rem; padding: 0.12rem 0.6rem 0.16rem; letter-spacing: 0.04em; max-width: calc(100% - 2 * var(--e-1)); }
+    .lieu { padding: 0.2rem; }
     .lieu__nom { font-size: 0.82rem; }
     .lieu :global(.lieu__etiquette) { font-size: 0.64rem; max-width: 7.5em; }
-    .mots { bottom: calc(var(--frise-bas, 0px) + 5%); max-width: calc(100% - 2 * var(--e-1)); padding: 0.4rem 0.8rem 0.45rem; }
+    .mots { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + 5%); max-width: calc(100% - 2 * var(--e-1)); padding: 0.4rem 0.8rem 0.45rem; }
     .mots__texte { font-size: 1.12rem; }
     .mots__auteur { font-size: 0.85rem; }
-    .portraits { left: var(--e-1); bottom: calc(var(--frise-bas, 0px) + var(--e-1)); gap: 0.35rem; padding: 0.25rem 0.3rem 0.2rem; }
+    .portraits { gap: 0.35rem; padding: 0.25rem 0.3rem 0.2rem; }
     .portraits :global(.portrait) { max-width: max(calc(var(--ovale-h) * 0.8 + 1rem), 5.6em); }
-    .portraits :global(.portrait__nom) { font-size: 0.66rem; letter-spacing: 0.02em; }
-    .portraits :global(.portrait__dates) { font-size: 0.6rem; }
+    .portraits :global(.portrait__nom) { font-size: 0.74rem; letter-spacing: 0.02em; }
+    .portraits :global(.portrait__dates) { font-size: 0.66rem; }
     .portraits.est-seul :global(.portrait) { max-width: 11em; }
-    .objet { bottom: calc(var(--frise-bas, 0px) + var(--e-1)); right: var(--e-1); padding: 0.25rem 0.3rem 0.2rem; }
-    .objet.est-gauche { left: var(--e-1); }
-    .manuscrit { right: var(--e-1); padding: 0.2rem; }
+    .manuscrit { padding: 0.2rem; }
     .manuscrit figcaption { max-width: max(var(--objet-l), 8em); }
-    .manuscrit.est-gauche { left: var(--e-1); }
     .objet__nom { font-size: 0.66rem; }
     .objet__legende { font-size: 0.6rem; letter-spacing: 0.02em; }
   }

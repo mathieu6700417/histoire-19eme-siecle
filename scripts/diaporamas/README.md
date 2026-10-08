@@ -619,7 +619,7 @@ date, licence, cadre_visage }`. `nom` est le nom affiché (court : « Danton »,
   `.cache/diaporamas/portraits/` (vignette de 2 400 px pour un très grand fichier), cadre du
   visage proposé par Gemini Flash sur l'image quadrillée, recadrage 4:5 où le visage occupe 58 % de
   la hauteur (son centre à 44 %), contrôle du recadrage par le modèle (« un seul visage entier,
-  centré ») ; webp 240 × 300 px, ~10 Ko. Un refus est signalé « à relire » : corriger
+  centré ») ; webp 360 × 450 px (240 × 300 avant le 2026-10-08), ~10 à 60 Ko. Un refus est signalé « à relire » : corriger
   `cadre_visage` à la main et ajouter `"cadre_visage_manuel": true` (Révolution : Drouet, Nelson,
   Couthon). Planche de contrôle : `.cache/diaporamas/portraits/planche.jpg` (ovales et noms).
 - Coût (Gemini Flash, tarif supposé) : ~0,12 $ pour la visibilité des 135 mentions de la
@@ -637,8 +637,10 @@ lieux ; à relancer après toute nouvelle voix.
   au nom (le premier dès l'entrée de la rangée), les précédents restent ; la rangée va du premier
   nom à 3 s après le dernier (5 s au moins ; un nom dit dans les 4 dernières secondes avance son
   entrée), prolongée jusqu'à la fin de la citation de la personne ;
-- taille : ovales de 17 % de la hauteur de la scène (78 à 118 px de haut sur ordinateur, 50 sur
-  téléphone), réduits si la rangée ne tient pas à côté du médaillon de lieu ;
+- taille (agrandie le 2026-10-08) : ovales de 25 % de la hauteur de la scène (110 à 180 px de haut
+  sur ordinateur, 70 sur téléphone ; nom 0,95 rem, dates 0,82 rem), réduits si la rangée ne tient
+  pas à côté du médaillon de lieu ; webp régénérés en 360 × 450 px (`HAUTEUR` de portraits.py),
+  nets jusqu'à une densité d'écran de 2, avec les cadres de visage déjà validés ;
 - zone couverte pour la caméra : la hauteur de la rangée est réservée **pour toute la diapositive**
   qui en a une (comme le médaillon de lieu) ; tous les ovales sont posés d'emblée (invisibles), la
   rangée ne change jamais de taille ;
@@ -693,7 +695,9 @@ signature ou la phrase, relevé à la main sur l'image quadrillée et vérifié 
 
 **Lecteur** (`objetsDe` dans `src/utils/diaporamas.ts`, `Diaporama.astro`, styles dans
 `Surimpressions.astro`) :
-- objet : coin bas, cartouche blanc cassé à filet fin, objet en couleur (22 % de la hauteur de la
+- objet (révision du 2026-10-08) : coin bas, **posé directement sur l'image**, sans carte ni fond : halo
+  clair diffus et ombre très douce (`drop-shadow`, pas de contour net), légende sous l'objet sur un
+  voile blanc cassé léger ; objet en couleur (22 % de la hauteur de la
   scène, 96 à 200 px ; 1,3 fois plus pour un objet très étroit ; 30 % de la largeur au plus),
   légende « objet » puis « date · musée » ; fondu de 0,8 s et montée de 10 px ; ~5 s depuis le
   passage (un passage dit dans les 4 dernières secondes avance l'entrée) ; place réservée pour la
@@ -720,6 +724,84 @@ Révolution : 10 objets, 3 manuscrits (liste avec `objets.py revolution --releve
 bonnet de laine d'époque photographiés librement sur Commons ; la dernière lettre de Marie-Antoinette
 n'y est qu'en fac-similé de 1872 et la narration ne l'évoque pas ; le procès-verbal du serment du Jeu
 de paume n'y est qu'en 1 000 px, signatures illisibles.
+
+## Marges des surimpressions du bas
+
+Spec 12, « Marges des surimpressions du bas » (2026-10-08). Les cartouches du haut et toutes les
+surimpressions de coin (médaillon de lieu, portraits, objet, manuscrit) partagent deux variables de
+la scène : `--marge-x` (gauche et droite) et `--marge-y` (haut des cartouches, bas des coins) ;
+`var(--e-2)` d'ordinaire (téléphone compris), `var(--gouttiere)` et `var(--e-3)` en plein écran. Le
+bas des surimpressions suit `--surimp-bas` (posé par `majBasSurimpressions`) : hors plein écran, 0 ;
+en plein écran, la hauteur des bandeaux du bas ; contrôles masqués (`inactif`), le sous-titre
+descend à leur place (`--descente-st`, transition 450 ms) et les surimpressions avec lui (à la
+marge du bas de l'écran si les sous-titres sont coupés) ; elles remontent en douceur (transition de
+`bottom`, 500 ms) quand les contrôles reviennent. La place réservée pour la caméra ne dépend pas
+des contrôles : elle compte toujours tous les bandeaux (le sous-titre est mesuré sans sa descente).
+
+## Avant / après et mosaïques
+
+Spec 12, « Enrichissements visuels », points 3 et 5 (2026-10-08). Toujours actifs dans le lecteur ;
+dans le livre d'images, l'image après sous l'image avant et les vignettes en petite grille ; crédits
+dans la section « Mosaïques et avant-après » de la page.
+
+```json
+{ "n": 20, "camera_manuelle": true,
+  "image": { "commons": "File:La Bastille vers 1780 - dessin - …", "camera": [{ "cadre": [0.25, 0.2, 0.93, 0.66] }], "utile": […],
+    "apres": { "fichier": "020-apres.webp", "commons": "File:The Bastille in the first days of its demolition, by Hubert Robert.jpg",
+               "titre": "…", "titre_court": "…", "auteur": "Hubert Robert", "date": "1789", "technique": "…", "conservation": "…",
+               "licence": "Domaine public", "utile": […], "cadre": [0.085, 0.09, 0.86, 0.58], "quand": "sa démolition commence",
+               "camera": [{ "cadre": […], "quand": "passage après le volet" }] } } }
+{ "n": 18, "mosaique": { "legende": "Cinq vues de la prise de la Bastille", "principale": 1,
+    "vignettes": [{ "commons": "File:…", "titre": "…", "auteur": "…", "date": "1789", "technique": "…", "conservation": "…" },
+                  { "commons": "<image de la diapositive>" }, …] } }
+```
+
+**Avant / après.** `image` est l'image « avant », `image.apres` l'image « après » (même lieu ou même
+sujet, notice complète). `apres.quand` = passage exact qui déclenche le volet ; `apres.cadre` = vue
+de l'image après au volet, choisie pour que le même lieu se superpose à la **dernière** vue de la
+caméra de l'image avant (mêmes centres et même échelle en pixels : relever deux repères communs sur
+les deux images quadrillées) ; `apres.camera` = étapes suivantes (après le volet). Les étapes de
+`image.camera` précèdent le volet. `images.py` écrit `NNN-apres.webp` (1600 px, `recadrage` admis),
+`utile.py` sa zone utile (clé « 20a »). Mettre `camera_manuelle: true`.
+
+**Mosaïque.** 4 à 6 vignettes (`principale` = rang de l'image de la diapositive, dont l'entrée ne
+porte que `commons`) ; `legende` = la ligne du cartouche pendant la grille (60 caractères au plus).
+`images.py` écrit `NNN-mK.webp` (1000 px) et complète la principale ; `utile.py` leurs zones utiles
+(clés « 18m0 »…, à relire sur la planche : marges et légendes gravées). Pas sur la première
+diapositive d'un acte (ouverture du carton).
+
+**Lecteur** (`avantApres`, `VOLET`, `MOSAIQUE` dans `src/utils/diaporamas.ts` ; `apresDe`, `raccord`,
+`majApres`, `plongee`, `majMosaique` dans `Diaporama.astro`) :
+- avant / après : la caméra de l'image avant s'arrête en douceur (vitesse nulle) au passage ; volet
+  de **3,5 s** (`clip-path` du calque après, de gauche à droite, smoothstep), bord en ligne verticale
+  fine (1 px blanc cassé bordé de gris) ; les deux images sont **fixes** pendant le volet ; la vue de
+  départ de l'image après est la vue finale de l'avant transportée par la correspondance des deux
+  cadres (respiration comprise) ; la caméra reprend ensuite (première tenue jusqu'à la fin du volet,
+  écart de 5 s compté depuis le passage). Cartouche de l'image après dès le début du volet. Mouvement
+  réduit : fondu enchaîné de 1 s ;
+- mosaïque : grille en 2 lignes (4 → 2 × 2 ; 5 → 2 au-dessus de 3 ; 6 → 3 × 2), filets de papier de
+  4 px, chaque vignette couvrant sa case avec sa zone utile ; vignettes en fondu (0,8 s, gris →
+  couleur), une toutes les 0,5 s depuis 0,3 s ; grille complète tenue 1 s ; puis **plongée** :
+  homothétie de toute la grille (zoom logarithmique, durée selon l'ampleur avec les plafonds de la
+  caméra, ~5 s pour une case de la moitié de la scène), la case principale s'agrandit jusqu'à la
+  scène entière et l'image principale est alors exactement à sa première vue, où sa caméra commence
+  (vitesse nulle aux deux bouts). Cartouche « Cinq vues… » pendant la grille, cartouche normal dès
+  le début de la plongée. Mouvement réduit : grille complète d'emblée, puis fondu de 0,8 s ;
+- tout dérive de l'instant lissé de la voix : pause, reprise, sauts et retour au début justes ; la
+  clé de reprise d'un avant / après est le fichier Commons de l'image après.
+
+`verifier.py` : fichiers, licences relevées, métadonnées, titre court, zone utile et cadres de
+l'image après, passages exacts et dans l'ordre (étapes de l'avant avant le volet, celles de l'après
+après), volet tenu dans la voix ; 4 à 6 vignettes présentes et sous licence, `principale` = l'image
+de la diapositive, zones utiles, pas sur une ouverture d'acte, grille et plongée tenues dans la voix ;
+dosage (3 à 4 avant/après, 2 mosaïques) en avertissement. `renumeroter.py` renomme aussi les
+`NNN-apres.webp` et `NNN-mK.webp`.
+
+Révolution : avant/après 20 (la Bastille vers 1780, Lallemand → en démolition, Hubert Robert), 57
+(Louis XVI en grand costume royal, Callet → à la barre de la Convention, « Louis Capet »), 59 (la
+place Louis-XV, Janinet → l'exécution du roi, Helman d'après Monnet : la guillotine prend la place de
+la statue) ; mosaïques 18 (cinq vues de la prise de la Bastille) et 53 (quatre vues de la prise des
+Tuileries).
 
 ## Chiffres clés et dates républicaines
 

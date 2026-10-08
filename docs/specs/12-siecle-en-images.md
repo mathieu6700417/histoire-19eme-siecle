@@ -698,10 +698,10 @@ montre pas, montrer son portrait. Décisions :
     silhouette dans une foule. Contrôle par Gemini Flash (`portraits.py --visibilite`), désaccords
     tranchés à la main. Une citation porte `personne` : son portrait l'accompagne.
   - registre : seules les personnes montrées ; une personne sans portrait fiable garde une `note`
-    et rien n'est montré. Pas de « portrait présumé ». Webp 240 × 300 px recadrée (visage à 58 %
-    de la hauteur), ovale tracé par le lecteur.
-  - lecteur : ovales de 17 % de la hauteur de la scène (78 à 118 px sur ordinateur, 50 px sur
-    téléphone), réduits si la rangée ne tient pas à côté du médaillon de lieu ; une personne par
+    et rien n'est montré. Pas de « portrait présumé ». Webp 360 × 450 px recadrée (visage à 58 %
+    de la hauteur ; 240 × 300 avant le 2026-10-08), ovale tracé par le lecteur.
+  - lecteur : ovales de 25 % de la hauteur de la scène (110 à 180 px sur ordinateur, 70 px sur
+    téléphone ; agrandis d'environ 1,5 fois le 2026-10-08, nom et dates un peu plus grands), réduits si la rangée ne tient pas à côté du médaillon de lieu ; une personne par
     ovale (première mention), le premier dès l'entrée de la rangée ; rangée du premier nom à 3 s
     après le dernier, 5 s au moins, prolongée jusqu'à la fin de la citation de la personne ; zone
     réservée pour toute la diapositive ; une personne seule : « Danton · 1759-1794 » sur une ligne.
@@ -760,6 +760,9 @@ la règle des documents d'époque du domaine public (Commons), monochromes hors 
    **détouré** sur fond neutre, posé en surimpression quand la voix en parle, avec une légende
    courte (objet, date, musée). Photo d'objet du domaine public ou sous licence libre admise
    (CC BY / BY-SA avec crédit ; l'objet est d'époque, la photo peut être récente).
+   **Révision du 2026-10-08** : l'objet détouré est **posé directement sur l'image**, sans
+   carte ni fond opaque ; il se détache par une ombre très douce ou un halo clair diffus (pas
+   de contour net), la légende courte en dessous sur un voile léger.
 2. **Manuscrits et signatures** : une lettre, un acte ou un registre d'époque en surimpression,
    avec zoom et halo doux sur la signature ou la phrase dont parle la voix (même halo que les
    documents d'épisode).
@@ -823,6 +826,55 @@ l'image reste le sujet. Les zones couvertes ne font jamais bouger la caméra bru
   (22 prairial an II, 9 thermidor an II, 1er prairial an III, an III, 13 vendémiaire an IV, 18 fructidor
   an V, 18 brumaire an VIII) ; caméra mesurée à nouveau sur ces 14 diapositives : rien au-dessus des
   plafonds, aucun à-coup.
+
+**Valeurs retenues, points 3 et 5** (mise en œuvre du 2026-10-08 ; détail dans
+`scripts/diaporamas/README.md`, « Avant / après et mosaïques ») :
+- avant / après : `image.apres` `{ fichier, commons, titre, titre_court, auteur, date, technique,
+  conservation, licence, utile, cadre, quand, camera? }` (l'image de la diapositive est l'« avant ») ;
+  volet glissant de 3,5 s (de gauche à droite, smoothstep), bord en ligne verticale fine, au passage
+  `quand` ; caméra de l'avant arrêtée en douceur au passage, les deux images fixes pendant le volet et
+  superposées par leurs cadres correspondants (vue de départ de l'après = vue finale de l'avant
+  transportée par la correspondance des deux cadres), puis caméra de l'après ; cartouche de l'après dès
+  le début du volet ; mouvement réduit : fondu enchaîné de 1 s ;
+- mosaïque : `mosaique` `{ legende, vignettes: [{ fichier, commons, titre, auteur, date, technique?,
+  conservation?, licence, utile }], principale }` ; grille en 2 lignes (2 × 2, 2 sur 3, 3 × 2), filets de
+  papier de 4 px ; vignettes en fondu gris → couleur (0,8 s), une toutes les 0,5 s ; grille tenue 1 s ;
+  plongée par homothétie de la grille (zoom logarithmique, plafonds de la caméra : ~5 s, 95 % du plafond
+  de zoom au plus fort), la case principale grandit jusqu'à la scène et l'image principale arrive
+  exactement sur sa première vue ; cartouche d'une ligne pendant la grille, normal dès la plongée ;
+  mouvement réduit : grille fixe puis fondu de 0,8 s ; crédits de toutes les vignettes sur la page ;
+- Révolution : avant/après 20 (Bastille, Lallemand vers 1780 → Hubert Robert 1789), 57 (Louis XVI,
+  Callet → « Louis Capet » à la barre), 59 (place Louis-XV, Janinet vers 1787 → place de la Révolution,
+  Helman d'après Monnet) ; narrations 20 et 59 retouchées pour annoncer le changement ; mosaïques 18
+  (cinq vues de la prise de la Bastille) et 53 (quatre vues de la prise des Tuileries). Caméra mesurée
+  (1280 × 720, 1920 × 1080, 390 × 844, plein écran 1920 × 1080, mouvement réduit) : rien au-dessus des
+  plafonds, aucun à-coup, rien hors de la zone utile.
+
+**Valeurs retenues, révision du point 1** (2026-10-08) : objet sans carte ni fond, `filter:
+drop-shadow(0 0 7px` blanc cassé à 75 %`) drop-shadow(0 3px 9px` noir à 35 %`)`, légende sur un voile
+blanc cassé à 82 % ; taille, coin et place réservée inchangés ; lisible sur image claire (22, 104, 120)
+comme plus sombre (23).
+
+### Marges des surimpressions du bas (2026-10-08)
+
+Retour de l'utilisateur : les surimpressions du bas (portraits, médaillon de carte, objets,
+manuscrits, et toute surimpression de coin) doivent avoir **les mêmes marges que les cartouches
+du haut** : même retrait à gauche et à droite (alignées avec le cartouche de l'image et celui de
+la musique), et en bas le même retrait par rapport au bord de l'image. **En plein écran**, quand
+les contrôles sont masqués, elles descendent à cette marge du bas de l'écran au lieu de rester
+au-dessus de la barre de lecture invisible ; quand les contrôles réapparaissent, elles remontent
+en douceur juste au-dessus d'eux (ou les contrôles passent par-dessus sans les masquer, selon ce
+qui est le plus sobre). La zone réservée pour la caméra reste constante (pas de mouvement de
+caméra lié à l'apparition des contrôles).
+
+**Valeurs retenues** (mise en œuvre du 2026-10-08) : variables `--marge-x` / `--marge-y` de la scène,
+partagées par les cartouches du haut et les surimpressions de coin (`var(--e-2)` d'ordinaire,
+téléphone compris ; `var(--gouttiere)` et `var(--e-3)` en plein écran) ; en plein écran, contrôles
+masqués, le sous-titre descend à leur place (450 ms) et les surimpressions avec lui (à la marge du
+bas de l'écran quand les sous-titres sont coupés), puis remontent en douceur (500 ms) au retour des
+contrôles ; la place réservée pour la caméra compte toujours tous les bandeaux (mesurée sans la
+descente) : aucun mouvement de caméra lié aux contrôles (mesuré en plein écran 1920 × 1080, contrôles
+qui apparaissent et disparaissent).
 
 ## Portail (`/diaporamas/`)
 

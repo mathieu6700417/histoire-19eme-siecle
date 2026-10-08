@@ -6,7 +6,7 @@ import { typographie } from '../../utils/typographie.mjs';
 import { libelleChapitre } from '../../data/chapitres-ecrivains';
 import { planComplet, urlChapitre } from '../../utils/ecrivains';
 import {
-  diaporamas, dureeTotale, formaterDuree, nomSourceMusique, objetsMusee, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
+  diaporamas, dureeTotale, urlCommons, formaterDuree, nomSourceMusique, objetsMusee, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
   type Diaporama as D,
 } from '../../utils/diaporamas';
 
@@ -35,6 +35,14 @@ const portraitsMontres = idsPortraits.map((id) => portraits.find((p) => p.id ===
 // de leur apparition.
 const idsObjets = [...new Set(d.diapositives.flatMap((x) => [...(x.manuscrits ?? []), ...(x.objets ?? [])].map((o) => o.id)))];
 const objetsMontres = idsObjets.map((id) => objetsMusee.find((o) => o.id === id)).filter((o) => o?.fichier && o.page);
+// Crédits des images des avant/après et des vignettes des mosaïques (spec 12, points 3 et 5) :
+// ces images n'ont pas toutes de cartouche propre dans le lecteur.
+const avantApresMontres = d.diapositives.filter((x) => x.image.apres).map((x) => ({ n: x.n, i: x.image.apres! }));
+const mosaiquesMontrees = d.diapositives.filter((x) => x.mosaique).map((x) => ({
+  n: x.n, legende: x.mosaique!.legende, vignettes: x.mosaique!.vignettes.map((v, k) => (k === x.mosaique!.principale ? { ...x.image, ...v } : v)),
+}));
+const notice = (v: { titre?: string; auteur?: string; date?: string; technique?: string; conservation?: string }) =>
+  t([v.auteur, v.titre ? `« ${v.titre} »` : '', v.date, v.technique, v.conservation].filter(Boolean).join(', '));
 /** Licence en milieu de phrase : minuscule initiale, sauf sigle (CC0, CC BY…). */
 const licence = (x: string) => t(/^[A-ZÀ-Ý][a-zà-ÿ]/.test(x) ? x.charAt(0).toLowerCase() + x.slice(1) : x);
 /** Lien vers le texte d'une licence Creative Commons (CC BY 3.0, CC BY-SA 4.0…), exigé par l'attribution. */
@@ -126,6 +134,28 @@ const urlLicence = (x: string) => {
             </li>
           ))}
         </ul>
+      </section>
+    )}
+    {(avantApresMontres.length > 0 || mosaiquesMontrees.length > 0) && (
+      <section class="musiques portraits-credits" aria-labelledby="titre-mosaiques">
+        <h2 id="titre-mosaiques">Mosaïques et avant-après</h2>
+        <p>{typographie("Certaines diapositives commencent par une grille d'images d'un même événement, avant de plonger dans l'une d'elles ; d'autres font glisser un volet entre deux états d'un même lieu ou d'un même sujet. Images du domaine public, de Wikimedia Commons.")}</p>
+        {mosaiquesMontrees.map((m) => (
+          <Fragment>
+            <h3>{t(m.legende)} (diapositive {m.n})</h3>
+            <ul>
+              {m.vignettes.map((v) => <li>{notice(v)}. <a href={urlCommons(v.commons)} rel="noopener" target="_blank">Commons</a>, domaine public.</li>)}
+            </ul>
+          </Fragment>
+        ))}
+        {avantApresMontres.length > 0 && (
+          <Fragment>
+            <h3>Avant, après</h3>
+            <ul>
+              {avantApresMontres.map(({ n, i }) => <li>Diapositive {n}, après : {notice(i)}. <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a>, domaine public.</li>)}
+            </ul>
+          </Fragment>
+        )}
       </section>
     )}
     {chapitre && (

@@ -33,7 +33,7 @@ import { typographie } from '../utils/typographie.mjs';
 import CarteCitation from './CarteCitation.astro';
 import EpisodeVisuels from './EpisodeVisuels.astro';
 import Surimpressions from './Surimpressions.astro';
-import { CARTON, PAUSE, SAUT_JOURS, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
+import { CARTON, PAUSE, SAUT_JOURS, MOSAIQUE, VOLET, avantApres, debutPlongee, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
 
 interface Props { diaporama: Diaporama }
 const { diaporama: d } = Astro.props;
@@ -42,9 +42,9 @@ const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const t = (s?: string) => (s ? typographie(s.trim()) : '');
 
 /** Légende de notice : auteur, *titre*, date, technique. Conservation. (HTML échappé) */
-function legende(x: Diaporama['diapositives'][number]) {
-  const i = x.image;
-  const tete = [i.auteur && esc(t(i.auteur)), `<cite>${esc(t(i.titre))}</cite>`, i.date && esc(t(i.date)), i.technique && esc(t(i.technique))]
+function legende(x: Diaporama['diapositives'][number]) { return legendeImage(x.image); }
+function legendeImage(i: { titre?: string; auteur?: string; date?: string; technique?: string; conservation?: string; commons: string }) {
+  const tete = [i.auteur && esc(t(i.auteur)), `<cite>${esc(t(i.titre ?? ''))}</cite>`, i.date && esc(t(i.date)), i.technique && esc(t(i.technique))]
     .filter(Boolean).join(', ');
   const lieu = i.conservation ? ` ${esc(t(i.conservation))}.` : '';
   return `<span class="notice">${tete}.${lieu}</span> <a class="notice__commons" href="${esc(urlCommons(i.commons))}" rel="noopener" target="_blank">Commons</a>`;
@@ -52,8 +52,8 @@ function legende(x: Diaporama['diapositives'][number]) {
 
 /** Cartouche du lecteur (spec 12, « Cartouches lisibles ») : trois lignes, *titre court*,
  *  auteur, « date · technique » (HTML échappé). Le titre officiel reste dans le livre et l'`alt`. */
-function cartouche(x: Diaporama['diapositives'][number]) {
-  const i = x.image;
+function cartouche(x: Diaporama['diapositives'][number]) { return cartoucheImage(x.image); }
+function cartoucheImage(i: { titre: string; titre_court?: string; auteur?: string; date?: string; technique?: string }) {
   const quand = [i.date && esc(t(i.date)), i.technique && esc(t(i.technique))].filter(Boolean).join(' · ');
   return `<cite>${esc(t(i.titre_court || i.titre))}</cite>${i.auteur ? `<span>${esc(t(i.auteur))}</span>` : ''}${quand ? `<span>${quand}</span>` : ''}`;
 }
@@ -105,7 +105,8 @@ function portraitDe(l: Lecture) {
 /** Image du moment d'une lecture (fond flou de sa carte) : celle de la diapositive qu'elle suit. */
 function fondDe(l: Lecture) {
   const x = d.diapositives.find((y) => y.n === l.apres);
-  return x ? urlMedia(d.slug, x.image.fichier) : undefined;
+  // Avant / après : l'image montrée à la fin de la voix est l'image « après ».
+  return x ? urlMedia(d.slug, x.image.apres?.fichier ?? x.image.fichier) : undefined;
 }
 /** Phrases horodatées d'un épisode, avec leur texte (sous-titres). */
 function phrasesEpisode(e: Episode) {
@@ -156,8 +157,9 @@ const donnees = {
   actes: d.actes.map((a) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut })),
   diapos: d.diapositives.map((x, k) => ({
     n: x.n,
-    // Clé stable de la reprise : le fichier Commons de l'image, qui survit aux renumérotations.
-    cle: x.image.commons,
+    // Clé stable de la reprise : le fichier Commons de l'image, qui survit aux renumérotations
+    // (celui de l'image « après » pour un avant / après : l'image avant peut servir ailleurs).
+    cle: x.image.apres?.commons ?? x.image.commons,
     img: urlMedia(d.slug, x.image.fichier),
     // Zone utile (spec 12, « Sans bordures ») : le lecteur ne voit que cette partie de l'image ;
     // `l` × `h` en sont les dimensions (px de l'image servie) et tous les cadres (caméra,
@@ -177,6 +179,21 @@ const donnees = {
     ouv: x.image.ouverture ? versUtile(x.image.ouverture, zoneUtile(x)) : null,
     date: frise ? { ...frise.diapos[k], libelle: t(frise.diapos[k].libelle) } : null,
     ...surimpressions(x),
+    // Avant / après (point 3) : image après, instant du volet, étapes de la caméra sur l'image après.
+    ap: x.image.apres ? (() => {
+      const ap = x.image.apres!, a = avantApres(x)!, u = a.u;
+      return { img: urlMedia(d.slug, ap.fichier), u, l: (ap.largeur ?? 1600) * (u[2] - u[0]), h: (ap.hauteur ?? 1200) * (u[3] - u[1]),
+        alt: t(ap.titre), legende: cartoucheImage(ap), t: a.t, camera: a.camera };
+    })() : null,
+    // Mosaïque (point 5) : vignettes (la principale est l'image de la diapositive), cartouche d'une ligne.
+    mos: x.mosaique ? {
+      legende: `<cite>${esc(t(x.mosaique.legende))}</cite>`,
+      principale: x.mosaique.principale,
+      vignettes: x.mosaique.vignettes.map((v) => {
+        const u = zoneUtileDe(v);
+        return { img: urlMedia(d.slug, v.fichier ?? x.image.fichier), u, l: (v.largeur ?? 1000) * (u[2] - u[0]), h: (v.hauteur ?? 800) * (u[3] - u[1]) };
+      }),
+    } : null,
     // Segment joué après la voix : intermède chanté, lecture d'époque ou épisode.
     suite: intermedeApres.has(x.n) ? (() => {
       const c = intermedeApres.get(x.n)!;
@@ -193,6 +210,9 @@ const donnees = {
     })() : null,
   })),
   saut: SAUT_JOURS,
+  // Avant / après et mosaïques (spec 12, points 3 et 5) : durée du volet, minutage de la grille.
+  volet: VOLET,
+  mosaique: MOSAIQUE,
   // Musique de fond : les pistes de chaque acte (dans l'ordre des actes), enchaînées en fondu.
   fond: d.actes.map((a) => (d.musique?.fond ?? []).filter((p) => p.acte === a.id && p.duree)
     .map((p) => ({ src: urlMedia(d.slug, p.fichier), duree: p.duree!, volume: p.volume ?? 1, info: cartoucheMusique(p) }))),
@@ -209,6 +229,9 @@ function friseHtml(classe: string) {
   const annees = frise.annees.map((a) => `<span class="frise-t__annee" data-a="${a.a}" style="left:${pc((a.x0 + a.x1) / 2)}">${a.a}</span>`).join('');
   return `<div class="frise-t ${classe}" aria-hidden="true"><div class="frise-t__piste"><span class="frise-t__date"></span>${actes}${crans}<span class="frise-t__curseur"></span></div><div class="frise-t__annees">${annees}</div></div>`;
 }
+// Dans chaque calque, après l'image : l'image « après » d'un avant / après (sous un volet qui la
+// découvre, et sa ligne), puis la grille d'une mosaïque. Vides et masqués hors de ces diapositives.
+const CALQUE_SUITE = '<div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
 const sectionsLivre = d.actes.map((a, i) => ({
   ...a,
   diapos: d.diapositives.filter((x) => x.n >= a.debut && (i === d.actes.length - 1 || x.n < d.actes[i + 1].debut)),
@@ -222,8 +245,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
   <div class="lecteur" role="region" aria-label={typographie(`Diaporama : ${d.titre}`)}>
     <p class="lecteur__acte" aria-hidden="true"><span class="lecteur__acte-titre">{t(acteDe(1).titre)}</span> <span class="lecteur__acte-dates">{t(acteDe(1).dates)}</span></p>
     <div class="lecteur__scene">
-      <div class="lecteur__calque est-visible"><img src={urlMedia(d.slug, premiere.image.fichier)} alt={t(premiere.image.titre)} width={premiere.image.largeur} height={premiere.image.hauteur} decoding="async" /></div>
-      <div class="lecteur__calque"><img alt="" decoding="async" /></div>
+      <div class="lecteur__calque est-visible"><img src={urlMedia(d.slug, premiere.image.fichier)} alt={t(premiere.image.titre)} width={premiere.image.largeur} height={premiere.image.hauteur} decoding="async" /><Fragment set:html={CALQUE_SUITE} /></div>
+      <div class="lecteur__calque"><img alt="" decoding="async" /><Fragment set:html={CALQUE_SUITE} /></div>
       <div class="lecteur__clip"><div class="clip__voile"></div><div class="clip__texte"></div></div>
       <p class="lecteur__legende est-visible" set:html={cartouche(premiere)} />
       <p class="lecteur__musique" aria-live="off"></p>
@@ -296,6 +319,25 @@ const sectionsLivre = d.actes.map((a, i) => ({
                 <img src={urlMedia(d.slug, x.image.fichier)} alt={t(x.image.titre)} width={x.image.largeur} height={x.image.hauteur} loading="lazy" decoding="async" />
                 <figcaption set:html={legende(x)} />
               </figure>
+              {x.image.apres && (
+                <figure class="livre__apres">
+                  <img src={urlMedia(d.slug, x.image.apres.fichier)} alt={t(x.image.apres.titre)} width={x.image.apres.largeur} height={x.image.apres.hauteur} loading="lazy" decoding="async" />
+                  <figcaption set:html={`<span class="livre__marque">Après :</span> ${legendeImage(x.image.apres)}`} />
+                </figure>
+              )}
+              {x.mosaique && (
+                <div class="livre__mosaique">
+                  <p class="livre__marque">{t(x.mosaique.legende)}</p>
+                  <ul>
+                    {x.mosaique.vignettes.filter((_, k) => k !== x.mosaique!.principale).map((v) => (
+                      <li><figure>
+                        <img src={urlMedia(d.slug, v.fichier ?? x.image.fichier)} alt={t(v.titre ?? '')} width={v.largeur} height={v.hauteur} loading="lazy" decoding="async" />
+                        <figcaption set:html={legendeImage(v)} />
+                      </figure></li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <p>{t(x.narration)}</p>
               {intermedeApres.has(x.n) && (
                 <div class="livre__chant">
@@ -339,6 +381,14 @@ const sectionsLivre = d.actes.map((a, i) => ({
     audio: string; duree: number; pause: number; camera: { c: Rect; t: number }[];
     /** Détail zoomé sur lequel s'ouvre le carton d'acte (spec 12, « Sortie du carton d'acte »). */
     ouv: Rect | null;
+    /** Avant / après (point 3) : image après (zone utile, dimensions), cartouche, instant du volet,
+     *  étapes de la caméra sur l'image après (la première : cadre de raccord, à l'instant du volet). */
+    ap: { img: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[] } | null;
+    /** Mosaïque (point 5) : cartouche de la grille, rang de l'image principale, vignettes. */
+    mos: { legende: string; principale: number; vignettes: { img: string; u: Rect; l: number; h: number }[] } | null;
+    /** Caméra (usage interne, vues dérivées) : instant et fin de la première tenue (`t0`, `a0`),
+     *  et vue de départ imposée (`v0`). */
+    t0?: number; a0?: number; v0?: Rect;
     /** Frise : jours (depuis 1970) du premier et du dernier jour daté, positions en %, libellé. */
     date: DateFrise | null;
     /** Segment joué après la voix (et sa pause) : intermède chanté, lecture ou épisode. */
@@ -373,7 +423,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
   interface Piste { src: string; duree: number; volume: number; info: string }
   interface DateFrise { j0: number; j1: number; x0: number; x1: number; libelle: string }
   interface Donnees {
-    slug: string; pause: number; carton: number; saut: number;
+    slug: string; pause: number; carton: number; saut: number; volet: number;
+    mosaique: { apparition: number; pas: number; fondu: number; tenue: number };
     actes: { titre: string; dates: string; debut: number }[]; diapos: Diapo[];
     /** Musique de fond : les pistes de chaque acte. */
     fond: Piste[][];
@@ -411,6 +462,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
   const RECUL = 0.04;       // agrandissement de départ
   const DUREE_RECUL = 1.5;  // s
   const FONDU_REDUIT = 0.3; // s, prefers-reduced-motion : fondu simple, ni recul ni gris
+  // Avant / après et mosaïque, prefers-reduced-motion : fondu enchaîné vers l'image après, et
+  // fondu de la grille (complète d'emblée) vers l'image principale.
+  const FONDU_APRES_REDUIT = 1;
+  const FONDU_MOSAIQUE_REDUIT = 0.8;
   // Sortie du carton d'acte (spec 12, « Sortie du carton d'acte en deux volets », révision du
   // 2026-10-08) : les volets s'ouvrent pendant les dernières secondes du carton (sa durée totale ne
   // change pas) ; la voix commence à la fin de l'ouverture. Si la diapositive a un détail
@@ -559,6 +614,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     const curseurVolume = racine.querySelector<HTMLInputElement>('.lecteur__volume');
     const segments = [...racine.querySelectorAll<HTMLButtonElement>('.lecteur__segment')];
     const CLE_POS = `diaporama:${D.slug}`;
+    const VOLET_S = D.volet, MOSAIQUE_T = D.mosaique;
+    const debutPlongee = (n: number) => MOSAIQUE_T.apparition + (n - 1) * MOSAIQUE_T.pas + MOSAIQUE_T.fondu + MOSAIQUE_T.tenue;
     const N = D.diapos.length;
 
     // Acte de chaque diapositive ; un carton précède la première diapositive de chaque acte.
@@ -593,7 +650,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     let minuterie = 0;    // carton, pause entre deux diapositives, ou durée sans voix
     let debutSansVoix = 0, ecouleSansVoix = 0;
     // Ce que montre chaque calque : la diapositive et le dernier cadre rendu.
-    const couches: { x: Diapo | null; r: Rect }[] = [{ x: D.diapos[0], r: [0, 0, 1, 1] }, { x: null, r: [0, 0, 1, 1] }];
+    // `ra` : dernier cadre rendu de l'image après d'un avant / après (null : pas encore découverte).
+    const couches: { x: Diapo | null; r: Rect; ra?: Rect | null }[] = [{ x: D.diapos[0], r: [0, 0, 1, 1] }, { x: null, r: [0, 0, 1, 1] }];
     // Carton d'acte en cours (horloge figée par la pause).
     let enCarton = false;
     const chronoCarton = new Chrono();
@@ -635,6 +693,12 @@ const sectionsLivre = d.actes.map((a, i) => ({
       const img = c.querySelector('img')!;
       img.style.width = `${(x.l * s) / (x.u[2] - x.u[0])}px`;
       img.style.height = `${(x.h * s) / (x.u[3] - x.u[1])}px`;
+      if (x.ap) {
+        const imgA = c.querySelector<HTMLImageElement>('.lecteur__apres img')!, A = x.ap, sa = Math.max(W / A.l, H / A.h);
+        imgA.style.width = `${(A.l * sa) / (A.u[2] - A.u[0])}px`;
+        imgA.style.height = `${(A.h * sa) / (A.u[3] - A.u[1])}px`;
+      }
+      placerTuiles(c, x);
     }
 
     // Hauteurs couvertes en haut (cartouche, acte en plein écran) et en bas (sous-titre,
@@ -644,6 +708,19 @@ const sectionsLivre = d.actes.map((a, i) => ({
     let basLieu = 0; // hauteur couverte en bas par le médaillon de lieu (s'il était affiché)
     let basCotes = { gauche: 0, droite: 0 }; // bas couvert de chaque côté (manuscrit)
     let hautBrut = 0; // haut couvert (cartouche), sans la réduction qui garde 55 % à la caméra
+    let basBandes = 0; // bas couvert par les bandeaux (plein écran : sous-titre, progression, contrôles)
+    /** Plein écran (spec 12, « Marges des surimpressions du bas ») : contrôles masqués, le
+     *  sous-titre descend à leur place et les surimpressions du bas avec lui, à la marge des
+     *  cartouches du bas de l'écran ; contrôles visibles, elles se posent juste au-dessus d'eux.
+     *  La caméra n'en dépend pas (marges mesurées avec tous les bandeaux). */
+    function majBasSurimpressions() {
+      const pe = document.fullscreenElement === lecteur;
+      const prog = $('.lecteur__progression'), ctl = $('.lecteur__controles');
+      const descente = pe ? prog.offsetHeight + ctl.offsetHeight : 0;
+      lecteur.style.setProperty('--descente-st', `${descente}px`);
+      const masques = pe && lecteur.classList.contains('inactif');
+      scene.style.setProperty('--surimp-bas', `${Math.round(masques ? Math.max(0, basBandes - descente) : basBandes)}px`);
+    }
     const surimpressions = [elActe, elLegende, elMusique, elSt, $('.lecteur__progression'), $('.lecteur__controles')];
     function mesurerMarges() {
       const s = scene.getBoundingClientRect();
@@ -651,6 +728,11 @@ const sectionsLivre = d.actes.map((a, i) => ({
       for (const el of surimpressions) {
         let r: { top: number; bottom: number; left: number; right: number; width: number; height: number } = el.getBoundingClientRect();
         if (el === elMusique && !el.classList.contains('est-visible')) continue;
+        if (el === elSt && r.height) {
+          // Sans la descente du sous-titre (contrôles masqués) : la place réservée reste constante.
+          const ty = new DOMMatrix(getComputedStyle(el).transform === 'none' ? undefined : getComputedStyle(el).transform).m42;
+          r = { top: r.top - ty, bottom: r.bottom - ty, left: r.left, right: r.right, width: r.width, height: r.height };
+        }
         if (el === elLegende || el === elMusique) {
           const top = s.top + scene.clientTop + el.offsetTop, left = s.left + scene.clientLeft + el.offsetLeft;
           r = { top, left, bottom: top + el.offsetHeight, right: left + el.offsetWidth, width: el.offsetWidth, height: el.offsetHeight };
@@ -661,17 +743,22 @@ const sectionsLivre = d.actes.map((a, i) => ({
       }
       // La frise en surimpression se pose au-dessus des bandeaux du bas (plein écran).
       scene.style.setProperty('--frise-bas', `${Math.round(bas)}px`);
+      basBandes = bas;
+      majBasSurimpressions();
+      // Marge du bas des surimpressions de coin (celle des cartouches du haut) : la place réservée
+      // à la caméra la compte avec tous les bandeaux, contrôles compris, même masqués (constante).
+      const margeY = parseFloat(getComputedStyle(elLegende).top) || 8;
       // Médaillon de lieu : sa place est réservée pour toute la diapositive (et non le temps de son
       // affichage) : une zone couverte qui change en cours de route ferait bouger la caméra d'un
       // coup (mesures du 2026-10-08 : jusqu'à 10 fois le plafond de vitesse en 0,9 s).
-      basLieu = elLieu && D.diapos[i].lieu ? scene.clientHeight - elLieu.offsetTop + 4 : 0;
+      basLieu = elLieu && D.diapos[i].lieu ? elLieu.offsetHeight + margeY + bas + 4 : 0;
       // Rangée de portraits (en bas à gauche) : même principe, place réservée pour toute la
       // diapositive, mesurée sans la frise (qui la fait monter le temps de son passage).
       const basPortraits = elPortraits && D.diapos[i].portraits
-        ? elPortraits.offsetHeight + (parseFloat(getComputedStyle(elPortraits).left) || 0) + bas + 4 : 0;
+        ? elPortraits.offsetHeight + margeY + bas + 4 : 0;
       // Objet de musée (coin bas) : même principe, place réservée pour toute la diapositive.
       const basObjet = elObjet && D.diapos[i].objet
-        ? elObjet.offsetHeight + (parseFloat(getComputedStyle(elObjet).right) || 8) + bas + 4 : 0;
+        ? elObjet.offsetHeight + margeY + bas + 4 : 0;
       // Bas occupé de chaque côté (le manuscrit se pose au-dessus de celui de son côté seulement).
       const objetGauche = D.diapos[i].objet?.cote === 'gauche';
       basCotes = { gauche: Math.max(bas, basPortraits, objetGauche ? basObjet : 0), droite: Math.max(bas, basLieu, objetGauche ? 0 : basObjet) };
@@ -687,14 +774,18 @@ const sectionsLivre = d.actes.map((a, i) => ({
      *  la scène. Un cadre trop haut pour la zone est montré depuis son bord supérieur (têtes).
      *  `f` ≥ 1 : agrandissement supplémentaire (recul d'entrée) autour du centre de la zone
      *  utile ; il se compose avec la caméra et garde la scène couverte. */
-    function transformation(c: HTMLElement, x: Diapo, r: Rect, f = 1) {
+    function transformation(c: HTMLElement, x: Diapo, r: Rect, f = 1, img = c.querySelector('img')!) {
       const W = c.clientWidth, H = c.clientHeight;
-      const img = c.querySelector('img')!;
       // Taille posée par `cadre` (offsetWidth l'arrondirait au pixel : zoom faussé de quelques millièmes).
       const IW = parseFloat(img.style.width) || img.offsetWidth || W, IH = parseFloat(img.style.height) || img.offsetHeight || H;
+      return css(parametres(W, H, IW, IH, x.u, r, f));
+    }
+    const css = (p: { tx: number; ty: number; s: number }) => `translate3d(${p.tx.toFixed(2)}px, ${p.ty.toFixed(2)}px, 0) scale(${p.s.toFixed(6)})`;
+    /** Translation et échelle de `transformation` (image de `IW` × `IH` px, zone utile `u`). */
+    function parametres(W: number, H: number, IW: number, IH: number, u: Rect, r: Rect, f = 1) {
       // Tout le calcul se fait dans la zone utile de l'image (`x.u`, sans bordure ni légende), qui
       // couvre la scène : `r` y est exprimé, et la translation finale tient compte de son décalage.
-      const u = x.u, iw = IW * (u[2] - u[0]), ih = IH * (u[3] - u[1]);
+      const iw = IW * (u[2] - u[0]), ih = IH * (u[3] - u[1]);
       const T = marges.haut, Hs = Math.max(1, H - marges.haut - marges.bas);
       const rx = r[0] * iw, ry = r[1] * ih, rw = Math.max(1, (r[2] - r[0]) * iw), rh = Math.max(1, (r[3] - r[1]) * ih);
       const z = Math.max(1, Math.min(W / rw, Hs / rh));
@@ -706,8 +797,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
       const px = W / 2, py = T + Hs / 2;
       tx = px + f * (tx - px); ty = py + f * (ty - py);
       tx -= z * f * u[0] * IW; ty -= z * f * u[1] * IH;
-      // Sous-pixel et échelle fine : un mouvement très lent ne doit pas avancer par crans.
-      return `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${(z * f).toFixed(6)})`;
+      // Sous-pixel et échelle fine (cf. `css`) : un mouvement très lent ne doit pas avancer par crans.
+      return { tx, ty, s: z * f };
     }
 
     /** Partie de l'image réellement montrée pour le cadre `r` (mêmes calculs que
@@ -739,7 +830,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
       const E = x.camera, finVoix = x.duree || 6;
       // Après un détail d'ouverture, la première vue n'est atteinte qu'à la fin du recul : aucune
       // étape ne commence avant (la tenue minimale court à partir de là).
-      const etapes = [{ v: vue(x, E[0].c), t: 0, de: 0, a: x.ouv ? dureeRecul(x) : 0 }];
+      // Image après d'un avant / après, ou fin de la plongée d'une mosaïque : la première vue
+      // (imposée par `v0`, sinon celle du premier cadre) n'est quittée qu'après `a0`.
+      const etapes = [{ v: x.v0 ?? vue(x, E[0].c), t: x.t0 ?? 0, de: 0, a: x.ouv ? dureeRecul(x) : x.a0 ?? 0 }];
       for (let k = 1; k < E.length; k++) {
         const p = etapes[etapes.length - 1], v = vue(x, E[k].c);
         if (E[k].t - p.t < ECART_MIN) continue;
@@ -812,13 +905,197 @@ const sectionsLivre = d.actes.map((a, i) => ({
      *  transition calme depuis la fin de la diapositive, puis respiration jusqu'à la fin. */
     function cadreIntermede(x: Diapo, c: SuiteChant & { cadre: Rect }, ts: number): Rect {
       if (mouvementReduit.matches) return c.cadre;
-      const A = cadreA(x, x.duree || 6), B = vue(x, c.cadre);
+      const A = cadreA(principal(x), x.duree || 6), B = vue(x, c.cadre);
       const { zoom, glisse } = ampleur(A, B);
       const u = Math.max(zoom / VISE_ZOOM, glisse / VISE_GLISSE);
       const d = Math.min(Math.max(DUREE_MIN, u <= 2 * MISE_EN_ROUTE ? 1.5 * u : u + MISE_EN_ROUTE), c.duree / 2);
       if (ts < d) return trajet(A, B, profil(ts, d, Math.min(d / 3, MISE_EN_ROUTE)));
       return souffle(B, ts - d, c.duree - d, x.n, 9);
     }
+
+    // --- Avant / après et mosaïque (spec 12, « Enrichissements visuels », points 3 et 5) -----------
+    // Tout dérive de l'instant de la voix (pause, reprise et sauts justes). Avant / après : la
+    // caméra de l'image avant s'arrête en douceur au passage du volet ; pendant le volet (VOLET s),
+    // les deux images sont fixes et superposées (même lieu au même endroit de l'écran) ; puis la
+    // caméra reprend sur l'image après, depuis la vue de raccord. Mosaïque : vignettes en grille,
+    // l'une après l'autre ; puis plongée (homothétie, zoom logarithmique, plafonds tenus) dans
+    // l'image principale, qui occupe enfin la scène là où sa caméra commence.
+    /** Image avant : sa caméra finit (vitesse nulle) au début du volet. */
+    const avantDe = (x: Diapo): Diapo => (x.ap ? { ...x, duree: x.ap.t } : x);
+    /** Image après : sa caméra part de la vue de raccord à la fin du volet. */
+    function apresDe(x: Diapo): Diapo {
+      const A = x.ap!;
+      const xa: Diapo = { ...x, img: A.img, u: A.u, l: A.l, h: A.h, camera: A.camera, ouv: null, ap: null, mos: null, t0: A.t, a0: A.t + VOLET_S };
+      if (!mouvementReduit.matches) xa.v0 = raccord(x, xa);
+      return xa;
+    }
+    /** Vue de départ sur l'image après : la vue finale de l'image avant (respiration comprise),
+     *  transportée par la correspondance entre la dernière vue de l'avant et la vue du cadre de
+     *  raccord de l'après (mêmes proportions : une similitude). */
+    function raccord(x: Diapo, xa: Diapo): Rect {
+      const xb = avantDe(x), P = plan(xb), Va = P[P.length - 1].v, Vp = vue(xa, xa.camera[0].c);
+      const F = cadreA(xb, xb.duree || 6);
+      const kx = (Vp[2] - Vp[0]) / (Va[2] - Va[0]), ky = (Vp[3] - Vp[1]) / (Va[3] - Va[1]);
+      return [Vp[0] + (F[0] - Va[0]) * kx, Vp[1] + (F[1] - Va[1]) * ky, Vp[0] + (F[2] - Va[0]) * kx, Vp[1] + (F[3] - Va[1]) * ky];
+    }
+    /** Cases de la grille (px de la scène) : 4 → 2 × 2 ; 5 → 2 au-dessus de 3 ; 6 → 3 × 2. Filets
+     *  de GOUTTIERE px entre les cases ; la grille couvre la scène. */
+    const GOUTTIERE = 4;
+    function cases(n: number, W: number, H: number): Rect[] {
+      const haut = Math.floor(n / 2), lignes = [haut, n - haut], g = GOUTTIERE / 2, R: Rect[] = [];
+      lignes.forEach((m, j) => {
+        for (let k = 0; k < m; k++) {
+          const x0 = (W * k) / m, x1 = (W * (k + 1)) / m, y0 = (H * j) / 2, y1 = (H * (j + 1)) / 2;
+          R.push([x0 + (k ? g : 0), y0 + (j ? g : 0), x1 - (k < m - 1 ? g : 0), y1 - (j ? 0 : g)]);
+        }
+      });
+      return R;
+    }
+    /** Taille CSS de l'image principale posée par `cadre` (sans lire le DOM). */
+    function tailleImage(x: { u: Rect; l: number; h: number }, W: number, H: number) {
+      const s = Math.max(W / x.l, H / x.h);
+      return { IW: (x.l * s) / (x.u[2] - x.u[0]), IH: (x.h * s) / (x.u[3] - x.u[1]) };
+    }
+    /** Géométrie de la mosaïque à la taille courante : cases, transformation finale de l'image
+     *  principale (`B` : sa première vue, là où sa caméra commence) et celle de la grille (`G` : la
+     *  même image réduite dans sa case, couvrante), début et durée de la plongée, fin (`a0`). */
+    function plongee(x: Diapo) {
+      const W = scene.clientWidth, H = scene.clientHeight, M = x.mos!;
+      const C = cases(M.vignettes.length, W, H), c = C[M.principale] ?? C[0];
+      const cw = c[2] - c[0], ch = c[3] - c[1], sigma = Math.max(cw / W, ch / H);
+      const { IW, IH } = tailleImage(x, W, H);
+      const B = parametres(W, H, IW, IH, x.u, vue(x, x.camera[0].c));
+      const cx = (c[0] + c[2]) / 2, cy = (c[1] + c[3]) / 2;
+      const G = { tx: cx + sigma * (B.tx - W / 2), ty: cy + sigma * (B.ty - H / 2), s: sigma * B.s };
+      // Vues de la scène entière dans la zone utile de l'image (au départ, bien plus grande que
+      // l'image) : la durée suit l'ampleur, comme une transition de la caméra (mêmes plafonds).
+      const iw = IW * (x.u[2] - x.u[0]), ih = IH * (x.u[3] - x.u[1]);
+      const rect = (p: typeof B): Rect => {
+        const x0 = (-p.tx / p.s - x.u[0] * IW) / iw, y0 = (-p.ty / p.s - x.u[1] * IH) / ih;
+        return [x0, y0, x0 + W / p.s / iw, y0 + H / p.s / ih];
+      };
+      const { zoom, glisse } = ampleur(rect(G), rect(B));
+      const u = Math.max(zoom / VISE_ZOOM, glisse / VISE_GLISSE);
+      const d = mouvementReduit.matches ? 0 : Math.max(DUREE_MIN, u <= 2 * MISE_EN_ROUTE ? 1.5 * u : u + MISE_EN_ROUTE);
+      const t0 = debutPlongee(M.vignettes.length);
+      return { C, k: M.principale, c, sigma, B, G, W, H, IW, IH, t0, d, m: Math.min(d / 3, MISE_EN_ROUTE), a0: t0 + d, cx, cy };
+    }
+    /** Image principale d'une diapositive pour la caméra : arrêtée au volet d'un avant / après,
+     *  ou partant de la fin de la plongée d'une mosaïque. */
+    function principal(x: Diapo): Diapo {
+      if (x.ap) return avantDe(x);
+      if (x.mos && !x.ouv) return { ...x, a0: plongee(x).a0 };
+      return x;
+    }
+    /** Cartouche voulu à l'instant `t` : la ligne de la mosaïque pendant la grille, celui de
+     *  l'image après dès le début du volet, sinon celui de l'image. */
+    function legendeVoulue(x: Diapo, t: number) {
+      if (x.mos && !x.ouv && t < debutPlongee(x.mos.vignettes.length)) return x.mos.legende;
+      if (x.ap && t >= x.ap.t) return x.ap.legende;
+      return x.legende;
+    }
+    /** Pose les éléments propres d'un calque (image après, grille) pour la diapositive `x`. */
+    function preparerCalque(c: HTMLElement, x: Diapo) {
+      const elA = c.querySelector<HTMLElement>('.lecteur__apres')!, imgA = elA.querySelector('img')!;
+      const trait = c.querySelector<HTMLElement>('.lecteur__trait')!, mo = c.querySelector<HTMLElement>('.mosaique')!;
+      elA.hidden = true; trait.hidden = true; elA.style.clipPath = ''; elA.style.opacity = '';
+      c.querySelector('img')!.style.visibility = '';
+      c.style.background = '';
+      if (x.ap) { if (imgA.getAttribute('src') !== x.ap.img) imgA.src = x.ap.img; imgA.alt = x.ap.alt; } else { imgA.removeAttribute('src'); imgA.alt = ''; }
+      mo.hidden = true;
+      mo.style.opacity = '';
+      if (x.mos && !x.ouv) {
+        if (mo.dataset.n !== String(x.n)) {
+          mo.replaceChildren(...x.mos.vignettes.map((v, k) => {
+            const t = document.createElement('div');
+            t.className = `tuile${k === x.mos!.principale ? ' tuile--principale' : ''}`;
+            const im = document.createElement('img');
+            im.alt = ''; im.decoding = 'async';
+            im.src = k === x.mos!.principale ? x.img : v.img;
+            t.append(im);
+            return t;
+          }));
+          mo.dataset.n = String(x.n);
+        }
+      } else { mo.replaceChildren(); delete mo.dataset.n; }
+    }
+    /** Place les vignettes dans leurs cases (taille de la scène) : chacune couvre sa case avec sa
+     *  zone utile, centrée ; la principale est posée à chaque image (majMosaique). */
+    function placerTuiles(c: HTMLElement, x: Diapo) {
+      const mo = c.querySelector<HTMLElement>('.mosaique')!;
+      if (!x.mos || x.ouv || mo.dataset.n !== String(x.n)) return;
+      const W = scene.clientWidth, H = scene.clientHeight, C = cases(x.mos.vignettes.length, W, H);
+      [...mo.children].forEach((el, k) => {
+        if (k === x.mos!.principale) return;
+        const v = x.mos!.vignettes[k], r = C[k], w = r[2] - r[0], h = r[3] - r[1];
+        Object.assign((el as HTMLElement).style, { left: `${r[0]}px`, top: `${r[1]}px`, width: `${w}px`, height: `${h}px` });
+        const s = Math.max(w / v.l, h / v.h), IW = (v.l * s) / (v.u[2] - v.u[0]), IH = (v.h * s) / (v.u[3] - v.u[1]);
+        const im = el.querySelector('img')!;
+        im.style.width = `${IW}px`; im.style.height = `${IH}px`;
+        im.style.transform = `translate3d(${(w / 2 - (v.u[0] + v.u[2]) / 2 * IW).toFixed(2)}px, ${(h / 2 - (v.u[1] + v.u[3]) / 2 * IH).toFixed(2)}px, 0)`;
+      });
+    }
+    /** Avant / après à l'instant `t` : volet (clip du calque après, ligne) et caméra de l'image après. */
+    function majApres(c: HTMLElement, x: Diapo, t: number) {
+      const A = x.ap!, elA = c.querySelector<HTMLElement>('.lecteur__apres')!, trait = c.querySelector<HTMLElement>('.lecteur__trait')!;
+      const k = calques.indexOf(c);
+      if (t < A.t) { elA.hidden = true; trait.hidden = true; couches[k].ra = null; return; }
+      elA.hidden = false;
+      const xa = apresDe(x), imgA = elA.querySelector('img')!;
+      const ra = cadreA(xa, t);
+      couches[k].ra = ra;
+      imgA.style.transform = transformation(c, xa, ra, 1, imgA);
+      if (mouvementReduit.matches) {
+        // Fondu enchaîné, sans volet.
+        elA.style.clipPath = '';
+        elA.style.opacity = adoucir((t - A.t) / FONDU_APRES_REDUIT).toFixed(3);
+        trait.hidden = true;
+        return;
+      }
+      const q = adoucir((t - A.t) / VOLET_S);
+      if (q < 1) {
+        elA.style.clipPath = `inset(0 ${((1 - q) * 100).toFixed(3)}% 0 0)`;
+        trait.hidden = false;
+        trait.style.transform = `translate3d(${(q * c.clientWidth).toFixed(2)}px, 0, 0)`;
+      } else {
+        elA.style.clipPath = '';
+        trait.hidden = true;
+      }
+    }
+    /** Mosaïque à l'instant `t` : vignettes qui paraissent, puis plongée dans l'image principale. */
+    function majMosaique(c: HTMLElement, x: Diapo, t: number) {
+      const mo = c.querySelector<HTMLElement>('.mosaique')!, img = c.querySelector('img')!;
+      const g = plongee(x), reduit = mouvementReduit.matches;
+      const fin = reduit ? g.t0 + FONDU_MOSAIQUE_REDUIT : g.a0;
+      if (t >= fin) { mo.hidden = true; img.style.visibility = ''; c.style.background = ''; return; }
+      mo.hidden = false;
+      c.style.background = 'var(--c-scene, #f1efea)';
+      // Avant le fondu de la grille (mouvement réduit), l'image principale reste cachée.
+      img.style.visibility = reduit && t >= g.t0 ? '' : 'hidden';
+      const tuiles = [...mo.children] as HTMLElement[];
+      tuiles.forEach((el, k) => {
+        const e = t - (MOSAIQUE_T.apparition + k * MOSAIQUE_T.pas);
+        el.style.opacity = reduit ? '1' : adoucir(e / MOSAIQUE_T.fondu).toFixed(3);
+        const gris = reduit ? 0 : 1 - adoucir(e / (2 * MOSAIQUE_T.fondu));
+        const im = el.querySelector('img')!;
+        im.style.filter = gris > 0.002 ? `grayscale(${gris.toFixed(3)})` : '';
+      });
+      // Plongée : homothétie de la grille, de G (départ) à B (image principale en place).
+      const pr = reduit ? 0 : profil(t - g.t0, g.d, g.m);
+      const r = 1 / g.sigma, s = g.G.s * Math.pow(r, pr), k = s / g.G.s;
+      const Fx = (g.sigma * g.B.tx - g.G.tx) / (g.sigma - 1), Fy = (g.sigma * g.B.ty - g.G.ty) / (g.sigma - 1);
+      const tx = Fx + k * (g.G.tx - Fx), ty = Fy + k * (g.G.ty - Fy);
+      mo.style.transform = `translate3d(${(tx - k * g.G.tx).toFixed(2)}px, ${(ty - k * g.G.ty).toFixed(2)}px, 0) scale(${k.toFixed(6)})`;
+      mo.style.opacity = reduit ? (1 - adoucir((t - g.t0) / FONDU_MOSAIQUE_REDUIT)).toFixed(3) : '';
+      // Case de la principale (repère de la grille) : de sa case à toute la scène réduite.
+      const M: Rect = [g.cx - (g.sigma * g.W) / 2, g.cy - (g.sigma * g.H) / 2, g.cx + (g.sigma * g.W) / 2, g.cy + (g.sigma * g.H) / 2];
+      const R = melanger(g.c, M, pr);
+      const el = tuiles[g.k], im = el.querySelector('img')!;
+      Object.assign(el.style, { left: `${R[0]}px`, top: `${R[1]}px`, width: `${R[2] - R[0]}px`, height: `${R[3] - R[1]}px` });
+      im.style.width = `${g.IW}px`; im.style.height = `${g.IH}px`;
+      im.style.transform = css({ tx: g.G.tx - R[0], ty: g.G.ty - R[1], s: g.G.s });
+    }
+    let legendeMontree = '';
 
     /** Instant courant de la voix de la diapositive : l'audio fait foi, lissé (`horloge`). */
     function instant() {
@@ -832,6 +1109,11 @@ const sectionsLivre = d.actes.map((a, i) => ({
       const x = couches[k].x;
       if (!x) return;
       calques[k].querySelector('img')!.style.transform = transformation(calques[k], x, couches[k].r);
+      const ra = couches[k].ra;
+      if (x.ap && ra) {
+        const imgA = calques[k].querySelector<HTMLImageElement>('.lecteur__apres img')!;
+        imgA.style.transform = transformation(calques[k], apresDe(x), ra, 1, imgA);
+      }
     }
 
     /** Rendu de l'image visible : caméra (horloge de l'audio) × entrée (horloge propre). */
@@ -856,11 +1138,19 @@ const sectionsLivre = d.actes.map((a, i) => ({
       majSurimpressions(t);
       // Intermède avec un cadre : la caméra suit l'horloge de l'intermède.
       const su = x.suite;
+      const tv = ouv ? tempsOuverture() - OUVERTURE : t;
       const r = su?.type === 'chant' && su.cadre && (enSuite || suiteFini)
         ? cadreIntermede(x, su as SuiteChant & { cadre: Rect }, suiteFini ? su.duree : horlogeSuite.lire(sa))
-        : cadreA(x, ouv ? tempsOuverture() - OUVERTURE : t);
+        : cadreA(principal(x), tv);
       couches[visible].r = r;
       img.style.transform = transformation(c, x, r, f);
+      // Avant / après, mosaïque ; puis le cartouche voulu à cet instant (pas pendant un segment).
+      if (x.ap) majApres(c, x, tv);
+      if (x.mos && !x.ouv) majMosaique(c, x, tv);
+      if (lance && !enCarton && !enSuite && !suiteFini) {
+        const v = legendeVoulue(x, tv);
+        if (v !== legendeMontree) changerLegende(v);
+      }
       img.style.filter = gris > 0.002 ? `grayscale(${gris.toFixed(3)})` : '';
       c.style.opacity = opacite.toFixed(3);
       if (opacite >= 1 && sortant >= 0) {
@@ -900,7 +1190,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
       cadre(c, x);
       if (img.getAttribute('src') !== x.img) img.src = x.img;
       img.alt = x.alt;
-      couches[k] = { x, r: cadreA(x, 0) };
+      preparerCalque(c, x);
+      placerTuiles(c, x);
+      couches[k] = { x, r: cadreA(principal(x), 0), ra: null };
       entreeNette = fondu && couvert;
       if (entreeNette) {
         // Sous un écran couvrant : l'ancienne image disparaît tout de suite (jamais d'éclair à la
@@ -1022,7 +1314,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
     function revelerCartouches() {
       for (const el of [elLegende, elMusique]) if (el.classList.contains('est-discret')) estomperPlusTard(el, REAPPARITION);
     }
-    function changerCartouche(x: Diapo) {
+    function changerCartouche(x: Diapo) { changerLegende(legendeVoulue(x, 0)); }
+    function changerLegende(html: string) {
+      legendeMontree = html;
       racine.querySelectorAll('.lecteur__legende--sortant').forEach((e) => e.remove());
       if (elLegende.classList.contains('est-visible')) {
         const copie = elLegende.cloneNode(true) as HTMLElement;
@@ -1032,7 +1326,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
         copie.classList.add('lecteur__legende--sortant');
         window.setTimeout(() => copie.remove(), 500);
       }
-      elLegende.innerHTML = x.legende;
+      elLegende.innerHTML = html;
       elLegende.classList.remove('est-visible');
       void elLegende.offsetWidth;
       elLegende.classList.add('est-visible');
@@ -1097,7 +1391,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (!elPortraits || !P) return;
       const H = scene.clientHeight, W = scene.clientWidth;
       const gauche = parseFloat(getComputedStyle(elPortraits).left) || 8;
-      let h = Math.max(W < 700 ? 50 : 78, Math.min(118, H * 0.17));
+      // ~1,5 fois la taille d'origine (retour de l'utilisateur du 2026-10-08).
+      let h = Math.max(W < 700 ? 70 : 110, Math.min(180, H * 0.25));
       elPortraits.style.setProperty('--ovale-h', `${Math.round(h)}px`);
       const lieu = D.diapos[i].lieu && elLieu ? elLieu.offsetWidth + gauche : 0;
       const place = W - 2 * gauche - lieu;
@@ -1108,7 +1403,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (elMots) elMots.style.bottom = '';
       if (elMots && D.diapos[i].citation) {
         const libre = (W - elMots.offsetWidth) / 2;
-        if (libre < gauche + elPortraits.offsetWidth + 8) elMots.style.bottom = `calc(var(--frise-bas, 0px) + ${Math.round(elPortraits.offsetHeight + gauche + 8)}px)`;
+        if (libre < gauche + elPortraits.offsetWidth + 8) elMots.style.bottom = `calc(var(--surimp-bas, var(--frise-bas, 0px)) + ${Math.round(elPortraits.offsetHeight + (parseFloat(getComputedStyle(elLegende).top) || 8) + 8)}px)`;
       }
     }
     // --- Objets de musée et manuscrits (spec 12, « Enrichissements visuels », 2026-10-08) -----
@@ -1435,6 +1730,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
         for (const g of x.portraits?.gens ?? []) new Image().src = g.src;
         if (x.objet) new Image().src = x.objet.src;
         if (x.manuscrit) new Image().src = x.manuscrit.src;
+        if (x.ap) new Image().src = x.ap.img;
+        for (const v of x.mos?.vignettes ?? []) new Image().src = v.img;
         if (j > k && x.audio) { const a = new Audio(); a.preload = 'auto'; a.src = x.audio; }
         if (x.suite && j <= k + 1) { const a = new Audio(); a.preload = 'auto'; a.src = x.suite.src; }
       }
@@ -2303,9 +2600,12 @@ const sectionsLivre = d.actes.map((a, i) => ({
     (racine as any).__camera = (n: number, t: number) => {
       const x = D.diapos.find((d) => d.n === n);
       if (!x) return null;
-      const r = cadreA(x, t);
-      return { cadre: r, vue: vue(x, r), utile: x.u, etapes: x.camera, duree: x.duree, effectives: mouvementReduit.matches ? x.camera.length : plan(x).length,
-        plan: plan(x).map((e, k, P) => ({ t: e.t, de: e.de, a: e.a, ...(k ? ampleur(P[k - 1].v, e.v) : {}) })) };
+      const xp = principal(x);
+      const r = cadreA(xp, t);
+      const ap = x.ap && t >= x.ap.t ? (() => { const xa = apresDe(x); return { cadre: cadreA(xa, t), plan: plan(xa).map((e) => ({ t: e.t, de: e.de, a: e.a })) }; })() : null;
+      const mos = x.mos && !x.ouv ? (() => { const g = plongee(x); return { debut: g.t0, duree: g.d, fin: g.a0, sigma: g.sigma }; })() : null;
+      return { ap, mos, cadre: r, vue: vue(x, r), utile: x.u, etapes: x.camera, duree: x.duree, effectives: mouvementReduit.matches ? x.camera.length : plan(xp).length,
+        plan: plan(xp).map((e, k, P) => ({ t: e.t, de: e.de, a: e.a, ...(k ? ampleur(P[k - 1].v, e.v) : {}) })) };
     };
     (racine as any).__musique = () => ({
       etat: etatMusique, duck, musiqueOn, volume, courant, ctx: ctx?.state ?? null,
@@ -2385,9 +2685,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
     let inactivite = 0;
     function montrerControles() {
       lecteur.classList.remove('inactif');
+      majBasSurimpressions();
       clearTimeout(inactivite);
       inactivite = window.setTimeout(() => {
-        if (joue && document.fullscreenElement === lecteur) lecteur.classList.add('inactif');
+        if (joue && document.fullscreenElement === lecteur) { lecteur.classList.add('inactif'); majBasSurimpressions(); }
       }, 3000);
     }
     for (const ev of ['mousemove', 'touchstart', 'keydown']) lecteur.addEventListener(ev, montrerControles, { passive: true });
@@ -2477,6 +2778,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
     border: 1px solid var(--c-filet);
     overflow: hidden;
     touch-action: pan-y;
+    /* Marges des cartouches du haut, reprises par toutes les surimpressions de coin (spec 12,
+       « Marges des surimpressions du bas ») : à gauche et à droite, et depuis le bas de l'image. */
+    --marge-x: var(--e-2);
+    --marge-y: var(--e-2);
   }
   .lecteur__calque {
     position: absolute;
@@ -2497,6 +2802,35 @@ const sectionsLivre = d.actes.map((a, i) => ({
     transform-origin: 0 0;
     will-change: transform, filter;
   }
+
+  /* Avant / après : l'image après, au-dessus de l'image avant, découverte par un volet (clip-path
+     posé par le script) dont le bord est une ligne verticale fine (blanc cassé bordé de gris). */
+  .lecteur__calque :global(.lecteur__apres) { position: absolute; inset: 0; overflow: hidden; }
+  .lecteur__calque :global(.lecteur__apres img), .lecteur__calque :global(.mosaique img) {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    max-width: none;
+    transform-origin: 0 0;
+    will-change: transform;
+  }
+  .lecteur__calque :global(.lecteur__trait) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -2px;
+    width: 1px;
+    background: rgba(251, 250, 247, 0.95);
+    border-left: 1px solid rgba(26, 26, 26, 0.4);
+    will-change: transform;
+  }
+  /* Mosaïque : grille de vignettes (fins filets de papier entre les cases), transformée en bloc
+     pendant la plongée ; la case de l'image principale passe au-dessus et s'agrandit. */
+  .lecteur__calque :global(.mosaique) { position: absolute; left: 0; top: 0; width: 100%; height: 100%; transform-origin: 0 0; will-change: transform; }
+  .lecteur__calque :global(.tuile) { position: absolute; overflow: hidden; }
+  .lecteur__calque :global(.tuile--principale) { z-index: 1; }
+  .lecteur__calque :global([hidden]) { display: none; }
 
   .lecteur__depart {
     position: absolute;
@@ -2531,8 +2865,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
   /* Cartouche en haut à gauche de l'image : titre, auteur, date. */
   .lecteur__legende {
     position: absolute;
-    top: var(--e-2);
-    left: var(--e-2);
+    top: var(--marge-y);
+    left: var(--marge-x);
     z-index: 1;
     max-width: min(26rem, 45%);
     margin: 0;
@@ -2562,8 +2896,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
      (deux lignes, aucune troncature) ; l'interprète n'apparaît qu'au survol. */
   .lecteur__musique {
     position: absolute;
-    top: var(--e-2);
-    right: var(--e-2);
+    top: var(--marge-y);
+    right: var(--marge-x);
     z-index: 1;
     max-width: min(24rem, 40%);
     margin: 0;
@@ -2955,8 +3289,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .lecteur:fullscreen .lecteur__progression,
   .lecteur:fullscreen .lecteur__controles { background: rgba(251, 250, 247, 0.88); padding-inline: var(--gouttiere); }
   .lecteur:fullscreen .lecteur__acte { grid-row: 1; justify-self: center; padding-block: 0.3rem; font-size: 0.9rem; }
-  .lecteur:fullscreen .lecteur__legende { top: var(--e-3); left: var(--gouttiere); max-width: min(32rem, 40%); }
-  .lecteur:fullscreen .lecteur__musique { top: var(--e-3); right: var(--gouttiere); max-width: min(30rem, 36%); }
+  .lecteur:fullscreen .lecteur__scene { --marge-x: var(--gouttiere); --marge-y: var(--e-3); }
+  .lecteur:fullscreen .lecteur__legende { max-width: min(32rem, 40%); }
+  .lecteur:fullscreen .lecteur__musique { max-width: min(30rem, 36%); }
   .lecteur:fullscreen .lecteur__musique :global(cite) { font-size: 1.2rem; }
   .lecteur:fullscreen .lecteur__musique :global(.m-auteur) { font-size: 1rem; }
   .lecteur:fullscreen .lecteur__legende :global(cite) { font-size: 1.2rem; }
@@ -2983,6 +3318,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .lecteur.inactif { cursor: none; }
   .lecteur.inactif .lecteur__progression,
   .lecteur.inactif .lecteur__controles, .lecteur.inactif .lecteur__acte { opacity: 0; }
+  /* Contrôles masqués en plein écran : le sous-titre descend au bas de l'écran (à leur place), et
+     les surimpressions du bas avec lui (--surimp-bas) ; ils remontent en douceur avec les contrôles. */
+  .lecteur:fullscreen .lecteur__soustitre { transition: transform 450ms ease; }
+  .lecteur:fullscreen.inactif .lecteur__soustitre { transform: translateY(var(--descente-st, 0px)); }
 
   /* Téléphone : image pleine largeur, contrôles sous l'image. */
   @media (max-width: 699px) {
@@ -2992,7 +3331,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     .lecteur__legende :global(cite) { font-size: 0.95rem; }
     .lecteur__legende :global(span) { font-size: 0.82rem; }
     /* Téléphone : la musique passe en bas à droite de l'image, en entier (pas de troncature). */
-    .lecteur__musique { top: auto; bottom: var(--e-1); right: var(--e-1); max-width: 80%; padding: 0.3rem 0.55rem; }
+    .lecteur__musique { top: auto; bottom: var(--marge-y); right: var(--marge-x); max-width: 80%; padding: 0.3rem 0.55rem; }
     .lecteur__musique :global(cite) { font-size: 0.95rem; }
     .lecteur__musique :global(.m-auteur) { font-size: 0.82rem; }
     .lecteur__controles { gap: var(--e-1) var(--e-3); }
@@ -3033,6 +3372,15 @@ const sectionsLivre = d.actes.map((a, i) => ({
   }
   .livre__episode { padding-left: var(--e-3); border-left: 1px solid var(--c-filet); }
   .livre__sources { font-size: 0.9rem; color: var(--c-texte-doux); }
+  /* Avant / après et mosaïques dans le livre d'images : l'image après sous l'image avant, les
+     vignettes de la mosaïque en petite grille. */
+  .livre__apres { margin-top: var(--e-2) !important; }
+  .livre__marque { font-variant: small-caps; letter-spacing: 0.06em; color: var(--c-texte-doux); }
+  .livre__mosaique { margin-top: var(--e-2); }
+  .livre__mosaique p { margin: 0 0 var(--e-1); }
+  .livre__mosaique ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: var(--e-2); }
+  .livre__mosaique li { margin: 0; }
+  .livre__mosaique figcaption { font-size: 0.8rem; }
 </style>
 
 <!-- Frise du temps : son HTML est injecté (set:html), d'où des styles globaux, préfixés par .diaporama. -->
@@ -3105,7 +3453,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .diaporama .frise-t--surimpression {
     position: absolute;
     left: 50%;
-    bottom: calc(var(--frise-bas, 0px) + var(--e-2));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--e-2));
     z-index: 2;
     width: min(40rem, calc(100% - 2 * var(--e-3)));
     padding: 0.35rem 1.1rem 0.15rem;
@@ -3127,8 +3475,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .diaporama .frise-t--surimpression.est-visible ~ .lieu,
   .diaporama .frise-t--surimpression.est-visible ~ .portraits,
   .diaporama .frise-t--surimpression.est-visible ~ .objet,
-  .diaporama .frise-t--surimpression.est-visible ~ .date-rep { bottom: calc(var(--frise-bas, 0px) + 5.4rem); }
-  .diaporama .frise-t--surimpression.est-visible ~ .chiffre { bottom: calc(var(--frise-bas, 0px) + max(var(--chiffre-bas, 7%), 5.4rem)); }
+  .diaporama .frise-t--surimpression.est-visible ~ .date-rep { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + 5.4rem); }
+  .diaporama .frise-t--surimpression.est-visible ~ .chiffre { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + max(var(--chiffre-bas, 7%), 5.4rem)); }
   @media (prefers-reduced-motion: reduce) {
     .diaporama .frise-t__curseur, .diaporama .frise-t__date { transition: none !important; }
     .diaporama .en-carton .frise-t--carton { animation: none; }
@@ -3140,12 +3488,12 @@ const sectionsLivre = d.actes.map((a, i) => ({
   }
   .diaporama .lecteur:fullscreen .frise-t--carton { max-width: min(46rem, 100%); }
   @media (max-width: 699px) {
-    .diaporama .frise-t--surimpression { width: 100%; bottom: var(--frise-bas, 0px); padding-inline: var(--gouttiere); }
+    .diaporama .frise-t--surimpression { width: 100%; bottom: var(--surimp-bas, var(--frise-bas, 0px)); padding-inline: var(--gouttiere); }
     .diaporama .frise-t--surimpression.est-visible ~ .lieu,
     .diaporama .frise-t--surimpression.est-visible ~ .portraits,
     .diaporama .frise-t--surimpression.est-visible ~ .objet,
-    .diaporama .frise-t--surimpression.est-visible ~ .date-rep { bottom: calc(var(--frise-bas, 0px) + 4.6rem); }
-    .diaporama .frise-t--surimpression.est-visible ~ .chiffre { bottom: calc(var(--frise-bas, 0px) + max(var(--chiffre-bas, 6%), 4.6rem)); }
+    .diaporama .frise-t--surimpression.est-visible ~ .date-rep { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + 4.6rem); }
+    .diaporama .frise-t--surimpression.est-visible ~ .chiffre { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + max(var(--chiffre-bas, 6%), 4.6rem)); }
     .diaporama .frise-t__date { font-size: 0.88rem; }
     .diaporama .frise-t__annee { font-size: 0.75rem; }
   }

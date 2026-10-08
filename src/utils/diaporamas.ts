@@ -32,6 +32,33 @@ export interface ImageDiapo {
   utile?: [number, number, number, number];
   /** La zone utile est saisie à la main : utile.py ne la réécrit pas. */
   utile_manuel?: boolean;
+  /** Avant / après (spec 12, « Enrichissements visuels », point 3) : la diapositive commence sur
+   *  cette image-ci (« avant ») ; au passage `apres.quand`, un volet glissant lent découvre
+   *  l'image « après » (même lieu ou même sujet), et le cartouche passe de l'une à l'autre. */
+  apres?: ImageApres;
+}
+/** Image « après » d'un avant / après : notice complète comme une image de diapositive ; `cadre`
+ *  = vue de la caméra au volet, qui correspond au dernier cadre de la caméra de l'image « avant »
+ *  (même lieu superposé) ; `quand` = passage exact qui déclenche le volet ; `camera` = étapes
+ *  suivantes sur l'image « après » (toutes avec un `quand` situé après celui du volet). */
+export interface ImageApres extends Omit<ImageDiapo, 'camera' | 'ouverture' | 'apres'> {
+  cadre: [number, number, number, number];
+  quand: string;
+  camera?: EtapeCamera[];
+}
+/** Vignette d'une mosaïque (point 5) : l'une des 4 à 6 images d'un même événement montrées en
+ *  grille au début de la diapositive ; la vignette `principale` est l'image de la diapositive. */
+export interface Vignette {
+  fichier?: string; commons: string; titre?: string; auteur?: string; date?: string; technique?: string;
+  conservation?: string; licence?: string; largeur?: number; hauteur?: number;
+  recadrage?: [number, number, number, number]; utile?: [number, number, number, number]; utile_manuel?: boolean;
+}
+export interface Mosaique {
+  /** Ligne du cartouche pendant la grille (« Cinq vues de la prise de la Bastille »). */
+  legende: string;
+  vignettes: Vignette[];
+  /** Rang (dans `vignettes`) de l'image de la diapositive, dans laquelle la caméra plonge. */
+  principale: number;
 }
 /** Cadre [x0, y0, x1, y1] (fractions de l'image servie) ; `quand` : passage exact de la narration. */
 export interface EtapeCamera { cadre: [number, number, number, number]; quand?: string }
@@ -68,6 +95,9 @@ export interface Diapositive {
   /** Date du calendrier républicain dite par la voix, avec sa correspondance grégorienne (point 4) :
    *  une au plus. */
   dates_republicaines?: DateRepublicaine[];
+  /** Mosaïque puis plongée (point 5) : grille de 4 à 6 images au début de la diapositive, puis la
+   *  caméra plonge dans l'image principale. */
+  mosaique?: Mosaique;
 }
 /** Chiffre clé (spec 12, « Enrichissements visuels », point 4) : `quand` = passage exact où la voix
  *  dit le nombre (prudence comprise : « plus de mille détenus ») ; `valeur` = ce nombre ; `prefixe`
@@ -460,6 +490,34 @@ export function versUtile(r: Rect, u: Rect): Rect {
   const [y0, y1] = borne((r[1] - u[1]) / h, (r[3] - u[1]) / h);
   const k = (v: number) => Math.round(v * 1e5) / 1e5;
   return [k(x0), k(y0), k(x1), k(y1)];
+}
+
+// --- Avant / après et mosaïques (spec 12, « Enrichissements visuels », points 3 et 5) ------------
+
+/** Durée du volet glissant d'un avant / après (s) : la ligne traverse la scène, départ et arrêt
+ *  doux ; la caméra est fixe pendant ce temps (même valeur dans verifier.py). */
+export const VOLET = 3.5;
+/** Mosaïque : première vignette (s de la voix), écart entre deux vignettes, fondu de chacune, et
+ *  tenue de la grille complète avant la plongée (mêmes valeurs dans verifier.py). */
+export const MOSAIQUE = { apparition: 0.3, pas: 0.5, fondu: 0.8, tenue: 1.0 };
+/** Début de la plongée (s de la voix) : la grille est complète et a tenu `tenue` secondes. */
+export const debutPlongee = (n: number) => MOSAIQUE.apparition + (n - 1) * MOSAIQUE.pas + MOSAIQUE.fondu + MOSAIQUE.tenue;
+
+/** Zone utile d'une image quelconque (image après, vignette). */
+export function zoneUtileDe(i: { utile?: Rect }): Rect {
+  const u = i.utile;
+  return u && u[0] >= 0 && u[1] >= 0 && u[2] <= 1 && u[3] <= 1 && u[2] > u[0] && u[3] > u[1] ? u : [0, 0, 1, 1];
+}
+
+/** Avant / après pour le lecteur : instant du volet (passage `quand`), cadre de raccord et étapes
+ *  suivantes, en fractions de la zone utile de l'image après (instants dans l'audio). */
+export function avantApres(x: Diapositive) {
+  const ap = x.image.apres;
+  if (!ap) return null;
+  const u = zoneUtileDe(ap);
+  const pseudo = { ...x, image: { ...x.image, camera: [{ cadre: ap.cadre }, { cadre: ap.cadre, quand: ap.quand }, ...(ap.camera ?? [])] } };
+  const E = etapesCamera(pseudo as Diapositive);
+  return { t: E[1].t, u, camera: E.slice(1).map((e) => ({ c: versUtile(e.c, u), t: e.t })) };
 }
 
 // --- Frise du temps (spec 12, révision du 2026-10-07) ------------------------------------------

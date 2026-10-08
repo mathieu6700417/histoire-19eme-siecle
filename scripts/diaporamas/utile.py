@@ -230,6 +230,23 @@ def combiner(pix: list[float], vis: list[float] | None) -> tuple[list[float], st
     return [0.0, 0.0, 1.0, 1.0], 'image entière (tout refusé)'
 
 
+def elements(d: dict) -> list[dict]:
+    """Images à zone utile : celle de chaque diapositive, puis l'image « après » d'un avant / après
+    (clé « 20a ») et les vignettes d'une mosaïque autres que la principale (clé « 18m2 »), sous la
+    forme {'n', 'image'} (même dictionnaire que dans le JSON : la zone y est écrite)."""
+    sortie = []
+    for x in d['diapositives']:
+        sortie.append(x)
+        ap = x['image'].get('apres')
+        if ap and ap.get('fichier'):
+            sortie.append({'n': f"{x['n']}a", 'image': ap})
+        mo = x.get('mosaique') or {}
+        for k, v in enumerate(mo.get('vignettes', [])):
+            if k != mo.get('principale') and v.get('fichier'):
+                sortie.append({'n': f"{x['n']}m{k}", 'image': v})
+    return sortie
+
+
 def empreinte(slug: str, x: dict) -> str:
     f = c.PUBLIC / slug / x['image']['fichier']
     h = hashlib.sha1(f.read_bytes()).hexdigest()[:16]
@@ -250,7 +267,7 @@ def planche(slug: str, d: dict, cache: dict, par_page: int = 15, colonnes: int =
     vl, vh, texte_h = 420, 420, 64
     police, petite = _police(20), _police(13)
     sorties = []
-    diapos = d['diapositives']
+    diapos = elements(d)
     for p in range(0, len(diapos), par_page):
         lot = diapos[p:p + par_page]
         lignes = (len(lot) + colonnes - 1) // colonnes
@@ -306,7 +323,7 @@ def main() -> int:
         return 0
 
     a_faire = []
-    for x in d['diapositives']:
+    for x in elements(d):
         if x['image'].get('utile_manuel'):
             continue
         e = cache.get(str(x['n']))
@@ -318,7 +335,7 @@ def main() -> int:
             a_faire.append(x)
         elif e.get('utile'):
             x['image']['utile'] = e['utile']  # réponse en cache, sans appel
-    manuelles = [x['n'] for x in d['diapositives'] if x['image'].get('utile_manuel')]
+    manuelles = [x['n'] for x in elements(d) if x['image'].get('utile_manuel')]
     print(f"{len(a_faire)} image(s) à analyser ({'bords seuls' if a.pixels else MODELE}) ; "
           f"manuelles : {manuelles or 'aucune'}.")
 
@@ -330,12 +347,12 @@ def main() -> int:
             try:
                 r = fut.result()
             except Exception as e:  # noqa: BLE001
-                print(f"{x['n']:3d} ERREUR {e}")
+                print(f"{x['n']!s:>4} ERREUR {e}")
                 continue
             x['image']['utile'] = r['utile']
             cache[str(x['n'])] = {'empreinte': empreinte(d['slug'], x), **r}
             v = r['vision'] or {}
-            print(f"{x['n']:3d} {r['utile']} ({r['source']}) bords {r['pixels']} "
+            print(f"{x['n']!s:>4} {r['utile']} ({r['source']}) bords {r['pixels']} "
                   f"modèle {v.get('zone')} « {v.get('exclu', '')} »")
             with verrou:
                 c.ecrire(f, d)
