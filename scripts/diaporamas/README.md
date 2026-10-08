@@ -43,6 +43,7 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle, bilan des mentions. |
 | `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage proposé par Gemini Flash puis contrôlé, webp ovale), contrôle de visibilité des personnes sur les images, planche de contrôle. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
+| `parallaxe.py` | Parallaxe 2,5D (banc d'essai) : profondeur par Depth Anything V2 Small (local), 2 ou 3 plans à alpha en rampe de profondeur, comblement OpenCV sous les plans proches, couleurs de bord démêlées, webp par plan, planche de contrôle. Venv `.cache/venv-parallaxe`. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
 | `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques »). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
@@ -119,6 +120,10 @@ python3 scripts/diaporamas/objets.py --chercher "assiette révolutionnaire"
 python3 scripts/diaporamas/objets.py --registre               # ce qui manque (--id x y, --force)
 python3 scripts/diaporamas/objets.py --planche
 python3 scripts/diaporamas/objets.py revolution --relever
+
+# Parallaxe 2,5D (banc d'essai, voir « Parallaxe 2,5D ») : plans par profondeur, planche à relire
+python3 scripts/diaporamas/parallaxe.py revolution --n 47 56 81 122          # --plans 2|3, --amplitude
+python3 scripts/diaporamas/parallaxe.py revolution --n 47 --planche          # planche seule
 
 # Insérer des diapositives (groupes {"apres": n actuel, "diapositives": […]}) et tout renuméroter ;
 # --essai affiche la correspondance sans rien écrire. Puis images.py, voix.py, camera.py.
@@ -780,13 +785,18 @@ diapositive d'un acte (ouverture du carton).
   écart de 5 s compté depuis le passage). Cartouche de l'image après dès le début du volet. Mouvement
   réduit : fondu enchaîné de 1 s ;
 - mosaïque : grille en 2 lignes (4 → 2 × 2 ; 5 → 2 au-dessus de 3 ; 6 → 3 × 2), filets de papier de
-  4 px, chaque vignette couvrant sa case avec sa zone utile ; vignettes en fondu (0,8 s, gris →
-  couleur), une toutes les 0,5 s depuis 0,3 s ; grille complète tenue 1 s ; puis **plongée** :
+  4 px, chaque vignette couvrant sa case avec sa zone utile ; **révision du 2026-10-08** : la grille est
+  entière dès l'entrée de la diapositive (jamais d'apparition une à une sur du blanc), puis chaque
+  vignette est **mise en valeur à son tour** (0,9 s chacune depuis 1 s de voix, la principale en
+  dernier, fondus croisés de 0,4 s) : en pleine couleur et avancée (échelle 1,03, sans ombre), les
+  autres en gris voilé (gris à 85 %, opacité 55 % sur le fond de scène) ; la principale garde sa
+  couleur et revient à l'échelle 1 avant la plongée ; tenue de 0,6 s après le dernier tour ; puis **plongée** :
   homothétie de toute la grille (zoom logarithmique, durée selon l'ampleur avec les plafonds de la
   caméra, ~5 s pour une case de la moitié de la scène), la case principale s'agrandit jusqu'à la
   scène entière et l'image principale est alors exactement à sa première vue, où sa caméra commence
   (vitesse nulle aux deux bouts). Cartouche « Cinq vues… » pendant la grille, cartouche normal dès
-  le début de la plongée. Mouvement réduit : grille complète d'emblée, puis fondu de 0,8 s ;
+  le début de la plongée. Mouvement réduit : grille fixe en couleur, sans mise en valeur, puis fondu de
+  0,8 s ;
 - tout dérive de l'instant lissé de la voix : pause, reprise, sauts et retour au début justes ; la
   clé de reprise d'un avant / après est le fichier Commons de l'image après.
 
@@ -870,3 +880,66 @@ chiffre ou date raccourcis ou omis en avertissement.
 Révolution : 8 chiffres (diapositives 18, 31, 55, 61, 67, 92, 108, 122) et 7 dates (92, 94, 105, 109,
 110, 116, 124) ; caméra mesurée à nouveau sur ces 14 diapositives (1280 × 720, 1920 × 1080, 390 × 844) :
 rien au-dessus des plafonds, aucun à-coup, rien hors de la zone utile.
+
+## Parallaxe 2,5D (banc d'essai, 2026-10-08)
+
+Spec 12, « Enrichissements visuels », point 6 : les plans d'un tableau glissent très lentement l'un sur
+l'autre. **Banc d'essai** sur 4 diapositives de la Révolution, à valider par l'utilisateur avant toute
+généralisation (~8 par période, une par acte).
+
+Champ facultatif dans l'image d'une diapositive, écrit par `parallaxe.py` :
+
+```json
+"parallaxe": { "plans": ["parallaxe/047-0.webp", "parallaxe/047-1.webp", "parallaxe/047-2.webp"], "amplitude": 0.015 }
+```
+
+`plans` va du fond (opaque) au premier plan (transparents), fichiers dans
+`public/diaporamas/<slug>/parallaxe/`, aux dimensions de l'image servie ; `amplitude` : déplacement
+final du premier plan à l'écran, en fraction de la largeur de la scène (0,005 à 0,02).
+
+Préparation (`parallaxe.py`, venv `.cache/venv-parallaxe` qui voit le torch du système ; voir l'en-tête
+du script pour l'installer ; le script s'y relance de lui-même) :
+1. profondeur relative par **Depth Anything V2 Small** (`depth-anything/Depth-Anything-V2-Small-hf`,
+   Apache 2.0, local, MPS), lissée (filtre bilatéral), normalisée sur la zone utile ;
+2. seuils entre plans par Otsu (2 ou 3 plans, `--plans`) ;
+3. alpha de chaque plan proche = **rampe dans l'espace des profondeurs** (largeur 0,06) : nette sur une
+   arête d'occlusion, large sur une surface continue (sol, ciel), sans couture ; îles et trous de moins
+   de 0,2 % de l'image nettoyés ; nul hors de la zone utile ;
+4. **comblement** sous chaque plan proche (OpenCV `inpaint`, Telea, rayon 6) dans son cœur élargi de
+   4 px, fondu sur 3 px ; le plan proche emporte cette bande (alpha ≥ part comblée) ;
+5. **couleurs de bord démêlées** : sur la rampe, la couleur d'un plan est calculée pour que la
+   composition au repos redonne exactement l'image (écart moyen 0,02 sur 765, alpha quantifié compris) ;
+6. webp q 82 (alpha q 90) ; planche `.cache/diaporamas/parallaxe/NNN.jpg` : image, profondeur et seuils,
+   fond comblé, plans sur damier, décalage exagéré ×3, écart de composition ×4.
+
+Lecteur (`Diaporama.astro`) :
+- les plans prennent la transformation de la caméra ; le fond ne glisse pas, le plan j sur N glisse
+  de j/(N−1) de l'amplitude ; le glissement n'avance que **pendant les tenues** de la caméra (jamais
+  pendant une transition, ni avant 2 s de voix : l'entrée gris → couleur est finie), sur les tenues
+  d'au moins 3 s, à vitesse de croisière constante (chaque tenue au prorata de sa durée hors rampes),
+  rampes de 2,5 s, à sens unique, arrêté à la fin de la voix ; figé dans le fondu vers la diapositive
+  suivante ;
+- **vitesse de croisière plafonnée** à 0,25 % de la largeur de la scène par seconde : l'amplitude est
+  réduite s'il le faut (diapositives à tenues courtes) ;
+- **jamais de bord** : sens du glissement vers le côté où la caméra laisse le plus de zone utile hors
+  de l'écran sur toute la voix (marge m, échantillonnée tous les 0,25 s, une fois par diapositive et
+  par taille de scène) ; si m ne suffit pas, le plan s'agrandit autour du centre de la scène, en
+  proportion de l'avancement (1 + q·k, k = (D − m)/(W/2 + m)), le déplacement maximal à l'écran restant
+  égal à l'amplitude (sans marge : le plan s'agrandit depuis le bord qui recule) ; vitesse relative
+  des plans indépendante de la caméra ;
+- **relève invisible** : l'image seule est montrée d'abord ; les plans la remplacent dès qu'ils sont
+  décodés, l'entrée finie et l'avancement encore nul (composition identique) ; arrivés trop tard,
+  ils sont abandonnés pour cette fois (l'image reste seule, sans saut) ; préchargés avec les 2
+  diapositives suivantes ;
+- `prefers-reduced-motion` : pas de parallaxe (l'image seule) ; ignorée sur un avant / après ou une
+  mosaïque.
+
+`verifier.py` : 2 ou 3 plans, fichiers présents, dimensions de l'image, fond opaque et plans proches
+transparents (en-tête WebP lu sans dépendance), amplitude de 0,005 à 0,02, ni avant / après ni
+mosaïque. `renumeroter.py` renomme aussi `parallaxe/NNN-k.webp`.
+
+Révolution (banc d'essai) : 47 (Pils, Rouget de Lisle), 56 (Vernet, Valmy), 81 (Hubert Robert, la
+violation des caveaux de Saint-Denis), 122 (Lejeune, les Pyramides) ; 3 plans, amplitude 0,015 ;
+815 Ko de plans en tout pour les quatre (images d’origine : 521 Ko), soit 1,6 fois l’image par diapositive. Le *Serment des Horaces* (6) a été
+écarté : les épées du père, trop fines, restent dans le fond et se détachent de sa main.
+

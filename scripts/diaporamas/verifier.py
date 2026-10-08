@@ -1413,12 +1413,12 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
 
 # --- Avant / après et mosaïques (spec 12, « Enrichissements visuels », points 3 et 5) ------------
 VOLET = 3.5   # durée du volet (s) ; mêmes valeurs que src/utils/diaporamas.ts
-MOSAIQUE = {'apparition': 0.3, 'pas': 0.5, 'fondu': 0.8, 'tenue': 1.0}
+MOSAIQUE = {'apparition': 1.0, 'pas': 0.9, 'fondu': 0.4, 'tenue': 0.6}  # révision du 2026-10-08 : grille entière, tours de mise en valeur
 PLONGEE_MIN = 3.0  # durée minimale de la plongée (s) : le lecteur l'allonge selon l'ampleur (~5 s pour une grille de 2 lignes)
 
 
 def debut_plongee(n: int) -> float:
-    return MOSAIQUE['apparition'] + (n - 1) * MOSAIQUE['pas'] + MOSAIQUE['fondu'] + MOSAIQUE['tenue']
+    return MOSAIQUE['apparition'] + n * MOSAIQUE['pas'] + MOSAIQUE['tenue']
 
 
 def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[list[str], list[str], int, int]:
@@ -1538,6 +1538,68 @@ def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[l
     if n_mos and n_mos != 2:
         avert.append(f'{n_mos} mosaïque(s) (2 visées par période)')
     return erreurs, avert, n_ap, n_mos
+
+
+# --- Parallaxe 2,5D (spec 12, « Enrichissements visuels », point 6, banc d'essai) --------------------
+PARALLAXE_AMPLITUDE = (0.005, 0.02)  # déplacement final du premier plan, fraction de la largeur de la scène
+
+
+def entete_webp(f) -> tuple[int, int, bool] | None:
+    """(largeur, hauteur, transparence) lus dans l'en-tête d'un WebP (bibliothèque standard)."""
+    b = f.read_bytes()[:40]
+    if len(b) < 30 or b[:4] != b'RIFF' or b[8:12] != b'WEBP':
+        return None
+    k = b[12:16]
+    if k == b'VP8X':
+        return 1 + int.from_bytes(b[24:27], 'little'), 1 + int.from_bytes(b[27:30], 'little'), bool(b[20] & 0x10)
+    if k == b'VP8L':
+        v = int.from_bytes(b[21:25], 'little')
+        return 1 + (v & 0x3FFF), 1 + ((v >> 14) & 0x3FFF), bool((v >> 28) & 1)
+    if k == b'VP8 ':
+        return int.from_bytes(b[26:28], 'little') & 0x3FFF, int.from_bytes(b[28:30], 'little') & 0x3FFF, False
+    return None
+
+
+def controler_parallaxe(d: dict, dossier) -> tuple[list[str], list[str], list[int]]:
+    """`image.parallaxe` `{ plans, amplitude }` (parallaxe.py) : 2 ou 3 plans, fichiers présents, aux
+    dimensions de l'image servie, le fond opaque et les plans proches transparents ; amplitude de 1 à
+    2 % de la scène environ (0,005 à 0,02) ; jamais sur un avant / après ni une mosaïque (le lecteur
+    l'y ignorerait). Dosage : ~8 par période si le banc d'essai est validé."""
+    erreurs, avert, nums = [], [], []
+    for x in d['diapositives']:
+        p = x['image'].get('parallaxe')
+        if p is None:
+            continue
+        q = f"{x['n']} : parallaxe"
+        nums.append(x['n'])
+        if not isinstance(p, dict) or set(p) - {'plans', 'amplitude'}:
+            erreurs.append(f'{q} : champ attendu {{ plans, amplitude }}')
+            continue
+        plans, amp = p.get('plans'), p.get('amplitude')
+        if not isinstance(plans, list) or not 2 <= len(plans) <= 3 or not all(isinstance(f, str) for f in plans):
+            erreurs.append(f'{q} : 2 ou 3 plans attendus (du fond au premier plan)')
+            continue
+        if not isinstance(amp, (int, float)) or not PARALLAXE_AMPLITUDE[0] <= amp <= PARALLAXE_AMPLITUDE[1]:
+            erreurs.append(f'{q} : amplitude {amp} hors de {PARALLAXE_AMPLITUDE[0]} à {PARALLAXE_AMPLITUDE[1]}')
+        if x['image'].get('apres') or x.get('mosaique'):
+            erreurs.append(f'{q} : pas de parallaxe sur un avant / après ni une mosaïque')
+        for k, f in enumerate(plans):
+            chemin = dossier / f
+            if not chemin.is_file():
+                erreurs.append(f'{q} : plan manquant {f} (relancer parallaxe.py)')
+                continue
+            e = entete_webp(chemin)
+            if not e:
+                erreurs.append(f'{q} : {f} n\'est pas un WebP lisible')
+                continue
+            l, h, alpha = e
+            if (l, h) != (x['image'].get('largeur'), x['image'].get('hauteur')):
+                erreurs.append(f"{q} : {f} fait {l} × {h} px, l'image {x['image'].get('largeur')} × {x['image'].get('hauteur')} (relancer parallaxe.py)")
+            if k == 0 and alpha:
+                avert.append(f'{q} : le fond {f} a une couche de transparence (il doit être opaque)')
+            if k > 0 and not alpha:
+                erreurs.append(f'{q} : le plan {f} est sans transparence')
+    return erreurs, avert, nums
 
 
 def verifier(slug: str) -> bool:
@@ -1684,6 +1746,9 @@ def verifier(slug: str) -> bool:
     e_am, a_am, n_ap, n_mos = controler_avant_apres_mosaiques(d, img, dossier)
     erreurs += e_am
     avert += a_am
+    e_par, a_par, n_par = controler_parallaxe(d, dossier)
+    erreurs += e_par
+    avert += a_par
 
     pauses = [pause_apres(x) for x in diapos]
     longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
@@ -1724,6 +1789,8 @@ def verifier(slug: str) -> bool:
     if n_ap or n_mos:
         print(f"Avant/après et mosaïques : {n_ap} avant/après (diapositives {', '.join(str(x['n']) for x in diapos if x['image'].get('apres'))}), "
               f"{n_mos} mosaïque(s) (diapositives {', '.join(str(x['n']) for x in diapos if x.get('mosaique'))}).")
+    if n_par:
+        print(f"Parallaxe 2,5D (banc d'essai) : {len(n_par)} diapositive(s) ({', '.join(map(str, n_par))}).")
     datees = sum(1 for x in diapos if 'date' in x)
     print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} surimpression(s) '
           f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")

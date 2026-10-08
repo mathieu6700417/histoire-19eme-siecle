@@ -12,7 +12,7 @@ la main) et les anciens numéros `n` servent de clés.
 
 Tout renvoi par numéro est recalculé : `n`, fichiers `NNN.webp` / `NNN.m4a` (renommés dans
 public/diaporamas/<slug>/, en deux temps pour éviter les collisions), `image.fichier` et
-`audio.fichier` (et `NNN-apres.webp`, `NNN-mK.webp` des avant/après et mosaïques), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
+`audio.fichier` (et `NNN-apres.webp`, `NNN-mK.webp` des avant/après et mosaïques, `parallaxe/NNN-k.webp` des parallaxes), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
 `portrait.diapositive` des lectures. Les états de .cache/diaporamas/<slug>/ indexés par numéro
 (images.json, voix.json, camera.json) sont réindexés : les voix, licences et cadrages inchangés
 restent reconnus, rien n'est resynthétisé (l'empreinte du texte fait foi). L'empreinte de
@@ -89,6 +89,13 @@ def main() -> int:
                     obj['fichier'] = neuf
                 elif f_ == c.nom(o, 'webp'):
                     obj['fichier'] = c.nom(nv, 'webp')
+            # Plans d'une parallaxe (parallaxe/NNN-k.webp, point 6).
+            par = x['image'].get('parallaxe') or {}
+            for k, f_ in enumerate(par.get('plans', [])):
+                if f_.startswith(f'parallaxe/{o:03d}-'):
+                    neuf = f'parallaxe/{nv:03d}-' + f_[len('parallaxe/') + 4:]
+                    renommages.append((dossier / f_, dossier / neuf))
+                    par['plans'][k] = neuf
     temporaires = []
     for src, dst in renommages:
         if src.exists():

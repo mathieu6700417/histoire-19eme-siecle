@@ -36,12 +36,18 @@ export interface ImageDiapo {
    *  cette image-ci (« avant ») ; au passage `apres.quand`, un volet glissant lent découvre
    *  l'image « après » (même lieu ou même sujet), et le cartouche passe de l'une à l'autre. */
   apres?: ImageApres;
+  /** Parallaxe 2,5D (spec 12, « Enrichissements visuels », point 6, banc d'essai) : plans de
+   *  l'image séparés par profondeur (scripts/diaporamas/parallaxe.py), du fond (opaque, comblé
+   *  sous les plans proches) au premier plan (transparents), chemins dans public/diaporamas/<slug>/ ;
+   *  `amplitude` : déplacement final du premier plan, en fraction de la largeur de la scène
+   *  (0,005 à 0,02). Ignorée sur un avant / après ou une mosaïque. */
+  parallaxe?: { plans: string[]; amplitude: number };
 }
 /** Image « après » d'un avant / après : notice complète comme une image de diapositive ; `cadre`
  *  = vue de la caméra au volet, qui correspond au dernier cadre de la caméra de l'image « avant »
  *  (même lieu superposé) ; `quand` = passage exact qui déclenche le volet ; `camera` = étapes
  *  suivantes sur l'image « après » (toutes avec un `quand` situé après celui du volet). */
-export interface ImageApres extends Omit<ImageDiapo, 'camera' | 'ouverture' | 'apres'> {
+export interface ImageApres extends Omit<ImageDiapo, 'camera' | 'ouverture' | 'apres' | 'parallaxe'> {
   cadre: [number, number, number, number];
   quand: string;
   camera?: EtapeCamera[];
@@ -497,11 +503,13 @@ export function versUtile(r: Rect, u: Rect): Rect {
 /** Durée du volet glissant d'un avant / après (s) : la ligne traverse la scène, départ et arrêt
  *  doux ; la caméra est fixe pendant ce temps (même valeur dans verifier.py). */
 export const VOLET = 3.5;
-/** Mosaïque : première vignette (s de la voix), écart entre deux vignettes, fondu de chacune, et
- *  tenue de la grille complète avant la plongée (mêmes valeurs dans verifier.py). */
-export const MOSAIQUE = { apparition: 0.3, pas: 0.5, fondu: 0.8, tenue: 1.0 };
-/** Début de la plongée (s de la voix) : la grille est complète et a tenu `tenue` secondes. */
-export const debutPlongee = (n: number) => MOSAIQUE.apparition + (n - 1) * MOSAIQUE.pas + MOSAIQUE.fondu + MOSAIQUE.tenue;
+/** Mosaïque (révision du 2026-10-08) : la grille est entière dès l'entrée ; première mise en
+ *  valeur (s de la voix), durée du tour de chaque vignette (la principale en dernier), fondu croisé
+ *  entre deux tours, et tenue après le dernier tour avant la plongée (≥ fondu ; mêmes valeurs dans
+ *  verifier.py). */
+export const MOSAIQUE = { apparition: 1.0, pas: 0.9, fondu: 0.4, tenue: 0.6 };
+/** Début de la plongée (s de la voix) : tous les tours faits, puis `tenue` secondes. */
+export const debutPlongee = (n: number) => MOSAIQUE.apparition + n * MOSAIQUE.pas + MOSAIQUE.tenue;
 
 /** Zone utile d'une image quelconque (image après, vignette). */
 export function zoneUtileDe(i: { utile?: Rect }): Rect {

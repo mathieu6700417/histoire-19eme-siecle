@@ -748,7 +748,7 @@ remplacent les paroles en sous-titre pendant les intermèdes chantés :
   - autres surimpressions : carte, portraits et citation sont déjà retirés pendant un intermède ;
     la frise du temps est masquée au début du chant ; le cartouche de l'image (titre du chant)
     reste au-dessus du voile ; celui de la musique de fond reste masqué ; pas de sous-titre.
-  - le bouton « Sous-titres » commande aussi les paroles : coupé, ni paroles ni voile.
+  - les paroles s'affichent même quand les sous-titres sont coupés (retour de l'utilisateur) ; le bouton « Sous-titres » ne les masque pas.
 
 ### Enrichissements visuels (2026-10-08)
 
@@ -774,6 +774,7 @@ la règle des documents d'époque du domaine public (Commons), monochromes hors 
    an II » → « 27 juillet 1794 »), discrète. Chiffres exacts et sourcés.
 5. **Mosaïque puis plongée** : 4 à 6 images d'un même événement apparaissent en grille, puis la
    caméra plonge dans l'une d'elles, qui devient l'image de la diapositive.
+   **Révision du 2026-10-08** : les vignettes sont **toutes présentes dès le début** (jamais d'apparition une à une sur du blanc) ; elles sont ensuite **mises en valeur une par une** (la vignette en cours en pleine couleur et légèrement avancée, les autres atténuées en gris voilé), puis la caméra plonge dans l'image principale.
 6. **Parallaxe 2,5D** : les plans d'un tableau séparés par estimation de profondeur glissent très
    lentement l'un sur l'autre. **Banc d'essai d'abord** sur 3 ou 4 images de la Révolution ; on
    ne généralise (une par acte) que si l'utilisateur valide le rendu.
@@ -854,6 +855,38 @@ l'image reste le sujet. Les zones couvertes ne font jamais bouger la caméra bru
 drop-shadow(0 0 7px` blanc cassé à 75 %`) drop-shadow(0 3px 9px` noir à 35 %`)`, légende sur un voile
 blanc cassé à 82 % ; taille, coin et place réservée inchangés ; lisible sur image claire (22, 104, 120)
 comme plus sombre (23).
+
+**Valeurs retenues, révision du point 5** (2026-10-08) : grille entière dès l'entrée de la diapositive ;
+mise en valeur à tour de rôle, 0,9 s par vignette depuis 1 s de voix, les autres d'abord dans l'ordre de
+la grille et la principale en dernier, fondus croisés de 0,4 s ; vignette en cours en pleine couleur,
+échelle 1,03 (sans ombre), au-dessus des autres ; autres en gris voilé (`grayscale` 85 %, opacité 55 %
+sur le fond de scène) ; avant le premier tour, toutes en couleur ; la principale garde sa couleur après
+son tour et revient à l'échelle 1 avant la plongée ; tenue de 0,6 s, puis plongée inchangée (5 vignettes :
+plongée à 6,1 s de voix au lieu de 4,1). Cartouche d'une ligne pendant la grille. Mouvement réduit :
+grille fixe en couleur, sans mise en valeur, puis fondu de 0,8 s. Mesuré (18 et 53, 1280 × 720 et
+1920 × 1080) : plongée à 95 % du plafond de zoom au plus fort, aucun à-coup.
+
+**Valeurs retenues, point 6, banc d'essai** (mise en œuvre du 2026-10-08 ; détail dans
+`scripts/diaporamas/README.md`, « Parallaxe 2,5D ») — **en attente de validation par l'utilisateur** :
+- données : `image.parallaxe` `{ plans: [fond, …, premier plan], amplitude }` (2 ou 3 webp dans
+  `public/diaporamas/<slug>/parallaxe/`, amplitude 0,005 à 0,02), écrit par
+  `scripts/diaporamas/parallaxe.py` : profondeur par Depth Anything V2 Small (libre, local), seuils
+  d'Otsu, alpha en rampe de profondeur (net sur les occlusions, fondu sur les surfaces continues),
+  comblement OpenCV (Telea) sous les plans proches, couleurs de bord démêlées (composition au repos =
+  l'image), planche de contrôle ; ignoré sur un avant / après ou une mosaïque ;
+- lecteur : les plans prennent la caméra ; premier plan jusqu'à l'amplitude, plan moyen de moitié,
+  fond fixe ; glissement seulement pendant les tenues de la caméra, à partir de 2 s de voix (l'entrée
+  gris → couleur est finie : décalage nul jusque-là), rampes de 2,5 s, vitesse de croisière constante
+  plafonnée à 0,25 % de la scène par seconde (amplitude réduite au besoin), à sens unique, figé dans
+  les transitions de caméra et le fondu vers la diapositive suivante ; jamais de bord de calque ni rien
+  hors de la zone utile (sens vers la plus grande marge, agrandissement du plan proportionnel à
+  l'avancement si la marge manque) ; relève invisible image → plans au décalage nul, abandon si les
+  plans arrivent trop tard ; `prefers-reduced-motion` : pas de parallaxe ;
+- banc d'essai : 47 (Pils), 56 (Vernet, Valmy), 81 (Hubert Robert, Saint-Denis), 122 (Lejeune,
+  Pyramides), 3 plans, amplitude 0,015 (retenue 0,9 à 1,5 % selon les tenues) ; mesuré (1280 × 720,
+  1920 × 1080, 390 × 844, mouvement réduit) : caméra inchangée et sous les plafonds, aucun saut, vitesse
+  relative des plans de 0,13 à 0,30 % de la scène par seconde au plus fort, continue, aucun bord de zone
+  utile visible ; plans : 815 Ko pour les quatre (1,6 fois l'image).
 
 ### Marges des surimpressions du bas (2026-10-08)
 
