@@ -112,13 +112,17 @@ export interface PisteFond extends PisteCommune {
   volume?: number;
 }
 /** Intermède chanté joué au premier plan après la diapositive `apres`. `paroles` :
- *  [instant (s, dans l'extrait), vers]. `instrumental` : intermède musical (œuvre sans
- *  paroles, spec 12, « Arts et techniques ») ; `paroles` est vide et le sous-titre masqué. */
+ *  [instant (s, dans l'extrait), vers, mots ?] ; `mots` (calage au mot, spec 12, « Paroles des
+ *  chants façon clip ») : [début, fin] de chaque mot de `motsLus(vers)` ; sans lui (`calage:
+ *  "vers"`, repli), le vers entier paraît à son instant. `instrumental` : intermède musical
+ *  (œuvre sans paroles, spec 12, « Arts et techniques ») ; `paroles` est vide. */
 export interface Intermede extends PisteCommune {
   apres: number;
   auteur: string;
   enregistrement: string;
-  paroles: [number, string][];
+  paroles: ([number, string] | [number, string, [number, number][]])[];
+  /** « mot » : paroles calées au mot ; « vers » : repli, vers entiers (scripts/diaporamas/paroles.py). */
+  calage?: 'mot' | 'vers';
   instrumental?: boolean;
   /** Cadre [x0, y0, x1, y1] (fractions de l'image de la diapositive `apres`) que la caméra
    *  rejoint au début de l'intermède, puis où elle respire ; sans lui, elle reste sur le dernier

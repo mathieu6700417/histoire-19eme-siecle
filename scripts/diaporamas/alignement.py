@@ -75,8 +75,11 @@ def _lettres(mot: str, dico: dict[str, int]) -> list[int]:
     return sortie
 
 
-def aligner(fichier: Path, texte: str, lexique: dict[str, str] | None = None) -> list[list[float]]:
-    """[[début, fin], …] (s) de chaque mot de `commun.mots_lus(texte)` dans l'audio."""
+def aligner(fichier: Path, texte: str, lexique: dict[str, str] | None = None,
+            debut: float = 0.0, fin: float | None = None) -> list[list[float]]:
+    """[[début, fin], …] (s) de chaque mot de `commun.mots_lus(texte)` dans l'audio. `debut` et
+    `fin` : le texte est cherché dans cette fenêtre seulement (instants rendus dans tout l'audio ;
+    paroles des chants, alignées vers par vers, spec 12, « Paroles des chants façon clip »)."""
     import torch
     from torchaudio.functional import forced_align, merge_tokens
     modele, dico, taux = _charger()
@@ -94,6 +97,8 @@ def aligner(fichier: Path, texte: str, lexique: dict[str, str] | None = None) ->
         cibles += ls
         proprietaire += [k] * len(ls)
     son = _audio(fichier)
+    if debut or fin is not None:
+        son = son[:, int(debut * TAUX):None if fin is None else int(fin * TAUX)]
     with torch.inference_mode():
         emission, _ = modele(son)
         emission = torch.log_softmax(emission, dim=-1)
@@ -117,7 +122,7 @@ def aligner(fichier: Path, texte: str, lexique: dict[str, str] | None = None) ->
             avant = next((bornes[j][1] for j in range(k - 1, -1, -1) if bornes[j]), 0.0)
             apres = next((bornes[j][0] for j in range(k + 1, len(bornes)) if bornes[j]), duree)
             bornes[k] = [avant, max(avant, apres)]
-    return [[round(d, 2), round(f, 2)] for d, f in bornes]
+    return [[round(debut + d, 2), round(debut + f, 2)] for d, f in bornes]
 
 
 def prorata(texte: str, phrases: list[list[float]], duree: float) -> list[list[float]]:

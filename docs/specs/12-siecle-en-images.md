@@ -732,6 +732,23 @@ remplacent les paroles en sous-titre pendant les intermèdes chantés :
 - Pause, reprise, sauts et passage (→) justes ; `prefers-reduced-motion` : vers entiers sans
   animation. Téléphone : taille adaptée, aucune coupure de mot. Les intermèdes instrumentaux ne
   changent pas.
+- **Valeurs retenues** (mise en œuvre du 2026-10-08 ; détail dans `scripts/diaporamas/README.md`,
+  « Paroles des chants calées au mot ») :
+  - calage : `scripts/diaporamas/paroles.py` (voix isolée par Hybrid Demucs de torchaudio, puis
+    alignement forcé wav2vec2 du texte entier sur l'extrait ; contrôle sur le mélange, écoute
+    ciblée par Gemini, planches relues, corrections `calage_fenetres` / `calage_retouches`) ;
+    données : `calage: "mot"` et `[début, vers, [[début, fin], …]]` (repli : `calage: "vers"`,
+    `[début, vers]`).
+  - lecteur : voile noir à 56 %, fondu de 1,4 s à l'entrée comme à la sortie (début et fin du chant,
+    saut, passage) ; vers en italique blanc cassé, de 1,45 rem à 3,6 rem selon la scène (7 % de
+    sa largeur, 9,5 % de sa hauteur au plus), centré sous le cartouche, équilibré sur ses lignes,
+    jamais coupé dans un mot ; chaque mot paraît (fondu de 0,4 s, montée de 0,12 em) 0,08 s avant
+    son début chanté ; le vers suivant remplace le précédent (qui s'efface en 0,45 s) ; tous les mots
+    du vers ont leur place dès le début (rien ne bouge quand ils paraissent).
+  - autres surimpressions : carte, portraits et citation sont déjà retirés pendant un intermède ;
+    la frise du temps est masquée au début du chant ; le cartouche de l'image (titre du chant)
+    reste au-dessus du voile ; celui de la musique de fond reste masqué ; pas de sous-titre.
+  - le bouton « Sous-titres » commande aussi les paroles : coupé, ni paroles ni voile.
 
 ### Enrichissements visuels (2026-10-08)
 

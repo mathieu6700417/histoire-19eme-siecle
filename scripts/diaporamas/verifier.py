@@ -31,7 +31,8 @@ NC ni ND), crédits complets (titre, compositeur ou auteur, date, interprète, l
 1 à 3 pistes de fond par acte, 3 à 6 intermèdes chantés (et 1 ou 2 intermèdes musicaux,
 `instrumental`, sans paroles) de 15 à 25 s, chacun après une
 diapositive existante dont la narration annonce le chant (son titre y figure), paroles
-horodatées dans l'ordre et dans la durée de l'extrait. Uniquement de vrais enregistrements
+horodatées dans l'ordre et dans la durée de l'extrait ; calées au mot (`calage: "mot"`, paroles.py),
+chaque mot de chaque vers horodaté, dans l'ordre, dans l'extrait. Uniquement de vrais enregistrements
 (source `commons` ou `archive`) : une piste issue d'un MIDI ou sans enregistrement réel est
 refusée, de même qu'un fichier orphelin dans musique/. La durée totale compte les intermèdes.
 Avertissement quand un acte dure plus que ses pistes de fond enchaînées (elles boucleraient).
@@ -660,6 +661,42 @@ def controler_boucles(d: dict) -> list[str]:
     return avert
 
 
+def _paroles_au_mot(q: str, p: dict, par: list, duree: float) -> list[str]:
+    """Paroles calées au mot (spec 12, « Paroles des chants façon clip », paroles.py) : chaque vers
+    porte [début, fin] de chacun de ses mots (`commun.mots_lus`), dans l'ordre (débuts strictement
+    croissants d'un bout à l'autre du chant), dans la durée de l'extrait, le vers commençant à son
+    premier mot ; `calage` dit « mot » (tous les vers calés) ou « vers » (repli, aucun)."""
+    err = []
+    cales = [x for x in par if len(x) == 3]
+    calage = p.get('calage')
+    if calage not in (None, 'mot', 'vers'):
+        err.append(f'{q} : calage « {calage} » inconnu (« mot » ou « vers »)')
+    if calage == 'mot' and len(cales) != len(par):
+        err.append(f'{q} : calage « mot » mais {len(par) - len(cales)} vers sans mots horodatés')
+    if calage in (None, 'vers') and cales:
+        err.append(f'{q} : mots horodatés sans « calage: mot »')
+    prec = -1.0
+    for k, x in enumerate(cales):
+        vers, mots = x[1], x[2]
+        noms = [m for _, _, m in c.mots_lus(vers)]
+        if not (isinstance(mots, list) and len(mots) == len(noms)
+                and all(isinstance(m, list) and len(m) == 2 and all(isinstance(v, (int, float)) for v in m) for m in mots)):
+            err.append(f'{q} : vers « {vers} » : {len(mots) if isinstance(mots, list) else 0} mots horodatés pour {len(noms)}')
+            continue
+        if abs(mots[0][0] - x[0]) > 0.05:
+            err.append(f'{q} : vers « {vers} » : commence à {x[0]} s, son premier mot à {mots[0][0]} s')
+        for nom, (d, fi) in zip(noms, mots):
+            if d <= prec:
+                err.append(f'{q} : « {nom} » ({vers}) : {d} s, pas après le mot précédent ({prec} s)')
+            if fi < d or d < 0 or fi > duree + 0.01:
+                err.append(f'{q} : « {nom} » ({vers}) : [{d}, {fi}] hors de l\'extrait (0 à {duree} s) ou à l\'envers')
+            prec = d
+    for cle in ('calage_fenetres', 'calage_retouches'):
+        if cle in p and not (isinstance(p[cle], list) and all(v is None or isinstance(v, list) for v in p[cle])):
+            err.append(f'{q} : {cle} invalide')
+    return err
+
+
 def controler_musique(d: dict, dossier) -> tuple[list[str], list[str], float]:
     """Musique : erreurs, avertissements et durée ajoutée par les intermèdes (avec leurs pauses)."""
     from musique import REFUS, licence_admise
@@ -735,9 +772,11 @@ def controler_musique(d: dict, dossier) -> tuple[list[str], list[str], float]:
                 erreurs.append(f'{q} : intermède instrumental avec des paroles')
         elif not par:
             erreurs.append(f'{q} : paroles absentes')
-        elif any(not (isinstance(x, list) and len(x) == 2 and isinstance(x[0], (int, float)) and str(x[1]).strip()) for x in par) \
+        elif any(not (isinstance(x, list) and len(x) in (2, 3) and isinstance(x[0], (int, float)) and str(x[1]).strip()) for x in par) \
                 or [x[0] for x in par] != sorted(x[0] for x in par) or par[0][0] < 0 or par[-1][0] >= duree:
-            erreurs.append(f'{q} : paroles mal horodatées ({par})')
+            erreurs.append(f'{q} : paroles mal horodatées ({[x[:2] for x in par]})')
+        else:
+            erreurs += _paroles_au_mot(q, p, par, duree)
         # Cadre facultatif de la caméra pendant l'intermède (spec 12, « Caméra calme et lente ») :
         # rectangle normalisé de l'image de la diapositive `apres`.
         if 'cadre' in p:

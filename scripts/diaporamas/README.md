@@ -11,6 +11,9 @@ fichier ne décrit que les outils.
 - **ffmpeg** (`brew install ffmpeg`) pour l'encodage AAC des voix.
 - Accès réseau à `commons.wikimedia.org` et à l'API Gemini.
 - Musique (`musique.py`) : bibliothèque standard et **ffmpeg** seulement.
+- Paroles des chants calées au mot (`paroles.py`) : **torch / torchaudio** (comme `alignement.py` ;
+  séparation de la voix par Hybrid Demucs de torchaudio, ~320 Mo téléchargés une fois),
+  **soundfile**, et **matplotlib** pour les planches de contrôle.
 - `GEMINI_API_KEY` dans `.env` à la racine (fichier non versionné).
 
 Les commandes se lancent depuis la racine du projet.
@@ -83,6 +86,10 @@ python3 scripts/diaporamas/musique.py revolution
 python3 scripts/diaporamas/musique.py revolution --piste chant-marseillaise
 python3 scripts/diaporamas/musique.py revolution --sources
 
+# Paroles des intermèdes chantés calées au mot (après musique.py) ; --ecoute : écoute ciblée par
+# Gemini ; --essai : n'écrit rien ; --chant <id> : un seul chant. Relire les planches ensuite.
+python3 scripts/diaporamas/paroles.py revolution --ecoute
+
 # Lectures et épisodes : voix (tout ce qui manque ou a changé, ou un segment précis)
 python3 scripts/diaporamas/voix.py revolution --segments lecture:sieyes episode:dette
 # Lectures : minutage mot par mot des audios existants (fait aussi après chaque synthèse de
@@ -134,7 +141,8 @@ python3 scripts/diaporamas/verifier.py --tous
    `camera.py <slug>`, puis relire les planches-contact (`.cache/diaporamas/<slug>/planche-*.jpg`)
    et corriger à la main les cadres faux (voir ci-dessous).
 6. Musique : écrire `musique` dans le JSON (voir ci-dessous), lancer `musique.py <slug>`,
-   écouter les extraits, ajuster `debut`/`fin` et les paroles.
+   écouter les extraits, ajuster `debut`/`fin` et les paroles, puis `paroles.py <slug> --ecoute`
+   et relire ses planches (voir « Paroles des chants » ci-dessous).
 7. Cartes de lieu, citations et portraits : remplir `lieux`, `citations`, `personnes` et `personnes_vues` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité), lancer
    `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
 8. `verifier.py <slug>` puis `npm run build`.
@@ -334,8 +342,38 @@ l'arrangeur est identifié (étiquette du disque, catalogue) et dans le domaine 
 - Intermèdes : 3 à 6 par période, 15 à 25 s, après la diapositive `apres`, dont la narration
   annonce le chant (son titre y figure : `verifier.py` le contrôle) ; le lecteur l'insère
   dans la durée et la barre de progression. `paroles` : `[instant dans l'extrait, vers]`,
-  texte exact vérifié sur une source fiable ; pour caler les instants, faire écouter
-  l'extrait (une transcription horodatée par Gemini aide, à relire).
+  texte exact vérifié sur une source fiable et **tel qu'il est chanté sur l'enregistrement**
+  (couplets et reprises réellement chantés) ; pour caler les instants, faire écouter
+  l'extrait (une transcription horodatée par Gemini aide, à relire), puis `paroles.py` cale
+  chaque mot (section suivante).
+
+### Paroles des chants calées au mot (`paroles.py`, 2026-10-08)
+
+Format (compatible avec l'ancien) : `"calage": "mot"` et chaque vers devient
+`[début du vers, vers, [[début, fin], …]]`, un couple par mot de `commun.mots_lus(vers)` (la
+ponctuation suit le mot) ; le début du vers est celui de son premier mot. Repli (`"calage":
+"vers"`) : `[début, vers]` seulement, le lecteur montre le vers entier en fondu à son début.
+
+Méthode : voix isolée par séparation de sources (Hybrid Demucs, `HDEMUCS_HIGH_MUSDB_PLUS` de
+torchaudio, sur le fichier joué : mêmes instants), puis alignement forcé wav2vec2 (alignement.py)
+du texte entier sur tout l'extrait, sur la voix isolée et, pour contrôle, sur le mélange.
+Contrôles : mots dans l'ordre, durées de 0,05 à 4 s, dans l'extrait ; écart voix isolée / mélange
+au-delà de 0,35 s signalé ; `--ecoute` : Gemini transcrit chaque vers découpé selon le calage et sa
+première moitié (signalé, pas bloquant : sur des découpes de 1 à 2 s, il invente parfois). Planche
+(spectrogramme de la voix, une rangée par 8 s, débuts des mots en traits pleins, ceux du mélange en
+pointillés) : `.cache/diaporamas/<slug>/paroles/<id>.png`.
+
+Corrections après relecture (dans l'intermède) : `calage_fenetres` (une fenêtre `[t0, t1]` par
+vers, ou `null`) quand l'alignement d'ensemble avale une note tenue et glisse un mot dans le vers
+suivant ; `calage_retouches` (`[[vers, mot, début], …]`, rangs à partir de 1) pour un mot faux ;
+`calage_force: "vers"` impose le repli.
+
+Pièges : sur le chant, wav2vec2 (entraîné sur la parole) place bien les consonnes d'attaque mais
+peut avaler une longue note tenue (le mot suivant part trop tôt) ; relire chaque mot sur la planche
+en suivant la mélodie (une syllabe par note, notes tenues sur les temps forts), et départager à
+l'oreille (whisper large-v3 sur la voix isolée ou Gemini sur une découpe) quand voix isolée et
+mélange divergent. Whisper seul hallucine sur certains 78 tours (« Sous-titrage MFP » pour la
+Marseillaise) : il ne sert qu'au contrôle.
 - Le lecteur (`Diaporama.astro`) mixe par Web Audio : fond à ~-20 dB sous la voix, ~-10 dB
   dans les respirations, ~-4 dB pendant les cartons d'acte, silencieux pendant un intermède
   (constantes `GAINS`) ; bouton « Musique » (M) et volume mémorisés (localStorage).

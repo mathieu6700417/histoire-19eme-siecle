@@ -33,7 +33,7 @@ import { typographie } from '../utils/typographie.mjs';
 import CarteCitation from './CarteCitation.astro';
 import EpisodeVisuels from './EpisodeVisuels.astro';
 import Surimpressions from './Surimpressions.astro';
-import { CARTON, PAUSE, SAUT_JOURS, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
+import { CARTON, PAUSE, SAUT_JOURS, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
 
 interface Props { diaporama: Diaporama }
 const { diaporama: d } = Astro.props;
@@ -174,7 +174,7 @@ const donnees = {
     // Segment joué après la voix : intermède chanté, lecture d'époque ou épisode.
     suite: intermedeApres.has(x.n) ? (() => {
       const c = intermedeApres.get(x.n)!;
-      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheIntermede(c), paroles: c.paroles.map(([s, v]) => [s, t(v)]), instrumental: !!c.instrumental, cadre: c.cadre ? versUtile(c.cadre, zoneUtile(x)) : null };
+      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheIntermede(c), paroles: c.paroles.map(([s, v, m]) => [s, t(v), m && motsLus(t(v)).length === m.length ? m.map(([d]) => d) : null]), instrumental: !!c.instrumental, cadre: c.cadre ? versUtile(c.cadre, zoneUtile(x)) : null };
     })() : lectureApres.has(x.n) ? (() => {
       const l = lectureApres.get(x.n)!;
       const m = minutageLecture(l);
@@ -218,6 +218,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     <div class="lecteur__scene">
       <div class="lecteur__calque est-visible"><img src={urlMedia(d.slug, premiere.image.fichier)} alt={t(premiere.image.titre)} width={premiere.image.largeur} height={premiere.image.hauteur} decoding="async" /></div>
       <div class="lecteur__calque"><img alt="" decoding="async" /></div>
+      <div class="lecteur__clip"><div class="clip__voile"></div><div class="clip__texte"></div></div>
       <p class="lecteur__legende est-visible" set:html={cartouche(premiere)} />
       <p class="lecteur__musique" aria-live="off"></p>
       <div class="lecteur__carton" data-action="passer" aria-hidden="true" title="Passer (Entrée)">
@@ -323,6 +324,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
 
 <script>
   type Rect = [number, number, number, number]; // x0, y0, x1, y1 (fractions de l'image)
+  /** Mots d'un texte (même découpage que `motsLus` de src/utils/diaporamas.ts et `commun.mots_lus`). */
+  const motsLus = (texte: string) => [...texte.matchAll(/\S+/g)].filter((m) => /[\p{L}\p{N}]/u.test(m[0])).map((m) => ({ d: m.index!, f: m.index! + m[0].length }));
   interface Diapo {
     /** `u` : zone utile (fractions de l'image) ; `l` × `h` : ses dimensions (px). Les cadres de la
      *  caméra, l'ouverture et le cadre d'un intermède sont en fractions de la zone utile. */
@@ -343,8 +346,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
      *  (4 au plus) son nom, ses dates, l'image et l'instant où l'ovale paraît. */
     portraits: { a: number; b: number; gens: { id: string; nom: string; dates: string; src: string; t: number }[] } | null;
   }
-  /** Intermède chanté : paroles [instant, vers]. */
-  interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string][]; instrumental: boolean; cadre: Rect | null }
+  /** Intermède chanté : paroles [instant, vers, début de chaque mot (`motsLus`) ou null : vers
+   *  entier à son début]. */
+  interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string, number[] | null][]; instrumental: boolean; cadre: Rect | null }
   /** Lecture d'époque : instant de début de chaque mot (alignement forcé, ou prorata) et, pour
    *  chaque phrase, [début (s), premier mot, mot suivant le dernier]. */
   interface SuiteLecture { type: 'lecture'; id: string; src: string; duree: number; mots: number[]; phrases: [number, number, number][]; date: DateFrise | null }
@@ -528,6 +532,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     const sa = $<HTMLAudioElement>('.lecteur__suite'); // lecteur des segments (chant, lecture, épisode)
     const elActe = $('.lecteur__acte'), elLegende = $('.lecteur__legende'), elSt = $('.lecteur__soustitre');
     const elMusique = $('.lecteur__musique');
+    const elClipTexte = $('.clip__texte');
     const elActeTitre = $('.lecteur__acte-titre'), elActeDates = $('.lecteur__acte-dates');
     const elCarton = $('.lecteur__carton'), elCartonTitre = $('.lecteur__carton-titre'), elCartonDates = $('.lecteur__carton-dates');
     const elN = $('.lecteur__n'), elEcoule = $('.lecteur__ecoule'), elTotal = $('.lecteur__total');
@@ -1538,7 +1543,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
 
     // --- Segments après la voix : intermède chanté, lecture d'époque, épisode -----------------------
     // La voix s'est tue. Intermède : le chant est joué au premier plan sur l'image du moment (la
-    // musique de fond se tait), avec son cartouche et ses paroles en sous-titre. Lecture : la carte
+    // musique de fond se tait), avec son cartouche et ses paroles façon clip au centre de l'image
+    // voilée (majParoles). Lecture : la carte
     // de citation couvre l'image (floue, voilée, immobile) et le texte y apparaît mot par mot au
     // rythme de la voix de lecture. Épisode : un panneau couvre la scène et ses visuels suivent la narration. L'horloge
     // est `sa.currentTime` (pause, reprise et sauts justes). → passe le segment.
@@ -1546,7 +1552,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
     const panneaux = new Map([...racine.querySelectorAll<HTMLElement>('.episode--lecteur')].map((e) => [e.dataset.episode!, e]));
     let ov: HTMLElement | null = null; // carte ou panneau affiché
     const CLASSES_SUITE = { chant: 'en-chant', lecture: 'en-citation', episode: 'en-episode' } as const;
-    let vers = -2;
     function lancerSuite() {
       const c = D.diapos[i].suite!;
       enSuite = true;
@@ -1557,9 +1562,15 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (c.type === 'chant') {
         changerCartouche({ legende: c.legende } as Diapo);
         chargerSurimpressions(null);
-        vers = -2;
         // Intermède musical (œuvre instrumentale) : pas de paroles, sous-titre masqué.
         lecteur.classList.toggle('en-instrumental', c.instrumental);
+        // Chant : paroles façon clip au centre de l'image voilée, sans sous-titre ni frise.
+        if (!c.instrumental && c.paroles.length) {
+          preparerClip(c);
+          lecteur.classList.add('en-clip');
+          changerSousTitre('');
+          cacherFrise();
+        }
       } else {
         ov = (c.type === 'lecture' ? cartes : panneaux).get(c.id) ?? null;
         if (ov) { preparer(ov, c); ov.classList.add('est-visible'); ov.setAttribute('aria-hidden', 'false'); }
@@ -1582,7 +1593,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (!enSuite) return;
       enSuite = false;
       suiteFini = true;
-      lecteur.classList.remove('en-chant', 'en-instrumental');
+      lecteur.classList.remove('en-chant', 'en-instrumental', 'en-clip');
       majSuite();
       musique();
       majTemps();
@@ -1594,7 +1605,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       enSuite = false;
       suiteFini = false;
       sa.pause();
-      lecteur.classList.remove('en-chant', 'en-instrumental', 'en-citation', 'en-episode');
+      lecteur.classList.remove('en-chant', 'en-instrumental', 'en-clip', 'en-citation', 'en-episode');
       // `garderCarte` : la carte reste affichée jusqu'à ce que l'image suivante soit prête (afficher).
       if (ov && !garderCarte) { ov.classList.remove('est-visible'); ov.setAttribute('aria-hidden', 'true'); }
       ov = null;
@@ -1609,16 +1620,52 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (c.type === 'lecture') majCitation(ov, c, t);
       else majEpisode(ov, c, t);
     }
-    /** Le vers en cours (un léger avance pour l'œil) ; rien avant le premier. */
+    // --- Paroles des chants façon clip (spec 12, 2026-10-08) -------------------------------------
+    // Chaque vers est posé d'avance au centre de l'image (mots invisibles, place réservée : rien ne
+    // bouge quand ils paraissent) ; le vers en cours est visible, ses mots paraissent à leur instant
+    // chanté. L'affichage dérive de l'horloge lissée de l'intermède : pause, reprise, sauts justes.
+    // Sans calage au mot (repli) ou en mouvement réduit, le vers entier paraît à son début.
+    const AVANCE_CLIP = 0.08; // s : le mot paraît un rien avant d'être chanté (attaque de la note)
+    let clipVers: HTMLElement[][] = [], clipEls: HTMLElement[] = [], vers = -2, versMots = -1;
+    function preparerClip(c: SuiteChant) {
+      clipEls = []; clipVers = [];
+      for (const [, v] of c.paroles) {
+        const p = document.createElement('p');
+        p.className = 'clip__vers';
+        const mots: HTMLElement[] = [];
+        const bornes = motsLus(v);
+        bornes.forEach((b, k) => {
+          // Un mot emporte la ponctuation qui le suit (« roi ! ») ; l'espace reste entre les mots.
+          const bout = v.slice(k ? b.d : 0, k + 1 < bornes.length ? bornes[k + 1].d : v.length);
+          const span = document.createElement('span');
+          span.className = 'clip__mot';
+          span.textContent = bout.trimEnd();
+          p.append(span, bout.slice(span.textContent.length));
+          mots.push(span);
+        });
+        elClipTexte.append(p);
+        clipEls.push(p);
+        clipVers.push(mots);
+      }
+      vers = -2; versMots = -1;
+    }
     function majParoles() {
       const c = D.diapos[i].suite;
-      if (!enSuite || !c || c.type !== 'chant') return;
-      const t = (sa.currentTime || 0) + 0.15;
+      if (!enSuite || !c || c.type !== 'chant' || !clipEls.length) return;
+      const t = horlogeSuite.lire(sa) + AVANCE_CLIP;
       let k = -1;
       while (k + 1 < c.paroles.length && c.paroles[k + 1][0] <= t) k++;
-      if (k === vers) return;
-      vers = k;
-      changerSousTitre(k >= 0 ? c.paroles[k][1] : '');
+      if (k !== vers) {
+        clipEls.forEach((e, j) => e.classList.toggle('est-courant', j === k));
+        vers = k; versMots = -1;
+      }
+      if (k < 0) return;
+      const mots = c.paroles[k][2];
+      let n = clipVers[k].length;
+      if (mots && !mouvementReduit.matches) { n = 0; while (n < mots.length && mots[n] <= t) n++; }
+      if (n === versMots) return;
+      clipVers[k].forEach((e, j) => e.classList.toggle('est-chante', j < n));
+      versMots = n;
     }
 
     // Éléments de chaque carte et panneau, relevés une fois (à leur premier affichage).
@@ -2056,6 +2103,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     // Contrôle de la caméra (tests) : cadre montré à l'instant `t` de la diapositive `n`.
     // Horloge (tests) : dernier instant lissé rendu et valeur brute de l'audio.
     (racine as any).__instant = () => ({ lisse: horloge.t, brut: audio.currentTime });
+    // Paroles façon clip (tests) : instant de l'intermède (brut, lissé), vers et mots affichés.
+    (racine as any).__clip = () => ({ brut: sa.currentTime, lisse: horlogeSuite.t, paused: sa.paused, vers, mots: versMots, clip: lecteur.classList.contains('en-clip') });
     (racine as any).__camera = (n: number, t: number) => {
       const x = D.diapos.find((d) => d.n === n);
       if (!x) return null;
@@ -2625,6 +2674,67 @@ const sectionsLivre = d.actes.map((a, i) => ({
   /* Intermède chanté : paroles en italique, troisième ligne du cartouche (interprète). */
   .lecteur.en-chant .lecteur__soustitre { font-style: italic; }
   .lecteur.en-instrumental .lecteur__soustitre { visibility: hidden; }
+  /* Paroles des chants façon clip (spec 12, 2026-10-08) : voile noir semi-transparent sur l'image
+     (la caméra continue dessous), vers en grand au centre, blanc cassé, mot après mot. Au-dessus
+     des calques, sous le cartouche ; les surimpressions (carte, portraits, citation) et la frise
+     sont déjà retirées pendant un intermède. Le tout paraît et s'efface en fondu avec la classe
+     `en-clip` (début et fin du chant, saut, passage) ; les paroles suivent le bouton Sous-titres. */
+  .lecteur__clip {
+    position: absolute;
+    inset: 0;
+    z-index: 1; /* comme le calque visible (z-index 1 posé par le script), et après lui */
+    container-type: size;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 1.4s ease, visibility 0s linear 1.4s;
+  }
+  .lecteur.en-clip.avec-st .lecteur__clip { opacity: 1; visibility: visible; transition: opacity 1.4s ease, visibility 0s; }
+  .clip__voile { position: absolute; inset: 0; background: rgba(0, 0, 0, 0.56); }
+  .clip__texte {
+    position: absolute;
+    /* Sous le cartouche du chant (en haut à gauche), au-dessus du bas de l'image. */
+    inset: 14% 7% 10%;
+    display: grid;
+    place-items: center;
+  }
+  .clip__texte :global(.clip__vers) {
+    grid-area: 1 / 1;
+    max-width: 22em;
+    margin: 0;
+    color: var(--c-fond);
+    font-style: italic;
+    font-size: clamp(1.45rem, min(7cqw, 9.5cqh), 3.6rem);
+    line-height: 1.22;
+    text-align: center;
+    text-wrap: balance;
+    /* Aucune coupure de mot : on ne passe à la ligne qu'entre deux mots. */
+    hyphens: none;
+    -webkit-hyphens: none;
+    overflow-wrap: normal;
+    word-break: normal;
+    opacity: 0;
+    /* Le vers sortant s'efface vite (ses mots ne doivent pas se mêler à ceux du suivant) ; le
+       vers entrant est là d'emblée, ses mots paraissent un à un. */
+    transition: opacity 0.45s ease;
+  }
+  .clip__texte :global(.clip__vers.est-courant) { opacity: 1; transition-duration: 0s; }
+  .clip__texte :global(.clip__mot) {
+    display: inline-block;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(0.12em);
+    transition: opacity 0.38s ease, transform 0.5s ease;
+  }
+  .clip__texte :global(.clip__mot.est-chante) { opacity: 1; transform: none; }
+  /* Pendant le chant, pas de sous-titre en bas (ni son bandeau en plein écran). */
+  .lecteur.en-clip .lecteur__soustitre :global(.st) { visibility: hidden; }
+  .lecteur:fullscreen.en-clip .lecteur__soustitre { visibility: hidden; }
+  @media (prefers-reduced-motion: reduce) {
+    .lecteur__clip, .lecteur.en-clip.avec-st .lecteur__clip { transition-duration: 0.3s; }
+    .clip__texte :global(.clip__vers) { transition-duration: 0.2s; }
+    .clip__texte :global(.clip__mot) { transform: none; transition: none; }
+  }
   /* Citation en surimpression : ses mots sont sur l'image, le sous-titre se tait. */
   .lecteur.avec-citation .lecteur__soustitre { visibility: hidden; }
   .lecteur__legende :global(.lecteur__legende-voix) { display: none; font-variant: normal; font-style: italic; letter-spacing: 0; font-size: 0.8rem; }
