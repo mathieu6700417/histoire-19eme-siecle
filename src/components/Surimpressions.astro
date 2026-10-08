@@ -216,7 +216,9 @@ for (const x of d.diapositives) {
   /* Portraits : rangée d'ovales sur un cartouche blanc cassé (même famille que le médaillon de
      lieu), en bas à gauche ; la hauteur des ovales (--ovale-h) est posée par le lecteur. Tous les
      ovales sont en place dès l'entrée (invisibles) : la rangée ne change pas de taille quand un
-     nom s'ajoute. Images en couleur (exception des images du diaporama), le reste monochrome. */
+     nom s'ajoute (place réservée constante). Le fond (::before) ne couvre que les portraits déjà
+     apparus : sa largeur (--fond-l) et l'opacité des ovales sont posées par le lecteur à chaque
+     image. Images en couleur (exception des images du diaporama), le reste monochrome. */
   .portraits {
     --ovale-h: 96px;
     position: absolute;
@@ -227,13 +229,24 @@ for (const x of d.diapositives) {
     align-items: flex-start;
     gap: 0.55rem;
     padding: 0.4rem 0.5rem 0.3rem;
-    background: rgba(251, 250, 247, 0.95);
-    border: 1px solid rgba(26, 26, 26, 0.22);
+    border: 1px solid transparent;
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
     transform: translateY(4px);
     transition: opacity 600ms ease, transform 600ms ease, visibility 0s linear 600ms;
+  }
+  .portraits::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    bottom: -1px;
+    width: var(--fond-l, calc(100% + 2px));
+    box-sizing: border-box;
+    background: rgba(251, 250, 247, 0.95);
+    border: 1px solid rgba(26, 26, 26, 0.22);
+    z-index: -1;
   }
   .portraits:empty { display: none; }
   .portraits.est-visible {
@@ -250,10 +263,7 @@ for (const x of d.diapositives) {
     width: max-content;
     max-width: max(calc(var(--ovale-h) * 0.8 + 1.6rem), 6.6em);
     opacity: 0;
-    transform: translateY(3px);
-    transition: opacity 450ms ease, transform 550ms cubic-bezier(0.2, 0.6, 0.3, 1);
   }
-  .portraits :global(.portrait.est-dit) { opacity: 1; transform: none; }
   /* Ovale à bord fin, façon camée : filet sombre, liseré clair, puis le visage. */
   .portraits :global(.portrait__ovale) {
     display: block;

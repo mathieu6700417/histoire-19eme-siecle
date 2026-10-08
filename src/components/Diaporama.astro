@@ -185,10 +185,6 @@ const donnees = {
       return { img: urlMedia(d.slug, ap.fichier), u, l: (ap.largeur ?? 1600) * (u[2] - u[0]), h: (ap.hauteur ?? 1200) * (u[3] - u[1]),
         alt: t(ap.titre), legende: cartoucheImage(ap), t: a.t, camera: a.camera };
     })() : null,
-    // Parallaxe 2,5D (point 6, banc d'essai) : plans du fond au premier plan, amplitude du premier
-    // plan (fraction de la largeur de la scène). Pas sur un avant / après ni une mosaïque.
-    par: x.image.parallaxe && !x.image.apres && !x.mosaique
-      ? { plans: x.image.parallaxe.plans.map((f) => urlMedia(d.slug, f)), amp: x.image.parallaxe.amplitude } : null,
     // Mosaïque (point 5) : vignettes (la principale est l'image de la diapositive), cartouche d'une ligne.
     mos: x.mosaique ? {
       legende: `<cite>${esc(t(x.mosaique.legende))}</cite>`,
@@ -233,9 +229,9 @@ function friseHtml(classe: string) {
   const annees = frise.annees.map((a) => `<span class="frise-t__annee" data-a="${a.a}" style="left:${pc((a.x0 + a.x1) / 2)}">${a.a}</span>`).join('');
   return `<div class="frise-t ${classe}" aria-hidden="true"><div class="frise-t__piste"><span class="frise-t__date"></span>${actes}${crans}<span class="frise-t__curseur"></span></div><div class="frise-t__annees">${annees}</div></div>`;
 }
-// Dans chaque calque, après l'image : les plans d'une parallaxe (point 6), l'image « après » d'un avant / après (sous un volet qui la
+// Dans chaque calque, après l'image : l'image « après » d'un avant / après (sous un volet qui la
 // découvre, et sa ligne), puis la grille d'une mosaïque. Vides et masqués hors de ces diapositives.
-const CALQUE_SUITE = '<div class="lecteur__plans" hidden></div><div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
+const CALQUE_SUITE = '<div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
 const sectionsLivre = d.actes.map((a, i) => ({
   ...a,
   diapos: d.diapositives.filter((x) => x.n >= a.debut && (i === d.actes.length - 1 || x.n < d.actes[i + 1].debut)),
@@ -388,9 +384,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
     /** Avant / après (point 3) : image après (zone utile, dimensions), cartouche, instant du volet,
      *  étapes de la caméra sur l'image après (la première : cadre de raccord, à l'instant du volet). */
     ap: { img: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[] } | null;
-    /** Parallaxe 2,5D (point 6) : plans (fond opaque, puis plans proches transparents) et amplitude
-     *  du premier plan, en fraction de la largeur de la scène. */
-    par: { plans: string[]; amp: number } | null;
     /** Mosaïque (point 5) : cartouche de la grille, rang de l'image principale, vignettes. */
     mos: { legende: string; principale: number; vignettes: { img: string; u: Rect; l: number; h: number }[] } | null;
     /** Caméra (usage interne, vues dérivées) : instant et fin de la première tenue (`t0`, `a0`),
@@ -459,12 +452,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
   const SOUFFLE_VITESSE = 0.005; // par seconde : une tenue courte respire moins
   const GLISSE = 1 / 3;
   const MISE_EN_ROUTE = 2.5;     // s (mise en route, et arrêt)
-  // Parallaxe 2,5D (point 6, banc d'essai) : les plans glissent pendant les tenues de la caméra
-  // seulement, à partir de PAR_DEBUT s de voix (l'entrée gris → couleur est finie), sur les tenues
-  // d'au moins PAR_TENUE s ; rampes de MISE_EN_ROUTE.
-  const PAR_DEBUT = 2;
-  const PAR_TENUE = 3;
-  const PAR_VITESSE = 0.0025; // largeur de scène par seconde, au plus fort : l'amplitude est réduite s'il le faut
   // Entrée d'une image (spec 12, « Animations d'entrée ») : fondu enchaîné, révélation
   // gris → couleur, recul de ~4 % jusqu'au cadre de la caméra. Horloge propre à l'entrée,
   // indépendante de l'audio : la caméra n'est jamais décalée. L'entrée est une transition
@@ -491,6 +478,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
   const RAMPE_RECUL = 0.4;      // part du recul en mise en route (et autant en arrêt)
   // Frise du temps en surimpression : durée d'affichage (le curseur glisse de 0,5 à 1,5 s, cf. CSS).
   const SURIMPRESSION = 3.6; // s
+  // Rangée de portraits : élargissement du fond à un nouveau nom, puis fondu de l'ovale (s).
+  const PORTRAIT_ELARGIR = 0.4;
+  const PORTRAIT_FONDU = 0.45;
   const adoucir = (t: number) => { const u = Math.min(1, Math.max(0, t)); return u * u * (3 - 2 * u); };
   const melanger = (a: Rect, b: Rect, t: number) => a.map((v, k) => v + (b[k] - v) * t) as Rect;
   /** Le cadre agrandi (k > 1) ou resserré (k < 1) autour de son centre. */
@@ -665,9 +655,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     let debutSansVoix = 0, ecouleSansVoix = 0;
     // Ce que montre chaque calque : la diapositive et le dernier cadre rendu.
     // `ra` : dernier cadre rendu de l'image après d'un avant / après (null : pas encore découverte).
-    // `q`, `pa` : avancement des plans d'une parallaxe et leur état (0 : en attente, 1 : montrés,
-    // 2 : abandonnés pour cette fois, chargés trop tard ou mouvement réduit).
-    const couches: { x: Diapo | null; r: Rect; ra?: Rect | null; q?: number; pa?: number }[] = [{ x: D.diapos[0], r: [0, 0, 1, 1] }, { x: null, r: [0, 0, 1, 1] }];
+    const couches: { x: Diapo | null; r: Rect; ra?: Rect | null }[] = [{ x: D.diapos[0], r: [0, 0, 1, 1] }, { x: null, r: [0, 0, 1, 1] }];
     // Carton d'acte en cours (horloge figée par la pause).
     let enCarton = false;
     const chronoCarton = new Chrono();
@@ -715,7 +703,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
         imgA.style.height = `${(A.h * sa) / (A.u[3] - A.u[1])}px`;
       }
       placerTuiles(c, x);
-      for (const im of c.querySelectorAll<HTMLImageElement>('.lecteur__plans img')) { im.style.width = img.style.width; im.style.height = img.style.height; }
     }
 
     // Hauteurs couvertes en haut (cartouche, acte en plein écran) et en bas (sous-titre,
@@ -1021,21 +1008,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (x.ap) { if (imgA.getAttribute('src') !== x.ap.img) imgA.src = x.ap.img; imgA.alt = x.ap.alt; } else { imgA.removeAttribute('src'); imgA.alt = ''; }
       mo.hidden = true;
       mo.style.opacity = '';
-      const pl = c.querySelector<HTMLElement>('.lecteur__plans')!;
-      pl.hidden = true;
-      if (x.par && !mouvementReduit.matches) {
-        if (pl.dataset.n !== String(x.n)) {
-          const img = c.querySelector('img')!;
-          pl.replaceChildren(...x.par.plans.map((src) => {
-            const im = document.createElement('img');
-            im.alt = ''; im.decoding = 'async'; im.src = src;
-            im.style.width = img.style.width; im.style.height = img.style.height;
-            im.decode().then(() => plansPrets.add(im)).catch(() => {});
-            return im;
-          }));
-          pl.dataset.n = String(x.n);
-        }
-      } else { pl.replaceChildren(); delete pl.dataset.n; }
       if (x.mos && !x.ouv) {
         if (mo.dataset.n !== String(x.n)) {
           mo.replaceChildren(...x.mos.vignettes.map((v, k) => {
@@ -1066,104 +1038,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
         im.style.width = `${IW}px`; im.style.height = `${IH}px`;
         im.style.transform = `translate3d(${(w / 2 - (v.u[0] + v.u[2]) / 2 * IW).toFixed(2)}px, ${(h / 2 - (v.u[1] + v.u[3]) / 2 * IH).toFixed(2)}px, 0)`;
       });
-    }
-    // --- Parallaxe 2,5D (spec 12, « Enrichissements visuels », point 6, banc d'essai) ----------
-    // Les plans (fond opaque comblé, plans proches transparents) prennent la transformation de la
-    // caméra ; les plans proches glissent en plus, très lentement, le premier plan de `amp` × la
-    // largeur de la scène au bout de la diapositive, le plan moyen de moitié, le fond pas du tout.
-    // Un plan déplacé est agrandi autour du centre de la scène juste assez pour que le bord de sa
-    // zone utile reste hors de l'écran : jamais de bord de calque, jamais rien hors de la zone utile.
-    // Composition au repos (avancement nul) = l'image exactement (couleurs démêlées par le script).
-    const plansPrets = new WeakSet<HTMLImageElement>();
-    /** Avancement (0 → 1) du glissement à l'instant `t` de la voix : seulement pendant les tenues de
-     *  la caméra (jamais pendant une transition, l'entrée ou l'ouverture du carton), vitesse
-     *  constante après une mise en route douce, arrêt doux au bout de chaque tenue ; 0 au début,
-     *  à sens unique. */
-    function avancePlans(x: Diapo, t: number) {
-      if (!x.par || mouvementReduit.matches) return 0;
-      const { tenues, tot, utile } = tenuesPlans(x);
-      let q = 0;
-      for (const [a, b] of tenues) q += (utile([a, b]) / tot) * profil(t - a, b - a, Math.min(MISE_EN_ROUTE, (b - a) / 2));
-      return q;
-    }
-    /** Tenues où les plans glissent, et leur durée totale hors rampes (`tot`, s). */
-    function tenuesPlans(x: Diapo) {
-      const P = plan(x), finVoix = x.duree || 6;
-      const tenues = P.map((p, k) => [Math.max(p.a, PAR_DEBUT), k + 1 < P.length ? P[k + 1].de : finVoix])
-        .filter(([a, b]) => b - a >= PAR_TENUE);
-      // Chaque tenue avance au prorata de sa durée hors rampes : même vitesse de croisière partout.
-      const utile = ([a, b]: number[]) => b - a - Math.min(MISE_EN_ROUTE, (b - a) / 2);
-      return { tenues, tot: tenues.reduce((s, e) => s + utile(e), 0), utile };
-    }
-    /** Amplitude retenue : celle des données, réduite pour que la vitesse de croisière du premier
-     *  plan (amplitude / durée hors rampes) reste sous PAR_VITESSE. */
-    const ampPlans = (x: Diapo) => Math.min(x.par!.amp, PAR_VITESSE * tenuesPlans(x).tot);
-    /** Marge de zone utile (px) laissée hors de l'écran, à gauche et à droite, au plus juste sur
-     *  toute la voix (caméra échantillonnée tous les 0,25 s) ; calculée une fois par diapositive et
-     *  par géométrie de la scène. Elle fixe le sens du glissement (le côté le plus généreux) et
-     *  l'agrandissement des plans, proportionnel à l'avancement : la vitesse relative des plans
-     *  reste constante, quoi que fasse la caméra. */
-    const margesPlans = new Map<string, { sens: number; m: number }>();
-    function margePlans(c: HTMLElement, x: Diapo) {
-      const img = c.querySelector('img')!, W = c.clientWidth, H = c.clientHeight;
-      const IW = parseFloat(img.style.width) || W, IH = parseFloat(img.style.height) || H;
-      const cle = `${x.n}:${W}x${H}:${IW.toFixed(1)}:${marges.haut.toFixed(1)}:${marges.bas.toFixed(1)}`;
-      let r = margesPlans.get(cle);
-      if (!r) {
-        let g = Infinity, dr = Infinity;
-        const fin = x.duree || 6;
-        for (let t = x.ouv ? -OUVERTURE : 0; t <= fin + 1e-6; t += 0.25) {
-          const p = parametres(W, H, IW, IH, x.u, cadreA(x, Math.min(t, fin)));
-          g = Math.min(g, -(p.tx + p.s * x.u[0] * IW));
-          dr = Math.min(dr, p.tx + p.s * x.u[2] * IW - W);
-        }
-        r = g >= dr ? { sens: 1, m: Math.max(0, g) } : { sens: -1, m: Math.max(0, dr) };
-        margesPlans.set(cle, r);
-      }
-      return r;
-    }
-    /** Pose les plans du calque `c` pour la vue `r` (agrandissement d'entrée `f`), avancement `q`.
-     *  Plan j (sur N) : glissement d = q·D_j, agrandissement autour du centre de la scène 1 + q·k,
-     *  k = (D_j − m)/(W/2 + m) si la marge m ne suffit pas (sinon 0) : le bord de la zone utile du
-     *  plan reste hors de l'écran à tout instant. D_j est choisi pour que le déplacement maximal à
-     *  l'écran (D_j + k·W/2, au bord qui avance) vaille A_j = amp × largeur × j/(N−1) : sans
-     *  marge, D_j = A_j/2 (le plan s'agrandit depuis le bord qui recule) ; avec une marge ≥ A_j,
-     *  glissement pur. */
-    function majPlans(c: HTMLElement, x: Diapo, r: Rect, f: number, q: number) {
-      const img = c.querySelector('img')!, ims = [...c.querySelectorAll<HTMLImageElement>('.lecteur__plans img')];
-      const W = c.clientWidth, H = c.clientHeight;
-      const IW = parseFloat(img.style.width) || W, IH = parseFloat(img.style.height) || H;
-      const p = parametres(W, H, IW, IH, x.u, r, f);
-      const { sens, m } = margePlans(c, x), N = ims.length, cx = W / 2, cy = H / 2, amp = ampPlans(x);
-      ims.forEach((im, j) => {
-        const Aj = N > 1 ? (amp * W * j) / (N - 1) : 0, e = cx / (cx + m);
-        const Dj = m >= Aj ? Aj : (Aj + m * e) / (1 + e);
-        const sg = 1 + q * Math.max(0, (Dj - m) / (cx + m)), d = sens * q * Dj;
-        im.style.transform = css({ tx: sg * p.tx + (1 - sg) * cx + d, ty: sg * p.ty + (1 - sg) * cy, s: sg * p.s });
-      });
-    }
-    /** Parallaxe du calque visible `k` à l'instant `t` : les plans remplacent l'image dès qu'ils sont
-     *  décodés, l'entrée finie et l'avancement encore nul (relève invisible : même composition) ;
-     *  arrivés trop tard, ils sont abandonnés pour cette fois (l'image reste seule, sans saut). */
-    function majParallaxe(k: number, x: Diapo, r: Rect, f: number, t: number, ouv: boolean) {
-      const c = calques[k], co = couches[k], pl = c.querySelector<HTMLElement>('.lecteur__plans')!;
-      if (mouvementReduit.matches) {
-        if (co.pa === 1) { pl.hidden = true; c.querySelector('img')!.style.visibility = ''; }
-        co.pa = 2;
-        return;
-      }
-      const q = avancePlans(x, t);
-      if (!co.pa) {
-        const ims = [...pl.children] as HTMLImageElement[];
-        if (q > 0) co.pa = 2;
-        else if (!enEntree && !ouv && ims.length && ims.every((im) => plansPrets.has(im))) {
-          co.pa = 1;
-          pl.hidden = false;
-          c.querySelector('img')!.style.visibility = 'hidden';
-        }
-      }
-      co.q = q;
-      if (co.pa === 1) majPlans(c, x, r, f, q);
     }
     /** Avant / après à l'instant `t` : volet (clip du calque après, ligne) et caméra de l'image après. */
     function majApres(c: HTMLElement, x: Diapo, t: number) {
@@ -1249,7 +1123,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
       const x = couches[k].x;
       if (!x) return;
       calques[k].querySelector('img')!.style.transform = transformation(calques[k], x, couches[k].r);
-      if (x.par && couches[k].pa === 1) majPlans(calques[k], x, couches[k].r, 1, couches[k].q ?? 0);
       const ra = couches[k].ra;
       if (x.ap && ra) {
         const imgA = calques[k].querySelector<HTMLImageElement>('.lecteur__apres img')!;
@@ -1285,7 +1158,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
         : cadreA(principal(x), tv);
       couches[visible].r = r;
       img.style.transform = transformation(c, x, r, f);
-      if (x.par) majParallaxe(visible, x, r, f, tv, ouv);
       // Avant / après, mosaïque ; puis le cartouche voulu à cet instant (pas pendant un segment).
       if (x.ap) majApres(c, x, tv);
       if (x.mos && !x.ouv) majMosaique(c, x, tv);
@@ -1334,7 +1206,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       img.alt = x.alt;
       preparerCalque(c, x);
       placerTuiles(c, x);
-      couches[k] = { x, r: cadreA(principal(x), 0), ra: null, q: 0, pa: 0 };
+      couches[k] = { x, r: cadreA(principal(x), 0), ra: null };
       entreeNette = fondu && couvert;
       if (entreeNette) {
         // Sous un écran couvrant : l'ancienne image disparaît tout de suite (jamais d'éclair à la
@@ -1502,7 +1374,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
     const elMots = racine.querySelector<HTMLElement>('.mots');
     const elPortraits = racine.querySelector<HTMLElement>('.portraits');
     let portraitsEls: HTMLElement[] = [];
-    let portraitsDits = -1;
+    // Bord droit du fond de la rangée (px, depuis son bord gauche) quand il couvre les portraits
+    // 1, 2… (mesuré par taillePortraits) ; dernier état écrit (évite les écritures inutiles).
+    let portraitsFins: number[] = [];
+    let portraitsEtat = '';
     let motsEls: HTMLElement[][] = [];
     let motsDits = -1;
     /** Taille du médaillon : ~un quart de la hauteur de la scène (plancher lisible), selon le fond.
@@ -1547,6 +1422,14 @@ const sectionsLivre = d.actes.map((a, i) => ({
         const libre = (W - elMots.offsetWidth) / 2;
         if (libre < gauche + elPortraits.offsetWidth + 8) elMots.style.bottom = `calc(var(--surimp-bas, var(--frise-bas, 0px)) + ${Math.round(elPortraits.offsetHeight + (parseFloat(getComputedStyle(elLegende).top) || 8) + 8)}px)`;
       }
+      // Largeurs du fond (bord extérieur compris) : jusqu'au bord droit du portrait k, plus la
+      // marge intérieure et le filet ; le dernier couvre la rangée entière.
+      const cs = getComputedStyle(elPortraits);
+      const bg = parseFloat(cs.borderLeftWidth) || 0, fin = (parseFloat(cs.paddingRight) || 0) + (parseFloat(cs.borderRightWidth) || 0);
+      // Scène non mise en page (offsetWidth nul) : mesure reprise à la prochaine image.
+      portraitsFins = elPortraits.offsetWidth > 0 ? portraitsEls.map((f, k) => k === portraitsEls.length - 1
+        ? elPortraits.offsetWidth : Math.min(elPortraits.offsetWidth, bg + f.offsetLeft + f.offsetWidth + fin)) : [];
+      portraitsEtat = '';
     }
     // --- Objets de musée et manuscrits (spec 12, « Enrichissements visuels », 2026-10-08) -----
     const elObjet = racine.querySelector<HTMLElement>('.objet');
@@ -1737,10 +1620,12 @@ const sectionsLivre = d.actes.map((a, i) => ({
         elMots.querySelectorAll<HTMLElement>('.m').forEach((m) => motsEls[Number(m.dataset.k)]?.push(m));
       }
       // Portraits : tous les ovales sont posés d'emblée (invisibles), si bien que la rangée garde
-      // sa taille ; chacun paraît à son nom (majSurimpressions).
+      // sa taille (place réservée pour la caméra, constante) ; seul son fond s'élargit, et chacun
+      // paraît à son nom (majSurimpressions).
       const P = x?.portraits;
       portraitsEls = [];
-      portraitsDits = -1;
+      portraitsFins = [];
+      portraitsEtat = '';
       if (elPortraits) {
         elPortraits.replaceChildren();
         elPortraits.classList.toggle('est-seul', P?.gens.length === 1);
@@ -1802,13 +1687,28 @@ const sectionsLivre = d.actes.map((a, i) => ({
         const vu = actif && t >= P.a && t < P.b;
         if (vu !== elPortraits.classList.contains('est-visible')) { elPortraits.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-portraits', vu); }
         // Chaque ovale paraît quand la voix attaque le nom (le premier dès l'entrée de la rangée) ;
-        // les précédents restent.
+        // les précédents restent. Rangée qui grandit (retour de l'utilisateur du 2026-10-08) : le
+        // fond ne couvre que les portraits apparus ; à un nouveau nom, il s'élargit vers la droite
+        // (PORTRAIT_ELARGIR s), puis l'ovale paraît en fondu (PORTRAIT_FONDU s). Tout dérive de
+        // l'instant lissé : pause, reprise et sauts justes. Mouvement réduit : sans animation.
         let n = 0;
         while (n < P.gens.length && P.gens[n].t <= t + 0.06) n++;
         n = Math.max(1, n);
-        if (n !== portraitsDits) {
-          portraitsEls.forEach((e, k) => e.classList.toggle('est-dit', k < n));
-          portraitsDits = n;
+        const k = n - 1, t0 = P.gens[k].t - 0.06, reduit = mouvementReduit.matches;
+        const el = k === 0 || reduit ? 1 : adoucir((t - t0) / PORTRAIT_ELARGIR);
+        const ap = k === 0 || reduit ? 1 : adoucir((t - t0 - PORTRAIT_ELARGIR) / PORTRAIT_FONDU);
+        if (!portraitsFins.length && portraitsEls.length && elPortraits.offsetWidth > 0) taillePortraits();
+        const fins = portraitsFins;
+        const l = fins.length > k ? (k === 0 ? fins[0] : fins[k - 1] + (fins[k] - fins[k - 1]) * el) : NaN;
+        const etat = `${k}:${el.toFixed(3)}:${ap.toFixed(3)}:${l.toFixed(1)}`;
+        if (etat !== portraitsEtat) {
+          if (Number.isFinite(l)) elPortraits.style.setProperty('--fond-l', `${l.toFixed(1)}px`);
+          portraitsEls.forEach((e, j) => {
+            const o = j < k ? 1 : j > k ? 0 : ap;
+            e.style.opacity = o.toFixed(3);
+            e.style.transform = o > 0 && o < 1 ? `translateY(${(3 * (1 - o)).toFixed(2)}px)` : '';
+          });
+          portraitsEtat = etat;
         }
         // Deux surimpressions au plus (spec 12) : la frise du temps cède quand médaillon de lieu et
         // portraits sont là ensemble (la citation, elle, la masque déjà).
@@ -1873,7 +1773,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
         if (x.objet) new Image().src = x.objet.src;
         if (x.manuscrit) new Image().src = x.manuscrit.src;
         if (x.ap) new Image().src = x.ap.img;
-        for (const src of x.par?.plans ?? []) new Image().src = src;
         for (const v of x.mos?.vignettes ?? []) new Image().src = v.img;
         if (j > k && x.audio) { const a = new Audio(); a.preload = 'auto'; a.src = x.audio; }
         if (x.suite && j <= k + 1) { const a = new Audio(); a.preload = 'auto'; a.src = x.suite.src; }
@@ -2949,9 +2848,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
   /* Avant / après : l'image après, au-dessus de l'image avant, découverte par un volet (clip-path
      posé par le script) dont le bord est une ligne verticale fine (blanc cassé bordé de gris). */
   .lecteur__calque :global(.lecteur__apres) { position: absolute; inset: 0; overflow: hidden; }
-  /* Parallaxe (point 6) : plans superposés, transformés chacun par le script (caméra + glissement). */
-  .lecteur__calque :global(.lecteur__plans) { position: absolute; inset: 0; overflow: hidden; }
-  .lecteur__calque :global(.lecteur__apres img), .lecteur__calque :global(.mosaique img), .lecteur__calque :global(.lecteur__plans img) {
+  .lecteur__calque :global(.lecteur__apres img), .lecteur__calque :global(.mosaique img) {
     display: block;
     position: absolute;
     left: 0;

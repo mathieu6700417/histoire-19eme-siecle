@@ -4095,15 +4095,7 @@
           0.0,
           1.0,
           1.0
-        ],
-        "parallaxe": {
-          "plans": [
-            "parallaxe/047-0.webp",
-            "parallaxe/047-1.webp",
-            "parallaxe/047-2.webp"
-          ],
-          "amplitude": 0.015
-        }
+        ]
       },
       "audio": {
         "fichier": "047.m4a",
@@ -5031,15 +5023,7 @@
           0.0,
           1.0,
           1.0
-        ],
-        "parallaxe": {
-          "plans": [
-            "parallaxe/056-0.webp",
-            "parallaxe/056-1.webp",
-            "parallaxe/056-2.webp"
-          ],
-          "amplitude": 0.015
-        }
+        ]
       },
       "audio": {
         "fichier": "056.m4a",
@@ -7191,15 +7175,7 @@
           0.012,
           0.991,
           0.983
-        ],
-        "parallaxe": {
-          "plans": [
-            "parallaxe/081-0.webp",
-            "parallaxe/081-1.webp",
-            "parallaxe/081-2.webp"
-          ],
-          "amplitude": 0.015
-        }
+        ]
       },
       "n": 81,
       "audio": {
@@ -10726,15 +10702,7 @@
           0.0,
           1.0,
           1.0
-        ],
-        "parallaxe": {
-          "plans": [
-            "parallaxe/122-0.webp",
-            "parallaxe/122-1.webp",
-            "parallaxe/122-2.webp"
-          ],
-          "amplitude": 0.015
-        }
+        ]
       },
       "audio": {
         "fichier": "122.m4a",

@@ -705,6 +705,11 @@ montre pas, montrer son portrait. Décisions :
     ovale (première mention), le premier dès l'entrée de la rangée ; rangée du premier nom à 3 s
     après le dernier, 5 s au moins, prolongée jusqu'à la fin de la citation de la personne ; zone
     réservée pour toute la diapositive ; une personne seule : « Danton · 1759-1794 » sur une ligne.
+    **Fond qui grandit** (retour de l'utilisateur du 2026-10-08) : le fond blanc cassé ne couvre que
+    les portraits déjà apparus ; à un nouveau nom, il s'élargit vers la droite en ~0,4 s (le premier
+    portrait reste en place), puis l'ovale paraît en fondu ; la zone réservée pour la caméra reste
+    celle de la rangée complète (aucun mouvement de caméra) ; état dérivé de l'horloge lissée (pause,
+    reprise, sauts justes) ; `prefers-reduced-motion` : largeur changée sans animation.
   - **priorités quand tout tombe ensemble** : citation > portraits = médaillon de lieu > frise du
     temps. La citation exclut le médaillon (règle existante) et, si elle touche la rangée, monte
     au-dessus d'elle pour toute la diapositive ; la frise cède quand médaillon et portraits sont là
@@ -775,12 +780,10 @@ la règle des documents d'époque du domaine public (Commons), monochromes hors 
 5. **Mosaïque puis plongée** : 4 à 6 images d'un même événement apparaissent en grille, puis la
    caméra plonge dans l'une d'elles, qui devient l'image de la diapositive.
    **Révision du 2026-10-08** : les vignettes sont **toutes présentes dès le début** (jamais d'apparition une à une sur du blanc) ; elles sont ensuite **mises en valeur une par une** (la vignette en cours en pleine couleur et légèrement avancée, les autres atténuées en gris voilé), puis la caméra plonge dans l'image principale.
-6. **Parallaxe 2,5D** : les plans d'un tableau séparés par estimation de profondeur glissent très
-   lentement l'un sur l'autre. **Banc d'essai d'abord** sur 3 ou 4 images de la Révolution ; on
-   ne généralise (une par acte) que si l'utilisateur valide le rendu.
+6. ~~Parallaxe 2,5D~~ : **abandonné après le banc d'essai (décision de l'utilisateur du 2026-10-08)**.
 
 **Dosage, par période** : ~10 objets, ~8 chiffres ou dates, 3 à 4 avant/après, 3 à 4
-manuscrits, 2 mosaïques, ~8 parallaxes (si validées). **Deux surimpressions au plus à la fois** ;
+manuscrits, 2 mosaïques. **Deux surimpressions au plus à la fois** ;
 l'image reste le sujet. Les zones couvertes ne font jamais bouger la caméra brusquement.
 
 **Valeurs retenues, points 1 et 2** (mise en œuvre du 2026-10-08 ; détail dans
@@ -865,28 +868,6 @@ son tour et revient à l'échelle 1 avant la plongée ; tenue de 0,6 s, puis plo
 plongée à 6,1 s de voix au lieu de 4,1). Cartouche d'une ligne pendant la grille. Mouvement réduit :
 grille fixe en couleur, sans mise en valeur, puis fondu de 0,8 s. Mesuré (18 et 53, 1280 × 720 et
 1920 × 1080) : plongée à 95 % du plafond de zoom au plus fort, aucun à-coup.
-
-**Valeurs retenues, point 6, banc d'essai** (mise en œuvre du 2026-10-08 ; détail dans
-`scripts/diaporamas/README.md`, « Parallaxe 2,5D ») — **en attente de validation par l'utilisateur** :
-- données : `image.parallaxe` `{ plans: [fond, …, premier plan], amplitude }` (2 ou 3 webp dans
-  `public/diaporamas/<slug>/parallaxe/`, amplitude 0,005 à 0,02), écrit par
-  `scripts/diaporamas/parallaxe.py` : profondeur par Depth Anything V2 Small (libre, local), seuils
-  d'Otsu, alpha en rampe de profondeur (net sur les occlusions, fondu sur les surfaces continues),
-  comblement OpenCV (Telea) sous les plans proches, couleurs de bord démêlées (composition au repos =
-  l'image), planche de contrôle ; ignoré sur un avant / après ou une mosaïque ;
-- lecteur : les plans prennent la caméra ; premier plan jusqu'à l'amplitude, plan moyen de moitié,
-  fond fixe ; glissement seulement pendant les tenues de la caméra, à partir de 2 s de voix (l'entrée
-  gris → couleur est finie : décalage nul jusque-là), rampes de 2,5 s, vitesse de croisière constante
-  plafonnée à 0,25 % de la scène par seconde (amplitude réduite au besoin), à sens unique, figé dans
-  les transitions de caméra et le fondu vers la diapositive suivante ; jamais de bord de calque ni rien
-  hors de la zone utile (sens vers la plus grande marge, agrandissement du plan proportionnel à
-  l'avancement si la marge manque) ; relève invisible image → plans au décalage nul, abandon si les
-  plans arrivent trop tard ; `prefers-reduced-motion` : pas de parallaxe ;
-- banc d'essai : 47 (Pils), 56 (Vernet, Valmy), 81 (Hubert Robert, Saint-Denis), 122 (Lejeune,
-  Pyramides), 3 plans, amplitude 0,015 (retenue 0,9 à 1,5 % selon les tenues) ; mesuré (1280 × 720,
-  1920 × 1080, 390 × 844, mouvement réduit) : caméra inchangée et sous les plafonds, aucun saut, vitesse
-  relative des plans de 0,13 à 0,30 % de la scène par seconde au plus fort, continue, aucun bord de zone
-  utile visible ; plans : 815 Ko pour les quatre (1,6 fois l'image).
 
 ### Marges des surimpressions du bas (2026-10-08)
 

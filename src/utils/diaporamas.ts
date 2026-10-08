@@ -36,18 +36,12 @@ export interface ImageDiapo {
    *  cette image-ci (« avant ») ; au passage `apres.quand`, un volet glissant lent découvre
    *  l'image « après » (même lieu ou même sujet), et le cartouche passe de l'une à l'autre. */
   apres?: ImageApres;
-  /** Parallaxe 2,5D (spec 12, « Enrichissements visuels », point 6, banc d'essai) : plans de
-   *  l'image séparés par profondeur (scripts/diaporamas/parallaxe.py), du fond (opaque, comblé
-   *  sous les plans proches) au premier plan (transparents), chemins dans public/diaporamas/<slug>/ ;
-   *  `amplitude` : déplacement final du premier plan, en fraction de la largeur de la scène
-   *  (0,005 à 0,02). Ignorée sur un avant / après ou une mosaïque. */
-  parallaxe?: { plans: string[]; amplitude: number };
 }
 /** Image « après » d'un avant / après : notice complète comme une image de diapositive ; `cadre`
  *  = vue de la caméra au volet, qui correspond au dernier cadre de la caméra de l'image « avant »
  *  (même lieu superposé) ; `quand` = passage exact qui déclenche le volet ; `camera` = étapes
  *  suivantes sur l'image « après » (toutes avec un `quand` situé après celui du volet). */
-export interface ImageApres extends Omit<ImageDiapo, 'camera' | 'ouverture' | 'apres' | 'parallaxe'> {
+export interface ImageApres extends Omit<ImageDiapo, 'camera' | 'ouverture' | 'apres'> {
   cadre: [number, number, number, number];
   quand: string;
   camera?: EtapeCamera[];
