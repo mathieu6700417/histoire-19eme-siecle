@@ -147,3 +147,55 @@ Constats :
 | 240,933 | 2,170 | Diaporama Empire : voix, caméra, musique | Bash sed | `sed -n 291,397p scripts/diaporamas/README.md` |
 | 231,796 | 2,126 | Diaporama Empire : voix, caméra, musique | Bash sed | `sed -n 266,300p docs/specs/12-siecle-en-images.md; sed -n 488,498p docs/specs/12-siecle-en` |
 | 230,098 | 4,793 | Diaporama Empire : écriture et images | Bash cat | `cd /private/tmp/claude-501/-Users-mathieu-ai-projects-19eme-siecle/5d484a45-d04b-4dd0-839b` |
+
+---
+
+# Suite : retouches et outillage (2026-10-09)
+
+Après la mise en ligne, l'utilisateur a regardé le diaporama et demandé une série de retouches,
+traitées par 12 sous-agents Opus (journaux : `frise-simplifiee`, `camera-vivante`,
+`cartes-animees`, `lectures-vers`, `decoupage-lecteur`, `outillage-python`, `generique`,
+`enrichissements-02`, `tetes-coupees`, `portraits-objets`, `indicatif-original`, `orchestration`).
+Livré en trois commits (126a578, ee4de03, a8405c6).
+
+## Tokens de toute la session (`tokens.py 5d484a45-…`)
+
+| | Requêtes | Cache écrit | Cache lu | Sortie |
+|---|---|---|---|---|
+| Production initiale (agents A, B, C) | 292 | 2,9 M | 51,0 M | 12 k |
+| Retouches et outillage (12 agents) | 933 | 3,9 M | 140,8 M | 52 k |
+| Orchestration (session principale) | 194 | 0,4 M | 39,5 M | 141 k |
+| **Total** | **1 419** | **7,2 M** | **231 M** | **201 k** |
+
+Gemini : ~2,7 $ (production) + ~6,3 $ (passe caméra sans plafond de réflexion) + ~0,9 $
+(visages) + ~0,4 $ (enrichissement) + ~1 $ (Lyria) + ~0,2 $ (banc d'essai). Crédits épuisés
+deux fois.
+
+## Constats
+
+1. **Les retouches ont coûté près de trois fois la production.** Ce que l'utilisateur a vu au
+   visionnage (frise cassée, têtes coupées, épisodes pauvres, enrichissements absents, cadres
+   faux) n'avait été repéré par aucun contrôle. Chaque défaut trouvé après coup a coûté un agent
+   complet (8 à 30 M lus). → Contrôles automatiques ajoutés (`verifier.py` : dosage, épisodes,
+   vignettes ; `camera.py --audit` : vues réelles, visages, portraits) ; `captures.py` pour un
+   contrôle visuel en une commande.
+2. **Le lecteur monolithique** (196 Ko) rendait chaque retouche chère et interdisait le
+   parallélisme ; découpé en 27 modules (rendu identique au pixel). Les agents suivants ont
+   travaillé à deux ou trois en parallèle sans conflit.
+3. **Gemini sans plafond** : la réflexion libre faisait ~85 % du coût de la caméra. Banc d'essai :
+   `gemini-3.8-flash` sans réflexion, ~0,006 $ par diapositive pour la caméra (dix fois moins).
+   `--budget` dans chaque consigne d'agent.
+4. **L'orchestration elle-même pèse** (39 M lus, 17 % du total) : une longue conversation qui relit
+   tout son historique à chaque tour. → Une session par chantier, ou `/compact` entre deux.
+5. **Reprendre un agent qui a déjà le contexte** (SendMessage) coûte bien moins qu'un nouvel agent
+   pour une petite retouche (frise : 14 appels en 2 min ; indicatif : 12 appels).
+6. Les agents ne peuvent ni écouter ni bien voir le mouvement : musique et caméra se jugent par
+   l'utilisateur. Leur proposer tôt une page d'écoute ou un build local évite des allers-retours.
+
+## Pour la période 03 (Restauration)
+
+- Lire d'abord la spec 12, « Produire une période : leçons de Consulat et Empire ».
+- Agent A prévoit enrichissements, épisodes riches, cartes et générique dès l'écriture ;
+  `verifier.py` doit être sans avertissement de dosage avant toute voix.
+- Outils par lots (`images.py --lot`, `portraits.py --lot`), `--budget` partout, `captures.py`.
+- Montrer le build à l'utilisateur à mi-parcours (après les images et la caméra), pas seulement à la fin.
