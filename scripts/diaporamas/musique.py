@@ -6,6 +6,12 @@ Usage :
     python3 scripts/diaporamas/musique.py revolution --force      # tout refaire
     python3 scripts/diaporamas/musique.py revolution --piste fond-crise-1
     python3 scripts/diaporamas/musique.py revolution --sources    # télécharge et contrôle seulement
+    python3 scripts/diaporamas/musique.py --indicatif             # indicatif commun du générique
+
+Indicatif (spec 12, « Générique d'ouverture et récapitulatif de fin ») : décrit dans
+src/data/diaporamas/commun/indicatif.json. Depuis le 2026-10-09, thème original composé avec Lyria
+(extraits préparés à part, rien à faire ici) ; pour un enregistrement (Commons, Internet Archive),
+deux extraits préparés comme un chant (-16 LUFS, 128 kb/s) dans public/diaporamas/commun/.
 
 Données : `musique` dans src/data/diaporamas/NN-<slug>.json (format dans le README) :
 `fond` (pistes de fond, par acte, enchaînées en fondu par le lecteur) et `intermedes`
@@ -143,6 +149,9 @@ def duree_audio(f: Path) -> float:
 
 def filtres_piste(p: dict, chant: bool, duree: float) -> str:
     f = []
+    if p.get('mono'):
+        # Pressage « stéréo » électronique d'un enregistrement mono : les deux canaux additionnés.
+        f.append('pan=mono|c0=0.5*c0+0.5*c1')
     if p.get('filtres') == '78tours':
         # Coupe-bas (ronflement), coupe-haut (souffle), débruitage léger du crépitement.
         f += ['highpass=f=70', 'lowpass=f=8500', 'afftdn=nf=-30']
@@ -233,13 +242,44 @@ def traiter(slug: str, force: bool, seulement: list[str] | None, sources_seules:
     return 1 if erreurs else 0
 
 
+INDICATIF = c.RACINE / 'src' / 'data' / 'diaporamas' / 'commun' / 'indicatif.json'
+
+
+def traiter_indicatif(force: bool) -> int:
+    """Indicatif commun du générique : extraits d'ouverture et de fin, -16 LUFS, durées écrites."""
+    d = json.loads(INDICATIF.read_text())
+    if d['source'].get('type') == 'lyria':
+        print('Indicatif composé avec Lyria : extraits déjà préparés (voir docs/journal/indicatif-original.jsonl).')
+        return 0
+    audio, info = obtenir_source(d['source'])
+    if not info['libre']:
+        print(f"  REFUS indicatif : licence non admise ({info['licence']})")
+        return 1
+    for nom, x in d['extraits'].items():
+        p = {**{k: d[k] for k in ('filtres', 'mono') if k in d}, **x}
+        cle = empreinte(d['source'], p, LUFS_CHANT)
+        dest = c.PUBLIC / x['fichier']
+        if not force and dest.exists() and x.get('empreinte') == cle and x.get('duree'):
+            continue
+        print(f"  indicatif {nom} : découpe, fondus, sonie → {x['fichier']}")
+        x['duree'] = preparer(audio, p, dest, True)
+        x['empreinte'] = cle
+    d['page'] = info.get('page')
+    INDICATIF.write_text(json.dumps(d, ensure_ascii=False, indent=2) + '\n')
+    print('Indicatif : ' + ', '.join(f"{n} {x['duree']} s" for n, x in d['extraits'].items()))
+    return 0
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('slug', nargs='?')
     p.add_argument('--force', action='store_true')
     p.add_argument('--piste', nargs='+')
     p.add_argument('--sources', action='store_true', help='télécharger et contrôler les licences seulement')
+    p.add_argument('--indicatif', action='store_true', help='indicatif commun du générique')
     a = p.parse_args()
+    if a.indicatif:
+        return traiter_indicatif(a.force)
     if not a.slug:
         p.error('indiquer une période')
     return traiter(a.slug, a.force, a.piste, a.sources)

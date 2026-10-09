@@ -31,6 +31,13 @@ reprendre l'image d'une diapositive (`portrait.diapositive`) : rien à télécha
 Avant / après et mosaïques (points 3 et 5 des « Enrichissements visuels ») : `image.apres` →
 NNN-apres.webp (1600 px, `recadrage` admis) ; `mosaique.vignettes` → NNN-mK.webp (1000 px), la
 vignette `principale` reprenant l'image de la diapositive. Même contrôle de licence et de largeur.
+
+Cadrage des vignettes (2026-10-09) : `mosaique.vignettes[].cadre` = le visage principal de la
+vignette ([x0, y0, x1, y1], fractions du WebP servi), relevé localement et gratuitement (YuNet,
+`visages_local.py`) à chaque passe ; le lecteur centre la case sur lui (dans la zone utile) au lieu
+du centre de l'image (CE 100 : les portraits en pied montraient le torse et les jambes). Sans
+visage net, pas de `cadre` (centre de la zone utile). Correction à la main : écrire `cadre` (le
+point à garder au centre est son centre) et `"cadre_manuel": true`. `--vignettes` ne fait que ça.
 """
 import argparse, hashlib, io, json, sys, time
 from pathlib import Path
@@ -44,6 +51,7 @@ GRAND_COTE = 1600
 COTE_PORTRAIT = 640
 COTE_DOCUMENT = 2400
 COTE_VIGNETTE = 1000   # vignettes d'une mosaïque (une case de la grille)
+VISAGE_VIGNETTE_MIN = 0.06   # hauteur minimale (fraction de la vignette) d'un visage de cadrage
 QUALITE = 74
 
 
@@ -147,6 +155,57 @@ def annexes(d: dict, dossier: Path, etat: dict, force: bool) -> list[str]:
     return echecs
 
 
+def visages_vignettes(slug: str, chemins: list[Path]) -> dict[str, list[list[float]]]:
+    """Visages locaux (YuNet, `visages_local.py`, gratuit) des fichiers donnés, en cache par empreinte
+    du fichier dans .cache/diaporamas/<slug>/vignettes-visages.json : {nom de fichier: rectangles}."""
+    import subprocess
+    f = c.CACHE / slug / 'vignettes-visages.json'
+    cache = json.loads(f.read_text()) if f.exists() else {}
+    cles = {p.name: hashlib.sha1(p.read_bytes()).hexdigest()[:16] for p in chemins if p.exists()}
+    manque = [p for p in chemins if p.exists() and cles[p.name] not in cache]
+    if manque:
+        py = c.RACINE / '.cache' / 'venv-visages' / 'bin' / 'python'
+        if not py.exists():
+            raise SystemExit(f'venv des visages absent ({py.relative_to(c.RACINE)}) : voir visages_local.py.')
+        r = subprocess.run([str(py), str(Path(__file__).with_name('visages_local.py'))],
+                           input=json.dumps([str(p) for p in manque]), capture_output=True, text=True)
+        if r.returncode:
+            raise SystemExit('Détection locale des visages en échec :\n' + r.stderr[-1500:])
+        cache.update(zip((cles[p.name] for p in manque), json.loads(r.stdout)))
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(json.dumps(cache, ensure_ascii=False))
+    return {nom: cache[cle] for nom, cle in cles.items()}
+
+
+def visage_principal(faces: list[list[float]]) -> list[float] | None:
+    """Le visage net le plus grand (assez haut, pas une bande aberrante), un visage du bas de l'image
+    comptant pour un tiers (fausses détections dans les drapés : l'hermine du sacre, CE 100), ou
+    None. Les petites têtes d'une scène de foule (moins de VISAGE_VIGNETTE_MIN) ne cadrent rien."""
+    nets = [k for k in faces if k[3] - k[1] >= VISAGE_VIGNETTE_MIN and (k[2] - k[0]) <= 3 * (k[3] - k[1])]
+    poids = lambda k: (k[2] - k[0]) * (k[3] - k[1]) * (1 if (k[1] + k[3]) / 2 < 0.6 else 1 / 3)
+    return max(nets, key=poids, default=None)
+
+
+def cadrer_vignettes(d: dict, dossier: Path) -> list[str]:
+    """`cadre` de chaque vignette (hors principale, cadrée par sa caméra) : son visage principal ;
+    les cadres manuels (`cadre_manuel`) sont gardés. Rend une ligne par vignette changée."""
+    mos = [(x, k, v) for x in d['diapositives'] for k, v in enumerate((x.get('mosaique') or {}).get('vignettes', []))
+           if k != x['mosaique'].get('principale') and v.get('fichier')]
+    faces = visages_vignettes(d['slug'], [dossier / v['fichier'] for _, _, v in mos])
+    sortie = []
+    for x, k, v in mos:
+        if v.get('cadre_manuel') or v['fichier'] not in faces:
+            continue
+        cadre = visage_principal(faces[v['fichier']])
+        if cadre != v.get('cadre'):
+            sortie.append(f"{x['n']:3d} vignette {k} ({v['fichier']}) : cadre {v.get('cadre')} → {cadre}")
+            if cadre is None:
+                v.pop('cadre', None)
+            else:
+                v['cadre'] = cadre
+    return sortie
+
+
 def chercher_libres(requete: str, nombre: int) -> tuple[list[dict], int]:
     """Recherche Commons filtrée (licence libre, largeur) : (retenus, nombre de résultats bruts)."""
     d = c.api_commons(action='query', generator='search', gsrsearch=f'{requete} filetype:bitmap',
@@ -216,6 +275,8 @@ def main() -> int:
     p.add_argument('--infos', nargs='+', metavar='FICHIER', help='métadonnées Commons complètes de fichiers')
     p.add_argument('--lot', metavar='FICHIER', help='recherches par lots : lignes « cle|requête »')
     p.add_argument('--nombre', type=int, default=12, help='résultats bruts demandés par recherche (--lot)')
+    p.add_argument('--vignettes', action='store_true',
+                   help='seulement le cadrage des vignettes des mosaïques sur leur visage (local, sans réseau)')
     a = p.parse_args()
 
     if a.lot:
@@ -245,6 +306,11 @@ def main() -> int:
 
     f, d = c.lire(a.slug)
     dossier = c.PUBLIC / d['slug']
+    if a.vignettes:
+        for ligne in cadrer_vignettes(d, dossier) or ['vignettes déjà cadrées']:
+            print(ligne)
+        c.ecrire(f, d)
+        return 0
     diapos = [x for x in d['diapositives'] if a.n is None or x['n'] == a.n]
     infos = c.infos_fichiers([x['image']['commons'] for x in diapos])
     etat_f = c.CACHE / d['slug'] / 'images.json'
@@ -295,6 +361,8 @@ def main() -> int:
 
     if a.n is None:
         echecs += annexes(d, dossier, etat, a.force)
+        for ligne in cadrer_vignettes(d, dossier):
+            print(ligne)
 
     # Vignette du portail : la première diapositive, petite.
     premiere = dossier / d['diapositives'][0]['image'].get('fichier', '001.webp')

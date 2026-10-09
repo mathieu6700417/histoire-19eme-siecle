@@ -14,6 +14,12 @@ est élargie en conséquence ; étalonnage sur le relevé Gemini, 2026-10-09).
 Détecteur : YuNet (OpenCV DNN), passé sur l'image entière et sur des tuiles qui se chevauchent
 (têtes plus petites), en couleur et en niveaux de gris égalisés (gravures, estampes), puis fusion
 par suppression des non-maxima.
+
+Mode portrait (2026-10-09, règle « chaque vue d'un portrait montre le visage entier ») : entrée
+`{"portrait": true, "chemins": [...]}` ; pour chaque chemin, le visage le plus probable seul (liste
+d'un rectangle, ou vide), cherché avec un seuil bas (SEUIL_PORTRAIT) et sans le filtre des grandes
+boîtes : camera.py s'en sert quand le titre ou le registre dit « portrait » et que la passe normale
+n'a rien trouvé (gravure pâle, profil).
 """
 import json
 import sys
@@ -28,17 +34,18 @@ SEUIL = 0.45           # score minimal de YuNet
 TUILES = 2             # tuiles par côté (avec chevauchement) en plus de l'image entière
 HAUT, BAS, LARGE = 0.25, 0.05, 0.25   # élargissement de la boîte YuNet (fractions de sa taille)
 H_MIN = 0.02           # hauteur minimale rendue (fraction de l'image), comme la consigne Gemini
+SEUIL_PORTRAIT = 0.2    # mode portrait : score minimal du meilleur visage
 GRAND, SEUIL_GRAND = 0.10, 0.70   # boîte de plus de 10 % de la hauteur : score exigé plus haut
                                   # (fausses alertes larges sur les drapés, les ciels, les foules)
 
 
-def _detecteur(L: int, H: int):
-    return cv2.FaceDetectorYN.create(str(MODELE), '', (L, H), SEUIL, 0.3, 5000)
+def _detecteur(L: int, H: int, seuil: float = SEUIL):
+    return cv2.FaceDetectorYN.create(str(MODELE), '', (L, H), seuil, 0.3, 5000)
 
 
-def _passer(img: np.ndarray) -> list[tuple[float, float, float, float, float]]:
+def _passer(img: np.ndarray, seuil: float = SEUIL) -> list[tuple[float, float, float, float, float]]:
     H, L = img.shape[:2]
-    det = _detecteur(L, H)
+    det = _detecteur(L, H, seuil)
     _, faces = det.detect(img)
     if faces is None:
         return []
@@ -100,16 +107,43 @@ def detecter(chemin: str) -> list[list[float]]:
         w, h = x1 - x0, y1 - y0
         if h / H > GRAND and score < SEUIL_GRAND:
             continue
-        r = [(x0 - LARGE * w) / L, (y0 - HAUT * h) / H, (x1 + LARGE * w) / L, (y1 + BAS * h) / H]
-        r = [round(min(1.0, max(0.0, v)), 3) for v in r]
+        r = _elargir((x0, y0, x1, y1), L, H)
         if r[3] - r[1] >= H_MIN and r[2] > r[0]:
             sortie.append(r)
     return sorted(sortie)
 
 
+def _elargir(b, L: int, H: int) -> list[float]:
+    x0, y0, x1, y1 = b[:4]
+    w, h = x1 - x0, y1 - y0
+    r = [(x0 - LARGE * w) / L, (y0 - HAUT * h) / H, (x1 + LARGE * w) / L, (y1 + BAS * h) / H]
+    return [round(min(1.0, max(0.0, v)), 3) for v in r]
+
+
+def detecter_portrait(chemin: str) -> list[list[float]]:
+    """Le visage le plus probable d'un portrait (seuil bas, image entière, couleur et gris égalisé)."""
+    img = cv2.imread(chemin, cv2.IMREAD_COLOR)
+    if img is None:
+        return []
+    H0, L0 = img.shape[:2]
+    k = COTE / max(H0, L0)
+    base = cv2.resize(img, (round(L0 * k), round(H0 * k)), interpolation=cv2.INTER_AREA) if k < 1 else img
+    H, L = base.shape[:2]
+    boites = [b for v in _variantes(base) for b in _passer(v, SEUIL_PORTRAIT)]
+    boites = [b for b in boites if (b[3] - b[1]) / H >= H_MIN]
+    if not boites:
+        return []
+    # Le plus probable, à score voisin le plus grand (le sujet d'un portrait domine l'image).
+    b = max(boites, key=lambda b: b[4] + 2 * (b[3] - b[1]) / H)
+    return [_elargir(b, L, H)]
+
+
 def main() -> None:
-    chemins = json.loads(sys.stdin.read())
-    json.dump([detecter(p) for p in chemins], sys.stdout)
+    entree = json.loads(sys.stdin.read())
+    if isinstance(entree, dict) and entree.get('portrait'):
+        json.dump([detecter_portrait(p) for p in entree['chemins']], sys.stdout)
+        return
+    json.dump([detecter(p) for p in entree], sys.stdout)
 
 
 if __name__ == '__main__':

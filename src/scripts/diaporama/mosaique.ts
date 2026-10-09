@@ -60,7 +60,9 @@ export function installerMosaique(lec: Lecteur) {
     return x;
   }
   /** Place les vignettes dans leurs cases (taille de la scène) : chacune couvre sa case avec sa
-   *  zone utile, centrée ; la principale est posée à chaque image (majMosaique). */
+   *  zone utile, centrée sur son visage principal (`c`, relevé par images.py) autant que la zone
+   *  utile le permet, sinon sur le centre de la zone ; la principale est posée à chaque image
+   *  (majMosaique), cadrée par la première vue de sa caméra. */
   function placerTuiles(c: HTMLElement, x: Diapo) {
     const mo = c.querySelector<HTMLElement>('.mosaique')!;
     if (!x.mos || x.ouv || mo.dataset.n !== String(x.n)) return;
@@ -72,8 +74,16 @@ export function installerMosaique(lec: Lecteur) {
       const s = Math.max(w / v.l, h / v.h), IW = (v.l * s) / (v.u[2] - v.u[0]), IH = (v.h * s) / (v.u[3] - v.u[1]);
       const im = el.querySelector('img')!;
       im.style.width = `${IW}px`; im.style.height = `${IH}px`;
-      im.style.transform = `translate3d(${(w / 2 - (v.u[0] + v.u[2]) / 2 * IW).toFixed(2)}px, ${(h / 2 - (v.u[1] + v.u[3]) / 2 * IH).toFixed(2)}px, 0)`;
+      const [tx, ty] = decalage(v, w, h, IW, IH);
+      im.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0)`;
     });
+  }
+  /** Décalage (px) de l'image d'une vignette dans sa case w × h (image IW × IH, déjà à l'échelle) :
+   *  le centre du visage `c` au centre de la case, borné pour que la zone utile couvre la case. */
+  function decalage(v: { u: Rect; c: Rect | null }, w: number, h: number, IW: number, IH: number): [number, number] {
+    const fx = v.c ? (v.c[0] + v.c[2]) / 2 : (v.u[0] + v.u[2]) / 2, fy = v.c ? (v.c[1] + v.c[3]) / 2 : (v.u[1] + v.u[3]) / 2;
+    const borne = (a: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, a));
+    return [borne(w / 2 - fx * IW, w - v.u[2] * IW, -v.u[0] * IW), borne(h / 2 - fy * IH, h - v.u[3] * IH, -v.u[1] * IH)];
   }
   /** Mosaïque à l'instant `t` : vignettes qui paraissent, puis plongée dans l'image principale. */
   function majMosaique(c: HTMLElement, x: Diapo, t: number) {
@@ -88,15 +98,16 @@ export function installerMosaique(lec: Lecteur) {
     const tuiles = [...mo.children] as HTMLElement[];
     // Grille entière dès l'entrée ; puis mise en valeur à tour de rôle (révision du 2026-10-08) :
     // les autres vignettes d'abord, dans l'ordre de la grille, la principale en dernier. La
-    // vignette en cours est en pleine couleur et s'avance (×1,03), les autres sont en gris voilé ;
-    // fondus croisés de `fondu` s. La principale garde sa couleur après son tour et revient à
-    // l'échelle 1 avant la plongée (qui part ainsi exactement de sa case).
+    // vignette en cours est en pleine couleur et s'avance (×1,03) ; celles déjà montrées restent en
+    // couleur, revenues à plat (révision du 2026-10-09) ; seules celles pas encore montrées sont en
+    // gris voilé ; fondus de `fondu` s. La principale revient elle aussi à l'échelle 1 avant la
+    // plongée (qui part ainsi exactement de sa case).
     const F = MOSAIQUE_T.fondu, ordre = [...tuiles.keys()].filter((k) => k !== g.k).concat(g.k);
     const voile = reduit ? 0 : adoucir((t - MOSAIQUE_T.apparition) / F);
     tuiles.forEach((el, k) => {
       const a = MOSAIQUE_T.apparition + ordre.indexOf(k) * MOSAIQUE_T.pas, b = a + MOSAIQUE_T.pas;
       const monte = reduit ? 0 : adoucir((t - a) / F), en = monte - (reduit ? 0 : adoucir((t - b) / F));
-      const v = 1 - voile * (1 - (k === g.k ? monte : en)); // 1 : pleine couleur, 0 : gris voilé
+      const v = 1 - voile * (1 - monte); // 1 : pleine couleur (en cours ou déjà vue), 0 : gris voilé
       el.style.opacity = (1 - 0.45 * (1 - v)).toFixed(3);
       el.style.transform = en > 0.001 ? `scale(${(1 + MISE_EN_VALEUR * en).toFixed(5)})` : '';
       el.style.zIndex = en > 0.001 ? '2' : '';

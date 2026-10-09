@@ -2,6 +2,7 @@
 // manuscrit (halo), chiffre clé (défilement), date républicaine. État partagé : portraits*, mots*.
 // Spec 12, « Cartes de lieu et citations », « Portraits », « Enrichissements visuels » ;
 // README : sections du même nom.
+import { COIN_H_MAX, COIN_H_MAX_TEL } from './constantes';
 import { mouvementReduit } from './outils';
 import type { Lecteur } from './contexte';
 
@@ -19,9 +20,6 @@ export function installerIncrustations(lec: Lecteur) {
   const elMots = racine.querySelector<HTMLElement>('.mots');
   const elPortraits = racine.querySelector<HTMLElement>('.portraits');
   lec.portraitsEls = [];
-  // Bord droit du fond de la rangée (px, depuis son bord gauche) quand il couvre les portraits
-  // 1, 2… (mesuré par taillePortraits) ; dernier état écrit (évite les écritures inutiles).
-  lec.portraitsFins = [];
   lec.portraitsEtat = '';
   lec.motsEls = [];
   lec.motsDits = -1;
@@ -43,37 +41,37 @@ export function installerIncrustations(lec: Lecteur) {
     c.style.height = `${Math.round(h)}px`;
     elLieu!.style.maxWidth = `${Math.round(w) + 12}px`;
   }
-  /** Rangée de portraits (spec 12, « Portraits des personnes nommées ») : ovales d'environ 17 %
-   *  de la hauteur de la scène (78 à 118 px de haut sur ordinateur, 50 sur téléphone), réduits si
-   *  la rangée ne tient pas à côté du médaillon de lieu (coin opposé). Puis la citation : si elle
-   *  touche la rangée, elle monte au-dessus d'elle, pour toute la diapositive (rien ne bouge
-   *  pendant qu'elle est lue). */
+  /** Plafond de hauteur des portraits et des objets du bas (part de la hauteur de la scène). */
+  const plafondCoin = () => scene.clientHeight * (scene.clientWidth < 700 ? COIN_H_MAX_TEL : COIN_H_MAX);
+  /** Rangée de portraits (spec 12, « Portraits des personnes nommées ») : ovales seuls, sans
+   *  cartouche, une étiquette serrée dessous. Hauteur : 1,5 fois l'ancienne (révision du
+   *  2026-10-09), plafonnée à 30 % de la hauteur de la scène (27 % sur téléphone debout) ;
+   *  réduite si la rangée ne tient pas à côté du médaillon de lieu ou de l'objet montré en même
+   *  temps dans le coin opposé. Puis la citation : si elle touche la rangée, elle monte au-dessus
+   *  d'elle, pour toute la diapositive (rien ne bouge pendant qu'elle est lue). */
   function taillePortraits() {
-    const P = D.diapos[lec.i].portraits;
+    const x = D.diapos[lec.i], P = x.portraits;
     if (!elPortraits || !P) return;
     const H = scene.clientHeight, W = scene.clientWidth;
     const gauche = parseFloat(getComputedStyle(elPortraits).left) || 8;
-    // ~1,5 fois la taille d'origine (retour de l'utilisateur du 2026-10-08).
-    let h = Math.max(W < 700 ? 70 : 110, Math.min(180, H * 0.25));
+    const ancienne = Math.max(W < 700 ? 70 : 110, Math.min(180, H * 0.25));
+    let h = Math.min(1.5 * ancienne, plafondCoin());
     elPortraits.style.setProperty('--ovale-h', `${Math.round(h)}px`);
-    const lieu = D.diapos[lec.i].lieu && elLieu ? elLieu.offsetWidth + gauche : 0;
-    const place = W - 2 * gauche - lieu;
-    if (elPortraits.offsetWidth > place && place > 0) {
-      h = Math.max(34, h * (place / elPortraits.offsetWidth));
+    const lieu = x.lieu && elLieu ? elLieu.offsetWidth + gauche : 0;
+    const O = x.objet;
+    const objet = O && O.cote !== 'gauche' && elObjet && Math.min(O.b, P.b) > Math.max(O.a, P.a)
+      ? elObjet.offsetWidth + gauche : 0;
+    const place = W - 2 * gauche - Math.max(lieu, objet);
+    // Les étiquettes ne rétrécissent pas avec les ovales : quelques passes jusqu'à ce que ça tienne.
+    for (let k = 0; k < 4 && place > 0 && elPortraits.offsetWidth > place && h > 34; k++) {
+      h = Math.max(34, h * (place / elPortraits.offsetWidth) - 2);
       elPortraits.style.setProperty('--ovale-h', `${Math.round(h)}px`);
     }
     if (elMots) elMots.style.bottom = '';
-    if (elMots && D.diapos[lec.i].citation) {
+    if (elMots && x.citation) {
       const libre = (W - elMots.offsetWidth) / 2;
       if (libre < gauche + elPortraits.offsetWidth + 8) elMots.style.bottom = `calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + ${Math.round(elPortraits.offsetHeight + (parseFloat(getComputedStyle(elLegende).top) || 8) + 8)}px)`;
     }
-    // Largeurs du fond (bord extérieur compris) : jusqu'au bord droit du portrait k, plus la
-    // marge intérieure et le filet ; le dernier couvre la rangée entière.
-    const cs = getComputedStyle(elPortraits);
-    const bg = parseFloat(cs.borderLeftWidth) || 0, fin = (parseFloat(cs.paddingRight) || 0) + (parseFloat(cs.borderRightWidth) || 0);
-    // Scène non mise en page (offsetWidth nul) : mesure reprise à la prochaine image.
-    lec.portraitsFins = elPortraits.offsetWidth > 0 ? lec.portraitsEls.map((f, k) => k === lec.portraitsEls.length - 1
-      ? elPortraits.offsetWidth : Math.min(elPortraits.offsetWidth, bg + f.offsetLeft + f.offsetWidth + fin)) : [];
     lec.portraitsEtat = '';
   }
   // --- Objets de musée et manuscrits (spec 12, « Enrichissements visuels », 2026-10-08) -----
@@ -82,18 +80,20 @@ export function installerIncrustations(lec: Lecteur) {
   const msDoc = elManuscrit?.querySelector<HTMLElement>('.manuscrit__doc') ?? null;
   const msHalo = elManuscrit?.querySelector<HTMLElement>('.manuscrit__halo') ?? null;
   lec.msEtat = '';
-  /** Objet : image d'environ 22 % de la hauteur de la scène (96 à 200 px sur ordinateur, 56 au
-   *  moins sur téléphone ; 1,3 fois plus pour un objet très étroit), 30 % de la largeur au plus
-   *  (34 % sur téléphone). */
+  /** Objet : 1,5 fois l'ancienne taille (révision du 2026-10-09 ; avant : 22 % de la hauteur de
+   *  la scène, 96 à 200 px, 56 au moins sur téléphone ; 1,3 fois plus pour un objet très étroit),
+   *  plafonnée à 30 % de la hauteur de la scène (27 % sur téléphone debout), légende en plus ;
+   *  40 % de la largeur au plus (45 % sur téléphone). */
   function tailleObjet() {
     const O = D.diapos[lec.i].objet;
     if (!elObjet || !O) return;
     const H = scene.clientHeight, W = scene.clientWidth;
-    let h = Math.max(W < 700 ? 56 : 96, Math.min(200, H * 0.22));
+    let ancienne = Math.max(W < 700 ? 56 : 96, Math.min(200, H * 0.22));
     // Objet très étroit (sabre) : un peu plus haut, sinon il ne se lit pas.
-    if (O.ratio < 0.5) h = Math.min(h * 1.3, H * 0.3);
+    if (O.ratio < 0.5) ancienne = Math.min(ancienne * 1.3, H * 0.3);
+    let h = Math.min(1.5 * ancienne, plafondCoin());
     let l = h * O.ratio;
-    const lmax = W * (W < 700 ? 0.34 : 0.3);
+    const lmax = W * (W < 700 ? 0.45 : 0.4);
     if (l > lmax) { l = lmax; h = l / O.ratio; }
     elObjet.style.setProperty('--objet-h', `${Math.round(h)}px`);
     elObjet.style.setProperty('--objet-l', `${Math.round(l)}px`);

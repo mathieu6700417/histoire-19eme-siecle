@@ -140,6 +140,10 @@ Règles :
   (rectangles) : vérifie-les contre la vue réelle (bande coupée en bas si le cadre est trop haut).
   Attention aux portraits en buste : un cadre serré sur un détail (main, décoration, objet) coupe
   souvent la tête ; cadre alors le détail avec le visage entier, ou franchement sous le menton.
+- PORTRAIT d'une personne seule : le PREMIER et le DERNIER cadre montrent son visage entier. Un
+  cadre intermédiaire peut s'approcher d'un détail que cite la voix (la main sur un décret, un
+  livre, une épée) à condition que le visage soit ENTIÈREMENT hors de la vue (rien du menton) ;
+  jamais un visage à moitié coupé.
 - Évite le bord inférieur et le coin supérieur gauche de l'image : en plein écran, le
   sous-titre couvre le bas et le cartouche (titre de l'œuvre) le haut à gauche. En
   particulier, ne cadre pas une légende gravée tout en bas de l'estampe : préfère la scène.
@@ -288,6 +292,10 @@ def visages(slug: str, x: dict, appeler: bool = True) -> list[list[float]] | Non
     """Rectangles des visages de l'image (fractions), selon SOURCE_VISAGES. `appeler` ne règle que
     l'appel Gemini (source « gemini ») : la détection locale, gratuite, est toujours faite.
     None seulement en source « gemini » quand l'image n'a pas été relevée et `appeler` est faux."""
+    return _avec_visage_portrait(slug, x, _visages_source(slug, x, appeler))
+
+
+def _visages_source(slug: str, x: dict, appeler: bool) -> list[list[float]] | None:
     if SOURCE_VISAGES == 'gemini':
         return visages_gemini(slug, x, appeler)
     cle = empreinte_image(slug, x)
@@ -305,6 +313,94 @@ def visages(slug: str, x: dict, appeler: bool = True) -> list[list[float]] | Non
     # Relevé Gemini présent : on n'y ajoute que les visages locaux nets qu'il a manqués (les petites
     # têtes de foule, qu'il ignore exprès, rendraient l'audit bavard sans rien protéger d'utile).
     return g + [k for k in locaux if k[3] - k[1] >= UNION_MIN and not any(_iou(k, h) > 0.2 for h in g)]
+
+
+# --- Portraits (règle du 2026-10-09 : « sur un portrait, chaque vue montre le visage entier ») ----
+# Défaut corrigé : CE 23 (Cadoudal). La caméra montrait la tête, menton coupé ; l'audit n'y voyait qu'un
+# visage coupé ordinaire, et la réparation géométrique (qui ne protégeait le sujet que s'il tenait
+# dans le cadre d'origine) a retenu la bande la plus proche qui laissait le visage « franchement
+# dehors » : le gilet. Désormais le visage principal d'un portrait est un sujet obligatoire de
+# chaque vue (contrôle de `erreurs_vues`, donc des propositions du modèle, de l'audit et des
+# réparations). Portrait = deux visages au plus, le plus grand d'au moins TETE_MIN de la hauteur ;
+# ou, si le titre ou le registre l'indique (une seule personne visible, nommée dans le titre ;
+# « Portrait » dans le titre ; image du registre), un visage dominant (PORTRAIT_DOMINANT fois plus
+# haut que les autres, trois visages nets au plus) d'au moins PORTRAIT_FACE_MIN. Indice sans visage
+# relevé : seconde passe locale à seuil bas (`visages_local.py`, mode portrait) ; à défaut, saisir
+# `image.visage` [x0, y0, x1, y1] à la main (il prime sur toute détection).
+PORTRAIT_DOMINANT = 1.4
+PORTRAIT_FACE_MIN = 0.06
+PORTRAIT_NETS_MAX = 3
+TETE_GRANDE = (0.4, 0.75)   # portrait très serré : bande du rectangle (crâne → menton) à montrer, du front à la bouche
+CHEVEUX_TOLERES = 0.08  # haut du rectangle (cheveux au-dessus du front) qu'une vue peut couper
+CHEVEUX_COUPABLES = 0.25  # … et, quand la tête ne tient pas dans une vue, part du haut (cheveux) sacrifiable
+_REGISTRE: dict | None = None
+
+
+def _registre() -> dict:
+    global _REGISTRE
+    if _REGISTRE is None:
+        f = c.RACINE / 'src' / 'data' / 'diaporamas' / 'portraits.json'
+        _REGISTRE = {p['id']: p for p in json.loads(f.read_text())} if f.exists() else {}
+    return _REGISTRE
+
+
+def _sans_accents(s: str) -> str:
+    import unicodedata
+    return unicodedata.normalize('NFD', s).encode('ascii', 'ignore').decode().lower()
+
+
+def indice_portrait(x: dict) -> bool:
+    """Le titre ou le registre dit-il que l'image est le portrait d'une personne seule ?"""
+    im = x['image']
+    titre = _sans_accents(im.get('titre') or '')
+    if re.match(r'(auto)?portrait\b', titre):
+        return True
+    vues = x.get('personnes_vues') or []
+    if len(vues) != 1:
+        return False
+    p = _registre().get(vues[0]['id'], {})
+    if p.get('commons') and p.get('commons') == im.get('commons'):
+        return True
+    noms = (p.get('nom') or vues[0]['id'].replace('-', ' ')).replace("'", ' ').replace('-', ' ').split()
+    return any(len(m) > 3 and re.search(r'\b' + re.escape(_sans_accents(m)) + r'\b', titre) for m in noms)
+
+
+def _nets(faces: list[list[float]], h_min: float = FACE_MIN) -> list[list[float]]:
+    return [k for k in faces if (k[2] - k[0]) <= 3 * (k[3] - k[1]) and k[3] - k[1] >= h_min]
+
+
+def _avec_visage_portrait(slug: str, x: dict, faces: list[list[float]] | None) -> list[list[float]] | None:
+    """Visage saisi à la main (`image.visage`) en tête de liste ; portrait indiqué sans visage net :
+    seconde passe locale à seuil bas."""
+    m = x['image'].get('visage')
+    if m:
+        return [list(m)] + [k for k in faces or [] if _iou(k, m) < 0.3]
+    if faces is None or _nets(faces, PORTRAIT_FACE_MIN) or not indice_portrait(x):
+        return faces
+    return faces + visage_portrait_local(slug, x)
+
+
+def visage_portrait_local(slug: str, x: dict) -> list[list[float]]:
+    """Meilleur visage d'un portrait au seuil bas (YuNet, gratuit), en cache sous « portrait:<clé> »."""
+    import subprocess
+    cle = 'portrait:' + empreinte_image(slug, x)
+    with verrou:
+        f, cache = _visages_locaux_cache(slug)
+        if cle in cache:
+            return cache[cle]
+    if not VENV_VISAGES.exists():
+        return []
+    r = subprocess.run([str(VENV_VISAGES), os.path.join(os.path.dirname(os.path.abspath(__file__)), 'visages_local.py')],
+                       input=json.dumps({'portrait': True, 'chemins': [str(c.PUBLIC / slug / x['image']['fichier'])]}),
+                       capture_output=True, text=True)
+    if r.returncode:
+        return []
+    liste = json.loads(r.stdout)[0]
+    with verrou:
+        f, cache = _visages_locaux_cache(slug)
+        cache[cle] = liste
+        f.write_text(json.dumps(cache, ensure_ascii=False))
+    return liste
 
 
 def visages_gemini(slug: str, x: dict, appeler: bool = True) -> list[list[float]] | None:
@@ -461,6 +557,7 @@ def erreurs_vues(x: dict, etapes: list[dict], L: int, H: int, image: Image.Image
     u = utile_de(x)
     hmax = min((u[2] - u[0]) * L / RATIO_VUE, (u[3] - u[1]) * H / (1 + BANDE_HAUT + BANDE_BAS)) / H
     erreurs = []
+    tous = faces or []
     for i, e in enumerate(etapes):
         v = vue_reelle(e['cadre'], L, H, u)
         cw, ch = couverture(e['cadre'], v, u)
@@ -471,14 +568,21 @@ def erreurs_vues(x: dict, etapes: list[dict], L: int, H: int, image: Image.Image
                            f"y {v[1]:.2f}-{v[3]:.2f} (x {v[0]:.2f}-{v[2]:.2f}) sera vue, soit {ch:.0%} de sa hauteur. "
                            f"Une vue fait au plus {hmax:.2f} de la hauteur de l'image : resserre le cadre sur la "
                            f"partie la plus parlante du sujet (qu'elle soit entière), sans couper de tête.")
+    # Le visage principal d'un portrait relève de la règle du portrait (plus stricte, mais qui admet
+    # le haut des cheveux coupé quand la tête est plus haute qu'une vue) : pas du contrôle ordinaire.
+    faces = autres_visages(faces or [], x)
     for i, e in enumerate(etapes):
         v = vue_reelle(e['cadre'], L, H, u)
         # La vue au début de la tenue et au bout du zoom lent (au plus fort).
-        coupes = visages_coupes(v, faces or []) or visages_coupes(vue_zoomee(v, dans_utile(e['cadre'], u)), faces or [])
+        coupes = visages_coupes(v, faces) or visages_coupes(vue_zoomee(v, dans_utile(e['cadre'], u)), faces)
         if coupes:
             erreurs.append(f"étape {i + 1} : la vue montrée (x {v[0]:.2f}-{v[2]:.2f}, y {v[1]:.2f}-{v[3]:.2f}) coupe "
                            f"le(s) visage(s) {coupes} : chaque visage doit être entier dans la vue ou franchement dehors.")
-    if image is not None and etapes:
+    portrait_faute = portrait_coupe(x, etapes, L, H, tous)
+    erreurs += portrait_faute
+    # Une vue qui montre le visage d'un portrait montre un sujet : pas de contrôle d'aplat (les fonds
+    # sombres ou unis des portraits peints le trompent).
+    if image is not None and etapes and (personne_seule(tous, x) is None or portrait_faute):
         v = vue_reelle(etapes[-1]['cadre'], L, H, u)
         p = part_unie(image, v)
         if p > UNI_MAX:
@@ -936,6 +1040,7 @@ def _coupes(x, e, i, n, L, H, u, faces) -> int | None:
     v = vue_reelle(e['cadre'], L, H, u)
     if not (i == 0 and n > 1 and ensemble(e['cadre'], u)) and min(couverture(e['cadre'], v, u)) < COUVERT_MIN:
         return None
+    faces = autres_visages(faces, x)
     return len({tuple(k) for k in visages_coupes(v, faces) + visages_coupes(vue_zoomee(v, dans_utile(e['cadre'], u)), faces)})
 
 
@@ -949,7 +1054,7 @@ def reparer_etape(x: dict, e: dict, i: int, n: int, L: int, H: int, faces: list,
     hauteur d'une vue prises dans le cadre (de haut en bas : on garde les têtes), puis petits
     déplacements et changements d'échelle ; None si rien ne convient."""
     u = utile_de(x)
-    if _etape_juste(x, e, i, n, L, H, u, faces):
+    if _etape_juste(x, e, i, n, L, H, u, faces) and not portrait_coupe(x, [e], L, H, faces):
         return e
     r = dans_utile(e['cadre'], u)
     # Le sujet : le plus grand visage que le cadre d'origine contient ; il doit rester entier dans la
@@ -957,9 +1062,21 @@ def reparer_etape(x: dict, e: dict, i: int, n: int, L: int, H: int, faces: list,
     dedans = [k for k in faces if k[3] - k[1] >= FACE_MIN and (k[2] - k[0]) <= 3 * (k[3] - k[1])
               and k[0] >= r[0] - 0.01 and k[2] <= r[2] + 0.01 and k[1] >= r[1] - 0.01 and k[3] <= r[3] + 0.01]
     sujet = max(dedans, key=lambda k: (k[2] - k[0]) * (k[3] - k[1])) if dedans and not ensemble(e['cadre'], u) else None
+    # Portrait : son visage principal est le sujet de toute vue, qu'il tienne ou non dans le cadre
+    # d'origine (CE 23 : un menton coupé « réparé » en vue du gilet).
+    portrait = personne_seule(faces, x)
+    if portrait is not None:
+        sujet = portrait
     w, h = r[2] - r[0], r[3] - r[1]
     hmax = min((u[2] - u[0]) * L / RATIO_VUE, (u[3] - u[1]) * H / (1 + BANDE_HAUT + BANDE_BAS)) / H
     candidats = []
+    if portrait is not None:                    # cadres sur la tête, essayés après les voisins du cadre
+        t = cadre_tete(x, portrait, L, H)
+        for sc in (1.0, 1.15, 1.3, 1.5):
+            for dy in (0, -0.02, 0.02, 0.04):
+                cx, cy = (t[0] + t[2]) / 2, (t[1] + t[3]) / 2 + dy
+                ww, hh = (t[2] - t[0]) * sc, min((t[3] - t[1]) * sc, max(hmax * 0.98, t[3] - t[1]))
+                candidats.append((0.6 + abs(math.log(sc)) + abs(dy), [cx - ww / 2, cy - hh / 2, cx + ww / 2, cy + hh / 2]))
     hb = min(h, hmax * 0.98)
     for k in range(0, 41):                      # bandes dans le cadre, du haut vers le bas
         y0 = r[1] + (h - hb) * k / 40
@@ -983,7 +1100,11 @@ def reparer_etape(x: dict, e: dict, i: int, n: int, L: int, H: int, faces: list,
         if k[2] - k[0] < 0.05 or k[3] - k[1] < 0.05:
             continue
         f = dict(e, cadre=ajuster(k, L, H))
-        if sujet is not None:
+        if portrait is not None:
+            v = vue_reelle(f['cadre'], L, H, u)
+            if not vue_portrait_juste(v, vue_zoomee(v, dans_utile(f['cadre'], u)), portrait, hmax, 0 < i < n - 1):
+                continue
+        elif sujet is not None:
             v = vue_reelle(f['cadre'], L, H, u)
             haut_ok = v[1] <= sujet[1] or (v[1] <= HAUT_VUE_MIN and v[1] - sujet[1] <= FRONT_TOLERE * (sujet[3] - sujet[1]))
             if not (v[0] <= sujet[0] and sujet[2] <= v[2] and haut_ok
@@ -1032,33 +1153,129 @@ def reparer(slug: str, x: dict, foule: bool = False) -> tuple[list[dict] | None,
     sortie[0].pop('quand', None)
     e = erreurs_vues(x, sortie, L, H, image_de(slug, x), faces)
     if foule:      # meilleur effort : seuls les cadres trop hauts et les aplats restent bloquants
-        e = [m for m in e if 'visage' not in m]
+        e = [m for m in e if 'visage' not in m or m.startswith('portrait')]
     return (sortie, []) if not e else (None, e)
 
 
-def sujet_portrait(faces: list[list[float]]) -> list[float] | None:
-    """Le visage principal d'un portrait (deux visages au plus) : le plus grand, s'il dépasse TETE_MIN de la hauteur."""
-    nets = [k for k in faces if (k[2] - k[0]) <= 3 * (k[3] - k[1]) and k[3] - k[1] >= FACE_MIN]
-    if len(nets) > 2:           # scène à plusieurs personnages : pas un portrait
+def sujet_portrait(faces: list[list[float]], x: dict | None = None) -> list[float] | None:
+    """Le visage principal d'un portrait : `image.visage` s'il est saisi ; sinon, deux visages au plus
+    et le plus grand d'au moins TETE_MIN de la hauteur ; ou, si le titre ou le registre indique un
+    portrait, un visage dominant (voir « Portraits » plus haut)."""
+    if not faces:
         return None
-    k = max(nets, key=lambda k: (k[2] - k[0]) * (k[3] - k[1]), default=None)
-    return k if k is not None and k[3] - k[1] >= TETE_MIN else None
+    if x is not None and x['image'].get('visage'):
+        return list(x['image']['visage'])
+    nets = _nets(faces)
+    grand = max(nets, key=lambda k: (k[2] - k[0]) * (k[3] - k[1]), default=None)
+    if grand is None:
+        return None
+    if len(nets) <= 2 and grand[3] - grand[1] >= TETE_MIN:
+        return grand
+    return personne_seule(faces, x) if x is not None else None
+
+
+def personne_seule(faces: list[list[float]], x: dict | None = None) -> list[float] | None:
+    """Visage principal d'un portrait d'une personne seule, soumis à la règle stricte (chaque vue le
+    montre entier) : `image.visage`, un seul visage net d'au moins TETE_MIN, ou un visage dominant
+    quand le titre ou le registre indique un portrait. Deux visages sans indice (couple, ou fausse
+    détection : Goya, CE 56) : seulement la règle faible (une vue au moins montre la tête)."""
+    if not faces:
+        return None
+    if x is not None and x['image'].get('visage'):
+        return list(x['image']['visage'])
+    nets = _nets(faces)
+    grand = max(nets, key=lambda k: (k[2] - k[0]) * (k[3] - k[1]), default=None)
+    if grand is None:
+        return None
+    fh = grand[3] - grand[1]
+    # Un seul visage net, assez grand et dans le haut de l'image (une tête au bas d'une bataille,
+    # Rév 93, n'est pas un portrait).
+    if len(nets) == 1 and fh >= TETE_MIN and (grand[1] + grand[3]) / 2 < 0.6:
+        return grand
+    if x is not None and indice_portrait(x) and len(nets) <= PORTRAIT_NETS_MAX and fh >= PORTRAIT_FACE_MIN \
+            and all(k is grand or (k[3] - k[1]) * PORTRAIT_DOMINANT <= fh for k in nets):
+        return grand
+    return None
+
+
+def autres_visages(faces: list[list[float]], x: dict) -> list[list[float]]:
+    """Visages soumis au contrôle ordinaire : tous, sauf le visage principal d'un portrait."""
+    k = personne_seule(faces, x)
+    return faces if k is None else [f for f in faces if f != k and _iou(f, k) < 0.5]
+
+
+def tete_visible(v: list[float], k: list[float], hmax: float) -> bool:
+    """La vue `v` montre-t-elle le visage `k` entier ? (front légèrement coupé admis sous le cartouche ;
+    visage plus haut qu'une vue : la bande TETE_GRANDE, du front à la bouche)."""
+    largeur = min(k[2], v[2]) - max(k[0], v[0]) >= FACE_DEDANS * (k[2] - k[0])
+    y0, y1 = bande_tete(k, hmax)
+    if y0 > k[1]:                               # tête plus haute qu'une vue : sa bande utile
+        return largeur and v[1] <= y0 + 0.003 and v[3] >= y1 - 0.003
+    haut = v[1] - k[1] <= CHEVEUX_TOLERES * (k[3] - k[1]) or \
+        (v[1] <= HAUT_VUE_MIN and v[1] - k[1] <= FRONT_TOLERE * (k[3] - k[1]))
+    return largeur and haut and k[3] <= v[3] + 0.005
+
+
+def bande_tete(k: list[float], hmax: float) -> tuple[float, float]:
+    """Partie du rectangle du visage `k` (du haut du crâne au menton) qu'une vue doit montrer : tout
+    s'il tient dans une vue ; sinon sans le haut des cheveux (CE 23, Cadoudal : rectangle de 0,165 pour
+    une vue de 0,148 dans un médaillon étroit), menton compris ; sinon (portrait très serré) du haut
+    du front à la bouche (TETE_GRANDE)."""
+    fh = k[3] - k[1]
+    if fh <= hmax * 0.95:
+        return k[1], k[3]
+    if fh * (1 - CHEVEUX_COUPABLES) <= hmax * 0.85:     # zoom lent compris (vue réduite de 1,12)
+        return k[1] + CHEVEUX_COUPABLES * fh, k[3]
+    return k[1] + TETE_GRANDE[0] * fh, k[1] + TETE_GRANDE[1] * fh
+
+
+def tete_dehors(v: list[float], k: list[float]) -> bool:
+    """Le visage `k` est-il entièrement hors de la vue `v` (0 % visible) ?"""
+    return min(k[2], v[2]) <= max(k[0], v[0]) or min(k[3], v[3]) <= max(k[1], v[1])
+
+
+def vue_portrait_juste(v: list[float], z: list[float], k: list[float], hmax: float, milieu: bool) -> bool:
+    """Vue `v` (et `z`, la même au bout du zoom lent) admise sur un portrait : visage entier ; ou,
+    pour une étape intermédiaire (ni la première ni la dernière), visage entièrement hors champ
+    (gros plan sur un détail cité par la voix : la main, le Code ; assouplissement du 2026-10-09)."""
+    return (tete_visible(v, k, hmax) and tete_visible(z, k, hmax)) or (milieu and tete_dehors(v, k) and tete_dehors(z, k))
+
+
+def portrait_coupe(x: dict, etapes: list[dict], L: int, H: int, faces: list) -> list[str]:
+    """Règle du portrait : la première et la dernière vue (au début de la tenue et au bout du zoom
+    lent) montrent le visage principal entier ; une vue intermédiaire le montre entier ou pas du tout
+    (jamais à moitié : CE 23, Cadoudal). Messages en « portrait : » (réparés par `reparer_tete`)."""
+    if not etapes:
+        return []
+    u = utile_de(x)
+    k = personne_seule(faces or [], x)
+    if k is None:
+        # Règle faible (deux visages sans indice de portrait) : une vue au moins montre la moitié de la tête.
+        k = sujet_portrait(faces or [], x)
+        if k is None:
+            return []
+        a = (k[2] - k[0]) * (k[3] - k[1])
+        for e in etapes:
+            v = vue_reelle(e['cadre'], L, H, u)
+            if max(0, min(k[2], v[2]) - max(k[0], v[0])) * max(0, min(k[3], v[3]) - max(k[1], v[1])) / a >= 0.5:
+                return []
+        return [f'portrait : aucune vue ne montre la tête du sujet {k} : cadrer la tête.']
+    hmax = min((u[2] - u[0]) * L / RATIO_VUE, (u[3] - u[1]) * H / (1 + BANDE_HAUT + BANDE_BAS)) / H
+    sortie = []
+    for i, e in enumerate(etapes):
+        v = vue_reelle(e['cadre'], L, H, u)
+        milieu = 0 < i < len(etapes) - 1
+        if not vue_portrait_juste(v, vue_zoomee(v, dans_utile(e['cadre'], u)), k, hmax, milieu):
+            sortie.append(f"portrait : étape {i + 1} : la vue (x {v[0]:.2f}-{v[2]:.2f}, y {v[1]:.2f}-{v[3]:.2f}) "
+                          + (f"coupe la tête du sujet {k} : une vue intermédiaire la montre entière ou pas du tout."
+                             if milieu else f"ne montre pas la tête entière du sujet {k} : la première et la dernière "
+                             f"vue d'un portrait montrent son visage."))
+    return sortie
 
 
 def tete_hors_champ(x: dict, etapes: list[dict], L: int, H: int, faces: list) -> list[str]:
-    """Portrait dont aucune vue ne montre la tête (au moins la moitié du visage principal) : la
-    réparation géométrique a pu garder une bande au milieu du buste (Chateaubriand, CE 14)."""
-    k = sujet_portrait(faces)
-    if k is None or not etapes:
-        return []
-    u = utile_de(x)
-    a = (k[2] - k[0]) * (k[3] - k[1])
-    for e in etapes:
-        for v in (vue_reelle(e['cadre'], L, H, u),):
-            i = max(0, min(k[2], v[2]) - max(k[0], v[0])) * max(0, min(k[3], v[3]) - max(k[1], v[1]))
-            if i / a >= 0.5:
-                return []
-    return [f'portrait : aucune vue ne montre la tête du sujet (visage {k}) : cadrer la tête.']
+    """Ancien nom (contrôle désormais fait par `erreurs_vues`) : la règle du portrait."""
+    return portrait_coupe(x, etapes, L, H, faces)
 
 
 def cadre_tete(x: dict, k: list[float], L: int, H: int) -> list[float]:
@@ -1067,8 +1284,13 @@ def cadre_tete(x: dict, k: list[float], L: int, H: int) -> list[float]:
     u = utile_de(x)
     hmax = min((u[2] - u[0]) * L / RATIO_VUE, (u[3] - u[1]) * H / (1 + BANDE_HAUT + BANDE_BAS)) / H
     fh = k[3] - k[1]
-    hh = min(hmax * 0.98, fh * 1.6) if fh <= hmax * 0.95 else fh * 1.1
-    y0 = max(0.0, k[1] - 0.15 * fh) if fh <= hmax * 0.95 else max(0.0, k[1] - 0.05 * fh)
+    b0, b1 = bande_tete(k, hmax)
+    if b0 <= k[1]:
+        hh = min(hmax * 0.98, fh * 1.6)
+        y0 = max(0.0, k[1] - 0.15 * fh)
+    else:                       # tête plus haute qu'une vue : cadre de la hauteur d'une vue, centré sur sa bande
+        hh = hmax * 0.97
+        y0 = max(0.0, (b0 + b1) / 2 - hh / 2)
     ww = min(1.0, max(k[2] - k[0], min(hh, hmax * 0.98) * H * RATIO_VUE / L))
     cx = (k[0] + k[2]) / 2
     x0 = min(max(0.0, cx - ww / 2), 1 - ww)
@@ -1076,28 +1298,39 @@ def cadre_tete(x: dict, k: list[float], L: int, H: int) -> list[float]:
 
 
 def reparer_tete(slug: str, x: dict) -> tuple[list[dict] | None, list[str]]:
-    """Portrait à tête hors champ : la première étape devient un cadre sur la tête (les suivantes
-    sont gardées), rendu juste par la réparation géométrique (sans appel)."""
+    """Portrait dont une vue ne montre pas la tête entière : chaque étape fautive est remplacée par le
+    cadre juste le plus proche qui montre le visage (réparation géométrique, sans appel) ; une étape
+    suivante irréparable est abandonnée, une première étape irréparable devient un cadre sur la tête."""
     cam = [dict(e) for e in x['image'].get('camera') or []]
     L, H = dims(x)
     faces = visages(slug, x, appeler=False) or []
-    k = sujet_portrait(faces)
+    k = sujet_portrait(faces, x)
     if k is None or not cam:
         return None, ['pas de portrait']
-    e0 = {kk: v for kk, v in cam[0].items() if kk != 'cadre'}
-    nouveau = reparer_etape(x, dict(e0, cadre=cadre_tete(x, k, L, H)), 0, len(cam), L, H, faces, foule_permise=True)
-    if nouveau is None:
-        return None, ['cadre de tête irréparable']
-    cam[0] = nouveau
-    while len(cam) > 1 and ignorees(x, cam, L, H):
-        cam.pop(1)
+    u = utile_de(x)
+    sortie: list[dict] = []
+    for i, e in enumerate(cam):
+        if not portrait_coupe(x, [e], L, H, faces) and _etape_juste(x, e, i, len(cam), L, H, u, faces):
+            sortie.append(e)
+            continue
+        f = reparer_etape(x, e, i, len(cam), L, H, faces, foule_permise=True)
+        if f is None and not sortie:
+            f = reparer_etape(x, dict(e, cadre=cadre_tete(x, k, L, H)), i, len(cam), L, H, faces, foule_permise=True)
+        if f is None:
+            if not sortie:
+                return None, ['cadre de tête irréparable']
+            continue
+        sortie.append(f)
+    while len(sortie) > 1 and ignorees(x, sortie, L, H):
+        sortie.pop(int(ignorees(x, sortie, L, H)[0].split()[1]) - 1)
+    sortie[0].pop('quand', None)
     # La vue de la tête montre un sujet (pas de contrôle d'aplat : les fonds sombres des portraits
     # peints le trompent) ; une tête plus haute qu'une vue n'est montrée que du front au nez.
-    e = erreurs_vues(x, cam, L, H, None, faces) + tete_hors_champ(x, cam, L, H, faces)
-    if len(cam) > 1:
-        e += [m for m in erreurs_vues(x, cam, L, H, image_de(slug, x), []) if m.startswith('dernière')]
-    e = [m for m in e if not (m.startswith('étape 1 :') and str(k) in m and 'coupe' in m)]
-    return (cam, []) if not e else (None, e)
+    e = erreurs_vues(x, sortie, L, H, None, faces)
+    if len(sortie) > 1:
+        e += [m for m in erreurs_vues(x, sortie, L, H, image_de(slug, x), []) if m.startswith('dernière')]
+    e = [m for m in e if not (str(k) in m and 'coupe le' in m)]
+    return (sortie, []) if not e else (None, e)
 
 
 def audit(d: dict) -> list[tuple[int, list[str]]]:
@@ -1108,8 +1341,7 @@ def audit(d: dict) -> list[tuple[int, list[str]]]:
             continue
         L, H = dims(x)
         faces = visages(d['slug'], x, appeler=False)
-        e = (erreurs_vues(x, cam, L, H, image_de(d['slug'], x), faces) + ignorees(x, cam, L, H)
-             + tete_hors_champ(x, cam, L, H, faces or []))
+        e = erreurs_vues(x, cam, L, H, image_de(d['slug'], x), faces) + ignorees(x, cam, L, H)
         if e:
             fautes.append((x['n'], e))
     return fautes

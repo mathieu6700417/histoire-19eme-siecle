@@ -18,6 +18,7 @@ import { installerLectures } from './lectures';
 import { installerEpisodes } from './episodes';
 import { installerNavigation } from './navigation';
 import { installerMusique } from './musique';
+import { installerGenerique } from './generique';
 import { installerTests } from './tests';
 import { installerControles } from './controles';
 import { installerReprise } from './reprise';
@@ -42,6 +43,7 @@ function monter(racine: HTMLElement) {
   installerEpisodes(lec);
   installerNavigation(lec);
   installerMusique(lec);
+  installerGenerique(lec);
   installerTests(lec);
   installerControles(lec);
   installerReprise(lec);

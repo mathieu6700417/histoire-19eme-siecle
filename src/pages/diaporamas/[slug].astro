@@ -6,7 +6,7 @@ import { typographie } from '../../utils/typographie.mjs';
 import { libelleChapitre } from '../../data/chapitres-ecrivains';
 import { planComplet, urlChapitre } from '../../utils/ecrivains';
 import {
-  diaporamas, dureeTotale, urlCommons, formaterDuree, nomSourceMusique, objetsMusee, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
+  diaporamas, dureeTotale, dureesGenerique, indicatif, urlCommons, formaterDuree, nomSourceMusique, objetsMusee, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
   type Diaporama as D,
 } from '../../utils/diaporamas';
 
@@ -84,6 +84,14 @@ const urlLicence = (x: string) => {
                   {' '}<a href={urlSourceMusique(p.source)} rel="noopener" target="_blank">{nomSourceMusique(p.source)}</a>, {urlLicence(p.licence) ? <a href={urlLicence(p.licence)} rel="noopener license" target="_blank">{licence(p.licence)}</a> : licence(p.licence)}.
                 </li>
               ))}
+            </ul>
+          </Fragment>
+        )}
+        {dureesGenerique(d).ouverture > 0 && (
+          <Fragment>
+            <h3>Générique</h3>
+            <ul>
+              <li>{t(`${indicatif.credit} : ${licence(indicatif.licence)}.`)}</li>
             </ul>
           </Fragment>
         )}

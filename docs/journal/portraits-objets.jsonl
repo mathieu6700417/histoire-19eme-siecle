@@ -1,0 +1,12 @@
+{"ts": "2026-10-09T16:19:09+00:00", "quoi": "debut", "etape": "lecture", "texte": "Lecture CLAUDE.md, README diaporamas, modules surimpressions"}
+{"ts": "2026-10-09T16:20:06+00:00", "quoi": "fin", "etape": "lecture", "texte": "camera.ts mesure offsetHeight des éléments (dynamique) ; camera.py sans taille fixe de surimpression (BANDE_BAS générique)"}
+{"ts": "2026-10-09T16:20:38+00:00", "quoi": "debut", "etape": "style", "texte": "Build de référence et captures avant"}
+{"ts": "2026-10-09T16:23:29+00:00", "quoi": "fin", "etape": "style", "texte": "Scène mesurée : 1040×450 (1280×760), 1040×720 (1920×1080), 390×390 (téléphone), 796×260 (téléphone couché)"}
+{"ts": "2026-10-09T16:23:29+00:00", "quoi": "debut", "etape": "tailles", "texte": "Ovale seul + étiquette, tailles 1,5× plafonnées"}
+{"ts": "2026-10-09T16:23:30+00:00", "quoi": "probleme", "etape": "tailles", "texte": "1,5× donne 37,5 % de la hauteur de scène pour les ovales (33 % pour les objets) : le plafond de 30 % l'emporte, gain réel ~1,2× sur ordinateur"}
+{"ts": "2026-10-09T16:28:38+00:00", "quoi": "fin", "etape": "tailles", "texte": "Ovales et objets : min(1,5× ancien, 30 % H) ordinateur, 27 % H téléphone ; largeur objet 40 % (45 % tél.) ; rangée réduite en plusieurs passes à côté du lieu ou d'un objet simultané"}
+{"ts": "2026-10-09T16:28:39+00:00", "quoi": "debut", "etape": "tests", "texte": "Planche et non-régression"}
+{"ts": "2026-10-09T16:30:54+00:00", "quoi": "fin", "etape": "tests", "texte": "Planche 20 captures relue une fois ; --comparer 12/12 identiques ; verifier.py OK x2"}
+{"ts": "2026-10-09T16:30:54+00:00", "quoi": "debut", "etape": "doc", "texte": "Spec 12 et README"}
+{"ts": "2026-10-09T16:31:31+00:00", "quoi": "fin", "etape": "doc", "texte": "Spec 12 (Portraits, Enrichissements visuels) et README mis à jour"}
+{"ts": "2026-10-09T16:31:31+00:00", "quoi": "idee", "etape": "tests", "texte": "geom.py (rectangles des surimpressions via monkeypatch de Page.screenshot) : mesurer avant de regarder la planche évite les allers-retours"}

@@ -46,6 +46,8 @@ export interface Lecteur {
   suiteEtPause: number[];
   debuts: number[];
   total: number;
+  genOuverture: number;
+  genFin: number;
   bornes: { de: number; fin: number; t0: number; t1: number; }[];
   horloge: HorlogeLissee;
   horlogeSuite: HorlogeLissee;
@@ -121,7 +123,6 @@ export interface Lecteur {
   elMots: HTMLElement | null;
   elPortraits: HTMLElement | null;
   portraitsEls: HTMLElement[];
-  portraitsFins: number[];
   portraitsEtat: string;
   motsEls: HTMLElement[][];
   motsDits: number;
@@ -177,11 +178,21 @@ export interface Lecteur {
   basculer: () => void;
   aller: (k: number) => void;
   suivant: () => void;
+  pause: () => void;
   // musique
   deverrouillerAudio: () => void;
   appliquerEtat: () => void;
   musique: () => void;
   basculerMusique: (oui?: boolean) => void;
+  // generique
+  enGenerique: 'ouverture' | 'fin' | null;
+  ouvrirGenerique: (k: number) => boolean;
+  lancerRecapitulatif: () => boolean;
+  reprendreGenerique: () => void;
+  figerGenerique: () => void;
+  passerGenerique: () => void;
+  quitterGenerique: () => void;
+  tempsGenerique: () => number | null;
   // controles
   montrerControles: () => void;
 }

@@ -1,4 +1,4 @@
-// Épisodes : panneaux de chiffres, barres, cartes, documents, calés sur l'instant du segment
+// Épisodes : panneaux de chiffres, barres, cartes, documents, chronologies, calés sur l'instant du segment
 // (`--p` de chaque élément). Spec 12, « Épisodes », « Chronologie animée » ;
 // README : « Lectures d'époque et épisodes ».
 import { adoucir, melanger } from './geometrie';
@@ -30,7 +30,12 @@ export function installerEpisodes(lec: Lecteur) {
         while (j + 1 < tr.length && tr[j + 1][0] <= ta) j++;
         f = j + 1 < tr.length && !reduit ? tr[j][1] + (tr[j + 1][1] - tr[j][1]) * ((ta - tr[j][0]) / Math.max(0.001, tr[j + 1][0] - tr[j][0])) : tr[j][1];
       }
-      if (Math.abs(f - x.x) > 0.0005) { x.el.setAttribute('width', (f * x.l).toFixed(1)); x.x = f; }
+      if (Math.abs(f - x.x) > 0.0005) {
+        // Masque de courbe (rect SVG : largeur) ou curseur de chronologie (élément HTML : --c).
+        if (x.el instanceof SVGRectElement) x.el.setAttribute('width', (f * x.l).toFixed(1));
+        else (x.el as unknown as HTMLElement).style.setProperty('--c', f.toFixed(4));
+        x.x = f;
+      }
     }
     for (const doc of e.docs!) majDocument(doc, ta, reduit);
     // Sous-titre : la phrase en cours.

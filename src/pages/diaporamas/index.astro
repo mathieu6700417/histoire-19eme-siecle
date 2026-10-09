@@ -3,7 +3,7 @@
 import Base from '../../layouts/Base.astro';
 import { typographie } from '../../utils/typographie.mjs';
 import { libelleChapitre } from '../../data/chapitres-ecrivains';
-import { diaporamas, dureeTotale, formaterDuree, planDiaporamas, urlDiaporama, urlMedia } from '../../utils/diaporamas';
+import { diaporamas, dureeTotale, formaterDuree, indicatif, planDiaporamas, urlDiaporama, urlMedia } from '../../utils/diaporamas';
 
 const plan = planDiaporamas();
 const total = diaporamas.reduce((s, d) => s + dureeTotale(d), 0);
@@ -26,6 +26,9 @@ const images = diaporamas.reduce((s, d) => s + d.diapositives.length, 0);
       </p>
       <p>
         {typographie("La musique est de l'époque, discrète sous la voix, avec quelques chants entendus au premier plan : uniquement de vrais enregistrements libres (anciens 78 tours, Musopen, orchestres qui publient sous licence libre), de compositeurs français quand il en existe, sinon de leurs contemporains européens. Chaque période les crédite en bas de page.")}
+      </p>
+      <p>
+        {typographie(`Chaque diaporama s'ouvre et se referme sur un même indicatif. ${indicatif.credit} : ${indicatif.licence.charAt(0).toLowerCase()}${indicatif.licence.slice(1)}.`)}
       </p>
       <p class="etat">{typographie(`${diaporamas.length} période${diaporamas.length > 1 ? 's' : ''} sur ${plan.length} disponible${diaporamas.length > 1 ? 's' : ''} · ${images} images · ${formaterDuree(total)} d'écoute`)}</p>
     </header>

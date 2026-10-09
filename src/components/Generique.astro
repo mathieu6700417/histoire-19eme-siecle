@@ -1,0 +1,125 @@
+---
+// Générique d'ouverture et récapitulatif de fin d'un diaporama (spec 12, révision du 2026-10-09) :
+// mosaïque des images de `generique` en deux rangées qui dérivent en sens contraires, titre et
+// dates de la période écrits lettre à lettre, « Fin ». Animé par src/scripts/diaporama/generique.ts
+// (styles posés à chaque image : aucune animation CSS, captures reproductibles). Les images ne se
+// chargent qu'au lancement (`data-src`). Monochrome hors images.
+import { typographie } from '../utils/typographie.mjs';
+import { imagesGenerique, urlMedia, type Diaporama } from '../utils/diaporamas';
+
+interface Props { diaporama: Diaporama }
+const { diaporama: d } = Astro.props;
+const images = imagesGenerique(d).map((im, k) => ({ k, src: urlMedia(d.slug, im.fichier), l: im.largeur ?? 1600, h: im.hauteur ?? 1200 }));
+const moitie = Math.ceil(images.length / 2);
+// Chaque rangée est répétée trois fois : elle couvre la scène et sa dérive, même sur grand écran.
+const rangees = [images.slice(0, moitie), images.slice(moitie)].map((r) => [...r, ...r, ...r]);
+/** Lettres d'un texte, mots insécables (pas de coupure au milieu d'un mot). */
+const mots = (s: string) => typographie(s).split(/(\s+)/).filter(Boolean);
+const titre = mots(d.titre);
+const dates = mots(d.periode);
+---
+
+{images.length > 0 && (
+  <div class="generique" data-action="passer" aria-hidden="true" title="Passer (Entrée)">
+    {rangees.map((r, j) => (
+      <div class:list={['generique__bande', `generique__bande--${j ? 'bas' : 'haut'}`]}>
+        <div class="generique__rail">
+          {r.map((im) => (
+            <div class="generique__vignette" data-k={im.k} style={`aspect-ratio: ${im.l} / ${im.h}`}>
+              <img data-src={im.src} alt="" decoding="async" />
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+    <div class="generique__milieu">
+      <p class="generique__fin">Fin</p>
+      <div class="generique__titres">
+        <p class="generique__titre" aria-label={typographie(d.titre)}>
+          {titre.map((m) => (/^\s+$/.test(m) ? m : <span class="mot">{[...m].map((c) => <span class="l">{c}</span>)}</span>))}
+        </p>
+        <span class="generique__filet"></span>
+        <p class="generique__dates" aria-label={typographie(d.periode)}>
+          {dates.map((m) => (/^\s+$/.test(m) ? m : <span class="mot">{[...m].map((c) => <span class="l">{c}</span>)}</span>))}
+        </p>
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  .generique {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(4px, 1vh, 8px);
+    padding: clamp(6px, 1.4vh, 12px) 0;
+    background: var(--c-fond);
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 900ms ease, visibility 0s linear 900ms;
+  }
+  .generique.est-visible { opacity: 1; visibility: visible; transition: opacity 900ms ease, visibility 0s; }
+  .generique__bande { flex: 0 0 31%; min-height: 0; overflow: hidden; }
+  /* Rangée du haut, titres au milieu, rangée du bas. */
+  .generique__bande--bas { order: 3; }
+  .generique__milieu { order: 2; }
+  .generique__rail { display: flex; gap: clamp(4px, 0.8vw, 8px); height: 100%; width: max-content; will-change: transform; }
+  .generique__vignette { height: 100%; opacity: 0; background: #e6e3dc; overflow: hidden; }
+  .generique__vignette img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .generique__milieu {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(2px, 1vh, 10px);
+    padding: 0 var(--e-2);
+    text-align: center;
+  }
+  .generique__titres { display: flex; flex-direction: column; align-items: center; gap: clamp(4px, 1.2vh, 12px); }
+  .generique__titre {
+    margin: 0;
+    font-family: var(--f-titre);
+    font-size: clamp(1.4rem, 3.6vw, 2.5rem);
+    font-variant: small-caps;
+    letter-spacing: 0.12em;
+    line-height: 1.15;
+    color: var(--c-texte);
+  }
+  .generique .mot { white-space: nowrap; }
+  .generique .l { opacity: 0; }
+  .generique__filet { display: block; width: 4.5rem; height: 0; border-top: 1px solid var(--c-texte-doux); transform: scaleX(0); }
+  .generique__dates {
+    margin: 0;
+    font-size: clamp(1rem, 2.1vw, 1.35rem);
+    font-style: italic;
+    font-variant-numeric: oldstyle-nums;
+    letter-spacing: 0.06em;
+    color: var(--c-texte-doux);
+  }
+  .generique__fin {
+    display: none;
+    margin: 0;
+    font-family: var(--f-titre);
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-style: italic;
+    letter-spacing: 0.04em;
+    color: var(--c-texte);
+  }
+  /* Récapitulatif : « Fin » puis le titre, sans filet ni dates. */
+  .generique--fin .generique__fin { display: block; }
+  .generique--fin .generique__filet, .generique--fin .generique__dates { display: none; }
+  .generique--fin .generique__titre { font-size: clamp(1.1rem, 2.6vw, 1.7rem); color: var(--c-texte-doux); }
+  @media (max-width: 40rem) {
+    .generique__bande { flex-basis: 30%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .generique, .generique.est-visible { transition-duration: 300ms; }
+  }
+</style>

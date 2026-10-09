@@ -61,8 +61,8 @@ export function installerControles(lec: Lecteur) {
   function recadrer() {
     couches.forEach((c, k) => { if (c.x) cadre(calques[k], c.x); });
     tailleLieu();
-    taillePortraits();
     tailleObjet();
+    taillePortraits();
     mesurerMarges();
     tailleChiffre();
     couches.forEach((c, k) => { if (c.x && (k !== lec.visible || c.x !== D.diapos[lec.i])) poser(k); });
@@ -103,7 +103,7 @@ export function installerControles(lec: Lecteur) {
     else if (e.key === 'Enter') {
       // Pendant un carton, Entrée le passe (même si le focus est sur le bouton de lecture).
       const bouton = cible.closest('button, a');
-      if (!lec.enCarton || (bouton && bouton !== btnLecture)) return;
+      if (!(lec.enCarton || lec.enGenerique) || (bouton && bouton !== btnLecture)) return;
       e.preventDefault(); passerCarton();
     }
     else if (e.key === 'f' || e.key === 'F') { if (peDispo) pleinEcran(); }

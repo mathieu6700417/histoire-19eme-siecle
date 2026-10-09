@@ -43,14 +43,14 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `gemini.py` | Appel Gemini commun : modèle par tâche (`DIAPORAMAS_MODELE_<TACHE>`, `--modele`), réflexion réglée (`thinkingBudget`, défaut 256, `DIAPORAMAS_REFLEXION`, `--reflexion`), plafond de dépense par lancement (`--budget`, arrêt propre), tarifs **indicatifs** par modèle (`TARIFS`). |
 | `banc_gemini.py` | Banc d'essai des modèles et budgets de réflexion pour une tâche (`camera`, `visages`, `utile`, `transcription`) sur 5 diapositives : jetons réels, coût, qualité, planche. `--essai` : plan sans appel. |
 | `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. Options Gemini : `--budget`, `--reflexion`, `--modele`. |
-| `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. |
+| `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. `--indicatif` : les deux extraits de l'indicatif commun du générique. |
 | `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). `monde` descend à -20° (Sainte-Hélène) ; `--fond NOM` ne refait que ce fond. |
 | `surimpressions.py` | Cartes de lieu, citations, portraits, objets de musée, manuscrits, chiffres clés et dates républicaines en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
 | `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle, bilan des mentions. |
 | `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage proposé par Gemini Flash puis contrôlé, webp ovale), contrôle de visibilité des personnes sur les images (consignes au titre de la période du JSON), planche de contrôle. `--lot FICHIER` : lignes `id|nom`, Wikidata en une ligne par personne et pré-remplissage du registre (`--essai` : sans écrire). Options Gemini : `--budget`, `--reflexion`, `--modele`. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
-| `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques »). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. |
+| `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques ») ; générique : 8 à 12 images de la période, deux par acte au plus, indicatif commun (licence, fichiers, durées). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
@@ -58,6 +58,9 @@ Données et sorties :
 - `src/data/diaporamas/NN-<slug>.json` : le script d'une période (source de vérité) ;
 - `public/diaporamas/<slug>/NNN.webp`, `NNN.m4a`, `vignette.webp` : fichiers servis ;
   `musique/fond-<acte>-<k>.m4a` et `musique/chant-<nom>.m4a` : musique ;
+- `src/data/diaporamas/commun/indicatif.json` et `public/diaporamas/commun/indicatif-ouverture.m4a`,
+  `indicatif-fin.m4a` : indicatif du générique (composé avec Lyria), **commun à toute la série**
+  (section « Générique ») ;
 - `.cache/diaporamas/` (ignoré par git) : originaux téléchargés (`originaux/`), licences et
   métadonnées relevées (`<slug>/images.json`), empreintes, transcriptions et scores de
   fidélité des voix (`<slug>/voix.json`), réponses du modèle de vision (`<slug>/camera.json`)
@@ -107,6 +110,8 @@ python3 scripts/diaporamas/portraits.py --lot personnes.txt --essai
 python3 scripts/diaporamas/musique.py revolution
 python3 scripts/diaporamas/musique.py revolution --piste chant-marseillaise
 python3 scripts/diaporamas/musique.py revolution --sources
+# Indicatif commun du générique (une fois pour toute la série)
+python3 scripts/diaporamas/musique.py --indicatif
 
 # Paroles des intermèdes chantés calées au mot (après musique.py) ; --ecoute : écoute ciblée par
 # Gemini ; --essai : n'écrit rien ; --chant <id> : un seul chant. Relire les planches ensuite.
@@ -239,6 +244,40 @@ réparation géométrique de la passe précédente (CE 23, 52, 69, 79 ; Rév 60,
 été corrigés ainsi ou à la main (`camera_manuelle`). Tout appel Gemini passe par `gemini.py`
 (réflexion à 256 jetons par défaut, `--budget` en $, `--modele`) ; mesurer d'abord avec
 `banc_gemini.py` sur 5 diapositives.
+
+**Règle du portrait (2026-10-09, CE 23 *Cadoudal*).** Cause du défaut : la caméra montrait la tête,
+menton coupé ; l'audit n'y voyait qu'un « visage coupé » ordinaire (l'ancien contrôle « tête hors
+champ » se contentait de la moitié du visage dans une vue), et `--reparer`, qui ne protégeait le
+sujet que s'il tenait dans le cadre d'origine (il dépassait de 0,02), a retenu la bande la plus
+proche où le visage était « franchement dehors » (8 % < 10 %) : le gilet. Le visage était bien
+détecté (Gemini et YuNet) et la vue réelle juste. Désormais (`personne_seule`, `portrait_coupe`,
+`tete_visible`, `bande_tete` dans `camera.py`) : sur le portrait d'une personne seule, **chaque
+vue**, au début de la tenue et au bout du zoom lent, montre le visage principal entier (8 % du haut
+du rectangle, les cheveux, peuvent être coupés ; tête plus haute qu'une vue : sans le quart haut,
+menton compris ; portrait très serré : bande 40-75 % du rectangle, du front à la bouche). Portrait =
+un seul visage net d'au moins 8 % de la hauteur dans le haut de l'image, ou, si le titre (« Portrait »,
+nom de la seule personne de `personnes_vues`) ou le registre (même fichier Commons) l'indique, un
+visage dominant (1,4 fois plus haut que les autres, trois au plus, 6 % au moins) ; sans visage net,
+seconde passe YuNet à seuil bas (`visages_local.py`, mode portrait) ; à défaut, saisir
+`image.visage` à la main. Deux visages sans indice (couple, fausse détection : CE 56) : règle faible
+(une vue au moins montre la moitié de la tête). Le contrôle est dans `erreurs_vues` (propositions du
+modèle, `--audit`, réparations) ; le visage principal n'est plus soumis au contrôle ordinaire, et
+une vue qui le montre est dispensée du contrôle d'aplat (fonds de portraits). `reparer_etape`
+protège ce visage même hors du cadre d'origine et essaie des cadres sur la tête ; `reparer_tete`
+répare chaque étape fautive (une étape suivante irréparable est abandonnée). Passe du 2026-10-09 :
+réparées CE 18, 23, 65, 73, 74, Rév 23, 38, 50, 65, 89, 113, 123, 127 ; à la main CE 33 (cadre avant
+et `apres.cadre` décalés ensemble, raccord gardé), Rév 7 et 60. Restent signalées par la règle
+faible (pas des personnes seules) : CE 56, Rév 98, 106.
+**Assouplissement (2026-10-09, choix de l'utilisateur)** : seules la première et la dernière vue
+doivent montrer le visage entier ; une vue intermédiaire peut aussi le laisser entièrement hors
+champ (0 %, début de tenue et bout du zoom : `tete_dehors`, `vue_portrait_juste`) pour un gros plan
+sur un détail cité par la voix ; un visage à moitié coupé reste refusé (consigne au modèle,
+`erreurs_vues`, `--audit`, `reparer_etape`). Gros plans rétablis à la main (`camera_manuelle`),
+avec retour au visage, détail rapproché pour que la transition tienne dans la voix : CE 18
+(décret, « Ingres le peint » → « son profil orne »), 65 (bureau et Code, « David le peint debout » →
+« le souverain veille »), 73 (cartes perforées), Rév 38 (Marche lugubre → « jusqu'au Panthéon »),
+50 (le verre → « l'humiliation infligée »), 113 (le drapeau), 123 (l'épée → « qui a quitté
+l'Égypte » ; sur téléphone, le lecteur ignore le gros plan, vue presque identique).
 
 - `image.camera` : 1 à 4 étapes `{"cadre": [x0, y0, x1, y1], "quand": "passage exact"}`, en
   fractions de l'image **servie** (le WebP, donc après `recadrage`). La première étape n'a pas
@@ -578,6 +617,14 @@ contrôle.
   les terres** du fond : ses points en mer peuvent rester larges, seules les frontières terrestres
   comptent), `trait` (`points` : ligne qui se dessine, ex. un fleuve ; `libelle`, `etiquette`),
   `legende` : `[signe, libellé]`, signes `fleche`, `rebelle`, `zone`, `plein`, `clair`, `trait`),
+  `chronologie` (`titre`, `debut`, `fin`, `evenements` : `date` ISO partielle, `libelle`, `precision`,
+  `quand` ; `source`) : frise propre à l'épisode, curseur qui glisse vers chaque date (1 s, `data-trace`
+  pilote `--c`), bulles posées au build (côté alterné, deux rangs de chaque côté, 20 % de large, jamais
+  l'une sur l'autre ; connecteurs SVG), la bulle précédente atténuée (`--p` d'un `.anim` imbriqué) ;
+  sous 520 px de frise (téléphone) : frise verticale à gauche, bulles d'une ligne à droite (date et
+  libellé, précision masquée), empilées au plus près de leur date. `verifier.py` : bornes, ordre,
+  passages, source ; une suite d'années dans un panneau `chiffres` est signalée.
+  Les pointes de `fleche` gardent leur taille à l'écran sur une carte recadrée (réduites par `k`).
   `document` (`image` Commons, licence
   relevée par `images.py`, `episodes/<id>.webp` en 2 400 px ; `lignes` : `cadre` [x0, y0, x1, y1]
   de la ligne dans l'image, `texte` exact relevé sur le fac-similé, `quand`).
@@ -735,22 +782,28 @@ lieux ; à relancer après toute nouvelle voix.
 **Lecteur** (`portraitsDe` dans `src/utils/diaporamas.ts`, `Diaporama.astro`, styles dans
 `Surimpressions.astro`) :
 - rangée d'ovales **en bas à gauche** (le médaillon de lieu est en bas à droite), en couleur, bord fin
-  (filet sombre et liseré clair), nom en petites capitales et dates dessous ; une personne seule :
-  « Danton · 1759-1794 » sur une ligne ;
+  (filet sombre et liseré clair), **sans cartouche** (révision du 2026-10-09) ; sous chaque ovale,
+  une petite étiquette blanc cassé à filet fin, serrée (marge de 0,2 rem) : nom en petites capitales
+  (0,86 rem ; 0,7 sur téléphone) et dates (0,74 ; 0,62) ; une personne seule : « Danton ·
+  1759-1794 » sur une ligne ;
 - une personne par ovale, dans l'ordre de la première mention, **4 au plus** ; chaque ovale paraît
   au nom (le premier dès l'entrée de la rangée), les précédents restent ; la rangée va du premier
   nom à 3 s après le dernier (5 s au moins ; un nom dit dans les 4 dernières secondes avance son
   entrée), prolongée jusqu'à la fin de la citation de la personne ;
-- taille (agrandie le 2026-10-08) : ovales de 25 % de la hauteur de la scène (110 à 180 px de haut
-  sur ordinateur, 70 sur téléphone ; nom 0,95 rem, dates 0,82 rem), réduits si la rangée ne tient
-  pas à côté du médaillon de lieu ; webp régénérés en 360 × 450 px (`HAUTEUR` de portraits.py),
-  nets jusqu'à une densité d'écran de 2, avec les cadres de visage déjà validés ;
-- zone couverte pour la caméra : la hauteur de la rangée est réservée **pour toute la diapositive**
-  qui en a une (comme le médaillon de lieu) ; tous les ovales sont posés d'emblée (invisibles), la
-  rangée ne change jamais de taille ; **fond qui grandit** (2026-10-08) : le cartouche blanc cassé ne
-  couvre que les portraits déjà apparus ; à un nouveau nom, il s'élargit vers la droite en 0,4 s, puis
-  l'ovale paraît en fondu (0,45 s) ; état dérivé de l'instant lissé (pause, reprise, sauts justes) ;
-  mouvement réduit : largeur changée d'un coup ;
+- taille (révision du 2026-10-09) : 1,5 fois l'ancienne (25 % de la hauteur de la scène, 110 à
+  180 px, 70 au moins sur téléphone), plafonnée à `COIN_H_MAX` = 30 % de la hauteur de la scène
+  (`COIN_H_MAX_TEL` = 27 % sous 700 px de large ; `constantes.ts`) : 134 px à 1280 × 760 (scène
+  1040 × 450), 216 px à 1920 × 1080, 105 px sur téléphone 390 × 844 ; rangée avec étiquette
+  ~36 % de la hauteur sur ordinateur. Réduite, en quelques passes (les étiquettes ne rétrécissent
+  pas avec l'ovale), si elle ne tient pas à côté du médaillon de lieu, ou de l'objet du coin droit
+  quand leurs fenêtres se chevauchent (`tailleObjet` passe avant `taillePortraits`). Webp de
+  450 px de haut : nets jusqu'à une densité d'écran de 2 pour un ovale de 225 px ; au-delà
+  (écran 4K, plein écran), légèrement doux ;
+- zone couverte pour la caméra : la hauteur de la rangée (étiquettes comprises, mesurée par
+  `offsetHeight`) est réservée **pour toute la diapositive** qui en a une (comme le médaillon de
+  lieu) ; tous les ovales sont posés d'emblée (invisibles), la rangée ne change jamais de taille ;
+  à un nouveau nom, l'ovale et son étiquette paraissent en fondu (`PORTRAIT_FONDU`, 0,45 s) ; le
+  « fond qui grandit » du 2026-10-08 a disparu avec le cartouche ;
 - affichage dérivé de l'instant lissé de l'audio (pause, reprise, sauts justes) ; mouvement réduit :
   fondu simple de 200 ms, sans glissement ;
 - **surimpressions ensemble**, par ordre de priorité : citation > portraits = médaillon de lieu >
@@ -804,8 +857,12 @@ signature ou la phrase, relevé à la main sur l'image quadrillée et vérifié 
 `Surimpressions.astro`) :
 - objet (révision du 2026-10-08) : coin bas, **posé directement sur l'image**, sans carte ni fond : halo
   clair diffus et ombre très douce (`drop-shadow`, pas de contour net), légende sous l'objet sur un
-  voile blanc cassé léger ; objet en couleur (22 % de la hauteur de la
-  scène, 96 à 200 px ; 1,3 fois plus pour un objet très étroit ; 30 % de la largeur au plus),
+  voile blanc cassé léger ; objet en couleur, 1,5 fois l'ancienne taille (révision du 2026-10-09 ;
+  avant : 22 % de la hauteur de la scène, 96 à 200 px, 56 au moins sur téléphone, 1,3 fois plus pour
+  un objet très étroit), plafonnée à `COIN_H_MAX` = 30 % de la hauteur de la scène (27 % sur
+  téléphone debout), légende en plus ; 40 % de la largeur au plus (45 % sur téléphone) ; 134 px à
+  1280 × 760, 105 px sur téléphone ; plus large que ~190 px, il chevauche la frise du bas sur
+  ordinateur et monte avec elle,
   légende « objet » puis « date · musée » ; fondu de 0,8 s et montée de 10 px ; ~5 s depuis le
   passage (un passage dit dans les 4 dernières secondes avance l'entrée) ; place réservée pour la
   caméra **toute la diapositive** (comme le médaillon et les portraits) ;
@@ -827,7 +884,11 @@ sur les 127 diapositives de la Révolution) : jamais plus de deux surimpressions
 l'objet avec la surimpression de son coin ni le manuscrit avec la citation ; objet omis ou raccourci
 en avertissement.
 
-Révolution : 10 objets, 3 manuscrits (liste avec `objets.py revolution --relever`). Pas de pique ni de
+Révolution : 10 objets, 3 manuscrits (liste avec `objets.py revolution --relever`).
+Consulat et Empire : 10 objets (pièces de 5 et 20 francs, main de justice, couronne dite de Charlemagne, chapeau,
+épée d'Austerlitz, télégraphe Chappe, métier Jacquard, bouteille d'Appert, masque mortuaire) et 3 manuscrits
+(Constitution de l'an VIII, proclamation de Golfe-Juan, Acte additionnel). Rien de libre pour une aigle de drapeau
+ni une croix de la Légion d'honneur du Premier Empire (2026-10-09). Pas de pique ni de
 bonnet de laine d'époque photographiés librement sur Commons ; la dernière lettre de Marie-Antoinette
 n'y est qu'en fac-similé de 1872 et la narration ne l'évoque pas ; le procès-verbal du serment du Jeu
 de paume n'y est qu'en 1 000 px, signatures illisibles.
@@ -871,6 +932,17 @@ les deux images quadrillées) ; `apres.camera` = étapes suivantes (après le vo
 `image.camera` précèdent le volet. `images.py` écrit `NNN-apres.webp` (1600 px, `recadrage` admis),
 `utile.py` sa zone utile (clé « 20a »). Mettre `camera_manuelle: true`.
 
+**Cadrage des vignettes (2026-10-09, CE 100).** `vignettes[].cadre` = visage principal de la vignette
+(fractions du WebP servi) : `images.py` le remplit à chaque passe (`--vignettes` : seulement ça, local,
+sans réseau) depuis les visages YuNet (cache `vignettes-visages.json`) : le plus grand visage net d'au
+moins 6 % de la hauteur, un visage du bas de l'image comptant pour un tiers (l'hermine du sacre,
+100-m1) ; pas de visage net (scènes de foule : Rév 18, 53, CE 89) : pas de `cadre`. Correction à la main :
+`cadre` et `"cadre_manuel": true`. Le lecteur (`decalage` dans `mosaique.ts`) centre la case sur le
+centre du `cadre`, borné pour que la zone utile couvre la case (sinon centre de la zone utile).
+`verifier.py` (`vignettes_coupees`) : erreur si le visage principal (le `cadre` manuel, sinon le relevé
+local) sort de plus de 10 % de la partie affichée, sur quatre scènes (ordinateur 1180 × 450, grand écran
+1500 × 720, plein écran 1920 × 1080, téléphone 390 × 390).
+
 **Mosaïque.** 4 à 6 vignettes (`principale` = rang de l'image de la diapositive, dont l'entrée ne
 porte que `commons`) ; `legende` = la ligne du cartouche pendant la grille (60 caractères au plus).
 `images.py` écrit `NNN-mK.webp` (1000 px) et complète la principale ; `utile.py` leurs zones utiles
@@ -890,8 +962,9 @@ diapositive d'un acte (ouverture du carton).
   4 px, chaque vignette couvrant sa case avec sa zone utile ; **révision du 2026-10-08** : la grille est
   entière dès l'entrée de la diapositive (jamais d'apparition une à une sur du blanc), puis chaque
   vignette est **mise en valeur à son tour** (0,9 s chacune depuis 1 s de voix, la principale en
-  dernier, fondus croisés de 0,4 s) : en pleine couleur et avancée (échelle 1,03, sans ombre), les
-  autres en gris voilé (gris à 85 %, opacité 55 % sur le fond de scène) ; la principale garde sa
+  dernier, fondus de 0,4 s) : en pleine couleur et avancée (échelle 1,03, sans ombre) ; **révision du
+  2026-10-09** : une vignette déjà montrée reste en pleine couleur, revenue à l'échelle 1 ; seules les
+  vignettes pas encore montrées sont en gris voilé (gris à 85 %, opacité 55 % sur le fond de scène) ; la principale garde sa
   couleur et revient à l'échelle 1 avant la plongée ; tenue de 0,6 s après le dernier tour ; puis **plongée** :
   homothétie de toute la grille (zoom logarithmique, durée selon l'ampleur avec les plafonds de la
   caméra, ~5 s pour une case de la moitié de la scène), la case principale s'agrandit jusqu'à la
@@ -908,6 +981,11 @@ après), volet tenu dans la voix ; 4 à 6 vignettes présentes et sous licence, 
 de la diapositive, zones utiles, pas sur une ouverture d'acte, grille et plongée tenues dans la voix ;
 dosage (3 à 4 avant/après, 2 mosaïques) en avertissement. `renumeroter.py` renomme aussi les
 `NNN-apres.webp` et `NNN-mK.webp`.
+
+Consulat et Empire (2026-10-09) : avant/après 5 (David → Delaroche, la propagande et le mulet), 33 (Gros,
+*Bonaparte au pont d'Arcole* → Ingres, le trône), 47 (statue de Louis XIV abattue en 1792 → colonne de la Grande
+Armée), 66 (Grand Châtelet en démolition, 1802 → fontaine du Palmier) ; cadres relevés sur grille, `camera_manuelle` ;
+mosaïques 89 (retraite de Russie) et 100 (cinq portraits de Napoléon, 1802-1814, plongée dans Delaroche).
 
 Révolution : avant/après 20 (la Bastille vers 1780, Lallemand → en démolition, Hubert Robert), 57
 (Louis XVI en grand costume royal, Callet → à la barre de la Convention, « Louis Capet »), 59 (la
@@ -1015,6 +1093,7 @@ est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir direct
 | `episodes.ts` | panneaux d'épisode (chiffres, barres, cartes, documents) |
 | `navigation.ts` | `afficher`, `demarrer`, `pause`, fin de voix, `aller`, `suivant`, écouteurs audio |
 | `musique.ts` | musique de fond (Web Audio, gains, fondus, bouton, volume ; `__musique()`) |
+| `generique.ts` | générique d'ouverture et récapitulatif de fin : mosaïque, titre, indicatif (`__generique()`) |
 | `tests.ts` | `__aller(n, segment)`, `__instant()`, `__camera(n, t)` |
 | `controles.ts` | clics, barre des actes, sous-titres, plein écran, redimensionnement, clavier, balayage |
 | `reprise.ts` | reprise mémorisée et premier rendu (installé en dernier) |
@@ -1026,6 +1105,40 @@ par `Object.assign(lec, { … })` (fonctions en tête, constantes en fin) et dé
 partagée se lit et s'écrit toujours `lec.x` (jamais déstructurée : elle changerait sans qu'on le
 voie). L'ordre d'installation de `lecteur.ts` reproduit l'ordre d'origine des écouteurs : ne pas le
 changer sans raison. `grep -n "nomDeFonction" src/scripts/diaporama/*.ts` suffit à tout retrouver.
+
+## Générique d'ouverture et récapitulatif de fin
+
+Spec 12, révision du 2026-10-09. Données : `"generique": ["File:…", …]` dans le JSON de la période,
+8 à 12 fichiers Commons (pas des numéros : ils survivent aux renumérotations), une ou deux images
+par acte au plus, dans l'ordre de la mosaïque (première moitié en haut, seconde en bas). Choix
+éditorial justifié dans le journal (`docs/journal/generique.jsonl`). L'indicatif est commun :
+`src/data/diaporamas/commun/indicatif.json` (source, licence, extraits `ouverture` et `fin` :
+`debut`, `fin`, fondus ; `duree` et `empreinte` écrites par `musique.py --indicatif`, -16 LUFS,
+128 kb/s, `mono: true` pour un pressage « stéréo » électronique), fichiers dans
+`public/diaporamas/commun/`. Crédité en bas de chaque page de période et sur le portail.
+
+- Valeurs retenues : thème original composé avec Lyria (`lyria-3.5`, candidat 08 « marche, plus de
+  cordes », généré le 2026-10-09 ; morceau brut, consigne et découpe : `.cache/diaporamas/
+  indicatif-original/`, `docs/journal/indicatif-original.jsonl`). `indicatif.json` porte `credit`
+  (« Indicatif composé avec Lyria (Google DeepMind) », exigé par Google, affiché tel quel) et
+  `licence` (« Création originale générée par IA pour le site »), la consigne et, par extrait,
+  `accord` (instant de l'accord final). Ouverture : 16,8 s, comptée jusqu'à l'accord (14,55 s) :
+  le premier carton monte dessus, la résonance continue sans fondu. Récapitulatif : 15,7 s, « Fin »
+  sur l'accord (10,25 s). `musique.py --indicatif` ne fait rien pour une source `lyria`.
+- Lecteur : `Generique.astro` (gabarit, styles ; images en `data-src`, chargées au lancement) et
+  `generique.ts`. L'ouverture remplace le premier `afficher(0)` de `lancer` (pas à une reprise),
+  puis `aller(0)` : le premier carton monte pendant que le générique s'efface. Le récapitulatif
+  part de `suivantAuto` après la dernière diapositive, finit par la pause et l'oubli de la position.
+  Passables comme un carton (→, clic, Entrée). Tout saut (`aller`, `afficher`) les quitte.
+  Comptés dans la durée : `etat.ts` décale `debuts` de l'ouverture, le premier acte de la barre
+  commence à 0 et le dernier finit après le récapitulatif ; la musique de fond se cale sur
+  `debuts[bornes[a].de]` (et non `t0`). Pendant le générique, la musique de fond se tait.
+- Minutage (constantes `O` et `F` de `generique.ts`, calées sur l'indicatif) : vignettes en fondu
+  (0,2 s), titre lettre à lettre (dès 0,4 s), filet, dates (6,4 s), couleur vignette par vignette
+  (3,2 à ~11 s), dérive de 8 % de la largeur ; récapitulatif : retour en couleur, passage au gris
+  de 1,2 s à 1,6 s avant l'accord, pâleur, « Fin » sur l'accord, titre 1 s après. Mouvement réduit :
+  pas de dérive, fondus courts. Changer d'indicatif : revoir ces constantes et les `accord`.
+- Captures : instants `o:T` et `f:T` ; les autres instants passent l'ouverture sans temps écoulé.
 
 ## Captures (contrôle visuel et non-régression)
 
@@ -1043,7 +1156,9 @@ python3 scripts/diaporamas/captures.py revolution 1:c5 2:12.5 20:5.5 7:s20 --dis
 ```
 
 - Plan : `n` ou `n:t` (voix de la diapositive n à t s, 2 par défaut, en pause), `n:sT` (segment après
-  la voix, à T s), `n:cT` (carton de l'acte qui commence à n, T s après son début).
+  la voix, à T s), `n:cT` (carton de l'acte qui commence à n, T s après son début), `o:T` et `f:T`
+  (générique d'ouverture, récapitulatif de fin). Depuis le générique, la barre de progression et
+  le temps écoulé diffèrent d'un build antérieur (décalés de l'ouverture) : comparer les autres zones.
 - `--appareil ordinateur|telephone|les-deux` (1280 × 760, 390 × 844) ; fichiers `o-<n_t>.png`,
   `t-<n_t>.png` ; `--planche` : `planche.png` (3 colonnes, légendées) ; `--attente` : ms d'horloge
   factice avant de poser l'instant (2 500 par défaut : entrée finie, frise du bas encore là).

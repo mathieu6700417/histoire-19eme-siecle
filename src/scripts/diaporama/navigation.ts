@@ -12,7 +12,7 @@ export function installerNavigation(lec: Lecteur) {
     majTemps, mesurerMarges, montrerFrise, montrerImage, passerCarton, poserActe, precharger, prelude,
     quandPrete, rendre, retablirWillChange, sa, voixEtPause } = lec;
   Object.assign(lec, { aller, allerSuite, arreterMinuterie, basculer, demarrer, entrerImage, lancer,
-    suivant, suivantAuto });
+    pause, suivant, suivantAuto });
   // --- Lecture -----------------------------------------------------------------------------
   function arreterMinuterie() { clearTimeout(lec.minuterie); lec.minuterie = 0; }
 
@@ -27,6 +27,7 @@ export function installerNavigation(lec: Lecteur) {
   }
 
   function afficher(k: number, fondu = true) {
+    lec.quitterGenerique();
     finirVolets();
     retablirWillChange();
     // Écran couvrant l'image avant le changement : carton d'acte, carte ou panneau d'un segment.
@@ -118,6 +119,7 @@ export function installerNavigation(lec: Lecteur) {
     btnLecture.setAttribute('aria-label', 'Pause');
     animer();
     lec.musique();
+    if (lec.enGenerique) return lec.reprendreGenerique();
     if (lec.enCarton) return lancerCarton();
     if (lec.enSuite) {
       sa.play().catch((e) => { if (e?.name !== 'AbortError') finSuite(); });
@@ -147,6 +149,7 @@ export function installerNavigation(lec: Lecteur) {
     lec.debutSansVoix = 0;
     arreterMinuterie();
     chronoCarton.figer();
+    lec.figerGenerique();
     if (lec.raf && !(lec.enEntree && chronoEntree.tourne)) { cancelAnimationFrame(lec.raf); lec.raf = 0; }
     rendre();
     majTemps();
@@ -186,7 +189,10 @@ export function installerNavigation(lec: Lecteur) {
   }
   function suivantAuto() {
     lec.minuterie = 0;
-    if (lec.i >= N - 1) { pause(); ecrire(CLE_POS, null); return; }
+    if (lec.i >= N - 1) {
+      if (lec.lancerRecapitulatif()) return; // il finit par la pause et l'oubli de la position
+      pause(); ecrire(CLE_POS, null); return;
+    }
     afficher(lec.i + 1);
   }
   function lancer(k = 0) {
@@ -194,7 +200,8 @@ export function installerNavigation(lec: Lecteur) {
     lec.lance = true;
     depart.hidden = true;
     lec.joue = true;
-    afficher(k, k !== lec.i);
+    // Générique d'ouverture au tout début (pas à une reprise), sinon la diapositive k.
+    if (!lec.ouvrirGenerique(k)) afficher(k, k !== lec.i);
     estomperPlusTard(elLegende);
     btnLecture.focus({ preventScroll: true });
     // Le lecteur entier à l'écran, s'il dépasse.
@@ -209,6 +216,7 @@ export function installerNavigation(lec: Lecteur) {
   function aller(k: number) {
     k = Math.max(0, Math.min(N - 1, k));
     if (!lec.lance) { lec.lance = true; depart.hidden = true; }
+    lec.quitterGenerique();
     if (k === lec.i && !prelude[lec.i] && !lec.enCarton) {
       // Retour au début de la diapositive courante (sans carton).
       arreterMinuterie();
@@ -228,6 +236,7 @@ export function installerNavigation(lec: Lecteur) {
   }
   /** « Suivant » : passe le carton s'il est affiché, sinon diapositive suivante. */
   function suivant() {
+    if (lec.enGenerique) return lec.passerGenerique();
     if (lec.enCarton) return passerCarton();
     aller(lec.i + 1);
   }

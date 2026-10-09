@@ -10,7 +10,10 @@ Usage (depuis la racine, après `npm run build` ou `npx astro build --outDir dis
 Plan : une liste d'instants, chacun `n[:instant]` :
   - `n` ou `n:t`  : diapositive n, voix à l'instant t (s ; 2 par défaut), en pause ;
   - `n:sT`        : segment joué après la voix de n (chant, lecture, épisode), à l'instant T, en pause ;
-  - `n:cT`        : carton de l'acte qui commence à n, T secondes après son début (0 à 12).
+  - `n:cT`        : carton de l'acte qui commence à n, T secondes après son début (0 à 12) ;
+  - `o:T`, `f:T`  : générique d'ouverture, récapitulatif de fin, T secondes après leur début.
+Hors générique, l'ouverture est passée aussitôt après « Lancer » (sans temps écoulé : mêmes images
+qu'un build sans générique, à la barre de progression et au temps près).
 Chaque capture se fait dans un onglet neuf (aucune reprise mémorisée ; « date précédente » de la
 frise = diapositive 1), avec une horloge entièrement factice : `page.clock` (Playwright) pour
 performance.now, minuteries et requestAnimationFrame, et un faux moteur audio (HORLOGE ci-dessous)
@@ -88,6 +91,9 @@ def serveur(dossier: Path) -> tuple[http.server.ThreadingHTTPServer, int]:
 
 
 def analyser(item: str) -> tuple[int, str, float]:
+    g = re.fullmatch(r'([of]):(\d+(?:\.\d+)?)', item)
+    if g:
+        return 0, g.group(1), float(g.group(2))
     m = re.fullmatch(r'(\d+)(?::([sc]?)(\d+(?:\.\d+)?))?', item)
     if not m:
         sys.exit(f'Instant illisible : {item!r} (attendu n, n:t, n:sT ou n:cT)')
@@ -111,9 +117,16 @@ def capturer(navigateur, url: str, appareil: str, item: str, attente: int, chemi
     pg.goto(url, wait_until='load')
     pg.wait_for_timeout(600)
     pg.click('[data-action="lancer"]')
-    pg.clock.run_for(100)
     r = "document.querySelector('.diaporama')"
-    if genre == 'c':
+    if genre != 'o':
+        # Hors ouverture : l'ouverture est passée (ou l'on va au récapitulatif) sans temps écoulé.
+        quoi = 'fin' if genre == 'f' else 'passer'
+        pg.evaluate(f"() => {r}.__generique && {r}.__generique('{quoi}')")
+    pg.clock.run_for(100)
+    if genre in ('o', 'f'):
+        pg.wait_for_timeout(800)               # images de la mosaïque (temps réel, horloge arrêtée)
+        pg.clock.run_for(max(0, int(t * 1000) - 100))
+    elif genre == 'c':
         if pg.evaluate(f"() => {r}.querySelector('.lecteur__n').textContent") != str(n):
             pg.evaluate(f"() => {r}.__aller({n})")
         pg.wait_for_timeout(400)               # décodage des images (temps réel)

@@ -435,6 +435,15 @@ réutilisable dans tous les épisodes : **`chronologie`**.
   Légion d'honneur 1802, franc germinal 1803, Code civil 1804). `verifier.py` contrôle les dates
   (dans les bornes, dans l'ordre) et signale un panneau `chiffres` qui contient des années.
 
+**Valeurs retenues** (mise en œuvre du 2026-10-09 ; détail dans le README, « Lectures d'époque et épisodes ») :
+frise horizontale de 4 à 96 % de la largeur, au milieu de la hauteur ; graduation à chaque 1er janvier, années aux
+deux bouts ; point de date et bulle en fondu (0,8 s) au passage, connecteur fin ; bulle de 20 % de large, à filet
+fin, date en petites capitales, libellé en italique, précision en gris ; côté alterné, deux rangs de chaque côté,
+placement calculé au build sans chevauchement ; curseur triangulaire qui rejoint chaque date en 1 s ; bulle
+précédente atténuée de moitié. Téléphone (frise de moins de 520 px) : frise verticale à gauche, bulles d'une ligne
+(date et libellé) à droite. Consulat et Empire : épisode « Les masses de granit » (carton, chronologie de
+6 événements, arrêté du préfet de la Seine signé Frochot surligné).
+
 ### Données et chaîne
 `lectures` et `episodes` dans le JSON de la période ; `voix.py` synthétise aussi ces voix et
 les horodate ; `verifier.py` contrôle extraits (mot pour mot), sources, licences, `quand`
@@ -708,6 +717,15 @@ certaines zones sont **mal choisies**. Décisions (remplacent la « respiration 
   coupe souvent la tête. Règle portée par `camera.py` (consigne et contrôle automatique), au même
   titre que « sujet entier » et « pas de dernier cadre sur le ciel » ; une image elle-même coupée
   (recadrage, original) est signalée, pas modifiée.
+- **Règle du portrait** (signalement de l'utilisateur, CE 23 *Cadoudal* : tête hors champ, 2026-10-09) :
+  sur une image dont le sujet est une personne seule, **chaque vue** (au début de la tenue et au
+  bout du zoom lent) montre son **visage entier** (une tête plus haute qu'une vue : sans le haut des
+  cheveux, menton compris ; portrait très serré : du front à la bouche). Le titre et le registre des
+  portraits servent d'indices ; contrôle et réparation dans `camera.py`. **Assouplissement (choix de
+  l'utilisateur, 2026-10-09)** : une vue intermédiaire peut faire un gros plan sur un détail cité
+  par la voix (la main sur le décret, le Code) si le visage est entièrement hors champ (0 %, au début
+  de la tenue et au bout du zoom lent) ; jamais à moitié coupé ; la première et la dernière vue
+  montrent toujours le visage entier.
 - **Valeurs retenues** (mise en œuvre du 2026-10-09) :
   - zoom lent continu (`souffle`) : 1,2 %/s (0,012 en log d'échelle), 12 % au plus, rampes de 1,2 s
     (la moitié de la tenue au plus), glissement vers le centre du cadre visé borné à la marge libre ;
@@ -800,16 +818,23 @@ montre pas, montrer son portrait. Décisions :
   - registre : seules les personnes montrées ; une personne sans portrait fiable garde une `note`
     et rien n'est montré. Pas de « portrait présumé ». Webp 360 × 450 px recadrée (visage à 58 %
     de la hauteur ; 240 × 300 avant le 2026-10-08), ovale tracé par le lecteur.
-  - lecteur : ovales de 25 % de la hauteur de la scène (110 à 180 px sur ordinateur, 70 px sur
-    téléphone ; agrandis d'environ 1,5 fois le 2026-10-08, nom et dates un peu plus grands), réduits si la rangée ne tient pas à côté du médaillon de lieu ; une personne par
-    ovale (première mention), le premier dès l'entrée de la rangée ; rangée du premier nom à 3 s
-    après le dernier, 5 s au moins, prolongée jusqu'à la fin de la citation de la personne ; zone
-    réservée pour toute la diapositive ; une personne seule : « Danton · 1759-1794 » sur une ligne.
-    **Fond qui grandit** (retour de l'utilisateur du 2026-10-08) : le fond blanc cassé ne couvre que
-    les portraits déjà apparus ; à un nouveau nom, il s'élargit vers la droite en ~0,4 s (le premier
-    portrait reste en place), puis l'ovale paraît en fondu ; la zone réservée pour la caméra reste
-    celle de la rangée complète (aucun mouvement de caméra) ; état dérivé de l'horloge lissée (pause,
-    reprise, sauts justes) ; `prefers-reduced-motion` : largeur changée sans animation.
+  - lecteur (révision du 2026-10-09, demande de l'utilisateur) : **l'ovale seul**, posé sur
+    l'image sans carte ni fond ; nom et dates dans une **petite étiquette blanc cassé à filet fin,
+    serrée juste sous l'ovale** (une personne seule : « Danton · 1759-1794 » sur une ligne ; à
+    plusieurs : nom, puis dates). Ovales **1,5 fois plus grands** que la taille du 2026-10-08
+    (25 % de la hauteur de la scène, 110 à 180 px ; 70 px au moins sur téléphone), **plafonnés à
+    30 % de la hauteur de la scène sur ordinateur, 27 % sur téléphone debout** (étiquette en plus) :
+    à 1280 × 760 (scène 1040 × 450), ovale de 134 px (110 avant), rangée de ~165 px avec
+    l'étiquette ; à 1920 × 1080 (scène 720 px), 216 px (180 avant) ; téléphone 390 × 844 (scène
+    390 × 390), 105 px (97 avant). Le plafond l'emporte presque toujours sur le facteur 1,5. Rangée
+    réduite (en quelques passes, les étiquettes ne rétrécissant pas) si elle ne tient pas à côté du
+    médaillon de lieu ou d'un objet montré en même temps dans le coin opposé. Une personne par
+    ovale (première mention), le premier dès l'entrée de la rangée, les suivants en fondu (0,45 s)
+    à leur nom ; rangée du premier nom à 3 s après le dernier, 5 s au moins, prolongée jusqu'à la
+    fin de la citation de la personne ; zone réservée pour toute la diapositive (rangée complète,
+    aucun mouvement de caméra) ; état dérivé de l'horloge lissée (pause, reprise, sauts justes) ;
+    `prefers-reduced-motion` : sans fondu. Le « fond qui grandit » du 2026-10-08 disparaît avec
+    le cartouche.
   - **priorités quand tout tombe ensemble** : citation > portraits = médaillon de lieu > frise du
     temps. La citation exclut le médaillon (règle existante) et, si elle touche la rangée, monte
     au-dessus d'elle pour toute la diapositive ; la frise cède quand médaillon et portraits sont là
@@ -879,7 +904,8 @@ la règle des documents d'époque du domaine public (Commons), monochromes hors 
    an II » → « 27 juillet 1794 »), discrète. Chiffres exacts et sourcés.
 5. **Mosaïque puis plongée** : 4 à 6 images d'un même événement apparaissent en grille, puis la
    caméra plonge dans l'une d'elles, qui devient l'image de la diapositive.
-   **Révision du 2026-10-08** : les vignettes sont **toutes présentes dès le début** (jamais d'apparition une à une sur du blanc) ; elles sont ensuite **mises en valeur une par une** (la vignette en cours en pleine couleur et légèrement avancée, les autres atténuées en gris voilé), puis la caméra plonge dans l'image principale.
+   **Révision du 2026-10-08** : les vignettes sont **toutes présentes dès le début** (jamais d'apparition une à une sur du blanc) ; elles sont ensuite **mises en valeur une par une** (la vignette en cours en pleine couleur et légèrement avancée ; **révision du 2026-10-09** : les vignettes déjà montrées restent en pleine couleur, revenues à plat, seules celles pas encore montrées sont atténuées en gris voilé), puis la caméra plonge dans l'image principale (inchangée).
+   **Cadrage des vignettes** (2026-10-09, CE 100 : portraits en pied montrés sans la tête) : chaque vignette est centrée sur son visage principal (champ `cadre`, relevé automatiquement sur les visages locaux, corrigeable à la main) dans la limite de sa zone utile, et non sur son centre ; une vignette dont le visage sort de la partie affichée est une erreur de `verifier.py`.
 6. ~~Parallaxe 2,5D~~ : **abandonné après le banc d'essai (décision de l'utilisateur du 2026-10-08)**.
 
 **Dosage, par période** : ~10 objets, ~8 chiffres ou dates, 3 à 4 avant/après, 3 à 4
@@ -893,8 +919,12 @@ l'image reste le sujet. Les zones couvertes ne font jamais bouger la caméra bru
   (licence par l'API : domaine public, CC0, CC BY, CC BY-SA ; détourage local par rembg
   `isnet-general-use`, enveloppe convexe pour les faïences et médailles ; webp transparent de 720 px
   au plus) ; crédits « Objets et documents » sur la page ;
-- objet : coin bas (droite par défaut), cartouche blanc cassé à filet fin, objet en couleur de 22 % de
-  la hauteur de la scène (96 à 200 px), légende « objet » / « date · musée » ; fondu de 0,8 s, montée
+- objet : coin bas (droite par défaut), posé sur l'image sans carte (révision du 2026-10-08), objet en
+  couleur **1,5 fois plus grand** (révision du 2026-10-09 ; avant : 22 % de la hauteur de la scène,
+  96 à 200 px, 1,3 fois plus pour un objet très étroit), **plafonné à 30 % de la hauteur de la scène
+  sur ordinateur, 27 % sur téléphone debout** (légende en plus), 40 % de la largeur au plus (45 % sur
+  téléphone) : 134 px à 1280 × 760 (99 avant), 105 px sur téléphone (86 avant) ; légende « objet » /
+  « date · musée » ; fondu de 0,8 s, montée
   de 10 px ; ~5 s depuis le passage ; place réservée pour la caméra toute la diapositive ;
 - manuscrit : sur un côté, sous le cartouche, 72 % de la hauteur au plus ; ~8 s ; zoom doux 1 s après
   l'entrée (2,5 s, 2,4 fois au plus), puis halo en 1,2 s, le même que les documents d'épisode ; ne
@@ -1006,18 +1036,27 @@ Demande de l'utilisateur : une animation au début et une à la fin de chaque di
 - **Pas de voix** : musique seule, aucune synthèse.
 - **Images** : **choix éditorial fait par un agent éditeur** (pas par l'utilisateur), 8 à 12 images
   fortes par période, une ou deux par acte au
-  plus, listées dans le JSON (champ `generique`, références aux diapositives par numéro, recalculées
-  par `renumeroter.py`). Les mêmes images servent à l'ouverture et au récapitulatif.
-- **Musique** : un **thème commun à toute la série**, comme l'indicatif d'une émission : un seul
-  enregistrement libre (mêmes règles de droits que la section « Musique »), un extrait d'ouverture
-  et un extrait de conclusion, partagés par les 9 diaporamas (fichiers communs, pas copiés par
-  période).
+  plus, listées dans le JSON (champ `generique`, références aux images par leur fichier Commons, pas
+  par numéro de diapositive : elles survivent aux insertions et renumérotations). Les mêmes images servent à l'ouverture et au récapitulatif.
+- **Musique** : un **thème original composé avec Lyria** (Google DeepMind, modèle `lyria-3.5`,
+  révision du 2026-10-09, à la place d'un enregistrement ancien), comme l'indicatif d'une émission :
+  un extrait d'ouverture et un extrait de conclusion, partagés par les 9 diaporamas (fichiers
+  communs, pas copiés par période). **Crédit obligatoire** (conditions d'utilisation de Google) :
+  « Indicatif composé avec Lyria (Google DeepMind) », sur le portail et chaque page de période,
+  avec la mention « création originale générée par IA pour le site » (pas de domaine public).
 - **Passables** comme un carton (→, clic, Entrée) ; une reprise en cours de diaporama ne rejoue
   pas le générique. Ils sont **comptés** dans la durée et la barre de progression.
 - Monochrome hors images (charte), responsive, `prefers-reduced-motion` : fondus courts, pas de
   défilement.
 - Même mécanique pour toutes les périodes : seules les données changent. `verifier.py` contrôle
   `generique` (8 à 12 images, une ou deux par acte au plus, numéros valides).
+- **Valeurs retenues** (2026-10-09) : candidat « 08, marche, plus de cordes » (marche en sol mineur,
+  cordes graves en pizzicato, cuivres en renfort). Ouverture : extrait de 16,8 s, **comptée 14,55 s**,
+  jusqu'à son accord final, sur lequel monte le premier carton (la résonance continue dessous) ; titre
+  écrit dès 0,4 s, dates sur l'accent de 6,5 s. Récapitulatif : 15,7 s, « Fin » sur l'accord final
+  (10,25 s), titre une seconde après. Générique : 30,2 s par période. 10 images pour la Révolution, 11
+  pour Consulat et Empire. (Essais écartés : Berlioz, *Le Carnaval romain*, puis la « Marche au
+  supplice », jugés moins adaptés qu'un thème propre à la série.)
 
 ## Produire une période : leçons de Consulat et Empire (2026-10-09)
 
@@ -1052,6 +1091,17 @@ suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan
   JSON d'une période.
 - **Contrôle avant la voix** : relire le dosage des enrichissements et la richesse des épisodes à la
   fin de l'étape 1, avant toute synthèse ; `verifier.py` signale un dosage insuffisant.
+
+### Consulat et Empire enrichi (2026-10-09)
+
+Dosage atteint : 4 avant/après (5, 33, 47, 66), 2 mosaïques (89, 100), 10 objets, 3 manuscrits, 8 chiffres et
+1 date. Épisodes : « Les masses de granit » (carton, chronologie, document), « Le prix du sang » (carton, chiffres,
+Bulletin des lois n° 54 surligné, chiffres des pertes, barres des quatre levées de 1813 : hommes demandés par
+sénatus-consulte, non tous levés) ; deux épisodes cartographiques nouveaux : « De Boulogne à Austerlitz » (après
+35 : chiffres, marche des corps, Rhin, Danube, Ulm encerclé, Vienne, Austerlitz) et « La campagne de Russie, aller
+et retour » (après 91 : bandes à la manière de Minard, largeur proportionnelle aux effectifs, aller en gris moyen,
+retour en gris foncé décalé au sud, puis barres 422 000 / 100 000 / 10 000 selon Minard). La diapositive à image
+de la conscription existait déjà (71, Boilly).
 
 ## Portail (`/diaporamas/`)
 

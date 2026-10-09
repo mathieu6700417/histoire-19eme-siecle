@@ -1,6 +1,6 @@
 ---
 // Visuels d'un épisode (spec 12, « Lectures d'époque et épisodes ») : cartons typographiques,
-// chiffres, barres, courbe, carte et document d'époque surligné, tous monochromes, rendus en
+// chiffres, barres, courbe, carte, chronologie et document d'époque surligné, tous monochromes, rendus en
 // HTML/SVG à partir des données du JSON de la période.
 //
 // Synchronisation : chaque élément animé porte `data-t` (instant de départ, en secondes dans
@@ -11,7 +11,7 @@
 // document, `data-vues` (cadres de zoom successifs). En mode « livre » (sans JavaScript), tout est
 // posé à `--p: 1` et les visuels sont empilés.
 import { typographie } from '../utils/typographie.mjs';
-import { bornesDate, instantPassage, urlCommons, urlMedia, type Episode, type FondCarte, type VisuelEpisode, type ElementCarte } from '../utils/diaporamas';
+import { bornesDate, libelleDate, instantPassage, urlCommons, urlMedia, type Episode, type FondCarte, type VisuelEpisode, type ElementCarte } from '../utils/diaporamas';
 
 interface Props { episode: Episode; slug: string; fonds: Record<string, FondCarte>; mode: 'lecteur' | 'livre' }
 const { episode: e, slug, fonds, mode } = Astro.props;
@@ -146,13 +146,14 @@ function lignes(x: number, y: number, texte: string, hl = 1.1) {
 function centre(pts: [number, number][]): [number, number] {
   return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length];
 }
-const fleche = (f: FondCarte, el: Extract<ElementCarte, { type: 'fleche' }>) => {
+const fleche = (f: FondCarte, el: Extract<ElementCarte, { type: 'fleche' }>, k = 1) => {
   const [x0, y0] = projeter(f, el.de), [x1, y1] = projeter(f, el.a);
   // Légère courbe (point de contrôle décalé perpendiculairement).
   const mx = (x0 + x1) / 2 - (y1 - y0) * 0.18, my = (y0 + y1) / 2 + (x1 - x0) * 0.18;
   // Pointe : triangle à l'arrivée, orienté selon la tangente (du point de contrôle à l'arrivée).
-  const n = Math.hypot(x1 - mx, y1 - my) || 1, ux = (x1 - mx) / n, uy = (y1 - my) / n, L = 26, l = 13;
-  const pointe = `M${(x1 + ux * 6).toFixed(1)},${(y1 + uy * 6).toFixed(1)} L${(x1 - ux * L + uy * l).toFixed(1)},${(y1 - uy * L - ux * l).toFixed(1)} L${(x1 - ux * L - uy * l).toFixed(1)},${(y1 - uy * L + ux * l).toFixed(1)}Z`;
+  // Pointe à taille d'écran constante : réduite comme les libellés sur une carte recadrée (k).
+  const n = Math.hypot(x1 - mx, y1 - my) || 1, ux = (x1 - mx) / n, uy = (y1 - my) / n, L = 26 * k, l = 13 * k;
+  const pointe = `M${(x1 + ux * 6 * k).toFixed(1)},${(y1 + uy * 6 * k).toFixed(1)} L${(x1 - ux * L + uy * l).toFixed(1)},${(y1 - uy * L - ux * l).toFixed(1)} L${(x1 - ux * L - uy * l).toFixed(1)},${(y1 - uy * L + ux * l).toFixed(1)}Z`;
   return { d: `M${x0},${y0} Q${mx.toFixed(1)},${my.toFixed(1)} ${x1},${y1}`, pointe, depart: [x0, y0] as [number, number] };
 };
 
@@ -164,6 +165,48 @@ function vue([x0, y0, x1, y1]: [number, number, number, number], ratio: number):
   const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
   const a = Math.min(1 - w, Math.max(0, cx - w / 2)), b = Math.min(1 - h, Math.max(0, cy - h / 2));
   return [r2(a), r2(b), r2(a + w), r2(b + h)].map((x) => Math.round(x * 1000) / 1000) as [number, number, number, number];
+}
+
+// --- Chronologie (spec 12, « Chronologie animée ») ------------------------------------------
+// Positions en % de la boîte de la frise, calculées ici une fois pour deux mises en page :
+// horizontale (ordinateur : axe au milieu, bulles alternées au-dessus et au-dessous, sur deux
+// rangs de chaque côté, jamais l'une sur l'autre) et verticale (téléphone : axe à gauche, bulles
+// à droite, empilées au plus près de leur date). Les connecteurs sont des lignes SVG (viewBox
+// 0 0 100 100 étirée) ; le curseur suit `data-trace` ([instant, fraction de la frise], …).
+const CH = { h0: 4, h1: 96, axe: 50, larg: 20, bords: { haut: [42, 19], bas: [58, 81] }, v0: 4, v1: 96, vx: 11, vbx: 19, haut: 14, ecart: 1.2 };
+function chrono(v: Extract<VisuelEpisode, { type: 'chronologie' }>, k: number) {
+  const d0 = bornesDate(v.debut)[0], d1 = bornesDate(v.fin)[1] + 1;
+  const f = (d: string) => Math.min(1, Math.max(0, (bornesDate(d)[0] - d0) / (d1 - d0)));
+  const a0 = Number(v.debut.slice(0, 4)), a1 = Number(v.fin.slice(0, 4)) + 1;
+  const graduations = [] as { f: number; annee: number; bout: boolean }[];
+  for (let a = a0; a <= a1; a++) {
+    const x = f(`${a}-01-01`);
+    if (bornesDate(`${a}-01-01`)[0] >= d0 && bornesDate(`${a}-01-01`)[0] <= d1) graduations.push({ f: r2(x), annee: a, bout: false });
+  }
+  if (graduations.length) { graduations[0].bout = true; graduations[graduations.length - 1].bout = true; }
+  const ev = v.evenements.map((e, j) => ({ ...e, f: f(e.date), t: quandEl(k, e.quand, j) }));
+  // Horizontal : premier emplacement libre, côté alterné d'abord, rang 0 puis 1, puis l'autre côté.
+  const poses: { cote: 'haut' | 'bas'; rang: number; x: number }[] = [];
+  const hz = ev.map((e, j) => {
+    const x = CH.h0 + (CH.h1 - CH.h0) * e.f;
+    const xc = Math.min(100 - CH.larg / 2 - 0.5, Math.max(CH.larg / 2 + 0.5, x));
+    const prefere = j % 2 === 0 ? 'haut' : 'bas', autre = prefere === 'haut' ? 'bas' : 'haut';
+    const essais = [[prefere, 0], [autre, 0], [prefere, 1], [autre, 1]] as ['haut' | 'bas', number][];
+    const libre = essais.find(([c, r]) => !poses.some((p) => p.cote === c && p.rang === r && Math.abs(p.x - xc) < CH.larg + 1)) ?? essais[3];
+    poses.push({ cote: libre[0], rang: libre[1], x: xc });
+    const y = CH.bords[libre[0]][libre[1]];
+    return { x: r2(x), xc: r2(xc), y, cote: libre[0] };
+  });
+  // Vertical : bulles empilées au plus près de leur date, sans se toucher, dans la boîte.
+  const vy = ev.map((e) => CH.v0 + (CH.v1 - CH.v0) * e.f);
+  const hautes = vy.map((y) => y - CH.haut / 2);
+  for (let j = 0; j < hautes.length; j++) hautes[j] = Math.max(hautes[j], 0, j ? hautes[j - 1] + CH.haut + CH.ecart : 0);
+  for (let j = hautes.length - 1; j >= 0; j--) hautes[j] = Math.min(hautes[j], (j < hautes.length - 1 ? hautes[j + 1] - CH.ecart : 100) - CH.haut);
+  const vt = ev.map((_, j) => ({ y: r2(vy[j]), top: r2(hautes[j]), milieu: r2(hautes[j] + CH.haut / 2) }));
+  // Curseur : du début de la frise, il glisse en 1 s vers chaque date quand la bulle paraît.
+  const trace: [number, number][] = [[0, 0]];
+  ev.forEach((e) => { const prec = trace[trace.length - 1][1]; trace.push([Math.max(e.t, trace[trace.length - 1][0]), prec], [r2(Math.max(e.t, trace[trace.length - 1][0]) + 1), r2(e.f)]); });
+  return { ev, hz, vt, graduations, trace };
 }
 const statique = mode === 'livre';
 ---
@@ -284,7 +327,7 @@ const statique = mode === 'livre';
                       );
                     }
                     if (el.type === 'fleche') {
-                      const fl = fleche(f, el);
+                      const fl = fleche(f, el, fen.k);
                       const et = etiquette(fl.depart, el.position ?? 'haut', 14 * fen.k);
                       return (
                         <g class="ev-carte__fleche anim" data-t={tj} data-d="1.4">
@@ -312,6 +355,43 @@ const statique = mode === 'livre';
                 )}
               </div>
               <p class="ev-source">{t(`${v.source}`)}</p>
+            </Fragment>
+          );
+        })()}
+
+        {v.type === 'chronologie' && (() => {
+          const c = chrono(v, k);
+          const n = c.ev.length;
+          return (
+            <Fragment>
+              {v.titre && <p class="ev-titre">{t(v.titre)}</p>}
+              <div class="ev-chrono" role="img" aria-label={t(v.titre ?? 'Chronologie')}>
+                <span class="ev-chrono__axe"></span>
+                {c.graduations.map((g) => (
+                  <span class={`ev-chrono__grad${g.bout ? ' est-bout' : ''}`} style={`--f:${g.f}`}>{g.bout && <span class="ev-chrono__annee">{g.annee}</span>}</span>
+                ))}
+                <svg class="ev-chrono__liens ev-chrono__liens--h" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                  {c.ev.map((e, j) => <line class="anim" data-t={e.t} data-d="0.8" x1={c.hz[j].x} y1={CH.axe} x2={c.hz[j].xc} y2={c.hz[j].y} />)}
+                </svg>
+                <svg class="ev-chrono__liens ev-chrono__liens--v" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                  {c.ev.map((e, j) => <line class="anim" data-t={e.t} data-d="0.8" x1={CH.vx} y1={c.vt[j].y} x2={CH.vbx} y2={c.vt[j].milieu} />)}
+                </svg>
+                {c.ev.map((e, j) => (
+                  <span class="ev-chrono__point anim" data-t={e.t} data-d="0.6" style={`--f:${r2(e.f)}`}></span>
+                ))}
+                {c.ev.map((e, j) => (
+                  <div class={`ev-chrono__bulle est-${c.hz[j].cote} anim`} data-t={e.t} data-d="0.8"
+                    style={`--hx:${c.hz[j].xc};--hy:${c.hz[j].y};--vy:${c.vt[j].top}`}>
+                    <div class="ev-chrono__corps anim" data-t={j < n - 1 ? c.ev[j + 1].t : 99999} data-d="0.6">
+                      <span class="ev-chrono__date">{t(libelleDate(e.date.slice(0, 7)))}</span>
+                      <span class="ev-chrono__libelle">{t(e.libelle)}</span>
+                      {e.precision && <span class="ev-chrono__precision">{t(e.precision)}</span>}
+                    </div>
+                  </div>
+                ))}
+                {!statique && <span class="ev-chrono__curseur" data-trace={JSON.stringify(c.trace)} data-l="1"></span>}
+              </div>
+              <p class="ev-source">{t(`Source : ${v.source}`)}</p>
             </Fragment>
           );
         })()}
@@ -546,6 +626,50 @@ const statique = mode === 'livre';
     mask-size: 100% 100%;
   }
   .ev-doc__lignes { margin: var(--e-2) 0 0; padding-left: var(--e-3); font-style: italic; }
+
+  /* Chronologie : frise fine, bulles à filet fin (ni fond coloré ni ombre), reliées à leur date ;
+     la dernière bulle en noir, les précédentes en gris atténué (--p de .ev-chrono__corps). */
+  .ev-chrono { position: relative; width: 100%; flex: 1 1 0; min-height: 0; container-type: size; }
+  .ev-chrono__axe { position: absolute; left: 4%; right: 4%; top: 50%; border-top: 1px solid var(--c-texte); }
+  .ev-chrono__grad { position: absolute; left: calc(4% + var(--f) * 92%); top: 50%; height: 0.7rem; border-left: 1px solid var(--c-texte-doux); transform: translateY(-50%); }
+  .ev-chrono__grad.est-bout { height: 1.1rem; border-left-color: var(--c-texte); }
+  .ev-chrono__annee { position: absolute; top: 100%; left: 0; transform: translate(-50%, 0.2rem); font-size: clamp(0.7rem, 2.6cqh, 0.95rem); color: var(--c-texte-doux); letter-spacing: 0.05em; }
+  .ev-chrono__liens { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .ev-chrono__liens line { stroke: var(--c-texte-doux); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: var(--p); }
+  .ev-chrono__liens--v { display: none; }
+  .ev-chrono__point { position: absolute; left: calc(4% + var(--f) * 92%); top: 50%; width: 9px; height: 9px; border-radius: 50%; background: var(--c-fond); border: 1.5px solid var(--c-texte); transform: translate(-50%, -50%) scale(var(--p)); }
+  .ev-chrono__curseur { --c: 0; position: absolute; left: calc(4% + var(--c) * 92%); top: 50%; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 10px solid var(--c-texte); transform: translate(-50%, -150%); }
+  .ev-chrono__bulle {
+    position: absolute; left: calc(var(--hx) * 1%); top: calc(var(--hy) * 1%); width: 20%;
+    opacity: var(--p); transform: translate(-50%, calc(-100% + (1 - var(--p)) * 6px));
+  }
+  .ev-chrono__bulle.est-bas { transform: translate(-50%, calc((1 - var(--p)) * -6px)); }
+  .ev-chrono__corps {
+    display: flex; flex-direction: column; gap: 0.1em; padding: 0.35em 0.5em; border: 1px solid var(--c-texte);
+    background: var(--c-fond); text-align: center; line-height: 1.2; color: var(--c-texte);
+    font-size: clamp(0.8rem, min(1.85cqw, 4.8cqh), 1.25rem);
+    opacity: calc(1 - var(--p) * 0.5); border-color: color-mix(in srgb, var(--c-texte) calc(100% - var(--p) * 60%), var(--c-fond));
+  }
+  .ev-chrono__date { font-variant: small-caps; letter-spacing: 0.06em; color: var(--c-texte-doux); font-size: 0.85em; }
+  .ev-chrono__libelle { font-style: italic; }
+  .ev-chrono__precision { color: var(--c-texte-doux); font-size: 0.85em; }
+  /* Scène étroite (téléphone) : frise verticale à gauche, bulles à droite. */
+  @container (max-width: 520px) {
+    .ev-chrono__axe { left: 11%; right: auto; top: 4%; bottom: 4%; border-top: 0; border-left: 1px solid var(--c-texte); }
+    .ev-chrono__grad { left: 11%; top: calc(4% + var(--f) * 92%); height: 0; width: 0.7rem; border-left: 0; border-top: 1px solid var(--c-texte-doux); transform: translateX(-50%); }
+    .ev-chrono__grad.est-bout { width: 1.1rem; border-top-color: var(--c-texte); }
+    .ev-chrono__annee { top: 0; left: auto; right: 100%; transform: translate(-0.3rem, -50%); }
+    .ev-chrono__liens--h { display: none; }
+    .ev-chrono__liens--v { display: block; }
+    .ev-chrono__point { left: 11%; top: calc(4% + var(--f) * 92%); }
+    .ev-chrono__curseur { left: 11%; top: calc(4% + var(--c) * 92%); border-top: 7px solid transparent; border-bottom: 7px solid transparent; border-left: 10px solid var(--c-texte); border-right: 0; transform: translate(-150%, -50%); }
+    .ev-chrono__bulle, .ev-chrono__bulle.est-bas { left: 19%; top: calc(var(--vy) * 1%); width: 80%; height: 14%; transform: translateX(calc((1 - var(--p)) * 6px)); }
+    .ev-chrono__corps { height: 100%; box-sizing: border-box; justify-content: flex-start; text-align: left; font-size: clamp(0.66rem, min(3.4cqw, 6.5cqh), 0.95rem); flex-direction: row; flex-wrap: nowrap; align-items: center; column-gap: 0.5em; padding: 0 0.5em; white-space: nowrap; overflow: hidden; }
+    .ev-chrono__precision { display: none; }
+  }
+  .episode--livre .ev-chrono { flex: none; aspect-ratio: 2.4; }
+  @media (max-width: 560px) { .episode--livre .ev-chrono { aspect-ratio: 0.75; } }
+  .episode--livre .ev-chrono__corps { --p: 0; }
 
   /* Livre d'images (sans JavaScript) : visuels empilés, statiques. */
   .episode--livre .ev { margin: var(--e-3) 0; }

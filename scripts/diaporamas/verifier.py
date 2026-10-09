@@ -1415,6 +1415,28 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
                     quands.append(x.get('quand'))
                 if not str(v.get('source') or '').strip():
                     erreurs.append(f'{qv} : source du document manquante')
+            elif tv == 'chronologie':
+                # Spec 12, « Chronologie animée » : dates dans les bornes et dans l'ordre, passages exacts.
+                b0, b1 = bornes_date(v.get('debut')), bornes_date(v.get('fin'))
+                if not b0 or not b1 or b0[0] > b1[1]:
+                    erreurs.append(f'{qv} : bornes invalides ({v.get("debut")!r}, {v.get("fin")!r})')
+                evs = v.get('evenements') or []
+                if not evs:
+                    erreurs.append(f'{qv} : aucun événement')
+                dates = [bornes_date(x.get('date')) for x in evs]
+                if any(d is None for d in dates):
+                    erreurs.append(f'{qv} : date d’événement invalide')
+                elif b0 and b1:
+                    if any(not (b0[0] <= d[0] and d[1] <= b1[1]) for d in dates):
+                        erreurs.append(f'{qv} : événement hors des bornes de la frise')
+                    if [d[0] for d in dates] != sorted(d[0] for d in dates):
+                        erreurs.append(f'{qv} : événements hors de l’ordre chronologique')
+                for x in evs:
+                    if not x.get('libelle') or not x.get('quand'):
+                        erreurs.append(f'{qv} : événement sans libellé ou sans « quand »')
+                    quands.append(x.get('quand'))
+                if not str(v.get('source') or '').strip():
+                    erreurs.append(f'{qv} : source de la chronologie manquante')
             else:
                 erreurs.append(f'{qv} : type inconnu')
             if tv == 'chiffres':
@@ -1451,6 +1473,73 @@ PLONGEE_MIN = 3.0  # durée minimale de la plongée (s) : le lecteur l'allonge s
 
 def debut_plongee(n: int) -> float:
     return MOSAIQUE['apparition'] + n * MOSAIQUE['pas'] + MOSAIQUE['tenue']
+
+
+# Cadrage des vignettes (2026-10-09) : scènes du lecteur (px) sur lesquelles on contrôle que le visage
+# principal de chaque vignette est dans la partie affichée de sa case (ordinateur, grand écran,
+# plein écran 16/9, téléphone : `.lecteur__scene`).
+SCENES_MOSAIQUE = {'ordinateur': (1180, 450), 'grand écran': (1500, 720), 'plein écran': (1920, 1080), 'téléphone': (390, 390)}
+GOUTTIERE_MOSAIQUE = 4
+
+
+def cases_mosaique(n: int, W: float, H: float) -> list[list[float]]:
+    """Cases de la grille, comme `cases` de mosaique.ts."""
+    haut, g, R = n // 2, GOUTTIERE_MOSAIQUE / 2, []
+    for j, m in enumerate((haut, n - haut)):
+        for k in range(m):
+            x0, x1, y0, y1 = W * k / m, W * (k + 1) / m, H * j / 2, H * (j + 1) / 2
+            R.append([x0 + (g if k else 0), y0 + (g if j else 0), x1 - (g if k < m - 1 else 0), y1 - (0 if j else g)])
+    return R
+
+
+def fenetre_vignette(v: dict, w: float, h: float) -> list[float]:
+    """Partie de la vignette (fractions de l'image) affichée dans une case w × h : zone utile couvrant
+    la case, centrée sur le visage `cadre` dans la limite de la zone (`decalage` de mosaique.ts)."""
+    u = v.get('utile') or [0, 0, 1, 1]
+    L, Hh = v.get('largeur') or 1000, v.get('hauteur') or 800
+    s = max(w / (L * (u[2] - u[0])), h / (Hh * (u[3] - u[1])))
+    IW, IH = L * s, Hh * s
+    k = v.get('cadre')
+    fx, fy = ((k[0] + k[2]) / 2, (k[1] + k[3]) / 2) if k else ((u[0] + u[2]) / 2, (u[1] + u[3]) / 2)
+    tx = min(-u[0] * IW, max(w - u[2] * IW, w / 2 - fx * IW))
+    ty = min(-u[1] * IH, max(h - u[3] * IH, h / 2 - fy * IH))
+    return [-tx / IW, -ty / IH, (w - tx) / IW, (h - ty) / IH]
+
+
+def visage_vignette(slug: str, dossier, v: dict) -> list[float] | None:
+    """Visage principal d'une vignette : `cadre` saisi à la main, sinon le relevé local d'images.py
+    (cache vignettes-visages.json), même s'il n'a pas été recopié dans `cadre`."""
+    if v.get('cadre_manuel') and v.get('cadre'):
+        return v['cadre']
+    import hashlib
+    from images import visage_principal
+    f = c.CACHE / slug / 'vignettes-visages.json'
+    p = dossier / (v.get('fichier') or '')
+    if not f.exists() or not p.is_file():
+        return v.get('cadre')
+    faces = json.loads(f.read_text()).get(hashlib.sha1(p.read_bytes()).hexdigest()[:16])
+    return v.get('cadre') if faces is None else visage_principal(faces)
+
+
+def vignettes_coupees(slug: str, dossier, mo: dict) -> list[str]:
+    """Vignettes dont le visage principal sort (de plus de 10 % de son aire) de la partie affichée."""
+    V, sortie = mo.get('vignettes') or [], []
+    for j, v in enumerate(V):
+        if j == mo.get('principale'):
+            continue
+        k = visage_vignette(slug, dossier, v)
+        if not k:
+            continue
+        a = (k[2] - k[0]) * (k[3] - k[1])
+        for nom, (W, H) in SCENES_MOSAIQUE.items():
+            r = cases_mosaique(len(V), W, H)[j]
+            f = fenetre_vignette(v, r[2] - r[0], r[3] - r[1])
+            i = max(0, min(k[2], f[2]) - max(k[0], f[0])) * max(0, min(k[3], f[3]) - max(k[1], f[1]))
+            if a > 0 and i / a < 0.9:
+                sortie.append(f"vignette {j} ({v.get('fichier')}) : visage {k} hors de la partie affichée "
+                              f"({nom}, {', '.join(f'{z:.2f}' for z in f)}) : `cadre` absent ou faux (images.py --vignettes)")
+                break
+    return sortie
 
 
 def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[list[str], list[str], int, int]:
@@ -1562,6 +1651,7 @@ def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[l
                     erreurs.append(f'{qv} : zone utile absente ou invalide (utile.py)')
                 elif (u[2] - u[0]) * (u[3] - u[1]) < UTILE_AIRE_MIN:
                     erreurs.append(f'{qv} : zone utile absurde ({u})')
+            erreurs += [f'{q}, {m}' for m in vignettes_coupees(d['slug'], dossier, mo)]
             du = (x.get('audio') or {}).get('duree') or 0
             if du and debut_plongee(len(V)) + PLONGEE_MIN + 3 > du:
                 erreurs.append(f'{q} : voix trop courte ({du:.1f} s) pour la grille et la plongée')
@@ -1575,6 +1665,82 @@ def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[l
     elif n_mos > 2:
         avert.append(f'{n_mos} mosaïque(s) (2 visées par période)')
     return erreurs, avert, n_ap, n_mos
+
+
+INDICATIF = c.RACINE / 'src' / 'data' / 'diaporamas' / 'commun' / 'indicatif.json'
+
+
+def controler_generique(d: dict) -> tuple[list[str], list[str], float]:
+    """Générique (spec 12, « Générique d'ouverture et récapitulatif de fin ») : 8 à 12 images de
+    la période (fichiers Commons), une ou deux par acte au plus ; indicatif commun : licence,
+    fichiers présents, durées. Renvoie aussi la durée ajoutée (ouverture + fin)."""
+    from musique import REFUS, licence_admise
+    erreurs, avert = [], []
+    g = d.get('generique')
+    if g is None:
+        return ['pas de champ « generique » (8 à 12 fichiers Commons)'], [], 0.0
+    if not 8 <= len(g) <= 12:
+        erreurs.append(f'generique : {len(g)} images (attendu : 8 à 12)')
+    if len(set(g)) != len(g):
+        erreurs.append('generique : image en double')
+    debuts = [a['debut'] for a in d['actes']]
+    par_acte: Counter = Counter()
+    for f in g:
+        x = next((x for x in d['diapositives'] if x['image'].get('commons') == f), None)
+        if not x:
+            erreurs.append(f'generique : {f} ne figure dans aucune diapositive de la période')
+            continue
+        if not (c.PUBLIC / d['slug'] / x['image']['fichier']).exists():
+            erreurs.append(f"generique : {x['image']['fichier']} absent de public/")
+        par_acte[d['actes'][sum(1 for b in debuts if b <= x['n']) - 1]['id']] += 1
+    for a, k in par_acte.items():
+        if k > 2:
+            erreurs.append(f'generique : {k} images de l’acte {a} (deux au plus)')
+    duree = 0.0
+    if not INDICATIF.exists():
+        erreurs.append(f'indicatif : {INDICATIF.relative_to(c.RACINE)} absent')
+        return erreurs, avert, duree
+    ind = json.loads(INDICATIF.read_text())
+    src = ind.get('source') or {}
+    lic = ind.get('licence', '')
+    if src.get('type') == 'lyria':
+        # Thème original composé avec Lyria (révision du 2026-10-09) : crédit exigé par Google.
+        if 'Lyria (Google DeepMind)' not in ind.get('credit', ''):
+            erreurs.append('indicatif : crédit « Indicatif composé avec Lyria (Google DeepMind) » manquant')
+        if not lic.lower().startswith('création originale générée par ia'):
+            erreurs.append(f'indicatif : licence attendue « Création originale générée par IA pour le site » ({lic})')
+        for k in ('modele', 'genere_le'):
+            if not src.get(k):
+                erreurs.append(f'indicatif : source.{k} vide (provenance)')
+        if not ind.get('consigne'):
+            erreurs.append('indicatif : consigne de génération absente')
+    else:
+        if src.get('type') not in ('commons', 'archive'):
+            erreurs.append(f"indicatif : source {src.get('type')!r} refusée (Lyria, Commons ou Internet Archive)")
+        if src.get('type') == 'archive' and not (str(src.get('publication', ''))[:4].isdigit() and int(str(src['publication'])[:4]) < 1963):
+            erreurs.append('indicatif : enregistrement de l’Internet Archive sans publication avant 1963')
+        if REFUS.search(lic) or not licence_admise(lic):
+            erreurs.append(f'indicatif : licence non admise ({lic})')
+        for k in ('titre', 'compositeur', 'date', 'interprete'):
+            if not ind.get(k):
+                erreurs.append(f'indicatif : champ « {k} » vide (crédits)')
+    # Ouverture comptée jusqu'à son accord final (le carton monte dessus) ; fin entière.
+    for nom, (mini, maxi) in (('ouverture', (12, 17)), ('fin', (12, 16.5))):
+        x = (ind.get('extraits') or {}).get(nom)
+        if not x:
+            erreurs.append(f'indicatif : extrait « {nom} » manquant'); continue
+        if not (c.PUBLIC / x['fichier']).exists():
+            erreurs.append(f"indicatif : {x['fichier']} absent de public/diaporamas/")
+        if not x.get('duree'):
+            erreurs.append(f'indicatif : durée de « {nom} » inconnue')
+            continue
+        if x.get('accord') is not None and not 0 < x['accord'] < x['duree']:
+            erreurs.append(f"indicatif : accord final de « {nom} » hors de l'extrait ({x['accord']} s)")
+        compte = x.get('accord', x['duree']) if nom == 'ouverture' else x['duree']
+        if not mini <= compte <= maxi:
+            avert.append(f"indicatif : {nom} de {compte} s (visé : {mini} à {maxi} s)")
+        duree += compte
+    return erreurs, avert, duree
 
 
 def verifier(slug: str) -> bool:
@@ -1721,14 +1887,18 @@ def verifier(slug: str) -> bool:
     e_am, a_am, n_ap, n_mos = controler_avant_apres_mosaiques(d, img, dossier)
     erreurs += e_am
     avert += a_am
+    e_gen, a_gen, duree_generique = controler_generique(d)
+    erreurs += e_gen
+    avert += a_gen
 
     pauses = [pause_apres(x) for x in diapos]
     longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
-    total = sum(durees) + sum(pauses) + CARTON * len(d['actes']) + duree_chants + duree_segments
+    total = sum(durees) + sum(pauses) + CARTON * len(d['actes']) + duree_chants + duree_segments + duree_generique
     print(f"{d['titre']} ({d['periode']}) : {len(diapos)} diapositives, {len(d['actes'])} actes, "
           f"{len(oeuvres)} œuvres différentes.")
     if durees:
-        print(f'Durée totale (pauses, cartons d’acte et intermèdes compris) : {total / 60:.1f} min ; moyenne {sum(durees) / len(durees):.1f} s par diapositive '
+        print(f'Générique : {len(d.get("generique") or [])} images, {duree_generique:.1f} s (ouverture et récapitulatif).')
+        print(f'Durée totale (pauses, cartons d’acte, intermèdes et générique compris) : {total / 60:.1f} min ; moyenne {sum(durees) / len(durees):.1f} s par diapositive '
               f'(de {min(durees):.1f} à {max(durees):.1f} s ; visé : ~18 s).')
     m = d.get('musique') or {}
     if m:

@@ -1,7 +1,7 @@
 // Surimpressions d'une diapositive : chargement (contenu des éléments d'`incrustations`) et mise à
 // jour à l'instant t (fenêtres [a, b), mots dits, ovales des portraits). Lit `x.lieu`, `x.citation`,
 // `x.portraits`, `x.objet`, `x.manuscrit`, `x.chiffre`, `x.dateRep`. Mêmes sections que incrustations.
-import { PORTRAIT_ELARGIR, PORTRAIT_FONDU } from './constantes';
+import { PORTRAIT_FONDU } from './constantes';
 import { adoucir } from './geometrie';
 import { mouvementReduit } from './outils';
 import type { Diapo } from './types';
@@ -87,11 +87,10 @@ export function installerSurimpressions(lec: Lecteur) {
       elMots.querySelectorAll<HTMLElement>('.m').forEach((m) => lec.motsEls[Number(m.dataset.k)]?.push(m));
     }
     // Portraits : tous les ovales sont posés d'emblée (invisibles), si bien que la rangée garde
-    // sa taille (place réservée pour la caméra, constante) ; seul son fond s'élargit, et chacun
-    // paraît à son nom (majSurimpressions).
+    // sa taille (place réservée pour la caméra, constante) ; chacun paraît à son nom
+    // (majSurimpressions).
     const P = x?.portraits;
     lec.portraitsEls = [];
-    lec.portraitsFins = [];
     lec.portraitsEtat = '';
     if (elPortraits) {
       elPortraits.replaceChildren();
@@ -154,23 +153,17 @@ export function installerSurimpressions(lec: Lecteur) {
     if (elPortraits && P) {
       const vu = actif && t >= P.a && t < P.b;
       if (vu !== elPortraits.classList.contains('est-visible')) { elPortraits.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-portraits', vu); }
-      // Chaque ovale paraît quand la voix attaque le nom (le premier dès l'entrée de la rangée) ;
-      // les précédents restent. Rangée qui grandit (retour de l'utilisateur du 2026-10-08) : le
-      // fond ne couvre que les portraits apparus ; à un nouveau nom, il s'élargit vers la droite
-      // (PORTRAIT_ELARGIR s), puis l'ovale paraît en fondu (PORTRAIT_FONDU s). Tout dérive de
-      // l'instant lissé : pause, reprise et sauts justes. Mouvement réduit : sans animation.
+      // Chaque ovale paraît, avec son étiquette, quand la voix attaque le nom (le premier dès
+      // l'entrée de la rangée) ; les précédents restent. Sans cartouche (révision du 2026-10-09) :
+      // fondu de l'ovale (PORTRAIT_FONDU s), dérivé de l'instant lissé (pause, reprise et sauts
+      // justes). Mouvement réduit : sans animation.
       let n = 0;
       while (n < P.gens.length && P.gens[n].t <= t + 0.06) n++;
       n = Math.max(1, n);
       const k = n - 1, t0 = P.gens[k].t - 0.06, reduit = mouvementReduit.matches;
-      const el = k === 0 || reduit ? 1 : adoucir((t - t0) / PORTRAIT_ELARGIR);
-      const ap = k === 0 || reduit ? 1 : adoucir((t - t0 - PORTRAIT_ELARGIR) / PORTRAIT_FONDU);
-      if (!lec.portraitsFins.length && lec.portraitsEls.length && elPortraits.offsetWidth > 0) taillePortraits();
-      const fins = lec.portraitsFins;
-      const l = fins.length > k ? (k === 0 ? fins[0] : fins[k - 1] + (fins[k] - fins[k - 1]) * el) : NaN;
-      const etat = `${k}:${el.toFixed(3)}:${ap.toFixed(3)}:${l.toFixed(1)}`;
+      const ap = k === 0 || reduit ? 1 : adoucir((t - t0) / PORTRAIT_FONDU);
+      const etat = `${k}:${ap.toFixed(3)}`;
       if (etat !== lec.portraitsEtat) {
-        if (Number.isFinite(l)) elPortraits.style.setProperty('--fond-l', `${l.toFixed(1)}px`);
         lec.portraitsEls.forEach((e, j) => {
           const o = j < k ? 1 : j > k ? 0 : ap;
           e.style.opacity = o.toFixed(3);

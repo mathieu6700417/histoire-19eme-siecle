@@ -37,6 +37,8 @@ import { typographie } from '../utils/typographie.mjs';
 import CarteCitation from './CarteCitation.astro';
 import EpisodeVisuels from './EpisodeVisuels.astro';
 import Surimpressions from './Surimpressions.astro';
+import Generique from './Generique.astro';
+import { dureesGenerique, imagesGenerique, indicatif, urlCommun } from '../utils/diaporamas';
 import { CARTON, PAUSE, MOSAIQUE, VOLET, avantApres, debutPlongee, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
 
 interface Props { diaporama: Diaporama }
@@ -195,7 +197,7 @@ const donnees = {
       principale: x.mosaique.principale,
       vignettes: x.mosaique.vignettes.map((v) => {
         const u = zoneUtileDe(v);
-        return { img: urlMedia(d.slug, v.fichier ?? x.image.fichier), u, l: (v.largeur ?? 1000) * (u[2] - u[0]), h: (v.hauteur ?? 800) * (u[3] - u[1]) };
+        return { img: urlMedia(d.slug, v.fichier ?? x.image.fichier), u, l: (v.largeur ?? 1000) * (u[2] - u[0]), h: (v.hauteur ?? 800) * (u[3] - u[1]), c: v.cadre ?? null };
       }),
     } : null,
     // Segment joué après la voix : intermède chanté, lecture d'époque ou épisode.
@@ -219,6 +221,12 @@ const donnees = {
   // Musique de fond : les pistes de chaque acte (dans l'ordre des actes), enchaînées en fondu.
   fond: d.actes.map((a) => (d.musique?.fond ?? []).filter((p) => p.acte === a.id && p.duree)
     .map((p) => ({ src: urlMedia(d.slug, p.fichier), duree: p.duree!, volume: p.volume ?? 1, info: cartoucheMusique(p) }))),
+  // Générique d'ouverture et récapitulatif de fin (spec 12, révision du 2026-10-09) : indicatif commun.
+  generique: dureesGenerique(d).ouverture && imagesGenerique(d).length ? {
+    images: imagesGenerique(d).length,
+    ouverture: { src: urlCommun(indicatif.extraits.ouverture.fichier), duree: dureesGenerique(d).ouverture },
+    fin: { src: urlCommun(indicatif.extraits.fin.fichier), duree: dureesGenerique(d).fin, accord: dureesGenerique(d).accordFin },
+  } : null,
 };
 const premiere = d.diapositives[0];
 
@@ -263,6 +271,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       {[...lectureApres.values()].map((l) => <CarteCitation lecture={l} portrait={portraitDe(l)} fond={fondDe(l)} mode="lecteur" />)}
       {[...episodeApres.values()].map((e) => <EpisodeVisuels episode={e} slug={d.slug} fonds={fonds} mode="lecteur" />)}
       {frise && <Fragment set:html={friseHtml('frise-t--surimpression')} />}
+      <Generique diaporama={d} />
       <Surimpressions diaporama={d} fonds={fonds} plan={plan} />
       <div class="lecteur__depart">
         <button type="button" class="lecteur__bouton-depart" data-action="lancer">Lancer le diaporama</button>
@@ -651,7 +660,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     .en-carton .lecteur__carton-titre, .en-carton .lecteur__carton-filet, .en-carton .lecteur__carton-dates { animation: none; }
     .en-carton .lecteur__carton-titre :global(.mot > span) { animation: none; }
   }
-  .lecteur.en-carton .lecteur__acte, .lecteur.en-carton .lecteur__soustitre { opacity: 0; }
+  .lecteur.en-carton .lecteur__acte, .lecteur.en-carton .lecteur__soustitre,
+  .lecteur.en-generique .lecteur__acte, .lecteur.en-generique .lecteur__soustitre { opacity: 0; }
   /* Volets de sortie du carton (copies posées par le script) : moitié haute et moitié basse,
      un filet fin au bord de la coupe. */
   .lecteur .lecteur__carton.lecteur__volet.lecteur__volet {

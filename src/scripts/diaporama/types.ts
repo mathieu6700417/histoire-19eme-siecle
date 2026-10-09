@@ -11,8 +11,9 @@ export interface Diapo {
   /** Avant / après (point 3) : image après (zone utile, dimensions), cartouche, instant du volet,
    *  étapes de la caméra sur l'image après (la première : cadre de raccord, à l'instant du volet). */
   ap: { img: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[] } | null;
-  /** Mosaïque (point 5) : cartouche de la grille, rang de l'image principale, vignettes. */
-  mos: { legende: string; principale: number; vignettes: { img: string; u: Rect; l: number; h: number }[] } | null;
+  /** Mosaïque (point 5) : cartouche de la grille, rang de l'image principale, vignettes (`c` : visage
+   *  principal, fractions de l'image, sur lequel la case est centrée ; null : centre de la zone utile). */
+  mos: { legende: string; principale: number; vignettes: { img: string; u: Rect; l: number; h: number; c: Rect | null }[] } | null;
   /** Caméra (usage interne, vues dérivées) : instant et fin de la première tenue (`t0`, `a0`),
    *  et vue de départ imposée (`v0`). */
   t0?: number; a0?: number; v0?: Rect;
@@ -55,6 +56,16 @@ export interface Donnees {
   actes: { titre: string; dates: string; debut: number }[]; diapos: Diapo[];
   /** Musique de fond : les pistes de chaque acte. */
   fond: Piste[][];
+  /** Générique d'ouverture et récapitulatif de fin (generique.ts) ; null sans `generique`. */
+  generique: Generique | null;
+}
+/** Générique : images de la mosaïque (k : rang dans la liste, les copies d'une rangée le
+ *  partagent), extraits de l'indicatif commun. */
+export interface Generique {
+  ouverture: { src: string; duree: number };
+  /** `accord` : instant de l'accord final, où paraît « Fin ». */
+  fin: { src: string; duree: number; accord: number };
+  images: number;
 }
 
 // Éléments de chaque carte et panneau, relevés une fois (à leur premier affichage).

@@ -9,6 +9,8 @@ export function installerProgression(lec: Lecteur) {
   Object.assign(lec, { majTemps, precharger, tempsCourant });
   /** Instant courant dans tout le diaporama (cartons, voix, pauses, intermèdes). */
   function tempsCourant() {
+    const g = lec.tempsGenerique?.();  // ouverture, récapitulatif (generique.ts, installé après)
+    if (g != null) return g;
     if (!lec.lance) return debuts[lec.i];
     if (lec.enCarton) return debuts[lec.i] + Math.min(chronoCarton.t, prelude[lec.i]);
     const base = debuts[lec.i] + prelude[lec.i];

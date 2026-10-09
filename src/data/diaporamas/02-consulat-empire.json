@@ -180,6 +180,13 @@
           "instant": 1.22,
           "gregorien": "23 septembre 1799 – 22 septembre 1800"
         }
+      ],
+      "manuscrits": [
+        {
+          "id": "constitution-an-viii",
+          "quand": "La Constitution de l'an VIII",
+          "instant": 0.3
+        }
       ]
     },
     {
@@ -320,7 +327,7 @@
     },
     {
       "n": 5,
-      "narration": "Reste à gagner la paix. Au printemps 1800, Bonaparte franchit les Alpes par le col du Grand-Saint-Bernard pour surprendre les Autrichiens en Italie. Ce tableau de propagande le montre sur un cheval cabré, le bras tendu vers le sommet. En réalité, il a passé le col à dos de mulet.",
+      "narration": "Reste à gagner la paix. Au printemps 1800, Bonaparte franchit les Alpes par le col du Grand-Saint-Bernard pour surprendre les Autrichiens en Italie. Ce tableau de propagande le montre sur un cheval cabré, le bras tendu vers le sommet. En réalité, il a passé le col à dos de mulet, comme le peindra Delaroche cinquante ans plus tard.",
       "date": "1800-05-20",
       "image": {
         "commons": "File:David - Napoleon crossing the Alps - Malmaison2.jpg",
@@ -343,33 +350,61 @@
         "camera": [
           {
             "cadre": [
-              0.18,
-              0.06,
-              0.88,
-              0.36
+              0.25,
+              0.05,
+              0.95,
+              0.35
             ]
           }
-        ]
+        ],
+        "apres": {
+          "fichier": "005-apres.webp",
+          "commons": "File:Paul Delaroche - Napoleon Crossing the Alps - Google Art Project.jpg",
+          "titre": "Bonaparte franchissant les Alpes",
+          "titre_court": "Bonaparte franchissant les Alpes, par Delaroche",
+          "auteur": "Paul Delaroche",
+          "date": "1850",
+          "technique": "huile sur toile",
+          "conservation": "Liverpool, Walker Art Gallery",
+          "licence": "Domaine public",
+          "cadre": [
+            0.08,
+            0.06,
+            0.82,
+            0.36
+          ],
+          "quand": "En réalité",
+          "camera": [],
+          "largeur": 1243,
+          "hauteur": 1600,
+          "utile": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "utile_manuel": true
+        }
       },
       "audio": {
         "fichier": "005.m4a",
-        "duree": 16.48,
+        "duree": 17.84,
         "phrases": [
           [
             0.0,
-            1.14
+            1.1
           ],
           [
-            1.93,
-            8.39
+            2.08,
+            7.82
           ],
           [
-            9.07,
-            13.49
+            8.6,
+            12.34
           ],
           [
-            14.05,
-            16.48
+            13.18,
+            17.84
           ]
         ]
       },
@@ -380,13 +415,21 @@
           "lon": 7.17041,
           "lat": 45.86905,
           "fond": "voisins",
-          "instant": 5.04
+          "instant": 5.0
         }
       ],
       "personnes_vues": [
         {
           "id": "bonaparte",
           "quand": "Bonaparte"
+        }
+      ],
+      "camera_manuelle": true,
+      "personnes": [
+        {
+          "id": "delaroche",
+          "quand": "Delaroche",
+          "instant": 16.52
         }
       ]
     },
@@ -492,10 +535,10 @@
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.09,
-              0.98,
-              0.39
+              0.17,
+              0.0,
+              1.0,
+              0.26
             ]
           }
         ]
@@ -557,10 +600,10 @@
         "camera": [
           {
             "cadre": [
-              0.23,
-              0.2,
+              0.02,
+              0.435,
               1.0,
-              0.6
+              0.895
             ]
           }
         ]
@@ -813,9 +856,9 @@
           {
             "cadre": [
               0.0,
-              0.16,
-              1.0,
-              0.54
+              0.152,
+              0.9,
+              0.528
             ]
           }
         ]
@@ -1181,9 +1224,9 @@
           {
             "cadre": [
               0.08,
-              0.17,
+              0.18,
               0.92,
-              0.41
+              0.42
             ]
           }
         ]
@@ -1269,28 +1312,10 @@
           {
             "cadre": [
               0.0,
-              0.0,
+              0.12,
               1.0,
-              1.0
+              0.66
             ]
-          },
-          {
-            "cadre": [
-              0.04,
-              0.355,
-              0.58,
-              0.885
-            ],
-            "quand": "les insurgés reprennent la lutte"
-          },
-          {
-            "cadre": [
-              0.55,
-              0.05,
-              0.99,
-              0.58
-            ],
-            "quand": "Vaincus à Vertières"
           }
         ]
       },
@@ -1322,7 +1347,7 @@
     },
     {
       "n": 18,
-      "narration": "En France, la popularité du Premier consul est à son comble. En août 1802, un plébiscite le fait consul à vie, avec le droit de désigner son successeur. Ingres le peint en habit rouge, la main posée sur un décret en faveur de la ville de Liège.",
+      "narration": "En France, la popularité du Premier consul est à son comble. En août 1802, un plébiscite le fait consul à vie, avec le droit de désigner son successeur. Ingres le peint en habit rouge, la main posée sur un décret en faveur de la ville de Liège. Bientôt, son profil orne les pièces d'or.",
       "date": "1802-08-02",
       "image": {
         "commons": "File:Napoléon Bonaparte premier consul - Ingres (hors cadre).jpg",
@@ -1354,49 +1379,60 @@
           {
             "cadre": [
               0.02,
-              0.35,
-              0.48,
-              0.61
+              0.27,
+              0.5,
+              0.52
             ],
-            "quand": "la main posée sur un décret"
+            "quand": "Ingres le peint"
+          },
+          {
+            "cadre": [
+              0.28,
+              0.11,
+              0.72,
+              0.359
+            ],
+            "quand": "son profil orne"
           }
         ]
       },
       "audio": {
         "fichier": "018.m4a",
-        "duree": 13.95,
+        "duree": 17.1,
         "phrases": [
           [
             0.0,
-            2.97
+            3.17
           ],
           [
-            3.59,
-            8.83
+            4.01,
+            9.14
           ],
           [
-            9.61,
-            13.95
+            9.86,
+            14.27
+          ],
+          [
+            14.84,
+            17.1
           ]
         ]
       },
-      "lieux": [
-        {
-          "nom": "Liège",
-          "quand": "la ville de Liège",
-          "lon": 5.57056,
-          "lat": 50.63972,
-          "fond": "voisins",
-          "instant": 13.19
-        }
-      ],
       "personnes": [
         {
           "id": "ingres",
           "quand": "Ingres",
-          "instant": 9.71
+          "instant": 9.93
         }
-      ]
+      ],
+      "objets": [
+        {
+          "id": "vingt-francs-premier-consul",
+          "quand": "son profil orne les pièces d'or",
+          "instant": 15.59
+        }
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 19,
@@ -1727,9 +1763,9 @@
           {
             "cadre": [
               0.249,
-              0.155,
+              0.195,
               0.72,
-              0.3
+              0.34
             ]
           }
         ]
@@ -2094,20 +2130,11 @@
         "camera": [
           {
             "cadre": [
-              0.51,
-              0.257,
-              0.83,
-              0.633
+              0.572,
+              0.092,
+              0.959,
+              0.488
             ]
-          },
-          {
-            "cadre": [
-              0.02,
-              0.376,
-              0.58,
-              0.894
-            ],
-            "quand": "Elle récompense les mérites militaires et civils"
           }
         ]
       },
@@ -2210,20 +2237,11 @@
         "camera": [
           {
             "cadre": [
-              0.1,
-              0.229,
-              1.0,
-              0.771
+              0.0,
+              0.314,
+              0.92,
+              0.856
             ]
-          },
-          {
-            "cadre": [
-              0.48,
-              0.39,
-              0.79,
-              0.83
-            ],
-            "quand": "Bonaparte touchant sans crainte un pestiféré"
           }
         ]
       },
@@ -2329,6 +2347,13 @@
         {
           "id": "josephine",
           "quand": "Joséphine"
+        }
+      ],
+      "objets": [
+        {
+          "id": "couronne-charlemagne",
+          "quand": "a lieu le sacre",
+          "instant": 2.98
         }
       ]
     },
@@ -2444,17 +2469,17 @@
           {
             "cadre": [
               0.184,
-              0.38,
+              0.55,
               0.634,
-              0.668
+              0.838
             ]
           },
           {
             "cadre": [
               0.51,
-              0.47,
+              0.51,
               0.92,
-              0.732
+              0.772
             ],
             "quand": "Les officiers jurent de le défendre"
           }
@@ -2502,86 +2527,112 @@
     },
     {
       "n": 33,
-      "narration": "Ingres, lui, peint l'Empereur comme une idole : de face, immobile, avec le sceptre, la main de justice et le manteau d'hermine semé d'abeilles. Il emprunte aux images des rois du Moyen Âge et de Dieu le Père. Au Salon de 1806, beaucoup jugent ce portrait étrange et gothique.",
+      "narration": "En 1796, Gros peignait un jeune général tout en élan, au pont d'Arcole. Ingres, lui, peint l'Empereur comme une idole : de face, immobile, avec le sceptre, la main de justice et le manteau d'hermine semé d'abeilles. Il emprunte aux rois du Moyen Âge et à Dieu le Père ; au Salon de 1806, on le juge étrange et gothique.",
       "image": {
-        "commons": "File:Ingres, Napoleon on his Imperial throne.jpg",
-        "titre": "Napoléon Ier sur le trône impérial",
-        "titre_court": "Napoléon Ier sur le trône impérial",
-        "auteur": "Jean-Auguste-Dominique Ingres",
-        "date": "1806",
+        "commons": "File:Antoine-Jean Gros - Bonaparte au pont d'Arcole.jpg",
+        "titre": "Bonaparte au pont d'Arcole",
+        "titre_court": "Bonaparte au pont d'Arcole",
+        "auteur": "Antoine-Jean Gros",
+        "date": "1796",
         "technique": "huile sur toile",
-        "conservation": "Paris, musée de l'Armée",
+        "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
         "fichier": "033.webp",
-        "largeur": 974,
-        "hauteur": 1600,
-        "utile": [
-          0.0,
-          0.0,
-          1.0,
-          1.0
-        ],
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.07,
-              0.95,
-              0.35
+              0.0,
+              0.17,
+              1.0,
+              0.47
             ]
-          },
-          {
-            "cadre": [
-              0.15,
-              0.29,
-              0.85,
-              0.55
-            ],
-            "quand": "le manteau d'hermine semé d'abeilles"
-          },
-          {
-            "cadre": [
-              0.05,
-              0.07,
-              0.95,
-              0.35
-            ],
-            "quand": "ce portrait étrange et gothique"
           }
-        ]
+        ],
+        "apres": {
+          "commons": "File:Ingres, Napoleon on his Imperial throne.jpg",
+          "titre": "Napoléon Ier sur le trône impérial",
+          "titre_court": "Napoléon Ier sur le trône impérial",
+          "auteur": "Jean-Auguste-Dominique Ingres",
+          "date": "1806",
+          "technique": "huile sur toile",
+          "conservation": "Paris, musée de l'Armée",
+          "licence": "Domaine public",
+          "largeur": 974,
+          "hauteur": 1600,
+          "utile": [
+            0.0,
+            0.0,
+            1.0,
+            1.0
+          ],
+          "fichier": "033-apres.webp",
+          "cadre": [
+            0.0,
+            0.128,
+            1.0,
+            0.448
+          ],
+          "quand": "Ingres, lui",
+          "camera": [
+            {
+              "cadre": [
+                0.1,
+                0.3,
+                0.9,
+                0.6
+              ],
+              "quand": "le manteau d'hermine semé d'abeilles"
+            }
+          ]
+        },
+        "largeur": 1304,
+        "hauteur": 1600,
+        "utile": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "utile_manuel": true
       },
       "audio": {
         "fichier": "033.m4a",
-        "duree": 18.87,
+        "duree": 21.23,
         "phrases": [
           [
             0.0,
-            9.8
+            4.78
           ],
           [
-            10.54,
-            13.68
+            5.59,
+            13.73
           ],
           [
-            14.5,
-            18.87
+            14.53,
+            21.23
           ]
         ]
       },
       "personnes": [
         {
+          "id": "gros",
+          "quand": "Gros",
+          "instant": 0.82
+        },
+        {
           "id": "ingres",
           "quand": "Ingres",
-          "instant": 0.26
+          "instant": 5.7
         }
       ],
       "objets": [
         {
           "id": "main-de-justice-sacre",
           "quand": "la main de justice",
-          "instant": 6.83
+          "instant": 10.92
         }
-      ]
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 34,
@@ -2608,29 +2659,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.03,
+              0.05,
+              0.97,
+              0.57
             ]
-          },
-          {
-            "cadre": [
-              0.36,
-              0.25,
-              0.7,
-              0.78
-            ],
-            "quand": "Pitt et Napoléon découpent le globe"
-          },
-          {
-            "cadre": [
-              0.55,
-              0.08,
-              0.98,
-              0.6
-            ],
-            "quand": "Napoléon se fait bientôt couronner"
           }
         ]
       },
@@ -2841,7 +2874,7 @@
     },
     {
       "n": 37,
-      "narration": "Le soir du 1er décembre 1805, en Moravie, l'Empereur visite ses bivouacs. Les soldats allument des torches de paille pour l'éclairer : c'est l'anniversaire du sacre. Face à eux, les armées russe et autrichienne, conduites par leurs deux empereurs, comptent l'écraser le lendemain.",
+      "narration": "Le soir du 1er décembre 1805, en Moravie, l'Empereur visite ses bivouacs, coiffé de son petit chapeau. Les soldats allument des torches de paille pour l'éclairer : c'est l'anniversaire du sacre. Face à eux, les armées russe et autrichienne, conduites par leurs deux empereurs, comptent l'écraser le lendemain.",
       "date": "1805-12-01",
       "image": {
         "commons": "File:Austerlitz-lejeune.jpg",
@@ -2864,27 +2897,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
               0.28,
-              1.0,
-              0.764
+              0.58,
+              0.72,
+              0.77
             ]
           },
           {
             "cadre": [
-              0.36,
-              0.54,
-              0.74,
-              0.82
-            ],
-            "quand": "Les soldats allument des torches de paille"
-          },
-          {
-            "cadre": [
-              0.52,
+              0.3,
               0.35,
-              0.96,
-              0.6
+              1.0,
+              0.73
             ],
             "quand": "Face à eux, les armées russe et autrichienne"
           }
@@ -2892,26 +2916,33 @@
       },
       "audio": {
         "fichier": "037.m4a",
-        "duree": 17.12,
+        "duree": 17.93,
         "phrases": [
           [
             0.0,
-            5.13
+            6.51
           ],
           [
-            6.04,
-            10.14
+            7.2,
+            11.55
           ],
           [
-            11.19,
-            17.12
+            12.34,
+            17.93
           ]
         ]
-      }
+      },
+      "objets": [
+        {
+          "id": "chapeau-napoleon",
+          "quand": "coiffé de son petit chapeau",
+          "instant": 5.41
+        }
+      ]
     },
     {
       "n": 38,
-      "narration": "Le 2 décembre, à Austerlitz, Napoléon laisse l'ennemi dégarnir son centre, puis l'enfonce sur le plateau de Pratzen. Le tableau montre le général Rapp lui présentant drapeaux et prisonniers de la garde du tsar. La victoire est complète, et l'Empereur la raconte aussitôt à Joséphine.",
+      "narration": "Le 2 décembre, à Austerlitz, Napoléon laisse l'ennemi dégarnir son centre, puis l'enfonce sur le plateau de Pratzen. Le tableau montre le général Rapp lui présentant drapeaux et prisonniers de la garde du tsar. L'épée qu'il portait ce jour-là, dit-on, est aujourd'hui aux Invalides. Il raconte aussitôt sa victoire à Joséphine.",
       "date": "1805-12-02",
       "image": {
         "commons": "File:La bataille d'Austerlitz. 2 decembre 1805 (François Gérard).jpg",
@@ -2934,47 +2965,33 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
+              0.2,
+              0.17,
               1.0,
-              1.0
+              0.73
             ]
-          },
-          {
-            "cadre": [
-              0.103,
-              0.214,
-              0.517,
-              0.817
-            ],
-            "quand": "le général Rapp lui présentant drapeaux"
-          },
-          {
-            "cadre": [
-              0.57,
-              0.11,
-              0.91,
-              0.71
-            ],
-            "quand": "l'Empereur la raconte aussitôt"
           }
         ]
       },
       "audio": {
         "fichier": "038.m4a",
-        "duree": 16.88,
+        "duree": 18.87,
         "phrases": [
           [
             0.0,
-            6.58
+            6.72
           ],
           [
-            7.8,
-            12.11
+            7.78,
+            12.03
           ],
           [
-            13.0,
-            16.88
+            12.98,
+            15.78
+          ],
+          [
+            16.74,
+            18.87
           ]
         ]
       },
@@ -2985,14 +3002,14 @@
           "lon": 16.8765,
           "lat": 49.15328,
           "fond": "europe",
-          "instant": 1.22
+          "instant": 1.14
         }
       ],
       "personnes": [
         {
           "id": "josephine",
           "quand": "Joséphine",
-          "instant": 16.3
+          "instant": 18.3
         }
       ],
       "personnes_vues": [
@@ -3003,6 +3020,13 @@
         {
           "id": "rapp",
           "quand": "Rapp"
+        }
+      ],
+      "objets": [
+        {
+          "id": "epee-austerlitz",
+          "quand": "L'épée qu'il portait",
+          "instant": 13.09
         }
       ]
     },
@@ -3031,20 +3055,11 @@
         "camera": [
           {
             "cadre": [
-              0.22,
-              0.37,
-              0.56,
-              0.92
+              0.33,
+              0.38,
+              0.58,
+              0.93
             ]
-          },
-          {
-            "cadre": [
-              0.563,
-              0.383,
-              0.807,
-              0.768
-            ],
-            "quand": "En 1806, Napoléon fait de ses frères"
           }
         ]
       },
@@ -3128,10 +3143,10 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.05,
+              0.1,
+              0.056,
               1.0,
-              0.62
+              0.614
             ]
           },
           {
@@ -3221,19 +3236,10 @@
           {
             "cadre": [
               0.0,
-              0.204,
+              0.194,
               0.96,
-              0.796
+              0.786
             ]
-          },
-          {
-            "cadre": [
-              0.45,
-              0.44,
-              0.85,
-              0.94
-            ],
-            "quand": "l'Empereur décrète le 21 novembre"
           }
         ]
       },
@@ -3349,29 +3355,11 @@
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.122,
-              0.95,
-              0.718
+              0.0,
+              0.101,
+              0.8,
+              0.589
             ]
-          },
-          {
-            "cadre": [
-              0.28,
-              0.598,
-              0.82,
-              0.931
-            ],
-            "quand": "les pertes sont terribles"
-          },
-          {
-            "cadre": [
-              0.16,
-              0.25,
-              0.5,
-              0.7
-            ],
-            "quand": "le regard compatissant"
           }
         ]
       },
@@ -3662,66 +3650,99 @@
     },
     {
       "n": 47,
-      "narration": "Sur la place Vendôme s'élève la colonne de la Grande Armée, inaugurée en 1810. Son revêtement de bronze vient, dit-on, des canons pris à Austerlitz. Une frise en spirale y déroule la campagne de 1805, comme sur la colonne de Trajan à Rome.",
+      "narration": "Sur la place Vendôme, la statue de Louis XIV a été abattue en août 1792. À sa place s'élève la colonne de la Grande Armée, inaugurée en 1810. Son revêtement de bronze vient, dit-on, des canons pris à Austerlitz. Une frise en spirale y déroule la campagne de 1805, comme sur la colonne de Trajan.",
       "image": {
-        "commons": "File:Place Vendôme, Colonne de la Grande Armée.png",
-        "titre": "Place Vendôme, colonne de la Grande Armée",
-        "titre_court": "La colonne de la Grande Armée",
-        "auteur": "Jean Duplessi-Bertaux",
-        "date": "vers 1810",
+        "commons": "File:Destruction par les Révolutionnaires de la statue équestre de Louis XIV sur la place Vendôme le 10août 1972.jpg",
+        "titre": "Destruction de la statue équestre de Louis XIV sur la place Vendôme, août 1792",
+        "titre_court": "La statue de Louis XIV abattue, août 1792",
+        "auteur": "graveur anonyme",
+        "date": "1792",
         "technique": "eau-forte",
         "conservation": "Paris, musée Carnavalet - Histoire de Paris",
         "licence": "Domaine public",
-        "recadrage": [
-          0.165,
-          0.125,
-          0.835,
-          0.81
-        ],
         "fichier": "047.webp",
-        "largeur": 1600,
-        "hauteur": 1266,
-        "utile": [
-          0.021,
-          0.019,
-          0.986,
-          0.974
-        ],
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.48,
+              0.15,
+              0.15,
               0.95,
-              0.96
+              0.75
             ]
-          },
-          {
-            "cadre": [
-              0.05,
-              0.02,
-              0.95,
-              0.48
-            ],
-            "quand": "Une frise en spirale"
           }
-        ]
+        ],
+        "apres": {
+          "commons": "File:Place Vendôme, Colonne de la Grande Armée.png",
+          "titre": "Place Vendôme, colonne de la Grande Armée",
+          "titre_court": "La colonne de la Grande Armée",
+          "auteur": "Jean Duplessi-Bertaux",
+          "date": "vers 1810",
+          "technique": "eau-forte",
+          "conservation": "Paris, musée Carnavalet - Histoire de Paris",
+          "licence": "Domaine public",
+          "recadrage": [
+            0.165,
+            0.125,
+            0.835,
+            0.81
+          ],
+          "largeur": 1600,
+          "hauteur": 1266,
+          "utile": [
+            0.021,
+            0.019,
+            0.986,
+            0.974
+          ],
+          "fichier": "047-apres.webp",
+          "cadre": [
+            0.07,
+            0.16,
+            0.87,
+            0.74
+          ],
+          "quand": "À sa place s'élève",
+          "camera": [
+            {
+              "cadre": [
+                0.05,
+                0.02,
+                0.95,
+                0.48
+              ],
+              "quand": "Une frise en spirale"
+            }
+          ]
+        },
+        "largeur": 1600,
+        "hauteur": 1223,
+        "utile": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "utile_manuel": true
       },
       "audio": {
         "fichier": "047.m4a",
-        "duree": 16.45,
+        "duree": 19.69,
         "phrases": [
           [
             0.0,
-            5.1
+            5.13
           ],
           [
-            5.73,
-            9.83
+            5.66,
+            10.01
           ],
           [
-            10.64,
-            16.45
+            10.56,
+            14.22
+          ],
+          [
+            14.97,
+            19.69
           ]
         ]
       },
@@ -3732,9 +3753,10 @@
           "lon": 2.32941,
           "lat": 48.86747,
           "fond": "paris",
-          "instant": 0.18
+          "instant": 0.2
         }
-      ]
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 48,
@@ -3816,6 +3838,13 @@
           "lat": 52.36667,
           "fond": "voisins",
           "instant": 17.33
+        }
+      ],
+      "objets": [
+        {
+          "id": "telegraphe-chappe-cnam",
+          "quand": "Le télégraphe des frères Chappe",
+          "instant": 4.26
         }
       ]
     },
@@ -3932,20 +3961,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.15,
-              1.0,
-              1.0
+              0.016,
+              0.313,
+              0.984,
+              0.827
             ]
-          },
-          {
-            "cadre": [
-              0.16,
-              0.33,
-              0.46,
-              0.82
-            ],
-            "quand": "un homme en chemise blanche lève les bras"
           }
         ]
       },
@@ -4228,10 +4248,10 @@
         "camera": [
           {
             "cadre": [
-              0.02,
-              0.23,
+              0.12,
+              0.146,
               0.98,
-              0.63
+              0.684
             ]
           }
         ]
@@ -4436,9 +4456,9 @@
           {
             "cadre": [
               0.0,
-              0.22,
-              1.0,
-              0.77
+              0.223,
+              0.94,
+              0.767
             ]
           },
           {
@@ -4586,10 +4606,10 @@
         "camera": [
           {
             "cadre": [
-              0.18,
-              0.22,
-              0.58,
-              0.752
+              0.28,
+              0.14,
+              0.68,
+              0.66
             ]
           }
         ]
@@ -5040,20 +5060,29 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.25,
+              0.05,
+              0.75,
+              0.28
             ]
           },
           {
             "cadre": [
-              0.58,
-              0.4,
+              0.55,
+              0.38,
               0.98,
-              0.635
+              0.61
             ],
-            "quand": "Le Code est posé sur la table"
+            "quand": "David le peint debout"
+          },
+          {
+            "cadre": [
+              0.25,
+              0.05,
+              0.75,
+              0.28
+            ],
+            "quand": "le souverain veille"
           }
         ]
       },
@@ -5118,84 +5147,119 @@
           "source": "Sénatus-consulte du 13 décembre 1810 (réunion des villes hanséatiques) : l'Empire compte 130 départements en 1811 (Jean Tulard, Dictionnaire Napoléon).",
           "instant": 2.32
         }
-      ]
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 66,
-      "narration": "Paris, capitale de l'Empire, se transforme. On perce la rue de Rivoli, on numérote les maisons, on ouvre le cimetière du Père-Lachaise. Le canal de l'Ourcq amène l'eau à des fontaines nouvelles, comme celle du Châtelet, dont la colonne célèbre les victoires de Bonaparte.",
+      "narration": "Paris, capitale de l'Empire, se transforme. On perce la rue de Rivoli, on numérote les maisons, on ouvre le cimetière du Père-Lachaise. Au Châtelet, la vieille forteresse est rasée à partir de 1802. À sa place, une fontaine nouvelle, alimentée par le canal de l'Ourcq, dresse une colonne qui célèbre les victoires de Bonaparte.",
       "image": {
-        "commons": "File:La place du Châtelet et la colonne du Palmier. D.6024.jpg",
-        "titre": "La place du Châtelet et la colonne du Palmier",
-        "titre_court": "La fontaine du Palmier, place du Châtelet",
-        "auteur": "Auguste Hibon",
-        "date": "vers 1810-1820",
-        "technique": "dessin",
-        "conservation": "Paris, musée Carnavalet - Histoire de Paris",
+        "commons": "File:Démolition du Grand Châtelet - dessin - btv1b103027213 (1 of 2).jpg",
+        "titre": "Démolition du Grand Châtelet",
+        "titre_court": "La démolition du Grand Châtelet, 1802",
+        "auteur": "dessinateur anonyme",
+        "date": "1802",
+        "technique": "dessin aquarellé",
+        "conservation": "Paris, Bibliothèque nationale de France, Estampes",
         "licence": "Domaine public",
         "fichier": "066.webp",
-        "largeur": 1326,
-        "hauteur": 1600,
-        "utile": [
-          0.039,
-          0.035,
-          0.958,
-          0.959
-        ],
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.05,
+              0.08,
+              0.95,
+              0.55
             ]
-          },
-          {
-            "cadre": [
-              0.2,
-              0.52,
-              0.68,
-              0.9
-            ],
-            "quand": "fontaines nouvelles, comme celle du Châtelet"
           }
-        ]
+        ],
+        "apres": {
+          "commons": "File:La place du Châtelet et la colonne du Palmier. D.6024.jpg",
+          "titre": "La place du Châtelet et la colonne du Palmier",
+          "titre_court": "La fontaine du Palmier, place du Châtelet",
+          "auteur": "Auguste Hibon",
+          "date": "vers 1810-1820",
+          "technique": "dessin",
+          "conservation": "Paris, musée Carnavalet - Histoire de Paris",
+          "licence": "Domaine public",
+          "largeur": 1326,
+          "hauteur": 1600,
+          "utile": [
+            0.039,
+            0.035,
+            0.958,
+            0.959
+          ],
+          "fichier": "066-apres.webp",
+          "cadre": [
+            0.0,
+            0.05,
+            1.0,
+            0.43
+          ],
+          "quand": "À sa place, une fontaine",
+          "camera": [
+            {
+              "cadre": [
+                0.2,
+                0.45,
+                0.7,
+                0.9
+              ],
+              "quand": "les victoires de Bonaparte"
+            }
+          ]
+        },
+        "largeur": 1600,
+        "hauteur": 1278,
+        "utile": [
+          0.0,
+          0.0,
+          1.0,
+          0.92
+        ],
+        "utile_manuel": true
       },
       "audio": {
         "fichier": "066.m4a",
-        "duree": 14.63,
+        "duree": 21.04,
         "phrases": [
           [
             0.0,
-            2.43
+            2.87
           ],
           [
-            3.04,
-            7.61
+            3.74,
+            9.07
           ],
           [
-            8.24,
-            14.63
+            9.91,
+            13.32
+          ],
+          [
+            14.11,
+            21.04
           ]
         ]
       },
       "lieux": [
         {
           "nom": "Fontaine du Palmier",
-          "quand": "celle du Châtelet",
+          "quand": "Au Châtelet",
           "lon": 2.34727,
           "lat": 48.8575,
           "fond": "paris",
-          "instant": 11.41
+          "instant": 9.95
         }
       ],
       "personnes": [
         {
           "id": "bonaparte",
           "quand": "Bonaparte",
-          "instant": 14.05
+          "instant": 20.46
         }
-      ]
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 67,
@@ -5649,7 +5713,7 @@
           {
             "cadre": [
               0.0,
-              0.38,
+              0.37,
               0.45,
               0.56
             ],
@@ -5703,11 +5767,20 @@
           "id": "jacquard",
           "quand": "Joseph-Marie Jacquard"
         }
-      ]
+      ],
+      "objets": [
+        {
+          "id": "metier-jacquard",
+          "quand": "un métier à tisser",
+          "cote": "gauche",
+          "instant": 5.77
+        }
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 74,
-      "narration": "Autre invention appelée à durer : la conserve. Nicolas Appert, confiseur, enferme les aliments dans des bocaux bouchés, puis les chauffe au bain-marie ; ils se gardent des mois. En 1810, l'État lui accorde un prix de douze mille francs, car la marine et l'armée y ont intérêt.",
+      "narration": "Autre invention appelée à durer : la conserve. Nicolas Appert, confiseur, enferme les aliments dans des bouteilles bouchées, puis les chauffe au bain-marie ; ils se gardent des mois. En 1810, l'État lui accorde un prix de douze mille francs, car la marine et l'armée y ont intérêt.",
       "image": {
         "commons": "File:Nicolas Appert anon.png",
         "titre": "Nicolas Appert",
@@ -5735,29 +5808,29 @@
         "camera": [
           {
             "cadre": [
-              0.06,
-              0.069,
-              0.94,
-              0.449
+              0.05,
+              0.19,
+              0.95,
+              0.57
             ]
           }
         ]
       },
       "audio": {
         "fichier": "074.m4a",
-        "duree": 16.78,
+        "duree": 17.89,
         "phrases": [
           [
             0.0,
-            2.51
+            2.69
           ],
           [
-            3.28,
-            10.54
+            3.24,
+            11.36
           ],
           [
-            11.19,
-            16.78
+            12.07,
+            17.89
           ]
         ]
       },
@@ -5773,7 +5846,14 @@
           "valeur": 12000,
           "unite": "francs de prix pour Nicolas Appert",
           "source": "Nicolas Appert, L'Art de conserver… (1810), avant-propos : prix de 12 000 francs accordé par le ministre de l'Intérieur (janvier 1810).",
-          "instant": 13.89
+          "instant": 14.78
+        }
+      ],
+      "objets": [
+        {
+          "id": "bouteille-appert",
+          "quand": "dans des bouteilles bouchées",
+          "instant": 6.41
         }
       ]
     },
@@ -5863,9 +5943,9 @@
           {
             "cadre": [
               0.19,
-              0.157,
-              0.79,
-              0.348
+              0.16,
+              0.83,
+              0.351
             ]
           }
         ]
@@ -6768,19 +6848,10 @@
           {
             "cadre": [
               0.33,
-              0.27,
-              0.67,
+              0.29,
+              0.69,
               0.77
             ]
-          },
-          {
-            "cadre": [
-              0.03,
-              0.62,
-              0.73,
-              0.96
-            ],
-            "quand": "Ceux qui tombent dans la neige"
           }
         ]
       },
@@ -7008,28 +7079,28 @@
           {
             "cadre": [
               0.0,
-              0.0,
+              0.35,
               1.0,
-              1.0
+              0.95
             ]
           },
           {
             "cadre": [
               0.0,
-              0.42,
-              0.48,
-              0.78
+              0.45,
+              0.45,
+              0.85
             ],
-            "quand": "construisent deux ponts dans l'eau glacée"
+            "quand": "Les pontonniers du général Éblé"
           },
           {
             "cadre": [
-              0.42,
-              0.49,
-              0.99,
+              0.25,
+              0.45,
+              0.98,
               0.95
             ],
-            "quand": "des milliers de traînards restent sur l'autre rive"
+            "quand": "des milliers de traînards restent"
           }
         ]
       },
@@ -7480,20 +7551,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
+              0.12,
+              0.358,
               1.0,
-              1.0
+              0.882
             ]
-          },
-          {
-            "cadre": [
-              0.52,
-              0.58,
-              0.98,
-              0.94
-            ],
-            "quand": "au milieu des blessés et des habitants réfugiés"
           }
         ]
       },
@@ -7756,7 +7818,135 @@
           "quand": "Napoléon"
         }
       ],
-      "camera_manuelle": true
+      "camera_manuelle": true,
+      "mosaique": {
+        "legende": "Napoléon de 1802 à 1814 : cinq portraits",
+        "principale": 4,
+        "vignettes": [
+          {
+            "commons": "File:Gros - First Consul Bonaparte.png",
+            "titre": "Bonaparte, Premier consul",
+            "titre_court": "Bonaparte, Premier consul",
+            "auteur": "Antoine-Jean Gros",
+            "date": "1802",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée national de la Légion d'honneur",
+            "licence": "Domaine public",
+            "fichier": "100-m0.webp",
+            "largeur": 654,
+            "hauteur": 1000,
+            "utile": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "utile_manuel": true,
+            "cadre": [
+              0.48,
+              0.064,
+              0.61,
+              0.183
+            ]
+          },
+          {
+            "commons": "File:Francois Gerard - Napoleon Ier en costume du Sacre.jpg",
+            "titre": "Napoléon Ier en costume du sacre",
+            "titre_court": "Napoléon Ier en costume du sacre",
+            "auteur": "François Gérard",
+            "date": "1805",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
+            "licence": "Domaine public",
+            "fichier": "100-m1.webp",
+            "largeur": 637,
+            "hauteur": 1000,
+            "utile": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "utile_manuel": true,
+            "cadre": [
+              0.482,
+              0.119,
+              0.592,
+              0.225
+            ]
+          },
+          {
+            "commons": "File:Robert Lefèvre - Portrait de Napoléon Ier (1769-1821), en uniforme de colonel des chasseurs de la Garde - P1068 - Musée Carnavalet.jpg",
+            "titre": "Napoléon Ier en uniforme de colonel des chasseurs de la Garde",
+            "titre_court": "Napoléon Ier en colonel des chasseurs",
+            "auteur": "Robert Lefèvre",
+            "date": "1809",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée Carnavalet - Histoire de Paris",
+            "licence": "Domaine public",
+            "fichier": "100-m2.webp",
+            "largeur": 739,
+            "hauteur": 1000,
+            "utile": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "utile_manuel": true,
+            "cadre": [
+              0.485,
+              0.213,
+              0.585,
+              0.31
+            ]
+          },
+          {
+            "commons": "File:Jacques-Louis David - The Emperor Napoleon in His Study at the Tuileries - Google Art Project.jpg",
+            "titre": "L'Empereur Napoléon dans son cabinet de travail aux Tuileries",
+            "titre_court": "Napoléon dans son cabinet de travail",
+            "auteur": "Jacques-Louis David",
+            "date": "1812",
+            "technique": "huile sur toile",
+            "conservation": "Washington, National Gallery of Art",
+            "licence": "Domaine public",
+            "fichier": "100-m3.webp",
+            "largeur": 600,
+            "hauteur": 1000,
+            "utile": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "utile_manuel": true,
+            "cadre": [
+              0.405,
+              0.094,
+              0.579,
+              0.216
+            ]
+          },
+          {
+            "commons": "File:Napoleon at Fontainebleau, 31 March 1814 (by Hippolyte Paul Delaroche).jpg",
+            "fichier": "100.webp",
+            "titre": "Napoléon à Fontainebleau, 31 mars 1814",
+            "auteur": "Paul Delaroche",
+            "date": "1846",
+            "technique": "huile sur toile",
+            "conservation": "Londres, Royal Collection",
+            "licence": "Domaine public",
+            "largeur": 1202,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ]
+          }
+        ]
+      }
     },
     {
       "n": 101,
@@ -7845,10 +8035,10 @@
         "camera": [
           {
             "cadre": [
-              0.27,
-              0.227,
-              0.74,
-              0.753
+              0.435,
+              0.229,
+              0.694,
+              0.74
             ]
           }
         ]
@@ -7958,7 +8148,7 @@
     },
     {
       "n": 104,
-      "narration": "Le 1er mars 1815, Napoléon débarque à Golfe-Juan avec un millier d'hommes. Le 7 mars, près de Grenoble, un bataillon envoyé contre lui barre la route. Il s'avance seul et offre sa poitrine, dit-on, à qui voudrait tuer son empereur. Les soldats se rallient à lui.",
+      "narration": "Le 1er mars 1815, Napoléon débarque à Golfe-Juan avec un millier d'hommes. Sa proclamation à l'armée promet que l'aigle volera « de clocher en clocher ». Le 7 mars, près de Grenoble, un bataillon envoyé contre lui barre la route. Il s'avance seul et offre sa poitrine, dit-on, à qui voudrait tuer son empereur. Les soldats se rallient à lui.",
       "date": "1815-03-01",
       "date_fin": "1815-03-07",
       "image": {
@@ -7988,42 +8178,37 @@
         "camera": [
           {
             "cadre": [
-              0.011,
-              0.261,
-              0.941,
-              0.769
+              0.0,
+              0.306,
+              0.821,
+              0.774
             ]
-          },
-          {
-            "cadre": [
-              0.554,
-              0.35,
-              0.806,
-              0.77
-            ],
-            "quand": "Il s'avance seul et offre sa poitrine"
           }
         ]
       },
       "audio": {
         "fichier": "104.m4a",
-        "duree": 17.7,
+        "duree": 22.03,
         "phrases": [
           [
             0.0,
             4.87
           ],
           [
-            5.7,
-            9.64
+            5.71,
+            9.7
           ],
           [
-            10.34,
-            15.29
+            10.45,
+            14.66
           ],
           [
-            16.04,
-            17.7
+            15.54,
+            19.88
+          ],
+          [
+            20.78,
+            22.03
           ]
         ]
       },
@@ -8034,7 +8219,7 @@
           "lon": 7.07417,
           "lat": 43.56722,
           "fond": "france",
-          "instant": 3.2
+          "instant": 3.02
         },
         {
           "nom": "Grenoble",
@@ -8042,13 +8227,20 @@
           "lon": 5.72639,
           "lat": 45.18694,
           "fond": "france",
-          "instant": 6.54
+          "instant": 11.43
         }
       ],
       "personnes_vues": [
         {
           "id": "napoleon",
           "quand": "Napoléon"
+        }
+      ],
+      "manuscrits": [
+        {
+          "id": "proclamation-golfe-juan",
+          "quand": "Sa proclamation à l'armée",
+          "instant": 5.78
         }
       ]
     },
@@ -8078,19 +8270,10 @@
           {
             "cadre": [
               0.077,
-              0.283,
+              0.279,
               0.833,
-              0.726
+              0.721
             ]
-          },
-          {
-            "cadre": [
-              0.368,
-              0.321,
-              0.612,
-              0.689
-            ],
-            "quand": "l'Empereur à cheval"
           }
         ]
       },
@@ -8430,10 +8613,10 @@
         "camera": [
           {
             "cadre": [
+              0.12,
               0.18,
-              0.255,
-              0.6,
-              0.765
+              0.68,
+              0.66
             ]
           }
         ]
@@ -8839,7 +9022,14 @@
             17.18
           ]
         ]
-      }
+      },
+      "objets": [
+        {
+          "id": "masque-mortuaire-napoleon",
+          "quand": "Il y meurt",
+          "instant": 0.08
+        }
+      ]
     }
   ],
   "lectures": [
@@ -10990,7 +11180,7 @@
       "apres": 3,
       "titre": "Les masses de granit",
       "date": "1800",
-      "narration": "Que bâtit le Premier consul ? En quelques années, il dote la France d'institutions qu'il appelle des masses de granit. En février 1800, un préfet nommé par le gouvernement est placé à la tête de chaque département. La même année naît la Banque de France. En 1802 viennent les lycées, qui forment officiers et fonctionnaires, et la Légion d'honneur. En 1803, le franc germinal, fait de cinq grammes d'argent, devient une monnaie stable pour plus d'un siècle. Enfin, le Code civil unifie le droit en 1804. Ce sont les piliers d'un État centralisé, où tout remonte vers Paris et vers un seul homme. Le préfet, surnommé « l'empereur au petit pied », applique partout les ordres du gouvernement. Les maires sont nommés, et non plus élus. Beaucoup de ces institutions existent encore aujourd'hui.",
+      "narration": "Que bâtit le Premier consul ? En quelques années, il dote la France d'institutions qu'il appelle des masses de granit. En janvier 1800 naît la Banque de France. Le mois suivant, un préfet nommé par le gouvernement est placé à la tête de chaque département. En 1802 viennent les lycées, qui forment officiers et fonctionnaires, puis la Légion d'honneur. En 1803, le franc germinal, fait de cinq grammes d'argent, devient une monnaie stable pour plus d'un siècle. Enfin, le Code civil unifie le droit en 1804. Ce sont les piliers d'un État centralisé, où tout remonte vers Paris et vers un seul homme. Le préfet, surnommé « l'empereur au petit pied », applique partout les ordres du gouvernement. À Paris, le préfet de la Seine, Frochot, signe ainsi ses arrêtés dès 1800. Les maires sont nommés, et non plus élus. Beaucoup de ces institutions existent encore aujourd'hui.",
       "visuels": [
         {
           "type": "carton",
@@ -10998,96 +11188,592 @@
           "sous": "Les institutions du Consulat, 1800-1804"
         },
         {
-          "type": "chiffres",
-          "quand": "un préfet nommé",
+          "type": "chronologie",
+          "quand": "naît la Banque de France",
           "titre": "Les institutions du Consulat",
-          "items": [
+          "debut": "1800",
+          "fin": "1804",
+          "evenements": [
             {
-              "valeur": "1800",
-              "unite": "les préfets",
-              "libelle": "un par département",
+              "date": "1800-01-18",
+              "libelle": "La Banque de France",
+              "precision": "banque d’émission",
+              "quand": "naît la Banque de France"
+            },
+            {
+              "date": "1800-02-17",
+              "libelle": "Les préfets",
+              "precision": "un par département",
               "quand": "un préfet nommé"
             },
             {
-              "valeur": "1800",
-              "unite": "la Banque de France",
-              "libelle": "banque d’émission",
-              "quand": "la Banque de France"
-            },
-            {
-              "valeur": "1802",
-              "unite": "lycées et Légion d’honneur",
-              "libelle": "former et récompenser",
+              "date": "1802-05-01",
+              "libelle": "Les lycées",
+              "precision": "former officiers et fonctionnaires",
               "quand": "les lycées"
             },
             {
-              "valeur": "5",
-              "unite": "grammes d’argent",
-              "libelle": "le franc germinal, 1803",
-              "quand": "cinq grammes d"
+              "date": "1802-05-19",
+              "libelle": "La Légion d’honneur",
+              "precision": "récompenser le mérite",
+              "quand": "la Légion d'honneur"
             },
             {
-              "valeur": "1804",
-              "unite": "le Code civil",
-              "libelle": "un droit pour tous",
-              "quand": "le Code civil"
+              "date": "1803-04-07",
+              "libelle": "Le franc germinal",
+              "precision": "5 grammes d’argent",
+              "quand": "le franc germinal"
+            },
+            {
+              "date": "1804-03-21",
+              "libelle": "Le Code civil",
+              "precision": "un même droit pour tous",
+              "quand": "le Code civil unifie"
             }
           ],
-          "source": "Loi du 28 pluviôse an VIII (17 février 1800) ; loi du 17 germinal an XI (7 avril 1803) ; Jean Tulard (dir.), Dictionnaire Napoléon, 1987"
+          "source": "Loi du 28 pluviôse an VIII (17 février 1800) ; lois des 11 et 29 floréal an X (1er et 19 mai 1802) ; loi du 17 germinal an XI (7 avril 1803) ; loi du 30 ventôse an XII (21 mars 1804) ; Jean Tulard (dir.), Dictionnaire Napoléon, Fayard, 1987"
+        },
+        {
+          "type": "document",
+          "quand": "Le préfet, surnommé",
+          "image": {
+            "commons": "File:Arrêté du prefet de la Seine daté du 17 floréal an VIII (07 mai 1800), A.6031.jpg",
+            "titre": "Arrêté du préfet de la Seine, signé Frochot",
+            "auteur": "préfecture de la Seine",
+            "date": "an VIII (1800)",
+            "conservation": "Paris, musée Carnavalet - Histoire de Paris",
+            "licence": "Domaine public",
+            "fichier": "episodes/masses-de-granit.webp",
+            "largeur": 1590,
+            "hauteur": 2400
+          },
+          "lignes": [
+            {
+              "cadre": [
+                0.15,
+                0.165,
+                0.84,
+                0.21
+              ],
+              "texte": "Département de la Seine",
+              "quand": "le préfet de la Seine"
+            },
+            {
+              "cadre": [
+                0.25,
+                0.78,
+                0.56,
+                0.82
+              ],
+              "texte": "Signé Frochot",
+              "quand": "Frochot"
+            }
+          ],
+          "source": "Musée Carnavalet, A.6031"
         }
       ],
       "sources": [
         "Loi du 28 pluviôse an VIII sur l’administration (17 février 1800)",
         "Loi du 17 germinal an XI sur les monnaies (7 avril 1803)",
+        "Arrêté du préfet de la Seine, an VIII, musée Carnavalet (A.6031)",
         "Jean Tulard (dir.), Dictionnaire Napoléon, Fayard, 1987"
       ],
       "audio": {
         "fichier": "episodes/masses-de-granit.m4a",
-        "duree": 48.42,
+        "duree": 55.04,
         "phrases": [
           [
             0.0,
-            1.32
+            1.38
           ],
           [
-            2.2,
-            6.33
+            2.33,
+            7.12
           ],
           [
-            7.6,
-            12.27
+            8.1,
+            10.83
           ],
           [
-            13.12,
-            15.14
+            11.5,
+            15.75
           ],
           [
-            16.18,
-            20.99
+            16.82,
+            22.25
           ],
           [
-            21.71,
-            27.87
+            23.45,
+            29.19
           ],
           [
-            28.87,
-            31.98
+            29.84,
+            33.24
           ],
           [
-            32.59,
-            36.88
+            33.92,
+            38.46
           ],
           [
-            38.09,
-            42.72
+            39.24,
+            44.06
           ],
           [
-            43.46,
-            45.37
+            45.08,
+            49.31
           ],
           [
-            46.03,
-            48.42
+            50.1,
+            51.72
+          ],
+          [
+            52.54,
+            55.04
+          ]
+        ]
+      }
+    },
+    {
+      "id": "boulogne-austerlitz",
+      "apres": 35,
+      "titre": "De Boulogne à Austerlitz",
+      "date": "1805",
+      "narration": "Comment l'armée de Boulogne arrive-t-elle si vite au cœur de l'Europe ? À la fin d'août 1805, sept corps d'armée quittent les côtes de la Manche. Près de deux cent mille hommes marchent vers le Rhin, chaque corps par sa propre route. Fin septembre, ils franchissent le fleuve entre Strasbourg et Mayence. Pour aller plus vite, ils vivent sur le pays, sans attendre les convois. Le général autrichien Mack les attend à Ulm, face à la Forêt-Noire. Mais la Grande Armée passe le Danube plus à l'est, puis se rabat derrière lui. Pris au piège, Mack capitule le 20 octobre. La route de Vienne est ouverte : les Français y entrent le 13 novembre, sans combat. L'Empereur pousse alors vers le nord, en Moravie, au-devant des Russes. Le 2 décembre, près d'Austerlitz, il livre bataille sur un terrain qu'il a choisi.",
+      "visuels": [
+        {
+          "type": "carton",
+          "texte": "De Boulogne à Austerlitz",
+          "sous": "La campagne de 1805"
+        },
+        {
+          "type": "chiffres",
+          "quand": "sept corps d'armée",
+          "titre": "La Grande Armée en 1805",
+          "items": [
+            {
+              "valeur": "7",
+              "unite": "corps d'armée",
+              "libelle": "chacun par sa route",
+              "quand": "sept corps d'armée"
+            },
+            {
+              "valeur": "près de 200 000",
+              "unite": "hommes",
+              "libelle": "de la Manche au Danube",
+              "quand": "Près de deux cent mille"
+            }
+          ],
+          "source": "Jean Tulard (dir.), Dictionnaire Napoléon, Fayard, 1987 ; Thierry Lentz, Nouvelle histoire du Premier Empire, t. I, Fayard, 2002"
+        },
+        {
+          "type": "carte",
+          "fond": "europe",
+          "quand": "marchent vers le Rhin",
+          "titre": "La campagne de 1805",
+          "cadre": [
+            -1.5,
+            46.4,
+            18.5,
+            52.8
+          ],
+          "elements": [
+            {
+              "type": "ville",
+              "lieu": [
+                1.61,
+                50.73
+              ],
+              "libelle": "Boulogne",
+              "position": "haut"
+            },
+            {
+              "type": "fleche",
+              "de": [
+                1.9,
+                50.6
+              ],
+              "a": [
+                7.6,
+                48.6
+              ],
+              "libelle": "",
+              "position": "bas",
+              "quand": "marchent vers le Rhin"
+            },
+            {
+              "type": "fleche",
+              "de": [
+                2.2,
+                50.9
+              ],
+              "a": [
+                8.35,
+                49.45
+              ],
+              "libelle": "",
+              "position": "haut",
+              "quand": "chaque corps par sa propre route"
+            },
+            {
+              "type": "fleche",
+              "de": [
+                5.12,
+                52.09
+              ],
+              "a": [
+                8.2,
+                50.1
+              ],
+              "libelle": "",
+              "position": "haut",
+              "quand": "chaque corps par sa propre route"
+            },
+            {
+              "type": "fleche",
+              "de": [
+                9.73,
+                52.37
+              ],
+              "a": [
+                9.93,
+                49.85
+              ],
+              "libelle": "",
+              "position": "droite",
+              "quand": "chaque corps par sa propre route"
+            },
+            {
+              "type": "trait",
+              "points": [
+                [
+                  7.59,
+                  47.56
+                ],
+                [
+                  7.6,
+                  48.1
+                ],
+                [
+                  7.75,
+                  48.58
+                ],
+                [
+                  8.2,
+                  48.98
+                ],
+                [
+                  8.46,
+                  49.49
+                ],
+                [
+                  8.27,
+                  50.0
+                ],
+                [
+                  7.6,
+                  50.36
+                ],
+                [
+                  6.96,
+                  50.94
+                ],
+                [
+                  6.6,
+                  51.5
+                ],
+                [
+                  5.9,
+                  51.85
+                ]
+              ],
+              "libelle": "Rhin",
+              "etiquette": [
+                6.6,
+                51.25
+              ],
+              "quand": "franchissent le fleuve"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                7.75,
+                48.58
+              ],
+              "libelle": "Strasbourg",
+              "position": "gauche",
+              "quand": "entre Strasbourg"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                8.27,
+                50.0
+              ],
+              "libelle": "Mayence",
+              "position": "gauche",
+              "quand": "et Mayence"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                9.99,
+                48.4
+              ],
+              "libelle": "Ulm",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "à Ulm"
+            },
+            {
+              "type": "trait",
+              "points": [
+                [
+                  8.5,
+                  47.95
+                ],
+                [
+                  9.2,
+                  48.08
+                ],
+                [
+                  9.99,
+                  48.4
+                ],
+                [
+                  10.78,
+                  48.72
+                ],
+                [
+                  11.42,
+                  48.76
+                ],
+                [
+                  12.1,
+                  49.02
+                ],
+                [
+                  12.9,
+                  48.85
+                ],
+                [
+                  13.46,
+                  48.57
+                ],
+                [
+                  14.29,
+                  48.31
+                ],
+                [
+                  15.0,
+                  48.2
+                ],
+                [
+                  15.6,
+                  48.41
+                ],
+                [
+                  16.37,
+                  48.21
+                ],
+                [
+                  17.1,
+                  48.14
+                ]
+              ],
+              "libelle": "Danube",
+              "etiquette": [
+                12.6,
+                49.35
+              ],
+              "quand": "passe le Danube"
+            },
+            {
+              "type": "fleche",
+              "de": [
+                9.6,
+                49.7
+              ],
+              "a": [
+                10.8,
+                48.75
+              ],
+              "libelle": "",
+              "quand": "plus à l'est"
+            },
+            {
+              "type": "fleche",
+              "de": [
+                10.9,
+                48.6
+              ],
+              "a": [
+                10.3,
+                48.05
+              ],
+              "libelle": "",
+              "quand": "se rabat derrière lui"
+            },
+            {
+              "type": "zone",
+              "style": "hachures",
+              "points": [
+                [
+                  9.4,
+                  48.1
+                ],
+                [
+                  9.7,
+                  47.85
+                ],
+                [
+                  10.3,
+                  47.85
+                ],
+                [
+                  10.6,
+                  48.15
+                ],
+                [
+                  10.55,
+                  48.65
+                ],
+                [
+                  10.1,
+                  48.85
+                ],
+                [
+                  9.55,
+                  48.7
+                ],
+                [
+                  9.3,
+                  48.4
+                ]
+              ],
+              "quand": "Pris au piège"
+            },
+            {
+              "type": "fleche",
+              "de": [
+                10.6,
+                48.3
+              ],
+              "a": [
+                16.2,
+                48.15
+              ],
+              "libelle": "",
+              "quand": "La route de Vienne"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                16.37,
+                48.21
+              ],
+              "libelle": "Vienne",
+              "capitale": true,
+              "position": "bas",
+              "quand": "y entrent"
+            },
+            {
+              "type": "fleche",
+              "de": [
+                16.4,
+                48.35
+              ],
+              "a": [
+                16.7,
+                49.05
+              ],
+              "libelle": "",
+              "quand": "vers le nord"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                16.76,
+                49.15
+              ],
+              "libelle": "Austerlitz",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "près d'Austerlitz"
+            }
+          ],
+          "legende": [
+            [
+              "fleche",
+              "marche de la Grande Armée"
+            ],
+            [
+              "rebelle",
+              "capitulation, bataille"
+            ],
+            [
+              "zone",
+              "Mack encerclé"
+            ],
+            [
+              "trait",
+              "fleuves"
+            ]
+          ],
+          "source": "Itinéraires simplifiés d'après les cartes de la campagne de 1805 (Atlas de West Point, Napoleonic Wars ; Tulard, Dictionnaire Napoléon). Fond : Natural Earth."
+        }
+      ],
+      "sources": [
+        "Jean Tulard (dir.), Dictionnaire Napoléon, Fayard, 1987",
+        "Thierry Lentz, Nouvelle histoire du Premier Empire, t. I, Fayard, 2002",
+        "United States Military Academy, atlas des guerres napoléoniennes, campagne de 1805"
+      ],
+      "audio": {
+        "fichier": "episodes/boulogne-austerlitz.m4a",
+        "duree": 45.21,
+        "phrases": [
+          [
+            0.0,
+            2.88
+          ],
+          [
+            3.75,
+            7.47
+          ],
+          [
+            8.12,
+            11.99
+          ],
+          [
+            12.47,
+            16.16
+          ],
+          [
+            16.68,
+            20.02
+          ],
+          [
+            20.71,
+            24.27
+          ],
+          [
+            24.91,
+            28.44
+          ],
+          [
+            29.14,
+            31.67
+          ],
+          [
+            32.35,
+            36.37
+          ],
+          [
+            37.04,
+            40.39
+          ],
+          [
+            41.04,
+            45.21
           ]
         ]
       }
@@ -13099,10 +13785,16 @@
       "apres": 71,
       "titre": "Le prix du sang",
       "date": "1814",
-      "narration": "Combien d'hommes l'Empire a-t-il levés ? De 1800 à 1814, près de deux millions de Français sont appelés sous les drapeaux. Selon les estimations des historiens, neuf cent mille à un million d'entre eux sont morts ou disparus, plus souvent de maladie et d'épuisement qu'au combat. Les réfractaires, cachés dans les bois, se comptent par dizaines de milliers, et des colonnes mobiles les traquent. Certains se font arracher les dents de devant, indispensables pour déchirer les cartouches. Les plus aisés, eux, achètent un remplaçant, pour quelques milliers de francs. Après 1812, l'Empire appelle des classes entières par anticipation, et même des hommes déjà exemptés. Chaque village a ses absents : la conscription devient la mesure la plus haïe du régime.",
+      "narration": "Combien d'hommes l'Empire a-t-il levés ? De 1800 à 1814, près de deux millions de Français sont appelés sous les drapeaux. Chaque levée est fixée par un décret, publié au Bulletin des lois. Les préfets répartissent ensuite le contingent entre les arrondissements, puis les jeunes gens tirent au sort. Selon les historiens, neuf cent mille à un million de ces hommes meurent ou disparaissent, plus souvent de maladie et d'épuisement qu'au combat. Les réfractaires, cachés dans les bois, se comptent par dizaines de milliers, et des colonnes mobiles les traquent. Certains se font arracher les dents de devant, indispensables pour déchirer les cartouches. Les plus aisés, eux, achètent un remplaçant, pour quelques milliers de francs. Après 1812, l'Empire appelle des classes entières par anticipation, et même des hommes déjà exemptés. En 1813, quatre levées successives réclament plus d'un million d'hommes. Chaque village a ses absents : la conscription devient la mesure la plus haïe du régime.",
       "visuels": [
         {
+          "type": "carton",
+          "texte": "Le prix du sang",
+          "sous": "La conscription, 1800-1814"
+        },
+        {
           "type": "chiffres",
+          "quand": "près de deux millions",
           "titre": "La conscription, 1800-1814",
           "items": [
             {
@@ -13110,7 +13802,53 @@
               "unite": "millions d’hommes appelés",
               "libelle": "de 1800 à 1814",
               "quand": "près de deux millions"
+            }
+          ],
+          "source": "Jacques Houdaille, « Le problème des pertes de guerre », Revue d'histoire moderne et contemporaine, 1970 ; Alan Forrest, Déserteurs et insoumis sous la Révolution et l’Empire, 1988"
+        },
+        {
+          "type": "document",
+          "quand": "Chaque levée est fixée",
+          "image": {
+            "commons": "File:18050322 - Bulletin des lois - Conscription de l'an XIV.jpg",
+            "titre": "Bulletin des lois n° 54 : décret impérial relatif à la levée de la conscription de l’an XIV",
+            "auteur": "Imprimerie impériale",
+            "date": "8 fructidor an XIII (26 août 1805)",
+            "conservation": "collection non identifiée",
+            "licence": "Domaine public",
+            "fichier": "episodes/conscription.webp",
+            "largeur": 875,
+            "hauteur": 1241
+          },
+          "lignes": [
+            {
+              "cadre": [
+                0.08,
+                0.225,
+                0.95,
+                0.272
+              ],
+              "texte": "Décret impérial relatif à la levée de la Conscription de l’an XIV.",
+              "quand": "fixée par un décret"
             },
+            {
+              "cadre": [
+                0.08,
+                0.7,
+                0.95,
+                0.775
+              ],
+              "texte": "La répartition du contingent fixé à chaque département sera faite par les préfets entre les divers arrondissemens de sous-préfecture",
+              "quand": "Les préfets répartissent"
+            }
+          ],
+          "source": "Bulletin des lois, IVe série, n° 54"
+        },
+        {
+          "type": "chiffres",
+          "quand": "Selon les historiens",
+          "titre": "Les pertes, 1800-1815",
+          "items": [
             {
               "valeur": "900 000 à 1 million",
               "unite": "morts ou disparus",
@@ -13118,54 +13856,540 @@
               "quand": "neuf cent mille"
             }
           ],
-          "source": "Jacques Houdaille, « Le problème des pertes de guerre », Revue d'histoire moderne et contemporaine, 1970 ; Alan Forrest, Déserteurs et insoumis sous la Révolution et l’Empire, 1988"
+          "source": "Jacques Houdaille, « Le problème des pertes de guerre », Revue d'histoire moderne et contemporaine, 1970"
         },
         {
-          "type": "carton",
-          "quand": "la mesure la plus haïe",
-          "texte": "La conscription",
-          "sous": "la mesure la plus haïe du régime"
+          "type": "barres",
+          "quand": "En 1813, quatre levées",
+          "titre": "Les levées de 1813",
+          "unite": "hommes demandés",
+          "max": 350000,
+          "barres": [
+            {
+              "libelle": "Janvier",
+              "valeur": 350000,
+              "affichage": "350 000"
+            },
+            {
+              "libelle": "Avril",
+              "valeur": 180000,
+              "affichage": "180 000"
+            },
+            {
+              "libelle": "Octobre",
+              "valeur": 280000,
+              "affichage": "280 000"
+            },
+            {
+              "libelle": "Novembre",
+              "valeur": 300000,
+              "affichage": "300 000",
+              "note": "plus d’un million en tout",
+              "accent": true
+            }
+          ],
+          "source": "Sénatus-consultes des 11 janvier, 3 avril, 9 octobre et 15 novembre 1813 (hommes demandés, non tous levés) ; Jean Tulard (dir.), Dictionnaire Napoléon, Fayard, 1987"
         }
       ],
       "sources": [
         "Jacques Houdaille, « Le problème des pertes de guerre », Revue d'histoire moderne et contemporaine, 1970",
-        "Alan Forrest, Déserteurs et insoumis sous la Révolution et l’Empire, Perrin, 1988"
+        "Alan Forrest, Déserteurs et insoumis sous la Révolution et l’Empire, Perrin, 1988",
+        "Bulletin des lois, n° 54 (décret du 8 fructidor an XIII)",
+        "Sénatus-consultes de 1813 ; Jean Tulard (dir.), Dictionnaire Napoléon, Fayard, 1987"
       ],
       "audio": {
         "fichier": "episodes/conscription.m4a",
-        "duree": 41.33,
+        "duree": 56.41,
         "phrases": [
           [
             0.0,
-            1.91
+            1.77
           ],
           [
-            2.78,
-            7.41
+            2.91,
+            7.36
           ],
           [
-            8.27,
-            15.42
+            8.12,
+            11.29
           ],
           [
-            16.01,
-            20.73
+            11.92,
+            16.85
           ],
           [
-            21.46,
-            25.22
+            17.83,
+            24.88
           ],
           [
-            26.01,
-            29.76
+            25.91,
+            31.39
           ],
           [
-            30.65,
-            35.85
+            32.27,
+            36.34
           ],
           [
-            36.64,
-            41.33
+            37.12,
+            40.44
+          ],
+          [
+            41.39,
+            46.86
+          ],
+          [
+            47.89,
+            51.33
+          ],
+          [
+            52.15,
+            56.41
+          ]
+        ]
+      }
+    },
+    {
+      "id": "russie",
+      "apres": 91,
+      "titre": "La campagne de Russie, aller et retour",
+      "date": "1812",
+      "narration": "Que reste-t-il de la Grande Armée ? Le 24 juin 1812, environ quatre cent vingt mille hommes franchissent le Niémen, selon les estimations courantes. Ils marchent vers l'est par Vilna, Vitebsk et Smolensk, sous la chaleur. Les maladies, la faim et la désertion fondent les rangs plus vite que les combats. Mi-septembre, environ cent mille hommes seulement entrent dans Moscou. Le 19 octobre, l'armée quitte la ville incendiée. Arrêtée à Maloïaroslavets, elle doit reprendre la route ravagée de l'aller. Le froid s'abat début novembre. Fin novembre, quelques dizaines de milliers d'hommes seulement passent la Bérézina. En décembre, à peine dix mille soldats du corps principal repassent le Niémen, selon Minard. Les ailes de l'armée ont mieux résisté, mais la Grande Armée de 1812 n'existe plus.",
+      "visuels": [
+        {
+          "type": "carton",
+          "texte": "Aller et retour",
+          "sous": "La Grande Armée en Russie, 1812"
+        },
+        {
+          "type": "carte",
+          "fond": "europe",
+          "quand": "franchissent le Niémen",
+          "titre": "La campagne de Russie, 1812",
+          "cadre": [
+            21.0,
+            52.4,
+            39.4,
+            57.2
+          ],
+          "elements": [
+            {
+              "type": "trait",
+              "points": [
+                [
+                  25.6,
+                  53.45
+                ],
+                [
+                  24.9,
+                  53.55
+                ],
+                [
+                  24.4,
+                  53.45
+                ],
+                [
+                  23.83,
+                  53.68
+                ],
+                [
+                  23.97,
+                  54.0
+                ],
+                [
+                  24.05,
+                  54.4
+                ],
+                [
+                  23.9,
+                  54.9
+                ],
+                [
+                  23.4,
+                  55.0
+                ],
+                [
+                  22.77,
+                  55.07
+                ],
+                [
+                  21.87,
+                  55.08
+                ],
+                [
+                  21.3,
+                  55.27
+                ]
+              ],
+              "libelle": "Niémen",
+              "etiquette": [
+                22.4,
+                55.95
+              ],
+              "quand": "franchissent le Niémen"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                23.9,
+                54.9
+              ],
+              "libelle": "Kovno",
+              "position": "bas",
+              "quand": "franchissent le Niémen"
+            },
+            {
+              "type": "zone",
+              "style": "clair",
+              "points": [
+                [
+                  24.101,
+                  55.335
+                ],
+                [
+                  25.221,
+                  55.115
+                ],
+                [
+                  30.192,
+                  55.377
+                ],
+                [
+                  32.147,
+                  54.924
+                ],
+                [
+                  31.953,
+                  54.636
+                ],
+                [
+                  30.208,
+                  55.003
+                ],
+                [
+                  25.339,
+                  54.265
+                ],
+                [
+                  23.699,
+                  54.465
+                ]
+              ],
+              "quand": "marchent vers l'est"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                25.28,
+                54.69
+              ],
+              "libelle": "Vilna",
+              "position": "haut",
+              "quand": "par Vilna"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                30.2,
+                55.19
+              ],
+              "libelle": "Vitebsk",
+              "position": "haut",
+              "quand": "Vitebsk"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                32.05,
+                54.78
+              ],
+              "libelle": "Smolensk",
+              "position": "bas",
+              "quand": "et Smolensk"
+            },
+            {
+              "type": "zone",
+              "style": "clair",
+              "points": [
+                [
+                  31.965,
+                  54.927
+                ],
+                [
+                  34.224,
+                  55.338
+                ],
+                [
+                  35.756,
+                  55.65
+                ],
+                [
+                  37.58,
+                  55.854
+                ],
+                [
+                  37.66,
+                  55.646
+                ],
+                [
+                  35.884,
+                  55.39
+                ],
+                [
+                  34.376,
+                  55.082
+                ],
+                [
+                  32.135,
+                  54.633
+                ]
+              ],
+              "quand": "entrent dans Moscou"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                37.62,
+                55.75
+              ],
+              "libelle": "Moscou",
+              "capitale": true,
+              "position": "haut",
+              "quand": "entrent dans Moscou"
+            },
+            {
+              "type": "zone",
+              "style": "plein",
+              "points": [
+                [
+                  37.759,
+                  55.379
+                ],
+                [
+                  36.517,
+                  54.611
+                ],
+                [
+                  36.004,
+                  55.108
+                ],
+                [
+                  34.331,
+                  54.854
+                ],
+                [
+                  32.072,
+                  54.443
+                ],
+                [
+                  32.028,
+                  54.517
+                ],
+                [
+                  34.269,
+                  54.966
+                ],
+                [
+                  36.056,
+                  55.292
+                ],
+                [
+                  36.423,
+                  54.809
+                ],
+                [
+                  37.481,
+                  55.521
+                ]
+              ],
+              "quand": "quitte la ville incendiée"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                36.47,
+                55.01
+              ],
+              "libelle": "Maloïaroslavets",
+              "position": "bas",
+              "quand": "Arrêtée à Maloïaroslavets"
+            },
+            {
+              "type": "zone",
+              "style": "plein",
+              "points": [
+                [
+                  32.069,
+                  54.442
+                ],
+                [
+                  30.409,
+                  54.185
+                ],
+                [
+                  28.378,
+                  54.0
+                ],
+                [
+                  28.362,
+                  54.06
+                ],
+                [
+                  30.391,
+                  54.235
+                ],
+                [
+                  32.031,
+                  54.518
+                ]
+              ],
+              "quand": "passent la Bérézina"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                28.37,
+                54.33
+              ],
+              "libelle": "Bérézina",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "passent la Bérézina"
+            },
+            {
+              "type": "zone",
+              "style": "plein",
+              "points": [
+                [
+                  28.371,
+                  54.005
+                ],
+                [
+                  26.841,
+                  53.986
+                ],
+                [
+                  25.266,
+                  54.366
+                ],
+                [
+                  23.889,
+                  54.576
+                ],
+                [
+                  23.911,
+                  54.624
+                ],
+                [
+                  25.294,
+                  54.414
+                ],
+                [
+                  26.859,
+                  54.034
+                ],
+                [
+                  28.369,
+                  54.055
+                ]
+              ],
+              "quand": "repassent le Niémen"
+            }
+          ],
+          "legende": [
+            [
+              "clair",
+              "aller"
+            ],
+            [
+              "plein",
+              "retour"
+            ],
+            [
+              "trait",
+              "le Niémen"
+            ]
+          ],
+          "source": "Tracé et largeur des bandes (proportionnelle aux effectifs) d'après Charles-Joseph Minard, Carte figurative des pertes successives en hommes de l'Armée française dans la campagne de Russie, 1869. Fond : Natural Earth."
+        },
+        {
+          "type": "barres",
+          "quand": "à peine dix mille soldats",
+          "titre": "Le corps principal de la Grande Armée, selon Minard",
+          "unite": "hommes",
+          "max": 422000,
+          "barres": [
+            {
+              "libelle": "Niémen, juin",
+              "valeur": 422000,
+              "affichage": "422 000"
+            },
+            {
+              "libelle": "Moscou, septembre",
+              "valeur": 100000,
+              "affichage": "100 000"
+            },
+            {
+              "libelle": "Niémen, décembre",
+              "valeur": 10000,
+              "affichage": "10 000",
+              "accent": true
+            }
+          ],
+          "source": "Charles-Joseph Minard, Carte figurative des pertes successives en hommes de l'Armée française dans la campagne de Russie, 1869 (chiffres de Thiers, Ségur, Fezensac, Chambray) ; les estimations varient selon les historiens"
+        }
+      ],
+      "sources": [
+        "Charles-Joseph Minard, Carte figurative des pertes successives en hommes de l'Armée française dans la campagne de Russie 1812-1813, 1869",
+        "Jean Tulard (dir.), Dictionnaire Napoléon, Fayard, 1987",
+        "Marie-Pierre Rey, L’Effroyable Tragédie. Une nouvelle histoire de la campagne de Russie, Flammarion, 2012"
+      ],
+      "audio": {
+        "fichier": "episodes/russie.m4a",
+        "duree": 48.95,
+        "phrases": [
+          [
+            0.0,
+            1.6
+          ],
+          [
+            2.53,
+            8.3
+          ],
+          [
+            8.99,
+            13.26
+          ],
+          [
+            14.13,
+            18.46
+          ],
+          [
+            19.44,
+            22.74
+          ],
+          [
+            23.76,
+            26.24
+          ],
+          [
+            27.06,
+            30.86
+          ],
+          [
+            31.84,
+            33.14
+          ],
+          [
+            33.94,
+            37.52
+          ],
+          [
+            38.65,
+            43.37
+          ],
+          [
+            44.19,
+            48.95
           ]
         ]
       }
@@ -13794,5 +15018,18 @@
         "calage": "mot"
       }
     ]
-  }
+  },
+  "generique": [
+    "File:David - Napoleon crossing the Alps - Malmaison2.jpg",
+    "File:Code civil des Français.jpg",
+    "File:Jacques-Louis David - The Coronation of Napoleon (1805-1807).jpg",
+    "File:The Plumb-Pudding in Danger;–or–State Epicures Taking un Petit Souper MET DP809028.jpg",
+    "File:La bataille d'Austerlitz. 2 decembre 1805 (François Gérard).jpg",
+    "File:El tres de mayo de 1808 en Madrid.jpg",
+    "File:Jacques-Louis David - The Emperor Napoleon in His Study at the Tuileries - Google Art Project.jpg",
+    "File:Fire of Moscow 1812.jpg",
+    "File:Minard.png",
+    "File:Montfort - Adieux de Napoleon a la Garde imperiale.jpg",
+    "File:Bataille de Waterloo, 18 juin 1815 (par Clément-Auguste Andrieux).jpg"
+  ]
 }

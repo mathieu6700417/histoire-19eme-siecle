@@ -1,0 +1,35 @@
+{
+  "id": "indicatif",
+  "titre": "Indicatif du « Siècle en images » (marche, cordes)",
+  "compositeur": "Indicatif composé avec Lyria (Google DeepMind)",
+  "date": "2026",
+  "interprete": "",
+  "source": {
+    "type": "lyria",
+    "modele": "lyria-3.5",
+    "genere_le": "2026-10-09",
+    "candidat": "08-marche-cordes",
+    "brut": ".cache/diaporamas/indicatif-original/brut/08-marche-cordes.mp3",
+    "journal": "docs/journal/indicatif-original.jsonl"
+  },
+  "licence": "Création originale générée par IA pour le site",
+  "credit": "Indicatif composé avec Lyria (Google DeepMind)",
+  "consigne": "Instrumental only, no vocals, no choir. Title music for a documentary series about nineteenth-century France. A dark, solemn orchestral march in the French Romantic style of the 1830s, played by a real acoustic symphony orchestra in a concert hall: no synthesizers, no drum kit, no modern film-trailer sound. Minor key (G minor), moderate march tempo around 72 bpm. A hammered march motif of 4 to 6 notes in the low brass (horns and trombones), with timpani and low strings playing pizzicato, stated immediately at the very first beat, then repeated. Variant: string-dominated, the low strings and violas drive the march with sharp pizzicato and then bowed accents, brass only reinforce the motif.\nStructure (the endings are essential):\n[0:00 - 0:11] The motif is stated twice, building quickly.\n[0:11 - 0:12] A decisive cadence: one final full-orchestra tutti chord, fortissimo, on the tonic, with a single heavy timpani stroke, cut off cleanly.\n[0:12 - 0:15] Complete silence.\n[0:15 - 0:40] The march continues: the same motif developed, growing in intensity.\n[0:40 - 0:55] Final restatement of the same motif by the full orchestra, ending with a decisive perfect cadence: two or three hammered tutti chords, the last one fortissimo with a timpani stroke, cut off cleanly, then silence.",
+  "note": "Morceau de 59 s généré une fois ; extraits découpés aux fins de phrase, -16 LUFS, AAC 160 kb/s (voir le journal indicatif-original).",
+  "extraits": {
+    "ouverture": {
+      "fichier": "commun/indicatif-ouverture.m4a",
+      "debut": 0.0,
+      "fin": 16.8,
+      "duree": 16.8,
+      "accord": 14.55
+    },
+    "fin": {
+      "fichier": "commun/indicatif-fin.m4a",
+      "debut": 43.4,
+      "fin": 59.1,
+      "duree": 15.7,
+      "accord": 10.25
+    }
+  }
+}

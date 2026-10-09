@@ -53,9 +53,12 @@ export const RAMPE_RECUL = 0.4;      // part du recul en mise en route (et autan
 // 0,5 à 1,5 s, cf. CSS).
 export const DUREE_FRISE = 4;   // s
 export const FONDU_FRISE = 0.6; // s (transition de sortie, cf. CSS)
-// Rangée de portraits : élargissement du fond à un nouveau nom, puis fondu de l'ovale (s).
-export const PORTRAIT_ELARGIR = 0.4;
+// Rangée de portraits : fondu de l'ovale et de son étiquette quand la voix dit le nom (s).
 export const PORTRAIT_FONDU = 0.45;
+// Portraits et objets du bas (révision du 2026-10-09 : 1,5 fois plus grands) : hauteur de l'ovale
+// ou de l'objet plafonnée à cette part de la hauteur de la scène (étiquette ou légende en plus).
+export const COIN_H_MAX = 0.3;      // ordinateur (et téléphone couché)
+export const COIN_H_MAX_TEL = 0.27; // téléphone debout (scène de moins de 700 px de large)
 export const CLE_ST = 'diaporamas-sous-titres';
 export const CLE_MUSIQUE = 'diaporamas-musique';
 export const CLE_VOLUME = 'diaporamas-musique-volume';

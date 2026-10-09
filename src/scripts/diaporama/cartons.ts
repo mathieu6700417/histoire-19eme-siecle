@@ -54,6 +54,7 @@ export function installerCartons(lec: Lecteur) {
    *  carton saute à son début, et tourne même en pause), la voix démarre à sa fin. Passé
    *  pendant l'ouverture : le carton finit aussitôt. */
   function passerCarton() {
+    if (lec.enGenerique) return lec.passerGenerique(); // le générique se passe comme un carton
     if (!lec.enCarton) return;
     if (lec.ouvre || !voletsPossibles()) return finCarton();
     chronoCarton.figer();

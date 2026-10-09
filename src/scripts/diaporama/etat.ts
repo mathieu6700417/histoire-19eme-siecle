@@ -45,16 +45,20 @@ export function installerEtat(lec: Lecteur) {
   // Segment éventuel après la voix (intermède chanté, lecture, épisode), suivi lui aussi de la pause.
   const suiteEtPause = D.diapos.map((x) => (x.suite ? x.suite.duree + D.pause : 0));
   const durees = D.diapos.map((_, k) => prelude[k] + voixEtPause[k] + suiteEtPause[k]);
+  // Générique d'ouverture avant la première diapositive, récapitulatif après la dernière (spec 12,
+  // « Générique d'ouverture et récapitulatif de fin ») : comptés dans la durée (generique.ts).
+  const genOuverture = D.generique?.ouverture.duree ?? 0, genFin = D.generique?.fin.duree ?? 0;
   const debuts: number[] = [];
-  durees.reduce((s, x, i) => ((debuts[i] = s), s + x), 0);
-  const total = debuts[N - 1] + durees[N - 1];
+  durees.reduce((s, x, i) => ((debuts[i] = s), s + x), genOuverture);
+  const total = debuts[N - 1] + durees[N - 1] + genFin;
   elTotal.textContent = mmss(total);
 
   // Barre de progression : un segment par acte, de largeur proportionnelle à sa durée.
   const bornes = D.actes.map((a, i) => {
     const de = D.diapos.findIndex((x) => x.n >= a.debut);
     const fin = i < D.actes.length - 1 ? D.diapos.findIndex((x) => x.n >= D.actes[i + 1].debut) : N;
-    return { de, fin, t0: debuts[de], t1: fin < N ? debuts[fin] : total };
+    // Le premier acte compte l'ouverture, le dernier le récapitulatif (barre de progression).
+    return { de, fin, t0: i === 0 ? 0 : debuts[de], t1: fin < N ? debuts[fin] : total };
   });
   segments.forEach((s, i) => (s.style.flexGrow = String(bornes[i].t1 - bornes[i].t0)));
 
@@ -99,7 +103,7 @@ export function installerEtat(lec: Lecteur) {
   lec.enSuite = false; lec.suiteFini = false;
   Object.assign(lec, { $, CLE_POS, D, MOSAIQUE_T, N, VOLET_S, acteDe, audio, bornes, btnLecture,
     btnMusique, btnPe, btnReprendre, btnSt, calques, chronoCarton, chronoEntree, couches, curseurVolume,
-    debutPlongee, debuts, depart, elActe, elActeDates, elActeTitre, elCarton, elCartonDates, elCartonTitre,
+    debutPlongee, debuts, depart, genFin, genOuverture, elActe, elActeDates, elActeTitre, elCarton, elCartonDates, elCartonTitre,
     elClipTexte, elEcoule, elLegende, elMusique, elN, elSt, horloge, horlogeSuite, lecteur, prelude, sa,
     scene, segments, suiteEtPause, tempsOuverture, total, voixEtPause });
 }

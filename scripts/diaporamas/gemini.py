@@ -33,7 +33,7 @@ TARIFS = {
 }
 DEFAUT_TARIF = (0.30, 2.50)
 
-REFLEXION_DEFAUT = 256      # jetons de réflexion par appel (bas : les tâches sont des relevés)
+REFLEXION_DEFAUT = 0        # sans réflexion : meilleur rapport qualité/prix au banc du 2026-10-09 (camera, utile, transcription ; gemini-3.8-flash)
 
 # Modèle par défaut de chaque tâche, et ancienne variable d'environnement encore lue.
 TACHES = {

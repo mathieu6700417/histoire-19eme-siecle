@@ -4,6 +4,7 @@
 import { chapitresPrevus } from '../data/chapitres-ecrivains';
 import registrePortraits from '../data/diaporamas/portraits.json';
 import registreObjets from '../data/diaporamas/objets.json';
+import indicatifCommun from '../data/diaporamas/commun/indicatif.json';
 
 export interface ImageDiapo {
   fichier: string;
@@ -52,6 +53,9 @@ export interface Vignette {
   fichier?: string; commons: string; titre?: string; auteur?: string; date?: string; technique?: string;
   conservation?: string; licence?: string; largeur?: number; hauteur?: number;
   recadrage?: [number, number, number, number]; utile?: [number, number, number, number]; utile_manuel?: boolean;
+  /** Visage principal (fractions de l'image servie) : la case est centrée sur lui, dans la zone utile
+   *  (rempli par images.py depuis les visages locaux ; `cadre_manuel` : saisi à la main). */
+  cadre?: [number, number, number, number]; cadre_manuel?: boolean;
 }
 export interface Mosaique {
   /** Ligne du cartouche pendant la grille (« Cinq vues de la prise de la Bastille »). */
@@ -252,7 +256,10 @@ export type VisuelEpisode =
   | ({ type: 'carte'; fond: string; titre: string; elements: ElementCarte[]; legende?: [string, string][]; source: string;
        /** Recadrage [lon0, lat0, lon1, lat1] dans le fond ; libellés et traits gardent leur taille à l'écran. */
        cadre?: [number, number, number, number] } & Quand)
-  | ({ type: 'document'; image: ImageDiapo & { fichier: string }; lignes: ({ cadre: [number, number, number, number]; texte: string } & Quand)[]; source: string } & Quand);
+  | ({ type: 'document'; image: ImageDiapo & { fichier: string }; lignes: ({ cadre: [number, number, number, number]; texte: string } & Quand)[]; source: string } & Quand)
+  /** Chronologie (spec 12, « Chronologie animée ») : frise propre à l'épisode, bornée par `debut` et
+   *  `fin` (dates ISO partielles) ; chaque événement fait paraître sa bulle quand la voix le nomme. */
+  | ({ type: 'chronologie'; titre?: string; debut: string; fin: string; evenements: ({ date: string; libelle: string; precision?: string } & Quand)[]; source: string } & Quand);
 export type ElementCarte = Quand & (
   | { type: 'ville'; lieu: [number, number]; libelle: string; capitale?: boolean; rebelle?: boolean; position?: string }
   | { type: 'fleche'; de: [number, number]; a: [number, number]; libelle: string; position?: string }
@@ -303,6 +310,9 @@ export interface Diaporama {
   musique?: Musique;
   lectures?: Lecture[];
   episodes?: Episode[];
+  /** Générique d'ouverture et récapitulatif de fin (spec 12, révision du 2026-10-09) : 8 à 12
+   *  images, par leur fichier Commons (« File:… »), dans l'ordre de la mosaïque. */
+  generique?: string[];
 }
 
 const base = import.meta.env.BASE_URL;
@@ -331,12 +341,40 @@ export const diaporamas: Diaporama[] = Object.values(fichiers)
 
 export const diaporamaDe = (numero: number) => diaporamas.find((d) => d.numero === numero);
 
+// --- Générique d'ouverture et récapitulatif de fin (spec 12, révision du 2026-10-09) -----------
+
+/** Indicatif commun à toute la série (src/data/diaporamas/commun/indicatif.json) : thème original
+ *  composé avec Lyria (Google DeepMind), deux extraits dans public/diaporamas/commun/. `credit` :
+ *  mention exigée par les conditions d'utilisation de Google, affichée telle quelle. `accord` :
+ *  instant de l'accord final de l'extrait (passage au premier carton ; « Fin »). */
+export interface Indicatif {
+  titre: string; compositeur: string; date: string; credit: string; licence: string; note?: string;
+  source: { type: 'lyria'; modele: string; genere_le: string; candidat: string };
+  extraits: Record<'ouverture' | 'fin', { fichier: string; debut: number; fin: number; duree?: number; accord?: number }>;
+}
+export const indicatif = indicatifCommun as Indicatif;
+export const urlCommun = (fichier: string) => `${base}diaporamas/${fichier}`;
+/** Durées de l'ouverture et du récapitulatif d'une période (0 sans `generique`). */
+/** Durées comptées : l'ouverture s'arrête sur son accord final (le premier carton monte pendant
+ *  que l'accord résonne), le récapitulatif va au bout de son extrait. `accordFin` : « Fin ». */
+export const dureesGenerique = (d: Diaporama) => {
+  const o = indicatif.extraits.ouverture, f = indicatif.extraits.fin;
+  return d.generique?.length && o.duree && f.duree
+    ? { ouverture: o.accord ?? o.duree, fin: f.duree, accordFin: f.accord ?? f.duree - 4 } : { ouverture: 0, fin: 0, accordFin: 0 };
+};
+/** Images du générique : la diapositive (première qui montre le fichier) et son image. */
+export const imagesGenerique = (d: Diaporama) => (d.generique ?? [])
+  .map((f) => d.diapositives.find((x) => x.image.commons === f))
+  .filter((x): x is Diapositive => Boolean(x))
+  .map((x) => x.image);
+
 /** Durée totale en secondes (voix + pauses + cartons d'acte + intermèdes chantés, lectures et
  *  épisodes, chacun suivi d'une pause). */
 export const dureeTotale = (d: Diaporama) =>
   d.diapositives.reduce((s, x) => s + (x.audio?.duree ?? 0) + pauseApres(x), 0) + CARTON * d.actes.length
   + (d.musique?.intermedes ?? []).reduce((s, x) => s + (x.duree ?? 0) + PAUSE, 0)
-  + [...(d.lectures ?? []), ...(d.episodes ?? [])].reduce((s, x) => s + (x.audio?.duree ?? 0) + PAUSE, 0);
+  + [...(d.lectures ?? []), ...(d.episodes ?? [])].reduce((s, x) => s + (x.audio?.duree ?? 0) + PAUSE, 0)
+  + dureesGenerique(d).ouverture + dureesGenerique(d).fin;
 
 /** Texte lu d'une lecture : les paragraphes sans les coupures, joints par une espace (les retours
  *  à la ligne des vers deviennent des espaces : mêmes positions de caractères que l'affichage).

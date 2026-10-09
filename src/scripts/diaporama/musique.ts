@@ -6,7 +6,7 @@ import { ecrire, lire } from './outils';
 import type { Lecteur } from './contexte';
 
 export function installerMusique(lec: Lecteur) {
-  const { D, acteDe, audio, bornes, btnMusique, curseurVolume, elMusique, estomperPlusTard, racine, sa,
+  const { D, acteDe, audio, bornes, btnMusique, debuts, curseurVolume, elMusique, estomperPlusTard, racine, sa,
     tempsCourant, total } = lec;
   Object.assign(lec, { appliquerEtat, basculerMusique, deverrouillerAudio, musique });
   // --- Musique de fond (Web Audio API) ---------------------------------------------------------
@@ -66,7 +66,7 @@ export function installerMusique(lec: Lecteur) {
   }
 
   function etatCourant(): EtatMusique {
-    if (!lec.lance || !lec.joue) return 'arret';
+    if (!lec.lance || !lec.joue || lec.enGenerique) return 'arret'; // générique : l'indicatif seul
     if (lec.enSuite) {
       // Intermède : la musique de fond se tait ; lecture et épisode : baissée comme sous la voix.
       if (D.diapos[lec.i].suite?.type === 'chant') return 'chant';
@@ -94,7 +94,7 @@ export function installerMusique(lec: Lecteur) {
   function afficherMusique() {
     const f = courant >= 0 ? fonds[courant] : null;
     const p = f && f.acte >= 0 ? D.fond[f.acte]?.[f.piste] : null;
-    const oui = Boolean(p && musiqueOn && lec.lance && !(lec.enSuite && D.diapos[lec.i].suite?.type === 'chant'));
+    const oui = Boolean(p && musiqueOn && lec.lance && !lec.enGenerique && !(lec.enSuite && D.diapos[lec.i].suite?.type === 'chant'));
     if (p && elMusique.dataset.src !== p.src) {
       elMusique.dataset.src = p.src;
       elMusique.classList.remove('est-visible');
@@ -136,7 +136,7 @@ export function installerMusique(lec: Lecteur) {
     const a = acteDe[lec.i], liste = D.fond[a];
     if (!liste?.length) return null;
     const total = liste.reduce((s, p) => s + p.duree, 0);
-    let o = Math.max(0, t - bornes[a].t0) % total, j = 0;
+    let o = Math.max(0, t - debuts[bornes[a].de]) % total, j = 0;
     while (j < liste.length - 1 && o >= liste[j].duree) { o -= liste[j].duree; j++; }
     return { a, j, o: Math.min(o, Math.max(0, liste[j].duree - FONDU_PISTE - 0.5)) };
   }
@@ -167,7 +167,7 @@ export function installerMusique(lec: Lecteur) {
   function musique() {
     if (!aFond) return;
     appliquerEtat();
-    if (!musiqueOn || !lec.lance || !lec.joue) return;
+    if (!musiqueOn || !lec.lance || !lec.joue || lec.enGenerique) return;
     const cur = courant >= 0 ? fonds[courant] : null;
     if (cur && cur.acte === acteDe[lec.i] && cur.el.getAttribute('src')) {
       // Même acte : la musique continue (ou reprend là où elle s'était arrêtée).

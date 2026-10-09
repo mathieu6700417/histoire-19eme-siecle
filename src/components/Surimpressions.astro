@@ -213,11 +213,11 @@ for (const x of d.diapositives) {
   .lieu :global(.lieu__etiquette.est-dit), .lieu :global(.lieu__filet.est-dit) { opacity: 1; }
   .lieu :global(.lieu__filet) { position: absolute; height: 1px; background: #6a6862; transform-origin: 0 50%; opacity: 0; transition: opacity 350ms ease; }
 
-  /* Portraits : rangée d'ovales sur un cartouche blanc cassé (même famille que le médaillon de
-     lieu), en bas à gauche ; la hauteur des ovales (--ovale-h) est posée par le lecteur. Tous les
-     ovales sont en place dès l'entrée (invisibles) : la rangée ne change pas de taille quand un
-     nom s'ajoute (place réservée constante). Le fond (::before) ne couvre que les portraits déjà
-     apparus : sa largeur (--fond-l) et l'opacité des ovales sont posées par le lecteur à chaque
+  /* Portraits (révision du 2026-10-09) : rangée d'ovales posés directement sur l'image, sans
+     cartouche, en bas à gauche ; sous chaque ovale, une petite étiquette blanc cassé serrée (nom en
+     petites capitales, dates). La hauteur des ovales (--ovale-h) est posée par le lecteur. Tous les
+     ovales sont en place dès l'entrée (invisibles) : la rangée ne change pas de taille quand un nom
+     s'ajoute (place réservée constante) ; l'opacité de chacun est posée par le lecteur à chaque
      image. Images en couleur (exception des images du diaporama), le reste monochrome. */
   .portraits {
     --ovale-h: 96px;
@@ -227,26 +227,12 @@ for (const x of d.diapositives) {
     z-index: 2;
     display: flex;
     align-items: flex-start;
-    gap: 0.55rem;
-    padding: 0.4rem 0.5rem 0.3rem;
-    border: 1px solid transparent;
+    gap: 0.6rem;
     pointer-events: none;
     opacity: 0;
     visibility: hidden;
     transform: translateY(4px);
     transition: opacity 600ms ease, transform 600ms ease, visibility 0s linear 600ms;
-  }
-  .portraits::before {
-    content: '';
-    position: absolute;
-    left: -1px;
-    top: -1px;
-    bottom: -1px;
-    width: var(--fond-l, calc(100% + 2px));
-    box-sizing: border-box;
-    background: rgba(251, 250, 247, 0.95);
-    border: 1px solid rgba(26, 26, 26, 0.22);
-    z-index: -1;
   }
   .portraits:empty { display: none; }
   .portraits.est-visible {
@@ -261,7 +247,7 @@ for (const x of d.diapositives) {
     flex-direction: column;
     align-items: center;
     width: max-content;
-    max-width: max(calc(var(--ovale-h) * 0.8 + 1.6rem), 6.6em);
+    max-width: max(calc(var(--ovale-h) * 0.8 + 1.4rem), 7em);
     opacity: 0;
   }
   /* Ovale à bord fin, façon camée : filet sombre, liseré clair, puis le visage. */
@@ -272,25 +258,29 @@ for (const x of d.diapositives) {
     border-radius: 50%;
     overflow: hidden;
     position: relative;
-    border: 1px solid rgba(26, 26, 26, 0.55);
+    border: 1px solid rgba(26, 26, 26, 0.6);
     background: #e6e4de;
   }
   .portraits :global(.portrait__ovale)::after { content: ''; position: absolute; inset: 0; border-radius: 50%; box-shadow: inset 0 0 0 2px rgba(251, 250, 247, 0.85); }
   .portraits :global(.portrait__ovale img) { display: block; width: 100%; height: 100%; object-fit: cover; }
+  /* Étiquette : juste sous l'ovale, aussi étroite que son texte, filet fin. */
   .portraits :global(figcaption) {
-    margin-top: 0.22rem;
+    margin-top: 0.2rem;
+    padding: 0.08rem 0.4rem 0.1rem;
+    background: rgba(251, 250, 247, 0.94);
+    border: 1px solid rgba(26, 26, 26, 0.22);
     text-align: center;
-    line-height: 1.15;
+    line-height: 1.12;
     color: var(--c-texte);
     hyphens: none;
     -webkit-hyphens: none;
     text-wrap: balance;
   }
-  .portraits :global(.portrait__nom) { display: block; font-size: 0.95rem; font-variant: small-caps; letter-spacing: 0.04em; }
+  .portraits :global(.portrait__nom) { display: block; font-size: 0.86rem; font-variant: small-caps; letter-spacing: 0.04em; }
   .portraits :global(.portrait__sep) { display: none; }
-  .portraits :global(.portrait__dates) { display: block; font-size: 0.82rem; color: #4a4843; font-variant-numeric: lining-nums; }
+  .portraits :global(.portrait__dates) { display: block; font-size: 0.74rem; color: #4a4843; font-variant-numeric: lining-nums; }
   /* Une seule personne : « Danton · 1759-1794 » sur une ligne si la place le permet. */
-  .portraits.est-seul :global(.portrait) { max-width: 14em; }
+  .portraits.est-seul :global(.portrait) { max-width: max(calc(var(--ovale-h) * 0.8 + 6rem), 14em); }
   .portraits.est-seul :global(.portrait__nom), .portraits.est-seul :global(.portrait__sep), .portraits.est-seul :global(.portrait__dates) { display: inline; }
   .portraits.est-seul :global(.portrait__sep) { color: #4a4843; }
 
@@ -548,11 +538,12 @@ for (const x of d.diapositives) {
     .mots { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + 5%); max-width: calc(100% - 2 * var(--e-1)); padding: 0.4rem 0.8rem 0.45rem; }
     .mots__texte { font-size: 1.12rem; }
     .mots__auteur { font-size: 0.85rem; }
-    .portraits { gap: 0.35rem; padding: 0.25rem 0.3rem 0.2rem; }
-    .portraits :global(.portrait) { max-width: max(calc(var(--ovale-h) * 0.8 + 1rem), 5.6em); }
-    .portraits :global(.portrait__nom) { font-size: 0.74rem; letter-spacing: 0.02em; }
-    .portraits :global(.portrait__dates) { font-size: 0.66rem; }
-    .portraits.est-seul :global(.portrait) { max-width: 11em; }
+    .portraits { gap: 0.35rem; }
+    .portraits :global(.portrait) { max-width: max(calc(var(--ovale-h) * 0.8 + 0.8rem), 4.4em); }
+    .portraits :global(figcaption) { margin-top: 0.14rem; padding: 0.04rem 0.28rem 0.06rem; }
+    .portraits :global(.portrait__nom) { font-size: 0.7rem; letter-spacing: 0.02em; }
+    .portraits :global(.portrait__dates) { font-size: 0.62rem; }
+    .portraits.est-seul :global(.portrait) { max-width: 12em; }
     .manuscrit { padding: 0.2rem; }
     .manuscrit figcaption { max-width: max(var(--objet-l), 8em); }
     .objet__nom { font-size: 0.66rem; }
