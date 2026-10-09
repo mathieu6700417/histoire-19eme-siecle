@@ -264,9 +264,9 @@ def nombre_dit(texte: str) -> int | None:
         if w == 'et':
             continue
         if w in _UNITES:
-            # « quatre vingt » : 4 × 20
-            if _UNITES[w] == 20 and courant in (4,):
-                courant *= 20
+            # « quatre vingt » : 4 × 20 (aussi après une centaine : « deux cent quatre-vingt-un »)
+            if _UNITES[w] == 20 and courant % 100 == 4:
+                courant += 76
             else:
                 courant += _UNITES[w]
         elif _MULT[w] == 100:

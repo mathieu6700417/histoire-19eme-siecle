@@ -60,10 +60,10 @@
     "auteur": "Jacques-Louis David",
     "date": "1794",
     "cadre_visage": [
-      0.33,
+      0.34,
       0.08,
-      0.74,
-      0.39
+      0.71,
+      0.38
     ],
     "fichier": "portraits/david.webp"
   },
@@ -103,7 +103,7 @@
       0.27,
       0.11,
       0.6,
-      0.39
+      0.4
     ],
     "fichier": "portraits/bailly.webp"
   },
@@ -117,10 +117,10 @@
     "auteur": "Joseph Boze",
     "date": "1789",
     "cadre_visage": [
-      0.27,
+      0.29,
       0.17,
-      0.72,
-      0.55
+      0.66,
+      0.56
     ],
     "fichier": "portraits/mirabeau.webp"
   },
@@ -168,9 +168,9 @@
     "auteur": "Henri-Pierre Danloux",
     "date": "1798",
     "cadre_visage": [
-      0.32,
+      0.3,
       0.09,
-      0.65,
+      0.66,
       0.44
     ],
     "fichier": "portraits/artois.webp"
@@ -219,10 +219,10 @@
     "auteur": "Nicolas de Largillierre",
     "date": "vers 1718-1724",
     "cadre_visage": [
-      0.36,
+      0.38,
       0.04,
-      0.69,
-      0.41
+      0.67,
+      0.4
     ],
     "fichier": "portraits/voltaire.webp"
   },
@@ -296,7 +296,7 @@
     "cadre_visage": [
       0.35,
       0.1,
-      0.59,
+      0.58,
       0.29
     ],
     "fichier": "portraits/brunswick.webp"
@@ -313,7 +313,7 @@
     "cadre_visage": [
       0.34,
       0.17,
-      0.6,
+      0.59,
       0.37
     ],
     "fichier": "portraits/dumouriez.webp"
@@ -328,9 +328,9 @@
     "auteur": "Joseph Karl Stieler",
     "date": "1828",
     "cadre_visage": [
-      0.34,
-      0.1,
-      0.62,
+      0.33,
+      0.11,
+      0.63,
       0.4
     ],
     "fichier": "portraits/goethe.webp"
@@ -413,9 +413,9 @@
     "auteur": "Charles Thévenin",
     "date": "vers 1802-1803",
     "cadre_visage": [
-      0.28,
+      0.27,
       0.11,
-      0.72,
+      0.73,
       0.58
     ],
     "fichier": "portraits/lamarck.webp"
@@ -430,9 +430,9 @@
     "auteur": "Ambroise Tardieu",
     "date": "1823",
     "cadre_visage": [
-      0.29,
+      0.28,
       0.16,
-      0.68,
+      0.67,
       0.53
     ],
     "fichier": "portraits/geoffroy-saint-hilaire.webp"
@@ -470,7 +470,7 @@
     "auteur": "Peintre anonyme (musée Lambinet)",
     "date": "vers 1790-1799",
     "cadre_visage": [
-      0.31,
+      0.29,
       0.23,
       0.6,
       0.51
@@ -487,9 +487,9 @@
     "auteur": "Marie-Geneviève Bouliard",
     "date": "1796",
     "cadre_visage": [
-      0.36,
-      0.25,
-      0.62,
+      0.35,
+      0.26,
+      0.63,
       0.44
     ],
     "fichier": "portraits/lenoir.webp"
@@ -504,10 +504,10 @@
     "auteur": "François Bonneville",
     "date": "1796",
     "cadre_visage": [
-      0.31,
+      0.3,
       0.12,
       0.68,
-      0.4
+      0.41
     ],
     "fichier": "portraits/carrier.webp"
   },
@@ -555,9 +555,9 @@
     "auteur": "Jacques-Louis David",
     "date": "1797-1798",
     "cadre_visage": [
-      0.36,
-      0.11,
-      0.72,
+      0.35,
+      0.1,
+      0.73,
       0.38
     ],
     "fichier": "portraits/bonaparte.webp"
@@ -596,9 +596,9 @@
     "date": "milieu du XIXe siècle",
     "cadre_visage": [
       0.47,
-      0.17,
+      0.18,
       0.64,
-      0.28
+      0.29
     ],
     "fichier": "portraits/jourdan.webp"
   },
@@ -647,10 +647,10 @@
     "auteur": "François Gérard",
     "date": "vers 1804",
     "cadre_visage": [
-      0.437,
-      0.155,
-      0.575,
-      0.258
+      0.44,
+      0.18,
+      0.57,
+      0.26
     ],
     "fichier": "portraits/tallien.webp"
   },
@@ -723,7 +723,7 @@
     "cadre_visage": [
       0.23,
       0.09,
-      0.55,
+      0.56,
       0.44
     ],
     "fichier": "portraits/hoche.webp"
@@ -740,7 +740,7 @@
     "cadre_visage": [
       0.35,
       0.29,
-      0.66,
+      0.67,
       0.47
     ],
     "fichier": "portraits/barras.webp"
@@ -755,8 +755,8 @@
     "auteur": "Frans Pourbus le Jeune",
     "date": "1610",
     "cadre_visage": [
-      0.46,
-      0.13,
+      0.45,
+      0.12,
       0.59,
       0.25
     ],
@@ -772,7 +772,7 @@
     "auteur": "Peintre anonyme (musée Carnavalet)",
     "date": "1805-1812",
     "cadre_visage": [
-      0.44,
+      0.43,
       0.21,
       0.73,
       0.49
@@ -853,5 +853,869 @@
       0.43
     ],
     "fichier": "portraits/roger-ducos.webp"
+  },
+  {
+    "id": "napoleon",
+    "nom": "Napoléon",
+    "dates": "1769-1821",
+    "commons": "File:Jacques-Louis David - The Emperor Napoleon in His Study at the Tuileries - Google Art Project.jpg",
+    "auteur": "Jacques-Louis David",
+    "date": "1812",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg",
+    "cadre_visage": [
+      0.42,
+      0.09,
+      0.57,
+      0.21
+    ],
+    "fichier": "portraits/napoleon.webp"
+  },
+  {
+    "id": "alexandre-ier",
+    "nom": "Alexandre Ier",
+    "dates": "1777-1825",
+    "commons": "File:Alexander I by François Gérard.jpg",
+    "auteur": "François Gérard",
+    "date": "1817",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Alexander_I_by_Fran%C3%A7ois_G%C3%A9rard.jpg",
+    "cadre_visage": [
+      0.44,
+      0.11,
+      0.58,
+      0.23
+    ],
+    "fichier": "portraits/alexandre-ier.webp"
+  },
+  {
+    "id": "blucher",
+    "nom": "Blücher",
+    "dates": "1742-1819",
+    "commons": "File:Peter Edward Stroehling - Porträt Gebhard Leberecht von Blücher.jpg",
+    "auteur": "Peter Edward Stroehling",
+    "date": "1814-1815",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Peter_Edward_Stroehling_-_Portr%C3%A4t_Gebhard_Leberecht_von_Bl%C3%BCcher.jpg",
+    "cadre_visage": [
+      0.32,
+      0.12,
+      0.69,
+      0.5
+    ],
+    "fichier": "portraits/blucher.webp"
+  },
+  {
+    "id": "boilly",
+    "nom": "Boilly",
+    "dates": "1761-1845",
+    "commons": "File:Versailles Boilly autoportrait.jpg",
+    "auteur": "Louis-Léopold Boilly (autoportrait)",
+    "date": "vers 1805",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Versailles_Boilly_autoportrait.jpg",
+    "cadre_visage": [
+      0.19,
+      0.09,
+      0.76,
+      0.67
+    ],
+    "fichier": "portraits/boilly.webp"
+  },
+  {
+    "id": "cambronne",
+    "nom": "Cambronne",
+    "dates": "1770-1842",
+    "commons": "File:Le Général Cambronne (BM 1925,1214.28).jpg",
+    "auteur": "Pierre-Louis Grevedon (lithographie)",
+    "date": "1826",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Le_G%C3%A9n%C3%A9ral_Cambronne_(BM_1925,1214.28).jpg",
+    "cadre_visage": [
+      0.35,
+      0.14,
+      0.62,
+      0.38
+    ],
+    "fichier": "portraits/cambronne.webp"
+  },
+  {
+    "id": "charles-iv",
+    "nom": "Charles IV",
+    "dates": "1748-1819",
+    "commons": "File:Carlos IV de rojo.jpg",
+    "auteur": "Francisco de Goya",
+    "date": "1789",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Carlos_IV_de_rojo.jpg",
+    "cadre_visage": [
+      0.37,
+      0.17,
+      0.6,
+      0.35
+    ],
+    "fichier": "portraits/charles-iv.webp"
+  },
+  {
+    "id": "chateaubriand",
+    "nom": "Chateaubriand",
+    "dates": "1768-1848",
+    "commons": "File:Anne-Louis Girodet-Trioson 006.jpg",
+    "auteur": "Anne-Louis Girodet",
+    "date": "vers 1808-1809",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Anne-Louis_Girodet-Trioson_006.jpg",
+    "cadre_visage": [
+      0.47,
+      0.06,
+      0.74,
+      0.29
+    ],
+    "fichier": "portraits/chateaubriand.webp"
+  },
+  {
+    "id": "constant",
+    "nom": "Benjamin Constant",
+    "dates": "1767-1830",
+    "commons": "File:Roche - Portrait de Benjamin Constant (1767-1830), écrivain et homme politique - P1679 - Musée Carnavalet.jpg",
+    "auteur": "Hercule de Roche",
+    "date": "1820",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Roche_-_Portrait_de_Benjamin_Constant_(1767-1830),_%C3%A9crivain_et_homme_politique_-_P1679_-_Mus%C3%A9e_Carnavalet.jpg",
+    "cadre_visage": [
+      0.28,
+      0.17,
+      0.61,
+      0.5
+    ],
+    "fichier": "portraits/constant.webp"
+  },
+  {
+    "id": "corneille",
+    "nom": "Corneille",
+    "dates": "1606-1684",
+    "commons": "File:Pierre Corneille 2.jpg",
+    "auteur": "D’après Charles Le Brun",
+    "date": "XVIIe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pierre_Corneille_2.jpg",
+    "cadre_visage": [
+      0.28,
+      0.12,
+      0.74,
+      0.78
+    ],
+    "fichier": "portraits/corneille.webp"
+  },
+  {
+    "id": "davout",
+    "nom": "Davout",
+    "dates": "1770-1823",
+    "commons": "File:Louis nicolas davout.jpg",
+    "auteur": "Tito Marzocchi de Belluci, d’après Pierre-Claude Gautherot (original de 1798)",
+    "date": "1852",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_nicolas_davout.jpg",
+    "cadre_visage": [
+      0.39,
+      0.09,
+      0.56,
+      0.2
+    ],
+    "fichier": "portraits/davout.webp"
+  },
+  {
+    "id": "delaroche",
+    "nom": "Paul Delaroche",
+    "dates": "1797-1856",
+    "commons": "File:Delaroche autoportrait fusain 1838.jpg",
+    "auteur": "Paul Delaroche (autoportrait)",
+    "date": "1838",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Delaroche_autoportrait_fusain_1838.jpg",
+    "cadre_visage": [
+      0.28,
+      0.21,
+      0.65,
+      0.57
+    ],
+    "fichier": "portraits/delaroche.webp"
+  },
+  {
+    "id": "denon",
+    "nom": "Vivant Denon",
+    "dates": "1747-1825",
+    "commons": "File:Vivant Denon par Robert Lefèvre (1809).jpg",
+    "auteur": "Robert Lefèvre",
+    "date": "1809",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Vivant_Denon_par_Robert_Lef%C3%A8vre_(1809).jpg",
+    "cadre_visage": [
+      0.35,
+      0.14,
+      0.73,
+      0.49
+    ],
+    "fichier": "portraits/denon.webp"
+  },
+  {
+    "id": "desaix",
+    "nom": "Desaix",
+    "dates": "1768-1800",
+    "commons": "File:Louis charles desaix.jpg",
+    "auteur": "Andrea Appiani",
+    "date": "vers 1800-1801",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_charles_desaix.jpg",
+    "cadre_visage": [
+      0.3,
+      0.1,
+      0.53,
+      0.34
+    ],
+    "fichier": "portraits/desaix.webp"
+  },
+  {
+    "id": "eble",
+    "nom": "Éblé",
+    "dates": "1758-1812",
+    "commons": "File:General Jean Baptiste Eblé.jpg",
+    "auteur": "Jean-Baptiste Paulin Guérin",
+    "date": "XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:General_Jean_Baptiste_Ebl%C3%A9.jpg",
+    "cadre_visage": [
+      0.27,
+      0.08,
+      0.69,
+      0.44
+    ],
+    "fichier": "portraits/eble.webp"
+  },
+  {
+    "id": "enghien",
+    "nom": "Duc d'Enghien",
+    "dates": "1772-1804",
+    "commons": "File:Louis Antoine, Duke of Enghien.jpg",
+    "auteur": "L. L. Schilly",
+    "date": "fin du XVIIIe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_Antoine,_Duke_of_Enghien.jpg",
+    "cadre_visage": [
+      0.34,
+      0.13,
+      0.61,
+      0.47
+    ],
+    "fichier": "portraits/enghien.webp"
+  },
+  {
+    "id": "faber-du-faur",
+    "nom": "Faber du Faur",
+    "dates": "1780-1857",
+    "note": "Le fichier Commons à son nom (1831) ne montre pas son visage ; pas d'autre portrait libre trouvé."
+  },
+  {
+    "id": "fontaine",
+    "nom": "Fontaine",
+    "dates": "1762-1853",
+    "commons": "File:P-F-L. Fontaine par JD Court - Château de Versailles.jpg",
+    "auteur": "Joseph-Désiré Court",
+    "date": "vers 1843-1848",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:P-F-L._Fontaine_par_JD_Court_-_Ch%C3%A2teau_de_Versailles.jpg",
+    "cadre_visage": [
+      0.4,
+      0.16,
+      0.6,
+      0.33
+    ],
+    "fichier": "portraits/fontaine.webp"
+  },
+  {
+    "id": "fulton",
+    "nom": "Robert Fulton",
+    "dates": "1765-1815",
+    "commons": "File:Robert Fulton, 1806, London, England, painted by Benjamin West, American, 1738-1820 Fenimore Art Museum, Cooperstown, N.Y. N0218.1961.jpg",
+    "auteur": "Benjamin West",
+    "date": "1806",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Robert_Fulton,_1806,_London,_England,_painted_by_Benjamin_West,_American,_1738-1820_Fenimore_Art_Museum,_Cooperstown,_N.Y._N0218.1961.jpg",
+    "cadre_visage": [
+      0.49,
+      0.04,
+      0.76,
+      0.34
+    ],
+    "fichier": "portraits/fulton.webp"
+  },
+  {
+    "id": "gerard",
+    "nom": "François Gérard",
+    "dates": "1770-1837",
+    "commons": "File:François Gérard (1770–1837), later Baron Gérard MET DP327712.jpg",
+    "auteur": "Antoine-Jean Gros",
+    "date": "vers 1790",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Fran%C3%A7ois_G%C3%A9rard_(1770%E2%80%931837),_later_Baron_G%C3%A9rard_MET_DP327712.jpg",
+    "cadre_visage": [
+      0.29,
+      0.09,
+      0.63,
+      0.53
+    ],
+    "fichier": "portraits/gerard.webp"
+  },
+  {
+    "id": "gericault",
+    "nom": "Géricault",
+    "dates": "1791-1824",
+    "commons": "File:Horace Vernet, Jean-Louis-André-Théodore Gericault, probably 1822 or 1823, 1998.84, MET.jpg",
+    "auteur": "Horace Vernet",
+    "date": "vers 1822-1823",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Horace_Vernet,_Jean-Louis-Andr%C3%A9-Th%C3%A9odore_Gericault,_probably_1822_or_1823,_1998.84,_MET.jpg",
+    "cadre_visage": [
+      0.27,
+      0.15,
+      0.72,
+      0.63
+    ],
+    "fichier": "portraits/gericault.webp"
+  },
+  {
+    "id": "gillray",
+    "nom": "Gillray",
+    "dates": "1756-1815",
+    "commons": "File:Jamesgillrayportrait.jpg",
+    "auteur": "Charles Turner, d’après un autoportrait de James Gillray (vers 1800)",
+    "date": "vers 1819",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jamesgillrayportrait.jpg",
+    "cadre_visage": [
+      0.37,
+      0.25,
+      0.62,
+      0.5
+    ],
+    "fichier": "portraits/gillray.webp"
+  },
+  {
+    "id": "girodet",
+    "nom": "Girodet",
+    "dates": "1767-1824",
+    "commons": "File:Anne-Louis Girodet autoportrait.jpg",
+    "auteur": "Anne-Louis Girodet (autoportrait)",
+    "date": "début du XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Anne-Louis_Girodet_autoportrait.jpg",
+    "cadre_visage": [
+      0.32,
+      0.11,
+      0.66,
+      0.49
+    ],
+    "fichier": "portraits/girodet.webp"
+  },
+  {
+    "id": "goya",
+    "nom": "Goya",
+    "dates": "1746-1828",
+    "commons": "File:Vicente López Portaña - el pintor Francisco de Goya.jpg",
+    "auteur": "Vicente López Portaña",
+    "date": "1826",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Vicente_L%C3%B3pez_Porta%C3%B1a_-_el_pintor_Francisco_de_Goya.jpg",
+    "cadre_visage": [
+      0.45,
+      0.14,
+      0.73,
+      0.41
+    ],
+    "fichier": "portraits/goya.webp"
+  },
+  {
+    "id": "gros",
+    "nom": "Gros",
+    "dates": "1771-1835",
+    "commons": "File:Gros Portrait à l'âge de vingt ans (RO 109).jpg",
+    "auteur": "François Gérard",
+    "date": "vers 1791",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Gros_Portrait_%C3%A0_l%27%C3%A2ge_de_vingt_ans_(RO_109).jpg",
+    "cadre_visage": [
+      0.29,
+      0.17,
+      0.65,
+      0.53
+    ],
+    "fichier": "portraits/gros.webp"
+  },
+  {
+    "id": "grouchy",
+    "nom": "Grouchy",
+    "dates": "1766-1847",
+    "commons": "File:EMMANUEL DE GROUCHY(1766-1847).jpg",
+    "auteur": "Georges Rouget",
+    "date": "1835",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:EMMANUEL_DE_GROUCHY(1766-1847).jpg",
+    "cadre_visage": [
+      0.27,
+      0.09,
+      0.7,
+      0.44
+    ],
+    "fichier": "portraits/grouchy.webp"
+  },
+  {
+    "id": "haydn",
+    "nom": "Haydn",
+    "dates": "1732-1809",
+    "commons": "File:Joseph Haydn, målning av Thomas Hardy från 1792.jpg",
+    "auteur": "Thomas Hardy",
+    "date": "1791-1792",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Joseph_Haydn,_m%C3%A5lning_av_Thomas_Hardy_fr%C3%A5n_1792.jpg",
+    "cadre_visage": [
+      0.2,
+      0.13,
+      0.66,
+      0.53
+    ],
+    "fichier": "portraits/haydn.webp"
+  },
+  {
+    "id": "ingres",
+    "nom": "Ingres",
+    "dates": "1780-1867",
+    "commons": "File:Ingres, Self-portrait.jpg",
+    "auteur": "Jean-Auguste-Dominique Ingres (autoportrait)",
+    "date": "1804",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Ingres,_Self-portrait.jpg",
+    "cadre_visage": [
+      0.28,
+      0.05,
+      0.61,
+      0.35
+    ],
+    "fichier": "portraits/ingres.webp"
+  },
+  {
+    "id": "joseph-bonaparte",
+    "nom": "Joseph Bonaparte",
+    "dates": "1768-1844",
+    "commons": "File:Joseph Bonaparte (by Wicar).jpg",
+    "auteur": "Jean-Baptiste Wicar",
+    "date": "1808",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Joseph_Bonaparte_(by_Wicar).jpg",
+    "cadre_visage": [
+      0.44,
+      0.2,
+      0.57,
+      0.3
+    ],
+    "fichier": "portraits/joseph-bonaparte.webp"
+  },
+  {
+    "id": "koutouzov",
+    "nom": "Koutouzov",
+    "dates": "1745-1813",
+    "note": "Pas de portrait de son vivant trouvé sur Commons (ceux de George Dawe et d'Oleszkiewicz datent des années 1820)."
+  },
+  {
+    "id": "laplace",
+    "nom": "Laplace",
+    "dates": "1749-1827",
+    "commons": "File:Portret van Pierre-Simon Laplace, RP-P-OB-63.930.jpg",
+    "auteur": "Gravure anonyme (Rijksmuseum)",
+    "date": "vers 1800",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_Pierre-Simon_Laplace,_RP-P-OB-63.930.jpg",
+    "cadre_visage": [
+      0.39,
+      0.19,
+      0.6,
+      0.42
+    ],
+    "fichier": "portraits/laplace.webp"
+  },
+  {
+    "id": "lejeune",
+    "nom": "Lejeune",
+    "dates": "1775-1848",
+    "commons": "File:Institut supérieur des arts de Toulouse - Portrait de Louis-François Lejeune - par Constantin Prévost - Inv 85.1.11.jpg",
+    "auteur": "Constantin Prévost",
+    "date": "XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Institut_sup%C3%A9rieur_des_arts_de_Toulouse_-_Portrait_de_Louis-Fran%C3%A7ois_Lejeune_-_par_Constantin_Pr%C3%A9vost_-_Inv_85.1.11.jpg",
+    "cadre_visage": [
+      0.22,
+      0.04,
+      0.77,
+      0.58
+    ],
+    "fichier": "portraits/lejeune.webp"
+  },
+  {
+    "id": "louis-bonaparte",
+    "nom": "Louis Bonaparte",
+    "dates": "1778-1846",
+    "commons": "File:LouisBonaparte Holland.jpg",
+    "auteur": "Charles Howard Hodges",
+    "date": "1809",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:LouisBonaparte_Holland.jpg",
+    "cadre_visage": [
+      0.43,
+      0.17,
+      0.54,
+      0.28
+    ],
+    "fichier": "portraits/louis-bonaparte.webp"
+  },
+  {
+    "id": "louis-xviii",
+    "nom": "Louis XVIII",
+    "dates": "1755-1824",
+    "commons": "File:Gérard - Louis XVIII of France in Coronation Robes.jpg",
+    "auteur": "François Gérard",
+    "date": "vers 1814",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:G%C3%A9rard_-_Louis_XVIII_of_France_in_Coronation_Robes.jpg",
+    "cadre_visage": [
+      0.59,
+      0.16,
+      0.71,
+      0.26
+    ],
+    "fichier": "portraits/louis-xviii.webp"
+  },
+  {
+    "id": "macpherson",
+    "nom": "James Macpherson",
+    "dates": "1736-1796",
+    "commons": "File:James Macpherson by George Romney.jpg",
+    "auteur": "George Romney",
+    "date": "vers 1779-1780",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:James_Macpherson_by_George_Romney.jpg",
+    "cadre_visage": [
+      0.26,
+      0.14,
+      0.6,
+      0.45
+    ],
+    "fichier": "portraits/macpherson.webp"
+  },
+  {
+    "id": "marie-antoinette",
+    "nom": "Marie-Antoinette",
+    "dates": "1755-1793",
+    "commons": "File:Louise Elisabeth Vigée-Lebrun - Marie-Antoinette dit « à la Rose » - Google Art Project.jpg",
+    "auteur": "Élisabeth Vigée Le Brun",
+    "date": "1783",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louise_Elisabeth_Vig%C3%A9e-Lebrun_-_Marie-Antoinette_dit_%C2%AB_%C3%A0_la_Rose_%C2%BB_-_Google_Art_Project.jpg",
+    "cadre_visage": [
+      0.39,
+      0.16,
+      0.55,
+      0.36
+    ],
+    "fichier": "portraits/marie-antoinette.webp"
+  },
+  {
+    "id": "marie-louise",
+    "nom": "Marie-Louise",
+    "dates": "1791-1847",
+    "commons": "File:L'impératriceMarie-Louise.jpg",
+    "auteur": "François Gérard",
+    "date": "1810",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:L%27imp%C3%A9ratriceMarie-Louise.jpg",
+    "cadre_visage": [
+      0.36,
+      0.16,
+      0.68,
+      0.5
+    ],
+    "fichier": "portraits/marie-louise.webp"
+  },
+  {
+    "id": "mehul",
+    "nom": "Méhul",
+    "dates": "1763-1817",
+    "commons": "File:Étienne-Henri Méhul, attribué à Antoine Gros, 1799.jpg",
+    "auteur": "Attribué à Antoine-Jean Gros",
+    "date": "1799",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:%C3%89tienne-Henri_M%C3%A9hul,_attribu%C3%A9_%C3%A0_Antoine_Gros,_1799.jpg",
+    "cadre_visage": [
+      0.24,
+      0.09,
+      0.6,
+      0.44
+    ],
+    "fichier": "portraits/mehul.webp"
+  },
+  {
+    "id": "minard",
+    "nom": "Charles Minard",
+    "dates": "1781-1870",
+    "note": "Pas de portrait libre identifié sur Commons."
+  },
+  {
+    "id": "moreau",
+    "nom": "Moreau",
+    "dates": "1763-1813",
+    "commons": "File:Général JEAN VICTOR MOREAU.jpg",
+    "auteur": "François Gérard",
+    "date": "vers 1797",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:G%C3%A9n%C3%A9ral_JEAN_VICTOR_MOREAU.jpg",
+    "cadre_visage": [
+      0.48,
+      0.14,
+      0.62,
+      0.24
+    ],
+    "fichier": "portraits/moreau.webp"
+  },
+  {
+    "id": "murat",
+    "nom": "Murat",
+    "dates": "1767-1815",
+    "commons": "File:Murat2.jpg",
+    "auteur": "François Gérard",
+    "date": "vers 1808",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Murat2.jpg",
+    "cadre_visage": [
+      0.26,
+      0.07,
+      0.7,
+      0.5
+    ],
+    "fichier": "portraits/murat.webp"
+  },
+  {
+    "id": "ney",
+    "nom": "Ney",
+    "dates": "1769-1815",
+    "commons": "File:Marechal Ney.jpg",
+    "auteur": "François Gérard",
+    "date": "vers 1805",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Marechal_Ney.jpg",
+    "cadre_visage": [
+      0.33,
+      0.11,
+      0.64,
+      0.48
+    ],
+    "fichier": "portraits/ney.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "percier",
+    "nom": "Percier",
+    "dates": "1764-1838",
+    "commons": "File:Charles Percier par Robert Lefèvre - Château de Versailles.jpg",
+    "auteur": "Robert Lefèvre",
+    "date": "1807",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_Percier_par_Robert_Lef%C3%A8vre_-_Ch%C3%A2teau_de_Versailles.jpg",
+    "cadre_visage": [
+      0.34,
+      0.13,
+      0.69,
+      0.48
+    ],
+    "fichier": "portraits/percier.webp"
+  },
+  {
+    "id": "pichegru",
+    "nom": "Pichegru",
+    "dates": "1761-1804",
+    "commons": "File:Portret van generaal Charles Pichegru, RP-P-1906-1749.jpg",
+    "auteur": "Gravure anonyme (Rijksmuseum)",
+    "date": "1795",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_generaal_Charles_Pichegru,_RP-P-1906-1749.jpg",
+    "cadre_visage": [
+      0.37,
+      0.18,
+      0.67,
+      0.44
+    ],
+    "fichier": "portraits/pichegru.webp"
+  },
+  {
+    "id": "pie-vii",
+    "nom": "Pie VII",
+    "dates": "1742-1823",
+    "commons": "File:Jacques-Louis David 018.jpg",
+    "auteur": "Jacques-Louis David",
+    "date": "1805",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jacques-Louis_David_018.jpg",
+    "cadre_visage": [
+      0.35,
+      0.19,
+      0.64,
+      0.45
+    ],
+    "fichier": "portraits/pie-vii.webp"
+  },
+  {
+    "id": "prudhon",
+    "nom": "Prud'hon",
+    "dates": "1758-1823",
+    "commons": "File:Pierre Paul Prudhon Selbstporträt.jpg",
+    "auteur": "Pierre-Paul Prud'hon (autoportrait)",
+    "date": "vers 1788-1790",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pierre_Paul_Prudhon_Selbstportr%C3%A4t.jpg",
+    "cadre_visage": [
+      0.46,
+      0.15,
+      0.72,
+      0.58
+    ],
+    "fichier": "portraits/prudhon.webp"
+  },
+  {
+    "id": "racine",
+    "nom": "Racine",
+    "dates": "1639-1699",
+    "commons": "File:Portrait de Jean Racine d'après Jean-Baptiste Santerre.jpg",
+    "auteur": "D’après Jean-Baptiste Santerre",
+    "date": "XVIIe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Jean_Racine_d%27apr%C3%A8s_Jean-Baptiste_Santerre.jpg",
+    "cadre_visage": [
+      0.37,
+      0.11,
+      0.56,
+      0.45
+    ],
+    "fichier": "portraits/racine.webp"
+  },
+  {
+    "id": "rostopchine",
+    "nom": "Rostopchine",
+    "dates": "1763-1826",
+    "commons": "File:Orest Kiprensky 006.jpeg",
+    "auteur": "Oreste Kiprensky",
+    "date": "1809",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Orest_Kiprensky_006.jpeg",
+    "cadre_visage": [
+      0.35,
+      0.16,
+      0.68,
+      0.49
+    ],
+    "fichier": "portraits/rostopchine.webp"
+  },
+  {
+    "id": "rowlandson",
+    "nom": "Rowlandson",
+    "dates": "1756-1827",
+    "commons": "File:Thomas Rowlandson portrait.jpg",
+    "auteur": "George Henry Harlow",
+    "date": "1814",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Thomas_Rowlandson_portrait.jpg",
+    "cadre_visage": [
+      0.41,
+      0.11,
+      0.72,
+      0.38
+    ],
+    "fichier": "portraits/rowlandson.webp"
+  },
+  {
+    "id": "savary",
+    "nom": "Savary",
+    "dates": "1774-1833",
+    "commons": "File:Savary peinture.jpg",
+    "auteur": "Robert Lefèvre",
+    "date": "1814",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Savary_peinture.jpg",
+    "cadre_visage": [
+      0.33,
+      0.1,
+      0.69,
+      0.47
+    ],
+    "fichier": "portraits/savary.webp"
+  },
+  {
+    "id": "spontini",
+    "nom": "Spontini",
+    "dates": "1774-1851",
+    "commons": "File:Aubry-Lecomte - Spontini (cropped).jpg",
+    "auteur": "Jean-Baptiste Aubry-Lecomte (lithographie)",
+    "date": "XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Aubry-Lecomte_-_Spontini_(cropped).jpg",
+    "cadre_visage": [
+      0.38,
+      0.2,
+      0.59,
+      0.48
+    ],
+    "fichier": "portraits/spontini.webp"
+  },
+  {
+    "id": "thilorier",
+    "nom": "Thilorier",
+    "dates": "1755-1818",
+    "note": "Pas de portrait connu sur Commons."
+  },
+  {
+    "id": "toussaint-louverture",
+    "nom": "Toussaint Louverture",
+    "dates": "1743-1803",
+    "commons": "File:Toussaint Louverture - Général en Chef à S.t Domingue - estampe - Bonneville del. et Sculp. - btv1b8413165z.jpg",
+    "auteur": "François Bonneville (estampe)",
+    "date": "1802",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Toussaint_Louverture_-_G%C3%A9n%C3%A9ral_en_Chef_%C3%A0_S.t_Domingue_-_estampe_-_Bonneville_del._et_Sculp._-_btv1b8413165z.jpg",
+    "cadre_visage": [
+      0.39,
+      0.3,
+      0.63,
+      0.46
+    ],
+    "fichier": "portraits/toussaint-louverture.webp"
+  },
+  {
+    "id": "villeneuve",
+    "nom": "Villeneuve",
+    "dates": "1763-1806",
+    "note": "Seul portrait sur Commons de 485 px, sans auteur ni date : non retenu."
+  },
+  {
+    "id": "wellington",
+    "nom": "Wellington",
+    "dates": "1769-1852",
+    "commons": "File:Sir Arthur Wellesley, 1st Duke of Wellington.jpg",
+    "auteur": "Thomas Lawrence",
+    "date": "vers 1815-1816",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Sir_Arthur_Wellesley,_1st_Duke_of_Wellington.jpg",
+    "cadre_visage": [
+      0.3,
+      0.15,
+      0.57,
+      0.41
+    ],
+    "fichier": "portraits/wellington.webp"
   }
 ]

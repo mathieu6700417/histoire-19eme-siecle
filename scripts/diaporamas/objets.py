@@ -213,7 +213,7 @@ def planche() -> None:
                 h = o['halo']
                 ImageDraw.Draw(f).rectangle([ox + h[0] * im.width, oy + h[1] * im.height, ox + h[2] * im.width, oy + h[3] * im.height], outline=(220, 0, 0), width=2)
             P.paste(f, (x, y))
-        d.text((4, y + T + 4), f"{o['id']} — {o['nom'][:70]} ({o['date']}, {o['musee']})", fill='black')
+        d.text((4, y + T + 4), f"{o['id']} - {o['nom'][:70]} ({o['date']}, {o['musee']})", fill='black')
     CACHE.mkdir(parents=True, exist_ok=True)
     P.save(CACHE / 'planche.jpg', quality=85)
     print(f"planche : {(CACHE / 'planche.jpg').relative_to(c.RACINE)}")

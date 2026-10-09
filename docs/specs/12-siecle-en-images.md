@@ -392,6 +392,8 @@ Décisions de l'utilisateur, relayées par la session qui a produit le pilote :
 - **Images violentes gardées** quand elles documentent les faits (massacres, exécutions), sans
   complaisance dans la narration.
 - **Lectures d'époque à voix de femme** (Gemini, voix Aoede) par défaut dans `voix.py`.
+- **Lieu de conservation introuvable** (2026-10-08) : on écrit « lieu de conservation non
+  identifié » plutôt que d'avancer un lieu sans source.
 - **Production des 8 autres périodes une par une**, pas en parallèle : chacune est regardée
   par l'utilisateur avant la suivante.
 

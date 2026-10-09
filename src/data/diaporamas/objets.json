@@ -214,5 +214,55 @@
     "fichier": "manuscrits/appel-section-piques.webp",
     "largeur": 911,
     "hauteur": 1400
+  },
+  {
+    "id": "cinq-francs-an-xiii",
+    "type": "objet",
+    "nom": "Pièce de cinq francs, revers « République française »",
+    "date": "an XIII (1805)",
+    "musee": "Musée Carnavalet",
+    "inventaire": "NM1825",
+    "commons": "File:Cinq francs Napoléon, an XIII (1805), NM1825(2).jpg",
+    "detourage": "convexe",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Cinq_francs_Napol%C3%A9on,_an_XIII_(1805),_NM1825(2).jpg",
+    "fichier": "objets/cinq-francs-an-xiii.webp",
+    "largeur": 720,
+    "hauteur": 712
+  },
+  {
+    "id": "main-de-justice-sacre",
+    "type": "objet",
+    "nom": "Sommet de la main de justice du sacre, par Biennais",
+    "date": "1804",
+    "musee": "Musée du Louvre",
+    "inventaire": "MS 85",
+    "commons": "File:Main Justice Louvre.jpg",
+    "licence": "Domaine public",
+    "page": "https://commons.wikimedia.org/wiki/File:Main_Justice_Louvre.jpg",
+    "fichier": "objets/main-de-justice-sacre.webp",
+    "largeur": 222,
+    "hauteur": 720
+  },
+  {
+    "id": "acte-additionnel",
+    "type": "manuscrit",
+    "nom": "Acte additionnel aux constitutions de l'Empire",
+    "date": "1815",
+    "musee": "Musée Carnavalet",
+    "inventaire": "G.34292",
+    "commons": "File:Acte additionnel aux constitutions de l'Empire. G.34292.jpg",
+    "halo": [
+      0.38,
+      0.366,
+      0.625,
+      0.398
+    ],
+    "passage": "Acte additionnel aux constitutions de l'Empire",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Acte_additionnel_aux_constitutions_de_l%27Empire._G.34292.jpg",
+    "fichier": "manuscrits/acte-additionnel.webp",
+    "largeur": 1029,
+    "hauteur": 1400
   }
 ]
