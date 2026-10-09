@@ -24,7 +24,8 @@ Frise du temps : `date` (et `date_fin` facultatif) au format AAAA, AAAA-MM ou AA
 réelle, `date_fin` postérieure à `date`, dans la période de la frise (de la première année du
 premier acte à la dernière année du dernier acte), date de la diapositive 1 obligatoire (une
 diapositive sans date reprend celle de la précédente). Les retours en arrière sont listés en
-avertissement (pour relecture) ; le nombre de surimpressions de la frise est affiché.
+avertissement (pour relecture) ; le nombre d'apparitions de la frise en bas de l'image
+(changement d'année ou retour en arrière, hors cartons d'acte) est affiché.
 Musique (si le champ `musique` existe ; voir musique.py) : chaque fichier présent, licence relevée
 par musique.py pour la source actuelle et admise (domaine public, CC0, CC BY, CC BY-SA ; jamais
 NC ni ND), crédits complets (titre, compositeur ou auteur, date, interprète, licence, source),
@@ -132,7 +133,6 @@ def pause_apres(x: dict) -> float:
 
 
 CHAMPS = ('titre', 'auteur', 'date', 'technique', 'conservation')
-SAUT_JOURS = 92  # frise : saut notable vers l'avant au-delà de 3 mois (même valeur que diaporamas.ts)
 MOIS = ('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre',
         'octobre', 'novembre', 'décembre')
 
@@ -168,7 +168,9 @@ def libelle_date(texte: str) -> str:
 
 def controler_dates(d: dict) -> tuple[list[str], list[str], list[int]]:
     """Dates de la frise : erreurs, avertissements (retours en arrière) et numéros des
-    diapositives où la frise s'affiche en surimpression (saut notable hors carton d'acte)."""
+    diapositives où la frise s'affiche en bas de l'image, hors carton d'acte : changement d'année
+    (année de début) ou retour en arrière (spec 12, frise simplifiée du 2026-10-09 ; même règle
+    que `changeFrise` dans Diaporama.astro)."""
     erreurs, avert, surimpressions = [], [], []
     annees = [int(a) for acte in d['actes'] for a in re.findall(r'\b1[789]\d\d\b', acte.get('dates') or '')]
     premier = re.findall(r'\b1[789]\d\d\b', d['actes'][0].get('dates') or '') if d['actes'] else []
@@ -207,7 +209,7 @@ def controler_dates(d: dict) -> tuple[list[str], list[str], list[int]]:
         if prec:
             if b[1] < prec[1]:
                 avert.append(f'{p} : retour en arrière ({prec[3]}, diapositive {prec[0]} → {lib})')
-            if x['n'] not in debuts_actes and (b[1] < prec[1] or (b[0] - prec[2]).days > SAUT_JOURS):
+            if x['n'] not in debuts_actes and (b[1] < prec[1] or b[0].year != prec[1].year):
                 surimpressions.append(x['n'])
         prec = (x['n'], b[0], b[1], lib)
     return erreurs, avert, surimpressions
@@ -880,7 +882,7 @@ def controler_objets(d: dict) -> tuple[list[str], list[str], int, int, int]:
                     avert.append(f"{p} : manuscrit raccourci à {F['manuscrit'][1] - F['manuscrit'][0]:.1f} s")
             else:
                 avert.append(f'{p} : manuscrit omis faute de place (citation)')
-        # Deux surimpressions au plus à la fois (la frise du temps, éphémère, cède à l'exécution).
+        # Deux surimpressions au plus à la fois (la frise du temps, hors du compte, s'affiche toujours et pousse les autres plus haut).
         fins = (a.get('duree') or 6) + pause_apres(x)
         actives = {k: v for k, v in F.items() if v}
         pire, quand_pire = 0, 0.0
@@ -1313,7 +1315,7 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
             elif not (dossier / (po.get('fichier') or '')).is_file():
                 erreurs.append(f'{q} : portrait absent ({po.get("fichier")})')
         else:
-            avert.append(f'{q} : pas de portrait (initiale affichée)')
+            avert.append(f'{q} : pas de portrait (carte sans portrait, texte seul)')
         r = po.get('cadre')
         if r is not None and not (len(r) == 4 and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
             erreurs.append(f'{q} : cadre du portrait invalide ({r})')
@@ -1383,6 +1385,14 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
                 if not str(v.get('source') or '').strip():
                     erreurs.append(f'{qv} : source de la carte manquante')
                 quands += [x.get('quand') for x in v.get('elements', [])]
+                for x in v.get('elements', []):
+                    te = x.get('type')
+                    if te not in ('ville', 'fleche', 'zone', 'trait'):
+                        erreurs.append(f'{qv} : élément de carte inconnu ({te})')
+                    elif te == 'zone' and not all(len(r) >= 3 for r in (x.get('parties') or [x.get('points') or []])):
+                        erreurs.append(f"{qv} : zone « {x.get('libelle', '')} » : anneau de moins de 3 points")
+                    elif te == 'trait' and len(x.get('points') or []) < 2:
+                        erreurs.append(f'{qv} : trait de moins de 2 points')
             elif tv == 'document':
                 im = v.get('image') or {}
                 cle = f"{e['_cle']}:{k}"
@@ -1725,7 +1735,7 @@ def verifier(slug: str) -> bool:
         print(f"Avant/après et mosaïques : {n_ap} avant/après (diapositives {', '.join(str(x['n']) for x in diapos if x['image'].get('apres'))}), "
               f"{n_mos} mosaïque(s) (diapositives {', '.join(str(x['n']) for x in diapos if x.get('mosaique'))}).")
     datees = sum(1 for x in diapos if 'date' in x)
-    print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} surimpression(s) '
+    print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} apparition(s) en bas de l\'image '
           f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")
     for a in avert:
         print(f'  avertissement {a}')

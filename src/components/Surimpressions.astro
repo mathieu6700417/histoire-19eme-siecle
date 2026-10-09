@@ -107,7 +107,7 @@ for (const x of d.diapositives) {
   .lieu {
     position: absolute;
     right: var(--marge-x, var(--e-2));
-    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--marge-y, var(--e-2)));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + var(--marge-y, var(--e-2)));
     z-index: 2;
     padding: 0.3rem 0.3rem 0.25rem;
     background: rgba(251, 250, 247, 0.95);
@@ -223,7 +223,7 @@ for (const x of d.diapositives) {
     --ovale-h: 96px;
     position: absolute;
     left: var(--marge-x, var(--e-2));
-    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--marge-y, var(--e-2)));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + var(--marge-y, var(--e-2)));
     z-index: 2;
     display: flex;
     align-items: flex-start;
@@ -304,7 +304,7 @@ for (const x of d.diapositives) {
     --objet-l: 150px;
     position: absolute;
     right: var(--marge-x, var(--e-2));
-    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--marge-y, var(--e-2)));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + var(--marge-y, var(--e-2)));
     z-index: 2;
     margin: 0;
     padding: 0;
@@ -397,7 +397,7 @@ for (const x of d.diapositives) {
   .mots {
     position: absolute;
     left: 50%;
-    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + 7%);
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + 7%);
     z-index: 2;
     width: max-content;
     max-width: min(46rem, calc(100% - 2 * var(--e-3)));
@@ -408,13 +408,13 @@ for (const x of d.diapositives) {
     opacity: 0;
     visibility: hidden;
     transform: translate(-50%, 4px);
-    transition: opacity 700ms ease, transform 700ms ease, visibility 0s linear 700ms;
+    transition: opacity 700ms ease, transform 700ms ease, visibility 0s linear 700ms, bottom 500ms ease;
   }
   .mots.est-visible {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, 0);
-    transition: opacity 300ms ease, transform 500ms ease, visibility 0s;
+    transition: opacity 300ms ease, transform 500ms ease, visibility 0s, bottom 500ms ease;
   }
   .mots__texte {
     margin: 0;
@@ -450,7 +450,7 @@ for (const x of d.diapositives) {
     --chiffre-t: 4.2rem;
     position: absolute;
     left: 50%;
-    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--chiffre-bas, 7%));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + var(--chiffre-bas, 7%));
     z-index: 2;
     width: max-content;
     max-width: calc(100% - 2 * var(--e-3));
@@ -506,7 +506,7 @@ for (const x of d.diapositives) {
   .date-rep {
     position: absolute;
     left: 50%;
-    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--e-2));
+    bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + var(--e-2));
     z-index: 2;
     width: max-content;
     max-width: calc(100% - 2 * var(--e-2));
@@ -538,14 +538,14 @@ for (const x of d.diapositives) {
   .date-rep__sep { color: #6a6862; }
 
   @media (max-width: 699px) {
-    .chiffre { padding: 0.35rem 1.6rem 0.4rem; bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--chiffre-bas, 6%)); max-width: calc(100% - 2 * var(--e-1)); }
+    .chiffre { padding: 0.35rem 1.6rem 0.4rem; bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + var(--chiffre-bas, 6%)); max-width: calc(100% - 2 * var(--e-1)); }
     .chiffre__prefixe { font-size: 0.78rem; }
     .chiffre__unite { font-size: 0.86rem; }
-    .date-rep { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--e-1)); font-size: 0.8rem; padding: 0.12rem 0.6rem 0.16rem; letter-spacing: 0.04em; max-width: calc(100% - 2 * var(--e-1)); }
+    .date-rep { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + var(--e-1)); font-size: 0.8rem; padding: 0.12rem 0.6rem 0.16rem; letter-spacing: 0.04em; max-width: calc(100% - 2 * var(--e-1)); }
     .lieu { padding: 0.2rem; }
     .lieu__nom { font-size: 0.82rem; }
     .lieu :global(.lieu__etiquette) { font-size: 0.64rem; max-width: 7.5em; }
-    .mots { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + 5%); max-width: calc(100% - 2 * var(--e-1)); padding: 0.4rem 0.8rem 0.45rem; }
+    .mots { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + 5%); max-width: calc(100% - 2 * var(--e-1)); padding: 0.4rem 0.8rem 0.45rem; }
     .mots__texte { font-size: 1.12rem; }
     .mots__auteur { font-size: 0.85rem; }
     .portraits { gap: 0.35rem; padding: 0.25rem 0.3rem 0.2rem; }

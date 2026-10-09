@@ -132,6 +132,8 @@ python3 scripts/diaporamas/verifier.py --tous
 
 ## Procédure pour une période
 
+0. Lire la spec 12, « Produire une période : leçons de Consulat et Empire » : enrichissements,
+   épisodes, cartes animées et générique se prévoient dès l'étape 1.
 1. Écrire `src/data/diaporamas/NN-<slug>.json` (format dans la spec 12) : actes, narrations,
    fichiers Commons (vérifiés avec `--infos`), métadonnées de notice.
    Chaque acte porte `dates` (« 1787-1789 », « juillet-octobre 1789 » : trait d'union sans
@@ -224,9 +226,13 @@ python3 scripts/diaporamas/verifier.py --tous
   négatifs de `__camera(n, t)` (−3,5 à 0) : l'ouverture, avant la voix.
 - **Tenues longues** : une tenue de plus de 7 s sur un même cadre déclenche une relance du
   modèle (texte dit pendant la tenue à l'appui) pour une étape de plus, seulement si la voix
-  nomme alors un élément visible. Sinon, le lecteur fait « respirer » l'image : resserrement à
-  sens unique de 4 % au plus (0,5 % par seconde au plus), glissement d'un tiers de la marge,
-  arrêt doux en fin de tenue. `camera.py` refuse désormais, dès la proposition du modèle, un
+  nomme alors un élément visible. Sinon, le lecteur fait « respirer » l'image.
+- **Zoom lent continu** (spec 12, « Caméra plus vivante et cadres justes », 2026-10-09 ; `souffle`) :
+  pendant chaque tenue, zoom avant à sens unique de 1,2 % par seconde (0,012 en log d'échelle), 12 %
+  au plus (×1,12, atteint après ~10 s de tenue), mise en route et arrêt doux de 1,2 s (la moitié
+  de la tenue au plus) ; glissement vers le centre du cadre visé (le sujet), borné à la marge
+  libre : la vue zoomée reste dans la vue de départ, donc dans la zone utile. `plan` compte le
+  départ zoomé pour tenir les plafonds de vitesse de la transition suivante. `camera.py` refuse désormais, dès la proposition du modèle, un
   passage à moins de 5 s du précédent et un micro-déplacement (contrôles hors empreinte : les
   caméras en cache ne sont pas recalculées).
 - Le lecteur montre le cadre en entier **sous le cartouche** (en haut à gauche) et, en plein
@@ -240,6 +246,35 @@ python3 scripts/diaporamas/verifier.py --tous
   avec `performance.now()` × `playbackRate` ; l'écart est résorbé en modulant la vitesse de ±5 % au
   plus ; jamais de recul ni de saut ; en pause, après un saut ou au départ, l'instant de l'audio
   exactement. `__instant()` donne l'instant lissé et brut (tests).
+- **Vue réelle, cause des cadres faux** (diagnostic du 2026-10-09) : la partie libre de la scène,
+  sous le cartouche et au-dessus des bandeaux, est une **bande panoramique** (~2,6:1 sur ordinateur,
+  ~2,3:1 en plein écran 16/9), pas un écran 16/10. Sur une image en hauteur, seule une bande de
+  ~20 à 36 % de la hauteur est visible, et un cadre plus haut est montré **depuis son bord
+  supérieur** : le bas du sujet disparaît (*La Thilorière* : le haut du ballon). Pire, deux cadres
+  différents ainsi coupés donnent la même vue : le lecteur ignore la seconde étape
+  (micro-déplacement) et la caméra ne bouge plus. L'audit du 2026-10-09 trouvait ~100 diapositives
+  avec une étape ignorée et ~146 sur 241 avec au moins un défaut grave.
+- **Règle des cadres justes** (`camera.py`, `VERSION = 'v3'`) : `vue_reelle` reproduit `vue` du
+  lecteur (bande `RATIO_VUE = 2.5`, bandeaux de 20 % et 15 % de la vue, coupe par le haut) ; le
+  modèle reçoit la zone utile, la hauteur maximale d'une vue et la liste des visages ; le contrôle
+  refuse (1) un cadre dont la vue montre moins de 80 % de la hauteur ou de la largeur (sujet
+  entier ; seule une vue d'ensemble de départ suivie d'autres étapes en est dispensée) ; (2) une
+  dernière vue à plus de 75 % sans détail (gradient faible : ciel, fond uni, marge ; mesure
+  grossière, des ciels gravés passent pour unis : relire) ; (3) **un visage coupé** : chaque
+  visage de 3 % de la hauteur de l'image au moins est entier dans la vue (90 % de son aire) ou
+  franchement dehors (10 % au plus), au début de la tenue et au bout du zoom lent ; (4) un
+  micro-déplacement jugé sur les vues, non sur les cadres. La relecture montre au modèle les vues
+  découpées telles qu'à l'écran. Une caméra v1/v2 en cache reste valable si elle passe ces
+  contrôles (sauf la mesure d'aplat, faite à la relecture et par `--audit`).
+- **Visages** : `camera.py <slug> --visages` les relève une fois par image (Gemini, en cache dans
+  `visages.json` par empreinte du fichier ; `cadrer` le fait au besoin). Schéma à clés nommées
+  (`gauche`, `haut`, `droite`, `bas`) : avec une liste `[x0, y0, x1, y1]`, Gemini rendait sa
+  convention `[y0, x0, y1, x1]`. Coût réel : ~0,004 $ par image (jetons de réflexion).
+- **Contrôle sans appel** : `camera.py <slug> --audit` liste les diapositives fautives (vues,
+  visages, aplat, étapes que le lecteur ignorerait) ; `--planche --n 4 20` fait une planche de ces
+  diapositives seules (`planche-choix-NN.jpg`). Les planches dessinent désormais les vues réelles
+  en pointillé (couleur de l'étape) et les visages contrôlés en blanc : c'est la vue en pointillé
+  qu'il faut juger, pas le cadre en trait plein.
 - Taille minimale : porté aux proportions 16/10, un cadre fait au moins 30 % du plus grand
   côté de l'image (`camera.ajuster`) ; `verifier.py` tolère 25 % pour les corrections à la main.
 - **Correction à la main** : modifier les étapes et ajouter `"camera_manuelle": true` à la
@@ -247,7 +282,8 @@ python3 scripts/diaporamas/verifier.py --tous
   corrigent ainsi, ou par `camera.py <slug> --n 12` si un nouvel essai du modèle suffit.
 - Le cache (`camera.json`) garde la réponse du modèle par empreinte (narration, image,
   consignes) : changer les consignes demande d'incrémenter `VERSION` dans `camera.py`.
-- Coût indicatif : ~2 appels par diapositive (proposition + relecture), environ 0,01 $ par
+- Coût mesuré en v3 (2026-10-09) : ~0,015 à 0,02 $ par diapositive (3 à 4 appels, vues découpées
+  en relecture). Ancien chiffre : ~2 appels par diapositive (proposition + relecture), environ 0,01 $ par
   diapositive, soit ~1 $ par période (tarif Gemini Flash supposé, à confirmer sur la facture).
 
 ## Frise du temps : dates des diapositives
@@ -262,14 +298,34 @@ python3 scripts/diaporamas/verifier.py --tous
   « 21 septembre – 11 décembre 1792 ». Préférer des bornes de même précision
   (`1793-06` → `1793-10` plutôt que `1793-06` → `1793-10-09`).
 - Échelle de la frise : du 1er janvier de la première année du premier acte au 31 décembre de
-  la dernière année du dernier acte (les `dates` des actes). Segments des actes : de la date de
-  leur première diapositive à celle de l'acte suivant.
-- Affichage : dans chaque carton d'acte (glissement depuis la date précédente) et en
-  surimpression 3,6 s quand la date saute de plus de 92 jours en avant ou revient en arrière
-  (intervalle entièrement antérieur au début du précédent). `verifier.py` contrôle format et
-  période, liste les retours en arrière en avertissement et compte les surimpressions : en
-  viser peu (une dizaine par période) ; un retour en arrière d'une diapositive de contexte
-  se règle souvent en omettant sa date ou en la datant au mois.
+  la dernière année du dernier acte (les `dates` des actes).
+- Dessin (frise simplifiée du 2026-10-09), le même dans le carton et en bas de l'image : un
+  filet fin, la première et la dernière année aux extrémités, une petite graduation par année
+  sans étiquette, le curseur (trait fin, ou court segment pour une durée) et sa date au-dessus
+  (`libelleDate`). Plus de segments d'actes ni d'années intermédiaires. Monochrome ; sur
+  téléphone, même dessin pleine largeur.
+- Carton d'acte : la même frise, sans curseur ni date, avec l'intervalle de l'acte en segment
+  noir épais (de la première à la dernière date de ses diapositives, `poserActe`), en fondu ;
+  6 px au moins, centré sur l'intervalle.
+- Affichage en bas de l'image : pendant 4 s (fondu, glissement ~1 s, lecture, fondu de 0,6 s) à chaque
+  **changement d'année** (année de début de la date) par rapport à la diapositive précédente
+  et à tout **retour en arrière** (intervalle entièrement antérieur au début du précédent) ;
+  rien pendant les lectures, épisodes et chants. Mouvement réduit : fondus courts, sans
+  glissement. `verifier.py` contrôle format et période, liste les retours en arrière en
+  avertissement et compte les apparitions en bas de l'image (Révolution : 16 ; Consulat et
+  Empire : 10) ; un retour en arrière d'une diapositive de contexte se règle souvent en omettant
+  sa date ou en la datant au mois.
+- Priorité : la frise **s'affiche toujours** ; elle prend le bas de l'image (au-dessus des
+  autres, z-index 3) et pousse les autres surimpressions du bas qui la chevauchent en largeur
+  (médaillon, portraits, objet, chiffre, date républicaine, citation ; classe `sous-frise` posée
+  par `majPoussee` à chaque image tant qu'elle est là : sur ordinateur, les coins restent en
+  place ; sur téléphone, tout monte) de sa hauteur plus 8 px, en douceur (500 ms), le temps
+  de son passage : variable `--frise-pousse` posée sur ces éléments par `:has()` et ajoutée à leur
+  `bottom`, hauteur mesurée (`--frise-h`). Elle n'entre pas dans la règle des deux
+  surimpressions ; la place réservée pour la caméra l'ignore (éphémère).
+- Piège corrigé le 2026-10-09 : la date républicaine des surimpressions s'appelle `dateRep`
+  dans les données du lecteur ; sous le nom `date`, elle écrasait la date de la frise (carton
+  sans curseur, frise du bas jamais montrée).
 
 ## Voix : pièges connus
 
@@ -457,13 +513,15 @@ contrôle.
   (mot en cours noir, mots lus gris foncé, suivants invisibles mais à leur place ; défilement
   doux si le texte dépasse) ; bandeau inférieur (nom, dates, nature, *œuvre*, année, crédit du
   portrait). Mouvement réduit : apparition par phrase. Téléphone : portrait en vignette au-dessus.
+  Poème (`poeme`, ou texte contenant des `\n`) : un vers par ligne (`.citation__vers`), retrait
+  suspendu pour un vers trop long, en italique ; le surlignage mot à mot est inchangé.
 - Voix de lecture (`VOIX_LECTURE` dans `voix.py`, ou `DIAPORAMAS_VOIX_LECTEUR` /
   `DIAPORAMAS_VOIX_LECTRICE`) : `Schedar` (homme) et `Aoede` (femme), **choix provisoire** ;
   essais à écouter dans `.cache/diaporamas/essais-voix-lecture/`. Changer de voix change
   l'empreinte : `voix.py` refait les lectures concernées.
 - `portrait` : `diapositive` (image d'une diapositive, recadrée sur `cadre`, le visage) ou
   `commons` (fichier propre, licence relevée par `images.py`, `lectures/<id>.webp`, 640 px).
-  Sans portrait, la carte montre l'initiale.
+  Sans portrait, rien à sa place : le texte occupe toute la largeur (pas d'initiale).
 - Durée visée : 20 à 40 s (60 à 100 mots environ).
 
 **Épisodes.**
@@ -477,12 +535,23 @@ contrôle.
   `libelle`, `accent`), `barres` (`max`, `barres` : `valeur`, `affichage`, `note`, `accent`),
   `courbe` (`points` [date ISO, valeur], `ymax`, `reperes` : `date` d'un point, `libelle`,
   `etiquette` [dx, dy], `ancre` ; le tracé atteint chaque repère quand la voix le nomme),
-  `carte` (`fond`, `elements` : `ville` (`lieu` [lon, lat], `capitale`, `rebelle`, `position`),
-  `fleche` (`de`, `a`), `zone` (`points`), `legende`), `document` (`image` Commons, licence
+  `carte` (`fond`, `cadre` facultatif [lon0, lat0, lon1, lat1] qui recadre le fond en gardant la
+  taille apparente des libellés et des traits, `elements` : `ville` (`lieu` [lon, lat], `capitale`,
+  `rebelle`, `position`), `fleche` (`de`, `a`), `zone` (`points`, ou `parties` : plusieurs anneaux ;
+  `style` : `hachures` par défaut, `plein` gris foncé, `clair` gris moyen ; `libelle` facultatif,
+  `\n` pour aller à la ligne ; `etiquette` [lon, lat] pour le placer ; la zone est **découpée sur
+  les terres** du fond : ses points en mer peuvent rester larges, seules les frontières terrestres
+  comptent), `trait` (`points` : ligne qui se dessine, ex. un fleuve ; `libelle`, `etiquette`),
+  `legende` : `[signe, libellé]`, signes `fleche`, `rebelle`, `zone`, `plein`, `clair`, `trait`),
+  `document` (`image` Commons, licence
   relevée par `images.py`, `episodes/<id>.webp` en 2 400 px ; `lignes` : `cadre` [x0, y0, x1, y1]
   de la ligne dans l'image, `texte` exact relevé sur le fac-similé, `quand`).
 - Chiffres, graphiques et cartes portent une `source` (affichée sous le visuel) ; `sources` de
   l'épisode : affichées dans le livre d'images.
+- Frontières d'époque (ex. l'Europe de 1811, épisode `grand-empire`) : anneaux tracés à la main
+  (20 à 80 points sur terre), assemblés à partir de **lignes de frontière partagées** (un même
+  tracé pour les deux voisins : ni jour ni chevauchement), source notée dans `source` ; contrôle
+  par une image des zones superposées au fond, comparée à une carte de référence.
 - Fonds de carte : `carte.py` (Natural Earth 1:50 m, domaine public ; projection
   équirectangulaire corrigée, cadre et fleuves dans `FONDS`). Les éléments sont donnés en
   [longitude, latitude].
@@ -652,8 +721,8 @@ lieux ; à relancer après toute nouvelle voix.
 - **surimpressions ensemble**, par ordre de priorité : citation > portraits = médaillon de lieu >
   frise du temps. La citation exclut déjà le médaillon (arbitrage existant) ; avec des portraits,
   si elle touche la rangée, elle monte au-dessus d'elle pour toute la diapositive (rien ne bouge
-  pendant la lecture) ; la frise du temps cède (masquée) quand médaillon et portraits sont là
-  ensemble, et sinon les portraits montent au-dessus d'elle comme le médaillon ; sur téléphone, le
+  pendant la lecture) ; la frise du temps, elle, ne cède plus (révision du 2026-10-09) : elle
+  pousse les autres plus haut ; sur téléphone, le
   cartouche de la musique (même bande du bas) s'efface le temps des portraits ;
 - crédits : section « Portraits » de la page (nom, dates, auteur, date, lien Commons, licence).
 
@@ -713,7 +782,7 @@ signature ou la phrase, relevé à la main sur l'image quadrillée et vérifié 
   de lieu > objet > frise du temps. Le manuscrit ne se montre jamais avec la citation, ni quand
   médaillon et portraits sont déjà là ensemble (raccourci à 5 s au moins ou reporté) ; l'objet cède à
   la citation, au manuscrit, à la surimpression de son coin et à tout moment où deux autres sont là
-  (raccourci à 3,5 s au moins, reporté ou omis) ; la frise cède dès que deux autres sont visibles ;
+  (raccourci à 3,5 s au moins, reporté ou omis) ; la frise ne cède plus (révision du 2026-10-09) : elle pousse les autres plus haut ;
 - affichage dérivé de l'instant lissé de l'audio (pause, reprise, sauts justes).
 
 `verifier.py` : registre (champs, fichier, licence, crédit CC BY, halo, passage), mentions (une de
@@ -866,7 +935,7 @@ année seule : la date de la diapositive doit y tomber).
 - **priorités** : citation > manuscrit > portraits = médaillon de lieu > objet ≥ chiffre > date > frise
   du temps. Le chiffre et la date ne se montrent jamais avec la citation ; ils n'entrent pas quand deux
   autres surimpressions sont déjà là (raccourcis, reportés ou omis) ; l'objet, placé avant, garde sa
-  fenêtre ; la frise cède dès que deux autres sont visibles ;
+  fenêtre ; la frise ne cède plus (révision du 2026-10-09) : elle pousse les autres plus haut ;
 - mouvement réduit : ni défilement ni montée, fondu de 200 ms.
 
 `verifier.py` : champs, `quand` exacts, nombre du `quand` égal à `valeur`, prudence reprise, unité et

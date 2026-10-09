@@ -249,12 +249,17 @@ export type VisuelEpisode =
    *  clair » (valeur tirée de `points` et de `unite_point`, ou `libelle` rédigé en clair), placé
    *  automatiquement sans toucher la courbe ni les axes. */
   | ({ type: 'courbe'; titre: string; unite: string; unite_point?: string; ymax: number; points: [string, number][]; reperes: ({ date: string; libelle?: string } & Quand)[]; source: string } & Quand)
-  | ({ type: 'carte'; fond: string; titre: string; elements: ElementCarte[]; legende?: [string, string][]; source: string } & Quand)
+  | ({ type: 'carte'; fond: string; titre: string; elements: ElementCarte[]; legende?: [string, string][]; source: string;
+       /** Recadrage [lon0, lat0, lon1, lat1] dans le fond ; libellés et traits gardent leur taille à l'écran. */
+       cadre?: [number, number, number, number] } & Quand)
   | ({ type: 'document'; image: ImageDiapo & { fichier: string }; lignes: ({ cadre: [number, number, number, number]; texte: string } & Quand)[]; source: string } & Quand);
 export type ElementCarte = Quand & (
   | { type: 'ville'; lieu: [number, number]; libelle: string; capitale?: boolean; rebelle?: boolean; position?: string }
   | { type: 'fleche'; de: [number, number]; a: [number, number]; libelle: string; position?: string }
-  | { type: 'zone'; points: [number, number][]; libelle: string });
+  | { type: 'zone'; points?: [number, number][]; parties?: [number, number][][]; libelle?: string;
+      /** hachures (défaut), plein (gris foncé), clair (gris moyen) ; découpée sur les terres. */
+      style?: 'hachures' | 'plein' | 'clair'; etiquette?: [number, number] }
+  | { type: 'trait'; points: [number, number][]; libelle?: string; etiquette?: [number, number] });
 
 /** Épisode : courte narration (voix du narrateur) sur ce que les images ne montrent pas, avec des
  *  visuels animés synchronisés sur les passages `quand` de la narration. */
@@ -522,11 +527,7 @@ export function avantApres(x: Diapositive) {
   return { t: E[1].t, u, camera: E.slice(1).map((e) => ({ c: versUtile(e.c, u), t: e.t })) };
 }
 
-// --- Frise du temps (spec 12, révision du 2026-10-07) ------------------------------------------
-
-/** Saut notable vers l'avant (en jours, ~3 mois) au-delà duquel la frise s'affiche en
- *  surimpression ; même valeur que SAUT_JOURS dans scripts/diaporamas/verifier.py. */
-export const SAUT_JOURS = 92;
+// --- Frise du temps (spec 12, révisions du 2026-10-07 et du 2026-10-09) ------------------------------------------
 
 const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre',
   'octobre', 'novembre', 'décembre'];

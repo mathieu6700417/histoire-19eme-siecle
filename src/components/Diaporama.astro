@@ -21,19 +21,20 @@
 //   volets, sur un détail zoomé de l'image (`image.ouverture`) puis un recul de 5 s avec la voix ;
 //   passé, le carton joue aussitôt son ouverture. Le carton se fige avec la pause ; l'entrée
 //   d'une image (1,8 s au plus) va toujours à son terme.
-// - Frise du temps (spec 12, révision du 2026-10-07) : la période graduée par année, les actes
-//   en segments, un curseur daté. Dans chaque carton d'acte, le curseur glisse de la date
-//   précédente au début du nouvel acte ; entre deux cartons, la frise passe 3,6 s en
-//   surimpression au bas de l'image quand la date saute de plus de 3 mois en avant ou revient
-//   en arrière. « Date précédente » : celle de la dernière diapositive affichée, si bien que
-//   les sauts manuels restent justes ; positions en %, donc indifférentes à la taille.
+// - Frise du temps (spec 12, frise simplifiée du 2026-10-09) : un filet de la première à la
+//   dernière année, une graduation par année sans étiquette, un curseur et sa date au-dessus.
+//   Dans chaque carton d'acte, le curseur glisse de la date précédente au début du nouvel acte ;
+//   entre deux cartons, la frise passe 4 s au bas de l'image à chaque changement d'année ou
+//   retour en arrière, toujours affichée : elle pousse les autres surimpressions du bas plus
+//   haut. « Date précédente » : celle de la dernière diapositive affichée, si bien que les sauts
+//   manuels restent justes ; positions en %, donc indifférentes à la taille.
 // - Rien ne joue sans clic. Sans JavaScript, la page est un livre d'images : la liste des
 //   diapositives avec image, légende et narration.
 import { typographie } from '../utils/typographie.mjs';
 import CarteCitation from './CarteCitation.astro';
 import EpisodeVisuels from './EpisodeVisuels.astro';
 import Surimpressions from './Surimpressions.astro';
-import { CARTON, PAUSE, SAUT_JOURS, MOSAIQUE, VOLET, avantApres, debutPlongee, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
+import { CARTON, PAUSE, MOSAIQUE, VOLET, avantApres, debutPlongee, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
 
 interface Props { diaporama: Diaporama }
 const { diaporama: d } = Astro.props;
@@ -133,7 +134,7 @@ function surimpressions(x: Diaporama['diapositives'][number]) {
   // Chiffre clé et date républicaine (point 4) : fenêtres déjà arbitrées.
   const chiffre = s.chiffre ? { ...s.chiffre, prefixe: t(s.chiffre.prefixe), unite: t(s.chiffre.unite) } : null;
   const date = s.date ? { ...s.date, republicain: t(s.date.republicain), gregorien: t(s.date.gregorien) } : null;
-  if (!s.citation) return { lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null, citation: null, portraits, objet, manuscrit, chiffre, date };
+  if (!s.citation) return { lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null, citation: null, portraits, objet, manuscrit, chiffre, dateRep: date };
   let k = 0;
   // Le guillemet fermant fait corps avec le dernier mot : il paraît avec lui.
   const jetons = t(s.citation.texte).split(/( +)/);
@@ -145,7 +146,7 @@ function surimpressions(x: Diaporama['diapositives'][number]) {
   return {
     lieu: s.lieu ? { ...s.lieu, nom: t(s.lieu.nom), credit: t(s.lieu.credit) } : null,
     citation: { a: c.a, b: c.b, fin: c.fin, mots, html, auteur: t(`— ${c.prudence ? 'attribué à ' : ''}${c.auteur}`) },
-    portraits, objet, manuscrit, chiffre, date,
+    portraits, objet, manuscrit, chiffre, dateRep: date,
   };
 }
 
@@ -209,7 +210,6 @@ const donnees = {
         date: frise && e.date ? { ...frise.dater(e.date), libelle: t(frise.dater(e.date).libelle) } : null };
     })() : null,
   })),
-  saut: SAUT_JOURS,
   // Avant / après et mosaïques (spec 12, points 3 et 5) : durée du volet, minutage de la grille.
   volet: VOLET,
   mosaique: MOSAIQUE,
@@ -219,15 +219,16 @@ const donnees = {
 };
 const premiere = d.diapositives[0];
 
-/** Frise du temps (deux exemplaires : dans le carton d'acte, en surimpression). Monochrome :
- *  actes en filets alternés, crans des années, curseur (trait ou court segment) et sa date. */
+/** Frise du temps simplifiée (spec 12, révision du 2026-10-09), même dessin dans le carton d'acte
+ *  et en bas de l'image : un filet de la première à la dernière année (ces deux années aux
+ *  extrémités), une petite graduation par année sans étiquette, le curseur (trait fin, ou court
+ *  segment pour une durée) et sa date au-dessus. Dans le carton d'acte, à la place du curseur,
+ *  l'intervalle de l'acte en segment noir épais, sans date (retour du 2026-10-09). Monochrome. */
 function friseHtml(classe: string) {
   if (!frise) return '';
-  const pc = (v: number) => `${v}%`;
-  const actes = frise.actes.map((a, k) => `<span class="frise-t__acte${k % 2 ? ' frise-t__acte--pair' : ''}" data-k="${k}" style="left:${pc(a.x0)};width:${pc(Math.max(0, a.x1 - a.x0))}"></span>`).join('');
-  const crans = [...frise.annees.map((a) => a.x0), 100].map((x) => `<span class="frise-t__cran" style="left:${pc(x)}"></span>`).join('');
-  const annees = frise.annees.map((a) => `<span class="frise-t__annee" data-a="${a.a}" style="left:${pc((a.x0 + a.x1) / 2)}">${a.a}</span>`).join('');
-  return `<div class="frise-t ${classe}" aria-hidden="true"><div class="frise-t__piste"><span class="frise-t__date"></span>${actes}${crans}<span class="frise-t__curseur"></span></div><div class="frise-t__annees">${annees}</div></div>`;
+  const crans = [...frise.annees.map((a) => a.x0), 100].map((x, k, X) => `<span class="frise-t__cran${k === 0 || k === X.length - 1 ? ' frise-t__cran--borne' : ''}" style="left:${x}%"></span>`).join('');
+  const a0 = frise.annees[0].a, a1 = frise.annees.at(-1)!.a;
+  return `<div class="frise-t ${classe}" aria-hidden="true"><span class="frise-t__borne">${a0}</span><div class="frise-t__piste"><span class="frise-t__date"></span><span class="frise-t__filet"></span>${crans}${classe === 'frise-t--carton' ? '<span class="frise-t__acte"></span>' : ''}<span class="frise-t__curseur"></span></div><span class="frise-t__borne">${a1}</span></div>`;
 }
 // Dans chaque calque, après l'image : l'image « après » d'un avant / après (sous un volet qui la
 // découvre, et sa ligne), puis la grille d'une mosaïque. Vides et masqués hors de ces diapositives.
@@ -408,7 +409,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     /** Chiffre clé (point 4) : fenêtre [a, b), valeur, texte final, prudence, unité, défilement. */
     chiffre: { a: number; b: number; valeur: number; texte: string; prefixe: string; unite: string; defile: boolean } | null;
     /** Date républicaine et sa correspondance grégorienne : fenêtre [a, b). */
-    date: { a: number; b: number; republicain: string; gregorien: string } | null;
+    dateRep: { a: number; b: number; republicain: string; gregorien: string } | null;
   }
   interface Objet { a: number; b: number; src: string; ratio: number; nom: string; legende: string; cote: 'gauche' | 'droite' }
   /** Intermède chanté : paroles [instant, vers, début de chaque mot (`motsLus`) ou null : vers
@@ -423,7 +424,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
   interface Piste { src: string; duree: number; volume: number; info: string }
   interface DateFrise { j0: number; j1: number; x0: number; x1: number; libelle: string }
   interface Donnees {
-    slug: string; pause: number; carton: number; saut: number; volet: number;
+    slug: string; pause: number; carton: number; volet: number;
     mosaique: { apparition: number; pas: number; fondu: number; tenue: number };
     actes: { titre: string; dates: string; debut: number }[]; diapos: Diapo[];
     /** Musique de fond : les pistes de chaque acte. */
@@ -445,13 +446,15 @@ const sectionsLivre = d.actes.map((a, i) => ({
   const TENUE_MIN = 1;         // s : arrêt minimal entre deux transitions
   const ECART_MIN = 5;         // s : moins entre deux passages → l'étape est ignorée
   const MICRO = 0.12;          // écart de zoom (log) et de position (fraction de la scène) en deçà duquel l'étape est ignorée
-  // Respiration (« Moins de tenues statiques », révisé) : resserrement à sens unique de 4 % au
-  // plus, glissement d'un tiers de la marge libre, vitesse constante après une mise en route douce
+  // Zoom lent continu pendant les tenues (spec 12, « Caméra plus vivante et cadres justes ») :
+  // zoom avant à sens unique, ~1,2 % par seconde (en log d'échelle), 12 % au plus (×1,12), avec un
+  // glissement vers le centre du cadre visé (le sujet), borné à la marge libre : le sous-cadre
+  // reste dans la vue, donc dans la zone utile. Vitesse constante après une mise en route douce
   // (et arrêt doux, pour se raccorder sans à-coup à la transition suivante ou à la fin de la voix).
-  const SOUFFLE = 0.04;
-  const SOUFFLE_VITESSE = 0.005; // par seconde : une tenue courte respire moins
-  const GLISSE = 1 / 3;
-  const MISE_EN_ROUTE = 2.5;     // s (mise en route, et arrêt)
+  const SOUFFLE = Math.log(1.12);  // zoom maximal d'une tenue (log d'échelle)
+  const SOUFFLE_VITESSE = 0.012;   // log d'échelle par seconde (~1,2 %/s) : une tenue courte zoome moins
+  const RAMPE_SOUFFLE = 1.2;       // s : mise en route (et arrêt) du zoom de tenue, courte pour qu'il se voie tôt
+  const MISE_EN_ROUTE = 2.5;       // s (mise en route, et arrêt)
   // Entrée d'une image (spec 12, « Animations d'entrée ») : fondu enchaîné, révélation
   // gris → couleur, recul de ~4 % jusqu'au cadre de la caméra. Horloge propre à l'entrée,
   // indépendante de l'audio : la caméra n'est jamais décalée. L'entrée est une transition
@@ -476,8 +479,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
   const POUSSEE = 0.025;        // resserrement pendant l'ouverture (arrêt doux à la fin)
   const RECUL_OUVERTURE = 5;    // s : recul du détail vers le premier cadre (après l'ouverture)
   const RAMPE_RECUL = 0.4;      // part du recul en mise en route (et autant en arrêt)
-  // Frise du temps en surimpression : durée d'affichage (le curseur glisse de 0,5 à 1,5 s, cf. CSS).
-  const SURIMPRESSION = 3.6; // s
+  // Frise du temps en bas de l'image : 4 s en tout, fondu de sortie compris (le curseur glisse de
+  // 0,5 à 1,5 s, cf. CSS).
+  const DUREE_FRISE = 4;   // s
+  const FONDU_FRISE = 0.6; // s (transition de sortie, cf. CSS)
   // Rangée de portraits : élargissement du fond à un nouveau nom, puis fondu de l'ovale (s).
   const PORTRAIT_ELARGIR = 0.4;
   const PORTRAIT_FONDU = 0.45;
@@ -514,15 +519,19 @@ const sectionsLivre = d.actes.map((a, i) => ({
     const g = Math.max(Math.abs((b[0] + b[2] - a[0] - a[2]) / 2) / wa, Math.abs((b[1] + b[3] - a[1] - a[3]) / 2) / ha) * k;
     return { zoom: Math.abs(lr), glisse: g };
   }
-  /** Vue respirante après `t` secondes d'une tenue de `d` secondes sur la vue `c` : resserrement
-   *  à sens unique, glissement dans une direction propre à la diapositive `n` et à l'étape `k`
-   *  (angle d'or). Le sous-cadre reste dans `c` (et donc dans l'image). */
-  function souffle(c: Rect, t: number, d: number, n: number, k: number): Rect {
-    const m = Math.min(MISE_EN_ROUTE, d / 2);
-    const serre = Math.min(SOUFFLE, SOUFFLE_VITESSE * Math.max(0, d - m));
-    if (serre <= 0) return c;
-    const a = n * 2.39996 + k * 1.7, g = (GLISSE * serre) / 2;
-    const r = echelle(c, 1 - serre), ox = Math.cos(a) * g * (c[2] - c[0]), oy = Math.sin(a) * g * (c[3] - c[1]);
+  /** Vue après `t` secondes d'une tenue de `d` secondes sur la vue `c` : zoom avant lent et
+   *  continu (log d'échelle à vitesse constante, SOUFFLE au plus), glissement vers le centre du
+   *  cadre visé `cible` (le sujet ; sans cible, zoom centré) borné à la marge libre. Le sous-cadre
+   *  reste dans `c` (et donc dans la zone utile). */
+  function souffle(c: Rect, t: number, d: number, cible?: Rect): Rect {
+    const m = Math.min(RAMPE_SOUFFLE, d / 2);
+    const lz = Math.min(SOUFFLE, SOUFFLE_VITESSE * Math.max(0, d - m));
+    if (lz <= 0) return c;
+    const serre = 1 - Math.exp(-lz), r = echelle(c, 1 - serre);
+    const mx = (serre * (c[2] - c[0])) / 2, my = (serre * (c[3] - c[1])) / 2;
+    const borne = (v: number, b: number) => Math.min(b, Math.max(-b, v));
+    const ox = cible ? borne((cible[0] + cible[2] - c[0] - c[2]) / 2, mx) : 0;
+    const oy = cible ? borne((cible[1] + cible[3] - c[1] - c[3]) / 2, my) : 0;
     return trajet(c, [r[0] + ox, r[1] + oy, r[2] + ox, r[3] + oy], profil(t, d, m));
   }
   const CLE_ST = 'diaporamas-sous-titres';
@@ -836,12 +845,16 @@ const sectionsLivre = d.actes.map((a, i) => ({
       // étape ne commence avant (la tenue minimale court à partir de là).
       // Image après d'un avant / après, ou fin de la plongée d'une mosaïque : la première vue
       // (imposée par `v0`, sinon celle du premier cadre) n'est quittée qu'après `a0`.
-      const etapes = [{ v: x.v0 ?? vue(x, E[0].c), t: x.t0 ?? 0, de: 0, a: x.ouv ? dureeRecul(x) : x.a0 ?? 0 }];
+      const etapes = [{ v: x.v0 ?? vue(x, E[0].c), c: E[0].c, t: x.t0 ?? 0, de: 0, a: x.ouv ? dureeRecul(x) : x.a0 ?? 0 }];
       for (let k = 1; k < E.length; k++) {
         const p = etapes[etapes.length - 1], v = vue(x, E[k].c);
         if (E[k].t - p.t < ECART_MIN) continue;
-        const { zoom, glisse } = ampleur(p.v, v);
-        if (zoom < MICRO && glisse < MICRO) continue;
+        const { zoom: z0, glisse: g0 } = ampleur(p.v, v);
+        if (z0 < MICRO && g0 < MICRO) continue;
+        // La transition part de la vue zoomée par la tenue (jusqu'à SOUFFLE) : on compte le pire
+        // des deux départs pour tenir les plafonds.
+        const pz = ampleur(echelle(p.v, Math.exp(-SOUFFLE)), v);
+        const zoom = Math.max(z0, pz.zoom), glisse = Math.max(g0, pz.glisse);
         // Durée : celle qui tient les plafonds (au plus fort, la vitesse vaut 1 / (d − rampe)) ;
         // 3 à 6 s d'ordinaire, davantage pour un long glissement le long d'une image très large.
         const u = Math.max(zoom / VISE_ZOOM, glisse / VISE_GLISSE);
@@ -852,7 +865,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
         const d = Math.min(besoin, a - tot);
         // Fin de voix trop proche : une transition un peu plus vive (×1,5 au plus) ou aucune.
         if (d < Math.max(DUREE_MIN, besoin / 1.5)) continue;
-        etapes.push({ v, t: E[k].t, de: a - d, a });
+        etapes.push({ v, c: E[k].c, t: E[k].t, de: a - d, a });
       }
       return etapes;
     }
@@ -893,7 +906,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       }
       const tenue = (k: number, u: number) => {
         const jusqua = k + 1 < P.length ? P[k + 1].de : finVoix;
-        return souffle(P[k].v, u - P[k].a, jusqua - P[k].a, x.n, k);
+        return souffle(P[k].v, u - P[k].a, jusqua - P[k].a, P[k].c);
       };
       for (let k = P.length - 1; k >= 1; k--) {
         if (t >= P[k].a) return tenue(k, t);
@@ -914,7 +927,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       const u = Math.max(zoom / VISE_ZOOM, glisse / VISE_GLISSE);
       const d = Math.min(Math.max(DUREE_MIN, u <= 2 * MISE_EN_ROUTE ? 1.5 * u : u + MISE_EN_ROUTE), c.duree / 2);
       if (ts < d) return trajet(A, B, profil(ts, d, Math.min(d / 3, MISE_EN_ROUTE)));
-      return souffle(B, ts - d, c.duree - d, x.n, 9);
+      return souffle(B, ts - d, c.duree - d, c.cadre);
     }
 
     // --- Avant / après et mosaïque (spec 12, « Enrichissements visuels », points 3 et 5) -----------
@@ -1246,27 +1259,19 @@ const sectionsLivre = d.actes.map((a, i) => ({
     // --- Frise du temps -----------------------------------------------------------------------
     const friseCarton = racine.querySelector<HTMLElement>('.frise-t--carton');
     const friseSur = racine.querySelector<HTMLElement>('.frise-t--surimpression');
-    const ORIGINE: DateFrise = { j0: 0, j1: 0, x0: 0, x1: 0, libelle: '' };
     let derniere = -1;     // dernière diapositive affichée : sa date est la « date précédente »
     let minuterieFrise = 0;
 
-    /** Saut notable : plus de 3 mois vers l'avant, ou tout retour en arrière (même règle que
-     *  verifier.py). */
-    const sautNotable = (de: DateFrise, a: DateFrise) => a.j1 < de.j0 || a.j0 - de.j1 > D.saut;
+    /** Frise du bas (révision du 2026-10-09) : à chaque changement d'année (année de début) par
+     *  rapport à la diapositive précédente, et à tout retour en arrière (intervalle entièrement
+     *  antérieur au début du précédent). Même règle que verifier.py. */
+    const anneeDe = (j: number) => new Date(j * 86400000).getUTCFullYear();
+    const changeFrise = (de: DateFrise, a: DateFrise) => a.j1 < de.j0 || anneeDe(a.j0) !== anneeDe(de.j0);
 
-    /** Étiquettes des années : toutes, ou une sur 2, 5 ou 10 selon la place. */
-    function graduer(f: HTMLElement) {
-      const w = f.clientWidth;
-      const annees = [...f.querySelectorAll<HTMLElement>('.frise-t__annee')];
-      if (!w || !annees.length) return;
-      const besoin = Math.max(...annees.slice(0, 3).map((e) => e.offsetWidth)) * 1.6;
-      const pas = [1, 2, 5, 10].find((p) => (p * w) / annees.length >= besoin) ?? 10;
-      annees.forEach((e) => e.classList.toggle('est-masquee', Number(e.dataset.a) % pas !== 0));
-    }
-    /** Date du curseur, centrée sur lui mais gardée dans la frise. */
+    /** Date du curseur, centrée sur lui mais gardée dans la piste. */
     function placerDate(f: HTMLElement, dt: DateFrise) {
-      const el = f.querySelector<HTMLElement>('.frise-t__date')!;
-      const w = f.clientWidth, demi = w ? (el.offsetWidth / 2 / w) * 100 : 0;
+      const el = f.querySelector<HTMLElement>('.frise-t__date')!, piste = el.parentElement!;
+      const w = piste.clientWidth, demi = w ? (el.offsetWidth / 2 / w) * 100 : 0;
       el.style.left = `${Math.min(100 - demi, Math.max(demi, (dt.x0 + dt.x1) / 2)).toFixed(3)}%`;
     }
     /** Curseur sur `dt` (trait, ou court segment pour une durée). */
@@ -1278,10 +1283,23 @@ const sectionsLivre = d.actes.map((a, i) => ({
       el.textContent = dt.libelle;
       placerDate(f, dt);
     }
-    /** Le curseur glisse de `de` à `a` (CSS, ~1 s, ease-in-out) ; segment de l'acte `k` marqué. */
-    function glisser(f: HTMLElement, de: DateFrise, a: DateFrise, k: number) {
-      graduer(f);
-      f.querySelectorAll('.frise-t__acte').forEach((e, j) => e.classList.toggle('est-courant', j === k));
+    /** Intervalle de chaque acte sur la frise (%) : du début de la première date de ses
+     *  diapositives à la fin de la dernière (dates reprises comprises). */
+    const intervallesActes = D.actes.map((_, k) => {
+      const ds = D.diapos.filter((_, j) => acteDe[j] === k).map((x) => x.date).filter((x): x is DateFrise => Boolean(x));
+      return ds.length ? { x0: Math.min(...ds.map((x) => x.x0)), x1: Math.max(...ds.map((x) => x.x1)) } : null;
+    });
+    /** Carton d'acte : segment de l'acte `k` (largeur minimale en CSS, centré sur l'intervalle). */
+    function poserActe(f: HTMLElement, k: number) {
+      const el = f.querySelector<HTMLElement>('.frise-t__acte'), iv = intervallesActes[k];
+      if (!el) return;
+      el.hidden = !iv;
+      if (!iv) return;
+      el.style.left = `${((iv.x0 + iv.x1) / 2).toFixed(3)}%`;
+      el.style.width = `${(iv.x1 - iv.x0).toFixed(3)}%`;
+    }
+    /** Le curseur glisse de `de` à `a` (CSS, ~1 s, ease-in-out). */
+    function glisser(f: HTMLElement, de: DateFrise, a: DateFrise) {
       poserCurseur(f, de, false);
       void f.offsetWidth;
       const bouge = !mouvementReduit.matches && (de.x0 !== a.x0 || de.x1 !== a.x1);
@@ -1291,25 +1309,41 @@ const sectionsLivre = d.actes.map((a, i) => ({
       clearTimeout(minuterieFrise);
       friseSur?.classList.remove('est-visible');
     }
-    /** Surimpression 3,6 s au bas de l'image ; horloge murale (éphémère, indépendante de la
-     *  voix : une pause ne la fige pas). */
-    function montrerFrise(de: DateFrise, a: DateFrise, k: number) {
+    /** Poussée (retour du 2026-10-09) : seules montent les surimpressions du bas qui chevauchent
+     *  la frise en largeur (sur ordinateur, médaillon et portraits dans les coins restent en
+     *  place ; sur téléphone, la frise est pleine largeur : tout monte). Recalculé à chaque image
+     *  tant que la frise est là (tailles et contenus changent en cours de diapositive). */
+    const pousses = [...scene.querySelectorAll<HTMLElement>(':scope > .lieu, :scope > .portraits, :scope > .objet, :scope > .chiffre, :scope > .date-rep, :scope > .mots')];
+    function majPoussee() {
+      if (!friseSur?.classList.contains('est-visible')) return;
+      const f = friseSur.getBoundingClientRect();
+      for (const el of pousses) {
+        const r = el.getBoundingClientRect();
+        el.classList.toggle('sous-frise', r.width > 0 && r.left < f.right - 1 && r.right > f.left + 1);
+      }
+    }
+    /** Surimpression de 4 s au bas de l'image (fondu, glissement ~1 s, lecture, fondu) ; elle
+     *  s'affiche toujours et pousse les autres surimpressions du bas plus haut (--frise-pousse,
+     *  CSS) ; horloge murale (éphémère, indépendante de la voix : une pause ne la fige pas). */
+    function montrerFrise(de: DateFrise, a: DateFrise) {
       if (!friseSur) return;
       clearTimeout(minuterieFrise);
       friseSur.classList.remove('est-visible');
       void friseSur.offsetWidth;
       friseSur.classList.add('est-visible');
-      glisser(friseSur, de, a, k);
-      minuterieFrise = window.setTimeout(cacherFrise, SURIMPRESSION * 1000);
+      glisser(friseSur, de, a);
+      scene.style.setProperty('--frise-h', `${friseSur.offsetHeight}px`);
+      majPoussee();
+      minuterieFrise = window.setTimeout(cacherFrise, (DUREE_FRISE - FONDU_FRISE) * 1000);
     }
-    /** Après un redimensionnement : graduation et date recalées (le curseur est en %). */
+    /** Après un redimensionnement : date recalée (le curseur est en %) et hauteur remesurée. */
     function ajusterFrises() {
       for (const f of [friseCarton, friseSur]) {
         if (!f) continue;
-        graduer(f);
         const x = D.diapos[i].date;
         if (x && f.querySelector('.frise-t__date')!.textContent) placerDate(f, x);
       }
+      if (friseSur) scene.style.setProperty('--frise-h', `${friseSur.offsetHeight}px`);
     }
 
     // --- Textes et compteurs ---------------------------------------------------------------
@@ -1420,7 +1454,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (elMots) elMots.style.bottom = '';
       if (elMots && D.diapos[i].citation) {
         const libre = (W - elMots.offsetWidth) / 2;
-        if (libre < gauche + elPortraits.offsetWidth + 8) elMots.style.bottom = `calc(var(--surimp-bas, var(--frise-bas, 0px)) + ${Math.round(elPortraits.offsetHeight + (parseFloat(getComputedStyle(elLegende).top) || 8) + 8)}px)`;
+        if (libre < gauche + elPortraits.offsetWidth + 8) elMots.style.bottom = `calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--frise-pousse, 0px) + ${Math.round(elPortraits.offsetHeight + (parseFloat(getComputedStyle(elLegende).top) || 8) + 8)}px)`;
       }
       // Largeurs du fond (bord extérieur compris) : jusqu'au bord droit du portrait k, plus la
       // marge intérieure et le filet ; le dernier couvre la rangée entière.
@@ -1525,7 +1559,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
         const bord = Math.max(...[cs.left, cs.right].map((v) => parseFloat(v)).filter((v) => isFinite(v) && v >= 0 && v < W / 3), 0);
         if (el.offsetWidth + bord + 8 > libre) bas = Math.max(bas, el.offsetHeight + bord + ecart);
       }
-      if (elDate && ensemble(x.date)) {
+      if (elDate && ensemble(x.dateRep)) {
         const bord = W < 700 ? 8 : 12;
         bas = Math.max(bas, elDate.offsetHeight + bord + ecart);
       }
@@ -1564,7 +1598,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       if (elDate) effacer(elDate);
       lecteur.classList.remove('avec-citation', 'avec-lieu', 'avec-portraits', 'avec-objet', 'avec-manuscrit', 'avec-chiffre', 'avec-date');
       // Chiffre et date : contenu posé d'emblée (invisible).
-      const CH = x?.chiffre, DR = x?.date;
+      const CH = x?.chiffre, DR = x?.dateRep;
       if (elChiffre && CH) {
         elChiffre.querySelector('.chiffre__prefixe')!.textContent = CH.prefixe;
         elChiffre.querySelector('.chiffre__mesure')!.textContent = CH.texte;
@@ -1667,7 +1701,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
         if (vu !== elManuscrit.classList.contains('est-visible')) { elManuscrit.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-manuscrit', vu); }
         majManuscrit(t);
       }
-      const CH = x.chiffre, DR = x.date;
+      const CH = x.chiffre, DR = x.dateRep;
       if (elChiffre && CH) {
         const vu = actif && t >= CH.a && t < CH.b;
         if (vu !== elChiffre.classList.contains('est-visible')) { elChiffre.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-chiffre', vu); }
@@ -1677,8 +1711,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
         const vu = actif && t >= DR.a && t < DR.b;
         if (vu !== elDate.classList.contains('est-visible')) { elDate.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-date', vu); }
       }
-      // Deux surimpressions au plus (spec 12) : la frise du temps cède dès que deux autres sont là.
-      if ([elLieu, elPortraits, elObjet, elManuscrit, elMots, elChiffre, elDate].filter((e) => e?.classList.contains('est-visible')).length >= 2) cacherFrise();
+      // Frise du temps (révision du 2026-10-09) : elle ne cède plus ; elle prend le bas et pousse
+      // celles qui la chevauchent en largeur plus haut (--frise-pousse, cf. majPoussee).
+      majPoussee();
       if (elLieu && L) {
         const vu = actif && t >= L.a && t < L.b;
         if (vu !== elLieu.classList.contains('est-visible')) { elLieu.classList.toggle('est-visible', vu); lecteur.classList.toggle('avec-lieu', vu); }
@@ -1710,16 +1745,12 @@ const sectionsLivre = d.actes.map((a, i) => ({
           });
           portraitsEtat = etat;
         }
-        // Deux surimpressions au plus (spec 12) : la frise du temps cède quand médaillon de lieu et
-        // portraits sont là ensemble (la citation, elle, la masque déjà).
-        if (vu && elLieu?.classList.contains('est-visible')) cacherFrise();
       }
       if (!elMots || !C) return;
       const vu = actif && t >= C.a && t < C.b;
       if (vu !== elMots.classList.contains('est-visible')) {
         elMots.classList.toggle('est-visible', vu);
         lecteur.classList.toggle('avec-citation', vu);
-        if (vu) cacherFrise();
       }
       // Mots dits (le mot paraît quand la voix l'attaque) ; mouvement réduit : la citation entière.
       let n = 0;
@@ -1984,8 +2015,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
         elCarton.setAttribute('aria-hidden', 'false');
         cacherFrise();
         chargerSurimpressions(null);
-        // Frise du carton : de la date précédente (ou du début de la période) au début de l'acte.
-        if (friseCarton && x.date) glisser(friseCarton, datePrec ?? ORIGINE, x.date, acteDe[i]);
+        // Frise du carton : l'intervalle de l'acte (segment épais, en fondu), sans curseur ni date.
+        if (friseCarton) poserActe(friseCarton, acteDe[i]);
         // Retirer puis remettre la classe relance l'animation des textes du carton.
         lecteur.classList.remove('en-carton');
         void elCarton.offsetWidth;
@@ -2012,8 +2043,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
         leverCarte();
         lecteur.classList.remove('en-carton');
       }
-      // Entre deux cartons : la frise en surimpression si la date fait un saut notable.
-      if (lance && datePrec && x.date && sautNotable(datePrec, x.date)) montrerFrise(datePrec, x.date, acteDe[i]);
+      // Entre deux cartons : la frise en bas de l'image à chaque changement d'année ou retour en arrière.
+      if (lance && datePrec && x.date && changeFrise(datePrec, x.date)) montrerFrise(datePrec, x.date);
       else cacherFrise();
       majTemps();
       if (joue) demarrer();
@@ -3427,28 +3458,44 @@ const sectionsLivre = d.actes.map((a, i) => ({
 
 <!-- Frise du temps : son HTML est injecté (set:html), d'où des styles globaux, préfixés par .diaporama. -->
 <style is:global>
-  /* Frise du temps : la période graduée par année, les actes en filets alternés (gris clair /
-     gris moyen, l'acte courant en noir), crans des années, curseur noir (trait fin, ou court
-     segment pour une durée) et sa date en petites capitales. Strictement monochrome. */
-  .diaporama .frise-t { --frise-glisse: 1s; width: 100%; font-variant-numeric: oldstyle-nums; }
-  .diaporama .frise-t__piste { position: relative; height: 2.6rem; }
-  .diaporama .frise-t__acte {
-    position: absolute;
-    bottom: 0.45rem;
-    height: 2px;
-    background: #a9a69f;
-    border-right: 2px solid var(--c-fond);
+  /* Frise du temps simplifiée (révision du 2026-10-09) : un filet fin de la première à la dernière
+     année (ces deux années aux extrémités, en gris), une petite graduation grise par année sans
+     étiquette, le curseur noir (trait fin, ou court segment pour une durée) et sa date au-dessus,
+     en petites capitales. Strictement monochrome. */
+  .diaporama .frise-t {
+    --frise-glisse: 1s;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: end;
+    column-gap: 0.7rem;
+    width: 100%;
+    font-variant-numeric: oldstyle-nums;
   }
-  .diaporama .frise-t__acte--pair { background: #75726c; }
-  .diaporama .frise-t__acte.est-courant { background: var(--c-texte); height: 3px; bottom: calc(0.45rem - 0.5px); }
+  .diaporama .frise-t__piste { position: relative; height: 2.3rem; }
+  .diaporama .frise-t__borne {
+    font-size: 0.8rem;
+    line-height: 1;
+    color: var(--c-texte-doux);
+    /* Centrée sur le filet (posé à 0,45 rem du bas de la piste). */
+    margin-bottom: calc(0.45rem - 0.5em);
+  }
+  .diaporama .frise-t__filet {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.45rem;
+    height: 1px;
+    background: var(--c-texte-doux);
+  }
   .diaporama .frise-t__cran {
     position: absolute;
-    bottom: calc(0.45rem - 3px);
+    bottom: 0.45rem;
     width: 1px;
-    height: 8px;
+    height: 4px;
     margin-left: -0.5px;
-    background: #a9a69f;
+    background: #9a9790;
   }
+  .diaporama .frise-t__cran--borne { bottom: calc(0.45rem - 3px); height: 7px; background: var(--c-texte-doux); }
   .diaporama .frise-t__curseur {
     position: absolute;
     bottom: calc(0.45rem - 7px);
@@ -3472,31 +3519,34 @@ const sectionsLivre = d.actes.map((a, i) => ({
     color: var(--c-texte);
     transition: left var(--frise-glisse) ease-in-out 0.5s;
   }
-  .diaporama .frise-t__annees { position: relative; height: 1.2rem; }
-  .diaporama .frise-t__annee {
-    position: absolute;
-    top: 0;
-    transform: translateX(-50%);
-    font-size: 0.8rem;
-    line-height: 1.2;
-    color: var(--c-texte-doux);
-  }
-  .diaporama .frise-t__annee.est-masquee { visibility: hidden; }
 
   /* Dans le carton : sous le titre et les dates ; le curseur glisse à partir de 0,6 s. */
   .diaporama .frise-t--carton { max-width: min(38rem, 100%); margin-top: var(--e-3); text-align: left; }
-  .diaporama .frise-t--carton .frise-t__curseur { transition-delay: 0.6s; }
-  .diaporama .frise-t--carton .frise-t__date { transition-delay: 0.6s; }
+  /* Carton : l'intervalle de l'acte en segment noir épais (6 px au moins, centré sur l'intervalle),
+     en fondu ; ni curseur ni date (les dates de l'acte sont sous le titre). */
+  .diaporama .frise-t--carton .frise-t__curseur, .diaporama .frise-t--carton .frise-t__date { display: none; }
+  .diaporama .frise-t--carton .frise-t__piste { height: 1.2rem; }
+  .diaporama .frise-t__acte {
+    position: absolute;
+    bottom: calc(0.45rem - 1px);
+    height: 3px;
+    min-width: 6px;
+    background: var(--c-texte);
+    transform: translateX(-50%);
+  }
+  .diaporama .en-carton .frise-t__acte { animation: frise-acte 700ms ease 900ms both; }
+  @keyframes frise-acte { from { opacity: 0; } to { opacity: 1; } }
   .diaporama .en-carton .frise-t--carton { animation: frise-entree 900ms cubic-bezier(0.2, 0.6, 0.3, 1) 300ms both; }
   @keyframes frise-entree { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
   /* En surimpression : bandeau blanc cassé voilé, fin, centré au bas de l'image (au-dessus des
-     bandeaux du bas en plein écran : --frise-bas, posé par le script). Éphémère. */
+     bandeaux du bas en plein écran : --frise-bas, posé par le script). 4 s ; au-dessus des autres
+     surimpressions, qu'elle pousse plus haut. */
   .diaporama .frise-t--surimpression {
     position: absolute;
     left: 50%;
     bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + var(--e-2));
-    z-index: 2;
+    z-index: 3; /* au-dessus des autres surimpressions (masquée pendant le carton) */
     width: min(40rem, calc(100% - 2 * var(--e-3)));
     padding: 0.35rem 1.1rem 0.15rem;
     background: rgba(251, 250, 247, 0.88);
@@ -3513,15 +3563,14 @@ const sectionsLivre = d.actes.map((a, i) => ({
     transition: opacity 400ms ease, transform 400ms ease, visibility 0s;
   }
   .diaporama .lecteur.en-carton .frise-t--surimpression { visibility: hidden; }
-  /* Frise affichée en même temps qu'un médaillon de lieu : le médaillon monte au-dessus d'elle. */
-  .diaporama .frise-t--surimpression.est-visible ~ .lieu,
-  .diaporama .frise-t--surimpression.est-visible ~ .portraits,
-  .diaporama .frise-t--surimpression.est-visible ~ .objet,
-  .diaporama .frise-t--surimpression.est-visible ~ .date-rep { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + 5.4rem); }
-  .diaporama .frise-t--surimpression.est-visible ~ .chiffre { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + max(var(--chiffre-bas, 7%), 5.4rem)); }
+  /* Priorité (révision du 2026-10-09) : la frise s'affiche toujours ; tant qu'elle est là, les autres
+     surimpressions du bas qui la chevauchent en largeur (.sous-frise, posée par le script :
+     médaillon, portraits, objet, chiffre, date républicaine, citation) montent de sa hauteur (--frise-h, mesurée par le script) plus un petit écart. */
+  .diaporama .lecteur__scene:has(> .frise-t--surimpression.est-visible) > .sous-frise { --frise-pousse: calc(var(--frise-h, 3rem) + var(--e-2)); }
   @media (prefers-reduced-motion: reduce) {
     .diaporama .frise-t__curseur, .diaporama .frise-t__date { transition: none !important; }
     .diaporama .en-carton .frise-t--carton { animation: none; }
+    .diaporama .en-carton .frise-t__acte { animation: frise-acte 200ms ease both; }
     .diaporama .frise-t--surimpression, .diaporama .frise-t--surimpression.est-visible {
       transform: translate(-50%, 0);
       transition: opacity 200ms ease, visibility 0s linear 200ms;
@@ -3531,12 +3580,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .diaporama .lecteur:fullscreen .frise-t--carton { max-width: min(46rem, 100%); }
   @media (max-width: 699px) {
     .diaporama .frise-t--surimpression { width: 100%; bottom: var(--surimp-bas, var(--frise-bas, 0px)); padding-inline: var(--gouttiere); }
-    .diaporama .frise-t--surimpression.est-visible ~ .lieu,
-    .diaporama .frise-t--surimpression.est-visible ~ .portraits,
-    .diaporama .frise-t--surimpression.est-visible ~ .objet,
-    .diaporama .frise-t--surimpression.est-visible ~ .date-rep { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + 4.6rem); }
-    .diaporama .frise-t--surimpression.est-visible ~ .chiffre { bottom: calc(var(--surimp-bas, var(--frise-bas, 0px)) + max(var(--chiffre-bas, 6%), 4.6rem)); }
     .diaporama .frise-t__date { font-size: 0.88rem; }
-    .diaporama .frise-t__annee { font-size: 0.75rem; }
   }
 </style>

@@ -34,38 +34,38 @@ function fond(p: NonNullable<Props['portrait']>) {
   const px = pos(((x0 + x1) / 2) * W, W, bw), py = pos(((y0 + y1) / 2) * Hh, Hh, bh);
   return `background-image:url("${p.src}");background-size:${((W / bw) * 100).toFixed(1)}% auto;background-position:${px.toFixed(1)}% ${py.toFixed(1)}%`;
 }
-const nomFamille = l.auteur.nom.split(',')[0].replace(/^(.*\s)?(de |d’|du )?/, '').trim();
-const initiale = (nomFamille || l.auteur.nom).charAt(0).toUpperCase();
+// Poème : vers séparés par « \n » dans les données (`poeme`, ou déduit des retours à la ligne).
+const poeme = !!l.poeme || l.texte.some((b) => b.includes('\n'));
 
 // --- Mode lecteur : le texte découpé en mots ------------------------------------------------
 // Un jeton = une suite sans espace. Un jeton avec lettre ou chiffre est un mot (rang k, même
 // découpage que `motsLus`) ; la ponctuation isolée suit le mot précédent (« ? », « : », « » »),
 // ou le suivant si elle ouvre (« « », « ( »). Les espaces deviennent insécables comme dans
-// `typographie` (avant : ; ? ! », après «) ; les retours à la ligne des vers sont gardés.
+// `typographie` (avant : ; ? ! », après «). Un retour à la ligne ouvre un nouveau vers : chaque
+// bloc est une liste de lignes (une seule en prose), chaque vers a sa ligne et un retrait
+// suspendu quand il passe à la ligne.
 type Jeton = { mot: string; k: number } | { espace: string };
 const OUVRANTS = /^[«(\[—–“]+$/;
 let rang = 0;
 const blocs = l.texte.map((b) => {
   if (b.trim() === '[…]') return { coupe: true as const, k: rang - 1 };
   const brut = b.split(/(\s+)/).filter((x) => x !== '');
-  const jetons: Jeton[] = [];
+  const lignes: Jeton[][] = [[]];
   brut.forEach((x, j) => {
     if (/^\s+$/.test(x)) {
+      if (x.includes('\n')) { lignes.push([]); return; }
       const suivant = brut[j + 1] ?? '', precedent = brut[j - 1] ?? '';
-      let e = x;
-      if (!x.includes('\n')) {
-        if (/^[;?!]/.test(suivant)) e = ' ';
-        else if (/^[:»]/.test(suivant) || /«$/.test(precedent)) e = ' ';
-        else e = ' ';
-      }
-      jetons.push({ espace: e });
+      let e = ' ';
+      if (/^[;?!]/.test(suivant)) e = '\u202f';
+      else if (/^[:»]/.test(suivant) || /«$/.test(precedent)) e = '\u00a0';
+      lignes.at(-1)!.push({ espace: e });
       return;
     }
     const mot = x.replace(/'/g, '’');
-    if (/[\p{L}\p{N}]/u.test(x)) jetons.push({ mot, k: rang++ });
-    else jetons.push({ mot, k: OUVRANTS.test(x) ? rang : Math.max(0, rang - 1) });
+    if (/[\p{L}\p{N}]/u.test(x)) lignes.at(-1)!.push({ mot, k: rang++ });
+    else lignes.at(-1)!.push({ mot, k: OUVRANTS.test(x) ? rang : Math.max(0, rang - 1) });
   });
-  return { coupe: false as const, jetons };
+  return { coupe: false as const, lignes: lignes.filter((li) => li.length) };
 });
 const dernier = rang - 1;
 // Bandeau : nature et œuvre, sans redite (« Mémoires · Mémoires »).
@@ -73,13 +73,11 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
 ---
 
 {mode === 'lecteur' ? (
-  <div class={`citation citation--lecteur${l.poeme ? ' citation--poeme' : ''}${portrait ? '' : ' citation--sans-portrait'}`} data-lecture={l.id} aria-hidden="true">
+  <div class={`citation citation--lecteur${poeme ? ' citation--poeme' : ''}${portrait ? '' : ' citation--sans-portrait'}`} data-lecture={l.id} aria-hidden="true">
     <div class="citation__fond" data-fond={imageFond}></div>
     <div class="citation__page">
     <div class="citation__plan">
-      {portrait
-        ? <div class="citation__portrait" style={fond(portrait)} role="img" aria-label={t(`Portrait de ${l.auteur.nom}`)}></div>
-        : <div class="citation__portrait citation__portrait--initiale" aria-hidden="true"><span>{initiale}</span></div>}
+      {portrait && <div class="citation__portrait" style={fond(portrait)} role="img" aria-label={t(`Portrait de ${l.auteur.nom}`)}></div>}
       <div class="citation__corps">
         <div class="citation__bloc">
         <span class="citation__guillemet" aria-hidden="true">«</span>
@@ -87,9 +85,12 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
           <div class="citation__defile">
             {blocs.map((b) => b.coupe
               ? <p class="citation__coupe" data-k={b.k}>[…]</p>
-              : <p>{b.jetons.map((j, n) => 'espace' in j
-                  ? j.espace
-                  : <span class="m" data-k={j.k}>{j.mot}{!l.poeme && j.k === dernier && n === b.jetons.length - 1 && !j.mot.endsWith('»') ? ' »' : ''}</span>)}</p>)}
+              : <p>{b.lignes.map((li) => {
+                  const mots = li.map((j, n) => 'espace' in j
+                    ? j.espace
+                    : <span class="m" data-k={j.k}>{j.mot}{!poeme && j.k === dernier && n === li.length - 1 && !j.mot.endsWith('»') ? '\u00a0»' : ''}</span>);
+                  return poeme ? <span class="citation__vers">{mots}</span> : mots;
+                })}</p>)}
           </div>
         </div>
         </div>
@@ -103,11 +104,9 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
     </div>
   </div>
 ) : (
-  <div class={`citation citation--livre${l.poeme ? ' citation--poeme' : ''}`} data-lecture={l.id}>
+  <div class={`citation citation--livre${poeme ? ' citation--poeme' : ''}`} data-lecture={l.id}>
     <div class="citation__auteur">
-      {portrait
-        ? <div class="citation__portrait" style={fond(portrait)} role="img" aria-label={t(`Portrait de ${l.auteur.nom}`)}></div>
-        : <div class="citation__portrait citation__portrait--initiale" aria-hidden="true"><span>{initiale}</span></div>}
+      {portrait && <div class="citation__portrait" style={fond(portrait)} role="img" aria-label={t(`Portrait de ${l.auteur.nom}`)}></div>}
       <p class="citation__nom">{t(l.auteur.nom)}</p>
       <p class="citation__vie">{l.auteur.dates}</p>
       {portrait && <p class="citation__credit">{t(`Portrait : ${portrait.credit}`)}</p>}
@@ -130,12 +129,6 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
   .citation__portrait {
     background-color: #e4e1da;
     background-repeat: no-repeat;
-  }
-  .citation__portrait--initiale {
-    display: grid;
-    place-items: center;
-    font-family: var(--f-titre);
-    color: var(--c-texte-doux);
   }
   .citation__coupe { color: var(--c-texte-doux); }
 
@@ -207,15 +200,8 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
     from { opacity: 0; transform: translateX(-1.6rem); filter: saturate(0) contrast(0.96); }
     to { opacity: 1; transform: none; filter: saturate(0.72) contrast(0.96); }
   }
-  .citation--lecteur .citation__portrait--initiale {
-    font-size: min(30cqh, 22cqw);
-    line-height: 1;
-    border-right: 1px solid var(--c-filet);
-    padding-right: clamp(1rem, 4cqw, 3rem);
-    aspect-ratio: auto;
-    height: auto;
-    filter: none;
-  }
+  /* Sans portrait : pas de cadre vide, le texte prend toute la largeur utile. */
+  .citation--sans-portrait .citation__plan { grid-template-columns: minmax(0, 52rem); }
 
   .citation--lecteur .citation__corps {
     position: relative;
@@ -256,7 +242,10 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
   .citation__defile { position: relative; transition: transform 900ms cubic-bezier(0.4, 0, 0.2, 1); }
   .citation--lecteur .citation__texte p { margin: 0 0 0.45em; }
   .citation--lecteur .citation__texte p:last-child { margin-bottom: 0; }
-  .citation--poeme .citation__texte p { white-space: pre-line; font-style: italic; }
+  .citation--poeme .citation__texte p { font-style: italic; }
+  .citation--livre.citation--poeme .citation__texte p { white-space: pre-line; }
+  /* Un vers par ligne ; s'il est trop long, la suite passe à la ligne en retrait. */
+  .citation__vers { display: block; padding-left: 1.6em; text-indent: -1.6em; }
   .citation--lecteur.citation--poeme .citation__texte p { margin-bottom: 0.6em; }
 
   /* Mots : invisibles mais à leur place (pas de saut de mise en page), puis le mot en cours en
@@ -318,7 +307,8 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
     .citation__corps { --taille: clamp(0.98rem, min(4.4cqw, 4.6cqh), 1.25rem); }
     .citation__plan { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); row-gap: 0.4rem; padding-bottom: 0.5rem; }
     .citation--lecteur .citation__portrait { height: auto; width: clamp(2.8rem, 15cqw, 4.2rem); align-self: start; }
-    .citation--lecteur .citation__portrait--initiale { width: auto; font-size: 2.6rem; border: 0; padding: 0; justify-self: start; }
+    .citation--sans-portrait .citation__plan { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); padding-top: 2.4rem; }
+    .citation--sans-portrait .citation__guillemet { left: 0; }
     .citation--lecteur .citation__corps { justify-content: flex-start; }
     .citation__guillemet { right: auto; left: calc(clamp(2.8rem, 15cqw, 4.2rem) + 0.5rem); margin: 0; transform: translateY(-100%); font-size: 3.6em; }
     .citation__bandeau { margin-bottom: max(0.5rem, var(--frise-bas, 0px)); padding-top: 0.3rem; font-size: 0.82rem; grid-template-columns: minmax(0, 1fr); }
@@ -339,7 +329,6 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
   }
   .citation--livre .citation__auteur { text-align: center; }
   .citation--livre .citation__portrait { width: 100%; aspect-ratio: 3 / 4; border: 1px solid var(--c-filet); }
-  .citation--livre .citation__portrait--initiale { font-size: 4rem; }
   .citation--livre .citation__nom { margin: var(--e-2) 0 0; font-variant: small-caps; letter-spacing: 0.05em; line-height: 1.25; font-size: 0.9rem; }
   .citation--livre .citation__vie { margin: 0; font-size: 0.85rem; }
   .citation--livre .citation__credit { margin: var(--e-1) 0 0; font-size: 0.72rem; line-height: 1.3; color: var(--c-texte-doux); }

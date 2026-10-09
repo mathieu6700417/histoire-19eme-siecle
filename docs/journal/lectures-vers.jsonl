@@ -1,0 +1,17 @@
+{"ts": "2026-10-09T12:47:23+00:00", "quoi": "debut", "etape": "lecture", "texte": "Lecture de CarteCitation, données et script"}
+{"ts": "2026-10-09T12:48:21+00:00", "quoi": "fin", "etape": "lecture", "texte": "Hugo sans poeme:true ; vers gardés en \\n mais rendus via pre-line ; portrait Hugo cadré trop à droite"}
+{"ts": "2026-10-09T12:48:21+00:00", "quoi": "debut", "etape": "portraits", "texte": "Planche des cadres, recadrage Hugo et contrôle des autres"}
+{"ts": "2026-10-09T12:48:53+00:00", "quoi": "note", "etape": "portraits", "texte": "camera.py tourne sur les deux JSON : écriture des cadres reportée ; cadres choisis hugo [0.2,0.06,0.66,0.42], stael [0.27,0.02,0.68,0.42], chateaubriand [0.38,0.08,0.74,0.42]"}
+{"ts": "2026-10-09T12:48:53+00:00", "quoi": "debut", "etape": "vers", "texte": "Vers : une ligne par vers, retrait suspendu, détection par \\n"}
+{"ts": "2026-10-09T12:49:46+00:00", "quoi": "fin", "etape": "vers", "texte": "Vers en span.citation__vers (block, retrait suspendu 1,6 em), poème déduit des \\n ; pre-line gardé pour le livre"}
+{"ts": "2026-10-09T12:49:46+00:00", "quoi": "debut", "etape": "sans-initiale", "texte": "Initiale retirée (code + style), grille à une colonne"}
+{"ts": "2026-10-09T12:50:04+00:00", "quoi": "fin", "etape": "sans-initiale", "texte": "Initiale retirée, grille 1 colonne ; message verifier.py ajusté"}
+{"ts": "2026-10-09T12:50:04+00:00", "quoi": "debut", "etape": "doc", "texte": "README + spec 12"}
+{"ts": "2026-10-09T12:50:04+00:00", "quoi": "fin", "etape": "doc", "texte": "README l.520 et vers ; spec 12 : initiale (2 lignes) + poèmes"}
+{"ts": "2026-10-09T12:58:54+00:00", "quoi": "probleme", "etape": "portraits", "texte": "camera.py (agent caméra) tourne depuis >10 min sur les deux JSON : attente pour écrire les cadres ; build de contrôle lancé en attendant"}
+{"ts": "2026-10-09T12:58:54+00:00", "quoi": "debut", "etape": "tests", "texte": "Build dist-lectures + captures headless"}
+{"ts": "2026-10-09T13:08:14+00:00", "quoi": "fin", "etape": "portraits", "texte": "Cadres écrits (une écriture Python) : hugo, stael (buste), chateaubriand (centré) ; poeme:true sur hugo ; les 9 autres portraits bien cadrés"}
+{"ts": "2026-10-09T13:09:39+00:00", "quoi": "fin", "etape": "tests", "texte": "verifier OK x2, build OK ; captures 6 lectures x 2 tailles ; planche scratchpad/lv/planche-lectures.png"}
+{"ts": "2026-10-09T13:09:39+00:00", "quoi": "probleme", "etape": "tests", "texte": "astro preview refuse un 2e serveur (déjà un sur 4322) : python3 -m http.server sur dist-lectures ; screenshot de .lecteur en 390 px rogné à 358 px, capture par clip de page"}
+{"ts": "2026-10-09T13:09:39+00:00", "quoi": "idee", "etape": "tests", "texte": "Verser lv/captures.py (lecture par __aller(n,true) + currentTime) dans scripts/diaporamas/ avec un argument de plan : contrôle des lectures en un appel"}
+{"ts": "2026-10-09T13:09:39+00:00", "quoi": "idee", "etape": "portraits", "texte": "Ajouter à portraits.py une planche des cadres de lecture (image + case 3/4 rendue) : le recadrage se juge en un coup d'œil sans build"}

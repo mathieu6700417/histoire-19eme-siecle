@@ -263,6 +263,36 @@ déplacer. Décisions :
   période et signale les retours en arrière (pour relecture, ce n'est pas une erreur).
 - `prefers-reduced-motion` : pas de glissement ; la frise apparaît et disparaît en fondu court.
 
+### Frise simplifiée (révision du 2026-10-09)
+
+Constat de l'utilisateur après la mise en ligne de Consulat et Empire : sur les cartons d'acte, la
+frise ne s'affiche parfois pas ; elle est trop chargée. Décisions (remplacent les points
+contraires ci-dessus) :
+
+- **Dessin unique**, le même dans le carton et en bas de l'image : un filet fin de la première à
+  la dernière année de la période, ces deux années aux extrémités, de **petites graduations
+  annuelles sans étiquette**, un **curseur** (trait vertical fin) et la **date en clair au-dessus**
+  du curseur (libellé `libelleDate`). Plus de segments d'actes, plus d'étiquettes d'années
+  intermédiaires. Strictement monochrome. Sur téléphone : même dessin, pleine largeur.
+- **Cartons d'acte** : la frise simplifiée reste, sous le titre et les dates, et s'affiche **à
+  chaque carton** (bug corrigé : la date républicaine des surimpressions écrasait la date de la
+  frise dans les données du lecteur). Retour du 2026-10-09 : pas de curseur ni de date précise,
+  mais l'**intervalle de l'acte** en segment noir plus épais (de la première à la dernière date
+  de ses diapositives), en fondu, sans glissement ; dates non répétées (elles sont sous le
+  titre) ; largeur minimale d'environ 6 px pour un acte de moins d'un an.
+- **En bas de l'image** : à **chaque changement d'année** par rapport à la diapositive
+  précédente (et à tout retour en arrière), plus seulement aux sauts de plus de 3 mois.
+  **4 s** : fondu d'entrée, glissement du curseur de l'ancienne à la nouvelle date (~1 s),
+  lecture (~2,5 s), fondu de sortie.
+- **Priorité** : la frise **s'affiche toujours** quand elle est déclenchée ; si le bas est occupé
+  (citation, portraits, médaillon de lieu, objet, chiffre, date républicaine, sous-titres), elle
+  prend la place du bas et **pousse les autres surimpressions plus haut** pendant ses 4 s, au lieu
+  de céder et de disparaître. Retour du 2026-10-09 : ne montent que celles qui **chevauchent
+  réellement la frise en largeur** (chevauchement mesuré par le script) ; sur ordinateur, portraits
+  et médaillon dans les coins restent en place, sur téléphone (frise pleine largeur) tout monte.
+- `verifier.py` compte les apparitions selon la nouvelle règle (changement d'année ou retour en
+  arrière).
+
 ## Musique (révision du 2026-10-07)
 
 Demande de l'utilisateur : de la musique, avec des œuvres pertinentes. Décisions :
@@ -335,7 +365,7 @@ avec pause, reprise et sauts justes. La musique de fond est baissée comme sous 
   Le narrateur peut introduire la lecture d'une demi-phrase dans la diapositive précédente.
 - **Visuel : carte de citation** : l'image du moment reste derrière, pâlie (voile blanc cassé)
   et immobile ; devant, sobrement : portrait d'époque de l'auteur s'il existe (Commons, domaine
-  public ; sinon son initiale), nom et dates, nature du texte et source (*œuvre*, année), puis
+  public ; sinon rien), nom et dates, nature du texte et source (*œuvre*, année), puis
   le texte, qui **s'écrit au rythme de la voix** (phrases horodatées comme la narration).
   Typographie d'édition savante, guillemets français.
 
@@ -343,11 +373,14 @@ avec pause, reprise et sauts justes. La musique de fond est baissée comme sous 
 citation de journal télévisé, en restant sobre et monochrome :
 - **fond** : l'image du moment, floue et voilée de blanc cassé, immobile ;
 - **portrait grand**, sur un côté, en pleine hauteur de la zone utile (recadré sur le visage),
-  qui entre par un léger fondu glissé ; à défaut de portrait, une grande initiale ;
+  qui entre par un léger fondu glissé ; sans portrait, ni initiale ni cadre vide : le texte
+  prend toute la place (révision du 2026-10-09) ;
 - **grand guillemet ouvrant** décoratif et **texte en gros caractères**, qui apparaît **mot par
   mot en fondu, au rythme exact de la voix** : le mot en cours est en noir, les mots déjà lus
   en gris foncé, les suivants invisibles ; quand le passage dépasse la place, il défile en
   douceur (le haut s'efface en dégradé) ;
+- **poèmes** : un vers par ligne (vers séparés par « \n » dans les données), retrait suspendu
+  quand un vers trop long passe à la ligne (révision du 2026-10-09) ;
 - **bandeau inférieur fin** (« lower third ») : NOM en petites capitales, dates, puis *œuvre*,
   année ; filet fin au-dessus ; crédit du portrait en très petit ;
 - **minutage des mots** : alignement forcé de l'audio sur le texte (ex. whisperx et un modèle
@@ -377,6 +410,30 @@ traits), rendues en SVG/HTML par le lecteur à partir de données (pas de vidéo
 
 Un épisode peut combiner plusieurs visuels (ex. carte puis chiffre). Exactitude stricte et
 formulations prudentes (charte du site).
+
+#### Chronologie animée (révision du 2026-10-09)
+
+Retour de l'utilisateur sur l'épisode « Les masses de granit » : un panneau de chiffres qui mêle des
+années (1800, 1802, 1804) et une quantité (5 grammes) ne va pas. Nouvelle famille de visuels,
+réutilisable dans tous les épisodes : **`chronologie`**.
+
+- **Une frise horizontale** propre à l'épisode (bornes choisies : ex. 1799-1805), filet fin,
+  graduations annuelles, années aux extrémités ; un **curseur** glisse de date en date.
+- **Des bulles** apparaissent **aux bonnes dates**, chacune au moment où la voix nomme l'événement
+  (`quand`) : petit cartouche à filet fin (ni fond coloré ni ombre), relié à son point de la frise
+  par un trait fin ; libellé court (« Les préfets »), une ligne de précision facultative (« un par
+  département », « franc germinal : 5 g d'argent »). Bulles alternées au-dessus et au-dessous de la
+  frise, décalées quand deux dates sont proches, sans jamais se chevaucher.
+- Les bulles déjà posées restent, en gris atténué ; la dernière est en noir.
+- **Téléphone** : frise verticale, bulles à droite.
+- Données : `{ "type": "chronologie", "titre", "debut", "fin", "evenements": [{ "date", "libelle",
+  "precision"?, "quand" }], "source" }` (dates ISO partielles, comme `date` des diapositives).
+- **Règle d'usage** : une suite d'événements datés se montre en `chronologie`, jamais en
+  `chiffres`. Le panneau `chiffres` est réservé aux quantités (habitants, morts, départements,
+  sommes), sans années mêlées.
+- Premier usage : l'épisode « Les masses de granit » (préfets et Banque de France 1800, lycées et
+  Légion d'honneur 1802, franc germinal 1803, Code civil 1804). `verifier.py` contrôle les dates
+  (dans les bornes, dans l'ordre) et signale un panneau `chiffres` qui contient des années.
 
 ### Données et chaîne
 `lectures` et `episodes` dans le JSON de la période ; `voix.py` synthétise aussi ces voix et
@@ -624,6 +681,47 @@ narration » et de « Moins de tenues statiques » quand elles diffèrent :
   en route et d'arrêt d'un tiers de la transition (2,5 s au plus) ; micro-déplacement : zoom et
   déplacement sous 0,12 ; respiration de 0,5 % par seconde au plus (4 % au plus). Un long
   glissement le long d'une image très large peut dépasser 6 s pour tenir le plafond.
+
+### Caméra plus vivante et cadres justes (2026-10-09)
+
+Retour de l'utilisateur après Consulat et Empire : plus de mouvements trop rapides ni saccadés
+(acquis à garder), mais l'image **ne bouge plus du tout** une fois la zone atteinte ; et
+certaines zones sont **mal choisies**. Décisions (remplacent la « respiration à sens unique » de
+« Caméra calme et lente » quand elles diffèrent) :
+
+- **Zoom lent continu pendant les tenues** : un zoom avant très lent et régulier, ~**1 % par
+  seconde**, jusqu'à **10-12 %** sur une longue tenue, avec un léger glissement vers le centre du
+  sujet du cadre ; mise en route douce, jamais d'aller-retour, jamais hors du cadre visé ni des
+  bords de l'image (zone utile). Il doit se voir sans donner le mal de mer (effet Ken Burns des
+  documentaires). Les plafonds de vitesse des transitions restent inchangés.
+  `prefers-reduced-motion` : inchangé.
+- **Cadres justes** : le sujet dont parle la voix doit être **entier** dans le cadre, et le
+  **dernier cadre** d'une diapositive ne s'arrête jamais sur un ciel, un feuillage, un fond ou une
+  marge. Cas tests signalés par l'utilisateur : Consulat et Empire **20** (*La Thilorière*, on ne
+  voit que le haut du ballon) et Révolution **4** (*Portrait à la gloire de Necker* : la caméra
+  finit sur la cime des arbres, Necker coupé au bord). On corrige d'abord ces exemples, on en tire
+  une règle pour `camera.py` (consigne au modèle et contrôle automatique), puis on relit les
+  planches des deux diaporamas pour les cas du même type.
+- **Aucun visage coupé** (ajout de l'utilisateur, 2026-10-09) : aucun cadre, de départ,
+  intermédiaire ou final, ne coupe un visage au milieu : un visage est soit entier dans le cadre,
+  soit franchement hors du cadre. Attention aux portraits en buste, où un cadre serré sur un détail
+  coupe souvent la tête. Règle portée par `camera.py` (consigne et contrôle automatique), au même
+  titre que « sujet entier » et « pas de dernier cadre sur le ciel » ; une image elle-même coupée
+  (recadrage, original) est signalée, pas modifiée.
+- **Valeurs retenues** (mise en œuvre du 2026-10-09) :
+  - zoom lent continu (`souffle`) : 1,2 %/s (0,012 en log d'échelle), 12 % au plus, rampes de 1,2 s
+    (la moitié de la tenue au plus), glissement vers le centre du cadre visé borné à la marge libre ;
+    `plan` compte le départ zoomé pour tenir les plafonds de la transition suivante ;
+  - cause des cadres faux : la partie libre de la scène est une bande ~2,5:1 (cartouche en haut,
+    bandeaux en bas), non un 16/10 ; un cadre trop haut est montré depuis son bord supérieur, et deux
+    cadres ainsi coupés se confondent (étape ignorée comme micro-déplacement : la caméra ne bouge
+    plus). Rév. 4 : en plus, étape à moins de 5 s du début, ignorée (caméra en cache antérieure au
+    contrôle) ;
+  - `camera.py` v3 : vue réelle calculée comme le lecteur ; refus d'un cadre dont la vue montre
+    moins de 80 % (sujet entier ; dispense pour une vue d'ensemble de départ suivie d'autres
+    étapes), d'une dernière vue à plus de 75 % sans détail, d'un visage (≥ 3 % de la hauteur de
+    l'image, relevé par Gemini) ni entier (≥ 90 %) ni dehors (≤ 10 %) au début ou au bout du zoom
+    de tenue, d'un micro-déplacement jugé sur les vues ; relecture sur les vues découpées.
 
 ### Sans bordures, et médaillon plus grand (2026-10-08)
 
@@ -891,6 +989,69 @@ bas de l'écran quand les sous-titres sont coupés), puis remontent en douceur (
 contrôles ; la place réservée pour la caméra compte toujours tous les bandeaux (mesurée sans la
 descente) : aucun mouvement de caméra lié aux contrôles (mesuré en plein écran 1920 × 1080, contrôles
 qui apparaissent et disparaissent).
+
+## Générique d'ouverture et récapitulatif de fin (révision du 2026-10-09)
+
+Demande de l'utilisateur : une animation au début et une à la fin de chaque diaporama. Décisions
+(ne pas rediscuter) :
+
+- **Ouverture (~10-12 s), avant le premier carton d'acte** : sur fond blanc cassé, une **mosaïque**
+  des images fortes de la période défile lentement (en gris, puis passage à la couleur) ; le
+  **titre** de la période puis ses **dates** s'écrivent (« Consulat et Empire », « 1799-1815 ») ;
+  la musique monte ; tout s'efface sur le premier carton.
+- **Fin (~12-15 s), après la dernière diapositive** : la mosaïque du générique revient en
+  récapitulatif, les images passent au gris une à une, puis « Fin » et le titre de la période.
+  **Rien sur la période suivante** : ni lien ni mention « à suivre » (la dernière diapositive fait
+  déjà le lien par la voix). La musique finit en fondu.
+- **Pas de voix** : musique seule, aucune synthèse.
+- **Images** : **choix éditorial fait par un agent éditeur** (pas par l'utilisateur), 8 à 12 images
+  fortes par période, une ou deux par acte au
+  plus, listées dans le JSON (champ `generique`, références aux diapositives par numéro, recalculées
+  par `renumeroter.py`). Les mêmes images servent à l'ouverture et au récapitulatif.
+- **Musique** : un **thème commun à toute la série**, comme l'indicatif d'une émission : un seul
+  enregistrement libre (mêmes règles de droits que la section « Musique »), un extrait d'ouverture
+  et un extrait de conclusion, partagés par les 9 diaporamas (fichiers communs, pas copiés par
+  période).
+- **Passables** comme un carton (→, clic, Entrée) ; une reprise en cours de diaporama ne rejoue
+  pas le générique. Ils sont **comptés** dans la durée et la barre de progression.
+- Monochrome hors images (charte), responsive, `prefers-reduced-motion` : fondus courts, pas de
+  défilement.
+- Même mécanique pour toutes les périodes : seules les données changent. `verifier.py` contrôle
+  `generique` (8 à 12 images, une ou deux par acte au plus, numéros valides).
+
+## Produire une période : leçons de Consulat et Empire (2026-10-09)
+
+Règles tirées des retours de l'utilisateur sur la deuxième période ; elles valent pour toutes les
+suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan.md`).
+
+- **Prévoir les enrichissements dès l'écriture** (étape 1, en même temps que le choix des
+  images) : avant/après (3 à 4), mosaïques (2), objets de musée (~10), manuscrits (3 à 4), chiffres
+  et dates (~8), avec leurs fichiers Commons et le passage de la narration qui les déclenche. Ce
+  n'est pas à l'étape des surimpressions qu'on les cherche : à ce moment, images et narration sont
+  figées et les paires manquent (Consulat et Empire en est sorti avec 0 avant/après). Penser
+  d'abord aux **images de propagande et à leur démenti** (David et Delaroche au Grand-Saint-Bernard),
+  aux **lieux transformés**, aux **séries de portraits** d'une figure centrale à travers la période.
+  Pour les **objets de musée**, partir des collections photographiées sous licence libre (Paris
+  Musées, Musée de l'Armée par Rama, CnAM…) et de ce que la narration nomme : armes, uniformes,
+  insignes, monnaies, regalia, instruments.
+- **Épisodes riches** : chaque épisode combine **au moins deux familles de visuels** (carte,
+  graphique, document d'époque surligné, chiffres) qui se relaient au fil de la voix ; jamais un
+  visuel unique pendant 40 s. Le **carton-titre ouvre** l'épisode, il ne le clôt pas. Un sujet qui a
+  de bonnes images d'époque (la conscription : Boilly, *Le Départ des conscrits*) reçoit aussi une
+  diapositive à image, juste avant ou juste après l'épisode.
+- **Cartes animées** : leur nombre **dépend de la narration** (aucun quota) : une carte chaque fois
+  que le récit parle d'espace (étendue d'un État, marche d'une armée, front, blocus) et que des
+  images ne le montreraient pas mieux. Frontières d'époque tracées à la main d'après des sources nommées,
+  contrôlées sur une image superposée au fond ; méthode dans le README (« Lectures d'époque et
+  épisodes »).
+- **Générique** : les 8 à 12 images de `generique` sont choisies par l'agent qui écrit la
+  période (agent éditeur), dans l'étape 1.
+- **Découpage du travail** : trois agents successifs (A : texte, images et enrichissements prévus ;
+  B : voix, zone utile, caméra, musique ; C : surimpressions, épisodes, vérification, build), chacun
+  tenant le journal de production (`scripts/journal/noter.py`). Un seul script à la fois écrit le
+  JSON d'une période.
+- **Contrôle avant la voix** : relire le dosage des enrichissements et la richesse des épisodes à la
+  fin de l'étape 1, avant toute synthèse ; `verifier.py` signale un dosage insuffisant.
 
 ## Portail (`/diaporamas/`)
 

@@ -77,7 +77,7 @@
               0.1,
               0.2,
               0.9,
-              0.555
+              0.478
             ]
           },
           {
@@ -85,7 +85,7 @@
               0.18,
               0.42,
               0.82,
-              0.86
+              0.698
             ],
             "quand": "drapé dans le manteau fleurdelisé du sacre"
           }
@@ -149,29 +149,20 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
-            ]
-          },
-          {
-            "cadre": [
-              0.55,
-              0.08,
-              0.88,
+              0.18,
+              0.12,
+              0.82,
               0.36
-            ],
-            "quand": "le ministre Calonne"
+            ]
           },
           {
             "cadre": [
               0.18,
               0.28,
               0.82,
-              0.8
+              0.52
             ],
-            "quand": "dont voici la liste"
+            "quand": "assemblée de notables, dont voici la liste"
           }
         ],
         "utile": [
@@ -238,19 +229,10 @@
           },
           {
             "cadre": [
-              0.24,
-              0.18,
-              0.78,
-              0.84
-            ],
-            "quand": "Un vieux paysan courbé"
-          },
-          {
-            "cadre": [
               0.15,
               0.4,
               0.84,
-              0.87
+              0.654
             ],
             "quand": "Lui paie la taille, la dîme"
           }
@@ -300,29 +282,20 @@
         "camera": [
           {
             "cadre": [
-              0.12,
-              0.08,
-              0.88,
-              0.85
+              0.2,
+              0.48,
+              0.75,
+              0.67
             ]
           },
           {
             "cadre": [
-              0.58,
-              0.1,
-              0.9,
-              0.42
-            ],
-            "quand": "Le roi promet de réunir"
-          },
-          {
-            "cadre": [
-              0.22,
+              0.16,
               0.33,
-              0.78,
-              0.8
+              0.84,
+              0.52
             ],
-            "quand": "rappelle Necker"
+            "quand": "et rappelle Necker"
           }
         ],
         "utile": [
@@ -387,10 +360,10 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
+              0.13,
+              0.201,
               1.0,
-              1.0
+              0.798
             ]
           }
         ],
@@ -448,17 +421,17 @@
           {
             "cadre": [
               0.0,
-              0.0,
+              0.28,
               1.0,
-              1.0
+              0.8
             ]
           },
           {
             "cadre": [
-              0.05,
-              0.26,
-              0.65,
-              0.95
+              0.06,
+              0.27,
+              0.66,
+              0.58
             ],
             "quand": "Trois frères y jurent devant leur père"
           }
@@ -1187,19 +1160,10 @@
           {
             "cadre": [
               0.0,
-              0.0,
-              1.0,
-              1.0
+              0.209,
+              0.96,
+              0.791
             ]
-          },
-          {
-            "cadre": [
-              0.42,
-              0.51,
-              0.73,
-              0.9
-            ],
-            "quand": "Au maître des cérémonies venu les faire sortir"
           },
           {
             "cadre": [
@@ -1280,20 +1244,11 @@
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.0,
-              0.88,
-              0.75
+              0.19,
+              0.02,
+              0.85,
+              0.46
             ]
-          },
-          {
-            "cadre": [
-              0.3,
-              0.0,
-              0.68,
-              0.68
-            ],
-            "quand": "l'avocat Camille Desmoulins, monté sur une table"
           }
         ],
         "ouverture": [
@@ -1370,20 +1325,20 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.12,
-              0.92,
-              0.82
+              0.11,
+              0.22,
+              0.9,
+              0.59
             ]
           },
           {
             "cadre": [
-              0.3,
-              0.16,
-              0.72,
-              0.72
+              0.2,
+              0.48,
+              0.8,
+              0.76
             ],
-            "quand": "le couvent de Saint-Lazare"
+            "quand": "La foule force aussi le couvent de Saint-Lazare"
           }
         ],
         "utile": [
@@ -1533,15 +1488,6 @@
               1.0,
               1.0
             ]
-          },
-          {
-            "cadre": [
-              0.05,
-              0.08,
-              0.64,
-              0.72
-            ],
-            "quand": "Forteresse et prison d'État"
           },
           {
             "cadre": [
@@ -1906,7 +1852,7 @@
               0.05,
               0.23,
               0.95,
-              0.92
+              0.587
             ]
           }
         ],
@@ -1970,20 +1916,20 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.04,
-              0.98,
-              0.92
+              0.05,
+              0.54,
+              0.95,
+              0.78
             ]
           },
           {
             "cadre": [
-              0.13,
-              0.07,
-              0.53,
-              0.35
+              0.05,
+              0.1,
+              0.95,
+              0.34
             ],
-            "quand": "Il paraît à la fenêtre sous les acclamations"
+            "quand": "Il paraît à la fenêtre"
           }
         ],
         "utile": [
@@ -2057,20 +2003,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.2,
+              0.265,
+              0.8,
+              0.429
             ]
-          },
-          {
-            "cadre": [
-              0.26,
-              0.23,
-              0.74,
-              0.66
-            ],
-            "quand": "le marquis de La Fayette"
           }
         ],
         "utile": [
@@ -2148,19 +2085,10 @@
           },
           {
             "cadre": [
-              0.16,
+              0.48,
               0.22,
-              0.58,
-              0.56
-            ],
-            "quand": "Dans les campagnes, fin juillet"
-          },
-          {
-            "cadre": [
-              0.5,
-              0.22,
-              0.85,
-              0.7
+              0.83,
+              0.478
             ],
             "quand": "attaquent des châteaux"
           }
@@ -2226,15 +2154,6 @@
           },
           {
             "cadre": [
-              0.35,
-              0.41,
-              0.69,
-              0.69
-            ],
-            "quand": "montent tour à tour à la tribune"
-          },
-          {
-            "cadre": [
               0.03,
               0.44,
               0.53,
@@ -2295,28 +2214,19 @@
           },
           {
             "cadre": [
-              0.05,
-              0.42,
-              0.36,
-              0.95
-            ],
-            "quand": "David expose son Brutus"
-          },
-          {
-            "cadre": [
               0.56,
-              0.35,
+              0.325,
               0.92,
-              0.88
+              0.845
             ],
             "quand": "à sa femme et à ses filles"
           },
           {
             "cadre": [
               0.0,
-              0.0,
+              0.012,
               1.0,
-              1.0
+              0.531
             ],
             "quand": "la patrie avant la famille"
           }
@@ -2435,20 +2345,11 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.14,
-              0.82,
-              0.78
+              0.0,
+              0.356,
+              0.685,
+              0.734
             ]
-          },
-          {
-            "cadre": [
-              0.15,
-              0.32,
-              0.62,
-              0.77
-            ],
-            "quand": "certaines traînant des canons"
           }
         ],
         "utile": [
@@ -2582,29 +2483,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
+              0.2,
+              0.15,
               1.0,
-              1.0
+              0.4
             ]
-          },
-          {
-            "cadre": [
-              0.32,
-              0.05,
-              0.85,
-              0.62
-            ],
-            "quand": "Élisabeth Vigée Le Brun"
-          },
-          {
-            "cadre": [
-              0.0,
-              0.0,
-              0.42,
-              0.6
-            ],
-            "quand": "devant un portrait de la reine"
           }
         ],
         "utile": [
@@ -2664,20 +2547,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.1,
+              0.2,
+              0.9,
+              0.68
             ]
-          },
-          {
-            "cadre": [
-              0.33,
-              0.12,
-              0.75,
-              0.62
-            ],
-            "quand": "quatre-vingt-trois départements, découpés en districts"
           }
         ],
         "ouverture": [
@@ -2740,27 +2614,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.27,
+              0.11,
+              0.75,
+              0.43
             ]
           },
           {
             "cadre": [
-              0.2,
-              0.1,
-              0.78,
-              0.48
-            ],
-            "quand": "L'assignat, d'abord un titre"
-          },
-          {
-            "cadre": [
-              0.25,
-              0.62,
+              0.26,
+              0.65,
               0.84,
-              0.9
+              0.89
             ],
             "quand": "Imprimé en masse"
           }
@@ -2817,20 +2682,11 @@
         "camera": [
           {
             "cadre": [
-              0.12,
-              0.13,
-              0.88,
-              0.85
+              0.17,
+              0.27,
+              0.83,
+              0.49
             ]
-          },
-          {
-            "cadre": [
-              0.28,
-              0.28,
-              0.72,
-              0.75
-            ],
-            "quand": "Cette caricature se moque d'un réfractaire en fuite"
           }
         ],
         "utile": [
@@ -2904,15 +2760,6 @@
           {
             "cadre": [
               0.05,
-              0.45,
-              0.95,
-              0.78
-            ],
-            "quand": "transformer le Champ-de-Mars en immense amphithéâtre"
-          },
-          {
-            "cadre": [
-              0.05,
               0.62,
               0.52,
               0.92
@@ -2974,27 +2821,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
+              0.1,
+              0.34,
               1.0,
-              1.0
+              0.92
             ]
           },
           {
             "cadre": [
-              0.0,
-              0.45,
-              0.52,
-              0.95
-            ],
-            "quand": "des gardes nationaux venus"
-          },
-          {
-            "cadre": [
-              0.65,
-              0.12,
-              1.0,
-              0.6
+              0.667,
+              0.124,
+              0.982,
+              0.556
             ],
             "quand": "La Fayette prête serment"
           }
@@ -3081,29 +2919,20 @@
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.08,
-              0.94,
-              0.88
+              0.0,
+              0.0,
+              1.0,
+              1.0
             ]
           },
           {
             "cadre": [
-              0.05,
-              0.58,
-              0.45,
-              0.88
-            ],
-            "quand": "les patriotes débattent des lois"
-          },
-          {
-            "cadre": [
-              0.58,
               0.52,
+              0.53,
               0.92,
-              0.88
+              0.75
             ],
-            "quand": "s'y fait entendre : Maximilien Robespierre"
+            "quand": "un avocat d'Arras, encore peu connu"
           }
         ],
         "utile": [
@@ -3250,27 +3079,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.08,
+              0.18,
+              0.78,
+              0.46
             ]
           },
           {
             "cadre": [
-              0.18,
-              0.18,
-              0.65,
-              0.7
-            ],
-            "quand": "Gossec, maître de musique"
-          },
-          {
-            "cadre": [
-              0.6,
-              0.46,
+              0.35,
+              0.48,
               0.98,
-              0.74
+              0.73
             ],
             "quand": "Sa Marche lugubre"
           }
@@ -3358,27 +3178,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.12,
+              0.2,
+              0.98,
+              0.68
             ]
           },
           {
             "cadre": [
-              0.0,
-              0.25,
-              0.52,
-              0.98
-            ],
-            "quand": "sous des déguisements"
-          },
-          {
-            "cadre": [
-              0.41,
-              0.15,
-              0.98,
-              0.98
+              0.44,
+              0.18,
+              1.0,
+              0.51
             ],
             "quand": "le roi est arrêté à Varennes"
           }
@@ -3495,20 +3306,20 @@
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.08,
-              0.96,
-              0.8
+              0.05,
+              0.12,
+              0.95,
+              0.65
             ]
           },
           {
             "cadre": [
-              0.2,
-              0.11,
-              0.64,
-              0.75
+              0.18,
+              0.18,
+              0.66,
+              0.46
             ],
-            "quand": "Le roi sacré, qu'on avait proclamé"
+            "quand": "Le roi sacré"
           }
         ],
         "utile": [
@@ -3562,29 +3373,20 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              0.95
+              0.02,
+              0.16,
+              0.98,
+              0.75
             ]
           },
           {
             "cadre": [
-              0.15,
+              0.08,
               0.45,
-              0.74,
+              0.92,
               0.96
             ],
-            "quand": "son char triomphal tiré par"
-          },
-          {
-            "cadre": [
-              0.65,
-              0.42,
-              1.0,
-              0.92
-            ],
-            "quand": "Des milliers de Parisiens accompagnent"
+            "quand": "char triomphal tiré par des chevaux blancs"
           }
         ],
         "utile": [
@@ -3657,20 +3459,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.044,
+              0.082,
+              0.966,
+              0.586
             ]
-          },
-          {
-            "cadre": [
-              0.43,
-              0.33,
-              0.98,
-              0.86
-            ],
-            "quand": "La garde nationale tire sur la foule"
           }
         ],
         "utile": [
@@ -3722,7 +3515,7 @@
               0.27,
               0.1,
               0.63,
-              0.6
+              0.347
             ]
           },
           {
@@ -3872,20 +3665,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
-            ]
-          },
-          {
-            "cadre": [
-              0.28,
+              0.15,
               0.1,
-              0.78,
-              0.53
-            ],
-            "quand": "Olympe de Gouges"
+              0.87,
+              0.36
+            ]
           }
         ],
         "utile": [
@@ -4074,18 +3858,18 @@
         "camera": [
           {
             "cadre": [
-              0.17,
-              0.13,
-              0.49,
-              0.84
+              0.18,
+              0.15,
+              0.53,
+              0.325
             ]
           },
           {
             "cadre": [
-              0.44,
-              0.35,
-              0.72,
-              0.83
+              0.4,
+              0.2,
+              1.0,
+              0.5
             ],
             "quand": "dans le salon du maire, Dietrich"
           }
@@ -4148,10 +3932,10 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.4,
+              0.05,
+              0.494,
               1.0,
-              0.82
+              0.726
             ]
           },
           {
@@ -4159,7 +3943,7 @@
               0.1,
               0.04,
               0.7,
-              0.44
+              0.272
             ],
             "quand": "un couperet lesté tombe entre deux montants"
           }
@@ -4223,26 +4007,8 @@
               0.03,
               0.05,
               0.97,
-              0.86
+              0.507
             ]
-          },
-          {
-            "cadre": [
-              0.05,
-              0.12,
-              0.55,
-              0.82
-            ],
-            "quand": "les sans-culottes, militants des quartiers populaires"
-          },
-          {
-            "cadre": [
-              0.52,
-              0.18,
-              0.93,
-              0.82
-            ],
-            "quand": "Ils pénètrent jusqu'au roi pour exiger"
           }
         ],
         "utile": [
@@ -4296,27 +4062,18 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.17,
-              0.82,
-              0.85
+              0.15,
+              0.18,
+              0.85,
+              0.38
             ]
           },
           {
             "cadre": [
-              0.32,
-              0.17,
-              0.68,
-              0.42
-            ],
-            "quand": "coiffe le bonnet rouge"
-          },
-          {
-            "cadre": [
-              0.14,
-              0.24,
-              0.76,
-              0.62
+              0.12,
+              0.33,
+              0.75,
+              0.53
             ],
             "quand": "boit à la santé de la Nation"
           }
@@ -4396,20 +4153,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
-            ]
-          },
-          {
-            "cadre": [
-              0.11,
+              0.05,
               0.04,
-              0.89,
-              0.38
-            ],
-            "quand": "Avec ce cercle répétiteur"
+              0.95,
+              0.28
+            ]
           }
         ],
         "utile": [
@@ -4584,15 +4332,6 @@
           },
           {
             "cadre": [
-              0.12,
-              0.62,
-              0.72,
-              0.94
-            ],
-            "quand": "les sections parisiennes et les fédérés"
-          },
-          {
-            "cadre": [
               0.52,
               0.3,
               0.98,
@@ -4736,10 +4475,10 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.16,
-              1.0,
-              0.9
+              0.034,
+              0.153,
+              0.952,
+              0.647
             ]
           },
           {
@@ -4824,36 +4563,18 @@
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.08,
-              0.88,
-              0.7
+              0.206,
+              0.224,
+              0.774,
+              0.646
             ]
           },
           {
             "cadre": [
-              0.46,
-              0.1,
-              0.88,
-              0.68
-            ],
-            "quand": "des bandes envahissent les prisons"
-          },
-          {
-            "cadre": [
-              0.18,
-              0.14,
-              0.64,
-              0.68
-            ],
-            "quand": "Après des simulacres de jugement"
-          },
-          {
-            "cadre": [
-              0.04,
-              0.15,
-              0.38,
-              0.7
+              0.095,
+              0.193,
+              0.333,
+              0.578
             ],
             "quand": "souvent de simples prisonniers"
           }
@@ -5088,19 +4809,10 @@
           {
             "cadre": [
               0.0,
-              0.1,
+              0.17,
               1.0,
-              0.9
+              0.45
             ]
-          },
-          {
-            "cadre": [
-              0.2,
-              0.15,
-              0.85,
-              0.55
-            ],
-            "quand": "une armoire de fer"
           }
         ],
         "fichier": "057.webp",
@@ -5184,19 +4896,10 @@
           {
             "cadre": [
               0.38,
-              0.26,
+              0.161,
               0.72,
-              0.64
+              0.479
             ]
-          },
-          {
-            "cadre": [
-              0.16,
-              0.25,
-              0.96,
-              0.97
-            ],
-            "quand": "il fait ses adieux à sa femme"
           }
         ],
         "utile": [
@@ -5384,10 +5087,10 @@
         "camera": [
           {
             "cadre": [
-              0.12,
-              0.13,
-              0.88,
-              0.85
+              0.28,
+              0.73,
+              0.68,
+              0.89
             ]
           }
         ],
@@ -5437,20 +5140,11 @@
         "camera": [
           {
             "cadre": [
-              0.37,
-              0.1,
-              0.98,
-              0.78
+              0.38,
+              0.2,
+              0.96,
+              0.712
             ]
-          },
-          {
-            "cadre": [
-              0.02,
-              0.18,
-              0.39,
-              0.77
-            ],
-            "quand": "le départ des volontaires est joyeux"
           }
         ],
         "ouverture": [
@@ -5530,20 +5224,11 @@
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.08,
+              0.13,
+              0.59,
               0.95,
-              0.92
+              0.9
             ]
-          },
-          {
-            "cadre": [
-              0.27,
-              0.07,
-              0.74,
-              0.53
-            ],
-            "quand": "comme le voiturier Jacques Cathelineau"
           }
         ],
         "utile": [
@@ -5661,18 +5346,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.15,
-              1.0,
-              0.98
+              0.05,
+              0.4,
+              0.95,
+              0.68
             ]
           },
           {
             "cadre": [
-              0.11,
+              0.12,
               0.4,
-              0.55,
-              0.86
+              0.72,
+              0.6
             ],
             "quand": "Leur jeune chef, Henri de La Rochejaquelein"
           }
@@ -5730,19 +5415,10 @@
           {
             "cadre": [
               0.0,
-              0.0,
+              0.515,
               1.0,
-              1.0
+              0.843
             ]
-          },
-          {
-            "cadre": [
-              0.22,
-              0.11,
-              0.78,
-              0.7
-            ],
-            "quand": "journaliste Brissot"
           }
         ],
         "utile": [
@@ -5802,10 +5478,10 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.18,
-              0.92,
-              0.98
+              0.05,
+              0.58,
+              0.95,
+              0.89
             ]
           }
         ],
@@ -5860,20 +5536,11 @@
         "camera": [
           {
             "cadre": [
-              0.16,
-              0.04,
-              0.88,
-              0.56
+              0.245,
+              0.0,
+              0.765,
+              0.185
             ]
-          },
-          {
-            "cadre": [
-              0.05,
-              0.05,
-              0.98,
-              0.97
-            ],
-            "quand": "porté en triomphe par les sans-culottes"
           }
         ],
         "utile": [
@@ -6013,26 +5680,17 @@
           {
             "cadre": [
               0.0,
-              0.0,
-              1.0,
-              1.0
-            ]
-          },
-          {
-            "cadre": [
-              0.05,
-              0.68,
               0.58,
-              0.97
-            ],
-            "quand": "y enseignent au public"
+              1.0,
+              0.98
+            ]
           },
           {
             "cadre": [
               0.0,
               0.38,
-              0.42,
-              0.78
+              0.75,
+              0.68
             ],
             "quand": "Serres et collections s'ouvrent à tous"
           }
@@ -6101,29 +5759,11 @@
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.06,
-              0.96,
-              0.88
-            ]
-          },
-          {
-            "cadre": [
-              0.5,
-              0.45,
-              0.86,
+              0.04,
+              0.34,
+              0.94,
               0.83
-            ],
-            "quand": "dans sa baignoire"
-          },
-          {
-            "cadre": [
-              0.03,
-              0.06,
-              0.96,
-              0.88
-            ],
-            "quand": "La scène est aussitôt gravée"
+            ]
           }
         ],
         "utile": [
@@ -6191,7 +5831,7 @@
               0.03,
               0.41,
               0.55,
-              1.0
+              0.715
             ],
             "quand": "la plume encore à la main"
           },
@@ -6312,10 +5952,10 @@
         "camera": [
           {
             "cadre": [
-              0.05,
               0.0,
-              0.95,
-              0.88
+              0.16,
+              1.0,
+              0.48
             ]
           }
         ],
@@ -6413,15 +6053,6 @@
           },
           {
             "cadre": [
-              0.5,
-              0.04,
-              0.98,
-              0.65
-            ],
-            "quand": "la révolte fédéraliste"
-          },
-          {
-            "cadre": [
               0.0,
               0.32,
               0.42,
@@ -6474,20 +6105,20 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.15,
+              0.14,
+              0.85,
+              0.58
             ]
           },
           {
             "cadre": [
-              0.49,
-              0.18,
-              0.83,
-              0.62
+              0.38,
+              0.23,
+              0.98,
+              0.6
             ],
-            "quand": "une Nature à l'égyptienne fait jaillir l'eau"
+            "quand": "une Nature à l'égyptienne"
           }
         ],
         "utile": [
@@ -6543,37 +6174,19 @@
           {
             "cadre": [
               0.0,
-              0.0,
+              0.45,
               1.0,
-              1.0
+              0.94
             ]
           },
           {
             "cadre": [
-              0.6,
-              0.15,
-              1.0,
-              0.72
+              0.18,
+              0.08,
+              0.82,
+              0.4
             ],
-            "quand": "Les tableaux des rois"
-          },
-          {
-            "cadre": [
-              0.1,
-              0.65,
-              0.62,
-              0.96
-            ],
-            "quand": "chacun peut venir les voir"
-          },
-          {
-            "cadre": [
-              0.2,
-              0.0,
-              0.8,
-              0.52
-            ],
-            "quand": "éclairée par des verrières"
+            "quand": "verrières percées dans la voûte"
           }
         ],
         "utile": [
@@ -6624,15 +6237,15 @@
               0.08,
               0.42,
               0.92,
-              1.0
+              0.709
             ]
           },
           {
             "cadre": [
               0.05,
-              0.0,
+              0.008,
               0.72,
-              0.62
+              0.298
             ],
             "quand": "Il tutoie, se dit citoyen"
           }
@@ -6690,10 +6303,10 @@
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.03,
-              0.95,
-              0.73
+              0.044,
+              0.07,
+              0.956,
+              0.463
             ]
           }
         ],
@@ -6756,27 +6369,27 @@
         "camera": [
           {
             "cadre": [
-              0.04,
-              0.08,
-              0.96,
-              0.98
+              0.055,
+              0.26,
+              0.956,
+              0.74
             ]
           },
           {
             "cadre": [
-              0.65,
-              0.33,
-              0.97,
-              0.88
+              0.636,
+              0.405,
+              0.956,
+              0.885
             ],
             "quand": "la loi des suspects permet d'arrêter"
           },
           {
             "cadre": [
-              0.04,
-              0.25,
-              0.42,
-              0.75
+              0.125,
+              0.333,
+              0.365,
+              0.647
             ],
             "quand": "des comités révolutionnaires comme celui-ci"
           }
@@ -6915,28 +6528,10 @@
           {
             "cadre": [
               0.1,
-              0.08,
-              0.9,
-              0.94
-            ]
-          },
-          {
-            "cadre": [
-              0.5,
-              0.3,
-              0.86,
-              0.65
-            ],
-            "quand": "les mains liées dans le dos"
-          },
-          {
-            "cadre": [
-              0.48,
               0.09,
-              0.83,
-              0.48
-            ],
-            "quand": "les cheveux coupés"
+              0.9,
+              0.33
+            ]
           }
         ],
         "utile": [
@@ -7063,18 +6658,18 @@
           {
             "cadre": [
               0.28,
-              0.06,
+              0.165,
               0.74,
-              0.26
+              0.365
             ],
             "quand": "parle de Brissot et de ses complices"
           },
           {
             "cadre": [
-              0.04,
-              0.08,
-              0.38,
-              0.62
+              0.084,
+              0.145,
+              0.424,
+              0.629
             ],
             "quand": "« Ô Liberté, que de crimes"
           }
@@ -7233,29 +6828,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.05,
-              1.0,
-              0.92
+              0.077,
+              0.086,
+              0.923,
+              0.554
             ]
-          },
-          {
-            "cadre": [
-              0.32,
-              0.06,
-              0.68,
-              0.45
-            ],
-            "quand": "devient un temple de la Raison"
-          },
-          {
-            "cadre": [
-              0.19,
-              0.08,
-              0.54,
-              0.72
-            ],
-            "quand": "où une actrice figure la Liberté"
           }
         ],
         "utile": [
@@ -7336,9 +6913,9 @@
           {
             "cadre": [
               0.03,
-              0.67,
+              0.66,
               0.71,
-              0.92
+              0.91
             ],
             "quand": "entassés sur des bateaux que l'on coule"
           }
@@ -7411,28 +6988,19 @@
           {
             "cadre": [
               0.05,
-              0.05,
-              0.95,
-              0.92
+              0.35,
+              0.58,
+              0.81
             ]
           },
           {
             "cadre": [
               0.36,
-              0.45,
-              0.72,
-              0.83
+              0.46,
+              0.96,
+              0.82
             ],
             "quand": "qu'on en mitraille certains au canon"
-          },
-          {
-            "cadre": [
-              0.61,
-              0.45,
-              0.96,
-              0.85
-            ],
-            "quand": "Près de deux mille Lyonnais sont exécutés"
           }
         ],
         "utile": [
@@ -7502,20 +7070,20 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.05,
-              1.0,
-              0.92
+              0.03,
+              0.38,
+              0.97,
+              0.9
             ]
           },
           {
             "cadre": [
-              0.18,
-              0.14,
-              0.58,
-              0.65
+              0.08,
+              0.61,
+              0.6,
+              0.89
             ],
-            "quand": "incendient une partie de la flotte"
+            "quand": "Un jeune officier d'artillerie"
           }
         ],
         "utile": [
@@ -7580,29 +7148,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
-            ]
-          },
-          {
-            "cadre": [
-              0.12,
-              0.45,
-              0.58,
-              0.95
-            ],
-            "quand": "où les esclaves s'étaient soulevés"
-          },
-          {
-            "cadre": [
-              0.38,
+              0.22,
               0.16,
-              0.9,
-              0.62
-            ],
-            "quand": "Les trois députés de l'île"
+              0.97,
+              0.46
+            ]
           }
         ],
         "utile": [
@@ -7667,29 +7217,11 @@
         "camera": [
           {
             "cadre": [
-              0.2,
-              0.07,
-              0.72,
-              0.52
+              0.18,
+              0.077,
+              0.7,
+              0.353
             ]
-          },
-          {
-            "cadre": [
-              0.0,
-              0.05,
-              0.48,
-              0.62
-            ],
-            "quand": "Accoudé au buste de Raynal"
-          },
-          {
-            "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
-            ],
-            "quand": "Mais Bonaparte rétablira l'esclavage en 1802"
           }
         ],
         "utile": [
@@ -7753,18 +7285,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.15,
-              1.0,
-              0.75
+              0.02,
+              0.22,
+              0.38,
+              0.65
             ]
           },
           {
             "cadre": [
-              0.37,
-              0.18,
-              0.82,
-              0.72
+              0.36,
+              0.25,
+              0.98,
+              0.62
             ],
             "quand": "fondre les canons"
           }
@@ -7871,20 +7403,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.05,
+              0.45,
+              0.95,
+              0.75
             ]
-          },
-          {
-            "cadre": [
-              0.18,
-              0.1,
-              0.65,
-              0.5
-            ],
-            "quand": "Le 5 avril, Danton monte à l'échafaud"
           }
         ],
         "utile": [
@@ -7941,15 +7464,6 @@
               1.0,
               1.0
             ]
-          },
-          {
-            "cadre": [
-              0.05,
-              0.02,
-              0.45,
-              0.76
-            ],
-            "quand": "il pèse tout ce qui entre"
           },
           {
             "cadre": [
@@ -8119,29 +7633,11 @@
         "camera": [
           {
             "cadre": [
-              0.18,
-              0.25,
-              0.58,
-              0.85
+              0.15,
+              0.24,
+              0.95,
+              0.48
             ]
-          },
-          {
-            "cadre": [
-              0.46,
-              0.33,
-              0.92,
-              0.7
-            ],
-            "quand": "Fermier général, chargé de lever l'impôt"
-          },
-          {
-            "cadre": [
-              0.48,
-              0.33,
-              0.81,
-              0.58
-            ],
-            "quand": "faire tomber cette tête"
           }
         ],
         "utile": [
@@ -8376,29 +7872,20 @@
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.08,
-              0.97,
-              0.88
+              0.109,
+              0.332,
+              1.0,
+              0.78
             ]
           },
           {
             "cadre": [
-              0.29,
-              0.09,
-              0.71,
-              0.47
+              0.237,
+              0.146,
+              0.762,
+              0.594
             ],
             "quand": "à l'Hôtel de Ville"
-          },
-          {
-            "cadre": [
-              0.41,
-              0.38,
-              0.74,
-              0.79
-            ],
-            "quand": "il est blessé à la mâchoire"
           }
         ],
         "utile": [
@@ -8467,20 +7954,11 @@
         "camera": [
           {
             "cadre": [
-              0.26,
-              0.38,
-              0.68,
-              0.78
-            ]
-          },
-          {
-            "cadre": [
-              0.0,
-              0.14,
+              0.072,
+              0.23,
               1.0,
-              0.98
-            ],
-            "quand": "sous les regards et les insultes"
+              0.63
+            ]
           }
         ],
         "utile": [
@@ -8545,18 +8023,18 @@
         "camera": [
           {
             "cadre": [
-              0.2,
-              0.15,
-              0.94,
-              0.94
+              0.4,
+              0.475,
+              0.9,
+              0.6
             ]
           },
           {
             "cadre": [
-              0.26,
-              0.47,
-              0.89,
-              0.85
+              0.261,
+              0.595,
+              0.739,
+              0.715
             ],
             "quand": "guillotinant le bourreau lui-même"
           }
@@ -8759,29 +8237,11 @@
         "camera": [
           {
             "cadre": [
-              0.58,
+              0.08,
               0.13,
               0.92,
-              0.87
+              0.51
             ]
-          },
-          {
-            "cadre": [
-              0.16,
-              0.14,
-              0.53,
-              0.85
-            ],
-            "quand": "Paris danse, s'amuse et affiche son luxe"
-          },
-          {
-            "cadre": [
-              0.1,
-              0.1,
-              0.93,
-              0.88
-            ],
-            "quand": "Ce luxe insolent contraste avec la misère"
           }
         ],
         "utile": [
@@ -8846,20 +8306,11 @@
         "camera": [
           {
             "cadre": [
-              0.18,
+              0.1,
               0.12,
-              0.84,
-              0.86
+              0.82,
+              0.32
             ]
-          },
-          {
-            "cadre": [
-              0.26,
-              0.13,
-              0.68,
-              0.45
-            ],
-            "quand": "cheveux courts et nuque dégagée"
           }
         ],
         "utile": [
@@ -8924,18 +8375,18 @@
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.01,
-              0.88,
-              0.52
+              0.0,
+              0.07,
+              1.0,
+              0.27
             ]
           },
           {
             "cadre": [
-              0.08,
-              0.56,
-              0.92,
-              0.95
+              0.0,
+              0.7,
+              1.0,
+              0.9
             ],
             "quand": "Chaque poste lit le signal"
           }
@@ -9004,28 +8455,10 @@
           {
             "cadre": [
               0.0,
-              0.0,
+              0.38,
               1.0,
-              1.0
+              0.87
             ]
-          },
-          {
-            "cadre": [
-              0.11,
-              0.05,
-              0.55,
-              0.9
-            ],
-            "quand": "les tombeaux sauvés"
-          },
-          {
-            "cadre": [
-              0.45,
-              0.1,
-              0.98,
-              0.88
-            ],
-            "quand": "musée des Monuments français"
           }
         ],
         "utile": [
@@ -9091,10 +8524,10 @@
         "camera": [
           {
             "cadre": [
-              0.07,
-              0.11,
-              0.83,
-              0.88
+              0.15,
+              0.64,
+              0.75,
+              0.86
             ]
           }
         ],
@@ -9151,20 +8584,11 @@
         "camera": [
           {
             "cadre": [
-              0,
-              0,
-              1,
-              1
+              0.141,
+              0.186,
+              1.0,
+              0.775
             ]
-          },
-          {
-            "cadre": [
-              0.19,
-              0.12,
-              0.98,
-              0.5
-            ],
-            "quand": "des billets de dix mille francs"
           }
         ],
         "utile": [
@@ -9220,18 +8644,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.03,
-              0.98,
-              0.83
+              0.024,
+              0.23,
+              0.976,
+              0.724
             ]
           },
           {
             "cadre": [
-              0.27,
-              0.3,
-              0.59,
-              0.66
+              0.31,
+              0.34,
+              0.63,
+              0.7
             ],
             "quand": "sa tête, plantée sur une pique"
           }
@@ -9298,29 +8722,11 @@
         "camera": [
           {
             "cadre": [
-              0.04,
-              0.06,
-              0.96,
-              0.88
+              0.061,
+              0.25,
+              0.931,
+              0.669
             ]
-          },
-          {
-            "cadre": [
-              0.04,
-              0.08,
-              0.5,
-              0.85
-            ],
-            "quand": "Jacobin du premier jour, fier et menaçant"
-          },
-          {
-            "cadre": [
-              0.52,
-              0.08,
-              0.94,
-              0.85
-            ],
-            "quand": "au même homme, piteux, trois jours plus tard"
           }
         ],
         "utile": [
@@ -9387,27 +8793,27 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.18,
+              0.07,
+              0.9,
+              0.37
             ]
           },
           {
             "cadre": [
+              0.43,
               0.58,
-              0.57,
-              0.95,
-              0.81
+              0.96,
+              0.79
             ],
             "quand": "traquent et massacrent d'anciens Jacobins"
           },
           {
             "cadre": [
-              0.2,
-              0.08,
-              0.86,
-              0.92
+              0.18,
+              0.07,
+              0.9,
+              0.37
             ],
             "quand": "Cette caricature dénonce ces tueurs"
           }
@@ -9547,9 +8953,9 @@
           {
             "cadre": [
               0.31,
-              0.28,
+              0.357,
               0.69,
-              0.72
+              0.643
             ],
             "quand": "la Déclaration qui précède le texte"
           }
@@ -9617,20 +9023,11 @@
         "camera": [
           {
             "cadre": [
-              0.07,
-              0.1,
-              0.93,
-              0.85
+              0.076,
+              0.226,
+              0.926,
+              0.749
             ]
-          },
-          {
-            "cadre": [
-              0.52,
-              0.2,
-              0.93,
-              0.83
-            ],
-            "quand": "Les royalistes, indignés"
           },
           {
             "cadre": [
@@ -9719,20 +9116,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.034,
+              0.085,
+              0.953,
+              0.598
             ]
-          },
-          {
-            "cadre": [
-              0.36,
-              0.64,
-              0.72,
-              0.9
-            ],
-            "quand": "Les cinq directeurs, dont Barras"
           }
         ],
         "ouverture": [
@@ -9795,9 +9183,9 @@
           {
             "cadre": [
               0.12,
-              0.05,
+              0.265,
               0.88,
-              0.8
+              0.505
             ]
           }
         ],
@@ -9867,18 +9255,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
+              0.024,
               0.03,
-              0.98,
-              0.98
+              0.976,
+              0.339
             ]
           },
           {
             "cadre": [
-              0.0,
-              0.12,
-              0.52,
-              0.75
+              0.024,
+              0.42,
+              0.544,
+              0.73
             ],
             "quand": "il s'élance drapeau en main"
           },
@@ -9887,7 +9275,7 @@
               0.33,
               0.08,
               0.79,
-              0.52
+              0.389
             ],
             "quand": "jeune général aux cheveux au vent"
           }
@@ -9944,7 +9332,7 @@
               0.12,
               0.06,
               0.84,
-              0.88
+              0.355
             ]
           }
         ],
@@ -10215,36 +9603,18 @@
         "camera": [
           {
             "cadre": [
-              0.02,
-              0.1,
-              0.98,
-              0.88
+              0.0,
+              0.245,
+              0.819,
+              0.681
             ]
           },
           {
             "cadre": [
-              0.16,
-              0.17,
-              0.45,
-              0.76
-            ],
-            "quand": "La théophilanthropie"
-          },
-          {
-            "cadre": [
-              0.37,
-              0.38,
-              0.76,
-              0.78
-            ],
-            "quand": "avec des hymnes et des fleurs"
-          },
-          {
-            "cadre": [
-              0.58,
-              0.38,
-              0.96,
-              0.84
+              0.599,
+              0.353,
+              0.941,
+              0.767
             ],
             "quand": "l'affaire d'une petite élite"
           }
@@ -10309,38 +9679,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
+              0.08,
+              0.217,
               1.0,
-              1.0
+              0.783
             ]
-          },
-          {
-            "cadre": [
-              0.12,
-              0.18,
-              0.42,
-              0.92
-            ],
-            "quand": "Philippe Pinel veut soigner les aliénés"
-          },
-          {
-            "cadre": [
-              0.65,
-              0.3,
-              0.99,
-              0.9
-            ],
-            "quand": "plutôt que par les chaînes"
-          },
-          {
-            "cadre": [
-              0.35,
-              0.25,
-              0.68,
-              0.96
-            ],
-            "quand": "Jean-Baptiste Pussin, qui fit retirer les fers"
           }
         ],
         "utile": [
@@ -10502,38 +9845,11 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.05,
-              0.92,
-              0.94
+              0.117,
+              0.173,
+              0.873,
+              0.383
             ]
-          },
-          {
-            "cadre": [
-              0.52,
-              0.08,
-              0.88,
-              0.5
-            ],
-            "quand": "un mètre-étalon"
-          },
-          {
-            "cadre": [
-              0.11,
-              0.08,
-              0.58,
-              0.5
-            ],
-            "quand": "Le litre et le gramme"
-          },
-          {
-            "cadre": [
-              0.08,
-              0.05,
-              0.92,
-              0.94
-            ],
-            "quand": "Cette estampe enseigne leurs usages"
           }
         ],
         "utile": [
@@ -10587,20 +9903,11 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
+              0.13,
+              0.194,
               1.0,
-              1.0
+              0.806
             ]
-          },
-          {
-            "cadre": [
-              0.25,
-              0.33,
-              0.75,
-              0.92
-            ],
-            "quand": "se pressent une trentaine de peintres"
           }
         ],
         "utile": [
@@ -10783,27 +10090,18 @@
         "camera": [
           {
             "cadre": [
-              0.12,
-              0.02,
-              0.78,
-              0.92
+              0.08,
+              0.04,
+              0.88,
+              0.28
             ]
           },
           {
             "cadre": [
-              0.24,
-              0.03,
-              0.66,
-              0.42
-            ],
-            "quand": "Sieyès, l'auteur du pamphlet"
-          },
-          {
-            "cadre": [
+              0.1,
               0.38,
-              0.36,
-              0.72,
-              0.72
+              0.9,
+              0.62
             ],
             "quand": "cherche, dit-on, « une épée »"
           }
@@ -10948,18 +10246,18 @@
         "camera": [
           {
             "cadre": [
-              0.0,
-              0.0,
-              1.0,
-              1.0
+              0.147,
+              0.114,
+              0.993,
+              0.446
             ]
           },
           {
             "cadre": [
               0.28,
-              0.4,
+              0.426,
               0.7,
-              0.9
+              0.794
             ],
             "quand": "montre un Bonaparte bousculé mais maître de lui"
           }
@@ -11032,17 +10330,17 @@
           {
             "cadre": [
               0.0,
-              0.0,
-              1.0,
-              1.0
+              0.227,
+              0.98,
+              0.748
             ]
           },
           {
             "cadre": [
-              0.04,
-              0.38,
-              0.81,
-              0.96
+              0.12,
+              0.499,
+              0.89,
+              1.0
             ],
             "quand": "montrent Hersilie se jetant"
           }

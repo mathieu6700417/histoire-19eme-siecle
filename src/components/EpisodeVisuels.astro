@@ -123,12 +123,25 @@ function projeter(f: FondCarte, [lon, lat]: [number, number]): [number, number] 
   return [r2((lon - cadre[0]) * cx * echelle), r2((cadre[3] - lat) * echelle)];
 }
 /** Position d'une étiquette autour d'un point : décalage et ancrage du texte. */
-function etiquette(p: [number, number], position = 'droite', ecart = 16) {
+function etiquette(p: [number, number], position = 'droite', ecart = 16, k = 1) {
   const [x, y] = p;
-  if (position === 'gauche') return { x: x - ecart, y: y + 10, ancre: 'end' };
-  if (position === 'haut') return { x, y: y - ecart - 2, ancre: 'middle' };
-  if (position === 'bas') return { x, y: y + ecart + 26, ancre: 'middle' };
-  return { x: x + ecart, y: y + 10, ancre: 'start' };
+  if (position === 'gauche') return { x: r2(x - ecart), y: r2(y + 10 * k), ancre: 'end' };
+  if (position === 'haut') return { x, y: r2(y - ecart - 2 * k), ancre: 'middle' };
+  if (position === 'bas') return { x, y: r2(y + ecart + 26 * k), ancre: 'middle' };
+  return { x: r2(x + ecart), y: r2(y + 10 * k), ancre: 'start' };
+}
+/** Fenêtre de la carte (viewBox) : le fond entier ou le recadrage `cadre` [lon0, lat0, lon1, lat1],
+ *  et `k`, rapport de taille à l'écran (libellés et traits gardent leur taille apparente). */
+function fenetre(f: FondCarte, cadre?: [number, number, number, number]) {
+  if (!cadre) return { vb: `0 0 ${f.largeur} ${f.hauteur}`, k: 1 };
+  const [x0, y0] = projeter(f, [cadre[0], cadre[3]]), [x1, y1] = projeter(f, [cadre[2], cadre[1]]);
+  return { vb: `${x0} ${y0} ${r2(x1 - x0)} ${r2(y1 - y0)}`, k: r2(Math.max((x1 - x0) / f.largeur, (y1 - y0) / f.hauteur)) };
+}
+const anneau = (f: FondCarte, r: [number, number][]) => `M${r.map((p) => projeter(f, p).join(',')).join(' L')}Z`;
+/** Libellé sur plusieurs lignes (`\n`), centré verticalement sur le point. */
+function lignes(x: number, y: number, texte: string, hl = 1.1) {
+  const ls = texte.split('\n');
+  return ls.map((l, i) => ({ x, dy: i === 0 ? `${r2(-(ls.length - 1) * hl / 2 + 0.35)}em` : `${hl}em`, l }));
 }
 function centre(pts: [number, number][]): [number, number] {
   return [pts.reduce((s, p) => s + p[0], 0) / pts.length, pts.reduce((s, p) => s + p[1], 0) / pts.length];
@@ -233,13 +246,15 @@ const statique = mode === 'livre';
         {v.type === 'carte' && (() => {
           const f = fonds[v.fond];
           if (!f) return null;
+          const fen = fenetre(f, v.cadre);
           return (
             <Fragment>
               <p class="ev-titre">{t(v.titre)}</p>
               <div class="ev-carte">
-                <svg class="ev-carte__svg" viewBox={`0 0 ${f.largeur} ${f.hauteur}`} role="img" aria-label={t(v.titre)}>
+                <svg class={`ev-carte__svg${v.cadre ? ' est-recadree' : ''}`} viewBox={fen.vb} style={`--k:${fen.k}`} role="img" aria-label={t(v.titre)}>
                   <defs>
-                    <pattern id={`${uid}-hachures`} width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="14" /></pattern>
+                    <pattern id={`${uid}-hachures-${k}`} width={r2(14 * fen.k)} height={r2(14 * fen.k)} patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2={r2(14 * fen.k)} /></pattern>
+                    <clipPath id={`${uid}-terres-${k}`}><path d={f.terres} /></clipPath>
                   </defs>
                   <path class="ev-carte__terres" d={f.terres} />
                   <path class="ev-carte__france" d={f.france} />
@@ -247,18 +262,30 @@ const statique = mode === 'livre';
                   {v.elements.map((el, j) => {
                     const tj = quandEl(k, el.quand, j);
                     if (el.type === 'zone') {
-                      const pts = el.points.map((p) => projeter(f, p));
-                      const [cx, cy] = centre(pts);
+                      // Plusieurs anneaux possibles (`parties`), découpés sur les terres : les points en
+                      // mer peuvent rester larges.
+                      const parties = el.parties ?? (el.points ? [el.points] : []);
+                      const style = el.style ?? 'hachures';
+                      const [cx, cy] = el.etiquette ? projeter(f, el.etiquette) : (() => { const c = centre(parties[0].map((p) => projeter(f, p))); return [c[0], c[1] + 70 * fen.k]; })();
                       return (
-                        <g class="ev-carte__zone anim" data-t={tj} data-d="1.2">
-                          <path d={`M${pts.map((p) => p.join(',')).join(' L')}Z`} fill={`url(#${uid}-hachures)`} />
-                          <text x={cx} y={cy + 70} text-anchor="middle">{t(el.libelle)}</text>
+                        <g class={`ev-carte__zone est-${style} anim`} data-t={tj} data-d="1.2">
+                          <path d={parties.map((r) => anneau(f, r)).join(' ')} clip-path={`url(#${uid}-terres-${k})`} fill={style === 'hachures' ? `url(#${uid}-hachures-${k})` : undefined} />
+                          {el.libelle && <text x={r2(cx)} y={r2(cy)} text-anchor="middle">{lignes(r2(cx), r2(cy), t(el.libelle)).map((x) => <tspan x={x.x} dy={x.dy}>{x.l}</tspan>)}</text>}
+                        </g>
+                      );
+                    }
+                    if (el.type === 'trait') {
+                      const et = el.etiquette && projeter(f, el.etiquette);
+                      return (
+                        <g class="ev-carte__fleuve-nomme anim" data-t={tj} data-d="1.6">
+                          <path class="ev-carte__trace" d={`M${el.points.map((p) => projeter(f, p).join(',')).join(' L')}`} pathLength="1" />
+                          {el.libelle && et && <text x={et[0]} y={et[1]} text-anchor="middle">{t(el.libelle)}</text>}
                         </g>
                       );
                     }
                     if (el.type === 'fleche') {
                       const fl = fleche(f, el);
-                      const et = etiquette(fl.depart, el.position ?? 'haut', 14);
+                      const et = etiquette(fl.depart, el.position ?? 'haut', 14 * fen.k);
                       return (
                         <g class="ev-carte__fleche anim" data-t={tj} data-d="1.4">
                           <path class="ev-carte__trait" d={fl.d} pathLength="1" />
@@ -268,10 +295,11 @@ const statique = mode === 'livre';
                       );
                     }
                     const p = projeter(f, el.lieu);
-                    const et = etiquette(p, el.position);
+                    const et = etiquette(p, el.position, 16 * fen.k, fen.k);
+                    const m = 7 * fen.k;
                     return (
                       <g class={`ev-carte__ville anim${el.capitale ? ' est-capitale' : ''}${el.rebelle ? ' est-rebelle' : ''}`} data-t={tj} data-d="0.7">
-                        {el.capitale ? <rect x={p[0] - 7} y={p[1] - 7} width="14" height="14" /> : <circle cx={p[0]} cy={p[1]} r={el.rebelle ? 10 : 7} />}
+                        {el.capitale ? <rect x={r2(p[0] - m)} y={r2(p[1] - m)} width={r2(2 * m)} height={r2(2 * m)} /> : <circle cx={p[0]} cy={p[1]} r={r2((el.rebelle ? 10 : 7) * fen.k)} />}
                         <text x={et.x} y={et.y} text-anchor={et.ancre}>{t(el.libelle)}</text>
                       </g>
                     );
@@ -468,23 +496,35 @@ const statique = mode === 'livre';
   .ev-carte__terres { fill: #ebe9e4; stroke: #c9c6bf; stroke-width: 1; }
   .ev-carte__france { fill: #dcd9d1; stroke: #5e5b55; stroke-width: 2.2; stroke-linejoin: round; }
   .ev-carte__fleuve { fill: none; stroke: #b4b1aa; stroke-width: 2; }
-  .ev-carte__svg text { font-size: 38px; fill: var(--c-texte); paint-order: stroke; stroke: rgba(251, 250, 247, 0.85); stroke-width: 6px; stroke-linejoin: round; }
-  .ev-carte__svg pattern line { stroke: #3d3b37; stroke-width: 2.5; }
+  .ev-carte__svg text { font-size: calc(38px * var(--k, 1)); fill: var(--c-texte); paint-order: stroke; stroke: rgba(251, 250, 247, 0.85); stroke-width: calc(6px * var(--k, 1)); stroke-linejoin: round; }
+  .ev-carte__svg pattern line { stroke: #3d3b37; stroke-width: calc(2.5px * var(--k, 1)); }
   .ev-carte__zone { opacity: var(--p); }
-  .ev-carte__zone path { stroke: #3d3b37; stroke-width: 2; stroke-dasharray: 6 5; }
+  .ev-carte__zone path { stroke: #3d3b37; stroke-width: calc(2px * var(--k, 1)); stroke-dasharray: 6 5; }
   .ev-carte__zone text { font-style: italic; }
-  .ev-carte__trait { fill: none; stroke: var(--c-texte); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
+  /* Zones pleines (ex. l'Empire) et claires (États vassaux) : aplats sans contour pointillé,
+     séparés par un filet de la couleur du papier. */
+  .ev-carte__zone.est-plein path { fill: #55524c; stroke: var(--c-fond); stroke-width: calc(1.5px * var(--k, 1)); stroke-dasharray: none; }
+  .ev-carte__zone.est-clair path { fill: #aeaba3; stroke: var(--c-fond); stroke-width: calc(1.5px * var(--k, 1)); stroke-dasharray: none; }
+  .ev-carte__zone.est-hachures path { stroke-dasharray: calc(6px * var(--k, 1)) calc(5px * var(--k, 1)); }
+  .ev-carte__svg.est-recadree .ev-carte__zone text { font-size: calc(34px * var(--k, 1)); letter-spacing: 0.02em; }
+  /* Trait (fleuve nommé) : se dessine de la source à l'embouchure. */
+  .ev-carte__trace { fill: none; stroke: var(--c-texte); stroke-width: calc(5px * var(--k, 1)); stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
+  .ev-carte__fleuve-nomme text { font-style: italic; opacity: clamp(0, calc(var(--p) * 2 - 0.6), 1); }
+  .ev-carte__trait { fill: none; stroke: var(--c-texte); stroke-width: calc(6px * var(--k, 1)); stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
   .ev-carte__pointe { fill: var(--c-texte); opacity: clamp(0, calc((var(--p) - 0.85) * 7), 1); }
   .ev-carte__fleche text { opacity: var(--p); font-variant: small-caps; letter-spacing: 0.04em; }
   .ev-carte__ville { opacity: var(--p); }
-  .ev-carte__ville circle, .ev-carte__ville rect { fill: var(--c-fond); stroke: var(--c-texte); stroke-width: 3; }
-  .ev-carte__ville.est-rebelle circle { fill: var(--c-texte); stroke: var(--c-fond); stroke-width: 3; }
-  .ev-carte__ville.est-capitale rect { fill: var(--c-texte); }
+  .ev-carte__ville circle, .ev-carte__ville rect { fill: var(--c-fond); stroke: var(--c-texte); stroke-width: calc(3px * var(--k, 1)); }
+  .ev-carte__ville.est-rebelle circle { fill: var(--c-texte); stroke: var(--c-fond); stroke-width: calc(3px * var(--k, 1)); }
+  .ev-carte__ville.est-capitale rect { fill: var(--c-texte); stroke: var(--c-fond); }
   .ev-carte__legende { flex: none; margin: 0; padding: 0; list-style: none; font-size: clamp(0.72rem, 1.8cqw, 0.9rem); color: var(--c-texte-doux); line-height: 1.8; }
   .ev-signe { display: inline-block; width: 1.4em; height: 0.8em; margin-right: 0.45em; vertical-align: -0.05em; }
   .ev-signe--fleche { height: 0; border-top: 3px solid var(--c-texte); vertical-align: 0.25em; }
   .ev-signe--rebelle { width: 0.75em; height: 0.75em; border-radius: 50%; background: var(--c-texte); margin-inline: 0.3em 0.8em; }
   .ev-signe--zone { border: 1px dashed #3d3b37; background: repeating-linear-gradient(45deg, #3d3b37 0 1.5px, transparent 1.5px 5px); }
+  .ev-signe--plein { background: #55524c; }
+  .ev-signe--clair { background: #aeaba3; }
+  .ev-signe--trait { height: 0; border-top: 3px solid var(--c-texte); vertical-align: 0.25em; }
 
   /* Document d'époque : la page entière, puis un léger zoom sur la ligne lue, qui s'éclaire
      d'un halo doux (papier éclairci et texte plus contrasté, bords flous) plutôt qu'un
@@ -521,6 +561,8 @@ const statique = mode === 'livre';
     .ev-barre { grid-template-columns: minmax(0, 1fr) auto; gap: 0 0.5rem; }
     .ev-barre__libelle { grid-column: 1 / -1; text-align: left; font-size: 0.82em; }
     .ev-carte__legende { display: none; }
+    /* Carte recadrée (petite à l'écran) : libellés agrandis pour rester lisibles. */
+    .ev-carte__svg.est-recadree text, .ev-carte__svg.est-recadree .ev-carte__zone text { font-size: calc(44px * var(--k, 1)); }
     .ev-chiffres { flex-direction: column; align-items: center; gap: 0.35rem; }
     .ev-chiffre__valeur { font-size: clamp(1.5rem, 8cqw, 2.2rem); }
   }
