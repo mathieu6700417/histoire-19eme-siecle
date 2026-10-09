@@ -19,6 +19,9 @@ fichier ne décrit que les outils.
   `python3 -m venv .cache/venv-rembg && .cache/venv-rembg/bin/pip install "rembg[cpu]" pillow`
   (modèle `isnet-general-use`, ~180 Mo, téléchargé au premier usage dans `~/.rembg/models`) ; et
   **scipy** (Anaconda) pour l'enveloppe convexe.
+- Visages locaux (`camera.py`, 2026-10-09) : **OpenCV** dans un venv ignoré par git,
+  `python3 -m venv .cache/venv-visages && .cache/venv-visages/bin/pip install opencv-python-headless numpy`,
+  et le modèle YuNet (230 Ko) dans `.cache/modeles-visages/yunet.onnx` (adresse dans `visages_local.py`).
 
 Les commandes se lancent depuis la racine du projet.
 
@@ -31,20 +34,23 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 
 | Fichier | Rôle |
 | --- | --- |
-| `commun.py` | Bibliothèque commune : chemins, lecture/écriture du script JSON, API Commons, licences, lexique. |
-| `images.py` | Métadonnées et licence (API Commons), téléchargement, WebP 1600 px, vignette du portail ; portraits des lectures et fac-similés des épisodes. Aide à la recherche (`--chercher`, `--infos`). |
-| `voix.py` | Synthèse Gemini (narrateur Charon ; voix de lecture pour les lectures d'époque), contrôle de fidélité, encodage m4a, durées, horodatage des phrases ; minutage mot par mot des lectures (`--mots`). Diapositives, lectures et épisodes. |
+| `commun.py` | Bibliothèque commune : chemins, lecture/écriture du script JSON, API Commons, licences, lexique. **Écriture sûre** (2026-10-09) : `ecrire` prend un verrou (`.cache/diaporamas/verrous/`), relit le disque et n'y reporte que les champs changés par le script depuis sa lecture (fusion à trois voies) ; même champ changé ailleurs entre-temps : refus explicite (`ConflitEcriture`, relancer le script). `voix.py`, `utile.py`, `camera.py` et `musique.py` peuvent donc tourner en parallèle (pas `renumeroter.py`). |
+| `images.py` | Métadonnées et licence (API Commons), téléchargement, WebP 1600 px, vignette du portail ; portraits des lectures et fac-similés des épisodes. Aide à la recherche (`--chercher`, `--infos`, et `--lot FICHIER` : lignes `cle|requête`, seuls les fichiers libres d'au moins 1000 px, noms complets, JSON et planche-contact dans `.cache/diaporamas/lots/`). |
+| `voix.py` | Synthèse Gemini (narrateur Charon ; voix de lecture pour les lectures d'époque), contrôle de fidélité, encodage m4a, durées, horodatage des phrases ; minutage mot par mot des lectures (`--mots`). Diapositives, lectures et épisodes. Options Gemini : `--budget`, `--reflexion` (transcription), `--modele` (voix), `--modele-transcription`. |
 | `alignement.py` | Alignement forcé d'un audio de lecture sur son texte (wav2vec2 français, torchaudio) : instants de chaque mot. Appelé par `voix.py`. |
-| `camera.py` | Caméra calée sur la narration : étapes `image.camera` proposées par Gemini Flash (vision), contrôlées, planche-contact. |
-| `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. |
+| `camera.py` | Caméra calée sur la narration : étapes `image.camera` proposées par Gemini Flash (vision), contrôlées, planche-contact. Visages relevés **localement** (`--visages`, gratuit ; `--visages-gemini` payant) ; `--audit` et `--reparer` sans appel (tête hors champ des portraits comprise). |
+| `visages_local.py` | Détection locale des visages (YuNet, OpenCV DNN), lancée par `camera.py` dans `.cache/venv-visages` : cache `<slug>/visages-local.json`, mêmes clés et même format que `visages.json`. |
+| `gemini.py` | Appel Gemini commun : modèle par tâche (`DIAPORAMAS_MODELE_<TACHE>`, `--modele`), réflexion réglée (`thinkingBudget`, défaut 256, `DIAPORAMAS_REFLEXION`, `--reflexion`), plafond de dépense par lancement (`--budget`, arrêt propre), tarifs **indicatifs** par modèle (`TARIFS`). |
+| `banc_gemini.py` | Banc d'essai des modèles et budgets de réflexion pour une tâche (`camera`, `visages`, `utile`, `transcription`) sur 5 diapositives : jetons réels, coût, qualité, planche. `--essai` : plan sans appel. |
+| `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. Options Gemini : `--budget`, `--reflexion`, `--modele`. |
 | `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. |
-| `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). |
+| `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). `monde` descend à -20° (Sainte-Hélène) ; `--fond NOM` ne refait que ce fond. |
 | `surimpressions.py` | Cartes de lieu, citations, portraits, objets de musée, manuscrits, chiffres clés et dates républicaines en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
 | `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle, bilan des mentions. |
-| `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage proposé par Gemini Flash puis contrôlé, webp ovale), contrôle de visibilité des personnes sur les images, planche de contrôle. |
+| `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage proposé par Gemini Flash puis contrôlé, webp ovale), contrôle de visibilité des personnes sur les images (consignes au titre de la période du JSON), planche de contrôle. `--lot FICHIER` : lignes `id|nom`, Wikidata en une ligne par personne et pré-remplissage du registre (`--essai` : sans écrire). Options Gemini : `--budget`, `--reflexion`, `--modele`. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
-| `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques »). |
+| `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques »). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
@@ -84,6 +90,17 @@ python3 scripts/diaporamas/camera.py revolution --n 12 37
 python3 scripts/diaporamas/camera.py revolution --planche
 # Seulement les diapositives dont la caméra tient plus de 7 s un même cadre
 python3 scripts/diaporamas/camera.py revolution --tenues
+# Visages locaux (gratuit), audit et réparation sans appel ; passe payante plafonnée et réglée
+python3 scripts/diaporamas/camera.py revolution --visages
+python3 scripts/diaporamas/camera.py revolution --audit
+python3 scripts/diaporamas/camera.py revolution --reparer --n 64 65
+python3 scripts/diaporamas/camera.py revolution --n 12 --budget 0.50 --reflexion 256 --modele gemini-3.5-flash-lite
+# Banc d'essai des modèles avant une passe de masse (--essai : plan et estimation, sans appel)
+python3 scripts/diaporamas/banc_gemini.py camera consulat-empire --essai
+python3 scripts/diaporamas/banc_gemini.py transcription revolution --modeles gemini-3.8-flash gemini-3.5-transcribe --reflexions 0
+# Recherches par lots : images (lignes « cle|requête ») et personnes (lignes « id|nom »)
+python3 scripts/diaporamas/images.py --lot recherches.txt
+python3 scripts/diaporamas/portraits.py --lot personnes.txt --essai
 
 # Musique : ce qui manque ou a changé ; --force pour tout refaire ; --sources pour
 # télécharger et contrôler les licences seulement
@@ -204,6 +221,24 @@ python3 scripts/diaporamas/verifier.py --tous
   toujours admise).
 
 ## Caméra : format et pièges
+
+**Visages locaux, tête hors champ, Gemini réglé (2026-10-09).** Les contrôles de visages (`--audit`,
+`--reparer`, contrôle des propositions) lisent `DIAPORAMAS_VISAGES` / `--source-visages` : `union`
+(défaut : relevé Gemini déjà payé s'il existe, plus les visages locaux nets d'au moins 6 % qu'il a
+manqués), `local` (YuNet seul, toute nouvelle période), `gemini` (ancien relevé, appel payant si
+absent). Comparaison sur 20 images (8 gravures, 6 foules, 6 peintures) : YuNet retrouve 80 % des
+visages Gemini des gravures, 83 % dans les foules, 100 % ailleurs (78 à 86 % sur les 230 images) ;
+il manque surtout têtes coupées, profils perdus et très petites têtes, et ajoute quelques fausses
+alertes ; ~35 s par période, 0 $. Gemini reste en option (`--visages-gemini`). Nouvelles règles :
+**front légèrement coupé admis** (au plus 20 % du visage) quand la vue est collée au haut de l'image
+(y ≤ 0,08 : le cartouche cache le haut) ; **tête hors champ** : un portrait (deux visages au plus,
+le plus grand d'au moins 8 % de la hauteur) dont aucune vue ne montre la moitié du visage principal
+est signalé par `--audit` et réparé par `--reparer` (première étape recadrée sur la tête, sans
+appel ; une tête plus haute qu'une vue est montrée du front au nez). Les portraits coupés par la
+réparation géométrique de la passe précédente (CE 23, 52, 69, 79 ; Rév 60, 62, 64, 65, 89, 103) ont
+été corrigés ainsi ou à la main (`camera_manuelle`). Tout appel Gemini passe par `gemini.py`
+(réflexion à 256 jetons par défaut, `--budget` en $, `--modele`) ; mesurer d'abord avec
+`banc_gemini.py` sur 5 diapositives.
 
 - `image.camera` : 1 à 4 étapes `{"cadre": [x0, y0, x1, y1], "quand": "passage exact"}`, en
   fractions de l'image **servie** (le WebP, donc après `recadrage`). La première étape n'a pas
@@ -947,3 +982,82 @@ chiffre ou date raccourcis ou omis en avertissement.
 Révolution : 8 chiffres (diapositives 18, 31, 55, 61, 67, 92, 108, 122) et 7 dates (92, 94, 105, 109,
 110, 116, 124) ; caméra mesurée à nouveau sur ces 14 diapositives (1280 × 720, 1920 × 1080, 390 × 844) :
 rien au-dessus des plafonds, aucun à-coup, rien hors de la zone utile.
+
+## Lecteur : carte des modules
+
+Le script du lecteur (`src/components/Diaporama.astro` ne garde que le gabarit HTML et les styles)
+est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir directement le bon fichier
+(chacun commence par 2 à 4 lignes : rôle, données lues, sections de la spec 12 et de ce README).
+
+| Module | Rôle |
+| --- | --- |
+| `lecteur.ts` | point d'entrée : crée le contexte `lec` de chaque `.diaporama`, installe les modules dans l'ordre |
+| `contexte.ts` | type `Lecteur` : état partagé et fonctions échangées entre modules |
+| `types.ts` | types des données embarquées (diapositive, suites, frise, segments) |
+| `constantes.ts` | réglages : caméra, entrée, ouverture du carton, frise, portraits, musique |
+| `geometrie.ts` | calculs purs de caméra (homothétie, profil de vitesse, ampleur, souffle) |
+| `horloge.ts` | `maintenant`, `Chrono`, `HorlogeLissee` |
+| `outils.ts` | `motsLus`, `lire` / `ecrire` (localStorage protégé), `mouvementReduit`, `mmss` |
+| `etat.ts` | données, éléments du DOM, durées et débuts, variables d'état (`lec.i`, `lec.joue`…) |
+| `camera.ts` | taille des calques, marges couvertes, vue, plan des transitions, `cadreA`, intermède |
+| `avant-apres.ts` | image avant / après, raccord, rendu du volet |
+| `mosaique.ts` | grille, vignettes, plongée dans l'image principale |
+| `rendu.ts` | préparation des calques, `instant`, `rendre`, boucle d'animation, `montrerImage` |
+| `frise.ts` | frise du carton et du bas de l'image, poussée des surimpressions |
+| `textes.ts` | cartouche (fondu croisé, estompe) et sous-titre |
+| `incrustations.ts` | éléments et tailles : lieu, citation, portraits, objet, manuscrit, chiffre, date républicaine |
+| `surimpressions.ts` | chargement des surimpressions d'une diapositive et mise à jour à l'instant t |
+| `progression.ts` | temps écoulé, barre des actes, préchargement des images |
+| `cartons.ts` | carton d'acte : minuterie, passage, ouverture en deux volets |
+| `segments.ts` | segments après la voix (chant, lecture, épisode) sur le lecteur `sa` |
+| `chant.ts` | paroles façon clip (`__clip()`) |
+| `lectures.ts` | cartes de citation mot à mot (vers compris), éléments relevés une fois (`etats`) |
+| `episodes.ts` | panneaux d'épisode (chiffres, barres, cartes, documents) |
+| `navigation.ts` | `afficher`, `demarrer`, `pause`, fin de voix, `aller`, `suivant`, écouteurs audio |
+| `musique.ts` | musique de fond (Web Audio, gains, fondus, bouton, volume ; `__musique()`) |
+| `tests.ts` | `__aller(n, segment)`, `__instant()`, `__camera(n, t)` |
+| `controles.ts` | clics, barre des actes, sous-titres, plein écran, redimensionnement, clavier, balayage |
+| `reprise.ts` | reprise mémorisée et premier rendu (installé en dernier) |
+
+**Conventions.** Chaque module exporte `installerX(lec)`. Ce qu'il emprunte aux modules installés
+avant lui est déstructuré en tête (`const { D, audio, rendre } = lec;`) ; ce qu'il expose est publié
+par `Object.assign(lec, { … })` (fonctions en tête, constantes en fin) et déclaré dans
+`contexte.ts`. Une fonction d'un module installé **après** s'appelle `lec.f()` ; une variable d'état
+partagée se lit et s'écrit toujours `lec.x` (jamais déstructurée : elle changerait sans qu'on le
+voie). L'ordre d'installation de `lecteur.ts` reproduit l'ordre d'origine des écouteurs : ne pas le
+changer sans raison. `grep -n "nomDeFonction" src/scripts/diaporama/*.ts` suffit à tout retrouver.
+
+## Captures (contrôle visuel et non-régression)
+
+`captures.py` photographie le lecteur à des instants précis, avec une horloge entièrement factice
+(`page.clock` de Playwright pour `performance.now`, les minuteries et `requestAnimationFrame`, et un
+faux moteur audio qui avance avec elle) : deux passages sur le même build donnent les mêmes pixels.
+
+```sh
+npx astro build --outDir dist-xxx            # ou npm run build (dossier dist)
+python3 scripts/diaporamas/captures.py revolution 1:c5 2:12.5 20:5.5 7:s20 --dist dist-xxx \
+  --appareil les-deux --sortie /chemin/avant --planche
+# … modification, nouveau build …
+python3 scripts/diaporamas/captures.py revolution 1:c5 2:12.5 20:5.5 7:s20 --dist dist-xxx \
+  --appareil les-deux --sortie /chemin/apres --comparer /chemin/avant
+```
+
+- Plan : `n` ou `n:t` (voix de la diapositive n à t s, 2 par défaut, en pause), `n:sT` (segment après
+  la voix, à T s), `n:cT` (carton de l'acte qui commence à n, T s après son début).
+- `--appareil ordinateur|telephone|les-deux` (1280 × 760, 390 × 844) ; fichiers `o-<n_t>.png`,
+  `t-<n_t>.png` ; `--planche` : `planche.png` (3 colonnes, légendées) ; `--attente` : ms d'horloge
+  factice avant de poser l'instant (2 500 par défaut : entrée finie, frise du bas encore là).
+- `--comparer DOSSIER` : différence pixel à pixel avec les PNG de même nom, `ecart-<nom>.png` pour
+  chaque écart, code de sortie 1 s'il y en a. Ne regarder que les écarts.
+- Serveur statique intégré sur un port libre (`astro preview` refuse une seconde instance) ;
+  Chromium du cache Playwright trouvé automatiquement (le plus récent ; `PLAYWRIGHT_BROWSERS_PATH`
+  respecté). Chaque capture se fait dans un onglet neuf (pas de reprise mémorisée ; « date
+  précédente » de la frise : la diapositive 1).
+- Limites connues : l'ouverture en volets (dernières 3,5 s d'un carton, et les images d'un début
+  d'acte juste après) passe par des Web Animations en temps réel, donc non reproductibles ; quelques
+  pixels de la barre de progression peuvent varier dans les captures de carton (bruit mesuré entre
+  deux passages identiques : 1 à 70 px). Faire deux passages de référence pour connaître le bruit.
+- Plan de non-régression du découpage du lecteur (34 captures) : Révolution `1:c5 15:c7 4:4 4:11
+  2:12.5 5:4 14:10.5 21:12 94:12 92:13.8 92:17.5 20:5.5 18:3 7:s20 92:s20 61:s30 72:s15 96:s10 114:s20`
+  (+ téléphone `1:c5 2:12.5 7:s20 20:5.5`) ; Consulat et Empire `1:c6 89:3.5 86:s15 111:s20 65:s25
+  3:s10 107:5 105:s30` (+ téléphone `65:s25 86:s15`).

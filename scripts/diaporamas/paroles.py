@@ -35,6 +35,7 @@ import argparse, base64, hashlib, json, re, subprocess, sys, unicodedata
 from pathlib import Path
 
 import commun as c
+import gemini
 
 ECART_SIGNALE = 0.35     # s : écart voix isolée / mélange au-delà duquel un mot est signalé
 DUREE_MOT = (0.05, 4.0)  # s : durée plausible d'un mot chanté (note tenue comprise)
@@ -136,13 +137,13 @@ def ecouter(fichier: Path, t0: float, t1: float) -> str:
     import voix
     wav = subprocess.run(['ffmpeg', '-v', 'error', '-ss', f'{t0:.2f}', '-to', f'{t1:.2f}', '-i', str(fichier),
                           '-ac', '1', '-ar', '16000', '-f', 'wav', '-'], capture_output=True, check=True).stdout
-    r = voix._appel(voix.MODELE_TRANSCRIPTION, {'contents': [{'parts': [
+    r = voix._appel(gemini.modele('paroles'), {'contents': [{'parts': [
         {'text': 'This is a short cut from a French song recording (1930s). Transcribe exactly the '
                  'French words that are sung in it, in order, including a word that is only partly '
                  'heard at the very start or end. Output only the words, nothing else; if no word is '
                  'sung, output an empty line.'},
         {'inlineData': {'mimeType': 'audio/wav', 'data': base64.b64encode(wav).decode()}}]}],
-        'generationConfig': {'temperature': 0}})
+        'generationConfig': {'temperature': 0}}, tache='paroles')
     try:
         return r['candidates'][0]['content']['parts'][0]['text'].strip()
     except (KeyError, IndexError):
@@ -231,7 +232,11 @@ def traiter(slug: str, seulement: list[str] | None, avec_ecoute: bool, essai: bo
         err, sig = controler(vers, cal, controle, fen, p['duree'])
         if avec_ecoute and not err:
             # Écoute bruitée sur des découpes courtes : signalée pour relecture, pas bloquante.
-            sig += [f'écoute : {x}' for x in ecoute(fichier, vers, cal, p['duree'])]
+            try:
+                sig += [f'écoute : {x}' for x in ecoute(fichier, vers, cal, p['duree'])]
+            except gemini.BudgetAtteint as e:
+                print(f'ARRÊT de l’écoute : {e}')
+                avec_ecoute = False
         planche(voix_wav, vers, cal, controle, cache / f"{p['id']}.png")
         repli = bool(err) or p.get('calage_force') == 'vers'
         ecarts = sorted(abs(a[0] - b[0]) for x, y in zip(cal, controle) for a, b in zip(x, y))
@@ -264,8 +269,13 @@ def main() -> int:
     a.add_argument('--chant', nargs='+', help='identifiants des intermèdes à traiter')
     a.add_argument('--ecoute', action='store_true', help='écoute ciblée de chaque vers par Gemini')
     a.add_argument('--essai', action='store_true', help="n'écrit rien dans le script")
+    gemini.options(a, ['paroles'])
     x = a.parse_args()
-    return traiter(x.slug, x.chant, x.ecoute, x.essai)
+    gemini.appliquer(x, ['paroles'])
+    r = traiter(x.slug, x.chant, x.ecoute, x.essai)
+    if x.ecoute:
+        print(gemini.bilan())
+    return r
 
 
 if __name__ == '__main__':

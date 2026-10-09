@@ -70,6 +70,11 @@ transcrit) ; dans chaque diapositive, un objet et un manuscrit au plus, au regis
 l'arbitrage : avertissement. Deux surimpressions au plus à la fois (citation, manuscrit, médaillon
 de lieu, portraits, objet ; fenêtres recalculées comme dans le lecteur), jamais l'objet avec la
 surimpression de son coin ni le manuscrit avec la citation.
+Dosage des enrichissements par période (spec 12, « Produire une période », 2026-10-09) : avertissement
+« dosage insuffisant » sous 3 avant/après, 2 mosaïques, 6 objets, 3 manuscrits, 6 chiffres ou dates
+(zéro compris). Épisodes : avertissement pour un visuel unique (moins de deux familles hors carton),
+un carton placé ailleurs qu'en tête (« en fin d'épisode »), un panneau `chiffres` qui contient des
+années (« Chronologie animée »).
 Chiffres clés et dates républicaines (spec 12, « Enrichissements visuels », point 4, 2026-10-08) : un
 chiffre et une date au plus par diapositive ; chiffre : `quand` exact, nombre dit dans le `quand` égal à
 `valeur` (chiffres ou toutes lettres), prudence dite (« plus de », « près de »…) reprise dans `prefixe`,
@@ -1412,6 +1417,23 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
                     erreurs.append(f'{qv} : source du document manquante')
             else:
                 erreurs.append(f'{qv} : type inconnu')
+            if tv == 'chiffres':
+                annees = [str(x.get('valeur')) for x in v.get('items', [])
+                          if re.fullmatch(r'\s*1[5-9]\d\d\s*', str(x.get('valeur', '')))]
+                if annees:
+                    avert.append(f"{qv} : panneau de chiffres qui contient des années ({', '.join(annees)}) : "
+                                 f"une suite d'événements datés se montre en « chronologie » (spec 12, « Chronologie animée »)")
+        # Épisodes riches (spec 12, « Produire une période ») : deux familles de visuels au moins
+        # (le carton n'en est pas une) ; le carton-titre ouvre l'épisode, il ne le clôt pas.
+        types = [v.get('type') for v in e['visuels']]
+        familles = {t_ for t_ in types if t_ != 'carton'}
+        if len(familles) < 2:
+            avert.append(f"{q} : visuel unique ({', '.join(sorted(familles)) or 'carton seul'}) : "
+                         f"au moins deux familles de visuels (carte, graphique, document, chiffres, chronologie) qui se relaient")
+        for k, t_ in enumerate(types):
+            if t_ == 'carton' and k > 0:
+                ou = 'en fin d’épisode' if k == len(types) - 1 else f'en position {k + 1}'
+                avert.append(f'{q} : carton {ou} : le carton-titre ouvre l’épisode, il ne le clôt pas')
         for qa in _instants_ok(t, quands):
             erreurs.append(f'{q} : « {qa} » absent de la narration')
         audio(q, e, t, VOIX, (45, 90))
@@ -1543,9 +1565,14 @@ def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[l
             du = (x.get('audio') or {}).get('duree') or 0
             if du and debut_plongee(len(V)) + PLONGEE_MIN + 3 > du:
                 erreurs.append(f'{q} : voix trop courte ({du:.1f} s) pour la grille et la plongée')
-    if n_ap and not 3 <= n_ap <= 4:
+    # Dosage (spec 12, « Produire une période ») : averti aussi à zéro, c'est le cas à repérer.
+    if n_ap < 3:
+        avert.append(f'dosage insuffisant : {n_ap} avant/après (3 à 4 visés par période ; à prévoir dès l\'écriture)')
+    elif n_ap > 4:
         avert.append(f'{n_ap} avant/après (3 à 4 visés par période)')
-    if n_mos and n_mos != 2:
+    if n_mos < 2:
+        avert.append(f'dosage insuffisant : {n_mos} mosaïque(s) (2 visées par période)')
+    elif n_mos > 2:
         avert.append(f'{n_mos} mosaïque(s) (2 visées par période)')
     return erreurs, avert, n_ap, n_mos
 
@@ -1724,10 +1751,18 @@ def verifier(slug: str) -> bool:
     if n_objets or n_manuscrits:
         print(f'Objets et manuscrits : {n_objets} objet(s) de musée, {n_manuscrits} manuscrit(s) montrés (visés : ~10 et 3 à 4) ; '
               f'deux surimpressions ensemble sur {n_deux} diapositive(s), jamais plus.')
-        if not 6 <= n_objets <= 14:
-            avert.append(f'{n_objets} objet(s) de musée (~10 visés par période)')
-        if not 3 <= n_manuscrits <= 4:
-            avert.append(f'{n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
+    # Dosage des enrichissements (spec 12, « Produire une période ») : averti aussi à zéro.
+    if n_objets < 6:
+        avert.append(f'dosage insuffisant : {n_objets} objet(s) de musée (~10 visés par période)')
+    elif n_objets > 14:
+        avert.append(f'{n_objets} objet(s) de musée (~10 visés par période)')
+    if n_manuscrits < 3:
+        avert.append(f'dosage insuffisant : {n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
+    elif n_manuscrits > 4:
+        avert.append(f'{n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
+    if n_chiffres + n_dates < 6:
+        avert.append(f'dosage insuffisant : {n_chiffres} chiffre(s) et {n_dates} date(s) républicaine(s) en surimpression '
+                     f'(~8 chiffres ou dates visés par période)')
     if n_chiffres or n_dates:
         print(f'Chiffres clés et dates : {n_chiffres} chiffre(s) (~8 visés), {n_dates} date(s) républicaine(s), '
               f'correspondances recalculées ({n_conf} confirmée(s) par la narration ou la date de la diapositive).')

@@ -43,9 +43,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from PIL import Image, ImageDraw, ImageFont
 
 import commun as c
+import gemini
 
-MODELE = os.environ.get('DIAPORAMAS_MODELE_VISION') or 'gemini-3.8-flash'
-URL = 'https://generativelanguage.googleapis.com/v1beta/models'
+MODELE = gemini.modele('camera')     # DIAPORAMAS_MODELE_CAMERA (ou _VISION), ou --modele
+URL = gemini.URL
 VERSION = 'v3'          # à changer quand les consignes changent : invalide le cache, donc tout est
                         # recadré à la passe suivante (sauf les diapositives manuelles ; une caméra
                         # v1/v2 qui passe les contrôles de vue reste valable : `empreintes_valides`)
@@ -77,8 +78,8 @@ TENUE_MAX = 7.0         # s : au-delà, une tenue sur un même cadre appelle une
 TRANSITION, AVANCE = 2.5, 0.6
 ESSAIS = 3              # propositions refusées par le contrôle mécanique avant repli
 RELECTURES = 1
-# Tarif indicatif Gemini Flash (hypothèse, $ par million de jetons) : entrée, sortie.
-PRIX_ENTREE, PRIX_SORTIE = 0.30, 2.50
+# Tarif indicatif : table TARIFS de gemini.py (hypothèse, $ par million de jetons).
+PRIX_ENTREE, PRIX_SORTIE = gemini.tarif(MODELE)
 
 verrou = threading.Lock()
 usage = {'appels': 0, 'entree': 0, 'sortie': 0}
@@ -178,46 +179,22 @@ SCHEMA = {
 
 # --- Appel Gemini ---------------------------------------------------------------------
 
-def appel(contenus: list[dict], systeme: str | None = None, schema: dict | None = None) -> dict:
-    """Réponse JSON du modèle de vision (la clé n'est jamais affichée)."""
-    cle = os.environ.get('GEMINI_API_KEY', '')
-    if not cle:
-        raise ErreurCamera('GEMINI_API_KEY absente de .env')
+def appel(contenus: list[dict], systeme: str | None = None, schema: dict | None = None,
+          tache: str = 'camera') -> dict:
+    """Réponse JSON du modèle de vision (la clé n'est jamais affichée ; réflexion, modèle et plafond
+    réglés par gemini.py)."""
     corps = {
         'systemInstruction': {'parts': [{'text': systeme or CONSIGNES}]},
         'contents': contenus,
         'generationConfig': {'temperature': 0.2, 'responseMimeType': 'application/json',
                              'responseSchema': schema or SCHEMA},
     }
-    for essai in range(6):
-        req = urllib.request.Request(f'{URL}/{MODELE}:generateContent', data=json.dumps(corps).encode(),
-                                     headers={'x-goog-api-key': cle, 'Content-Type': 'application/json'})
-        try:
-            d = json.loads(urllib.request.urlopen(req, timeout=180).read())
-            break
-        except urllib.error.HTTPError as e:
-            msg = e.read().decode(errors='replace')[:300]
-            if e.code in (429, 500, 502, 503, 504) and essai < 5:
-                time.sleep(8 * (essai + 1))
-                continue
-            raise ErreurCamera(f'Gemini {e.code} : {msg}') from None
-        except (urllib.error.URLError, TimeoutError) as e:
-            if essai < 5:
-                time.sleep(8 * (essai + 1))
-                continue
-            raise ErreurCamera(f'Gemini injoignable : {e}') from None
-    else:
-        raise ErreurCamera('Gemini : trop de tentatives')
-    u = d.get('usageMetadata') or {}
+    d = gemini.generer(tache, corps, nom=MODELE if tache == 'camera' else None, erreur=ErreurCamera)
     with verrou:
         usage['appels'] += 1
-        usage['entree'] += int(u.get('promptTokenCount') or 0)
-        usage['sortie'] += int(u.get('candidatesTokenCount') or 0) + int(u.get('thoughtsTokenCount') or 0)
-    try:
-        texte = ''.join(p.get('text', '') for p in d['candidates'][0]['content']['parts'])
-        return json.loads(texte)
-    except (KeyError, IndexError, json.JSONDecodeError) as e:
-        raise ErreurCamera(f'réponse illisible : {str(d)[:300]}') from e
+        usage['entree'] += d['_usage']['entree']
+        usage['sortie'] += d['_usage']['sortie']
+    return gemini.json_de(d, ErreurCamera)
 
 
 # --- Visages (règle « aucun visage coupé », 2026-10-09) ---------------------------------------
@@ -239,6 +216,9 @@ VISAGES_SCHEMA = {'type': 'OBJECT', 'properties': {'visages': {'type': 'ARRAY', 
     'type': 'OBJECT', 'properties': {k: {'type': 'NUMBER'} for k in ('gauche', 'haut', 'droite', 'bas')},
     'required': ['gauche', 'haut', 'droite', 'bas']}}}, 'required': ['visages']}
 FACE_DEDANS, FACE_DEHORS = 0.9, 0.1   # part de l'aire du visage dans la vue : entier / franchement hors
+FRONT_TOLERE = 0.2      # part du haut d'un visage (front) qui peut être coupée par une vue collée au haut
+HAUT_VUE_MIN = 0.08     # … c.-à-d. qui commence au plus à cette hauteur (cartouche : y≈0,06)
+TETE_MIN = 0.08         # hauteur du plus grand visage au-delà de laquelle l'image est un portrait : sa tête doit être vue
 FACE_MIN = 0.03         # hauteur minimale (fraction de l'image) d'un visage contrôlé : pas les têtes d'une foule
 
 
@@ -252,7 +232,82 @@ def _visages_cache(slug: str) -> tuple:
     return f, (json.loads(f.read_text()) if f.exists() else {})
 
 
+# Source des visages (2026-10-09) : détection locale gratuite (YuNet, `visages_local.py`, venv
+# .cache/venv-visages), cache .cache/diaporamas/<slug>/visages-local.json au même format et aux
+# mêmes clés que visages.json (Gemini). DIAPORAMAS_VISAGES (ou --source-visages) :
+#   union  (défaut) : relevé Gemini déjà payé s'il existe, complété des visages locaux qu'il n'a pas ;
+#   local           : détection locale seule ;
+#   gemini          : relevé Gemini seul (appel payant si absent, comme avant).
+# Comparaison sur 20 images (8 gravures, 6 foules, 6 peintures/portraits) : la détection locale
+# retrouve 80 % des visages Gemini des gravures, 83 % dans les foules, 100 % ailleurs ; elle manque
+# surtout les têtes coupées, les profils perdus et les très petites têtes, et ajoute quelques
+# fausses alertes. Sur les 230 images des deux périodes : 78 à 86 % selon la catégorie.
+SOURCE_VISAGES = os.environ.get('DIAPORAMAS_VISAGES') or 'union'
+UNION_MIN = 0.06        # hauteur minimale d'un visage local ajouté au relevé Gemini (mode union)
+VENV_VISAGES = c.RACINE / '.cache' / 'venv-visages' / 'bin' / 'python'
+
+
+def _visages_locaux_cache(slug: str) -> tuple:
+    f = c.CACHE / slug / 'visages-local.json'
+    return f, (json.loads(f.read_text()) if f.exists() else {})
+
+
+def preparer_visages_locaux(slug: str, xs: list[dict]) -> int:
+    """Détecte en un lot (un seul sous-processus) les visages locaux manquants ; rend leur nombre."""
+    import subprocess
+    f, cache = _visages_locaux_cache(slug)
+    manque = {}
+    for x in xs:
+        if (c.PUBLIC / slug / x['image']['fichier']).exists():
+            cle = empreinte_image(slug, x)
+            if cle not in cache:
+                manque[cle] = str(c.PUBLIC / slug / x['image']['fichier'])
+    if not manque:
+        return 0
+    if not VENV_VISAGES.exists():
+        raise SystemExit(f'venv des visages absent ({VENV_VISAGES.relative_to(c.RACINE)}) : voir visages_local.py.')
+    r = subprocess.run([str(VENV_VISAGES), os.path.join(os.path.dirname(os.path.abspath(__file__)), 'visages_local.py')],
+                       input=json.dumps(list(manque.values())), capture_output=True, text=True)
+    if r.returncode:
+        raise SystemExit('Détection locale des visages en échec :\n' + r.stderr[-1500:])
+    with verrou:
+        f, cache = _visages_locaux_cache(slug)
+        cache.update(zip(manque, json.loads(r.stdout)))
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text(json.dumps(cache, ensure_ascii=False))
+    return len(manque)
+
+
+def _iou(a: list[float], b: list[float]) -> float:
+    i = max(0, min(a[2], b[2]) - max(a[0], b[0])) * max(0, min(a[3], b[3]) - max(a[1], b[1]))
+    u = (a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - i
+    return i / u if u > 0 else 0.0
+
+
 def visages(slug: str, x: dict, appeler: bool = True) -> list[list[float]] | None:
+    """Rectangles des visages de l'image (fractions), selon SOURCE_VISAGES. `appeler` ne règle que
+    l'appel Gemini (source « gemini ») : la détection locale, gratuite, est toujours faite.
+    None seulement en source « gemini » quand l'image n'a pas été relevée et `appeler` est faux."""
+    if SOURCE_VISAGES == 'gemini':
+        return visages_gemini(slug, x, appeler)
+    cle = empreinte_image(slug, x)
+    with verrou:
+        locaux = _visages_locaux_cache(slug)[1].get(cle)
+    if locaux is None:
+        preparer_visages_locaux(slug, [x])
+        with verrou:
+            locaux = _visages_locaux_cache(slug)[1].get(cle, [])
+    if SOURCE_VISAGES == 'local':
+        return locaux
+    g = visages_gemini(slug, x, appeler=False)
+    if g is None:
+        return locaux
+    # Relevé Gemini présent : on n'y ajoute que les visages locaux nets qu'il a manqués (les petites
+    # têtes de foule, qu'il ignore exprès, rendraient l'audit bavard sans rien protéger d'utile).
+    return g + [k for k in locaux if k[3] - k[1] >= UNION_MIN and not any(_iou(k, h) > 0.2 for h in g)]
+
+
+def visages_gemini(slug: str, x: dict, appeler: bool = True) -> list[list[float]] | None:
     """Rectangles des visages de l'image (fractions) ; None si non relevés et `appeler` faux."""
     cle = empreinte_image(slug, x)
     with verrou:
@@ -264,7 +319,7 @@ def visages(slug: str, x: dict, appeler: bool = True) -> list[list[float]] | Non
     grille = avec_grille(reduire(image_de(slug, x)))
     r = appel([{'role': 'user', 'parts': [{'text': f"Image : {x['image'].get('titre')}."},
                                           {'inlineData': {'mimeType': 'image/jpeg', 'data': _jpeg(grille)}}]}],
-              VISAGES_CONSIGNES, VISAGES_SCHEMA)
+              VISAGES_CONSIGNES, VISAGES_SCHEMA, tache='visages')
     liste = [[round(min(1, max(0, float(k[c_]))), 3) for c_ in ('gauche', 'haut', 'droite', 'bas')]
              for k in r.get('visages') or [] if isinstance(k, dict)]
     liste = [k for k in liste if k[2] > k[0] and k[3] > k[1]]
@@ -300,7 +355,11 @@ def visages_coupes(v: list[float], faces: list[list[float]]) -> list[list[float]
             continue
         a = (k[2] - k[0]) * (k[3] - k[1])
         i = max(0, min(k[2], v[2]) - max(k[0], v[0])) * max(0, min(k[3], v[3]) - max(k[1], v[1]))
-        if a > 0 and FACE_DEHORS < i / a < FACE_DEDANS:
+        # Front légèrement coupé admis quand la vue est collée au haut de l'image (le cartouche cache
+        # le haut, la vue ne peut pas monter plus) : le reste du visage est entier.
+        front = (v[1] <= HAUT_VUE_MIN and k[1] < v[1] and v[1] - k[1] <= FRONT_TOLERE * (k[3] - k[1])
+                 and k[0] >= v[0] and k[2] <= v[2] and k[3] <= v[3])
+        if a > 0 and FACE_DEHORS < i / a < FACE_DEDANS and not front:
             sortie.append(k)
     return sortie
 
@@ -926,7 +985,8 @@ def reparer_etape(x: dict, e: dict, i: int, n: int, L: int, H: int, faces: list,
         f = dict(e, cadre=ajuster(k, L, H))
         if sujet is not None:
             v = vue_reelle(f['cadre'], L, H, u)
-            if not (v[0] <= sujet[0] and sujet[2] <= v[2] and v[1] <= sujet[1]
+            haut_ok = v[1] <= sujet[1] or (v[1] <= HAUT_VUE_MIN and v[1] - sujet[1] <= FRONT_TOLERE * (sujet[3] - sujet[1]))
+            if not (v[0] <= sujet[0] and sujet[2] <= v[2] and haut_ok
                     and sujet[1] + part * (sujet[3] - sujet[1]) <= v[3]):
                 continue
         nc = _coupes(x, f, i, n, L, H, u, faces)
@@ -976,6 +1036,70 @@ def reparer(slug: str, x: dict, foule: bool = False) -> tuple[list[dict] | None,
     return (sortie, []) if not e else (None, e)
 
 
+def sujet_portrait(faces: list[list[float]]) -> list[float] | None:
+    """Le visage principal d'un portrait (deux visages au plus) : le plus grand, s'il dépasse TETE_MIN de la hauteur."""
+    nets = [k for k in faces if (k[2] - k[0]) <= 3 * (k[3] - k[1]) and k[3] - k[1] >= FACE_MIN]
+    if len(nets) > 2:           # scène à plusieurs personnages : pas un portrait
+        return None
+    k = max(nets, key=lambda k: (k[2] - k[0]) * (k[3] - k[1]), default=None)
+    return k if k is not None and k[3] - k[1] >= TETE_MIN else None
+
+
+def tete_hors_champ(x: dict, etapes: list[dict], L: int, H: int, faces: list) -> list[str]:
+    """Portrait dont aucune vue ne montre la tête (au moins la moitié du visage principal) : la
+    réparation géométrique a pu garder une bande au milieu du buste (Chateaubriand, CE 14)."""
+    k = sujet_portrait(faces)
+    if k is None or not etapes:
+        return []
+    u = utile_de(x)
+    a = (k[2] - k[0]) * (k[3] - k[1])
+    for e in etapes:
+        for v in (vue_reelle(e['cadre'], L, H, u),):
+            i = max(0, min(k[2], v[2]) - max(k[0], v[0])) * max(0, min(k[3], v[3]) - max(k[1], v[1]))
+            if i / a >= 0.5:
+                return []
+    return [f'portrait : aucune vue ne montre la tête du sujet (visage {k}) : cadrer la tête.']
+
+
+def cadre_tete(x: dict, k: list[float], L: int, H: int) -> list[float]:
+    """Cadre de la largeur d'une vue autour de la tête `k` (un peu d'air au-dessus) ; si la tête est
+    plus haute qu'une vue, le cadre la contient et le lecteur en montre le haut."""
+    u = utile_de(x)
+    hmax = min((u[2] - u[0]) * L / RATIO_VUE, (u[3] - u[1]) * H / (1 + BANDE_HAUT + BANDE_BAS)) / H
+    fh = k[3] - k[1]
+    hh = min(hmax * 0.98, fh * 1.6) if fh <= hmax * 0.95 else fh * 1.1
+    y0 = max(0.0, k[1] - 0.15 * fh) if fh <= hmax * 0.95 else max(0.0, k[1] - 0.05 * fh)
+    ww = min(1.0, max(k[2] - k[0], min(hh, hmax * 0.98) * H * RATIO_VUE / L))
+    cx = (k[0] + k[2]) / 2
+    x0 = min(max(0.0, cx - ww / 2), 1 - ww)
+    return [round(x0, 3), round(y0, 3), round(x0 + ww, 3), round(min(1.0, y0 + hh), 3)]
+
+
+def reparer_tete(slug: str, x: dict) -> tuple[list[dict] | None, list[str]]:
+    """Portrait à tête hors champ : la première étape devient un cadre sur la tête (les suivantes
+    sont gardées), rendu juste par la réparation géométrique (sans appel)."""
+    cam = [dict(e) for e in x['image'].get('camera') or []]
+    L, H = dims(x)
+    faces = visages(slug, x, appeler=False) or []
+    k = sujet_portrait(faces)
+    if k is None or not cam:
+        return None, ['pas de portrait']
+    e0 = {kk: v for kk, v in cam[0].items() if kk != 'cadre'}
+    nouveau = reparer_etape(x, dict(e0, cadre=cadre_tete(x, k, L, H)), 0, len(cam), L, H, faces, foule_permise=True)
+    if nouveau is None:
+        return None, ['cadre de tête irréparable']
+    cam[0] = nouveau
+    while len(cam) > 1 and ignorees(x, cam, L, H):
+        cam.pop(1)
+    # La vue de la tête montre un sujet (pas de contrôle d'aplat : les fonds sombres des portraits
+    # peints le trompent) ; une tête plus haute qu'une vue n'est montrée que du front au nez.
+    e = erreurs_vues(x, cam, L, H, None, faces) + tete_hors_champ(x, cam, L, H, faces)
+    if len(cam) > 1:
+        e += [m for m in erreurs_vues(x, cam, L, H, image_de(slug, x), []) if m.startswith('dernière')]
+    e = [m for m in e if not (m.startswith('étape 1 :') and str(k) in m and 'coupe' in m)]
+    return (cam, []) if not e else (None, e)
+
+
 def audit(d: dict) -> list[tuple[int, list[str]]]:
     fautes = []
     for x in d['diapositives']:
@@ -983,8 +1107,9 @@ def audit(d: dict) -> list[tuple[int, list[str]]]:
         if not cam:
             continue
         L, H = dims(x)
-        e = (erreurs_vues(x, cam, L, H, image_de(d['slug'], x), visages(d['slug'], x, appeler=False))
-             + ignorees(x, cam, L, H))
+        faces = visages(d['slug'], x, appeler=False)
+        e = (erreurs_vues(x, cam, L, H, image_de(d['slug'], x), faces) + ignorees(x, cam, L, H)
+             + tete_hors_champ(x, cam, L, H, faces or []))
         if e:
             fautes.append((x['n'], e))
     return fautes
@@ -1008,20 +1133,46 @@ def main() -> int:
                    help='sans appel : répare géométriquement les caméras fautives (avec --n : ces diapositives) ; '
                         'les manuelles sont seulement signalées')
     p.add_argument('--visages', action='store_true',
-                   help='relever les visages de toutes les images (un appel par image, en cache), sans cadrer')
+                   help='relever localement (gratuit) les visages de toutes les images, en cache, sans cadrer')
+    p.add_argument('--visages-gemini', action='store_true',
+                   help='relever les visages par Gemini (un appel payant par image, en cache), sans cadrer')
+    p.add_argument('--source-visages', choices=['union', 'local', 'gemini'],
+                   help='visages utilisés par les contrôles (défaut : DIAPORAMAS_VISAGES ou « union »)')
     p.add_argument('--paralleles', type=int, default=4)
+    gemini.options(p, ['camera', 'visages'])
     a = p.parse_args()
     c.charger_env()
+    global MODELE
+    gemini.appliquer(a, ['camera', 'visages'])
+    MODELE = gemini.modele('camera')
 
     f, d = c.lire(a.slug)
     etat_f = c.CACHE / d['slug'] / 'camera.json'
     cache = json.loads(etat_f.read_text()) if etat_f.exists() else {}
 
+    global SOURCE_VISAGES
+    if a.source_visages:
+        SOURCE_VISAGES = a.source_visages
+    if SOURCE_VISAGES != 'gemini':
+        nb = preparer_visages_locaux(d['slug'], d['diapositives'])
+        if nb:
+            print(f'Visages locaux relevés pour {nb} image(s) (YuNet, gratuit).')
     if a.visages:
+        cle = lambda x: empreinte_image(d['slug'], x)
+        locaux = _visages_locaux_cache(d['slug'])[1]
+        print(f"{sum(len(locaux.get(cle(x), [])) for x in d['diapositives'])} visages locaux sur "
+              f"{len(d['diapositives'])} images (source des contrôles : {SOURCE_VISAGES}).")
+        return 0
+
+    if a.visages_gemini:
         with ThreadPoolExecutor(max_workers=a.paralleles) as pool:
-            res = list(pool.map(lambda x: (x['n'], visages(d['slug'], x)), d['diapositives']))
-        print(f"{sum(len(v) for _, v in res)} visages sur {len(res)} images ; appels : {usage['appels']} "
-              f"(~{usage['entree'] / 1e6 * PRIX_ENTREE + usage['sortie'] / 1e6 * PRIX_SORTIE:.3f} $).")
+            def un(x):
+                try:
+                    return x['n'], visages_gemini(d['slug'], x)
+                except gemini.BudgetAtteint:
+                    return x['n'], None
+            res = list(pool.map(un, d['diapositives']))
+        print(f"{sum(len(v or []) for _, v in res)} visages sur {len(res)} images. {gemini.bilan()}")
         return 0
 
     if a.reparer:
@@ -1033,7 +1184,10 @@ def main() -> int:
             if x.get('camera_manuelle'):
                 echecs.append((n, ['manuelle'] + e))
                 continue
-            cam, raisons = reparer(d['slug'], x)
+            if any(m.startswith('portrait :') for m in e):
+                cam, raisons = reparer_tete(d['slug'], x)
+            else:
+                cam, raisons = reparer(d['slug'], x)
             if cam is None:
                 cam, raisons = reparer(d['slug'], x, foule=True)
                 if cam is not None:
@@ -1089,12 +1243,20 @@ def main() -> int:
           f'{manuelles or "aucune"}.')
 
     debut = time.time()
+    arret = []
     with ThreadPoolExecutor(max_workers=a.paralleles) as pool:
         futurs = {pool.submit(cadrer, d['slug'], x): x for x in a_faire}
         for fut in as_completed(futurs):
             x = futurs[fut]
             try:
                 r = fut.result()
+            except gemini.BudgetAtteint as e:
+                if not arret:
+                    print(f'ARRÊT : {e} ; ce qui est fait est gardé.')
+                    arret.append(1)
+                    for fu in futurs:
+                        fu.cancel()
+                continue
             except Exception as e:  # noqa: BLE001
                 print(f"{x['n']:3d} ERREUR {e}")
                 continue
@@ -1115,10 +1277,7 @@ def main() -> int:
     for x in d['diapositives']:
         x['image'].pop('cadrage', None)
     c.ecrire(f, d)
-    cout = usage['entree'] / 1e6 * PRIX_ENTREE + usage['sortie'] / 1e6 * PRIX_SORTIE
-    print(f"\nAppels : {usage['appels']} ; jetons : {usage['entree']} en entrée, {usage['sortie']} en sortie ; "
-          f"{time.time() - debut:.0f} s (coût indicatif ~{cout:.3f} $, tarif supposé "
-          f"{PRIX_ENTREE} $ / {PRIX_SORTIE} $ par million de jetons).")
+    print(f"\n{time.time() - debut:.0f} s. {gemini.bilan()}")
     from collections import Counter
     print('Étapes par diapositive :', dict(sorted(Counter(len(x['image'].get('camera') or [])
                                                             for x in d['diapositives']).items())))

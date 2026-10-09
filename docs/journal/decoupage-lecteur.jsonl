@@ -1,0 +1,19 @@
+{"ts": "2026-10-09T13:58:28+00:00", "quoi": "debut", "etape": "lecture", "texte": "Lecture du composant et des outils existants"}
+{"ts": "2026-10-09T14:02:00+00:00", "quoi": "fin", "etape": "lecture", "texte": "Script = closure monter() l.608-2820 ; captures.py écrit (page.clock + faux audio)"}
+{"ts": "2026-10-09T14:02:00+00:00", "quoi": "debut", "etape": "captures-reference", "texte": "Build dist-modules + captures de référence"}
+{"ts": "2026-10-09T14:08:29+00:00", "quoi": "probleme", "etape": "captures-reference", "texte": "Ouverture en volets (carton > 8,5 s) : Web Animations en temps réel, capture non reproductible ; 15:c10 remplacé par 15:c7"}
+{"ts": "2026-10-09T14:13:06+00:00", "quoi": "probleme", "etape": "captures-reference", "texte": "Bruit résiduel entre deux passages de référence : quelques pixels de la barre de progression / temps écoulé dans les captures de carton (1:c5, 15:c7) et 107:5 ; 77:17.8 (début d'acte, volets) non reproductible, remplacé par 94:12"}
+{"ts": "2026-10-09T14:13:06+00:00", "quoi": "fin", "etape": "captures-reference", "texte": "34 captures de référence (rev 23, CE 11 ; ordinateur + téléphone), 2 passages : 30/34 identiques, écarts de 1 à 70 px dans la barre de contrôle"}
+{"ts": "2026-10-09T14:13:06+00:00", "quoi": "debut", "etape": "carte-fonctions", "texte": "Attribution des déclarations de monter() aux modules"}
+{"ts": "2026-10-09T14:18:29+00:00", "quoi": "fin", "etape": "carte-fonctions", "texte": "20 modules internes + 5 externes ; découpeur TS (checker) : 27 let partagés passent dans lec, références croisées en déstructuration (modules antérieurs) ou lec.x (postérieurs)"}
+{"ts": "2026-10-09T14:18:29+00:00", "quoi": "debut", "etape": "extraction", "texte": "Remplacement du <script> par l'import des modules"}
+{"ts": "2026-10-09T14:18:29+00:00", "quoi": "fin", "etape": "extraction", "texte": "Diaporama.astro : script remplacé par import (196 Ko -> styles + gabarit)"}
+{"ts": "2026-10-09T14:18:29+00:00", "quoi": "debut", "etape": "assemblage", "texte": "Build dist-modules"}
+{"ts": "2026-10-09T14:18:45+00:00", "quoi": "fin", "etape": "assemblage", "texte": "Build OK"}
+{"ts": "2026-10-09T14:18:45+00:00", "quoi": "debut", "etape": "non-regression", "texte": "Captures après découpage, comparées aux deux passages de référence"}
+{"ts": "2026-10-09T14:21:57+00:00", "quoi": "fin", "etape": "non-regression", "texte": "34 captures : 31 identiques à la référence ; 3 écarts (1:c5 1 px, 15:c7 68 px, 107:5 3 px) = même bruit qu'entre les deux passages de référence (barre de progression) ; 72:s15 : écart de 83 px intermittent, identique 3/3 en relançant. Sorties __camera/__instant/__clip/__musique identiques. verifier OK x2, tsc strict 0 erreur"}
+{"ts": "2026-10-09T14:21:57+00:00", "quoi": "debut", "etape": "doc", "texte": "README : carte des modules et captures.py"}
+{"ts": "2026-10-09T14:22:34+00:00", "quoi": "fin", "etape": "doc", "texte": "README : sections « Lecteur : carte des modules » et « Captures »"}
+{"ts": "2026-10-09T14:22:57+00:00", "quoi": "probleme", "etape": "non-regression", "texte": "Commentaires des points de test mal placés dans l'original (« Contrôle de la caméra » au-dessus de __instant, « on lit l'état et les gains » au-dessus de __aller) : recasés près de leur code (commentaires seuls)"}
+{"ts": "2026-10-09T14:22:57+00:00", "quoi": "idee", "etape": "doc", "texte": "Le découpeur TS (checker) qui réécrit les références croisées a rendu l'extraction sûre et rapide (0 erreur tsc, 0 écart) : le garder en tête pour d'autres composants géants"}
+{"ts": "2026-10-09T14:22:57+00:00", "quoi": "idee", "etape": "doc", "texte": "captures.py --comparer avec un plan standard enregistré (fichier plan par slug) permettrait une non-régression en une commande après chaque retouche du lecteur"}

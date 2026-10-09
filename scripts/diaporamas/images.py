@@ -6,6 +6,13 @@ Usage :
     python3 scripts/diaporamas/images.py revolution --force    # refait les WebP existants
     python3 scripts/diaporamas/images.py --chercher "prise de la Bastille" [nombre]
     python3 scripts/diaporamas/images.py --infos "File:…" ["File:…" …]
+    python3 scripts/diaporamas/images.py --lot recherches.txt [--nombre 12]   # lignes « cle|requête »
+
+`--lot FICHIER` (2026-10-09) : une recherche Commons par ligne `cle|requête` (lignes vides et `#`
+ignorées) ; ne garde que les fichiers libres (domaine public, CC0) d'au moins LARGEUR_MIN px ;
+sortie compacte, une ligne par fichier retenu avec son nom complet (jamais tronqué) ; résultats
+dans .cache/diaporamas/lots/<nom>.json et planche-contact <nom>.jpg (vignettes numérotées
+`cle:k`, par ligne de recherche).
 
 Pour chaque diapositive : interroge l'API Commons (imageinfo, extmetadata), refuse toute
 licence autre que le domaine public (ou CC0), télécharge une version de 2400 px de large
@@ -140,6 +147,66 @@ def annexes(d: dict, dossier: Path, etat: dict, force: bool) -> list[str]:
     return echecs
 
 
+def chercher_libres(requete: str, nombre: int) -> tuple[list[dict], int]:
+    """Recherche Commons filtrée (licence libre, largeur) : (retenus, nombre de résultats bruts)."""
+    d = c.api_commons(action='query', generator='search', gsrsearch=f'{requete} filetype:bitmap',
+                      gsrnamespace=6, gsrlimit=nombre, prop='imageinfo', iiprop='size|mime|url|extmetadata',
+                      iiurlwidth=300, iiextmetadatalanguage='fr',
+                      iiextmetadatafilter='ObjectName|Artist|DateTimeOriginal|LicenseShortName|License')
+    pages = sorted(d.get('query', {}).get('pages', []), key=lambda p: p.get('index', 0))
+    retenus = []
+    for p in pages:
+        info = (p.get('imageinfo') or [{}])[0]
+        meta = {k: v.get('value') for k, v in (info.get('extmetadata') or {}).items()}
+        libre, licence = c.licence_libre({'meta': meta})
+        if not libre or (info.get('width') or 0) < LARGEUR_MIN:
+            continue
+        retenus.append({'fichier': p['title'], 'largeur': info.get('width'), 'hauteur': info.get('height'),
+                        'licence': licence, 'titre': c.titre_objet(meta.get('ObjectName')),
+                        'auteur': c.texte_meta(meta.get('Artist')), 'date': c.texte_meta(meta.get('DateTimeOriginal')),
+                        'vignette': info.get('thumburl'), 'page': info.get('descriptionurl')})
+    return retenus, len(pages)
+
+
+def lot(fichier: Path, nombre: int) -> int:
+    """Recherches par lots (`cle|requête` par ligne) : sortie compacte, JSON, planche-contact."""
+    from PIL import ImageDraw
+    lignes = [l.split('|', 1) for l in fichier.read_text().splitlines() if l.strip() and not l.lstrip().startswith('#')]
+    if any(len(l) != 2 for l in lignes):
+        raise SystemExit('format attendu : une ligne « cle|requête » par recherche')
+    resultats = {}
+    for cle, requete in lignes:
+        cle, requete = cle.strip(), requete.strip()
+        retenus, bruts = chercher_libres(requete, nombre)
+        resultats[cle] = {'requete': requete, 'resultats': retenus}
+        print(f'{cle} « {requete} » : {len(retenus)} libre(s) ≥ {LARGEUR_MIN} px sur {bruts}')
+        for k, r in enumerate(retenus, 1):
+            print(f"  {cle}:{k} {r['largeur']}×{r['hauteur']} · {r['date'][:20]} · {r['auteur'][:40]} · {r['titre'][:60]}")
+            print(f"      {r['fichier']}")
+        time.sleep(0.5)
+    dossier = c.CACHE / 'lots'
+    dossier.mkdir(parents=True, exist_ok=True)
+    base = dossier / f'images-{fichier.stem}'
+    base.with_suffix('.json').write_text(json.dumps(resultats, ensure_ascii=False, indent=1))
+    # Planche-contact : une rangée par recherche, vignettes numérotées cle:k.
+    W, col = 200, max([len(v['resultats']) for v in resultats.values()] + [1])
+    P = Image.new('RGB', (W * col + 120, (W + 20) * max(1, len(resultats))), 'white')
+    dr = ImageDraw.Draw(P)
+    for i, (cle, v) in enumerate(resultats.items()):
+        dr.text((4, i * (W + 20) + W // 2), cle[:18], fill='black')
+        for k, r in enumerate(v['resultats']):
+            try:
+                im = Image.open(io.BytesIO(c.http_get(r['vignette']))).convert('RGB')
+            except Exception:  # noqa: BLE001
+                continue
+            im.thumbnail((W - 6, W - 6))
+            P.paste(im, (120 + k * W, i * (W + 20) + 16))
+            dr.text((120 + k * W, i * (W + 20) + 2), f"{cle}:{k + 1} {r['largeur']}px", fill='black')
+    P.save(base.with_suffix('.jpg'), quality=80)
+    print(f"Résultats : {base.with_suffix('.json').relative_to(c.RACINE)} ; planche : {base.with_suffix('.jpg').relative_to(c.RACINE)}")
+    return 0
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('slug', nargs='?')
@@ -147,8 +214,12 @@ def main() -> int:
     p.add_argument('--force', action='store_true', help='refaire les WebP déjà présents')
     p.add_argument('--chercher', nargs='+', metavar=('REQUETE', 'NOMBRE'))
     p.add_argument('--infos', nargs='+', metavar='FICHIER', help='métadonnées Commons complètes de fichiers')
+    p.add_argument('--lot', metavar='FICHIER', help='recherches par lots : lignes « cle|requête »')
+    p.add_argument('--nombre', type=int, default=12, help='résultats bruts demandés par recherche (--lot)')
     a = p.parse_args()
 
+    if a.lot:
+        return lot(Path(a.lot), a.nombre)
     if a.infos:
         for t, info in c.infos_fichiers(a.infos).items():
             if info.get('manquant'):

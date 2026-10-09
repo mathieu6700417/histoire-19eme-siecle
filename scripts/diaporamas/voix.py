@@ -41,9 +41,10 @@ import unicodedata, urllib.error, urllib.request, wave
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import commun as c
+import gemini
 
-MODELE_VOIX = os.environ.get('DIAPORAMAS_MODELE_VOIX') or 'gemini-3.8-flash-tts'
-MODELE_TRANSCRIPTION = os.environ.get('DIAPORAMAS_MODELE_TRANSCRIPTION') or 'gemini-3.8-flash'
+MODELE_VOIX = gemini.modele('voix')                     # DIAPORAMAS_MODELE_VOIX ou --modele
+MODELE_TRANSCRIPTION = gemini.modele('transcription')   # DIAPORAMAS_MODELE_TRANSCRIPTION ou --modele-transcription
 VOIX = 'Charon'
 # Voix de lecture (lectures d'époque) : une seule voix de femme pour tous les textes, quel que
 # soit l'auteur, nettement distincte du narrateur (décision de l'utilisateur du 2026-10-07).
@@ -62,31 +63,13 @@ class ErreurGemini(Exception):
     pass
 
 
-def _appel(modele: str, corps: dict) -> dict:
-    cle = os.environ.get('GEMINI_API_KEY', '')
-    if not cle:
-        raise ErreurGemini('GEMINI_API_KEY absente de .env')
-    for essai in range(6):
-        req = urllib.request.Request(
-            f'{URL}/{modele}:generateContent', data=json.dumps(corps).encode(),
-            headers={'x-goog-api-key': cle, 'Content-Type': 'application/json'})
-        try:
-            d = json.loads(urllib.request.urlopen(req, timeout=300).read())
-            with verrou:
-                usage['jetons'] += int((d.get('usageMetadata') or {}).get('totalTokenCount') or 0)
-            return d
-        except urllib.error.HTTPError as e:
-            corps_err = e.read().decode(errors='replace')[:400]
-            if e.code in (429, 500, 502, 503, 504) and essai < 5:
-                time.sleep(10 * (essai + 1))
-                continue
-            raise ErreurGemini(f'Gemini {e.code} : {corps_err}') from None
-        except (urllib.error.URLError, TimeoutError) as e:
-            if essai < 5:
-                time.sleep(10 * (essai + 1))
-                continue
-            raise ErreurGemini(f'Gemini injoignable : {e}') from None
-    raise ErreurGemini('Gemini : trop de tentatives')
+def _appel(modele: str, corps: dict, tache: str | None = None) -> dict:
+    """Appel Gemini (gemini.py : réflexion réglée hors synthèse vocale, plafond --budget)."""
+    tache = tache or ('voix' if modele == MODELE_VOIX else 'transcription')
+    d = gemini.generer(tache, corps, nom=modele, delai=300, erreur=ErreurGemini)
+    with verrou:
+        usage['jetons'] += int((d.get('usageMetadata') or {}).get('totalTokenCount') or 0)
+    return d
 
 
 def _pcm(donnees: bytes, mime: str) -> bytes:
@@ -391,7 +374,17 @@ def main() -> int:
                    help="horodate les phrases des audios existants, sans synthèse")
     p.add_argument('--mots', action='store_true',
                    help="minute les mots des lectures existantes (alignement forcé), sans synthèse")
+    gemini.options(p, ['voix'])
+    p.add_argument('--modele-transcription', metavar='NOM',
+                   help='modèle de la transcription de contrôle (ex. gemini-3.5-transcribe)')
     a = p.parse_args()
+    global MODELE_VOIX, MODELE_TRANSCRIPTION
+    gemini.appliquer(a, ['voix'])                  # --reflexion ne touche que la transcription
+    if a.reflexion is not None:
+        gemini._reflexion['transcription'] = a.reflexion
+    if a.modele_transcription:
+        gemini._choix['transcription'] = a.modele_transcription
+    MODELE_VOIX, MODELE_TRANSCRIPTION = gemini.modele('voix'), gemini.modele('transcription')
     c.charger_env()
 
     f, d = c.lire(a.slug)
@@ -424,12 +417,21 @@ def main() -> int:
 
     echecs = []
     debut = time.time()
+    arret = []
     with ThreadPoolExecutor(max_workers=a.paralleles) as pool:
         futurs = {pool.submit(traiter, q, dossier): q for q in a_faire}
         for fut in as_completed(futurs):
             q = futurs[fut]
             try:
                 r = fut.result()
+            except gemini.BudgetAtteint as e:
+                if not arret:
+                    print(f'ARRÊT : {e} ; ce qui est fait est gardé.')
+                    arret.append(1)
+                    for fu in futurs:
+                        fu.cancel()
+                echecs.append(f"{q['nom']} : non faite (plafond)")
+                continue
             except Exception as e:  # noqa: BLE001
                 echecs.append(f"{q['nom']} : erreur : {e}")
                 print(f"{q['nom']} ERREUR {e}")
@@ -463,6 +465,7 @@ def main() -> int:
     print(f"\nAppels : {usage['appels_voix']} synthèses, {usage['appels_transcription']} transcriptions, "
           f"{usage['jetons']} jetons ; {usage['secondes'] / 60:.1f} min produites en {time.time() - debut:.0f} s "
           f"(coût indicatif ~{cout:.2f} $).")
+    print(gemini.bilan())
     print(f'Voix de la période (diapositives, lectures, épisodes ; sans pauses ni cartons) : {total / 60:.1f} min.')
     if echecs:
         print(f'\n{len(echecs)} échec(s) :', *sorted(echecs), sep='\n  ')

@@ -29,16 +29,85 @@ def fichier_periode(slug: str) -> Path:
     raise SystemExit(f'Script introuvable pour « {slug} » dans {DONNEES.relative_to(RACINE)}/')
 
 
+# Écriture sûre : plusieurs scripts (voix.py, utile.py, camera.py, musique.py…) peuvent
+# tourner en même temps sur le même JSON. Chacun garde la version qu'il a lue (« base ») ;
+# à l'écriture, sous verrou de fichier, on relit le disque et on n'y reporte que les champs
+# que CE script a changés depuis sa base (fusion à trois voies). Si un autre script a changé
+# le même champ autrement entre-temps, on refuse explicitement (ConflitEcriture).
+
+class ConflitEcriture(SystemExit):
+    pass
+
+
+_MANQUE = object()
+_BASES: dict[int, tuple[dict, object]] = {}     # id(données) -> (données, copie de la base)
+
+
+def _copie(v):
+    return json.loads(json.dumps(v))
+
+
+def _fusion(base, nous, eux, chemin: str):
+    """Fusion à trois voies de valeurs JSON ; _MANQUE = clé absente."""
+    if nous == base:
+        return eux
+    if eux == base or eux == nous:
+        return nous
+    if isinstance(base, dict) and isinstance(nous, dict) and isinstance(eux, dict):
+        r = {}
+        for k in list(eux) + [k for k in nous if k not in eux]:
+            v = _fusion(base.get(k, _MANQUE), nous.get(k, _MANQUE), eux.get(k, _MANQUE), f'{chemin}.{k}')
+            if v is not _MANQUE:
+                r[k] = v
+        return r
+    if (isinstance(base, list) and isinstance(nous, list) and isinstance(eux, list)
+            and len(base) == len(nous) == len(eux)):
+        return [_fusion(b, n, e, f'{chemin}[{i}]') for i, (b, n, e) in enumerate(zip(base, nous, eux))]
+    raise ConflitEcriture(f'Écriture refusée : « {chemin or "racine"} » a été modifié par un autre script '
+                          f'depuis la lecture. Relancer ce script (ses caches évitent de refaire le travail).')
+
+
+def _verrou(f: Path):
+    import fcntl
+    v = CACHE / 'verrous' / (f.name + '.lock')
+    v.parent.mkdir(parents=True, exist_ok=True)
+    h = v.open('w')
+    fcntl.flock(h, fcntl.LOCK_EX)
+    return h
+
+
+def _suivre(donnees: dict) -> None:
+    _BASES[id(donnees)] = (donnees, _copie(donnees))
+
+
 def lire(slug: str) -> tuple[Path, dict]:
     f = fichier_periode(slug)
-    return f, json.loads(f.read_text())
+    d = json.loads(f.read_text())
+    _suivre(d)
+    return f, d
 
 
 def ecrire(f: Path, donnees: dict) -> None:
-    """Réécrit le script (indentation de 2, accents en clair). Écriture atomique."""
-    tmp = f.with_suffix('.json.tmp')
-    tmp.write_text(json.dumps(donnees, ensure_ascii=False, indent=2) + '\n')
-    tmp.replace(f)
+    """Écrit le script (indentation de 2, accents en clair), atomiquement et sous verrou.
+
+    Si `donnees` vient de lire(), seuls les champs modifiés depuis la lecture (ou depuis la
+    dernière écriture) sont reportés sur la version du disque : les changements faits
+    entre-temps par un autre script sont conservés. Conflit sur un même champ : refus.
+    """
+    h = _verrou(f)
+    try:
+        suivi = _BASES.get(id(donnees))
+        if suivi and suivi[0] is donnees and f.exists():
+            disque = json.loads(f.read_text())
+            final = _fusion(suivi[1], _copie(donnees), disque, '')
+        else:
+            final = donnees
+        tmp = f.with_suffix(f'.json.{os.getpid()}.tmp')
+        tmp.write_text(json.dumps(final, ensure_ascii=False, indent=2) + '\n')
+        tmp.replace(f)
+        _suivre(donnees)        # nouvelle base : ce que ce script a déjà reporté
+    finally:
+        h.close()
 
 
 def nom(n: int, ext: str) -> str:

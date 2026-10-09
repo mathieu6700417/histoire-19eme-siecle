@@ -5,6 +5,8 @@ Usage :
     # Aide à la recherche : Wikidata (dates, image P18 et sa notice Commons) puis recherche Commons
     python3 scripts/diaporamas/portraits.py --chercher "Charles Alexandre de Calonne"
     python3 scripts/diaporamas/portraits.py --infos "File:David Self Portrait.jpg"
+    # Par lots : une personne par ligne « id|nom » ; --essai : sans écrire le registre
+    python3 scripts/diaporamas/portraits.py --lot personnes.txt [--essai]
 
     # Registre : licence relevée par l'API, téléchargement (cache), cadre du visage (proposé par
     # le modèle de vision puis contrôlé sur le recadrage), webp ovale ~450 px de haut
@@ -47,7 +49,10 @@ from PIL import Image, ImageDraw
 
 import commun as c
 import camera
-from camera import MODELE, URL, PRIX_ENTREE, PRIX_SORTIE, _jpeg, _police, avec_grille, reduire
+import gemini
+from camera import _jpeg, _police, avec_grille, reduire
+
+MODELE = gemini.modele('portraits')  # DIAPORAMAS_MODELE_PORTRAITS (ou _VISION), ou --modele
 
 REGISTRE = c.DONNEES / 'portraits.json'
 SORTIE = c.PUBLIC / 'portraits'
@@ -67,48 +72,17 @@ class ErreurPortrait(Exception):
 # --- Modèle de vision (même appel que camera.py, consignes propres) ---------------------------
 
 def appel(consignes: str, schema: dict, contenus: list[dict]) -> dict:
-    cle = os.environ.get('GEMINI_API_KEY', '')
-    if not cle:
-        raise ErreurPortrait('GEMINI_API_KEY absente de .env')
     corps = {
         'systemInstruction': {'parts': [{'text': consignes}]},
         'contents': contenus,
         'generationConfig': {'temperature': 0.1, 'responseMimeType': 'application/json', 'responseSchema': schema},
     }
-    for essai in range(6):
-        req = urllib.request.Request(f'{URL}/{MODELE}:generateContent', data=json.dumps(corps).encode(),
-                                     headers={'x-goog-api-key': cle, 'Content-Type': 'application/json'})
-        try:
-            d = json.loads(urllib.request.urlopen(req, timeout=180).read())
-            break
-        except urllib.error.HTTPError as e:
-            msg = e.read().decode(errors='replace')[:300]
-            if e.code in (429, 500, 502, 503, 504) and essai < 5:
-                time.sleep(8 * (essai + 1))
-                continue
-            raise ErreurPortrait(f'Gemini {e.code} : {msg}') from None
-        except (urllib.error.URLError, TimeoutError) as e:
-            if essai < 5:
-                time.sleep(8 * (essai + 1))
-                continue
-            raise ErreurPortrait(f'Gemini injoignable : {e}') from None
-    else:
-        raise ErreurPortrait('Gemini : trop de tentatives')
-    u = d.get('usageMetadata') or {}
-    with verrou:
-        camera.usage['appels'] += 1
-        camera.usage['entree'] += int(u.get('promptTokenCount') or 0)
-        camera.usage['sortie'] += int(u.get('candidatesTokenCount') or 0) + int(u.get('thoughtsTokenCount') or 0)
-    try:
-        return json.loads(''.join(p.get('text', '') for p in d['candidates'][0]['content']['parts']))
-    except (KeyError, IndexError, json.JSONDecodeError) as e:
-        raise ErreurPortrait(f'réponse illisible : {str(d)[:300]}') from e
+    d = gemini.generer('portraits', corps, nom=MODELE, erreur=ErreurPortrait)
+    return gemini.json_de(d, ErreurPortrait)
 
 
 def cout() -> str:
-    u = camera.usage
-    prix = u['entree'] / 1e6 * PRIX_ENTREE + u['sortie'] / 1e6 * PRIX_SORTIE
-    return f"{u['appels']} appel(s), {u['entree']} jetons en entrée, {u['sortie']} en sortie, ~{prix:.3f} $"
+    return gemini.bilan()
 
 
 # --- Registre ------------------------------------------------------------------------------
@@ -231,6 +205,11 @@ def registre(ids: list[str] | None, force: bool) -> int:
             try:
                 _, bilan = f.result()
                 print(bilan)
+            except gemini.BudgetAtteint as e:
+                erreurs += 1
+                print('ARRÊT', e)
+                for fu in futurs:
+                    fu.cancel()
             except ErreurPortrait as e:
                 erreurs += 1
                 print('ERREUR', e)
@@ -289,6 +268,76 @@ def chercher(nom: str) -> None:
         print(f"   {x['fichier']}\n       {x['auteur']} | {x['date']} | {x['licence']} | {x['largeur']}×{x['hauteur']} | {x['titre']}")
 
 
+def _personne_wikidata(nom: str) -> dict | None:
+    """Premier être humain (P31 = Q5) trouvé sur Wikidata pour `nom` : Q, libellé, description,
+    dates, image P18 (fichier Commons)."""
+    r = wikidata(action='wbsearchentities', search=nom, language='fr', uselang='fr', limit=5, type='item')
+    ids = [x['id'] for x in r.get('search', [])]
+    if not ids:
+        return None
+    ents = wikidata(action='wbgetentities', ids='|'.join(ids), props='claims|labels|descriptions', languages='fr')['entities']
+    for q in ids:
+        e = ents.get(q) or {}
+        cl = e.get('claims', {})
+        if not any(x['mainsnak'].get('datavalue', {}).get('value', {}).get('id') == 'Q5' for x in cl.get('P31', [])):
+            continue
+
+        def an(prop):
+            try:
+                t = cl[prop][0]['mainsnak']['datavalue']['value']['time']
+                return t[1:5].lstrip('0') if t[0] == '+' else '?'
+            except (KeyError, IndexError, TypeError):
+                return '?'
+        p18 = [x['mainsnak']['datavalue']['value'] for x in cl.get('P18', []) if 'datavalue' in x['mainsnak']]
+        return {'q': q, 'nom': e.get('labels', {}).get('fr', {}).get('value') or nom,
+                'description': e.get('descriptions', {}).get('fr', {}).get('value', ''),
+                'dates': f"{an('P569')}-{an('P570')}", 'p18': 'File:' + p18[0] if p18 else None}
+    return None
+
+
+def lot(fichier: str, ecrire: bool) -> int:
+    """`--lot FICHIER` : une personne par ligne `id|nom` ; Wikidata (humain, dates, image P18 avec sa
+    licence) en une ligne par personne ; les ids absents du registre y sont pré-remplis (`id`, `nom`,
+    `dates`, `wikidata`, `commons` si l'image P18 est libre, sinon une `note`), à compléter ensuite par
+    `--registre --id …` (téléchargement, cadre du visage)."""
+    lignes = [l.split('|', 1) for l in open(fichier, encoding='utf-8').read().splitlines()
+              if l.strip() and not l.lstrip().startswith('#')]
+    if any(len(l) != 2 for l in lignes):
+        raise SystemExit('format attendu : une ligne « id|nom » par personne')
+    r = lire_registre()
+    connus = {p['id'] for p in r}
+    nouveaux = []
+    for pid, nom in ((a.strip(), b.strip()) for a, b in lignes):
+        w = _personne_wikidata(nom)
+        if w is None:
+            print(f'{pid:24s} INTROUVABLE sur Wikidata (« {nom} »)')
+            continue
+        img = ''
+        libre = False
+        if w['p18']:
+            i = c.infos_fichiers([w['p18']])[w['p18']]
+            if not i.get('manquant'):
+                libre, lic = c.licence_libre(i)
+                m = i.get('meta', {})
+                img = (f" | P18 {w['p18']} ({'libre' if libre else 'REFUSÉE'} {lic}, {i.get('largeur')}×{i.get('hauteur')}, "
+                       f"{c.texte_meta(m.get('Artist'))[:40]}, {c.texte_meta(m.get('DateTimeOriginal'))[:20]})")
+        etat = 'déjà au registre' if pid in connus else ('ajouté' if ecrire else 'à ajouter')
+        print(f"{pid:24s} {w['q']:10s} {w['nom']} ({w['dates']}) — {w['description'][:60]}{img or ' | sans image P18'} [{etat}]")
+        if pid not in connus:
+            p = {'id': pid, 'nom': w['nom'], 'dates': w['dates'], 'wikidata': w['q']}
+            if libre:
+                p['commons'] = w['p18']
+            else:
+                p['note'] = 'pré-rempli par portraits.py --lot : pas d’image P18 libre, portrait à chercher (--chercher)'
+            nouveaux.append(p)
+            connus.add(pid)
+    if ecrire and nouveaux:
+        ecrire_registre(r + nouveaux)
+    print(f"{len(nouveaux)} personne(s) {'ajoutée(s) au registre' if ecrire else 'à ajouter (--essai : rien écrit)'} ; "
+          f"puis : portraits.py --registre --id {' '.join(p['id'] for p in nouveaux if p.get('commons')) or '…'}")
+    return 0
+
+
 def infos(fichier: str) -> None:
     i = c.infos_fichiers([fichier])[fichier]
     if i.get('manquant'):
@@ -303,7 +352,7 @@ def infos(fichier: str) -> None:
 # --- Visibilité des personnes nommées ------------------------------------------------------
 
 CONSIGNES_VISIBLE = """\
-Tu relis un diaporama documentaire sur la Révolution française. Pour une diapositive, on te donne
+Tu relis un diaporama documentaire sur l'histoire de France ({periode}). Pour une diapositive, on te donne
 l'image (une œuvre d'époque), sa notice (titre, auteur, date) et la narration dite par la voix,
 puis la liste des personnes que la narration nomme. Pour chacune, dis si elle est VISIBLE sur
 l'image : représentée de façon reconnaissable, comme sujet de l'œuvre (portrait, scène dont elle
@@ -326,6 +375,8 @@ def mentions(x: dict) -> list[tuple[str, str, bool]]:
 
 def visibilite(slug: str, d: dict, ns: list[int] | None, force: bool) -> None:
     noms = {p['id']: p for p in lire_registre()}
+    # Titre de la période dans les consignes (« La Révolution, 1789-1799 »), pas en dur.
+    periode = ', '.join(v for v in (d.get('titre'), d.get('periode')) if v) or slug
     cache_f = c.CACHE / slug / 'personnes.json'
     cache = json.loads(cache_f.read_text()) if cache_f.exists() else {}
 
@@ -337,9 +388,12 @@ def visibilite(slug: str, d: dict, ns: list[int] | None, force: bool) -> None:
             return x, cache[str(x['n'])]['reponse']
         notice = ', '.join(v for v in (i.get('titre'), i.get('auteur'), i.get('date'), i.get('technique')) if v)
         liste = '\n'.join(f"- id « {k} » : {noms[k]['nom'] if k in noms else k} ({noms.get(k, {}).get('dates', '')})" for k in ids)
-        r = appel(CONSIGNES_VISIBLE, SCHEMA_VISIBLE, [{'role': 'user', 'parts': [
+        try:
+            r = appel(CONSIGNES_VISIBLE.format(periode=periode), SCHEMA_VISIBLE, [{'role': 'user', 'parts': [
             {'text': f"Notice : {notice}.\nNarration : {x['narration']}\nPersonnes nommées :\n{liste}"},
             {'inline_data': {'mime_type': 'image/jpeg', 'data': _jpeg(reduire(Image.open(c.PUBLIC / slug / i['fichier'])))}}]}])
+        except gemini.BudgetAtteint:
+            return x, None
         with verrou:
             cache[str(x['n'])] = {'cle': cle, 'reponse': r.get('personnes', [])}
         return x, cache[str(x['n'])]['reponse']
@@ -350,7 +404,11 @@ def visibilite(slug: str, d: dict, ns: list[int] | None, force: bool) -> None:
         res = sorted((f.result() for f in as_completed([ex.submit(une, x) for x in a_faire])), key=lambda r: r[0]['n'])
     cache_f.parent.mkdir(parents=True, exist_ok=True)
     cache_f.write_text(json.dumps(cache, ensure_ascii=False, indent=1) + '\n')
+    if any(rep is None for _, rep in res):
+        print(f"ARRÊT : plafond atteint, {sum(rep is None for _, rep in res)} diapositive(s) non vues (relancer).")
     for x, rep in res:
+        if rep is None:
+            continue
         vu = {r['id']: r for r in rep}
         donnees = {i: v for i, _, v in mentions(x)}
         for i, v in donnees.items():
@@ -393,11 +451,19 @@ def main() -> int:
     p.add_argument('--force', action='store_true')
     p.add_argument('--visibilite', action='store_true')
     p.add_argument('--relever', action='store_true')
+    p.add_argument('--lot', metavar='FICHIER', help='personnes par lots : lignes « id|nom » (Wikidata, pré-remplissage du registre)')
+    p.add_argument('--essai', action='store_true', help='avec --lot : affiche sans écrire le registre')
+    gemini.options(p, ['portraits'])
     a = p.parse_args()
     c.charger_env()
+    global MODELE
+    gemini.appliquer(a, ['portraits'])
+    MODELE = gemini.modele('portraits')
     if a.chercher:
         chercher(a.chercher)
         return 0
+    if a.lot:
+        return lot(a.lot, not a.essai)
     if a.infos:
         infos(a.infos)
         return 0

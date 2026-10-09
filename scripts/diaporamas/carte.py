@@ -2,6 +2,7 @@
 
 Usage :
     python3 scripts/diaporamas/carte.py            # (re)fait src/data/diaporamas/fonds/*.json
+    python3 scripts/diaporamas/carte.py --fond monde   # ce fond seulement (ni plans ni autres fonds)
 
 Les cartes animées des épisodes sont dessinées en SVG par le lecteur, sur un fond simplifié
 tiré de Natural Earth (domaine public, https://www.naturalearthdata.com/) : terres émergées,
@@ -18,7 +19,7 @@ lecteur reprend ces fonds avec un cadre adapté au lieu (`fond` d'un lieu) : `fr
 seule, aussi utilisé par les épisodes), `voisins` (France et pays voisins : Fleurus, Mayence,
 Turin, Arcole, Campo-Formio), `europe` (Europe et Méditerranée, France repérée : Égypte,
 Moscou, Algérie), `monde` (Amériques et Afrique de l'Ouest comprises : Saint-Domingue, Gorée,
-Guyane). La France est toujours dessinée en plus soutenu : on voit où est le lieu par rapport
+Guyane, Sainte-Hélène). La France est toujours dessinée en plus soutenu : on voit où est le lieu par rapport
 à elle.
 
 Plans de Paris d'époque (`--plans`, ou sans argument : tout) : pour un lieu de Paris
@@ -52,7 +53,8 @@ FONDS = {
     'voisins': {'cadre': [-6.5, 40.4, 17.5, 55.4], 'echelle': 44, 'tolerance': 1.0,
                 'fleuves': ['Rhine', 'Rhône', 'Seine', 'Loire', 'Po']},
     'europe': {'cadre': [-12.0, 26.0, 42.0, 60.5], 'echelle': 20, 'tolerance': 1.0, 'fleuves': []},
-    'monde': {'cadre': [-100.0, -12.0, 50.0, 64.0], 'echelle': 6, 'tolerance': 0.9, 'fleuves': []},
+    # Sud à -20° (2026-10-09) : Sainte-Hélène (-15,9°), qui revient après 1815 (retour des Cendres, 1840).
+    'monde': {'cadre': [-100.0, -20.0, 50.0, 64.0], 'echelle': 6, 'tolerance': 0.9, 'fleuves': []},
 }
 
 # Plans de Paris d'époque (domaine public, Commons) et leur calage : points
@@ -285,7 +287,9 @@ def main() -> int:
     dossier = c.DONNEES / 'fonds'
     dossier.mkdir(parents=True, exist_ok=True)
     seulement_plans = '--plans' in sys.argv
-    for nom, p in PLANS.items():
+    # --fond NOM… : ces fonds seulement (ni plans ni autres fonds refaits).
+    fonds = sys.argv[sys.argv.index('--fond') + 1:] if '--fond' in sys.argv else None
+    for nom, p in ({} if fonds else PLANS).items():
         d = plan(nom, p)
         f = c.DONNEES / 'plans' / f'{nom}.json'
         f.parent.mkdir(parents=True, exist_ok=True)
@@ -297,6 +301,8 @@ def main() -> int:
     if seulement_plans:
         return 0
     for nom, fond in FONDS.items():
+        if fonds and nom not in fonds:
+            continue
         d = fabriquer(nom, fond)
         f = dossier / f'{nom}.json'
         f.write_text(json.dumps(d, ensure_ascii=False) + '\n')

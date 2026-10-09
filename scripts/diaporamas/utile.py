@@ -37,7 +37,10 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 import commun as c
-from camera import MODELE, URL, PRIX_ENTREE, PRIX_SORTIE, _jpeg, _police, avec_grille, reduire
+import gemini
+from camera import _jpeg, _police, avec_grille, reduire
+
+MODELE = gemini.modele('utile')     # DIAPORAMAS_MODELE_UTILE (ou _VISION), ou --modele
 
 VERSION = 'u1'      # à changer quand les consignes ou l'analyse changent (invalide le cache)
 COTE_ANALYSE = 900  # plus grand côté de l'image analysée
@@ -138,43 +141,17 @@ def analyse_bords(im: Image.Image) -> list[float]:
 # --- Modèle de vision -------------------------------------------------------------------
 
 def appel(contenus: list[dict]) -> dict:
-    cle = os.environ.get('GEMINI_API_KEY', '')
-    if not cle:
-        raise ErreurUtile('GEMINI_API_KEY absente de .env')
     corps = {
         'systemInstruction': {'parts': [{'text': CONSIGNES}]},
         'contents': contenus,
         'generationConfig': {'temperature': 0.1, 'responseMimeType': 'application/json', 'responseSchema': SCHEMA},
     }
-    for essai in range(6):
-        req = urllib.request.Request(f'{URL}/{MODELE}:generateContent', data=json.dumps(corps).encode(),
-                                     headers={'x-goog-api-key': cle, 'Content-Type': 'application/json'})
-        try:
-            d = json.loads(urllib.request.urlopen(req, timeout=180).read())
-            break
-        except urllib.error.HTTPError as e:
-            msg = e.read().decode(errors='replace')[:300]
-            if e.code in (429, 500, 502, 503, 504) and essai < 5:
-                time.sleep(8 * (essai + 1))
-                continue
-            raise ErreurUtile(f'Gemini {e.code} : {msg}') from None
-        except (urllib.error.URLError, TimeoutError) as e:
-            if essai < 5:
-                time.sleep(8 * (essai + 1))
-                continue
-            raise ErreurUtile(f'Gemini injoignable : {e}') from None
-    else:
-        raise ErreurUtile('Gemini : trop de tentatives')
-    u = d.get('usageMetadata') or {}
+    d = gemini.generer('utile', corps, nom=MODELE, erreur=ErreurUtile)
     with verrou:
         usage['appels'] += 1
-        usage['entree'] += int(u.get('promptTokenCount') or 0)
-        usage['sortie'] += int(u.get('candidatesTokenCount') or 0) + int(u.get('thoughtsTokenCount') or 0)
-    try:
-        texte = ''.join(p.get('text', '') for p in d['candidates'][0]['content']['parts'])
-        return json.loads(texte)
-    except (KeyError, IndexError, json.JSONDecodeError) as e:
-        raise ErreurUtile(f'réponse illisible : {str(d)[:300]}') from e
+        usage['entree'] += d['_usage']['entree']
+        usage['sortie'] += d['_usage']['sortie']
+    return gemini.json_de(d, ErreurUtile)
 
 
 def vision(im: Image.Image, x: dict) -> dict:
@@ -311,8 +288,12 @@ def main() -> int:
     p.add_argument('--planche', action='store_true', help='planche de contrôle seulement')
     p.add_argument('--pixels', action='store_true', help='analyse des bords seule (sans modèle)')
     p.add_argument('--paralleles', type=int, default=6)
+    gemini.options(p, ['utile'])
     a = p.parse_args()
     c.charger_env()
+    global MODELE
+    gemini.appliquer(a, ['utile'])
+    MODELE = gemini.modele('utile')
 
     f, d = c.lire(a.slug)
     etat_f = c.CACHE / d['slug'] / 'utile.json'
@@ -340,12 +321,20 @@ def main() -> int:
           f"manuelles : {manuelles or 'aucune'}.")
 
     debut = time.time()
+    arret = []
     with ThreadPoolExecutor(max_workers=a.paralleles) as pool:
         futurs = {pool.submit(traiter, d['slug'], x, a.pixels): x for x in a_faire}
         for fut in as_completed(futurs):
             x = futurs[fut]
             try:
                 r = fut.result()
+            except gemini.BudgetAtteint as e:
+                if not arret:
+                    print(f'ARRÊT : {e} ; ce qui est fait est gardé.')
+                    arret.append(1)
+                    for fu in futurs:
+                        fu.cancel()
+                continue
             except Exception as e:  # noqa: BLE001
                 print(f"{x['n']!s:>4} ERREUR {e}")
                 continue
@@ -365,9 +354,7 @@ def main() -> int:
         retrait = [1 - (u[2] - u[0]) * (u[3] - u[1]) for u in (x['image']['utile'] for x in rognees)]
         print(f"\nImages rognées : {len(rognees)} / {len(d['diapositives'])} ; aire retirée moyenne "
               f"{sum(retrait) / len(retrait) * 100:.1f} % (max {max(retrait) * 100:.1f} %).")
-    cout = usage['entree'] / 1e6 * PRIX_ENTREE + usage['sortie'] / 1e6 * PRIX_SORTIE
-    print(f"Appels : {usage['appels']} ; jetons : {usage['entree']} en entrée, {usage['sortie']} en sortie ; "
-          f"{time.time() - debut:.0f} s (coût indicatif ~{cout:.3f} $).")
+    print(f"{time.time() - debut:.0f} s. {gemini.bilan()}")
     for s in planche(d['slug'], d, cache):
         print('Planche :', s.relative_to(c.RACINE))
     return 0
