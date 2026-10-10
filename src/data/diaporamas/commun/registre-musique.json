@@ -1,0 +1,913 @@
+{
+  "note": "Enregistrements libres déjà vérifiés et œuvres cherchées en vain : à consulter avant toute recherche musicale (scripts/diaporamas/registre_musique.py chercher <mots>).",
+  "enregistrements": [
+    {
+      "id": "archive:boulogne-de-saint-george-guenin-bertheaume-symphonies-jean-francois-paillard-bundle-cd-8-dvg#CD8(01-02) Boulogne de Saint-George, J. - Symphonie concertante for two violins, Op. 13.flac",
+      "source": {
+        "type": "archive",
+        "id": "boulogne-de-saint-george-guenin-bertheaume-symphonies-jean-francois-paillard-bundle-cd-8-dvg",
+        "fichier": "CD8(01-02) Boulogne de Saint-George, J. - Symphonie concertante for two violins, Op. 13.flac",
+        "publication": "1957"
+      },
+      "oeuvre": "Symphonie concertante pour deux violons en sol majeur, op. 13 : premier mouvement",
+      "compositeur": "Joseph Bologne, chevalier de Saint-George",
+      "date_oeuvre": "vers 1782",
+      "interprete": "Micheline Blanchard et Germaine Raymond, violons, Ensemble instrumental Jean-Marie Leclair, direction Jean-François Paillard (disque Erato, 1955-1957)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1957 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1957, avant 1963) ; https://archive.org/details/boulogne-de-saint-george-guenin-bertheaume-symphonies-jean-francois-paillard-bundle-cd-8-dvg",
+      "duree": 1051.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          1.8,
+          373,
+          "fond, premier mouvement"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi#disc1/02.03. Violin Concerto No. 22 In A Minor: Agitato Assai.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi",
+        "fichier": "disc1/02.03. Violin Concerto No. 22 In A Minor: Agitato Assai.mp3",
+        "publication": "1956"
+      },
+      "oeuvre": "Concerto pour violon nᵒ 22 en la mineur : finale, Agitato assai",
+      "compositeur": "Giovanni Battista Viotti (violoniste italien, à Paris de 1782 à 1792)",
+      "date_oeuvre": "vers 1797",
+      "interprete": "Peter Rybar, violon, Orchestre symphonique de Winterthour, direction Clemens Dahinden (disque Westminster XWN 18192, 1956)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi",
+      "duree": 454.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          330,
+          "fond, finale, Agitato assai"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:boulogne-de-saint-george-guenin-bertheaume-symphonies-jean-francois-paillard-bundle-cd-8-dvg#CD8(08-10) Boulogne de Saint-George, J. - Symphony in G major,Op. 11 no. 1.flac",
+      "source": {
+        "type": "archive",
+        "id": "boulogne-de-saint-george-guenin-bertheaume-symphonies-jean-francois-paillard-bundle-cd-8-dvg",
+        "fichier": "CD8(08-10) Boulogne de Saint-George, J. - Symphony in G major,Op. 11 no. 1.flac",
+        "publication": "1957"
+      },
+      "oeuvre": "Symphonie en sol majeur, op. 11 nᵒ 1 : Allegro presto",
+      "compositeur": "Joseph Bologne, chevalier de Saint-George",
+      "date_oeuvre": "1779",
+      "interprete": "Ensemble instrumental Jean-Marie Leclair, direction Jean-François Paillard (disque Erato, 1955-1957)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1957 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1957, avant 1963) ; https://archive.org/details/boulogne-de-saint-george-guenin-bertheaume-symphonies-jean-francois-paillard-bundle-cd-8-dvg",
+      "duree": 602.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          204.5,
+          "fond, Allegro presto"
+        ],
+        [
+          436.6,
+          594.5,
+          "fond, finale, Presto"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:78_la-rosiere-republicaine-suite-de-ballet-pt4-a-gavotte-b-carmagnole_grand-or#LB_28_CPT_1709-1.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_la-rosiere-republicaine-suite-de-ballet-pt4-a-gavotte-b-carmagnole_grand-or",
+        "fichier": "LB_28_CPT_1709-1.flac",
+        "publication": "1935"
+      },
+      "oeuvre": "La Rosière républicaine, suite de ballet : Gavotte, Carmagnole",
+      "compositeur": "André Grétry, suite arrangée par Selmar Meyrowitz (1875-1941)",
+      "date_oeuvre": "1794",
+      "interprete": "Grand Orchestre philharmonique de Paris, direction Selmar Meyrowitz (vers 1934, disque Columbia LB 27-28)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1935 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1935, avant 1963) ; https://archive.org/details/78_la-rosiere-republicaine-suite-de-ballet-pt4-a-gavotte-b-carmagnole_grand-or",
+      "duree": 153.9,
+      "filtres": "78tours",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Gavotte, Carmagnole"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi#disc1/02.02. Violin Concerto No. 22 In A Minor: Adagio.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi",
+        "fichier": "disc1/02.02. Violin Concerto No. 22 In A Minor: Adagio.mp3",
+        "publication": "1956"
+      },
+      "oeuvre": "Concerto pour violon nᵒ 22 en la mineur : Adagio",
+      "compositeur": "Giovanni Battista Viotti (violoniste italien, à Paris de 1782 à 1792)",
+      "date_oeuvre": "vers 1797",
+      "interprete": "Peter Rybar, violon, Orchestre symphonique de Winterthour, direction Clemens Dahinden (disque Westminster XWN 18192, 1956)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi",
+      "duree": 491.6,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          215,
+          "fond, Adagio"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi#disc1/02.01. Violin Concerto No. 22 In A Minor: Moderato.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi",
+        "fichier": "disc1/02.01. Violin Concerto No. 22 In A Minor: Moderato.mp3",
+        "publication": "1956"
+      },
+      "oeuvre": "Concerto pour violon nᵒ 22 en la mineur : Moderato",
+      "compositeur": "Giovanni Battista Viotti (violoniste italien, à Paris de 1782 à 1792)",
+      "date_oeuvre": "vers 1797",
+      "interprete": "Peter Rybar, violon, Orchestre symphonique de Winterthour, direction Clemens Dahinden (disque Westminster XWN 18192, 1956)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/lp_violin-concerto-no-22-in-a-minor-violin-c_giovanni-battista-viotti-pietro-nardini-gi",
+      "duree": 850.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          490,
+          "fond, Moderato"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_medea_luigi-cherubini-maria-meneghini-callas-orc#disc1/01.01. Medea.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_medea_luigi-cherubini-maria-meneghini-callas-orc",
+        "fichier": "disc1/01.01. Medea.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Médée, ouverture",
+      "compositeur": "Luigi Cherubini (compositeur italien établi à Paris)",
+      "date_oeuvre": "1797",
+      "interprete": "Orchestre de la Scala de Milan, direction Tullio Serafin (enregistré en 1957, disque Ricordi-Mercury, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_medea_luigi-cherubini-maria-meneghini-callas-orc",
+      "duree": 422.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          420,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_medea_luigi-cherubini-maria-meneghini-callas-orc#disc3/05.02. Act III, Part 1.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_medea_luigi-cherubini-maria-meneghini-callas-orc",
+        "fichier": "disc3/05.02. Act III, Part 1.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Médée, prélude de l’acte III (l’orage)",
+      "compositeur": "Luigi Cherubini (compositeur italien établi à Paris)",
+      "date_oeuvre": "1797",
+      "interprete": "Orchestre de la Scala de Milan, direction Tullio Serafin (enregistré en 1957, disque Ricordi-Mercury, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_medea_luigi-cherubini-maria-meneghini-callas-orc",
+      "duree": 573.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          258,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:78_la-rosiere-republicaine-suite-de-ballet-pt1-a-danse-lgre-b-contredanse_g#LB_27_CPT_1706-1.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_la-rosiere-republicaine-suite-de-ballet-pt1-a-danse-lgre-b-contredanse_g",
+        "fichier": "LB_27_CPT_1706-1.flac",
+        "publication": "1935"
+      },
+      "oeuvre": "La Rosière républicaine, suite de ballet : Danse légère, Contredanse",
+      "compositeur": "André Grétry, suite arrangée par Selmar Meyrowitz (1875-1941)",
+      "date_oeuvre": "1794",
+      "interprete": "Grand Orchestre philharmonique de Paris, direction Selmar Meyrowitz (vers 1934, disque Columbia LB 27-28)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1935 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1935, avant 1963) ; https://archive.org/details/78_la-rosiere-republicaine-suite-de-ballet-pt1-a-danse-lgre-b-contredanse_g",
+      "duree": 198.2,
+      "filtres": "78tours",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Danse légère, Contredanse"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:78_la-rosiere-republicaine-suite-de-ballet-pt2-a-intermezzo-b-rondo_grand-orch#LB_27_CPT_1707-1.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_la-rosiere-republicaine-suite-de-ballet-pt2-a-intermezzo-b-rondo_grand-orch",
+        "fichier": "LB_27_CPT_1707-1.flac",
+        "publication": "1935"
+      },
+      "oeuvre": "La Rosière républicaine, suite de ballet : Intermezzo, Rondo",
+      "compositeur": "André Grétry, suite arrangée par Selmar Meyrowitz (1875-1941)",
+      "date_oeuvre": "1794",
+      "interprete": "Grand Orchestre philharmonique de Paris, direction Selmar Meyrowitz (vers 1934, disque Columbia LB 27-28)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1935 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1935, avant 1963) ; https://archive.org/details/78_la-rosiere-republicaine-suite-de-ballet-pt2-a-intermezzo-b-rondo_grand-orch",
+      "duree": 199.0,
+      "filtres": "78tours",
+      "structure": [
+        [
+          0.0,
+          140,
+          "fond, Intermezzo, Rondo"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:78_la-rosiere-republicaine-suite-de-ballet-pt3-a-romance-b-furioso_grand-orch#LB_28_CPT_1708-2.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_la-rosiere-republicaine-suite-de-ballet-pt3-a-romance-b-furioso_grand-orch",
+        "fichier": "LB_28_CPT_1708-2.flac",
+        "publication": "1935"
+      },
+      "oeuvre": "La Rosière républicaine, suite de ballet : Romance, Furioso",
+      "compositeur": "André Grétry, suite arrangée par Selmar Meyrowitz (1875-1941)",
+      "date_oeuvre": "1794",
+      "interprete": "Grand Orchestre philharmonique de Paris, direction Selmar Meyrowitz (vers 1934, disque Columbia LB 27-28)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1935 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1935, avant 1963) ; https://archive.org/details/78_la-rosiere-republicaine-suite-de-ballet-pt3-a-romance-b-furioso_grand-orch",
+      "duree": 200.5,
+      "filtres": "78tours",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Romance, Furioso"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada#disc1/01.02. The Caliph Of Bagdad.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada",
+        "fichier": "disc1/01.02. The Caliph Of Bagdad.mp3",
+        "publication": "1951"
+      },
+      "oeuvre": "Le Calife de Bagdad, ouverture",
+      "compositeur": "François-Adrien Boieldieu",
+      "date_oeuvre": "1800",
+      "interprete": "Orchestre philharmonique de Londres, direction Jean Martinon (disque London LLP 351, 1951)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1951 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1951, avant 1963) ; https://archive.org/details/lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada",
+      "duree": 476.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          235,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:x.-0699-beckmans-o-richard-o-mon-roi#X.0699 Beckmans - O Richard o mon Roi.flac",
+      "source": {
+        "type": "archive",
+        "id": "x.-0699-beckmans-o-richard-o-mon-roi",
+        "fichier": "X.0699 Beckmans - O Richard o mon Roi.flac",
+        "publication": "1929"
+      },
+      "oeuvre": "Ô Richard, ô mon roi",
+      "compositeur": "Grétry et Sedaine, Richard Cœur de Lion",
+      "date_oeuvre": "1784",
+      "interprete": "José Beckmans, baryton, avec orchestre",
+      "enregistrement": "Pathé, vers 1929",
+      "genre": "chant",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1929 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1929, avant 1963) ; item : https://creativecommons.org/publicdomain/mark/1.0/ ; https://archive.org/details/x.-0699-beckmans-o-richard-o-mon-roi",
+      "duree": 245.3,
+      "filtres": "78tours",
+      "structure": [
+        [
+          36.3,
+          54.8,
+          "« Ô Richard ! ô mon roi ! »"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "commons:File:La Marseillaise Georges THILL Musique de la Garde Républicaine.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:La Marseillaise Georges THILL Musique de la Garde Républicaine.ogg"
+      },
+      "oeuvre": "La Marseillaise",
+      "compositeur": "Rouget de Lisle",
+      "date_oeuvre": "1792",
+      "interprete": "Georges Thill, ténor, Musique de la Garde républicaine, direction Pierre Dupont",
+      "enregistrement": "Columbia, 1931",
+      "genre": "chant",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:La_Marseillaise_Georges_THILL_Musique_de_la_Garde_R%C3%A9publicaine.ogg",
+      "duree": 196.5,
+      "filtres": "78tours",
+      "structure": [
+        [
+          18.8,
+          42.7,
+          "« Allons enfants de la Patrie, »"
+        ]
+      ],
+      "periodes": [
+        "01-revolution",
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "commons:File:Le Chant du Départ Chant patriotique Georges THILL Musique de la Garde Républicaine.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Le Chant du Départ Chant patriotique Georges THILL Musique de la Garde Républicaine.ogg"
+      },
+      "oeuvre": "Le Chant du départ",
+      "compositeur": "Méhul et Marie-Joseph Chénier",
+      "date_oeuvre": "1794",
+      "interprete": "Georges Thill, ténor, Musique de la Garde républicaine, direction Pierre Dupont",
+      "enregistrement": "Columbia, 1931",
+      "genre": "chant",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Le_Chant_du_D%C3%A9part_Chant_patriotique_Georges_THILL_Musique_de_la_Garde_R%C3%A9publicaine.ogg",
+      "duree": 201.8,
+      "filtres": "78tours",
+      "structure": [
+        [
+          16.0,
+          41.6,
+          "« La victoire en chantant nous ouvre la barrière ; »"
+        ]
+      ],
+      "periodes": [
+        "01-revolution",
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "commons:File:Méhul Desormière - Chasse du jeune Henri.flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Méhul Desormière - Chasse du jeune Henri.flac"
+      },
+      "oeuvre": "La Chasse du jeune Henri",
+      "compositeur": "Méhul, ouverture du Jeune Henri",
+      "date_oeuvre": "1797",
+      "interprete": "orchestre dirigé par Roger Désormière",
+      "enregistrement": "1951",
+      "genre": "instrumental",
+      "licence": "Domaine public (enregistrement publié avant 1963)",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:M%C3%A9hul_Desormi%C3%A8re_-_Chasse_du_jeune_Henri.flac",
+      "duree": 25.0,
+      "structure": [
+        [
+          0.9,
+          25,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "01-revolution"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni#disc1/01.01. Concerto Pour Harpe Et Orchestre En Ut Majeur: 1. Satz : Allegro Brillante.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni",
+        "publication": "1960",
+        "fichier": "disc1/01.01. Concerto Pour Harpe Et Orchestre En Ut Majeur: 1. Satz : Allegro Brillante.mp3"
+      },
+      "oeuvre": "Concerto pour harpe en ut majeur : Allegro brillante",
+      "compositeur": "François-Adrien Boieldieu",
+      "date_oeuvre": "1801",
+      "interprete": "Nicanor Zabaleta, harpe, Orchestre symphonique de la Radio de Berlin, direction Ernst Märzendorfer (disque Deutsche Grammophon SLPM 138 118, 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni",
+      "duree": 323.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Allegro brillante"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni#disc1/01.02. Concerto Pour Harpe Et Orchestre En Ut Majeur: 2. Satz : Andante - Lento Attacca.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni",
+        "publication": "1960",
+        "fichier": "disc1/01.02. Concerto Pour Harpe Et Orchestre En Ut Majeur: 2. Satz : Andante - Lento Attacca.mp3"
+      },
+      "oeuvre": "Concerto pour harpe en ut majeur : Andante",
+      "compositeur": "François-Adrien Boieldieu",
+      "date_oeuvre": "1801",
+      "interprete": "Nicanor Zabaleta, harpe, Orchestre symphonique de la Radio de Berlin, direction Ernst Märzendorfer (disque Deutsche Grammophon SLPM 138 118, 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni",
+      "duree": 326.4,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          150,
+          "fond, Andante"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni#disc1/01.03. Concerto Pour Harpe Et Orchestre En Ut Majeur: 3. Satz : Rondeau: Allegro Agitato.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni",
+        "publication": "1960",
+        "fichier": "disc1/01.03. Concerto Pour Harpe Et Orchestre En Ut Majeur: 3. Satz : Rondeau: Allegro Agitato.mp3"
+      },
+      "oeuvre": "Concerto pour harpe en ut majeur : Rondeau",
+      "compositeur": "François-Adrien Boieldieu",
+      "date_oeuvre": "1801",
+      "interprete": "Nicanor Zabaleta, harpe, Orchestre symphonique de la Radio de Berlin, direction Ernst Märzendorfer (disque Deutsche Grammophon SLPM 138 118, 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_concerto-pour-harpe-et-orchestre-en-ut-maj_franois-adrien-boieldieu-joaqun-rodrigo-ni",
+      "duree": 642.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          320,
+          "fond, Rondeau"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar#disc1/01.01. Symphony No. 1 in G Minor: Allegro.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar",
+        "publication": "1954",
+        "fichier": "disc1/01.01. Symphony No. 1 in G Minor: Allegro.mp3"
+      },
+      "oeuvre": "Symphonie nᵒ 1 en sol mineur : Allegro",
+      "compositeur": "Étienne Méhul",
+      "date_oeuvre": "1808-1809",
+      "interprete": "Orchestre de chambre de la Radio de Berlin (disque Urania URLP 7109, vers 1954)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1954 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1954, avant 1963) ; https://archive.org/details/lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar",
+      "duree": 389.9,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          345,
+          "fond, Allegro"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar#disc1/01.04. Symphony No. 1 in G Minor: Finale (Allegro Agitato).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar",
+        "publication": "1954",
+        "fichier": "disc1/01.04. Symphony No. 1 in G Minor: Finale (Allegro Agitato).mp3"
+      },
+      "oeuvre": "Symphonie nᵒ 1 en sol mineur : finale, Allegro agitato",
+      "compositeur": "Étienne Méhul",
+      "date_oeuvre": "1808-1809",
+      "interprete": "Orchestre de chambre de la Radio de Berlin (disque Urania URLP 7109, vers 1954)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1954 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1954, avant 1963) ; https://archive.org/details/lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar",
+      "duree": 348.4,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          310,
+          "fond, finale, Allegro agitato"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar#disc1/01.02. Symphony No. 1 in G Minor: Andante.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar",
+        "publication": "1954",
+        "fichier": "disc1/01.02. Symphony No. 1 in G Minor: Andante.mp3"
+      },
+      "oeuvre": "Symphonie nᵒ 1 en sol mineur : Andante",
+      "compositeur": "Étienne Méhul",
+      "date_oeuvre": "1808-1809",
+      "interprete": "Orchestre de chambre de la Radio de Berlin (disque Urania URLP 7109, vers 1954)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1954 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1954, avant 1963) ; https://archive.org/details/lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar",
+      "duree": 429.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Andante"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar#disc1/01.03. Symphony No. 1 in G Minor: Minuetto.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar",
+        "publication": "1954",
+        "fichier": "disc1/01.03. Symphony No. 1 in G Minor: Minuetto.mp3"
+      },
+      "oeuvre": "Symphonie nᵒ 1 en sol mineur : Menuet",
+      "compositeur": "Étienne Méhul",
+      "date_oeuvre": "1808-1809",
+      "interprete": "Orchestre de chambre de la Radio de Berlin (disque Urania URLP 7109, vers 1954)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1954 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1954, avant 1963) ; https://archive.org/details/lp_mehul-symphony-no-1-in-g-minor-mozart-a-mu_etienne-henri-mehul-wolfgang-amadeus-mozar",
+      "duree": 222.6,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          110,
+          "fond, Menuet"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar#disc1/01.01. Symphony In D: First Movement: Largo; Allegro.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar",
+        "publication": "1953",
+        "fichier": "disc1/01.01. Symphony In D: First Movement: Largo; Allegro.mp3"
+      },
+      "oeuvre": "Symphonie en ré majeur : Largo, Allegro",
+      "compositeur": "Luigi Cherubini (compositeur italien installé à Paris)",
+      "date_oeuvre": "1815",
+      "interprete": "Orchestre symphonique de la NBC, direction Arturo Toscanini (disque RCA Victor LM 1745, 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1953 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1953, avant 1963) ; https://archive.org/details/lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar",
+      "duree": 616.7,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          280,
+          "fond, Largo, Allegro"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar#disc1/01.04. Symphony In D: Fourth Movement: Allegro Assai.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar",
+        "publication": "1953",
+        "fichier": "disc1/01.04. Symphony In D: Fourth Movement: Allegro Assai.mp3"
+      },
+      "oeuvre": "Symphonie en ré majeur : finale, Allegro assai",
+      "compositeur": "Luigi Cherubini (compositeur italien installé à Paris)",
+      "date_oeuvre": "1815",
+      "interprete": "Orchestre symphonique de la NBC, direction Arturo Toscanini (disque RCA Victor LM 1745, 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1953 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1953, avant 1963) ; https://archive.org/details/lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar",
+      "duree": 264.9,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          235,
+          "fond, finale, Allegro assai"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar#disc1/01.02. Symphony In D: Second Movement: Larghetto Cantabile.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar",
+        "publication": "1953",
+        "fichier": "disc1/01.02. Symphony In D: Second Movement: Larghetto Cantabile.mp3"
+      },
+      "oeuvre": "Symphonie en ré majeur : Larghetto cantabile",
+      "compositeur": "Luigi Cherubini (compositeur italien installé à Paris)",
+      "date_oeuvre": "1815",
+      "interprete": "Orchestre symphonique de la NBC, direction Arturo Toscanini (disque RCA Victor LM 1745, 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1953 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1953, avant 1963) ; https://archive.org/details/lp_symphony-in-d-septet_luigi-cherubini-ludwig-van-beethoven-ar",
+      "duree": 414.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          300,
+          "fond, Larghetto cantabile"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:leon-campagnolaetienne-nicolas-mehul-joseph-champs-paternels-gramophon-y-83#LéonCampagnola,Étienne-NicolasMéhul,Joseph,ChampsPaternels,Gramophon Y83.mp3",
+      "source": {
+        "type": "archive",
+        "id": "leon-campagnolaetienne-nicolas-mehul-joseph-champs-paternels-gramophon-y-83",
+        "fichier": "LéonCampagnola,Étienne-NicolasMéhul,Joseph,ChampsPaternels,Gramophon Y83.mp3",
+        "publication": "1924"
+      },
+      "oeuvre": "Champs paternels",
+      "compositeur": "Méhul, sur un livret d’Alexandre Duval",
+      "date_oeuvre": "1807",
+      "interprete": "Léon Campagnola, ténor, avec orchestre",
+      "enregistrement": "Gramophone Y 83, 1924",
+      "genre": "chant",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1924 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1924, avant 1963) ; item : http://creativecommons.org/publicdomain/mark/1.0/ ; https://archive.org/details/leon-campagnolaetienne-nicolas-mehul-joseph-champs-paternels-gramophon-y-83",
+      "duree": 250.6,
+      "filtres": "78tours",
+      "structure": [
+        [
+          8.0,
+          33.5,
+          "« Champs paternels, Hébron, douce vallée ! »"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:78_la-vestaleo-nume-tutelar-oh-god-protect-her_rosa-ponselle-g-spontini_gbia7028629b#La Vestale–O Nume tutelar (Oh God Protect  - Rosa Ponselle.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_la-vestaleo-nume-tutelar-oh-god-protect-her_rosa-ponselle-g-spontini_gbia7028629b",
+        "fichier": "La Vestale–O Nume tutelar (Oh God Protect  - Rosa Ponselle.flac",
+        "publication": "1926"
+      },
+      "oeuvre": "La Vestale",
+      "compositeur": "Spontini, sur un livret d’Étienne de Jouy",
+      "date_oeuvre": "1807",
+      "interprete": "orchestre de l’enregistrement de Rosa Ponselle, soprano (version italienne)",
+      "enregistrement": "Victor, 1926",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1926 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1926, avant 1963) ; https://archive.org/details/78_la-vestaleo-nume-tutelar-oh-god-protect-her_rosa-ponselle-g-spontini_gbia7028629b",
+      "duree": 211.4,
+      "filtres": "78tours",
+      "structure": [
+        [
+          21.0,
+          45.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "02-consulat-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-08"
+    }
+  ],
+  "introuvables": [
+    {
+      "oeuvre": "Les Deux Journées, ouverture",
+      "compositeur": "Luigi Cherubini",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)"
+    },
+    {
+      "oeuvre": "Anacréon, ouverture",
+      "compositeur": "Luigi Cherubini",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)"
+    },
+    {
+      "oeuvre": "Joseph, ouverture",
+      "compositeur": "Étienne Méhul",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)",
+      "note": "l’air « Champs paternels » du même opéra existe (Campagnola, 1924)"
+    },
+    {
+      "oeuvre": "Jean de Paris, ouverture",
+      "compositeur": "François-Adrien Boieldieu",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)",
+      "note": "seul enregistrement trouvé : microsillon de 1966, trop récent"
+    },
+    {
+      "oeuvre": "Partant pour la Syrie",
+      "compositeur": "Hortense de Beauharnais",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)",
+      "note": "seul item trouvé sous licence NC-ND (enregistrement russe)"
+    },
+    {
+      "oeuvre": "Veillons au salut de l’Empire",
+      "compositeur": "Nicolas Dalayrac (air), Adrien-Simon Boy (paroles)",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)"
+    },
+    {
+      "oeuvre": "Le Roi d’Yvetot",
+      "compositeur": "Pierre-Jean de Béranger",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)",
+      "note": "trouvé seulement chanté en anglais"
+    },
+    {
+      "oeuvre": "Vive Henri IV",
+      "compositeur": "chant traditionnel",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)",
+      "note": "enregistrement des Quatre Barbus, année de publication inconnue ; aucun chant royaliste libre trouvé"
+    },
+    {
+      "oeuvre": "La Vestale (enregistrement de Maria Callas, 1954-1955)",
+      "compositeur": "Gaspare Spontini",
+      "cherche": "2026-10-08",
+      "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)",
+      "note": "étiquette pirate ERR, date de publication inconnue ; l’enregistrement de Rosa Ponselle (1926) est retenu"
+    }
+  ]
+}

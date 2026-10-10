@@ -239,6 +239,10 @@ def traiter(slug: str, force: bool, seulement: list[str] | None, sources_seules:
     c.ecrire(f, d)
     poids = sum(x.stat().st_size for x in (dossier / 'musique').glob('*.m4a')) if (dossier / 'musique').exists() else 0
     print(f'Musique : {len(pistes(d))} pistes, {poids / 1e6:.1f} Mo ; {erreurs} erreur(s).')
+    import registre_musique   # registre des enregistrements libres (spec 13) : simple rappel
+    absentes = registre_musique.absentes(d, f.stem)
+    if absentes:
+        print(f"{len(absentes)} piste(s) absente(s) du registre : lancer registre_musique.py ajouter --depuis {d['slug']}")
     return 1 if erreurs else 0
 
 

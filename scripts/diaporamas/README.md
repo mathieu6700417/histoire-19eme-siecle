@@ -39,18 +39,20 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `voix.py` | Synthèse Gemini (narrateur Charon ; voix de lecture pour les lectures d'époque), contrôle de fidélité, encodage m4a, durées, horodatage des phrases ; minutage mot par mot des lectures (`--mots`). Diapositives, lectures et épisodes. Options Gemini : `--budget`, `--reflexion` (transcription), `--modele` (voix), `--modele-transcription`. |
 | `alignement.py` | Alignement forcé d'un audio de lecture sur son texte (wav2vec2 français, torchaudio) : instants de chaque mot. Appelé par `voix.py`. |
 | `camera.py` | Caméra calée sur la narration : étapes `image.camera` proposées par Gemini Flash (vision), contrôlées, planche-contact. Visages relevés **localement** (`--visages`, gratuit ; `--visages-gemini` payant) ; `--audit` et `--reparer` sans appel (tête hors champ des portraits comprise). |
-| `visages_local.py` | Détection locale des visages (YuNet, OpenCV DNN), lancée par `camera.py` dans `.cache/venv-visages` : cache `<slug>/visages-local.json`, mêmes clés et même format que `visages.json`. |
-| `gemini.py` | Appel Gemini commun : modèle par tâche (`DIAPORAMAS_MODELE_<TACHE>`, `--modele`), réflexion réglée (`thinkingBudget`, défaut 256, `DIAPORAMAS_REFLEXION`, `--reflexion`), plafond de dépense par lancement (`--budget`, arrêt propre), tarifs **indicatifs** par modèle (`TARIFS`). |
+| `visages_local.py` | Détection locale des visages (YuNet, OpenCV DNN), lancée par `camera.py` dans `.cache/venv-visages` : cache `<slug>/visages-local.json`, mêmes clés et même format que `visages.json`. Mode portrait avec scores pour `portraits.py` (cadre du visage, spec 13). |
+| `gemini.py` | Appel Gemini commun : modèle par tâche (`DIAPORAMAS_MODELE_<TACHE>`, `--modele`), réflexion réglée (`thinkingBudget`, défaut 256, `DIAPORAMAS_REFLEXION`, `--reflexion`), plafond de dépense par lancement (`--budget`, arrêt propre), tarifs **indicatifs** par modèle (`TARIFS`). **Solde** (spec 13) : registre des dépenses, `--crediter`, `--solde`, sonde des crédits avant le premier appel, arrêt propre sur un 402 (voir « Vérification par étape et solde Gemini »). |
 | `banc_gemini.py` | Banc d'essai des modèles et budgets de réflexion pour une tâche (`camera`, `visages`, `utile`, `transcription`) sur 5 diapositives : jetons réels, coût, qualité, planche. `--essai` : plan sans appel. |
 | `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. Options Gemini : `--budget`, `--reflexion`, `--modele`. |
-| `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. `--indicatif` : les deux extraits de l'indicatif commun du générique. |
+| `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. `--indicatif` : les deux extraits de l'indicatif commun du générique. Rappelle en fin de passe les pistes absentes du registre des enregistrements. |
 | `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). `monde` descend à -20° (Sainte-Hélène) ; `--fond NOM` ne refait que ce fond. |
 | `surimpressions.py` | Cartes de lieu, citations, portraits, objets de musée, manuscrits, chiffres clés et dates républicaines en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
 | `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle, bilan des mentions. |
-| `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage proposé par Gemini Flash puis contrôlé, webp ovale), contrôle de visibilité des personnes sur les images (consignes au titre de la période du JSON), planche de contrôle. `--lot FICHIER` : lignes `id|nom`, Wikidata en une ligne par personne et pré-remplissage du registre (`--essai` : sans écrire). Options Gemini : `--budget`, `--reflexion`, `--modele`. |
+| `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage par le détecteur local YuNet depuis le 2026-10-10, Gemini en repli demandé seulement, webp ovale), contrôle de visibilité des personnes sur les images (consignes au titre de la période du JSON), planche de contrôle. `--lot FICHIER` : lignes `id|nom`, Wikidata en une ligne par personne et pré-remplissage du registre (`--essai` : sans écrire). Options Gemini : `--budget`, `--reflexion`, `--modele`. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
-| `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques ») ; générique : 8 à 12 images de la période, deux par acte au plus, indicatif commun (licence, fichiers, durées). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. |
+| `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques ») ; générique : 8 à 12 images de la période, deux par acte au plus, indicatif commun (licence, fichiers, durées). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. `--etape A|B|C` (spec 13) : contrôles d’une étape, sortie résumée. |
+| `tester_etapes.py` | Contrôle de `verifier.py --etape` : la réunion des étapes A, B et C égale la vérification complète. |
+| `registre_musique.py` | Registre des enregistrements libres commun aux périodes (`commun/registre-musique.json`) : `chercher`, `ajouter --depuis`, `ecarter`, `possible`, `introuvable`, `--amorcer` (voir « Registre des enregistrements libres »). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
@@ -150,6 +152,16 @@ python3 scripts/diaporamas/renumeroter.py revolution --inserer ajouts.json --ess
 # comparés au cache Wikisource au lieu de la page téléchargée à neuf)
 python3 scripts/diaporamas/verifier.py revolution
 python3 scripts/diaporamas/verifier.py --tous
+# Contrôles d'une seule étape de production (A, B ou C), sortie résumée ; --tout : tous les avertissements
+python3 scripts/diaporamas/verifier.py restauration --etape A
+
+# Crédits Gemini : solde estimé, dépense de 7 jours par script, sonde ; après une recharge : --crediter
+python3 scripts/diaporamas/gemini.py --solde
+python3 scripts/diaporamas/gemini.py --crediter 10
+
+# Registre des enregistrements libres : à consulter avant toute recherche musicale ; à compléter après musique.py
+python3 scripts/diaporamas/registre_musique.py chercher mehul symphonie
+python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
 ```
 
 ## Procédure pour une période
@@ -175,12 +187,17 @@ python3 scripts/diaporamas/verifier.py --tous
    et corriger à la main les zones fausses (voir « Zone utile » ci-dessous).
    `camera.py <slug>`, puis relire les planches-contact (`.cache/diaporamas/<slug>/planche-*.jpg`)
    et corriger à la main les cadres faux (voir ci-dessous).
-6. Musique : écrire `musique` dans le JSON (voir ci-dessous), lancer `musique.py <slug>`,
+6. Musique : pour chaque piste envisagée, d'abord `registre_musique.py chercher <mots>` (voir
+   « Registre des enregistrements libres ») ; écrire `musique` dans le JSON (voir ci-dessous), lancer `musique.py <slug>`
+   puis `registre_musique.py ajouter --depuis <slug>`,
    écouter les extraits, ajuster `debut`/`fin` et les paroles, puis `paroles.py <slug> --ecoute`
    et relire ses planches (voir « Paroles des chants » ci-dessous).
 7. Cartes de lieu, citations, portraits, objets, manuscrits, chiffres et dates : remplir `lieux`, `citations`, `personnes`, `personnes_vues`, `objets`, `manuscrits`, `chiffres` et `dates_republicaines` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité, `objets.py` pour le registre des objets), lancer
    `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
 8. `verifier.py <slug>` puis `npm run build`.
+
+Chaque agent termine son étape par `verifier.py <slug> --etape A` (ou `B`, `C`), et lance
+`gemini.py --solde` avant une étape payante (voir « Vérification par étape et solde Gemini »).
 
 ## Cartouches et graphiques
 
@@ -424,6 +441,32 @@ Règle de droits (spec 12) : l'œuvre **et** l'enregistrement doivent être libr
 public, CC0, CC BY et CC BY-SA admis (crédit affiché, lien vers la licence) ; NC et ND
 toujours refusés. **Uniquement de vrais enregistrements** (décision du 2026-10-07) : aucun
 rendu MIDI ni partition jouée par ordinateur ; `verifier.py` refuse une source `midi`.
+
+### Registre des enregistrements libres (`registre_musique.py`, spec 13)
+
+`src/data/diaporamas/commun/registre-musique.json` garde, pour toutes les périodes, chaque
+enregistrement déjà vérifié (`retenu` par une période, `possible`, ou `ecarte` avec son motif) et les
+œuvres cherchées en vain (`introuvables`). **Avant toute recherche sur Commons ou l'Internet
+Archive**, l'agent B interroge le registre ; il n'y cherche pas de nouveau ce qui est écarté ou
+introuvable sans raison nouvelle.
+
+```sh
+python3 scripts/diaporamas/registre_musique.py chercher thill            # tous les mots, sans accents ni casse
+python3 scripts/diaporamas/registre_musique.py ajouter --depuis <slug>   # après musique.py <slug>
+python3 scripts/diaporamas/registre_musique.py ecarter "archive:<item>#<fichier>" "licence NC-ND" --oeuvre "…" --interprete "…"
+python3 scripts/diaporamas/registre_musique.py possible "commons:File:….ogg" "<œuvre>" "<compositeur>" "<interprète>"
+python3 scripts/diaporamas/registre_musique.py introuvable "<œuvre>" "<compositeur>" "Commons, IA : requêtes essayées"
+```
+
+- Une entrée par **enregistrement** (un fichier d'une source), d'identifiant
+  `archive:<item>#<fichier>` ou `commons:File:<fichier>` : source et licence reprises telles quelles
+  de la piste, durée de l'enregistrement entier, `structure` (passages déjà utilisés : début, fin,
+  libellé), `periodes` qui l'utilisent. Le même fichier dans deux périodes fait une seule entrée.
+- `chercher` porte sur l'œuvre, le compositeur et l'interprète ; une ligne par résultat (statut,
+  œuvre, interprète, année, périodes, `id`), puis les introuvables qui correspondent.
+- `musique.py` rappelle en fin de passe les pistes absentes du registre ; `verifier.py` (étape B)
+  en fait un avertissement. `--amorcer` (idempotent) a rempli le registre depuis les périodes 01 et
+  02 : 28 enregistrements pour 31 pistes, 9 introuvables de la recherche de la période 02.
 Œuvres composées pendant la période ou peu avant ; compositeurs français d'abord, sinon
 européens contemporains (le dire dans `note`). Un arrangement n'est admis que si
 l'arrangeur est identifié (étiquette du disque, catalogue) et dans le domaine public.
@@ -768,13 +811,34 @@ date, licence, cadre_visage }`. `nom` est le nom affiché (court : « Danton »,
   Lagrange, Claude Chappe, Pussin (voir leurs notes).
 - `portraits.py --registre` : licence par l'API (refus sinon), original téléchargé dans
   `.cache/diaporamas/portraits/` (vignette de 2 400 px pour un très grand fichier), cadre du
-  visage proposé par Gemini Flash sur l'image quadrillée, recadrage 4:5 où le visage occupe 58 % de
-  la hauteur (son centre à 44 %), contrôle du recadrage par le modèle (« un seul visage entier,
-  centré ») ; webp 360 × 450 px (240 × 300 avant le 2026-10-08), ~10 à 60 Ko. Un refus est signalé « à relire » : corriger
+  visage par le détecteur local (voir « Cadre du visage par YuNet » ci-dessous), recadrage 4:5 où le
+  visage occupe 58 % de la hauteur (son centre à 44 %) ; webp 360 × 450 px (240 × 300 avant le
+  2026-10-08), ~10 à 60 Ko. Un cadre faux ou un visage non trouvé : corriger
   `cadre_visage` à la main et ajouter `"cadre_visage_manuel": true` (Révolution : Drouet, Nelson,
   Couthon). Planche de contrôle : `.cache/diaporamas/portraits/planche.jpg` (ovales et noms).
 - Coût (Gemini Flash, tarif supposé) : ~0,12 $ pour la visibilité des 135 mentions de la
-  Révolution, ~0,15 $ pour les cadres et contrôles de 48 portraits.
+  Révolution ; cadres : 0 $ depuis le 2026-10-10 (~0,15 $ pour 48 portraits avec Gemini).
+
+### Cadre du visage par YuNet (spec 13, 2026-10-10)
+
+`portraits.py --registre` ne demande plus le cadre du visage à Gemini : il lance une fois
+`visages_local.py` en mode portrait (venv `.cache/venv-visages`) sur tous les portraits à cadrer.
+
+- **Ce qui est recalculé** : un portrait sans `cadre_visage`, ou dont le fichier Commons ou le nom a
+  changé (clé du cache `cadres.json`), ou tout portrait désigné avec `--force`. Les cadres déjà au
+  registre, posés par Gemini, sont gardés ; `cadre_visage_manuel: true` reste prioritaire.
+- **Visage non trouvé** : « cadre à poser à la main » (code de sortie 1), ou relancer ce portrait
+  avec `--repli-gemini --budget 0.05` (proposition et contrôle par Gemini, comme avant).
+- **À relire** : `.cache/diaporamas/portraits/planche-a-relire.jpg` montre les seuls portraits
+  nouveaux ou douteux (score sous 0,6, visage de moins de 6 % de la hauteur, visage très décentré,
+  repli Gemini).
+- **Étalonnage** : `portraits.py --registre --essai [--marge HAUT BAS CÔTÉS]` compare YuNet aux
+  cadres du registre sans rien écrire, et dessine la planche des 10 plus gros écarts
+  (`etalonnage-yunet.jpg`). Mesure du 2026-10-10 sur les 93 cadres Gemini des périodes 01 et 02 :
+  visage trouvé 92 fois (Prud'hon, dessin de profil, manque), IoU médiane 0,76 (0,84 sur les
+  recadrages 4:5), sans marge ajoutée. YuNet cadre un peu plus large que Gemini sur les têtes
+  coiffées d'un chapeau (Toussaint Louverture, Barras).
+- venv ou `yunet.onnx` absents : le script affiche les deux commandes d'installation et s'arrête.
 
 **Instants** : `surimpressions.py <slug>` écrit `instant` (début du nom dans l'audio) comme pour les
 lieux ; à relancer après toute nouvelle voix.
@@ -1141,6 +1205,38 @@ par acte au plus, dans l'ordre de la mosaïque (première moitié en haut, secon
   de 1,2 s à 1,6 s avant l'accord, assombrissement, « Fin » sur l'accord, titre et dates 1 s après. Mouvement réduit :
   pas de dérive, fondus courts. Changer d'indicatif : revoir ces constantes et les `accord`.
 - Captures : instants `o:T` et `f:T` ; les autres instants passent l'ouverture sans temps écoulé.
+
+## Vérification par étape et solde Gemini (spec 13)
+
+**`verifier.py <slug> --etape A|B|C`** n'exécute et n'affiche que les contrôles d'une étape de
+production : une ligne de bilan par famille, les erreurs, puis 15 avertissements au plus (`--tout`
+pour tous). Code de sortie 1 s'il y a des erreurs de l'étape. Sans `--etape`, rien ne change.
+
+| Étape | Familles de contrôles |
+| --- | --- |
+| A (texte, images, prévus) | structure, images, narration, dates, dosage (enrichissements, lectures et épisodes prévus), richesse des épisodes, générique |
+| B (voix, zone utile, caméra, musique) | audio, ouverture, zone utile, caméra, musique, registre musical, lectures et épisodes, boucles |
+| C (surimpressions, vérification) | surimpressions, portraits, objets et manuscrits, chiffres et dates, avant/après et mosaïques, puis **tout** (vérification complète, sortie résumée) |
+
+À l'étape A, les lectures ne sont pas comparées à Wikisource (contrôle de l'étape B, sans réseau en A).
+Contrôle de la répartition : `python3 scripts/diaporamas/tester_etapes.py consulat-empire` (la
+réunion des messages de A, B et C doit égaler la vérification complète ; A et B sans message commun).
+
+**Solde Gemini.** L'API ne donne pas le solde des crédits prépayés : `gemini.py` le tient.
+
+- Chaque appel est ajouté à `.cache/diaporamas/gemini-depenses.jsonl` (date, script, tâche, modèle,
+  jetons, dollars estimés).
+- Après une recharge : `gemini.py --crediter 10` (le crédit disponible à cet instant) ;
+  solde estimé = crédit − dépenses depuis. C'est une **estimation** (tarifs indicatifs).
+- `gemini.py --solde` : solde estimé, dépense des 7 derniers jours par script, et **sonde** (un
+  appel d'un jeton). Code 0 : crédits disponibles ; 2 : crédits épuisés ; 1 : pas de réponse.
+  Fonctionne sans crédit déclaré (dépenses et sonde seulement).
+- Tout script payant (`voix.py`, `utile.py`, `camera.py`, `portraits.py`, `paroles.py`,
+  `banc_gemini.py`) sonde une fois avant son premier appel, et refuse de démarrer si les crédits
+  sont épuisés ou si `--budget` dépasse le solde estimé. `--sans-sonde` saute ce contrôle.
+  `surimpressions.py` n'appelle pas Gemini.
+- Un 402 en cours de route arrête le script comme le plafond `--budget` : ce qui est fait est écrit.
+- Essai sans dépense : `DIAPORAMAS_GEMINI_SIMULER=402 python3 scripts/diaporamas/utile.py <slug> --n 5 --budget 0.05`.
 
 ## Captures (contrôle visuel et non-régression)
 

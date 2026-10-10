@@ -19,7 +19,8 @@ Mode portrait (2026-10-09, règle « chaque vue d'un portrait montre le visage e
 `{"portrait": true, "chemins": [...]}` ; pour chaque chemin, le visage le plus probable seul (liste
 d'un rectangle, ou vide), cherché avec un seuil bas (SEUIL_PORTRAIT) et sans le filtre des grandes
 boîtes : camera.py s'en sert quand le titre ou le registre dit « portrait » et que la passe normale
-n'a rien trouvé (gravure pâle, profil).
+n'a rien trouvé (gravure pâle, profil). Avec `"scores": true` en plus (portraits.py, spec 13), le
+rectangle est suivi du score de YuNet : `[gauche, haut, droite, bas, score]`.
 """
 import json
 import sys
@@ -120,7 +121,7 @@ def _elargir(b, L: int, H: int) -> list[float]:
     return [round(min(1.0, max(0.0, v)), 3) for v in r]
 
 
-def detecter_portrait(chemin: str) -> list[list[float]]:
+def detecter_portrait(chemin: str, scores: bool = False) -> list[list[float]]:
     """Le visage le plus probable d'un portrait (seuil bas, image entière, couleur et gris égalisé)."""
     img = cv2.imread(chemin, cv2.IMREAD_COLOR)
     if img is None:
@@ -135,13 +136,13 @@ def detecter_portrait(chemin: str) -> list[list[float]]:
         return []
     # Le plus probable, à score voisin le plus grand (le sujet d'un portrait domine l'image).
     b = max(boites, key=lambda b: b[4] + 2 * (b[3] - b[1]) / H)
-    return [_elargir(b, L, H)]
+    return [_elargir(b, L, H) + ([round(b[4], 3)] if scores else [])]
 
 
 def main() -> None:
     entree = json.loads(sys.stdin.read())
     if isinstance(entree, dict) and entree.get('portrait'):
-        json.dump([detecter_portrait(p) for p in entree['chemins']], sys.stdout)
+        json.dump([detecter_portrait(p, bool(entree.get('scores'))) for p in entree['chemins']], sys.stdout)
         return
     json.dump([detecter(p) for p in entree], sys.stdout)
 

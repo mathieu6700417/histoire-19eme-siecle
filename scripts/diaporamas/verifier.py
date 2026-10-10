@@ -3,6 +3,16 @@
 Usage :
     python3 scripts/diaporamas/verifier.py revolution
     python3 scripts/diaporamas/verifier.py --tous
+    python3 scripts/diaporamas/verifier.py restauration --etape A     # contrôles d'une étape, sortie résumée
+    python3 scripts/diaporamas/verifier.py restauration --etape B --tout
+
+`--etape A|B|C` (spec 13) : seulement les contrôles de l'étape de production, avec une ligne de bilan
+par famille, les erreurs, puis 15 avertissements au plus (`--tout` : tous). A : structure, images,
+narration, dates, dosage des enrichissements prévus, richesse des épisodes, générique. B : audio,
+ouverture, zone utile, caméra, musique, registre musical, lectures et épisodes, boucles. C, étape
+finale : surimpressions, portraits, objets, chiffres, avant/après et mosaïques, et tout le reste
+(vérification complète). Code de sortie 1 s'il y a des erreurs de l'étape. Sans `--etape` : tout,
+comme avant. `tester_etapes.py <slug>` contrôle que la réunion des étapes égale la vérification complète.
 
 Vérifie : nombre de diapositives (110 à 130 depuis la révision « Arts et techniques ») et d'actes (6 à 10), numérotation continue,
 actes cohérents (débuts croissants, titre et dates du carton d'acte : « 1787-1789 »,
@@ -36,7 +46,8 @@ horodatées dans l'ordre et dans la durée de l'extrait ; calées au mot (`calag
 chaque mot de chaque vers horodaté, dans l'ordre, dans l'extrait. Uniquement de vrais enregistrements
 (source `commons` ou `archive`) : une piste issue d'un MIDI ou sans enregistrement réel est
 refusée, de même qu'un fichier orphelin dans musique/. La durée totale compte les intermèdes.
-Avertissement quand un acte dure plus que ses pistes de fond enchaînées (elles boucleraient).
+Avertissement quand un acte dure plus que ses pistes de fond enchaînées (elles boucleraient), et
+quand une piste n'est pas au registre des enregistrements libres (registre_musique.py, spec 13).
 Lectures et épisodes (spec 12, « Lectures d'époque et épisodes ») : champs complets, `apres`
 désignant une diapositive sans autre segment (intermède, lecture, épisode), audio présent et à
 jour (empreinte de voix.py, voix de lecture comprise), fidélité, phrases horodatées, durées
@@ -1023,6 +1034,15 @@ def _sans_accents(t: str) -> str:
 FONDU_PISTE = 3.0  # s : chevauchement de deux pistes de fond d'un acte (FONDU_PISTE de Diaporama.astro)
 
 
+def controler_registre(d: dict, periode: str) -> list[str]:
+    """Registre des enregistrements libres (spec 13, outil 1) : avertit pour chaque piste de la période
+    qui n'y est pas notée comme retenue pour elle (à verser après musique.py)."""
+    import registre_musique
+    return [f'musique {pid} : piste absente du registre des enregistrements '
+            f"(registre_musique.py ajouter --depuis {d['slug']})"
+            for pid in registre_musique.absentes(d, periode)]
+
+
 def controler_boucles(d: dict) -> list[str]:
     """Musique de fond (spec 12, retours du 2026-10-07) : avertit quand un acte dure plus que ses
     pistes enchaînées (le lecteur les ferait boucler). Durée de l'acte : carton, diapositives et
@@ -1198,6 +1218,8 @@ def _texte_wikisource(page: str) -> tuple[str, str]:
     publique, comme scripts/ecrivains/verifier.py ; `--hors-ligne` : cache de wikisource.py."""
     import wikisource as ws
     norm, page_publique = _ecrivains().norm, _ecrivains().page
+    if SANS_WIKISOURCE:
+        return 'non comparé', ''
     if HORS_LIGNE:
         return 'cache', norm(' '.join(ws.paragraphes(page)) + ' ' + ' '.join(ws.paragraphes(page, vers=True)))
     code, p1, p2 = page_publique(ws.url_page(page))
@@ -1743,7 +1765,47 @@ def controler_generique(d: dict) -> tuple[list[str], list[str], float]:
     return erreurs, avert, duree
 
 
-def verifier(slug: str) -> bool:
+# Répartition des contrôles par étape de production (spec 13, outil 2) : `--etape A|B|C`.
+ETAPES = {'A': 'texte, images, enrichissements prévus', 'B': 'voix, zone utile, caméra, musique',
+          'C': 'surimpressions et vérification complète'}
+FAMILLES = {
+    'A': ('structure', 'images', 'narration', 'dates', 'dosage', 'épisodes (richesse)', 'générique'),
+    'B': ('audio', 'ouverture', 'zone utile', 'caméra', 'musique', 'registre musical', 'lectures et épisodes', 'boucles'),
+    'C': ('surimpressions', 'portraits', 'objets et manuscrits', 'chiffres et dates', 'avant/après et mosaïques'),
+}
+MAX_AVERT = 15   # avertissements affichés par `--etape` (tous avec `--tout`)
+# Messages d'un contrôle d'une étape qui relèvent d'une autre (donnée écrite plus tôt) : (motif, étape, famille).
+REGLES_SEGMENTS = (
+    (r'visuel unique|le carton-titre ouvre|panneau de chiffres qui contient des années', 'A', 'épisodes (richesse)'),
+    (r'^\d+ lecture\(s\) \(4 à 6|^\d+ épisode\(s\) \(3 à 5', 'A', 'dosage'),
+)
+REGLES_MOSAIQUES = ((r'avant/après \(3 à 4 visés|mosaïque\(s\) \(2 visées', 'A', 'dosage'),)
+SANS_WIKISOURCE = False  # étape A : les lectures ne sont pas comparées à Wikisource (contrôle de l'étape B)
+
+
+class Releve:
+    """Erreurs et avertissements d'une vérification, chacun rangé dans une étape et une famille,
+    dans l'ordre des contrôles (l'affichage complet garde donc l'ordre d'avant `--etape`)."""
+
+    def __init__(self):
+        self.erreurs: list[tuple[str, str, str]] = []
+        self.avert: list[tuple[str, str, str]] = []
+
+    def plus(self, etape: str, famille: str, erreurs=(), avert=(), regles=()) -> None:
+        for liste, messages in ((self.erreurs, erreurs), (self.avert, avert)):
+            for m in messages:
+                e, f = next(((e, f) for motif, e, f in regles if re.search(motif, m)), (etape, famille))
+                liste.append((e, f, m))
+
+    def de(self, etape: str | None) -> tuple[list, list]:
+        """Messages d'une étape ; None et C (étape finale) : tous."""
+        if etape in (None, 'C'):
+            return self.erreurs, self.avert
+        return [x for x in self.erreurs if x[0] == etape], [x for x in self.avert if x[0] == etape]
+
+
+def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
+    global SANS_WIKISOURCE
     f, d = c.lire(slug)
     dossier = c.PUBLIC / d['slug']
     etat_img = c.CACHE / d['slug'] / 'images.json'
@@ -1751,9 +1813,12 @@ def verifier(slug: str) -> bool:
     img = json.loads(etat_img.read_text()) if etat_img.exists() else {}
     voix = json.loads(etat_voix.read_text()) if etat_voix.exists() else {}
     lexique = c.charger_lexique()
-    erreurs, avert = [], []
+    R = Releve()
     diapos = d['diapositives']
+    fait = lambda e: etape in (None, 'C', e)   # les contrôles de cette étape sont-ils à exécuter ?
+    SANS_WIKISOURCE = etape == 'A'
 
+    erreurs = []
     if not 110 <= len(diapos) <= 130:
         erreurs.append(f'{len(diapos)} diapositives (attendu : 110 à 130)')
     if not 6 <= len(d['actes']) <= 10:
@@ -1777,6 +1842,7 @@ def verifier(slug: str) -> bool:
     for k in ('slug', 'numero', 'titre', 'periode', 'resume'):
         if not d.get(k) and d.get(k) != 0:
             erreurs.append(f'champ « {k} » manquant')
+    R.plus('A', 'structure', erreurs)
 
     # Une même œuvre deux fois au plus, images après et vignettes de mosaïque comprises.
     oeuvres = Counter(x['image']['commons'] for x in diapos)
@@ -1787,173 +1853,210 @@ def verifier(slug: str) -> bool:
         for j, v in enumerate(mo.get('vignettes', [])):
             if j != mo.get('principale'):
                 oeuvres[v.get('commons')] += 1
-    for oeuvre, n in oeuvres.items():
-        if n > 2:
-            erreurs.append(f'{oeuvre} utilisée {n} fois (2 au plus)')
+    R.plus('A', 'images', [f'{oeuvre} utilisée {n} fois (2 au plus)' for oeuvre, n in oeuvres.items() if n > 2])
 
     durees = []
     for x in diapos:
         n, i = x['n'], x['image']
         p = f'{n:3d}'
-        if not (dossier / i.get('fichier', '')).is_file():
-            erreurs.append(f"{p} : image absente ({i.get('fichier')})")
-        e = img.get(str(n))
-        if not e or e.get('commons') != i['commons']:
-            erreurs.append(f'{p} : licence non relevée pour ce fichier (relancer images.py)')
-        elif not e.get('libre'):
-            erreurs.append(f"{p} : licence refusée ({e.get('licence')})")
-        elif (e.get('largeur') or 0) < 1000:
-            avert.append(f"{p} : original étroit ({e.get('largeur')} px)")
-        if i.get('licence') != 'Domaine public':
-            erreurs.append(f'{p} : licence affichée absente')
-        manquants = [k for k in CHAMPS if not (i.get(k) or '').strip()]
-        if manquants:
-            erreurs.append(f"{p} : métadonnées manquantes ({', '.join(manquants)})")
-        r = i.get('recadrage')
-        if r is not None and not (isinstance(r, list) and len(r) == 4 and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
-            erreurs.append(f'{p} : recadrage invalide ({r})')
-        tc = (i.get('titre_court') or '').strip()
-        if not tc:
-            erreurs.append(f'{p} : titre court (titre_court) manquant pour le cartouche')
-        elif len(tc) > 60:
-            erreurs.append(f'{p} : titre court trop long ({len(tc)} caractères, 60 au plus)')
-        if 'cadrage' in i:
-            erreurs.append(f'{p} : champ « cadrage » supprimé (remplacé par « camera »)')
-        erreurs += [f'{p} : {e}' for e in controler_camera(x)]
-        e_ouv, a_ouv = controler_ouverture(x, n in debuts)
-        erreurs += [f'{p} : {e}' for e in e_ouv]
-        avert += [f'{p} : {e}' for e in a_ouv]
-        cadre_inter = next((s.get('cadre') for s in (d.get('musique') or {}).get('intermedes', []) if s.get('apres') == n), None)
-        e_ut, a_ut = controler_utile(x, cadre_inter)
-        erreurs += [f'{p} : {e}' for e in e_ut]
-        avert += [f'{p} : {e}' for e in a_ut]
+        if fait('A'):
+            erreurs, avert = [], []
+            if not (dossier / i.get('fichier', '')).is_file():
+                erreurs.append(f"{p} : image absente ({i.get('fichier')})")
+            e = img.get(str(n))
+            if not e or e.get('commons') != i['commons']:
+                erreurs.append(f'{p} : licence non relevée pour ce fichier (relancer images.py)')
+            elif not e.get('libre'):
+                erreurs.append(f"{p} : licence refusée ({e.get('licence')})")
+            elif (e.get('largeur') or 0) < 1000:
+                avert.append(f"{p} : original étroit ({e.get('largeur')} px)")
+            if i.get('licence') != 'Domaine public':
+                erreurs.append(f'{p} : licence affichée absente')
+            manquants = [k for k in CHAMPS if not (i.get(k) or '').strip()]
+            if manquants:
+                erreurs.append(f"{p} : métadonnées manquantes ({', '.join(manquants)})")
+            r = i.get('recadrage')
+            if r is not None and not (isinstance(r, list) and len(r) == 4 and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
+                erreurs.append(f'{p} : recadrage invalide ({r})')
+            tc = (i.get('titre_court') or '').strip()
+            if not tc:
+                erreurs.append(f'{p} : titre court (titre_court) manquant pour le cartouche')
+            elif len(tc) > 60:
+                erreurs.append(f'{p} : titre court trop long ({len(tc)} caractères, 60 au plus)')
+            R.plus('A', 'images', erreurs, avert)
+        if fait('B'):
+            if 'cadrage' in i:
+                R.plus('B', 'caméra', [f'{p} : champ « cadrage » supprimé (remplacé par « camera »)'])
+            R.plus('B', 'caméra', [f'{p} : {e}' for e in controler_camera(x)])
+            e_ouv, a_ouv = controler_ouverture(x, n in debuts)
+            R.plus('B', 'ouverture', [f'{p} : {e}' for e in e_ouv], [f'{p} : {e}' for e in a_ouv])
+            cadre_inter = next((s.get('cadre') for s in (d.get('musique') or {}).get('intermedes', []) if s.get('apres') == n), None)
+            e_ut, a_ut = controler_utile(x, cadre_inter)
+            R.plus('B', 'zone utile', [f'{p} : {e}' for e in e_ut], [f'{p} : {e}' for e in a_ut])
 
-        a = x.get('audio') or {}
-        if not a.get('fichier') or not (dossier / a['fichier']).is_file():
-            erreurs.append(f'{p} : audio absent')
-        else:
-            v = voix.get(str(n), {})
-            if v.get('empreinte') != empreinte(c.appliquer_lexique(x['narration'], lexique)):
-                erreurs.append(f'{p} : audio périmé (la narration a changé : relancer voix.py)')
-            elif v.get('fidelite', 0) < 0.9:
-                erreurs.append(f"{p} : fidélité insuffisante ({v.get('fidelite')})")
-            duree = a.get('duree') or 0
-            durees.append(duree)
-            ph = a.get('phrases')
-            if not ph:
-                erreurs.append(f'{p} : phrases non horodatées (voix.py --horodater)')
-            elif (len(ph) != len(c.phrases(x['narration']))
-                  or any(not (0 <= d0 <= f0 <= duree + 0.05) for d0, f0 in ph)
-                  or any(ph[k][1] > ph[k + 1][0] + 0.01 for k in range(len(ph) - 1))):
-                erreurs.append(f'{p} : horodatage des phrases incohérent ({ph})')
-            if not 14 <= duree <= 24:
-                avert.append(f'{p} : durée {duree:.1f} s (visé : 14 à 24 s)')
+            erreurs, avert = [], []
+            a = x.get('audio') or {}
+            if not a.get('fichier') or not (dossier / a['fichier']).is_file():
+                erreurs.append(f'{p} : audio absent')
+            else:
+                v = voix.get(str(n), {})
+                if v.get('empreinte') != empreinte(c.appliquer_lexique(x['narration'], lexique)):
+                    erreurs.append(f'{p} : audio périmé (la narration a changé : relancer voix.py)')
+                elif v.get('fidelite', 0) < 0.9:
+                    erreurs.append(f"{p} : fidélité insuffisante ({v.get('fidelite')})")
+                duree = a.get('duree') or 0
+                durees.append(duree)
+                ph = a.get('phrases')
+                if not ph:
+                    erreurs.append(f'{p} : phrases non horodatées (voix.py --horodater)')
+                elif (len(ph) != len(c.phrases(x['narration']))
+                      or any(not (0 <= d0 <= f0 <= duree + 0.05) for d0, f0 in ph)
+                      or any(ph[k][1] > ph[k + 1][0] + 0.01 for k in range(len(ph) - 1))):
+                    erreurs.append(f'{p} : horodatage des phrases incohérent ({ph})')
+                if not 14 <= duree <= 24:
+                    avert.append(f'{p} : durée {duree:.1f} s (visé : 14 à 24 s)')
+            R.plus('B', 'audio', erreurs, avert)
 
-        t = x['narration']
-        for ph in c.phrases(t):
-            if c.nb_mots(ph) > 25:
-                erreurs.append(f'{p} : phrase de {c.nb_mots(ph)} mots (25 au plus) : « {ph[:60]}… »')
-        if not 2 <= len(c.phrases(t)) <= 3:
-            avert.append(f'{p} : {len(c.phrases(t))} phrases (2 à 3 visées)')
-        if not 40 <= c.nb_mots(t) <= 55:
-            avert.append(f'{p} : {c.nb_mots(t)} mots (40 à 55 visés)')
-        if re.search(r'[()\[\]]', t):
-            erreurs.append(f'{p} : parenthèses dans la narration')
-        if re.search(r'\b(etc|av|apr|J\.-C|M|Mme|St|Ste|cf|env)\.', t):
-            erreurs.append(f'{p} : abréviation dans la narration')
+        if fait('A'):
+            erreurs, avert = [], []
+            t = x['narration']
+            for ph in c.phrases(t):
+                if c.nb_mots(ph) > 25:
+                    erreurs.append(f'{p} : phrase de {c.nb_mots(ph)} mots (25 au plus) : « {ph[:60]}… »')
+            if not 2 <= len(c.phrases(t)) <= 3:
+                avert.append(f'{p} : {len(c.phrases(t))} phrases (2 à 3 visées)')
+            if not 40 <= c.nb_mots(t) <= 55:
+                avert.append(f'{p} : {c.nb_mots(t)} mots (40 à 55 visés)')
+            if re.search(r'[()\[\]]', t):
+                erreurs.append(f'{p} : parenthèses dans la narration')
+            if re.search(r'\b(etc|av|apr|J\.-C|M|Mme|St|Ste|cf|env)\.', t):
+                erreurs.append(f'{p} : abréviation dans la narration')
+            R.plus('A', 'narration', erreurs, avert)
 
-    e_dates, a_dates, surimp = controler_dates(d)
-    erreurs += e_dates
-    avert += a_dates
-    e_mus, a_mus, duree_chants = controler_musique(d, dossier)
-    erreurs += e_mus
-    avert += a_mus
+    # Les contrôles qui suivent gardent l'ordre d'avant `--etape`. Ceux de l'étape C tournent aussi à
+    # l'étape A, sans y être affichés : ils comptent les enrichissements prévus (dosage).
+    surimp = []
+    duree_chants = duree_segments = duree_generique = 0.0
+    n_lieux = n_cit = n_portraits = n_gens = 0
+    if fait('A'):
+        e_dates, a_dates, surimp = controler_dates(d)
+        R.plus('A', 'dates', e_dates, a_dates)
+    if fait('B'):
+        e_mus, a_mus, duree_chants = controler_musique(d, dossier)
+        R.plus('B', 'musique', e_mus, a_mus)
     e_seg, a_seg, duree_segments = controler_segments(d, dossier, voix, img, lexique)
-    erreurs += e_seg
-    avert += a_seg
-    avert += controler_boucles(d)
-    e_sur, a_sur, n_lieux, n_cit = controler_surimpressions(d)
-    erreurs += e_sur
-    avert += a_sur
-    e_por, a_por, n_portraits, n_gens = controler_portraits(d)
-    erreurs += e_por
-    avert += a_por
-    e_obj, a_obj, n_objets, n_manuscrits, n_deux = controler_objets(d)
-    erreurs += e_obj
-    avert += a_obj
-    e_ch, a_ch, n_chiffres, n_dates, n_conf = controler_chiffres(d)
-    erreurs += e_ch
-    avert += a_ch
-    e_am, a_am, n_ap, n_mos = controler_avant_apres_mosaiques(d, img, dossier)
-    erreurs += e_am
-    avert += a_am
-    e_gen, a_gen, duree_generique = controler_generique(d)
-    erreurs += e_gen
-    avert += a_gen
+    R.plus('B', 'lectures et épisodes', e_seg, a_seg, REGLES_SEGMENTS)
+    if fait('B'):
+        R.plus('B', 'boucles', (), controler_boucles(d))
+        R.plus('B', 'registre musical', (), controler_registre(d, f.stem))
+    if fait('C'):
+        e_sur, a_sur, n_lieux, n_cit = controler_surimpressions(d)
+        R.plus('C', 'surimpressions', e_sur, a_sur)
+        e_por, a_por, n_portraits, n_gens = controler_portraits(d)
+        R.plus('C', 'portraits', e_por, a_por)
+    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = 0
+    if fait('A') or fait('C'):
+        e_obj, a_obj, n_objets, n_manuscrits, n_deux = controler_objets(d)
+        R.plus('C', 'objets et manuscrits', e_obj, a_obj)
+        e_ch, a_ch, n_chiffres, n_dates, n_conf = controler_chiffres(d)
+        R.plus('C', 'chiffres et dates', e_ch, a_ch)
+        e_am, a_am, n_ap, n_mos = controler_avant_apres_mosaiques(d, img, dossier)
+        R.plus('C', 'avant/après et mosaïques', e_am, a_am, REGLES_MOSAIQUES)
+    if fait('A'):
+        e_gen, a_gen, duree_generique = controler_generique(d)
+        R.plus('A', 'générique', e_gen, a_gen)
 
     pauses = [pause_apres(x) for x in diapos]
     longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
     total = sum(durees) + sum(pauses) + CARTON * len(d['actes']) + duree_chants + duree_segments + duree_generique
-    print(f"{d['titre']} ({d['periode']}) : {len(diapos)} diapositives, {len(d['actes'])} actes, "
-          f"{len(oeuvres)} œuvres différentes.")
-    if durees:
+    chiffres = etape in (None, 'C')   # les lignes de chiffres ne sont justes qu'avec tous les contrôles
+    if etape:
+        print(f"{d['titre']} ({d['periode']}) — étape {etape} ({ETAPES[etape]})")
+    else:
+        print(f"{d['titre']} ({d['periode']}) : {len(diapos)} diapositives, {len(d['actes'])} actes, "
+              f"{len(oeuvres)} œuvres différentes.")
+    if durees and chiffres:
         print(f'Générique : {len(d.get("generique") or [])} images, {duree_generique:.1f} s (ouverture et récapitulatif).')
         print(f'Durée totale (pauses, cartons d’acte, intermèdes et générique compris) : {total / 60:.1f} min ; moyenne {sum(durees) / len(durees):.1f} s par diapositive '
               f'(de {min(durees):.1f} à {max(durees):.1f} s ; visé : ~18 s).')
     m = d.get('musique') or {}
-    if m:
+    if m and chiffres:
         poids = sum(f.stat().st_size for f in (dossier / 'musique').glob('*.m4a')) if (dossier / 'musique').is_dir() else 0
         n_instr = sum(1 for p in m.get('intermedes', []) if p.get('instrumental'))
         print(f"Musique : {len(m.get('fond', []))} pistes de fond, {len(m.get('intermedes', [])) - n_instr} intermède(s) chanté(s), "
               f"{n_instr} intermède(s) musical(aux) "
               f"({duree_chants:.0f} s, pauses comprises), {poids / 1e6:.1f} Mo.")
-    if d.get('lectures') or d.get('episodes'):
+    if (d.get('lectures') or d.get('episodes')) and not etape:
         print(f"Lectures et épisodes : {len(d.get('lectures', []))} lecture(s), {len(d.get('episodes', []))} épisode(s) "
               f"({duree_segments / 60:.1f} min, pauses comprises).")
-    if n_lieux or n_cit:
+    if (n_lieux or n_cit) and not etape:
         print(f'Surimpressions : {n_lieux} lieu(x) dans {sum(1 for x in d["diapositives"] if x.get("lieux"))} médaillon(s) de carte, {n_cit} citation(s) ; pause allongée après la voix '
               f"(citation finale) : {', '.join(f'{n} ({q:.2f} s)' for n, q in longues) or 'aucune'}.")
-    if n_portraits:
+    if n_portraits and not etape:
         n_ment = sum(len(x.get('personnes') or []) + len(x.get('personnes_vues') or []) for x in diapos)
         n_vues = sum(len(x.get('personnes_vues') or []) for x in diapos)
         print(f'Portraits : {n_ment} mention(s) de personnes, dont {n_vues} visibles sur l’image ; '
               f'{n_portraits} mention(s) avec portrait, {n_gens} personne(s) différente(s) montrée(s).')
-    if n_objets or n_manuscrits:
+    if (n_objets or n_manuscrits) and not etape:
         print(f'Objets et manuscrits : {n_objets} objet(s) de musée, {n_manuscrits} manuscrit(s) montrés (visés : ~10 et 3 à 4) ; '
               f'deux surimpressions ensemble sur {n_deux} diapositive(s), jamais plus.')
     # Dosage des enrichissements (spec 12, « Produire une période ») : averti aussi à zéro.
-    if n_objets < 6:
-        avert.append(f'dosage insuffisant : {n_objets} objet(s) de musée (~10 visés par période)')
-    elif n_objets > 14:
-        avert.append(f'{n_objets} objet(s) de musée (~10 visés par période)')
-    if n_manuscrits < 3:
-        avert.append(f'dosage insuffisant : {n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
-    elif n_manuscrits > 4:
-        avert.append(f'{n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
-    if n_chiffres + n_dates < 6:
-        avert.append(f'dosage insuffisant : {n_chiffres} chiffre(s) et {n_dates} date(s) républicaine(s) en surimpression '
-                     f'(~8 chiffres ou dates visés par période)')
-    if n_chiffres or n_dates:
+    avert = []
+    if fait('A'):
+        if n_objets < 6:
+            avert.append(f'dosage insuffisant : {n_objets} objet(s) de musée (~10 visés par période)')
+        elif n_objets > 14:
+            avert.append(f'{n_objets} objet(s) de musée (~10 visés par période)')
+        if n_manuscrits < 3:
+            avert.append(f'dosage insuffisant : {n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
+        elif n_manuscrits > 4:
+            avert.append(f'{n_manuscrits} manuscrit(s) (3 à 4 visés par période)')
+        if n_chiffres + n_dates < 6:
+            avert.append(f'dosage insuffisant : {n_chiffres} chiffre(s) et {n_dates} date(s) républicaine(s) en surimpression '
+                         f'(~8 chiffres ou dates visés par période)')
+    R.plus('A', 'dosage', (), avert)
+    if (n_chiffres or n_dates) and not etape:
         print(f'Chiffres clés et dates : {n_chiffres} chiffre(s) (~8 visés), {n_dates} date(s) républicaine(s), '
               f'correspondances recalculées ({n_conf} confirmée(s) par la narration ou la date de la diapositive).')
-    if n_ap or n_mos:
+    if (n_ap or n_mos) and not etape:
         print(f"Avant/après et mosaïques : {n_ap} avant/après (diapositives {', '.join(str(x['n']) for x in diapos if x['image'].get('apres'))}), "
               f"{n_mos} mosaïque(s) (diapositives {', '.join(str(x['n']) for x in diapos if x.get('mosaique'))}).")
-    datees = sum(1 for x in diapos if 'date' in x)
-    print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} apparition(s) en bas de l\'image '
-          f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")
-    for a in avert:
-        print(f'  avertissement {a}')
-    for e in erreurs:
+    if not etape:
+        datees = sum(1 for x in diapos if 'date' in x)
+        print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} apparition(s) en bas de l\'image '
+              f"hors cartons d'acte{' (diapositives ' + ', '.join(map(str, surimp)) + ')' if surimp else ''}.")
+    erreurs, avert = R.de(etape)
+    if not etape:
+        for _, _, a in avert:
+            print(f'  avertissement {a}')
+        for _, _, e in erreurs:
+            print(f'  ERREUR {e}')
+        print('OK' if not erreurs else f'{len(erreurs)} erreur(s).')
+        return not erreurs
+    # Sortie résumée d'une étape : bilan par famille, erreurs, puis MAX_AVERT avertissements au plus.
+    pl = lambda k, mot: f"{k} {mot}{'s' if k > 1 else ''}"
+    for et in (('A', 'B', 'C') if etape == 'C' else (etape,)):
+        for fam in FAMILLES[et]:
+            ne = sum(1 for x in erreurs if x[:2] == (et, fam))
+            na = sum(1 for x in avert if x[:2] == (et, fam))
+            print(f"  {fam} : {pl(ne, 'erreur')}, {pl(na, 'avertissement')}")
+    for _, _, e in erreurs:
         print(f'  ERREUR {e}')
-    print('OK' if not erreurs else f'{len(erreurs)} erreur(s).')
+    for _, _, a in (avert if tout else avert[:MAX_AVERT]):
+        print(f'  avertissement {a}')
+    if not tout and len(avert) > MAX_AVERT:
+        print(f'  … et {len(avert) - MAX_AVERT} autre(s) avertissement(s) : --tout pour les voir tous')
+    print(f'OK (étape {etape})' if not erreurs else f'{len(erreurs)} erreur(s) à l’étape {etape}.')
     return not erreurs
 
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('slug', nargs='?')
-    p.add_argument('--tous', action='store_true')
+    p.add_argument('--tous', action='store_true', help='toutes les périodes')
+    p.add_argument('--etape', choices=sorted(ETAPES), type=str.upper,
+                   help='seulement les contrôles d’une étape de production, sortie résumée (C : tout)')
+    p.add_argument('--tout', action='store_true', help='avec --etape : tous les avertissements (15 sinon)')
     p.add_argument('--hors-ligne', action='store_true', help='lectures comparées au cache Wikisource')
     a = p.parse_args()
     global HORS_LIGNE
@@ -1966,7 +2069,7 @@ def main() -> int:
         p.error('indiquer une période ou --tous')
     ok = True
     for s in slugs:
-        ok = verifier(s) and ok
+        ok = verifier(s, a.etape, a.tout) and ok
         print()
     return 0 if ok else 1
 

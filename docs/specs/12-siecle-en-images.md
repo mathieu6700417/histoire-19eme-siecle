@@ -1101,6 +1101,12 @@ suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan
   JSON d'une période.
 - **Contrôle avant la voix** : relire le dosage des enrichissements et la richesse des épisodes à la
   fin de l'étape 1, avant toute synthèse ; `verifier.py` signale un dosage insuffisant.
+- **Outillage (spec 13, 2026-10-10)** : chaque agent clôt son étape par `verifier.py <slug> --etape
+  A|B|C` et lance `gemini.py --solde` avant une étape payante ; le cadre des portraits vient du
+  détecteur local (0 $). **Consigne de l'agent B** : pour chaque piste proposée, chercher d'abord dans
+  le registre des enregistrements libres (`registre_musique.py chercher <mots>`), avant toute
+  recherche sur Commons ou l'Internet Archive ; après `musique.py`, y verser les pistes retenues
+  (`ajouter --depuis <slug>`) et y noter ce qui a été écarté ou cherché en vain.
 
 ### Consulat et Empire enrichi (2026-10-09)
 

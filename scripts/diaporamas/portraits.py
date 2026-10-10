@@ -8,10 +8,12 @@ Usage :
     # Par lots : une personne par ligne « id|nom » ; --essai : sans écrire le registre
     python3 scripts/diaporamas/portraits.py --lot personnes.txt [--essai]
 
-    # Registre : licence relevée par l'API, téléchargement (cache), cadre du visage (proposé par
-    # le modèle de vision puis contrôlé sur le recadrage), webp ovale ~450 px de haut
+    # Registre : licence relevée par l'API, téléchargement (cache), cadre du visage (détecteur local
+    # YuNet, gratuit ; spec 13), webp ovale ~450 px de haut
     python3 scripts/diaporamas/portraits.py --registre
     python3 scripts/diaporamas/portraits.py --registre --id danton calonne --force
+    python3 scripts/diaporamas/portraits.py --registre --id prudhon --repli-gemini --budget 0.05
+    python3 scripts/diaporamas/portraits.py --registre --essai # étalonnage de YuNet, sans rien écrire
     python3 scripts/diaporamas/portraits.py --planche          # planche de contrôle des recadrages
 
     # Mentions d'une période : visibilité de chaque personne nommée sur l'image de sa diapositive
@@ -37,12 +39,25 @@ compte pas. Le titre de l'œuvre et sa notice d'abord, puis Gemini Flash (une qu
 diapositive, toutes ses personnes à la fois) ; le script signale chaque désaccord entre les données
 et le modèle, à trancher à la main. Cache : .cache/diaporamas/<slug>/personnes.json.
 
-Recadrage : le modèle propose le rectangle du visage sur l'image quadrillée ; on en tire un
-rectangle 4:5 où le visage occupe ~58 % de la hauteur, un peu au-dessus du centre (place du cou et
-du col), ramené dans l'image ; puis le modèle revoit le recadrage (un seul visage entier, centré,
-ni coupé ni minuscule) ; un refus est signalé « à relire ». Cache : .cache/diaporamas/portraits/.
+Recadrage (spec 13, outil 3, depuis le 2026-10-10) : le rectangle du visage vient du détecteur local
+YuNet (`visages_local.py` en mode portrait, dans le venv `.cache/venv-visages` ; un seul lancement
+pour tous les portraits à cadrer ; 0 $). On en tire un rectangle 4:5 où le visage occupe ~58 % de la
+hauteur, un peu au-dessus du centre (place du cou et du col), ramené dans l'image.
+- Un cadre déjà au registre n'est pas recalculé (cache `cle` : même fichier Commons, même personne ;
+  les cadres posés par Gemini avant la bascule restent valides), sauf `--force` ;
+  `cadre_visage_manuel: true` reste prioritaire.
+- Visage non trouvé : le portrait est signalé « cadre à poser à la main » (`cadre_visage` puis
+  `cadre_visage_manuel: true`). Avec `--repli-gemini` (et `--budget`), le modèle de vision propose
+  alors le rectangle sur l'image quadrillée puis revoit le recadrage, comme avant.
+- Planche des seuls portraits nouveaux ou douteux (score bas, boîte très petite ou très décentrée,
+  repli Gemini) : .cache/diaporamas/portraits/planche-a-relire.jpg ; la planche de tous : planche.jpg.
+- `--registre --essai [--marge HAUT BAS CÔTÉS]` : étalonnage, sans rien écrire. YuNet est comparé
+  aux cadres du registre (hors cadres manuels) : visages trouvés, IoU médiane, 10 plus gros écarts
+  et leur planche (etalonnage-yunet.jpg). Objectif : 90 % de visages trouvés, IoU médiane de 0,7.
+- venv ou modèle `yunet.onnx` absents : message avec les deux commandes d'installation, et arrêt.
+Cache : .cache/diaporamas/portraits/ (originaux, cadres.json).
 """
-import argparse, hashlib, json, os, sys, threading, time, urllib.error, urllib.parse, urllib.request
+import argparse, hashlib, json, os, subprocess, sys, threading, time, urllib.error, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from PIL import Image, ImageDraw
@@ -62,6 +77,23 @@ HAUTEUR = 450           # px de haut de la webp (ovales jusqu’à 180 px, nets 
 RATIO = 0.8             # largeur / hauteur du recadrage (ovale vertical)
 PART_VISAGE = 0.58      # hauteur du visage dans le recadrage
 QUALITE = 82
+
+# Cadre du visage par le détecteur local (spec 13, outil 3) : YuNet, par visages_local.py en mode portrait.
+VENV_VISAGES = camera.VENV_VISAGES
+MODELE_YUNET = c.RACINE / '.cache' / 'modeles-visages' / 'yunet.onnx'
+INSTALLER = ('    python3 -m venv .cache/venv-visages && .cache/venv-visages/bin/pip install opencv-python-headless numpy\n'
+             '    mkdir -p .cache/modeles-visages && curl -L -o .cache/modeles-visages/yunet.onnx \\\n'
+             '      https://github.com/opencv/opencv_zoo/raw/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx')
+VERSION_LOCALE = 'y1'   # réglages du détecteur local (invalide le cache de SES cadres, pas ceux de Gemini)
+# Marge ajoutée à la boîte de visages_local.py (déjà « crâne-menton, oreille à oreille ») : haut, bas,
+# côtés, en fractions de la boîte. Étalonnage du 2026-10-10 sur les 93 cadres Gemini des périodes 01 et
+# 02 : sans marge, visage trouvé 92 fois sur 93, IoU médiane 0,76 ; la meilleure marge essayée
+# (0, -0,05, -0,05) ne gagne que 0,02 : aucune marge retenue.
+MARGE = (0.0, 0.0, 0.0)
+OBJECTIF_TROUVES, OBJECTIF_IOU = 0.90, 0.70     # objectif de l'étalonnage (spec 13)
+# Cadre « douteux », à relire sur la planche : score bas, boîte très petite ou très décentrée
+# (aucun des 92 cadres de l'étalonnage : scores de 0,79 à 0,94, hauteurs de 9 % au moins).
+SCORE_DOUTEUX, HAUTEUR_DOUTEUSE, DECENTRE = 0.6, 0.06, 0.3
 verrou = threading.Lock()
 
 
@@ -97,10 +129,14 @@ def ecrire_registre(r: list[dict]) -> None:
     tmp.replace(REGISTRE)
 
 
+def chemin_original(p: dict):
+    return CACHE / (hashlib.sha1(p['commons'].encode()).hexdigest()[:16] + '.img')
+
+
 def original(p: dict, info: dict) -> Image.Image:
     """Original Commons (cache), ou vignette de 2400 px pour un très grand fichier."""
     CACHE.mkdir(parents=True, exist_ok=True)
-    f = CACHE / (hashlib.sha1(p['commons'].encode()).hexdigest()[:16] + '.img')
+    f = chemin_original(p)
     if not f.exists():
         url = info['url'] if (info.get('largeur') or 0) <= 4000 and info.get('mime') in ('image/jpeg', 'image/png', 'image/webp') else info['vignette']
         f.write_bytes(c.http_get(url))
@@ -145,10 +181,71 @@ def recadrage(visage: list[float], L: int, H: int) -> tuple[int, int, int, int]:
     return round(a), round(b), round(a + w), round(b + h)
 
 
-def traiter(p: dict, force: bool) -> tuple[dict, str]:
-    """Licence, original, cadre du visage, contrôle, webp. Rend (entrée mise à jour, bilan)."""
-    if not p.get('commons'):
-        return p, f"{p['id']:28s} pas de portrait ({p.get('note', 'sans note')})"
+# --- Cadre du visage par le détecteur local (YuNet, spec 13) ---------------------------------
+
+def verifier_yunet() -> None:
+    if not VENV_VISAGES.exists() or not MODELE_YUNET.exists():
+        manque = ' et '.join(str(f.relative_to(c.RACINE)) for f in (VENV_VISAGES, MODELE_YUNET) if not f.exists())
+        raise SystemExit(f'Détecteur local des visages absent ({manque}). Installer :\n{INSTALLER}')
+
+
+def visages_yunet(chemins: list, marge: tuple = MARGE) -> list[tuple[list[float], float] | None]:
+    """Cadre du visage (fractions de l'image) et score de YuNet pour chaque image, en UN lancement de
+    visages_local.py (mode portrait) dans le venv ; None quand aucun visage n'est trouvé."""
+    verifier_yunet()
+    if not chemins:
+        return []
+    r = subprocess.run([str(VENV_VISAGES), str(c.RACINE / 'scripts' / 'diaporamas' / 'visages_local.py')],
+                       input=json.dumps({'portrait': True, 'scores': True, 'chemins': [str(x) for x in chemins]}),
+                       capture_output=True, text=True)
+    if r.returncode:
+        raise SystemExit(f'visages_local.py : échec\n{r.stderr[-600:]}\nRéinstaller au besoin :\n{INSTALLER}')
+    haut, bas, cote = marge
+    sortie = []
+    for v in json.loads(r.stdout):
+        if not v:
+            sortie.append(None)
+            continue
+        x0, y0, x1, y1, score = v[0]
+        w, h = x1 - x0, y1 - y0
+        b = [x0 - cote * w, y0 - haut * h, x1 + cote * w, y1 + bas * h]
+        sortie.append(([round(min(1.0, max(0.0, z)), 3) for z in b], score))
+    return sortie
+
+
+def doutes(v: list[float], score: float) -> list[str]:
+    """Raisons de relire un cadre du détecteur : score bas, boîte très petite ou très décentrée."""
+    r = []
+    if score < SCORE_DOUTEUX:
+        r.append(f'score bas ({score:.2f})')
+    if v[3] - v[1] < HAUTEUR_DOUTEUSE:
+        r.append(f'visage très petit ({(v[3] - v[1]) * 100:.0f} % de la hauteur)')
+    if abs((v[0] + v[2]) / 2 - 0.5) > DECENTRE or (v[1] + v[3]) / 2 > 0.5 + DECENTRE - 0.1:
+        r.append('visage très décentré')
+    return r
+
+
+def cles(p: dict) -> tuple[str, str]:
+    """Clés de cache du cadre : celle du détecteur local, et celle des cadres Gemini d'avant la
+    spec 13 (toujours admise : ces cadres ne sont pas recalculés)."""
+    h = lambda *x: hashlib.sha1(json.dumps(list(x)).encode()).hexdigest()[:16]
+    return h(VERSION_LOCALE, 'yunet', p['commons'], p['nom']), h(VERSION, MODELE, p['commons'], p['nom'])
+
+
+def a_cadrer(p: dict, force: bool, cache: dict) -> bool:
+    """Faut-il (re)calculer le cadre ? Jamais un cadre manuel ; un cadre existant est gardé tant que
+    sa clé de cache vaut encore (même fichier Commons, même personne), sauf --force. Un cadre du
+    registre sans entrée de cache (cache perdu) est gardé lui aussi."""
+    if p.get('cadre_visage_manuel'):
+        return False
+    if force or not p.get('cadre_visage'):
+        return True
+    e = cache.get(p['id'])
+    return bool(e) and e.get('cle') not in cles(p)
+
+
+def preparer(p: dict) -> tuple[Image.Image, str]:
+    """Licence relevée (refus si elle n'est pas libre), métadonnées, original en cache."""
     info = c.infos_fichiers([p['commons']]).get(p['commons'], {})
     if info.get('manquant'):
         raise ErreurPortrait(f"{p['id']} : fichier Commons introuvable ({p['commons']})")
@@ -160,69 +257,121 @@ def traiter(p: dict, force: bool) -> tuple[dict, str]:
     p['page'] = info['page']
     p.setdefault('auteur', c.texte_meta(m.get('Artist'))[:120])
     p.setdefault('date', c.texte_meta(m.get('DateTimeOriginal'))[:60])
-    im = original(p, info)
-    L, H = im.size
-    cache_f = CACHE / 'cadres.json'
-    cache = json.loads(cache_f.read_text()) if cache_f.exists() else {}
-    cle = hashlib.sha1(json.dumps([VERSION, MODELE, p['commons'], p['nom']]).encode()).hexdigest()[:16]
-    bilan = ''
-    if not p.get('cadre_visage_manuel') and (force or not p.get('cadre_visage') or cache.get(p['id'], {}).get('cle') != cle):
-        r = appel(CONSIGNES_VISAGE, SCHEMA_VISAGE, [{'role': 'user', 'parts': [
-            {'text': f"Portrait de {p['nom']} ({p['dates']}) : {p.get('titre') or p['commons']}."},
-            {'inline_data': {'mime_type': 'image/jpeg', 'data': _jpeg(avec_grille(reduire(im)))}}]}])
-        v = [round(float(z), 3) for z in r.get('visage', [])]
-        if len(v) != 4 or not (0 <= v[0] < v[2] <= 1 and 0 <= v[1] < v[3] <= 1):
-            raise ErreurPortrait(f"{p['id']} : visage illisible {v}")
-        p['cadre_visage'] = v
-        boite = recadrage(v, L, H)
-        k = appel(CONSIGNES_CONTROLE, SCHEMA_CONTROLE, [{'role': 'user', 'parts': [
-            {'text': f"Personne nommée : {p['nom']} ({p['dates']})."},
-            {'inline_data': {'mime_type': 'image/jpeg', 'data': _jpeg(im.crop(boite).resize((320, 400)))}}]}])
-        with verrou:
-            cache[p['id']] = {'cle': cle, 'visage': v, 'controle': k}
-            cache_f.write_text(json.dumps(cache, ensure_ascii=False, indent=1) + '\n')
-        bilan = 'cadre proposé, contrôle ' + ('ok' if k.get('ok') else f"REFUSÉ : {k.get('probleme')} (à relire)")
-    else:
-        k = cache.get(p['id'], {}).get('controle')
-        bilan = 'cadre manuel' if p.get('cadre_visage_manuel') else ('cadre en cache, contrôle ' + ('ok' if (k or {}).get('ok') else 'à relire'))
-    boite = recadrage(p['cadre_visage'], L, H)
+    return original(p, info), licence
+
+
+def cadre_gemini(p: dict, im: Image.Image) -> tuple[list[float], dict]:
+    """Repli (`--repli-gemini`) : cadre proposé par le modèle de vision, puis contrôle du recadrage."""
+    r = appel(CONSIGNES_VISAGE, SCHEMA_VISAGE, [{'role': 'user', 'parts': [
+        {'text': f"Portrait de {p['nom']} ({p['dates']}) : {p.get('titre') or p['commons']}."},
+        {'inline_data': {'mime_type': 'image/jpeg', 'data': _jpeg(avec_grille(reduire(im)))}}]}])
+    v = [round(float(z), 3) for z in r.get('visage', [])]
+    if len(v) != 4 or not (0 <= v[0] < v[2] <= 1 and 0 <= v[1] < v[3] <= 1):
+        raise ErreurPortrait(f"{p['id']} : visage illisible {v}")
+    k = appel(CONSIGNES_CONTROLE, SCHEMA_CONTROLE, [{'role': 'user', 'parts': [
+        {'text': f"Personne nommée : {p['nom']} ({p['dates']})."},
+        {'inline_data': {'mime_type': 'image/jpeg', 'data': _jpeg(im.crop(recadrage(v, *im.size)).resize((320, 400)))}}]}])
+    return v, k
+
+
+def medaillon(p: dict, im: Image.Image) -> int:
+    """Écrit la webp 4:5 recadrée sur le visage ; rend son poids (Ko)."""
     SORTIE.mkdir(parents=True, exist_ok=True)
     p['fichier'] = f"portraits/{p['id']}.webp"
     sortie = c.PUBLIC / p['fichier']
-    v = im.crop(boite)
+    v = im.crop(recadrage(p['cadre_visage'], *im.size))
     v = v.resize((round(HAUTEUR * RATIO), HAUTEUR), Image.LANCZOS)
     v.save(sortie, 'WEBP', quality=QUALITE, method=6)
-    return p, f"{p['id']:28s} {licence:22s} {sortie.stat().st_size // 1024:3d} Ko  {bilan}"
+    return sortie.stat().st_size // 1024
 
 
-def registre(ids: list[str] | None, force: bool) -> int:
+def registre(ids: list[str] | None, force: bool, repli: bool = False) -> int:
+    """Licences et originaux (en parallèle), cadres manquants par YuNet en un seul lancement
+    (Gemini seulement en repli demandé), médaillons, planche des portraits à relire."""
     r = lire_registre()
     a_faire = [p for p in r if not ids or p['id'] in ids]
     erreurs = 0
+    prets: dict[str, tuple[Image.Image, str]] = {}
     with ThreadPoolExecutor(4) as ex:
-        futurs = {ex.submit(traiter, p, force): p for p in a_faire}
+        futurs = {ex.submit(preparer, p): p for p in a_faire if p.get('commons')}
         for f in as_completed(futurs):
             try:
-                _, bilan = f.result()
-                print(bilan)
-            except gemini.BudgetAtteint as e:
-                erreurs += 1
-                print('ARRÊT', e)
-                for fu in futurs:
-                    fu.cancel()
+                prets[futurs[f]['id']] = f.result()
             except ErreurPortrait as e:
                 erreurs += 1
                 print('ERREUR', e)
+    cache_f = CACHE / 'cadres.json'
+    cache = json.loads(cache_f.read_text()) if cache_f.exists() else {}
+    besoin = [p for p in a_faire if p['id'] in prets and a_cadrer(p, force, cache)]
+    trouves = visages_yunet([chemin_original(p) for p in besoin]) if besoin else []
+    bilans, relire, arret = {}, {}, None
+    for p, t in zip(besoin, trouves):
+        im = prets[p['id']][0]
+        if t:
+            v, score = t
+            d = doutes(v, score)
+            p['cadre_visage'] = v
+            cache[p['id']] = {'cle': cles(p)[0], 'visage': v, 'source': 'yunet', 'score': score, 'douteux': d}
+            bilans[p['id']] = f'cadre YuNet (score {score:.2f})' + (f" DOUTEUX : {', '.join(d)} (à relire)" if d else '')
+            relire[p['id']] = ', '.join(d) or 'nouveau'
+            continue
+        if repli and not arret:
+            try:
+                v, k = cadre_gemini(p, im)
+            except gemini.BudgetAtteint as e:
+                arret = str(e)
+                print('ARRÊT', e)
+            except ErreurPortrait as e:
+                print('ERREUR', e)
+            else:
+                p['cadre_visage'] = v
+                cache[p['id']] = {'cle': cles(p)[0], 'visage': v, 'source': 'gemini', 'controle': k}
+                bilans[p['id']] = 'visage non trouvé par YuNet, cadre Gemini, contrôle ' + (
+                    'ok' if k.get('ok') else f"REFUSÉ : {k.get('probleme')} (à relire)")
+                relire[p['id']] = 'repli Gemini' + ('' if k.get('ok') else f" refusé : {k.get('probleme')}")
+                continue
+        erreurs += 1
+        bilans[p['id']] = ('VISAGE NON TROUVÉ : cadre à poser à la main (`cadre_visage` et `cadre_visage_manuel: true`)'
+                           + ('' if repli else ', ou relancer avec --repli-gemini --budget')
+                           + (' ; ancien cadre gardé' if p.get('cadre_visage') else ''))
+    for p in a_faire:
+        if not p.get('commons'):
+            print(f"{p['id']:28s} pas de portrait ({p.get('note', 'sans note')})")
+            continue
+        if p['id'] not in prets:
+            continue
+        im, licence = prets[p['id']]
+        if p['id'] not in bilans:
+            e = cache.get(p['id'])
+            if p.get('cadre_visage_manuel'):
+                bilans[p['id']] = 'cadre manuel'
+            else:
+                if not e:   # cadre d'avant le cache : noté, pour repérer un changement de fichier Commons
+                    cache[p['id']] = {'cle': cles(p)[0], 'visage': p['cadre_visage'], 'source': 'registre'}
+                k = (e or {}).get('controle')
+                bilans[p['id']] = 'cadre en cache' + ('' if k is None or k.get('ok') else ', contrôle à relire') + (
+                    f" ; douteux : {', '.join(e['douteux'])}" if (e or {}).get('douteux') else '')
+        if not p.get('cadre_visage'):
+            print(f"{p['id']:28s} {licence:22s}   -     {bilans[p['id']]}")
+            continue
+        print(f"{p['id']:28s} {licence:22s} {medaillon(p, im):3d} Ko  {bilans[p['id']]}")
+    CACHE.mkdir(parents=True, exist_ok=True)
+    cache_f.write_text(json.dumps(cache, ensure_ascii=False, indent=1) + '\n')
     ordre = {p['id']: k for k, p in enumerate(r)}
     ecrire_registre(sorted(r, key=lambda p: ordre[p['id']]))
-    print(f"{len(a_faire)} portrait(s) ; {cout()}")
+    relire = {i: n for i, n in relire.items() if next(p for p in r if p['id'] == i).get('fichier')}
+    print(f"{len(a_faire)} portrait(s), {len(besoin)} cadre(s) à calculer, {sum(1 for t in trouves if t)} trouvé(s) par YuNet"
+          f"{'' if not relire else f', {len(relire)} à relire'} ; {cout()}")
+    if relire:
+        planche(relire, 'planche-a-relire.jpg')
     return 1 if erreurs else 0
 
 
-def planche() -> None:
-    """Planche de contrôle : chaque médaillon en ovale, avec son nom (.cache/diaporamas/portraits/planche.jpg)."""
-    r = [p for p in lire_registre() if p.get('fichier')]
-    col, lc, hc = 8, 160, 230
+def planche(notes: dict[str, str] | None = None, nom: str = 'planche.jpg') -> None:
+    """Planche de contrôle : chaque médaillon en ovale, avec son nom (.cache/diaporamas/portraits/planche.jpg).
+    Avec `notes` (id -> raison) : seulement ces portraits, la raison sous le nom (planche « à relire »)."""
+    r = [p for p in lire_registre() if p.get('fichier') and (notes is None or p['id'] in notes)]
+    col, lc, hc = (8, 160, 230) if notes is None else (min(6, max(1, len(r))), 210, 230)
     page = Image.new('RGB', (col * lc, ((len(r) + col - 1) // col) * hc), (250, 249, 246))
     d = ImageDraw.Draw(page)
     police = _police(13)
@@ -233,10 +382,88 @@ def planche() -> None:
         ImageDraw.Draw(masque).ellipse([0, 0, 135, 169], fill=255)
         page.paste(im, (x + 12, y + 8), masque)
         d.text((x + 8, y + 184), p['id'][:22], fill=(20, 20, 20), font=police)
-        d.text((x + 8, y + 202), p.get('dates', ''), fill=(90, 90, 90), font=police)
-    f = CACHE / 'planche.jpg'
+        d.text((x + 8, y + 202), p.get('dates', '') if notes is None else notes[p['id']][:30], fill=(90, 90, 90), font=police)
+    f = CACHE / nom
     page.save(f, quality=88)
     print(f.relative_to(c.RACINE))
+
+
+def _iou(a, b) -> float:
+    ix = max(0, min(a[2], b[2]) - max(a[0], b[0]))
+    iy = max(0, min(a[3], b[3]) - max(a[1], b[1]))
+    u = (a[2] - a[0]) * (a[3] - a[1]) + (b[2] - b[0]) * (b[3] - b[1]) - ix * iy
+    return ix * iy / u if u > 0 else 0.0
+
+
+def etalonner(ids: list[str] | None, marge: tuple) -> int:
+    """`--registre --essai` : YuNet comparé aux cadres déjà au registre (posés par Gemini), sans rien
+    écrire (ni registre, ni cache, ni médaillon). Bilan chiffré et planche des 10 plus gros écarts."""
+    import statistics
+    r = [p for p in lire_registre() if p.get('commons') and p.get('cadre_visage') and not p.get('cadre_visage_manuel')
+         and (not ids or p['id'] in ids)]
+    ps = [p for p in r if chemin_original(p).exists()]
+    if not ps:
+        print('Aucun portrait cadré dont l’original soit en cache.')
+        return 1
+    res = visages_yunet([chemin_original(p) for p in ps], marge)
+    lignes = []     # (IoU des cadres, IoU des recadrages, personne, cadre YuNet ou None, score)
+    for p, t in zip(ps, res):
+        if not t:
+            lignes.append((0.0, 0.0, p, None, 0.0))
+            continue
+        with Image.open(chemin_original(p)) as im:
+            L, H = im.size
+        lignes.append((_iou(p['cadre_visage'], t[0]), _iou(recadrage(p['cadre_visage'], L, H), recadrage(t[0], L, H)), p, t[0], t[1]))
+    trouves = [x for x in lignes if x[3]]
+    part = len(trouves) / len(ps)
+    med = statistics.median(x[0] for x in trouves) if trouves else 0.0
+    med_r = statistics.median(x[1] for x in trouves) if trouves else 0.0
+    n_doutes = sum(1 for x in trouves if doutes(x[3], x[4]))
+    print(f'Étalonnage de YuNet sur les cadres du registre (rien n’est écrit) : {len(r)} portrait(s) cadré(s) hors cadres manuels, '
+          f'{len(ps)} original(aux) en cache ; marge haut {marge[0]}, bas {marge[1]}, côtés {marge[2]}.')
+    print(f"Visage trouvé : {len(trouves)} / {len(ps)} ({part * 100:.1f} % ; visé : {OBJECTIF_TROUVES * 100:.0f} % au moins)"
+          f"{' ; non trouvé : ' + ', '.join(x[2]['id'] for x in lignes if not x[3]) if len(trouves) < len(ps) else ''}.")
+    print(f'IoU avec le cadre du registre : médiane {med:.3f} (visé : {OBJECTIF_IOU} au moins), minimum '
+          f"{min((x[0] for x in trouves), default=0):.2f}, {sum(1 for x in trouves if x[0] >= 0.5)} à 0,5 ou plus ; "
+          f'IoU des recadrages 4:5 (ce que montre le médaillon) : médiane {med_r:.3f}. Douteux selon les seuils : {n_doutes}.')
+    pires = sorted(lignes, key=lambda x: x[0])[:10]
+    print('10 plus gros écarts : ' + ', '.join(f"{x[2]['id']} {x[0]:.2f}" for x in pires))
+    # Planche : original avec les deux cadres (registre en bleu, YuNet en orange), puis les deux médaillons.
+    lc, hc, col = 620, 330, 2
+    page = Image.new('RGB', (col * lc, ((len(pires) + col - 1) // col) * hc + 30), (250, 249, 246))
+    d = ImageDraw.Draw(page)
+    police = _police(13)
+    d.text((10, 8), 'Cadre du registre (Gemini) en bleu, médaillon de gauche ; cadre YuNet en orange, médaillon de droite.',
+           fill=(20, 20, 20), font=police)
+    for k, (iou, iou_r, p, v, score) in enumerate(pires):
+        x, y = (k % col) * lc, (k // col) * hc + 30
+        im = Image.open(chemin_original(p)).convert('RGB')
+        L, H = im.size
+        vue = im.copy()
+        vue.thumbnail((270, 280))
+        dv = ImageDraw.Draw(vue)
+        for cadre, couleur in ((p['cadre_visage'], (40, 90, 200)), (v, (230, 120, 20))):
+            if cadre:
+                dv.rectangle([cadre[0] * vue.width, cadre[1] * vue.height, cadre[2] * vue.width, cadre[3] * vue.height],
+                             outline=couleur, width=3)
+        page.paste(vue, (x + 10, y + 6))
+        for j, cadre in enumerate((p['cadre_visage'], v)):
+            if not cadre:
+                d.text((x + 290 + j * 160 + 20, y + 80), 'non trouvé', fill=(160, 30, 30), font=police)
+                continue
+            m = im.crop(recadrage(cadre, L, H)).resize((136, 170))
+            masque = Image.new('L', m.size, 0)
+            ImageDraw.Draw(masque).ellipse([0, 0, 135, 169], fill=255)
+            page.paste(m, (x + 290 + j * 160, y + 6), masque)
+        d.text((x + 290, y + 190), p['id'][:40], fill=(20, 20, 20), font=police)
+        d.text((x + 290, y + 208), f'IoU des cadres {iou:.2f} ; des recadrages {iou_r:.2f}', fill=(90, 90, 90), font=police)
+        d.text((x + 290, y + 226), f'score YuNet {score:.2f}' if v else 'visage non trouvé par YuNet', fill=(90, 90, 90), font=police)
+    f = CACHE / 'etalonnage-yunet.jpg'
+    page.save(f, quality=88)
+    print(f'Planche des écarts : {f.relative_to(c.RACINE)}')
+    ok = part >= OBJECTIF_TROUVES and med >= OBJECTIF_IOU
+    print('Objectif atteint.' if ok else 'Objectif NON atteint : ajuster --marge, puis montrer la planche avant de basculer.')
+    return 0 if ok else 1
 
 
 # --- Recherche assistée ----------------------------------------------------------------------
@@ -452,7 +679,12 @@ def main() -> int:
     p.add_argument('--visibilite', action='store_true')
     p.add_argument('--relever', action='store_true')
     p.add_argument('--lot', metavar='FICHIER', help='personnes par lots : lignes « id|nom » (Wikidata, pré-remplissage du registre)')
-    p.add_argument('--essai', action='store_true', help='avec --lot : affiche sans écrire le registre')
+    p.add_argument('--essai', action='store_true',
+                   help='avec --lot : affiche sans écrire le registre ; avec --registre : étalonnage de YuNet, sans rien écrire')
+    p.add_argument('--repli-gemini', action='store_true',
+                   help='avec --registre : cadre proposé par Gemini quand YuNet ne trouve pas de visage (donner --budget)')
+    p.add_argument('--marge', type=float, nargs=3, metavar=('HAUT', 'BAS', 'COTES'),
+                   help='avec --registre --essai : marge ajoutée à la boîte de YuNet (fractions de la boîte)')
     gemini.options(p, ['portraits'])
     a = p.parse_args()
     c.charger_env()
@@ -467,8 +699,10 @@ def main() -> int:
     if a.infos:
         infos(a.infos)
         return 0
+    if a.registre and a.essai:
+        return etalonner(a.id, tuple(a.marge) if a.marge else MARGE)
     if a.registre:
-        code = registre(a.id, a.force)
+        code = registre(a.id, a.force, a.repli_gemini)
         planche()
         return code
     if a.planche:
