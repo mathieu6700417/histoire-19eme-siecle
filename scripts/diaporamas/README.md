@@ -1126,7 +1126,9 @@ par acte au plus, dans l'ordre de la mosaïque (première moitié en haut, secon
   le premier carton monte dessus, la résonance continue sans fondu. Récapitulatif : 15,7 s, « Fin »
   sur l'accord (10,25 s). `musique.py --indicatif` ne fait rien pour une source `lyria`.
 - Lecteur : `Generique.astro` (gabarit, styles ; images en `data-src`, chargées au lancement) et
-  `generique.ts`. L'ouverture remplace le premier `afficher(0)` de `lancer` (pas à une reprise),
+  `generique.ts`. Enfant de `.lecteur` (pas de la scène) : mosaïque bord à bord en trois rangées,
+  voile sombre, titre et dates en grand (unités `cqw`/`cqh`) ; `caler()` arrête le bas à la barre
+  des actes (0 en plein écran, où il passe sous les bandeaux). L'ouverture remplace le premier `afficher(0)` de `lancer` (pas à une reprise),
   puis `aller(0)` : le premier carton monte pendant que le générique s'efface. Le récapitulatif
   part de `suivantAuto` après la dernière diapositive, finit par la pause et l'oubli de la position.
   Passables comme un carton (→, clic, Entrée). Tout saut (`aller`, `afficher`) les quitte.
@@ -1136,7 +1138,7 @@ par acte au plus, dans l'ordre de la mosaïque (première moitié en haut, secon
 - Minutage (constantes `O` et `F` de `generique.ts`, calées sur l'indicatif) : vignettes en fondu
   (0,2 s), titre lettre à lettre (dès 0,4 s), filet, dates (6,4 s), couleur vignette par vignette
   (3,2 à ~11 s), dérive de 8 % de la largeur ; récapitulatif : retour en couleur, passage au gris
-  de 1,2 s à 1,6 s avant l'accord, pâleur, « Fin » sur l'accord, titre 1 s après. Mouvement réduit :
+  de 1,2 s à 1,6 s avant l'accord, assombrissement, « Fin » sur l'accord, titre et dates 1 s après. Mouvement réduit :
   pas de dérive, fondus courts. Changer d'indicatif : revoir ces constantes et les `accord`.
 - Captures : instants `o:T` et `f:T` ; les autres instants passent l'ouverture sans temps écoulé.
 

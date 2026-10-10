@@ -1,5 +1,5 @@
 // Générique d'ouverture (avant le premier carton, pas à une reprise) et récapitulatif de fin (après
-// la dernière diapositive) : mosaïque des images de `generique`, titre et dates écrits, indicatif
+// la dernière diapositive) : mosaïque bord à bord des images de `generique`, titre et dates écrits, indicatif
 // commun (lecteur <audio> propre), passables comme un carton, comptés dans la durée. Test :
 // `__generique(phase)`. Spec 12, « Générique d'ouverture et récapitulatif de fin » ; README.
 import { ecrire, mouvementReduit } from './outils';
@@ -15,8 +15,8 @@ type Phase = 'ouverture' | 'fin';
 const O = { apparition: 0.2, fondu: 1.4, pasApparition: 0.07, titre: 0.4, lettre: 0.1, fonduLettre: 0.5,
   dates: 6.4, couleur: 3.2, finCouleur: 9.4, dureeCouleur: 1.6, derive: 0.08 };
 // Récapitulatif : la mosaïque revient en couleur, chaque vignette passe au gris à son tour, puis
-// elles pâlissent ; « Fin » paraît sur l'accord final (`G.fin.accord`), le titre une seconde après.
-const F = { fondu: 1.2, gris: 1.2, avantAccord: 1.6, dureeGris: 0.9, pali: 0.3, fonduFin: 0.35, titre: 1, fonduTexte: 1 };
+// elles s'assombrissent ; « Fin » paraît sur l'accord final (`G.fin.accord`), titre et dates une seconde après.
+const F = { fondu: 1.2, gris: 1.2, avantAccord: 1.6, dureeGris: 0.9, pali: 0.5, fonduFin: 0.35, titre: 1, fonduTexte: 1 };
 
 const lisse = (x: number) => { const v = Math.max(0, Math.min(1, x)); return v * v * (3 - 2 * v); };
 const entre = (t: number, a: number, d: number) => lisse((t - a) / d);
@@ -101,13 +101,13 @@ export function installerGenerique(lec: Lecteur) {
         v.style.opacity = (entre(t, 0, F.fondu) * pali).toFixed(3);
         v.style.filter = g <= 0 ? '' : `grayscale(${g.toFixed(3)})`;
       }
-      // « Fin », puis le titre (sans les dates) : en fondu.
+      // « Fin », puis le titre et les dates : en fondu.
       elFin.style.opacity = entre(t, accord - 0.05, F.fonduFin).toFixed(3);
       const a = entre(t, accord + F.titre, F.fonduTexte);
       titres.style.opacity = a.toFixed(3);
       lettresTitre.forEach((l) => (l.style.opacity = '1'));
       filet.style.transform = 'scaleX(1)';
-      lettresDates.forEach((l) => (l.style.opacity = '0'));
+      lettresDates.forEach((l) => (l.style.opacity = '1'));
     }
   }
   function boucle() {
@@ -119,9 +119,20 @@ export function installerGenerique(lec: Lecteur) {
     if (chrono.tourne) raf = requestAnimationFrame(boucle);
   }
 
+  /** Hors plein écran, le générique couvre le lecteur jusqu'à la barre des actes (titre d'acte et
+   *  sous-titres compris) ; en plein écran, tout l'écran, sous les bandeaux. */
+  const barre = racine.querySelector<HTMLElement>('.lecteur__progression');
+  function caler() {
+    const plein = document.fullscreenElement === lecteur;
+    el!.style.bottom = !barre || plein ? '0' : `${Math.max(0, lecteur.clientHeight - barre.offsetTop)}px`;
+  }
+  new ResizeObserver(caler).observe(lecteur);
+  document.addEventListener('fullscreenchange', caler);
+
   function montrer(ph: Phase) {
     phase = ph;
     charger();
+    caler();
     el!.classList.toggle('generique--fin', ph === 'fin');
     el!.setAttribute('aria-hidden', 'false');
     el!.classList.add('est-visible');

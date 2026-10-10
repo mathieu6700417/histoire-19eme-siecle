@@ -1058,6 +1058,16 @@ Demande de l'utilisateur : une animation au début et une à la fin de chaque di
   pour Consulat et Empire. (Essais écartés : Berlioz, *Le Carnaval romain*, puis la « Marche au
   supplice », jugés moins adaptés qu'un thème propre à la série.)
 
+- **Mise en page révisée** (2026-10-09, demande de l'utilisateur) : les images prennent tout
+  l'écran. **Mosaïque bord à bord** en trois rangées (filets sombres de 3 px, plus de fond blanc
+  cassé), qui couvre tout le lecteur jusqu'à la barre des actes (titre d'acte et sous-titres
+  compris), tout l'écran en plein écran ; **voile sombre** par-dessus (plus dense au centre, comme
+  les paroles des chants) ; **titre en très grandes lettres** blanc cassé (environ 80 % de la
+  largeur, petites capitales serif ; sur deux lignes sur téléphone), dates en italique environ
+  moitié moins grandes. Le récapitulatif montre **« Fin », le titre et les dates** (même
+  composition qu'à l'ouverture, « Fin » au-dessus en italique) ; les images s'assombrissent au lieu
+  de pâlir. Animations et minutage inchangés (fondus, dérive, gris puis couleur, lettre à lettre).
+
 ## Produire une période : leçons de Consulat et Empire (2026-10-09)
 
 Règles tirées des retours de l'utilisateur sur la deuxième période ; elles valent pour toutes les

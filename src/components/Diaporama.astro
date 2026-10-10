@@ -271,7 +271,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
       {[...lectureApres.values()].map((l) => <CarteCitation lecture={l} portrait={portraitDe(l)} fond={fondDe(l)} mode="lecteur" />)}
       {[...episodeApres.values()].map((e) => <EpisodeVisuels episode={e} slug={d.slug} fonds={fonds} mode="lecteur" />)}
       {frise && <Fragment set:html={friseHtml('frise-t--surimpression')} />}
-      <Generique diaporama={d} />
       <Surimpressions diaporama={d} fonds={fonds} plan={plan} />
       <div class="lecteur__depart">
         <button type="button" class="lecteur__bouton-depart" data-action="lancer">Lancer le diaporama</button>
@@ -279,6 +278,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
       </div>
     </div>
     <p class="lecteur__soustitre"><span class="st">{t(premiere.narration)}</span></p>
+    <Generique diaporama={d} />
 
     <div class="lecteur__progression" aria-label="Actes du diaporama">
       <div class="lecteur__piste">
@@ -396,7 +396,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .diaporama:not(.avec-js) .lecteur { display: none; }
   .diaporama.avec-js .livre { display: none; }
 
-  .lecteur { display: flex; flex-direction: column; background: var(--c-fond); }
+  .lecteur { position: relative; display: flex; flex-direction: column; background: var(--c-fond); }
   .lecteur__acte {
     margin: 0 0 var(--e-2);
     font-variant: small-caps;
@@ -925,6 +925,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     overflow: hidden;
   }
   .lecteur:fullscreen > * { grid-column: 1; position: relative; z-index: 1; margin: 0; }
+  /* Générique : tout l'écran, sous les bandeaux du plein écran. */
+  .lecteur:fullscreen > :global(.generique) { position: absolute; grid-row: 1 / -1; z-index: 0; }
   .lecteur:fullscreen .lecteur__scene { grid-row: 1 / -1; z-index: 0; height: auto; min-height: 0; border: 0; }
   .lecteur:fullscreen .lecteur__acte,
   .lecteur:fullscreen .lecteur__soustitre,

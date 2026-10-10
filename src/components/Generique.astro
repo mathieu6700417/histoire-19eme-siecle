@@ -1,7 +1,9 @@
 ---
 // Générique d'ouverture et récapitulatif de fin d'un diaporama (spec 12, révision du 2026-10-09) :
-// mosaïque des images de `generique` en deux rangées qui dérivent en sens contraires, titre et
-// dates de la période écrits lettre à lettre, « Fin ». Animé par src/scripts/diaporama/generique.ts
+// mosaïque bord à bord des images de `generique` en trois rangées qui dérivent en sens alternés,
+// sous un voile sombre ; titre et dates de la période en très grandes lettres blanc cassé, écrits
+// lettre à lettre, « Fin » au-dessus pour le récapitulatif. Posé sur tout le lecteur, du haut
+// jusqu'à la barre des actes (`bottom` calé par le script ; tout l'écran en plein écran). Animé par src/scripts/diaporama/generique.ts
 // (styles posés à chaque image : aucune animation CSS, captures reproductibles). Les images ne se
 // chargent qu'au lancement (`data-src`). Monochrome hors images.
 import { typographie } from '../utils/typographie.mjs';
@@ -10,9 +12,11 @@ import { imagesGenerique, urlMedia, type Diaporama } from '../utils/diaporamas';
 interface Props { diaporama: Diaporama }
 const { diaporama: d } = Astro.props;
 const images = imagesGenerique(d).map((im, k) => ({ k, src: urlMedia(d.slug, im.fichier), l: im.largeur ?? 1600, h: im.hauteur ?? 1200 }));
-const moitie = Math.ceil(images.length / 2);
-// Chaque rangée est répétée trois fois : elle couvre la scène et sa dérive, même sur grand écran.
-const rangees = [images.slice(0, moitie), images.slice(moitie)].map((r) => [...r, ...r, ...r]);
+// Trois rangées (la première reçoit le reste) ; chacune est répétée quatre fois : elle couvre la
+// scène et sa dérive, même sur grand écran.
+const tiers = [0, 1, 2].map((j) => Math.floor(images.length / 3) + (j < images.length % 3 ? 1 : 0));
+const rangees = tiers.map((t, j) => images.slice(tiers.slice(0, j).reduce((a, b) => a + b, 0), tiers.slice(0, j + 1).reduce((a, b) => a + b, 0)))
+  .map((r) => [...r, ...r, ...r, ...r]);
 /** Lettres d'un texte, mots insécables (pas de coupure au milieu d'un mot). */
 const mots = (s: string) => typographie(s).split(/(\s+)/).filter(Boolean);
 const titre = mots(d.titre);
@@ -22,7 +26,7 @@ const dates = mots(d.periode);
 {images.length > 0 && (
   <div class="generique" data-action="passer" aria-hidden="true" title="Passer (Entrée)">
     {rangees.map((r, j) => (
-      <div class:list={['generique__bande', `generique__bande--${j ? 'bas' : 'haut'}`]}>
+      <div class="generique__bande">
         <div class="generique__rail">
           {r.map((im) => (
             <div class="generique__vignette" data-k={im.k} style={`aspect-ratio: ${im.l} / ${im.h}`}>
@@ -32,6 +36,7 @@ const dates = mots(d.periode);
         </div>
       </div>
     ))}
+    <div class="generique__voile"></div>
     <div class="generique__milieu">
       <p class="generique__fin">Fin</p>
       <div class="generique__titres">
@@ -52,11 +57,11 @@ const dates = mots(d.periode);
     position: absolute;
     inset: 0;
     z-index: 8;
+    container-type: size;
     display: flex;
     flex-direction: column;
-    gap: clamp(4px, 1vh, 8px);
-    padding: clamp(6px, 1.4vh, 12px) 0;
-    background: var(--c-fond);
+    gap: 3px;
+    background: #0d0d0d;
     overflow: hidden;
     cursor: pointer;
     opacity: 0;
@@ -64,60 +69,65 @@ const dates = mots(d.periode);
     transition: opacity 900ms ease, visibility 0s linear 900ms;
   }
   .generique.est-visible { opacity: 1; visibility: visible; transition: opacity 900ms ease, visibility 0s; }
-  .generique__bande { flex: 0 0 31%; min-height: 0; overflow: hidden; }
-  /* Rangée du haut, titres au milieu, rangée du bas. */
-  .generique__bande--bas { order: 3; }
-  .generique__milieu { order: 2; }
-  .generique__rail { display: flex; gap: clamp(4px, 0.8vw, 8px); height: 100%; width: max-content; will-change: transform; }
-  .generique__vignette { height: 100%; opacity: 0; background: #e6e3dc; overflow: hidden; }
+  .generique__bande { flex: 1 1 0; min-height: 0; overflow: hidden; }
+  .generique__rail { display: flex; gap: 3px; height: 100%; width: max-content; will-change: transform; }
+  .generique__vignette { height: 100%; opacity: 0; background: #1a1a1a; overflow: hidden; }
   .generique__vignette img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  /* Voile sombre, plus dense au centre, sous le texte (comme les paroles des chants). */
+  .generique__voile {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at center, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.42));
+  }
   .generique__milieu {
-    flex: 1 1 auto;
-    min-height: 0;
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: clamp(2px, 1vh, 10px);
-    padding: 0 var(--e-2);
+    gap: min(2cqh, 1.2rem);
+    padding: 0 6cqw;
     text-align: center;
+    color: var(--c-fond);
   }
-  .generique__titres { display: flex; flex-direction: column; align-items: center; gap: clamp(4px, 1.2vh, 12px); }
+  .generique__titres { display: flex; flex-direction: column; align-items: center; gap: min(3cqh, 1.6rem); }
   .generique__titre {
     margin: 0;
     font-family: var(--f-titre);
-    font-size: clamp(1.4rem, 3.6vw, 2.5rem);
+    font-size: min(8.4cqw, 17cqh);
     font-variant: small-caps;
-    letter-spacing: 0.12em;
-    line-height: 1.15;
-    color: var(--c-texte);
+    letter-spacing: 0.08em;
+    line-height: 1.05;
+    color: var(--c-fond);
   }
   .generique .mot { white-space: nowrap; }
   .generique .l { opacity: 0; }
-  .generique__filet { display: block; width: 4.5rem; height: 0; border-top: 1px solid var(--c-texte-doux); transform: scaleX(0); }
+  .generique__filet { display: block; width: min(14cqw, 9rem); height: 0; border-top: 1px solid rgba(251, 250, 247, 0.6); transform: scaleX(0); }
   .generique__dates {
     margin: 0;
-    font-size: clamp(1rem, 2.1vw, 1.35rem);
+    font-size: min(4.4cqw, 9cqh);
     font-style: italic;
     font-variant-numeric: oldstyle-nums;
     letter-spacing: 0.06em;
-    color: var(--c-texte-doux);
+    line-height: 1.1;
+    color: rgba(251, 250, 247, 0.85);
   }
   .generique__fin {
     display: none;
     margin: 0;
     font-family: var(--f-titre);
-    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-size: min(4cqw, 8.5cqh);
     font-style: italic;
     letter-spacing: 0.04em;
-    color: var(--c-texte);
+    color: rgba(251, 250, 247, 0.85);
   }
-  /* Récapitulatif : « Fin » puis le titre, sans filet ni dates. */
+  /* Récapitulatif : « Fin » au-dessus du titre et des dates. */
   .generique--fin .generique__fin { display: block; }
-  .generique--fin .generique__filet, .generique--fin .generique__dates { display: none; }
-  .generique--fin .generique__titre { font-size: clamp(1.1rem, 2.6vw, 1.7rem); color: var(--c-texte-doux); }
-  @media (max-width: 40rem) {
-    .generique__bande { flex-basis: 30%; }
+  /* Écran vertical (téléphone) : titre plus grand, sur deux lignes au besoin. */
+  @container (aspect-ratio < 1) {
+    .generique__titre { font-size: 11cqw; line-height: 1.1; }
+    .generique__dates, .generique__fin { font-size: 6cqw; }
   }
   @media (prefers-reduced-motion: reduce) {
     .generique, .generique.est-visible { transition-duration: 300ms; }
