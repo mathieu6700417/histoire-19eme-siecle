@@ -717,10 +717,16 @@
           0.0,
           280,
           "fond, Largo, Allegro"
+        ],
+        [
+          0.0,
+          345,
+          "fond, Largo, Allegro"
         ]
       ],
       "periodes": [
-        "02-consulat-empire"
+        "02-consulat-empire",
+        "03-restauration"
       ],
       "statut": "retenu",
       "verifie": "2026-10-08"
@@ -846,6 +852,441 @@
       ],
       "statut": "retenu",
       "verifie": "2026-10-08"
+    },
+    {
+      "id": "archive:lp_requiem-c-moll_nbc-symphony-orchestra-arturo-toscanini-th#disc1/01.01. Requiem Mass In C Minor: Introitus.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_requiem-c-moll_nbc-symphony-orchestra-arturo-toscanini-th",
+        "fichier": "disc1/01.01. Requiem Mass In C Minor: Introitus.mp3",
+        "publication": "1957"
+      },
+      "oeuvre": "Requiem en ut mineur, à la mémoire de Louis XVI : Introït et Kyrie",
+      "compositeur": "Luigi Cherubini (compositeur italien installé à Paris)",
+      "date_oeuvre": "1816",
+      "interprete": "Chorale Robert Shaw, Orchestre symphonique de la NBC, direction Arturo Toscanini (concert de février 1950, disque RCA publié en 1957)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/lp_requiem-c-moll_nbc-symphony-orchestra-arturo-toscanini-th",
+      "duree": 419.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          266,
+          "fond, Introït et Kyrie"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0#disc1/02.01. The Barber Of Seville.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0",
+        "fichier": "disc1/02.01. The Barber Of Seville.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "Le Barbier de Séville, ouverture",
+      "compositeur": "Gioachino Rossini (compositeur italien, à Paris à partir de 1824)",
+      "date_oeuvre": "1816",
+      "interprete": "Orchestre symphonique de Chicago, direction Fritz Reiner (disque RCA Victor LSC 2318, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0",
+      "duree": 423.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          288,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:lp_famous-overtures_gioacchino-rossini-concertgebouworkest-edu#disc1/02.01. Semiramis.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_gioacchino-rossini-concertgebouworkest-edu",
+        "fichier": "disc1/02.01. Semiramis.mp3",
+        "publication": "1952"
+      },
+      "oeuvre": "Sémiramis, ouverture",
+      "compositeur": "Gioachino Rossini (compositeur italien, à Paris à partir de 1824)",
+      "date_oeuvre": "1823",
+      "interprete": "Orchestre du Concertgebouw d’Amsterdam, direction Eduard van Beinum (disque London LL 358, 1952)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1952 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1952, avant 1963) ; https://archive.org/details/lp_famous-overtures_gioacchino-rossini-concertgebouworkest-edu",
+      "duree": 744.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          416,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada#disc1/02.02. The White Lady.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada",
+        "fichier": "disc1/02.02. The White Lady.mp3",
+        "publication": "1951"
+      },
+      "oeuvre": "La Dame blanche, ouverture",
+      "compositeur": "François-Adrien Boieldieu",
+      "date_oeuvre": "1825",
+      "interprete": "Orchestre philharmonique de Londres, direction Jean Martinon (disque London LLP 351, 1951)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1951 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1951, avant 1963) ; https://archive.org/details/lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada",
+      "duree": 500.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          370,
+          "fond"
+        ],
+        [
+          468.5,
+          493,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0#disc1/01.01. William Tell.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0",
+        "fichier": "disc1/01.01. William Tell.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "Guillaume Tell, ouverture",
+      "compositeur": "Gioachino Rossini (compositeur italien installé à Paris)",
+      "date_oeuvre": "1829",
+      "interprete": "Orchestre symphonique de Chicago, direction Fritz Reiner (disque RCA Victor LSC 2318, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0",
+      "duree": 709.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          478,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "commons:File:Hector Berlioz - Symphonie fantastique, op. 14 - 4. Marche au supplice (Igor Markevitch, Orchestre Lamoureux, 1962).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Hector Berlioz - Symphonie fantastique, op. 14 - 4. Marche au supplice (Igor Markevitch, Orchestre Lamoureux, 1962).flac"
+      },
+      "oeuvre": "Symphonie fantastique : Marche au supplice",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1830",
+      "interprete": "Orchestre Lamoureux, direction Igor Markevitch (disque Deutsche Grammophon, 1962)",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Hector_Berlioz_-_Symphonie_fantastique,_op._14_-_4._Marche_au_supplice_(Igor_Markevitch,_Orchestre_Lamoureux,_1962).flac",
+      "duree": 288.0,
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Marche au supplice"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "commons:File:Hector Berlioz - Symphonie fantastique, op. 14 - 1. Rêveries – Passions (Igor Markevitch, Orchestre Lamoureux, 1962).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Hector Berlioz - Symphonie fantastique, op. 14 - 1. Rêveries – Passions (Igor Markevitch, Orchestre Lamoureux, 1962).flac"
+      },
+      "oeuvre": "Symphonie fantastique : Rêveries, Passions",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1830",
+      "interprete": "Orchestre Lamoureux, direction Igor Markevitch (disque Deutsche Grammophon, 1962)",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Hector_Berlioz_-_Symphonie_fantastique,_op._14_-_1._R%C3%AAveries_%E2%80%93_Passions_(Igor_Markevitch,_Orchestre_Lamoureux,_1962).flac",
+      "duree": 855.0,
+      "structure": [
+        [
+          0.0,
+          112,
+          "fond, Rêveries, Passions"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:78_le-roi-dyvetot_pierre-bertin-jean-fragerolle-branger_gbia0507404b#LE ROI D'YVETOT - PIERRE BERTIN - Jean FRAGEROLLE.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_le-roi-dyvetot_pierre-bertin-jean-fragerolle-branger_gbia0507404b",
+        "fichier": "LE ROI D'YVETOT - PIERRE BERTIN - Jean FRAGEROLLE.flac",
+        "publication": "1935"
+      },
+      "oeuvre": "Le Roi d’Yvetot",
+      "compositeur": "Pierre-Jean de Béranger",
+      "date_oeuvre": "1813",
+      "interprete": "Pierre Bertin, sociétaire de la Comédie-Française, avec piano",
+      "enregistrement": "Lumen 33.011, années 1930",
+      "genre": "chant",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1935 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1935, avant 1963) ; https://archive.org/details/78_le-roi-dyvetot_pierre-bertin-jean-fragerolle-branger_gbia0507404b",
+      "duree": 127.3,
+      "filtres": "78tours",
+      "structure": [
+        [
+          6.7,
+          22.0,
+          "« Il était un roi d’Yvetot »"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or#disc1/01.01. Masaniello (La Muette De Portci).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or",
+        "fichier": "disc1/01.01. Masaniello (La Muette De Portci).mp3",
+        "publication": "1955"
+      },
+      "oeuvre": "La Muette de Portici",
+      "compositeur": "Auber, sur un livret de Scribe et Germain Delavigne",
+      "date_oeuvre": "1828",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff (disque London LL 1157, 1955)",
+      "enregistrement": "London, 1955",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1955 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1955, avant 1963) ; https://archive.org/details/lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or",
+      "duree": 504.8,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          447.0,
+          471,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "commons:File:Hector Berlioz - Symphonie fantastique, op. 14 - 2. Un bal (Igor Markevitch, Orchestre Lamoureux, 1962).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Hector Berlioz - Symphonie fantastique, op. 14 - 2. Un bal (Igor Markevitch, Orchestre Lamoureux, 1962).flac"
+      },
+      "oeuvre": "Symphonie fantastique",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1830",
+      "interprete": "Orchestre Lamoureux, direction Igor Markevitch (disque Deutsche Grammophon, 1962)",
+      "enregistrement": "Deutsche Grammophon, 1962",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Hector_Berlioz_-_Symphonie_fantastique,_op._14_-_2._Un_bal_(Igor_Markevitch,_Orchestre_Lamoureux,_1962).flac",
+      "duree": 368.0,
+      "structure": [
+        [
+          30.0,
+          55,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "03-restauration"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:andred-arkor-francois-adrien-boieldieu-la-dame-blanche-viens-gentille-dame-columbia-rfx-26#AndredArkor,FrançoisAdrienBoieldieu,LaDameBlanche,ViensGentilleDame,ColumbiaRFX26.mp3",
+      "source": {
+        "type": "archive",
+        "id": "andred-arkor-francois-adrien-boieldieu-la-dame-blanche-viens-gentille-dame-columbia-rfx-26",
+        "fichier": "AndredArkor,FrançoisAdrienBoieldieu,LaDameBlanche,ViensGentilleDame,ColumbiaRFX26.mp3"
+      },
+      "oeuvre": "La Dame blanche, cavatine « Viens, gentille dame » (Columbia RFX 26, 1932 ; la voix entre à 7,8 s ; texte chanté avec reprises, à caler à l'oreille : l'écoute par Gemini n'a pas permis de le vérifier)",
+      "compositeur": "François-Adrien Boieldieu",
+      "interprete": "André d'Arkor, ténor, avec orchestre",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:AmourSacre34001#Amour sacre 34001.flac",
+      "source": {
+        "type": "archive",
+        "id": "AmourSacre34001",
+        "fichier": "Amour sacre 34001.flac"
+      },
+      "oeuvre": "La Muette de Portici, duo « Amour sacré de la patrie » (Gramophone & Typewriter 34001, fin 1902, avec piano ; enregistrement acoustique, passage du refrain non repéré)",
+      "compositeur": "Daniel-François-Esprit Auber",
+      "interprete": "Agustarello Affre, ténor, et Jean Noté, baryton",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or#disc1/02.01. Fra Diavolo.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or",
+        "fichier": "disc1/02.01. Fra Diavolo.mp3"
+      },
+      "oeuvre": "Fra Diavolo, ouverture (1830 ; disque London LL 1157, 1955 ; même disque : Le Cheval de bronze, Les Diamants de la couronne)",
+      "compositeur": "Daniel-François-Esprit Auber",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0#disc1/02.02. La Gazza Ladra.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0",
+        "fichier": "disc1/02.02. La Gazza Ladra.mp3"
+      },
+      "oeuvre": "La Pie voleuse, ouverture (1817 ; disque RCA Victor LSC 2318, 1959 ; même disque : La Scala di seta, Il Signor Bruschino, La Cenerentola)",
+      "compositeur": "Gioachino Rossini",
+      "interprete": "Orchestre symphonique de Chicago, direction Fritz Reiner",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada#disc1/01.01. Zampa.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada",
+        "fichier": "disc1/01.01. Zampa.mp3"
+      },
+      "oeuvre": "Zampa, ouverture (1831 ; disque London LLP 351, 1951)",
+      "compositeur": "Ferdinand Hérold",
+      "interprete": "Orchestre philharmonique de Londres, direction Jean Martinon",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "commons:File:La Parisienne Casimir Delavigne.wav",
+      "source": {
+        "type": "commons",
+        "fichier": "File:La Parisienne Casimir Delavigne.wav"
+      },
+      "oeuvre": "La Parisienne",
+      "compositeur": "",
+      "interprete": "non identifié",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "versement d'un contributeur en 2025 (CC0), interprète et origine de l'enregistrement non identifiés : provenance invérifiable",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "commons:File:La Parisienne (Lefébure-Wély arrangement published 1851).ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:La Parisienne (Lefébure-Wély arrangement published 1851).ogg"
+      },
+      "oeuvre": "La Parisienne",
+      "compositeur": "",
+      "interprete": "rendu synthétique",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "rendu par ordinateur d'une partition (pas un enregistrement)",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "commons:File:Fr-48.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Fr-48.ogg"
+      },
+      "oeuvre": "La Parisienne",
+      "compositeur": "",
+      "interprete": "rendu synthétique",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "rendu synthétique de nationalanthems.info (pas un enregistrement)",
+      "verifie": "2026-10-10"
+    },
+    {
+      "id": "archive:78_la-muette-de-portici-overture-first-record_royal-belgian-guards-band-auber-prevost-_gbi#",
+      "source": {
+        "type": "archive",
+        "id": "78_la-muette-de-portici-overture-first-record_royal-belgian-guards-band-auber-prevost-_gbi",
+        "fichier": ""
+      },
+      "oeuvre": "La Muette de Portici, ouverture",
+      "compositeur": "",
+      "interprete": "Musique royale des Guides (1930)",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "arrangement pour harmonie d'Arthur Prevost (mort en 1967) : arrangeur non tombé dans le domaine public",
+      "verifie": "2026-10-10"
     }
   ],
   "introuvables": [
@@ -908,6 +1349,18 @@
       "cherche": "2026-10-08",
       "ou": "Commons, Internet Archive et web (recherche de l’agent B, journal de la période 02, entrée 35 ; requêtes non consignées)",
       "note": "étiquette pirate ERR, date de publication inconnue ; l’enregistrement de Rosa Ponselle (1926) est retenu"
+    },
+    {
+      "oeuvre": "La Parisienne (chantée)",
+      "compositeur": "Casimir Delavigne, air arrangé par Auber",
+      "cherche": "2026-10-10",
+      "ou": "Commons (Parisienne 1830, La Parisienne Delavigne) : seulement des rendus synthétiques et un fichier d'origine inconnue ; Internet Archive (title:parisienne + delavigne/auber/78rpm) : rien"
+    },
+    {
+      "oeuvre": "Chansons de Béranger autres que Le Roi d'Yvetot (Le Vieux Drapeau, Les Souvenirs du peuple, Le Sacre de Charles le Simple)",
+      "compositeur": "Pierre-Jean de Béranger",
+      "cherche": "2026-10-10",
+      "ou": "Internet Archive (beranger collection:78rpm ; titres) et Commons (Béranger chanson) : rien ; Le Roi d'Yvetot existe en français (Pierre Bertin, Lumen 33.011)"
     }
   ]
 }

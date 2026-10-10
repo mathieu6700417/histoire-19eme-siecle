@@ -1717,5 +1717,614 @@
       0.41
     ],
     "fichier": "portraits/wellington.webp"
+  },
+  {
+    "id": "la-fayette",
+    "nom": "La Fayette",
+    "dates": "1757-1834",
+    "commons": "File:Ary Scheffer - Marquis De Lafayette - NPG.82.150 - National Portrait Gallery.jpg",
+    "auteur": "Ary Scheffer",
+    "date": "1822",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Ary_Scheffer_-_Marquis_De_Lafayette_-_NPG.82.150_-_National_Portrait_Gallery.jpg",
+    "cadre_visage": [
+      0.321,
+      0.1,
+      0.678,
+      0.447
+    ],
+    "fichier": "portraits/la-fayette.webp"
+  },
+  {
+    "id": "lazare-carnot",
+    "nom": "Lazare Carnot",
+    "dates": "1753-1823",
+    "commons": "File:Lazare-Carnot-par-Boilly.jpg",
+    "auteur": "Louis-Léopold Boilly",
+    "date": "1813",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Lazare-Carnot-par-Boilly.jpg",
+    "cadre_visage": [
+      0.173,
+      0.119,
+      0.761,
+      0.588
+    ],
+    "fichier": "portraits/lazare-carnot.webp"
+  },
+  {
+    "id": "foy",
+    "nom": "Général Foy",
+    "dates": "1775-1825",
+    "commons": "File:Pierre Roch Vigneron - Portrait du général Foy (1775-1825) - P763 - Musée Carnavalet.jpg",
+    "auteur": "Pierre-Roch Vigneron",
+    "date": "1820",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pierre_Roch_Vigneron_-_Portrait_du_g%C3%A9n%C3%A9ral_Foy_(1775-1825)_-_P763_-_Mus%C3%A9e_Carnavalet.jpg",
+    "cadre_visage": [
+      0.345,
+      0.139,
+      0.727,
+      0.503
+    ],
+    "fichier": "portraits/foy.webp"
+  },
+  {
+    "id": "laffitte",
+    "nom": "Laffitte",
+    "dates": "1767-1844",
+    "commons": "File:Portrait de Jacques Laffitte.jpg",
+    "auteur": "Peintre non identifié (Centre des monuments nationaux)",
+    "date": "XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Jacques_Laffitte.jpg",
+    "cadre_visage": [
+      0.409,
+      0.161,
+      0.671,
+      0.382
+    ],
+    "fichier": "portraits/laffitte.webp"
+  },
+  {
+    "id": "manuel",
+    "nom": "Manuel",
+    "dates": "1775-1827",
+    "commons": "File:J. Antoine Manuel.jpg",
+    "auteur": "Michel Martin Drolling",
+    "date": "1822",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:J._Antoine_Manuel.jpg",
+    "cadre_visage": [
+      0.403,
+      0.091,
+      0.637,
+      0.316
+    ],
+    "fichier": "portraits/manuel.webp"
+  },
+  {
+    "id": "charlet",
+    "nom": "Charlet",
+    "dates": "1792-1845",
+    "commons": "File:Charlet (BM 1895,0617.298).jpg",
+    "auteur": "Louis Dupré, lithographe",
+    "date": "1830",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charlet_(BM_1895,0617.298).jpg",
+    "cadre_visage": [
+      0.376,
+      0.098,
+      0.689,
+      0.426
+    ],
+    "fichier": "portraits/charlet.webp"
+  },
+  {
+    "id": "horace-vernet",
+    "nom": "Horace Vernet",
+    "dates": "1789-1863",
+    "commons": "File:Emile Jean Horace Vernet 002.jpg",
+    "auteur": "Horace Vernet, autoportrait",
+    "date": "1835",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Emile_Jean_Horace_Vernet_002.jpg",
+    "cadre_visage": [
+      0.427,
+      0.177,
+      0.537,
+      0.282
+    ],
+    "fichier": "portraits/horace-vernet.webp"
+  },
+  {
+    "id": "beranger",
+    "nom": "Béranger",
+    "dates": "1780-1857",
+    "commons": "File:Pierre-Jean Béranger.jpg",
+    "auteur": "Ary Scheffer",
+    "date": "vers 1830",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pierre-Jean_B%C3%A9ranger.jpg",
+    "cadre_visage": [
+      0.252,
+      0.137,
+      0.676,
+      0.536
+    ],
+    "fichier": "portraits/beranger.webp"
+  },
+  {
+    "id": "decazes",
+    "nom": "Decazes",
+    "dates": "1780-1860",
+    "commons": "File:Portrait d'Élie Decazes par François Gérard.jpg",
+    "auteur": "François Gérard",
+    "date": "vers 1815",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_d%27%C3%89lie_Decazes_par_Fran%C3%A7ois_G%C3%A9rard.jpg",
+    "cadre_visage": [
+      0.372,
+      0.137,
+      0.615,
+      0.371
+    ],
+    "fichier": "portraits/decazes.webp"
+  },
+  {
+    "id": "courier",
+    "nom": "Paul-Louis Courier",
+    "dates": "1772-1825",
+    "commons": "File:Paul-Louis Courier par Ary Scheffer.jpg",
+    "auteur": "Ary Scheffer",
+    "date": "premier quart du XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Paul-Louis_Courier_par_Ary_Scheffer.jpg",
+    "cadre_visage": [
+      0.232,
+      0.131,
+      0.727,
+      0.631
+    ],
+    "fichier": "portraits/courier.webp"
+  },
+  {
+    "id": "guizot",
+    "nom": "Guizot",
+    "dates": "1787-1874",
+    "commons": "File:Guizot, François - 2 (cropped).jpg",
+    "auteur": "Jehan Georges Vibert, d’après Paul Delaroche (original de 1837)",
+    "date": "XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Guizot,_Fran%C3%A7ois_-_2_(cropped).jpg",
+    "cadre_visage": [
+      0.321,
+      0.127,
+      0.607,
+      0.414
+    ],
+    "fichier": "portraits/guizot.webp"
+  },
+  {
+    "id": "cousin",
+    "nom": "Victor Cousin",
+    "dates": "1792-1867",
+    "commons": "File:Victor Cousin.jpg",
+    "auteur": "Lithographie de Delpech",
+    "date": "1833",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Victor_Cousin.jpg",
+    "cadre_visage": [
+      0.356,
+      0.0,
+      0.773,
+      0.368
+    ],
+    "fichier": "portraits/cousin.webp"
+  },
+  {
+    "id": "charles-x",
+    "nom": "Charles X",
+    "dates": "1757-1836",
+    "commons": "File:Charles X, King of France - Lawrence 1825.jpg",
+    "auteur": "Thomas Lawrence",
+    "date": "1825",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_X,_King_of_France_-_Lawrence_1825.jpg",
+    "cadre_visage": [
+      0.461,
+      0.206,
+      0.585,
+      0.304
+    ],
+    "fichier": "portraits/charles-x.webp"
+  },
+  {
+    "id": "ferdinand-vii",
+    "nom": "Ferdinand VII",
+    "dates": "1784-1833",
+    "commons": "File:Fernando VII - Vicente López.jpg",
+    "auteur": "Vicente López Portaña",
+    "date": "1814",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Fernando_VII_-_Vicente_L%C3%B3pez.jpg",
+    "cadre_visage": [
+      0.422,
+      0.12,
+      0.724,
+      0.384
+    ],
+    "fichier": "portraits/ferdinand-vii.webp"
+  },
+  {
+    "id": "duchesse-angouleme",
+    "nom": "Duchesse d'Angoulême",
+    "dates": "1778-1851",
+    "commons": "File:Madame Royale.jpg",
+    "auteur": "Antoine-Jean Gros",
+    "date": "1816-1817",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Madame_Royale.jpg",
+    "cadre_visage": [
+      0.402,
+      0.213,
+      0.515,
+      0.301
+    ],
+    "fichier": "portraits/duchesse-angouleme.webp"
+  },
+  {
+    "id": "fresnel",
+    "nom": "Fresnel",
+    "dates": "1788-1827",
+    "commons": "File:Fresnel - Œuvres complètes d'Augustin Fresnel tome 1 (page 6 crop).jpg",
+    "auteur": "Gravure en frontispice des Œuvres complètes, d’après un portrait fait de son vivant",
+    "date": "1866",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Fresnel_-_%C5%92uvres_compl%C3%A8tes_d%27Augustin_Fresnel_tome_1_(page_6_crop).jpg",
+    "cadre_visage": [
+      0.324,
+      0.173,
+      0.715,
+      0.546
+    ],
+    "fichier": "portraits/fresnel.webp"
+  },
+  {
+    "id": "delacroix",
+    "nom": "Delacroix",
+    "dates": "1798-1863",
+    "commons": "File:Autoportrait - Eugène Delacroix - Musée du Louvre Peintures RF 25.jpg",
+    "auteur": "Eugène Delacroix, autoportrait",
+    "date": "1837",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Autoportrait_-_Eug%C3%A8ne_Delacroix_-_Mus%C3%A9e_du_Louvre_Peintures_RF_25.jpg",
+    "cadre_visage": [
+      0.348,
+      0.158,
+      0.711,
+      0.53
+    ],
+    "fichier": "portraits/delacroix.webp"
+  },
+  {
+    "id": "hugo",
+    "nom": "Victor Hugo",
+    "dates": "1802-1885",
+    "commons": "File:Achille Devéria, Victor Hugo, 1829, NGA 208390.jpg",
+    "auteur": "Achille Devéria",
+    "date": "1829",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Achille_Dev%C3%A9ria,_Victor_Hugo,_1829,_NGA_208390.jpg",
+    "cadre_visage": [
+      0.396,
+      0.17,
+      0.664,
+      0.432
+    ],
+    "fichier": "portraits/hugo.webp"
+  },
+  {
+    "id": "lamartine",
+    "nom": "Lamartine",
+    "dates": "1790-1869",
+    "commons": "File:Alphonse de Lamartine.PNG",
+    "auteur": "François Gérard",
+    "date": "1831",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Alphonse_de_Lamartine.PNG",
+    "cadre_visage": [
+      0.409,
+      0.096,
+      0.663,
+      0.353
+    ],
+    "fichier": "portraits/lamartine.webp"
+  },
+  {
+    "id": "boieldieu",
+    "nom": "Boieldieu",
+    "dates": "1775-1834",
+    "commons": "File:Léon Riesener - Portrait de François-Adrien Boieldieu.jpg",
+    "auteur": "Henri-François Riesener",
+    "date": "avant 1828",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:L%C3%A9on_Riesener_-_Portrait_de_Fran%C3%A7ois-Adrien_Boieldieu.jpg",
+    "cadre_visage": [
+      0.312,
+      0.151,
+      0.696,
+      0.518
+    ],
+    "fichier": "portraits/boieldieu.webp"
+  },
+  {
+    "id": "walter-scott",
+    "nom": "Walter Scott",
+    "dates": "1771-1832",
+    "commons": "File:Sir Henry Raeburn - Portrait of Sir Walter Scott.jpg",
+    "auteur": "Henry Raeburn",
+    "date": "1822",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Sir_Henry_Raeburn_-_Portrait_of_Sir_Walter_Scott.jpg",
+    "cadre_visage": [
+      0.267,
+      0.121,
+      0.668,
+      0.488
+    ],
+    "fichier": "portraits/walter-scott.webp"
+  },
+  {
+    "id": "byron",
+    "nom": "Lord Byron",
+    "dates": "1788-1824",
+    "commons": "File:Byron 1813 by Phillips.jpg",
+    "auteur": "Thomas Phillips",
+    "date": "1813",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Byron_1813_by_Phillips.jpg",
+    "cadre_visage": [
+      0.335,
+      0.102,
+      0.643,
+      0.402
+    ],
+    "fichier": "portraits/byron.webp"
+  },
+  {
+    "id": "rothschild",
+    "nom": "James de Rothschild",
+    "dates": "1792-1868",
+    "commons": "File:Portrait du baron James de Rothschild (1792-1868), (banquier d'origine allemande, fondateur et directeur de la branche f, PH4928.jpg",
+    "auteur": "André-Adolphe-Eugène Disdéri, photographe",
+    "date": "entre 1860 et 1868",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_du_baron_James_de_Rothschild_(1792-1868),_(banquier_d%27origine_allemande,_fondateur_et_directeur_de_la_branche_f,_PH4928.jpg",
+    "cadre_visage": [
+      0.444,
+      0.201,
+      0.594,
+      0.294
+    ],
+    "fichier": "portraits/rothschild.webp"
+  },
+  {
+    "id": "daguerre",
+    "nom": "Daguerre",
+    "dates": "1787-1851",
+    "commons": "File:Jean-Babtiste Sabarier-Blot L.J.M.Daguerre.1844.JPG",
+    "auteur": "Jean-Baptiste Sabatier-Blot, daguerréotype",
+    "date": "1844",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean-Babtiste_Sabarier-Blot_L.J.M.Daguerre.1844.JPG",
+    "cadre_visage": [
+      0.362,
+      0.175,
+      0.62,
+      0.399
+    ],
+    "fichier": "portraits/daguerre.webp"
+  },
+  {
+    "id": "villele",
+    "nom": "Villèle",
+    "dates": "1773-1854",
+    "commons": "File:Portret van Joseph de Villèle, RP-P-1911-2032.jpg",
+    "auteur": "Graveur non identifié",
+    "date": "1823",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_Joseph_de_Vill%C3%A8le,_RP-P-1911-2032.jpg",
+    "cadre_visage": [
+      0.39,
+      0.24,
+      0.6,
+      0.44
+    ],
+    "fichier": "portraits/villele.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "auber",
+    "nom": "Auber",
+    "dates": "1782-1871",
+    "commons": "File:Daniel-François-Esprit Auber - btv1b8415426h.jpg",
+    "auteur": "Lithographie éditée par A. René",
+    "date": "1830",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Daniel-Fran%C3%A7ois-Esprit_Auber_-_btv1b8415426h.jpg",
+    "cadre_visage": [
+      0.275,
+      0.228,
+      0.533,
+      0.433
+    ],
+    "fichier": "portraits/auber.webp"
+  },
+  {
+    "id": "gautier",
+    "nom": "Théophile Gautier",
+    "dates": "1811-1872",
+    "commons": "File:Auguste de Chatillon - Portrait de Théophile Gautier.jpg",
+    "auteur": "Auguste de Châtillon",
+    "date": "1839",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Auguste_de_Chatillon_-_Portrait_de_Th%C3%A9ophile_Gautier.jpg",
+    "cadre_visage": [
+      0.367,
+      0.109,
+      0.634,
+      0.305
+    ],
+    "fichier": "portraits/gautier.webp"
+  },
+  {
+    "id": "bourmont",
+    "nom": "Bourmont",
+    "dates": "1773-1846",
+    "commons": "File:Louis Auguste Victor de Ghaisne de Bourmont.jpg",
+    "auteur": "Nicolas-Eustache Maurin, lithographe",
+    "date": "entre 1820 et 1840",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_Auguste_Victor_de_Ghaisne_de_Bourmont.jpg",
+    "cadre_visage": [
+      0.319,
+      0.064,
+      0.646,
+      0.426
+    ],
+    "fichier": "portraits/bourmont.webp"
+  },
+  {
+    "id": "polignac",
+    "nom": "Polignac",
+    "dates": "1780-1847",
+    "commons": "File:Portret van Jules de Polignac, RP-P-1910-6657.jpg",
+    "auteur": "Graveur non identifié",
+    "date": "1829",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_Jules_de_Polignac,_RP-P-1910-6657.jpg",
+    "cadre_visage": [
+      0.42,
+      0.295,
+      0.57,
+      0.435
+    ],
+    "fichier": "portraits/polignac.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "thiers",
+    "nom": "Thiers",
+    "dates": "1797-1877",
+    "commons": "File:Adolphe Thiers par Auguste Raffet.jpg",
+    "auteur": "Auguste Raffet",
+    "date": "vers 1827",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Adolphe_Thiers_par_Auguste_Raffet.jpg",
+    "cadre_visage": [
+      0.46,
+      0.061,
+      0.697,
+      0.263
+    ],
+    "fichier": "portraits/thiers.webp"
+  },
+  {
+    "id": "marmont",
+    "nom": "Marmont",
+    "dates": "1774-1852",
+    "commons": "File:Marmont.jpg",
+    "auteur": "Paulin Guérin",
+    "date": "1837",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Marmont.jpg",
+    "cadre_visage": [
+      0.289,
+      0.101,
+      0.666,
+      0.439
+    ],
+    "fichier": "portraits/marmont.webp"
+  },
+  {
+    "id": "bordeaux",
+    "nom": "Duc de Bordeaux",
+    "dates": "1820-1883",
+    "commons": "File:S. A. Royale Mgr. le duc de Bordeaux. G.38708.jpg",
+    "auteur": "Charles-Achille d’Hardiviller, lithographe",
+    "date": "vers 1828",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:S._A._Royale_Mgr._le_duc_de_Bordeaux._G.38708.jpg",
+    "cadre_visage": [
+      0.422,
+      0.235,
+      0.641,
+      0.412
+    ],
+    "fichier": "portraits/bordeaux.webp"
+  },
+  {
+    "id": "delavigne",
+    "nom": "Casimir Delavigne",
+    "dates": "1793-1843",
+    "commons": "File:Casimir Delavigne par Delpech.png",
+    "auteur": "Lithographie de Delpech",
+    "date": "années 1830",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Casimir_Delavigne_par_Delpech.png",
+    "cadre_visage": [
+      0.378,
+      0.041,
+      0.751,
+      0.414
+    ],
+    "fichier": "portraits/delavigne.webp"
+  },
+  {
+    "id": "nourrit",
+    "nom": "Adolphe Nourrit",
+    "dates": "1802-1839",
+    "commons": "File:AdolpheNourrit.jpg",
+    "auteur": "Jacques François Llanta, lithographe",
+    "date": "1830",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:AdolpheNourrit.jpg",
+    "cadre_visage": [
+      0.297,
+      0.134,
+      0.659,
+      0.451
+    ],
+    "fichier": "portraits/nourrit.webp"
+  },
+  {
+    "id": "niepce",
+    "nom": "Niépce",
+    "dates": "1765-1833",
+    "note": "Pas de portrait fait de son vivant : le portrait connu, de Léonard-François Berger, est posthume (1854)."
+  },
+  {
+    "id": "seguin",
+    "nom": "Marc Seguin",
+    "dates": "1786-1875",
+    "note": "Pas de portrait d’époque libre et assez grand sur Commons (une vignette de 394 px, des photos de statue)."
+  },
+  {
+    "id": "angouleme",
+    "nom": "Duc d'Angoulême",
+    "dates": "1775-1844",
+    "commons": "File:Louis Antoine d'Artois.jpg",
+    "auteur": "Attribué à François-Joseph Kinson",
+    "date": "1825",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_Antoine_d%27Artois.jpg",
+    "cadre_visage": [
+      0.32,
+      0.123,
+      0.691,
+      0.487
+    ],
+    "fichier": "portraits/angouleme.webp"
   }
 ]

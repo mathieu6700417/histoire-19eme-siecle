@@ -988,7 +988,7 @@ def controler_chiffres(d: dict) -> tuple[list[str], list[str], int, int, int]:
                     dit = c.nombre_dit(m['quand'])
                     if dit is None or dit != m.get('valeur'):
                         erreurs.append(f"{q} : nombre dit {dit} ≠ valeur {m.get('valeur')}")
-                    prud = next((w for w in PRUDENCES if re.search(rf'\b{w}\b', m['quand'].lower())), '')
+                    prud = next((w for w in PRUDENCES if re.search(rf'\b{w}\b', re.sub(r"\bd['’]", 'de ', m['quand'].lower()))), '')  # « près d'un milliard »
                     if prud != (m.get('prefixe') or '').lower():
                         erreurs.append(f"{q} : prudence « {prud} » dite, préfixe « {m.get('prefixe') or ''} »")
                     if not str(m.get('unite') or '').strip() or len(m['unite']) > 45:

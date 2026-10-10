@@ -66,7 +66,7 @@ PLANS = {
         'auteur': 'Edme Verniquet',
         'date': '1790 (levé de 1785-1791 ; fac-similé)',
         'credit': 'Plan de Verniquet, 1790',
-        'slugs': ['prologue', 'revolution', 'consulat-empire'],
+        'slugs': ['prologue', 'revolution', 'consulat-empire', 'restauration'],
         # Partie gardée (pixels de l'original : la ville, sans les tables ni le titre) et largeur servie.
         'recadrage': [100, 1050, 5800, 4450], 'largeur': 2000, 'qualite': 55,
         # Pixels relevés sur l'original (6 179 × 4 849), plan orienté sur la méridienne de Paris.
