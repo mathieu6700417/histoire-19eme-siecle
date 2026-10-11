@@ -17,8 +17,14 @@ export interface Diapo {
   /** Caméra (usage interne, vues dérivées) : instant et fin de la première tenue (`t0`, `a0`),
    *  et vue de départ imposée (`v0`). */
   t0?: number; a0?: number; v0?: Rect;
+  /** Image entière sur fond noir (spec 12, « Retours du visionnage de la Restauration ») : l'image
+   *  est montrée en entier, bandes noires de côté, puis la caméra s'approche lentement du sujet
+   *  `v` (fractions de la zone utile ; null : centre), jusqu'au zoom `z` au plus. */
+  en?: Entier | null;
   /** Frise : jours (depuis 1970) du premier et du dernier jour daté, positions en %, libellé. */
   date: DateFrise | null;
+  /** Plans (spec 14) : images suivantes de la diapositive, chacune à son instant de la voix. */
+  plans?: Plan[] | null;
   /** Segment joué après la voix (et sa pause) : intermède chanté, lecture ou épisode. */
   suite: Suite | null;
   /** Carte de lieu : fenêtre [a, b) (s de l'audio), point (%) dans le fond, partie du plan de
@@ -38,13 +44,22 @@ export interface Diapo {
   /** Date républicaine et sa correspondance grégorienne : fenêtre [a, b). */
   dateRep: { a: number; b: number; republicain: string; gregorien: string } | null;
 }
+/** Image d'une série (spec 14 : plan d'une diapositive, image d'une galerie ou d'une lecture) :
+ *  zone utile, dimensions, cartouche, instant `t` (s de la voix ou du segment) où elle paraît en
+ *  fondu croisé, étapes de la caméra (fractions de la zone utile, instants de la même horloge). */
+export interface Entier { v: Rect | null; z: number }
+export interface Plan { img: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[]; en?: Entier | null }
 export interface Objet { a: number; b: number; src: string; ratio: number; nom: string; legende: string; cote: 'gauche' | 'droite' }
 /** Intermède chanté : paroles [instant, vers, début de chaque mot (`motsLus`) ou null : vers
  *  entier à son début]. */
-export interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string, number[] | null][]; instrumental: boolean; cadre: Rect | null }
+export interface SuiteChant { type: 'chant'; src: string; duree: number; legende: string; paroles: [number, string, number[] | null][]; instrumental: boolean; cadre: Rect | null;
+  /** Galerie (spec 14) : images montrées pendant l'extrait (instants du segment). */
+  galerie?: Plan[] | null }
 /** Lecture d'époque : instant de début de chaque mot (alignement forcé, ou prorata) et, pour
  *  chaque phrase, [début (s), premier mot, mot suivant le dernier]. */
-export interface SuiteLecture { type: 'lecture'; id: string; src: string; duree: number; mots: number[]; phrases: [number, number, number][]; date: DateFrise | null }
+export interface SuiteLecture { type: 'lecture'; id: string; src: string; duree: number; mots: number[]; phrases: [number, number, number][]; date: DateFrise | null;
+  /** Lecture illustrée (spec 14) : images de fond derrière la carte (instants du segment). */
+  images?: Plan[] | null }
 /** Épisode : phrases [début, fin (s), texte du sous-titre]. */
 export interface SuiteEpisode { type: 'episode'; id: string; src: string; duree: number; phrases: [number, number, string][]; date: DateFrise | null }
 export type Suite = SuiteChant | SuiteLecture | SuiteEpisode;
@@ -53,7 +68,7 @@ export interface DateFrise { j0: number; j1: number; x0: number; x1: number; lib
 export interface Donnees {
   slug: string; pause: number; carton: number; volet: number;
   mosaique: { apparition: number; pas: number; fondu: number; tenue: number };
-  actes: { titre: string; dates: string; debut: number }[]; diapos: Diapo[];
+  actes: { titre: string; dates: string; debut: number; reperes: { x: number; date: string; texte: string }[] }[]; diapos: Diapo[];
   /** Musique de fond : les pistes de chaque acte. */
   fond: Piste[][];
   /** Générique d'ouverture et récapitulatif de fin (generique.ts) ; null sans `generique`. */

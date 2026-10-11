@@ -72,7 +72,7 @@ export function installerEtat(lec: Lecteur) {
   lec.debutSansVoix = 0; lec.ecouleSansVoix = 0;
   // Ce que montre chaque calque : la diapositive et le dernier cadre rendu.
   // `ra` : dernier cadre rendu de l'image après d'un avant / après (null : pas encore découverte).
-  const couches: { x: Diapo | null; r: Rect; ra?: Rect | null }[] = [{ x: D.diapos[0], r: [0, 0, 1, 1] }, { x: null, r: [0, 0, 1, 1] }];
+  const couches: { x: Diapo | null; r: Rect; ra?: Rect | null; tp?: number; tg?: number }[] = [{ x: D.diapos[0], r: [0, 0, 1, 1] }, { x: null, r: [0, 0, 1, 1] }];
   // Carton d'acte en cours (horloge figée par la pause).
   lec.enCarton = false;
   const chronoCarton = new Chrono();

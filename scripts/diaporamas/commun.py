@@ -402,3 +402,156 @@ def date_republicaine(texte: str) -> tuple[str, str] | None:
     if not 1 <= jour <= 30:
         return None
     return texte.strip(), _date_fr(vers_gregorien(jour, MOIS_REPUBLICAINS.index(m.group(2)) + 1, an))
+
+
+# --- Plans, lectures illustrées et galeries (spec 14) ------------------------------------------
+# Une diapositive peut porter `plans` (1 ou 2 images de plus, chacune déclenchée par un passage
+# `quand`), une lecture `images`, un intermède `galerie`, un épisode des panneaux `image`. Tous les
+# scripts passent par les deux fonctions ci-dessous pour connaître ces images.
+
+LETTRES_PLANS = 'bc'     # NNN-b.webp, NNN-c.webp : 3 images au plus par diapositive
+FONDU_PLAN = 0.8         # s : fondu croisé entre deux images d'une diapositive (constantes.ts)
+AVANCE_PLAN = 0.3        # s : l'image commence à paraître un peu avant le passage (diaporamas.ts)
+DUREE_PLAN_MIN = 5.0     # s : durée minimale d'une image à l'écran (spec 14)
+PROCHE_DEBUT = 1.5       # s : un passage dit à moins de ce délai du début de sa phrase cale le plan sur ce début
+
+_DEBUT_PHRASE = re.compile(r'[.!?…]\s+(?=[«A-ZÀÂÉÈÊÎÔÛÇ0-9])')
+
+
+def debuts_phrases(texte: str) -> list[int]:
+    """Débuts (caractères) des phrases : même découpage que le lecteur et camera.py."""
+    return [0] + [m.end() for m in _DEBUT_PHRASE.finditer(texte)]
+
+
+def images_supplementaires(d: dict, ns: list[int] | None = None) -> list[dict]:
+    """Images de la spec 14, dans l'ordre du diaporama : {'genre' (plan, lecture, galerie, episode),
+    'cle' (97b, lecture:dumas:1, galerie:<id>:1, episode:<id>:2), 'image' (le dictionnaire du JSON),
+    'fichier' (nom par défaut), 'n' (diapositive du plan ou `apres`), 'parent', 'entree'}.
+    `ns` : seulement ce qui se rattache à ces diapositives."""
+    sortie = []
+    garde = lambda n: ns is None or n in ns
+    for x in d['diapositives']:
+        for k, p in enumerate(x.get('plans') or []):
+            lettre = LETTRES_PLANS[k] if k < len(LETTRES_PLANS) else chr(ord('b') + k)
+            if garde(x['n']) and isinstance(p.get('image'), dict):
+                sortie.append({'genre': 'plan', 'cle': f"{x['n']}{lettre}", 'image': p['image'], 'n': x['n'],
+                               'fichier': nom(x['n'], 'webp').replace('.webp', f'-{lettre}.webp'), 'parent': x, 'entree': p})
+    for l in d.get('lectures', []):
+        for k, g in enumerate(l.get('images') or [], 1):
+            if garde(l.get('apres')) and isinstance(g.get('image'), dict):
+                sortie.append({'genre': 'lecture', 'cle': f"lecture:{l['id']}:{k}", 'image': g['image'], 'n': l.get('apres'),
+                               'fichier': f"lectures/{l['id']}-{k}.webp", 'parent': l, 'entree': g})
+    for i in (d.get('musique') or {}).get('intermedes', []):
+        for k, g in enumerate(i.get('galerie') or [], 1):
+            if garde(i.get('apres')) and isinstance(g.get('image'), dict):
+                sortie.append({'genre': 'galerie', 'cle': f"galerie:{i['id']}:{k}", 'image': g['image'], 'n': i.get('apres'),
+                               'fichier': f"galeries/{i['id']}-{k}.webp", 'parent': i, 'entree': g})
+    for e in d.get('episodes', []):
+        for k, v in enumerate(e.get('visuels', [])):
+            if v.get('type') == 'image' and garde(e.get('apres')) and isinstance(v.get('image'), dict):
+                sortie.append({'genre': 'episode', 'cle': f"episode:{e['id']}:{k}", 'image': v['image'], 'n': e.get('apres'),
+                               'fichier': f"episodes/{e['id']}-{k}.webp", 'parent': e, 'entree': v})
+    return sortie
+
+
+def _phrases_horodatees(x: dict) -> list[tuple[int, int, float, float]]:
+    texte = x['narration']
+    debuts = debuts_phrases(texte)
+    duree = (x.get('audio') or {}).get('duree') or 6
+    ph = (x.get('audio') or {}).get('phrases')
+    sortie = []
+    for j, d in enumerate(debuts):
+        f = debuts[j + 1] if j + 1 < len(debuts) else len(texte)
+        t0, t1 = ph[j] if ph and len(ph) == len(debuts) else (d / len(texte) * duree, f / len(texte) * duree)
+        sortie.append((d, f, float(t0), float(t1)))
+    return sortie
+
+
+def fenetres_plans(x: dict) -> list[dict]:
+    """Fenêtre de chaque image d'une diapositive à plans (l'image principale, puis chaque plan) :
+    {'car': (premier caractère, caractère suivant) de la narration dite pendant qu'elle est à
+    l'écran, 't': (début, fin) en secondes de la voix, 'instant': s où elle paraît (None si
+    surimpressions.py n'a pas encore écrit `instant`), 'pos': position du passage `quand` (-1 :
+    absent)}. Le début d'un plan est celui de sa phrase quand son instant y est calé."""
+    texte, plans = x['narration'], x.get('plans') or []
+    duree = (x.get('audio') or {}).get('duree') or 6
+    ph = _phrases_horodatees(x)
+    bornes, depuis = [], 0
+    for p in plans:
+        pos = texte.find(p.get('quand') or '\0', depuis)
+        if pos >= 0:
+            depuis = pos + 1
+        inst = p.get('instant')
+        car = max(0, pos)
+        if pos >= 0 and inst is not None:
+            d0, _, t0, _ = next(q for q in reversed(ph) if q[0] <= pos)
+            if inst <= t0 + 0.05:
+                car = d0
+        bornes.append((car, inst, pos))
+    sortie = []
+    for k in range(len(plans) + 1):
+        c0, t0, pos = bornes[k - 1] if k else (0, 0.0, 0)
+        c1, t1 = (bornes[k][0], bornes[k][1]) if k < len(plans) else (len(texte), duree)
+        sortie.append({'car': (c0, max(c0, c1)), 't': (t0, t1), 'instant': t0, 'pos': pos})
+    return sortie
+
+
+def _vue(x: dict, fen: dict, n, image: dict, manuel: bool) -> dict:
+    """Pseudo-diapositive : l'image, la narration dite pendant sa fenêtre et son minutage (instants
+    comptés depuis le début de la fenêtre)."""
+    texte = x['narration']
+    (c0, c1), (t0, t1) = fen['car'], fen['t']
+    t0 = t0 or 0.0
+    t1 = t1 if t1 is not None else (x.get('audio') or {}).get('duree') or 6
+    morceaux, phrases = [], []
+    for d, f, a, b in _phrases_horodatees(x):
+        if f <= c0 or d >= c1:
+            continue
+        m = texte[max(d, c0):min(f, c1)].strip()
+        if m:
+            morceaux.append(m)
+            phrases.append([round(max(0.0, max(a, t0) - t0), 2), round(max(0.0, min(b, t1) - t0), 2)])
+    narration = ' '.join(morceaux)
+    audio = {'duree': round(max(0.1, t1 - t0), 2)}
+    if len(debuts_phrases(narration)) == len(phrases):
+        audio['phrases'] = phrases
+    vue = {'n': n, 'image': image, 'narration': narration, 'audio': audio, 'fenetre': fen, 'diapositive': x['n']}
+    if manuel:
+        vue['camera_manuelle'] = True
+    return vue
+
+
+def vues_camera(d: dict, series: bool = True) -> list[dict]:
+    """Ce que voient utile.py et camera.py : une « vue » par image à cadrer, au format d'une
+    diapositive ({'n', 'image', 'narration', 'audio'}, le dictionnaire `image` étant celui du JSON).
+    - diapositive sans plans : la diapositive elle-même ;
+    - diapositive à plans : l'image principale avec la narration de sa fenêtre (n entier), puis chaque
+      plan (n « 97b ») avec la sienne ; `sans_instant` si surimpressions.py n'a pas encore tourné ;
+    - `series` : images des lectures et des galeries (n « lecture:dumas:1 »), sans narration
+      (`serie` : vrai), cadrées localement d'un seul cadre."""
+    sortie = []
+    for x in d['diapositives']:
+        plans = [p for p in (x.get('plans') or []) if isinstance(p.get('image'), dict)]
+        if not plans:
+            sortie.append(x)
+            continue
+        fen = fenetres_plans(x)
+        manque = any(p.get('instant') is None for p in plans)
+        v = _vue(x, fen[0], x['n'], x['image'], bool(x.get('camera_manuelle')))
+        for cle in ('personnes_vues',):
+            if cle in x:
+                v[cle] = x[cle]
+        v['sans_instant'] = manque
+        sortie.append(v)
+        for k, p in enumerate(plans):
+            lettre = LETTRES_PLANS[k] if k < len(LETTRES_PLANS) else chr(ord('b') + k)
+            v = _vue(x, fen[k + 1], f"{x['n']}{lettre}", p['image'], bool(p.get('camera_manuelle')))
+            v['sans_instant'] = manque
+            v['plan'] = p
+            sortie.append(v)
+    if series:
+        for s in images_supplementaires(d):
+            if s['genre'] in ('lecture', 'galerie'):
+                sortie.append({'n': s['cle'], 'image': s['image'], 'narration': '', 'audio': {'duree': 8}, 'serie': True})
+    return sortie
+

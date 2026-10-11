@@ -182,6 +182,52 @@ def libelle_date(texte: str) -> str:
     return f"{'1er' if p[2] == 1 else p[2]} {MOIS[p[1] - 1]} {p[0]}"
 
 
+def controler_retours(d: dict) -> tuple[list[str], list[str]]:
+    """Retours du visionnage de la Restauration (spec 12, 2026-10-11) : dates clés des actes
+    (`reperes`, facultatif : 2 ou 3 par acte, date valide dans la période, libellé court) et images
+    entières sur fond noir (`entier`, `entier_vers`, `entier_zoom`)."""
+    erreurs, avert = [], []
+    annees = [int(a) for acte in d['actes'] for a in re.findall(r'\b1[789]\d\d\b', acte.get('dates') or '')]
+    for acte in d['actes']:
+        R = acte.get('reperes')
+        if R is None:
+            continue
+        p = f"acte « {acte.get('id')} »"
+        if not isinstance(R, list) or not 2 <= len(R) <= 3:
+            erreurs.append(f'{p} : « reperes » attend 2 ou 3 dates clés')
+            continue
+        for r in R:
+            b = bornes_date(r.get('date'))
+            bf = bornes_date(r['date_fin']) if 'date_fin' in r else b
+            if not b or not bf or bf[1] < b[0]:
+                erreurs.append(f"{p} : repère à la date invalide ({r.get('date')!r}, {r.get('date_fin')!r})")
+            elif annees and not (min(annees) <= b[0].year and bf[1].year <= max(annees)):
+                erreurs.append(f"{p} : repère hors de la période ({r['date']})")
+            lib = r.get('libelle')
+            if not isinstance(lib, str) or not lib.strip():
+                erreurs.append(f'{p} : repère sans libellé')
+            elif len(lib) > 36:
+                avert.append(f'{p} : libellé de repère long ({len(lib)} caractères) : « {lib} »')
+    for x in c.vues_camera(d):
+        im = x['image']
+        if not any(k in im for k in ('entier', 'entier_vers', 'entier_zoom', 'entier_manuel')):
+            continue
+        p = f"{x['n']}"
+        if not isinstance(im.get('entier', False), bool):
+            erreurs.append(f'{p} : « entier » doit être vrai ou faux')
+        v = im.get('entier_vers')
+        if v is not None and not (isinstance(v, list) and len(v) == 4 and 0 <= v[0] < v[2] <= 1 and 0 <= v[1] < v[3] <= 1):
+            erreurs.append(f'{p} : « entier_vers » invalide ({v})')
+        z = im.get('entier_zoom')
+        if z is not None and not (isinstance(z, (int, float)) and 1 <= z <= 2):
+            erreurs.append(f'{p} : « entier_zoom » hors de 1 à 2 ({z})')
+        if im.get('entier') and (im.get('apres') or x.get('mosaique')):
+            avert.append(f'{p} : « entier » sans effet sur un avant / après ou une mosaïque')
+        if im.get('entier') and str(x['n']).startswith('lecture:'):
+            avert.append(f'{p} : « entier » déconseillé sur une image de lecture (fond de la carte)')
+    return erreurs, avert
+
+
 def controler_dates(d: dict) -> tuple[list[str], list[str], list[int]]:
     """Dates de la frise : erreurs, avertissements (retours en arrière) et numéros des
     diapositives où la frise s'affiche en bas de l'image, hors carton d'acte : changement d'année
@@ -1169,7 +1215,8 @@ def controler_musique(d: dict, dossier) -> tuple[list[str], list[str], float]:
             erreurs.append(f'{q} : « apres » ne désigne pas une diapositive ({n})')
         else:
             titre = re.sub(r"^(le|la|les|l')\s*", '', _sans_accents(p.get('titre') or ''))
-            if titre and titre not in _sans_accents(narrations[n]):
+            # Une galerie nouvelle (`theme`, spec 14) n'est pas annoncée : elle illustre ce qui vient d'être dit.
+            if titre and not p.get('theme') and titre not in _sans_accents(narrations[n]):
                 avert.append(f'{q} : la narration de la diapositive {n} n’annonce pas « {p.get("titre")} »')
         par = p.get('paroles') or []
         if p.get('instrumental'):
@@ -1437,6 +1484,12 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
                     quands.append(x.get('quand'))
                 if not str(v.get('source') or '').strip():
                     erreurs.append(f'{qv} : source du document manquante')
+            elif tv == 'image':
+                # Spec 14 : image d'époque plein cadre (fichier, licence et notice : controler_plans).
+                if not isinstance(v.get('image'), dict) or not v['image'].get('commons'):
+                    erreurs.append(f'{qv} : panneau « image » sans image Commons')
+                if k == 0:
+                    erreurs.append(f'{qv} : un panneau « image » ne peut pas ouvrir l’épisode (pas de « quand »)')
             elif tv == 'chronologie':
                 # Spec 12, « Chronologie animée » : dates dans les bornes et dans l'ordre, passages exacts.
                 b0, b1 = bornes_date(v.get('debut')), bornes_date(v.get('fin'))
@@ -1765,13 +1818,178 @@ def controler_generique(d: dict) -> tuple[list[str], list[str], float]:
     return erreurs, avert, duree
 
 
+# --- Plans, lectures illustrées et galeries (spec 14) -------------------------------------------
+GALERIE_NOUVELLE = (20.0, 30.0)   # durée visée d'une galerie nouvelle sans voix (s)
+IMAGES_MIN_SPEC14 = 200           # dosage : images d'une période produite après la spec 14
+
+
+def controler_plans(d: dict, img_etat: dict, dossier) -> tuple[dict, dict, dict]:
+    """Images de la spec 14 : plans des diapositives, images des lectures, galeries des intermèdes,
+    panneaux `image` des épisodes. Rend ({étape: erreurs}, {étape: avertissements}, comptes) :
+    A : structure, fichiers, licences, notices, doublons, passages `quand` ; B : zone utile et
+    caméra de chaque image ; C : instants des plans et durées minimales."""
+    E = {'A': [], 'B': [], 'C': []}
+    A = {'A': [], 'B': [], 'C': []}
+    sup = c.images_supplementaires(d)
+    comptes = {g: sum(1 for s in sup if s['genre'] == g) for g in ('plan', 'lecture', 'galerie', 'episode')}
+    rect = lambda r: isinstance(r, list) and len(r) == 4 and all(isinstance(v, (int, float)) for v in r) \
+        and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1
+    # Œuvres déjà montrées par la période (diapositives, images après, vignettes).
+    deja = Counter()
+    for x in d['diapositives']:
+        deja[x['image'].get('commons')] += 1
+        if x['image'].get('apres'):
+            deja[x['image']['apres'].get('commons')] += 1
+        mo = x.get('mosaique') or {}
+        for j, v in enumerate(mo.get('vignettes', [])):
+            if j != mo.get('principale'):
+                deja[v.get('commons')] += 1
+    vues_sup = Counter()
+    for s in sup:
+        i, q = s['image'], f"{s['cle']}"
+        vues_sup[i.get('commons')] += 1
+        if not i.get('commons'):
+            E['A'].append(f'{q} : image sans fichier Commons (`commons`)')
+            continue
+        if not (dossier / (i.get('fichier') or '\0')).is_file():
+            E['A'].append(f"{q} : image absente ({i.get('fichier')}) : images.py")
+        e = img_etat.get(f"spec14:{s['genre']}:{i['commons']}")
+        if not e:
+            E['A'].append(f'{q} : licence non relevée pour ce fichier (relancer images.py)')
+        elif not e.get('libre'):
+            E['A'].append(f"{q} : licence refusée ({e.get('licence')})")
+        elif (e.get('largeur') or 0) < 1000:
+            A['A'].append(f"{q} : original étroit ({e.get('largeur')} px)")
+        if i.get('licence') != 'Domaine public':
+            E['A'].append(f'{q} : licence affichée absente')
+        manquants = [k for k in CHAMPS if not (i.get(k) or '').strip()]
+        if manquants:
+            E['A'].append(f"{q} : métadonnées manquantes ({', '.join(manquants)})")
+        tc = (i.get('titre_court') or '').strip()
+        if not tc:
+            E['A'].append(f'{q} : titre court (titre_court) manquant pour le cartouche')
+        elif len(tc) > 60:
+            E['A'].append(f'{q} : titre court trop long ({len(tc)} caractères, 60 au plus)')
+        if i.get('recadrage') is not None and not rect(i['recadrage']):
+            E['A'].append(f"{q} : recadrage invalide ({i['recadrage']})")
+        # Pas deux fois la même image dans la période, sauf reprise voulue (détail d'une œuvre déjà montrée).
+        if (deja[i['commons']] or vues_sup[i['commons']] > 1) and not s['entree'].get('reprise'):
+            E['A'].append(f"{q} : image déjà employée dans la période ({i['commons']}) ; « reprise »: true si c'est voulu (détail)")
+        # Zone utile et caméra (pas pour un panneau d'épisode, recadré par CSS).
+        if s['genre'] != 'episode':
+            if i.get('utile') is None:
+                E['B'].append(f'{q} : zone utile absente (utile.py)')
+            elif not rect(i['utile']):
+                E['B'].append(f"{q} : zone utile invalide ({i['utile']})")
+            if s['genre'] != 'plan':
+                cam = i.get('camera')
+                if not (isinstance(cam, list) and len(cam) == 1 and rect(cam[0].get('cadre'))):
+                    E['B'].append(f'{q} : cadre absent ou invalide (camera.py : un seul cadre pour une image sans narration)')
+    # Plans : structure, passages, instants, durées, caméra de chaque image sur sa fenêtre.
+    for x in d['diapositives']:
+        plans = x.get('plans')
+        if plans is None:
+            continue
+        p = f"{x['n']:3d}"
+        if not isinstance(plans, list) or not 1 <= len(plans) <= len(c.LETTRES_PLANS) or any(not isinstance(pl.get('image'), dict) for pl in plans):
+            E['A'].append(f'{p} : plans : 1 ou 2 entrées {{quand, image}} (3 images au plus par diapositive)')
+            continue
+        if x['image'].get('apres') or x.get('mosaique'):
+            E['A'].append(f'{p} : pas de plans sur une diapositive à avant/après ou à mosaïque')
+        fen = c.fenetres_plans(x)
+        if any(f_['pos'] < 0 for f_ in fen[1:]):
+            E['A'].append(f"{p} : plan dont le passage « quand » est absent de la narration (ou hors de l'ordre)")
+            continue
+        du = (x.get('audio') or {}).get('duree')
+        if not du:
+            continue
+        if any(pl.get('instant') is None for pl in plans):
+            E['C'].append(f'{p} : plan sans instant (surimpressions.py)')
+            continue
+        fin = du + pause_apres(x)
+        bornes = [0.0] + [pl['instant'] for pl in plans] + [fin]
+        for k in range(len(bornes) - 1):
+            if bornes[k + 1] - bornes[k] < c.DUREE_PLAN_MIN - 0.05:   # 0,05 s : arrondi des instants
+                nom_ = 'la première image' if k == 0 else f'le plan {c.LETTRES_PLANS[k - 1]}'
+                E['C'].append(f'{p} : {nom_} ne reste que {bornes[k + 1] - bornes[k]:.1f} s à l\'écran ({c.DUREE_PLAN_MIN:.0f} s au moins)')
+        # Un plan ne commence pas pendant une citation ou un chiffre affiché.
+        F = fenetres_surimpressions(x, {}, {})
+        for k, pl in enumerate(plans):
+            for nom_, cle in (('la citation', 'citation'), ('le chiffre', 'chiffre')):
+                f_ = F.get(cle)
+                if f_ and f_[0] - 0.2 < pl['instant'] < f_[1] - 0.3:
+                    A['C'].append(f"{p} : le plan {c.LETTRES_PLANS[k]} commence ({pl['instant']:.1f} s) pendant {nom_} "
+                                  f"({f_[0]:.1f}-{f_[1]:.1f} s) : le décaler à la phrase suivante")
+        for v in c.vues_camera({'diapositives': [x]}, series=False)[1:]:
+            E['B'] += [f"{v['n']} : {e}" for e in controler_camera(v)]
+            e_ut, a_ut = controler_utile(v)
+            E['B'] += [f"{v['n']} : {e}" for e in e_ut if 'absente' not in e and 'invalide' not in e]
+            A['B'] += [f"{v['n']} : {e}" for e in a_ut]
+    # Lectures illustrées : 2 à 4 images, passages présents dans le texte lu, dans l'ordre.
+    for l in d.get('lectures', []):
+        im = l.get('images')
+        if im is None:
+            continue
+        q = f"lecture {l.get('id')}"
+        if not 2 <= len(im) <= 4:
+            A['A'].append(f'{q} : {len(im)} image(s) de fond (2 à 4 visées)')
+        texte, depuis = c.texte_lu(l), 0
+        for k, g in enumerate(im, 1):
+            if g.get('quand'):
+                pos = texte.find(g['quand'], depuis)
+                if pos < 0:
+                    E['A'].append(f"{q} : image {k} : « {g['quand']} » absent du texte lu (ou hors de l'ordre)")
+                else:
+                    depuis = pos + 1
+    # Galeries : 3 à 5 images sur un intermède ; galerie nouvelle (`theme`) : sans voix, 20 à 30 s.
+    nouvelles, ajout = 0, 0.0
+    for i in (d.get('musique') or {}).get('intermedes', []):
+        g = i.get('galerie')
+        q = f"intermède {i.get('id')}"
+        if i.get('theme') and not g:
+            E['A'].append(f'{q} : `theme` sans `galerie`')
+        if g is None:
+            continue
+        if not 3 <= len(g) <= 5:
+            A['A'].append(f'{q} : galerie de {len(g)} image(s) (3 à 5 visées)')
+        if i.get('cadre'):
+            A['A'].append(f'{q} : `cadre` et `galerie` ensemble : la galerie couvre l\'image, le cadre ne sert pas')
+        if i.get('duree') and len(g) and i['duree'] / len(g) < c.DUREE_PLAN_MIN:
+            E['C'].append(f"{q} : {i['duree'] / len(g):.1f} s par image de la galerie ({c.DUREE_PLAN_MIN:.0f} s au moins)")
+        inst = [x_.get('instant') for x_ in g if x_.get('instant') is not None]
+        if inst != sorted(inst) or any(v < 0 or v > (i.get('duree') or 1e9) for v in inst):
+            E['A'].append(f'{q} : instants de la galerie hors de l\'ordre ou hors de l\'extrait')
+        if i.get('theme'):
+            nouvelles += 1
+            ajout += (i.get('duree') or 0) + PAUSE
+            if not i.get('instrumental'):
+                E['A'].append(f'{q} : une galerie nouvelle (`theme`) est sans voix : `instrumental` attendu')
+            if i.get('paroles'):
+                E['A'].append(f'{q} : une galerie nouvelle (`theme`) n\'a pas de paroles')
+            if i.get('duree') and not GALERIE_NOUVELLE[0] - 0.5 <= i['duree'] <= GALERIE_NOUVELLE[1] + 0.5:
+                A['A'].append(f"{q} : galerie nouvelle de {i['duree']:.0f} s ({GALERIE_NOUVELLE[0]:.0f} à {GALERIE_NOUVELLE[1]:.0f} s visées)")
+    if nouvelles > 3:
+        A['A'].append(f'{nouvelles} galeries nouvelles (2 à 3 visées par période)')
+    if ajout > 120:
+        A['A'].append(f'galeries nouvelles : {ajout:.0f} s ajoutées à la période (2 min au plus)')
+    # Épisodes : 1 à 2 panneaux `image`.
+    for e in d.get('episodes', []):
+        n_im = sum(1 for v in e.get('visuels', []) if v.get('type') == 'image')
+        if n_im > 2:
+            A['A'].append(f"épisode {e.get('id')} : {n_im} panneaux « image » (1 à 2 visés)")
+    comptes['nouvelles'] = nouvelles
+    return E, A, comptes
+
+
 # Répartition des contrôles par étape de production (spec 13, outil 2) : `--etape A|B|C`.
 ETAPES = {'A': 'texte, images, enrichissements prévus', 'B': 'voix, zone utile, caméra, musique',
           'C': 'surimpressions et vérification complète'}
 FAMILLES = {
-    'A': ('structure', 'images', 'narration', 'dates', 'dosage', 'épisodes (richesse)', 'générique'),
-    'B': ('audio', 'ouverture', 'zone utile', 'caméra', 'musique', 'registre musical', 'lectures et épisodes', 'boucles'),
-    'C': ('surimpressions', 'portraits', 'objets et manuscrits', 'chiffres et dates', 'avant/après et mosaïques'),
+    'A': ('structure', 'images', 'narration', 'dates', 'dosage', 'épisodes (richesse)', 'générique', 'plans et galeries (images)'),
+    'B': ('audio', 'ouverture', 'zone utile', 'caméra', 'musique', 'registre musical', 'lectures et épisodes', 'boucles',
+          'plans et galeries (zone utile, caméra)'),
+    'C': ('surimpressions', 'portraits', 'objets et manuscrits', 'chiffres et dates', 'avant/après et mosaïques',
+          'plans et galeries (instants, durées)'),
 }
 MAX_AVERT = 15   # avertissements affichés par `--etape` (tous avec `--tout`)
 # Messages d'un contrôle d'une étape qui relèvent d'une autre (donnée écrite plus tôt) : (motif, étape, famille).
@@ -1941,6 +2159,7 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
     if fait('A'):
         e_dates, a_dates, surimp = controler_dates(d)
         R.plus('A', 'dates', e_dates, a_dates)
+        R.plus('A', 'repères et images entières', *controler_retours(d))
     if fait('B'):
         e_mus, a_mus, duree_chants = controler_musique(d, dossier)
         R.plus('B', 'musique', e_mus, a_mus)
@@ -1965,6 +2184,12 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
     if fait('A'):
         e_gen, a_gen, duree_generique = controler_generique(d)
         R.plus('A', 'générique', e_gen, a_gen)
+    # Spec 14 : plans, lectures illustrées, galeries (contrôles locaux, rangés par étape).
+    e_pl, a_pl, n_sup = controler_plans(d, img, dossier)
+    for et, fam in (('A', 'plans et galeries (images)'), ('B', 'plans et galeries (zone utile, caméra)'), ('C', 'plans et galeries (instants, durées)')):
+        if fait(et):
+            R.plus(et, fam, e_pl[et], a_pl[et])
+    n_images = len(diapos) + sum(n_sup[g] for g in ('plan', 'lecture', 'galerie', 'episode'))
 
     pauses = [pause_apres(x) for x in diapos]
     longues = [(x['n'], q) for x, q in zip(diapos, pauses) if q > PAUSE]
@@ -1979,6 +2204,10 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         print(f'Générique : {len(d.get("generique") or [])} images, {duree_generique:.1f} s (ouverture et récapitulatif).')
         print(f'Durée totale (pauses, cartons d’acte, intermèdes et générique compris) : {total / 60:.1f} min ; moyenne {sum(durees) / len(durees):.1f} s par diapositive '
               f'(de {min(durees):.1f} à {max(durees):.1f} s ; visé : ~18 s).')
+    if chiffres and n_images > len(diapos):
+        print(f"Images : {n_images} dont {n_sup['plan']} plan(s), {n_sup['lecture']} de lecture(s), {n_sup['galerie']} de galerie(s) "
+              f"({n_sup['nouvelles']} galerie(s) nouvelle(s)), {n_sup['episode']} d'épisode(s) ; une image toutes les "
+              f"{total / max(1, n_images):.0f} s en moyenne (7 à 12 s visées, spec 14).")
     m = d.get('musique') or {}
     if m and chiffres:
         poids = sum(f.stat().st_size for f in (dossier / 'musique').glob('*.m4a')) if (dossier / 'musique').is_dir() else 0
@@ -2014,6 +2243,9 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         if n_chiffres + n_dates < 6:
             avert.append(f'dosage insuffisant : {n_chiffres} chiffre(s) et {n_dates} date(s) républicaine(s) en surimpression '
                          f'(~8 chiffres ou dates visés par période)')
+        # Spec 14 : une période produite après elle (ou déjà enrichie) vise 220 à 260 images.
+        if (d.get('numero', 0) >= 3 or n_images > len(diapos)) and n_images < IMAGES_MIN_SPEC14:
+            avert.append(f'dosage insuffisant : {n_images} images ({IMAGES_MIN_SPEC14} au moins visées, spec 14 : plans, lectures illustrées, galeries)')
     R.plus('A', 'dosage', (), avert)
     if (n_chiffres or n_dates) and not etape:
         print(f'Chiffres clés et dates : {n_chiffres} chiffre(s) (~8 visés), {n_dates} date(s) républicaine(s), '

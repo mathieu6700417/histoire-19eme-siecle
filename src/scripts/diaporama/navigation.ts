@@ -91,7 +91,8 @@ export function installerNavigation(lec: Lecteur) {
     }
     lec.enCarton = false;
     elCarton.setAttribute('aria-hidden', 'true');
-    const couvert = sousCarton || Boolean(carte);
+    // Lecture illustrée (spec 14) : la carte laisse voir l'image, donc fondu enchaîné ordinaire.
+    const couvert = sousCarton || (Boolean(carte) && !carte!.classList.contains('citation--illustree'));
     entrerImage(fondu, couvert);
     if (couvert && fondu) {
       // L'écran couvrant ne se lève qu'une fois la nouvelle image décodée, posée dessous.

@@ -396,6 +396,21 @@ const statique = mode === 'livre';
           );
         })()}
 
+        {v.type === 'image' && (() => {
+          const i = v.image;
+          // Zoom lent sur toute la durée du panneau (jusqu'au visuel suivant, ou la fin de l'épisode).
+          const fin = k + 1 < e.visuels.length ? debuts[k + 1] : duree;
+          return (
+            <Fragment>
+              <figure class="ev-image">
+                <img class="anim" data-t={debuts[k]} data-d={r2(Math.max(4, fin - debuts[k] + 1))} src={urlMedia(slug, i.fichier)} alt={t(i.titre)}
+                  width={i.largeur} height={i.hauteur} loading="lazy" decoding="async" style={`object-position:${v.position ?? '50% 35%'}`} />
+              </figure>
+              <p class="ev-source">{v.legende && <Fragment>{t(v.legende)}{' '}</Fragment>}{t(`${[i.auteur, i.titre_court || i.titre, i.date, i.technique].filter(Boolean).join(', ')}.${i.conservation ? ` ${i.conservation}.` : ''}`)} <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a></p>
+            </Fragment>
+          );
+        })()}
+
         {v.type === 'document' && (() => {
           const i = v.image;
           const L = i.largeur ?? 1000, H = i.hauteur ?? 1300;
@@ -467,7 +482,14 @@ const statique = mode === 'livre';
     transition: opacity 600ms ease;
   }
   .episode--lecteur .ev.est-actif { opacity: 1; }
-  .episode--lecteur .ev--carte, .episode--lecteur .ev--courbe, .episode--lecteur .ev--document { justify-content: flex-start; }
+  .episode--lecteur .ev--carte, .episode--lecteur .ev--courbe, .episode--lecteur .ev--document, .episode--lecteur .ev--image { justify-content: flex-start; }
+  /* Image d'époque plein cadre (spec 14) : elle remplit le panneau, recadrée, avec un zoom très
+     lent réglé sur --p ; sa notice dessous. Dans le livre : l'image entière, immobile. */
+  .ev-image { margin: 0; width: 100%; }
+  .ev-image img { display: block; width: 100%; height: auto; }
+  .episode--lecteur .ev-image { flex: 1 1 0; min-height: 0; overflow: hidden; }
+  .episode--lecteur .ev-image img { height: 100%; object-fit: cover; transform: scale(calc(1 + 0.07 * var(--p, 0))); transform-origin: 50% 40%; will-change: transform; }
+  @media (prefers-reduced-motion: reduce) { .episode--lecteur .ev-image img { transform: none; } }
   @media (prefers-reduced-motion: reduce) { .episode--lecteur .ev, .episode--lecteur { transition-duration: 150ms; } }
 
   .anim { --p: var(--p-defaut); }

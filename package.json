@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "astro build && wrangler deploy",
+    "annoter": "python3 scripts/diaporamas/annoter.py",
     "verifier:ecrivains": "python3 scripts/ecrivains/verifier.py --tous"
   },
   "dependencies": {

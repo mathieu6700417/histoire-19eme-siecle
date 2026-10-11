@@ -1,0 +1,5 @@
+{"ts": "2026-10-11T12:27:21+00:00", "quoi": "debut", "etape": "lecture", "texte": "Lecture de la spec 15 et du lecteur"}
+{"ts": "2026-10-11T12:29:04+00:00", "quoi": "fin", "etape": "lecture", "texte": "captures.py côté serveur retenu pour la capture"}
+{"ts": "2026-10-11T12:36:25+00:00", "quoi": "debut", "etape": "essais", "texte": "Build annotation et essais sans tête"}
+{"ts": "2026-10-11T12:46:59+00:00", "quoi": "fin", "etape": "essais", "texte": "151 + 6 vérifications sans tête réussies ; build normal identique octet pour octet au build de référence ; annotations d'essai supprimées ; serveur laissé sur 127.0.0.1:4330"}
+{"ts": "2026-10-11T12:46:59+00:00", "quoi": "idee", "etape": "essais", "texte": "Le script d'essai sans tête (scratchpad annot/essai.py) pourrait être versé dans scripts/diaporamas pour rejouer la recette de la spec 15 après une retouche du lecteur"}

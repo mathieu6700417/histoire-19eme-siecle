@@ -3,11 +3,11 @@
 import Base from '../../layouts/Base.astro';
 import { typographie } from '../../utils/typographie.mjs';
 import { libelleChapitre } from '../../data/chapitres-ecrivains';
-import { diaporamas, dureeTotale, formaterDuree, indicatif, planDiaporamas, urlDiaporama, urlMedia } from '../../utils/diaporamas';
+import { diaporamas, dureeTotale, formaterDuree, indicatif, nombreImages, planDiaporamas, urlDiaporama, urlMedia } from '../../utils/diaporamas';
 
 const plan = planDiaporamas();
 const total = diaporamas.reduce((s, d) => s + dureeTotale(d), 0);
-const images = diaporamas.reduce((s, d) => s + d.diapositives.length, 0);
+const images = diaporamas.reduce((s, d) => s + nombreImages(d), 0);
 ---
 
 <Base
@@ -45,7 +45,7 @@ const images = diaporamas.reduce((s, d) => s + d.diapositives.length, 0);
                   <span class="periode__numero">{libelleChapitre(p.numero)} · {p.periode}</span>
                   <span class="periode__titre">{typographie(p.diaporama.titre)}</span>
                   <span class="periode__resume">{typographie(p.diaporama.resume)}</span>
-                  <span class="periode__duree">{typographie(`${p.diaporama.diapositives.length} images · ${formaterDuree(dureeTotale(p.diaporama))}`)}</span>
+                  <span class="periode__duree">{typographie(`${nombreImages(p.diaporama)} images · ${formaterDuree(dureeTotale(p.diaporama))}`)}</span>
                 </span>
               </a>
             ) : (

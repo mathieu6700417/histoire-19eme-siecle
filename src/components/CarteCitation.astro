@@ -8,6 +8,9 @@
 //   révélé mot par mot au rythme exact de la voix (chaque mot porte `data-k`, son rang dans
 //   `motsLus(texteLu(l))` ; la ponctuation isolée suit le mot voisin) ; bandeau inférieur fin
 //   (nom, dates, nature, *œuvre*, année, crédit du portrait).
+//   Lecture illustrée (spec 14, champ `images`) : pas de fond flou ; la carte devient un voile de
+//   papier translucide sur les images du calque (fondu croisé, mouvement lent), plus dense derrière
+//   le texte ; la légende courte de l'image visible s'écrit au bas de la carte (`.citation__image`).
 // - mode « livre » : la même lecture, statique, dans le livre d'images sans JavaScript.
 import { typographie } from '../utils/typographie.mjs';
 import { urlWikisource, type Lecture } from '../utils/diaporamas';
@@ -18,9 +21,11 @@ interface Props {
   portrait?: { src: string; largeur: number; hauteur: number; cadre?: [number, number, number, number]; credit: string } | null;
   /** Image du moment (fond flou de la carte, mode lecteur). */
   fond?: string;
+  /** Lecture illustrée (spec 14) : des images d'époque passent derrière la carte, qui les voile. */
+  illustree?: boolean;
   mode: 'lecteur' | 'livre';
 }
-const { lecture: l, portrait, fond: imageFond, mode } = Astro.props;
+const { lecture: l, portrait, fond: imageFond, illustree, mode } = Astro.props;
 const t = (s?: string) => (s ? typographie(s.trim()) : '');
 
 /** Portrait recadré sur le visage : taille et position du fond pour couvrir une case 3/4. */
@@ -73,8 +78,8 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
 ---
 
 {mode === 'lecteur' ? (
-  <div class={`citation citation--lecteur${poeme ? ' citation--poeme' : ''}${portrait ? '' : ' citation--sans-portrait'}`} data-lecture={l.id} aria-hidden="true">
-    <div class="citation__fond" data-fond={imageFond}></div>
+  <div class={`citation citation--lecteur${poeme ? ' citation--poeme' : ''}${portrait ? '' : ' citation--sans-portrait'}${illustree ? ' citation--illustree' : ''}`} data-lecture={l.id} aria-hidden="true">
+    {illustree ? <div class="citation__voile"></div> : <div class="citation__fond" data-fond={imageFond}></div>}
     <div class="citation__page">
     <div class="citation__plan">
       {portrait && <div class="citation__portrait" style={fond(portrait)} role="img" aria-label={t(`Portrait de ${l.auteur.nom}`)}></div>}
@@ -102,6 +107,7 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
       {portrait && <p class="citation__credit">{t(`Portrait : ${portrait.credit}`)}</p>}
     </div>
     </div>
+    {illustree && <p class="citation__image" aria-hidden="true"></p>}
   </div>
 ) : (
   <div class={`citation citation--livre${poeme ? ' citation--poeme' : ''}`} data-lecture={l.id}>
@@ -166,6 +172,43 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
     inset: 0;
     background: rgba(251, 250, 247, 0.84);
   }
+
+  /* Lecture illustrée (spec 14) : la carte est un voile de papier sur l'image du calque (en
+     couleur, en mouvement lent) ; un halo plus dense, sans bord, porte le texte et le portrait. */
+  .citation--illustree { background: transparent; }
+  .citation__voile { position: absolute; inset: 0; background: rgba(247, 245, 240, 0.6); }
+  .citation--illustree .citation__plan::before {
+    content: '';
+    position: absolute;
+    inset: -4cqh -3cqw 0;
+    background: radial-gradient(ellipse at center, rgba(247, 245, 240, 0.9) 45%, rgba(247, 245, 240, 0) 78%);
+    pointer-events: none;
+  }
+  .citation--illustree .citation__bandeau { position: relative; isolation: isolate; }
+  .citation--illustree .citation__bandeau::before {
+    content: '';
+    position: absolute;
+    inset: 0 -6cqw;
+    background: rgba(247, 245, 240, 0.82);
+    z-index: -1;
+  }
+  /* Légende courte de l'image visible : en haut à gauche, petite, sur un filet de papier (scène
+     étroite : absente, le livre d'images la donne). */
+  .citation__image {
+    position: absolute;
+    top: 0.3rem;
+    left: 0.6rem;
+    max-width: 70%;
+    margin: 0;
+    padding: 0.15rem 0.5rem;
+    background: rgba(251, 250, 247, 0.86);
+    border: 1px solid var(--c-filet);
+    font-size: clamp(0.7rem, 1.5cqw, 0.85rem);
+    line-height: 1.3;
+    color: var(--c-texte-doux);
+  }
+  .citation__image:empty { display: none; }
+  @container (max-width: 600px) { .citation__image { display: none; } }
 
   /* La page de la carte (les unités cqw/cqh se rapportent à la carte, qui est le conteneur). */
   .citation__page {

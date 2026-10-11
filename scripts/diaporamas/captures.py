@@ -11,7 +11,11 @@ Plan : une liste d'instants, chacun `n[:instant]` :
   - `n` ou `n:t`  : diapositive n, voix à l'instant t (s ; 2 par défaut), en pause ;
   - `n:sT`        : segment joué après la voix de n (chant, lecture, épisode), à l'instant T, en pause ;
   - `n:cT`        : carton de l'acte qui commence à n, T secondes après son début (0 à 12) ;
-  - `o:T`, `f:T`  : générique d'ouverture, récapitulatif de fin, T secondes après leur début.
+  - `o:T`, `f:T`  : générique d'ouverture, récapitulatif de fin, T secondes après leur début ;
+  - `n:pK`, `n:pK+D`, `n:pK-D` : plan K de la diapositive n (spec 14 ; 1 = première image ajoutée),
+    D secondes après son instant (2 par défaut ; `+0.4` : au milieu du fondu croisé qui l'amène,
+    `-1` : juste avant) ;
+  - `n:gK`, `n:gK+D` : image K de la galerie ou de la lecture illustrée jouée après n, de même.
 Hors générique, l'ouverture est passée aussitôt après « Lancer » (sans temps écoulé : mêmes images
 qu'un build sans générique, à la barre de progression et au temps près).
 Chaque capture se fait dans un onglet neuf (aucune reprise mémorisée ; « date précédente » de la
@@ -42,6 +46,7 @@ from datetime import datetime
 from pathlib import Path
 
 RACINE = Path(__file__).resolve().parents[2]
+REDUIT = False
 APPAREILS = {'ordinateur': (1280, 760, 'o'), 'telephone': (390, 844, 't')}
 
 # Faux moteur audio : play/pause/currentTime/paused/ended, remis à zéro quand la source change.
@@ -94,6 +99,9 @@ def analyser(item: str) -> tuple[int, str, float]:
     g = re.fullmatch(r'([of]):(\d+(?:\.\d+)?)', item)
     if g:
         return 0, g.group(1), float(g.group(2))
+    g = re.fullmatch(r'(\d+):([pg])(\d+)([+-]\d+(?:\.\d+)?)?', item)
+    if g:   # plan ou image de galerie : rang (partie entière) et décalage, résolus dans la page
+        return int(g.group(1)), g.group(2) + g.group(3), float(g.group(4) or 2)
     m = re.fullmatch(r'(\d+)(?::([sc]?)(\d+(?:\.\d+)?))?', item)
     if not m:
         sys.exit(f'Instant illisible : {item!r} (attendu n, n:t, n:sT ou n:cT)')
@@ -101,23 +109,36 @@ def analyser(item: str) -> tuple[int, str, float]:
 
 
 def nom_fichier(tag: str, item: str) -> str:
-    return f"{tag}-{item.replace(':', '_')}.png"
+    return f"{tag}-{item.replace(':', '_').replace('+', 'p').replace('-', 'm')}.png"
 
 
-def capturer(navigateur, url: str, appareil: str, item: str, attente: int, chemin: Path) -> list[str]:
-    w, h, _ = APPAREILS[appareil]
+def capturer(navigateur, url: str, appareil: str, item: str, attente: int, chemin: Path,
+             taille: tuple[int, int] | None = None, init: str | None = None) -> list[str]:
+    """`taille` (fenêtre, à la place de celle de l'appareil) et `init` (script injecté avant ceux de la
+    page) servent aux captures d'annotation (annoter.py, spec 15)."""
+    w, h = taille or APPAREILS[appareil][:2]
     n, genre, t = analyser(item)
     erreurs: list[str] = []
-    ctx = navigateur.new_context(viewport={'width': w, 'height': h}, device_scale_factor=1, reduced_motion='no-preference')
+    ctx = navigateur.new_context(viewport={'width': w, 'height': h}, device_scale_factor=1, reduced_motion='reduce' if REDUIT else 'no-preference')
     pg = ctx.new_page()
     pg.on('pageerror', lambda e: erreurs.append(str(e)))
     pg.clock.install(time=datetime(2026, 1, 1))
     pg.clock.pause_at(datetime(2026, 1, 1, 0, 0, 1))  # horloge arrêtée : n'avance que par run_for
     pg.add_init_script(HORLOGE)
+    if init:
+        pg.add_init_script(init)
     pg.goto(url, wait_until='load')
     pg.wait_for_timeout(600)
     pg.click('[data-action="lancer"]')
     r = "document.querySelector('.diaporama')"
+    if len(genre) > 1 and genre[0] in 'pg':
+        # Plan ou image de galerie (spec 14) : son instant est lu dans les données embarquées.
+        k, serie = int(genre[1:]) - 1, 'x.plans' if genre[0] == 'p' else 'x.suite && (x.suite.galerie || x.suite.images)'
+        t0 = pg.evaluate(f"() => {{ const x = JSON.parse({r}.querySelector('.diaporama__donnees').textContent).diapos.find((y) => y.n === {n}); const s = {serie}; return s && s[{k}] ? s[{k}].t : null; }}")
+        if t0 is None:
+            ctx.close()
+            return [f'pas de {"plan" if genre[0] == "p" else "image de galerie"} {k + 1} sur la diapositive {n}']
+        genre, t = ('' if genre[0] == 'p' else 's'), max(0.0, t0 + t)
     if genre != 'o':
         # Hors ouverture : l'ouverture est passée (ou l'on va au récapitulatif) sans temps écoulé.
         quoi = 'fin' if genre == 'f' else 'passer'
@@ -146,9 +167,17 @@ def capturer(navigateur, url: str, appareil: str, item: str, attente: int, chemi
         pg.evaluate(f"() => {{ const a = {r}.querySelector('.lecteur__audio'); a.currentTime = {t}; a.pause(); }}")
         pg.clock.run_for(500)
     pg.wait_for_timeout(300)
-    boite = pg.evaluate(f"() => {{ const b = {r}.querySelector('.lecteur').getBoundingClientRect(); return {{ x: b.x + scrollX, y: b.y + scrollY, width: b.width, height: b.height }}; }}")
+    boite = pg.evaluate(f"() => {{ const b = {r}.querySelector('.lecteur').getBoundingClientRect(); return {{ x: b.x + scrollX, y: b.y + scrollY, width: b.width, height: b.height, sx: scrollX, sy: scrollY }}; }}")
+    sx, sy = boite.pop('sx'), boite.pop('sy')
     boite['width'] = min(boite['width'], w - boite['x'])
-    pg.screenshot(path=str(chemin), clip=boite, full_page=True, animations='disabled', caret='hide')
+    if boite['x'] - sx >= 0 and boite['y'] - sy >= 0 and boite['y'] - sy + boite['height'] <= h:
+        # Le lecteur tient dans la fenêtre : photo de la fenêtre. Une photo « pleine page » redimensionne
+        # la fenêtre émulée, et le lecteur redessine alors l'image pendant la prise (course : la même
+        # capture donnait deux résultats sur un même build, diapositive 99 après la plongée, 2026-10-11).
+        boite['x'] -= sx; boite['y'] -= sy
+        pg.screenshot(path=str(chemin), clip=boite, animations='disabled', caret='hide')
+    else:
+        pg.screenshot(path=str(chemin), clip=boite, full_page=True, animations='disabled', caret='hide')
     ctx.close()
     return erreurs
 
@@ -213,7 +242,14 @@ def main() -> None:
     ap.add_argument('--planche', action='store_true')
     ap.add_argument('--comparer')
     ap.add_argument('--attente', type=int, default=2500)
+    ap.add_argument('--fenetre', help="taille de la fenêtre de l'ordinateur, LxH (1280x760 par défaut ; ex. 1512x945)")
+    ap.add_argument('--reduit', action='store_true', help='avec prefers-reduced-motion')
     a = ap.parse_args()
+    global REDUIT
+    REDUIT = a.reduit
+    if a.fenetre:
+        l, h = (int(v) for v in a.fenetre.lower().split('x'))
+        APPAREILS['ordinateur'] = (l, h, 'o')
     dist = (RACINE / a.dist) if not Path(a.dist).is_absolute() else Path(a.dist)
     if not (dist / 'diaporamas' / a.slug / 'index.html').exists():
         sys.exit(f'{dist}/diaporamas/{a.slug}/index.html introuvable : construire le site d\'abord')

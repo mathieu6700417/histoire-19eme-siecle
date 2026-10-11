@@ -33,6 +33,15 @@ export interface ImageDiapo {
   utile?: [number, number, number, number];
   /** La zone utile est saisie à la main : utile.py ne la réécrit pas. */
   utile_manuel?: boolean;
+  /** Image entière sur fond noir (spec 12, « Retours du visionnage de la Restauration ») : l'image
+   *  est montrée en entier, bandes noires de côté, puis la caméra s'approche lentement de
+   *  `entier_vers` (le sujet, fractions de l'image servie) jusqu'au zoom `entier_zoom` (1,3 par
+   *  défaut). Posé par `camera.py --entiers` ; `entier_manuel` : le script n'y touche plus.
+   *  Sans effet sur une image avant / après ou une mosaïque ; jamais posé sur une image de lecture. */
+  entier?: boolean;
+  entier_manuel?: boolean;
+  entier_vers?: [number, number, number, number];
+  entier_zoom?: number;
   /** Avant / après (spec 12, « Enrichissements visuels », point 3) : la diapositive commence sur
    *  cette image-ci (« avant ») ; au passage `apres.quand`, un volet glissant lent découvre
    *  l'image « après » (même lieu ou même sujet), et le cartouche passe de l'une à l'autre. */
@@ -64,6 +73,15 @@ export interface Mosaique {
   /** Rang (dans `vignettes`) de l'image de la diapositive, dans laquelle la caméra plonge. */
   principale: number;
 }
+/** Plan (spec 14) : image suivante d'une diapositive, montrée en fondu croisé à partir du passage
+ *  `quand` de la narration (`instant` : s de la voix, écrit par surimpressions.py, de préférence au
+ *  début de la phrase) ; `image` a le format de l'image d'une diapositive (fichier `NNN-b.webp`,
+ *  `NNN-c.webp`), sa zone utile et sa caméra (passages `quand` pris dans sa fenêtre de narration). */
+export interface PlanDiapo { quand: string; instant?: number; image: ImageDiapo; camera_manuelle?: boolean }
+/** Image d'une série sans narration propre (spec 14 : fond d'une lecture, galerie d'un intermède) :
+ *  `quand` (lecture : mots du texte lu) ou `instant` (s du segment) facultatifs, sinon les images
+ *  sont réparties également sur la durée. */
+export interface ImageSerie { quand?: string; instant?: number; image: ImageDiapo }
 /** Cadre [x0, y0, x1, y1] (fractions de l'image servie) ; `quand` : passage exact de la narration. */
 export interface EtapeCamera { cadre: [number, number, number, number]; quand?: string }
 export interface Diapositive {
@@ -102,6 +120,8 @@ export interface Diapositive {
   /** Mosaïque puis plongée (point 5) : grille de 4 à 6 images au début de la diapositive, puis la
    *  caméra plonge dans l'image principale. */
   mosaique?: Mosaique;
+  /** Plans (spec 14) : 1 ou 2 images de plus, dans l'ordre de la voix (pas avec `apres` ni `mosaique`). */
+  plans?: PlanDiapo[];
 }
 /** Chiffre clé (spec 12, « Enrichissements visuels », point 4) : `quand` = passage exact où la voix
  *  dit le nombre (prudence comprise : « plus de mille détenus ») ; `valeur` = ce nombre ; `prefixe`
@@ -142,7 +162,10 @@ export interface LieuDiapo { nom: string; quand: string; lon: number; lat: numbe
 export interface CitationDiapo { texte: string; auteur: string; prudence?: boolean; mots?: [number, number][]; /** Personne citée (registre des portraits) : son portrait l'accompagne. */ personne?: string }
 /** `dates` : dates de l'acte, montrées par le carton de changement d'acte (« 1787-1789 »,
  *  « juillet-octobre 1789 »). */
-export interface Acte { id: string; titre: string; dates: string; debut: number }
+/** `reperes` (facultatif, 2 à 3) : dates clés de l'acte montrées sur la frise animée de son carton
+ *  (spec 12, « Retours du visionnage de la Restauration ») : `date` (et `date_fin`) au format des
+ *  diapositives, `libelle` court. */
+export interface Acte { id: string; titre: string; dates: string; debut: number; reperes?: { date: string; date_fin?: string; libelle: string }[] }
 // --- Musique (spec 12, révision du 2026-10-07) : préparée par scripts/diaporamas/musique.py ---
 
 /** Source d'une piste : fichier Commons ou enregistrement de l'Internet Archive (78 tours publié
@@ -195,6 +218,12 @@ export interface Intermede extends PisteCommune {
    *  rejoint au début de l'intermède, puis où elle respire ; sans lui, elle reste sur le dernier
    *  cadre de la diapositive. */
   cadre?: [number, number, number, number];
+  /** Galerie (spec 14) : 3 à 5 images montrées pendant l'extrait, en fondu croisé (fichiers
+   *  `galeries/<id>-<k>.webp`). */
+  galerie?: ImageSerie[];
+  /** Galerie nouvelle sans voix (spec 14) : le thème, écrit en tête du cartouche à la place de
+   *  l'œuvre entendue (qui reste dans les crédits et au survol). */
+  theme?: string;
 }
 /** `note` : phrase facultative sous les crédits (ex. pourquoi des compositeurs étrangers). */
 export interface Musique { note?: string; fond: PisteFond[]; intermedes: Intermede[] }
@@ -241,6 +270,9 @@ export interface Lecture {
   poeme?: boolean;
   texte: string[];
   portrait?: PortraitLecture;
+  /** Lecture illustrée (spec 14) : 2 à 4 images de fond derrière la carte (fichiers
+   *  `lectures/<id>-<k>.webp`) ; `quand` : mots du texte lu qui font entrer l'image. */
+  images?: ImageSerie[];
   audio?: AudioSegment;
 }
 
@@ -256,6 +288,9 @@ export type VisuelEpisode =
   | ({ type: 'carte'; fond: string; titre: string; elements: ElementCarte[]; legende?: [string, string][]; source: string;
        /** Recadrage [lon0, lat0, lon1, lat1] dans le fond ; libellés et traits gardent leur taille à l'écran. */
        cadre?: [number, number, number, number] } & Quand)
+  /** Image d'époque plein cadre (spec 14), avec sa notice en légende (`legende` : phrase facultative
+   *  qui la précède) ; `position` : point gardé au centre du recadrage (CSS, « 50% 35% » par défaut). */
+  | ({ type: 'image'; image: ImageDiapo & { fichier: string }; legende?: string; position?: string } & Quand)
   | ({ type: 'document'; image: ImageDiapo & { fichier: string }; lignes: ({ cadre: [number, number, number, number]; texte: string } & Quand)[]; source: string } & Quand)
   /** Chronologie (spec 12, « Chronologie animée ») : frise propre à l'épisode, bornée par `debut` et
    *  `fin` (dates ISO partielles) ; chaque événement fait paraître sa bulle quand la voix le nomme. */
@@ -511,6 +546,60 @@ export function etapesCamera(x: Diapositive): { c: [number, number, number, numb
     return { c: e.cadre, t: Math.round((d + ((pos - debuts[j]) / Math.max(1, finCar - debuts[j])) * (f - d)) * 100) / 100 };
   });
 }
+
+// --- Plans, lectures illustrées et galeries (spec 14) -------------------------------------------
+
+/** Avance (s) d'une image sur le passage qui la déclenche (même valeur dans commun.py). */
+export const AVANCE_PLAN = 0.3;
+/** Plans d'une diapositive pour le lecteur : instant (s de la voix) et étapes de caméra de chaque
+ *  plan (cadres en fractions de l'image ; instants absolus, chaque passage cherché à partir du
+ *  début de la fenêtre du plan). */
+export function plansDe(x: Diapositive) {
+  const texte = x.narration, duree = x.audio?.duree ?? 6, phrases = x.audio?.phrases;
+  const debuts = debutsPhrases(texte);
+  let depuis = 0;
+  return (x.plans ?? []).map((p) => {
+    let pos = texte.indexOf(p.quand, depuis);
+    if (pos < 0) pos = Math.max(0, texte.indexOf(p.quand));
+    depuis = pos + 1;
+    const t = p.instant ?? Math.max(0, instantCaractere(texte, pos, duree, phrases) - AVANCE_PLAN);
+    // Début de la fenêtre de narration du plan : celui de sa phrase si l'instant y est calé.
+    let j = debuts.length - 1;
+    while (j > 0 && debuts[j] > pos) j--;
+    const car = phrases?.length === debuts.length && t <= phrases[j][0] + 0.05 ? debuts[j] : pos;
+    let apres = car;
+    const camera = (p.image.camera?.length ? p.image.camera : [{ cadre: [0, 0, 1, 1] as Rect }]).map((e, k) => {
+      if (k === 0 || !e.quand) return { c: e.cadre, t };
+      const q = texte.indexOf(e.quand, apres);
+      if (q < 0) return { c: e.cadre, t };
+      apres = q + e.quand.length;
+      return { c: e.cadre, t: Math.max(t, instantCaractere(texte, q, duree, phrases)) };
+    });
+    return { t, image: p.image, camera };
+  });
+}
+/** Instants (s du segment) des images d'une série : `instant` saisi, sinon `instants[k]` (passage
+ *  `quand` situé par l'appelant), sinon réparties également sur `duree` ; la première à 0, les
+ *  suivantes jamais avant la précédente. */
+export function instantsSerie(images: ImageSerie[], duree: number, situes: (number | null)[] = []) {
+  let prec = 0;
+  return images.map((g, k) => {
+    const t = k === 0 ? 0 : Math.max(prec, g.instant ?? situes[k] ?? (k * duree) / images.length);
+    prec = t;
+    return Math.round(t * 100) / 100;
+  });
+}
+/** Toutes les images d'époque d'une période (spec 14) : diapositives, plans, images des lectures,
+ *  galeries des intermèdes, panneaux `image` des épisodes. */
+export function imagesSupplementaires(d: Diaporama) {
+  return [
+    ...d.diapositives.flatMap((x) => (x.plans ?? []).map((p) => p.image)),
+    ...(d.lectures ?? []).flatMap((l) => (l.images ?? []).map((g) => g.image)),
+    ...(d.musique?.intermedes ?? []).flatMap((c) => (c.galerie ?? []).map((g) => g.image)),
+    ...(d.episodes ?? []).flatMap((e) => e.visuels.flatMap((v) => (v.type === 'image' ? [v.image as ImageDiapo] : []))),
+  ];
+}
+export const nombreImages = (d: Diaporama) => d.diapositives.length + imagesSupplementaires(d).length;
 
 type Rect = [number, number, number, number];
 /** Zone utile d'une image (l'image entière si elle n'est pas renseignée ou invalide). */

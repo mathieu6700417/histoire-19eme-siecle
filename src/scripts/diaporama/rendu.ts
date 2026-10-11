@@ -9,12 +9,15 @@ import type { Lecteur } from './contexte';
 
 export function installerRendu(lec: Lecteur) {
   const { D, apresDe, audio, cadre, cadreA, cadreIntermede, calques, chronoCarton, chronoEntree, couches,
-    debutPlongee, horloge, horlogeSuite, majApres, majMosaique, placerTuiles, principal, sa,
+    debutPlongee, horloge, horlogeSuite, legendeGalerie, majApres, majGalerie, majMosaique, majPlans, placerTuiles, poserPlans, preparerPlans,
+    principal, sa,
     tempsOuverture, transformation } = lec;
   Object.assign(lec, { animer, assurerFin, instant, legendeVoulue, montrerImage, poser, rendre });
   /** Cartouche voulu à l'instant `t` : la ligne de la mosaïque pendant la grille, celui de
    *  l'image après dès le début du volet, sinon celui de l'image. */
   function legendeVoulue(x: Diapo, t: number) {
+    // Plans (spec 14) : le cartouche suit l'image affichée.
+    if (x.plans) for (let k = x.plans.length - 1; k >= 0; k--) if (t >= x.plans[k].t) return x.plans[k].legende;
     if (x.mos && !x.ouv && t < debutPlongee(x.mos.vignettes.length)) return x.mos.legende;
     if (x.ap && t >= x.ap.t) return x.ap.legende;
     return x.legende;
@@ -25,7 +28,7 @@ export function installerRendu(lec: Lecteur) {
     const trait = c.querySelector<HTMLElement>('.lecteur__trait')!, mo = c.querySelector<HTMLElement>('.mosaique')!;
     elA.hidden = true; trait.hidden = true; elA.style.clipPath = ''; elA.style.opacity = '';
     c.querySelector('img')!.style.visibility = '';
-    c.style.background = '';
+    c.style.background = x.en ? '#000' : ''; // image entière : bandes noires de côté
     if (x.ap) { if (imgA.getAttribute('src') !== x.ap.img) imgA.src = x.ap.img; imgA.alt = x.ap.alt; } else { imgA.removeAttribute('src'); imgA.alt = ''; }
     mo.hidden = true;
     mo.style.opacity = '';
@@ -43,6 +46,7 @@ export function installerRendu(lec: Lecteur) {
         mo.dataset.n = String(x.n);
       }
     } else { mo.replaceChildren(); delete mo.dataset.n; }
+    preparerPlans(c, x);
   }
   lec.legendeMontree = '';
 
@@ -63,6 +67,7 @@ export function installerRendu(lec: Lecteur) {
       const imgA = calques[k].querySelector<HTMLImageElement>('.lecteur__apres img')!;
       imgA.style.transform = transformation(calques[k], apresDe(x), ra, 1, imgA);
     }
+    poserPlans(k);
   }
 
   /** Rendu de l'image visible : caméra (horloge de l'audio) × entrée (horloge propre). */
@@ -96,9 +101,15 @@ export function installerRendu(lec: Lecteur) {
     // Avant / après, mosaïque ; puis le cartouche voulu à cet instant (pas pendant un segment).
     if (x.ap) majApres(c, x, tv);
     if (x.mos && !x.ouv) majMosaique(c, x, tv);
+    // Plans (horloge de la voix), puis galerie du segment en cours (horloge du segment) : spec 14.
+    if (x.plans) majPlans(c, x, tv, gris);
+    const g = su && (su.type === 'chant' ? su.galerie : su.type === 'lecture' ? su.images : null) ? majGalerie(c, x) : -1;
     if (lec.lance && !lec.enCarton && !lec.enSuite && !lec.suiteFini) {
       const v = legendeVoulue(x, tv);
       if (v !== lec.legendeMontree) lec.changerLegende(v);
+    } else if (g >= 0 && lec.lance && !lec.enCarton) {
+      const v = legendeGalerie(x, g);
+      if (v != null && v !== lec.legendeMontree) lec.changerLegende(v);
     }
     img.style.filter = gris > 0.002 ? `grayscale(${gris.toFixed(3)})` : '';
     c.style.opacity = opacite.toFixed(3);
@@ -117,7 +128,7 @@ export function installerRendu(lec: Lecteur) {
   function boucle(ts: number) {
     horloge.image = horlogeSuite.image = ts / 1000;
     rendre();
-    if (lec.enCarton) lec.majTemps();
+    if (lec.enCarton) { lec.majTemps(); lec.majFriseCarton(); }
     if (lec.enSuite) lec.majSuite();
     lec.raf = lec.joue || (lec.enEntree && chronoEntree.tourne) || chronoCarton.tourne ? requestAnimationFrame(boucle) : 0;
   }

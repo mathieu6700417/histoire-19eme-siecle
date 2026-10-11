@@ -6,7 +6,7 @@ import { typographie } from '../../utils/typographie.mjs';
 import { libelleChapitre } from '../../data/chapitres-ecrivains';
 import { planComplet, urlChapitre } from '../../utils/ecrivains';
 import {
-  diaporamas, dureeTotale, dureesGenerique, indicatif, urlCommons, formaterDuree, nomSourceMusique, objetsMusee, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
+  diaporamas, dureeTotale, dureesGenerique, indicatif, nombreImages, urlCommons, formaterDuree, nomSourceMusique, objetsMusee, planDiaporamas, portraits, urlDiaporama, urlSectionDiaporamas, urlSourceMusique,
   type Diaporama as D,
 } from '../../utils/diaporamas';
 
@@ -59,7 +59,7 @@ const urlLicence = (x: string) => {
         <a href={urlSectionDiaporamas}>Le siècle en images</a>
         <span aria-hidden="true"> · </span>{libelleChapitre(d.numero)}
         <span aria-hidden="true"> · </span>{d.periode}
-        <span aria-hidden="true"> · </span>{d.diapositives.length} images
+        <span aria-hidden="true"> · </span>{nombreImages(d)} images
         <span aria-hidden="true"> · </span>{duree}
       </p>
       <h1>{typographie(d.titre)}</h1>

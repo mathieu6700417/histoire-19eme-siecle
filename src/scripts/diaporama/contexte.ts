@@ -1,7 +1,7 @@
 // Type du contexte `lec` partagé par les modules : état mutable (`lec.i`, `lec.enCarton`…) et
 // fonctions qu'un module expose aux autres. Généré au découpage ; à tenir à jour à la main
 // quand un module expose un nouveau membre (Object.assign(lec, …) en tête ou en fin de module).
-import type { DateFrise, Diapo, Donnees, EtatSegment, Rect, SuiteChant, SuiteEpisode, SuiteLecture } from './types';
+import type { DateFrise, Diapo, Donnees, EtatSegment, Plan, Rect, SuiteChant, SuiteEpisode, SuiteLecture } from './types';
 import type { Chrono, HorlogeLissee } from './horloge';
 
 /** Contexte d'un lecteur : état partagé et fonctions que les modules s'échangent. */
@@ -59,7 +59,7 @@ export interface Lecteur {
   minuterie: number;
   debutSansVoix: number;
   ecouleSansVoix: number;
-  couches: { x: Diapo | null; r: Rect; ra?: Rect | null | undefined; }[];
+  couches: { x: Diapo | null; r: Rect; ra?: Rect | null | undefined; tp?: number; tg?: number; }[];
   enCarton: boolean;
   chronoCarton: Chrono;
   ouvre: boolean;
@@ -92,6 +92,15 @@ export interface Lecteur {
   principal: (x: Diapo) => Diapo;
   placerTuiles: (c: HTMLElement, x: Diapo) => void;
   majMosaique: (c: HTMLElement, x: Diapo, t: number) => void;
+  // plans
+  galerieDe: (x: Diapo) => Plan[] | null;
+  planDe: (x: Diapo, p: Plan, fin: number) => Diapo;
+  preparerPlans: (c: HTMLElement, x: Diapo) => void;
+  taillerPlans: (c: HTMLElement, x: Diapo) => void;
+  majPlans: (c: HTMLElement, x: Diapo, t: number, gris?: number) => void;
+  majGalerie: (c: HTMLElement, x: Diapo, ts?: number) => number;
+  poserPlans: (k: number) => void;
+  legendeGalerie: (x: Diapo, k: number) => string | null;
   // rendu
   legendeVoulue: (x: Diapo, t: number) => string;
   legendeMontree: string;
@@ -107,6 +116,7 @@ export interface Lecteur {
   derniere: number;
   changeFrise: (de: DateFrise, a: DateFrise) => boolean;
   poserActe: (f: HTMLElement, k: number) => void;
+  majFriseCarton: (t?: number) => void;
   cacherFrise: () => void;
   majPoussee: () => void;
   montrerFrise: (de: DateFrise, a: DateFrise) => void;

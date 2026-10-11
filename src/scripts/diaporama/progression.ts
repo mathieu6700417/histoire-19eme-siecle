@@ -50,6 +50,8 @@ export function installerProgression(lec: Lecteur) {
       if (x.objet) new Image().src = x.objet.src;
       if (x.manuscrit) new Image().src = x.manuscrit.src;
       if (x.ap) new Image().src = x.ap.img;
+      // Plans, galerie d'intermède, images d'une lecture (spec 14).
+      for (const p of [...(x.plans ?? []), ...(lec.galerieDe(x) ?? [])]) new Image().src = p.img;
       for (const v of x.mos?.vignettes ?? []) new Image().src = v.img;
       if (j > k && x.audio) { const a = new Audio(); a.preload = 'auto'; a.src = x.audio; }
       if (x.suite && j <= k + 1) { const a = new Audio(); a.preload = 'auto'; a.src = x.suite.src; }

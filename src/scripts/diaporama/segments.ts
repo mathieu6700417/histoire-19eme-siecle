@@ -27,7 +27,7 @@ export function installerSegments(lec: Lecteur) {
     if (sa.getAttribute('src') !== c.src) sa.src = c.src;
     try { sa.currentTime = 0; } catch { /* métadonnées pas encore chargées */ }
     if (c.type === 'chant') {
-      changerCartouche({ legende: c.legende } as Diapo);
+      changerCartouche({ legende: c.galerie?.[0]?.legende ?? c.legende } as Diapo);
       chargerSurimpressions(null);
       // Intermède musical (œuvre instrumentale) : pas de paroles, sous-titre masqué.
       lecteur.classList.toggle('en-instrumental', c.instrumental);
@@ -83,6 +83,8 @@ export function installerSegments(lec: Lecteur) {
     if (!c || (!lec.enSuite && !lec.suiteFini)) return;
     const t = lec.suiteFini ? c.duree + 2 : sa.currentTime || 0;
     if (c.type === 'chant') { if (lec.enSuite) lec.majParoles(); return; }
+    // Lecture illustrée (spec 14) : hors boucle d'animation (saut en pause), l'image de fond suit.
+    if (c.type === 'lecture' && c.images && !lec.raf) lec.rendre();
     if (!lec.ov) return;
     if (c.type === 'lecture') lec.majCitation(lec.ov, c, t);
     else lec.majEpisode(lec.ov, c, t);

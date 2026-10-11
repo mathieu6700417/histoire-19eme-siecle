@@ -44,8 +44,9 @@ export function installerIncrustations(lec: Lecteur) {
   /** Plafond de hauteur des portraits et des objets du bas (part de la hauteur de la scène). */
   const plafondCoin = () => scene.clientHeight * (scene.clientWidth < 700 ? COIN_H_MAX_TEL : COIN_H_MAX);
   /** Rangée de portraits (spec 12, « Portraits des personnes nommées ») : ovales seuls, sans
-   *  cartouche, une étiquette serrée dessous. Hauteur : 1,5 fois l'ancienne (révision du
-   *  2026-10-09), plafonnée à 30 % de la hauteur de la scène (27 % sur téléphone debout) ;
+   *  cartouche, une étiquette serrée dessous. Hauteur : la moyenne de l'ancienne (25 % de la scène,
+   *  110 à 180 px ; 70 px au moins sur téléphone) et de celle du 2026-10-09 (1,5 fois l'ancienne,
+   *  plafonnée à 30 % de la scène, 27 % sur téléphone debout) : retour du 2026-10-11 ;
    *  réduite si la rangée ne tient pas à côté du médaillon de lieu ou de l'objet montré en même
    *  temps dans le coin opposé. Puis la citation : si elle touche la rangée, elle monte au-dessus
    *  d'elle, pour toute la diapositive (rien ne bouge pendant qu'elle est lue). */
@@ -55,7 +56,9 @@ export function installerIncrustations(lec: Lecteur) {
     const H = scene.clientHeight, W = scene.clientWidth;
     const gauche = parseFloat(getComputedStyle(elPortraits).left) || 8;
     const ancienne = Math.max(W < 700 ? 70 : 110, Math.min(180, H * 0.25));
-    let h = Math.min(1.5 * ancienne, plafondCoin());
+    // Retour du 2026-10-11 : à mi-chemin entre l'ancienne taille et celle du 2026-10-09 (1,5 fois
+    // l'ancienne, plafonnée à 30 % de la scène ; 27 % sur téléphone debout).
+    let h = (ancienne + Math.min(1.5 * ancienne, plafondCoin())) / 2;
     elPortraits.style.setProperty('--ovale-h', `${Math.round(h)}px`);
     const lieu = x.lieu && elLieu ? elLieu.offsetWidth + gauche : 0;
     const O = x.objet;

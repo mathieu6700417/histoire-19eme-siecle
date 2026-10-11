@@ -395,7 +395,8 @@ l'Égypte » ; sur téléphone, le lecteur ignore le gros plan, vue presque iden
   sans étiquette, le curseur (trait fin, ou court segment pour une durée) et sa date au-dessus
   (`libelleDate`). Plus de segments d'actes ni d'années intermédiaires. Monochrome ; sur
   téléphone, même dessin pleine largeur.
-- Carton d'acte : la même frise, sans curseur ni date, avec l'intervalle de l'acte en segment
+- Carton d'acte (**révisé le 2026-10-11** : frise animée, voir « Images entières sur fond noir,
+  repères des cartons ») : la même frise, sans curseur ni date, avec l'intervalle de l'acte en segment
   noir épais (de la première à la dernière date de ses diapositives, `poserActe`), en fondu ;
   6 px au moins, centré sur l'intervalle.
 - Affichage en bas de l'image : pendant 4 s (fondu, glissement ~1 s, lecture, fondu de 0,6 s) à chaque
@@ -854,7 +855,8 @@ lieux ; à relancer après toute nouvelle voix.
   au nom (le premier dès l'entrée de la rangée), les précédents restent ; la rangée va du premier
   nom à 3 s après le dernier (5 s au moins ; un nom dit dans les 4 dernières secondes avance son
   entrée), prolongée jusqu'à la fin de la citation de la personne ;
-- taille (révision du 2026-10-09) : 1,5 fois l'ancienne (25 % de la hauteur de la scène, 110 à
+- taille (**révisée le 2026-10-11** : moyenne de l'ancienne et de celle-ci, voir en fin de fichier ;
+  révision du 2026-10-09) : 1,5 fois l'ancienne (25 % de la hauteur de la scène, 110 à
   180 px, 70 au moins sur téléphone), plafonnée à `COIN_H_MAX` = 30 % de la hauteur de la scène
   (`COIN_H_MAX_TEL` = 27 % sous 700 px de large ; `constantes.ts`) : 134 px à 1280 × 760 (scène
   1040 × 450), 216 px à 1920 × 1080, 105 px sur téléphone 390 × 844 ; rangée avec étiquette
@@ -1144,6 +1146,7 @@ est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir direct
 | `camera.ts` | taille des calques, marges couvertes, vue, plan des transitions, `cadreA`, intermède |
 | `avant-apres.ts` | image avant / après, raccord, rendu du volet |
 | `mosaique.ts` | grille, vignettes, plongée dans l'image principale |
+| `plans.ts` | spec 14 : plans d'une diapositive, galerie d'un intermède, images d'une lecture (fondu croisé, caméra par image) |
 | `rendu.ts` | préparation des calques, `instant`, `rendre`, boucle d'animation, `montrerImage` |
 | `frise.ts` | frise du carton et du bas de l'image, poussée des surimpressions |
 | `textes.ts` | cartouche (fondu croisé, estompe) et sous-titre |
@@ -1161,6 +1164,7 @@ est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir direct
 | `tests.ts` | `__aller(n, segment)`, `__instant()`, `__camera(n, t)` |
 | `controles.ts` | clics, barre des actes, sous-titres, plein écran, redimensionnement, clavier, balayage |
 | `reprise.ts` | reprise mémorisée et premier rendu (installé en dernier) |
+| `annotations.ts` | spec 15, **mode annotation seulement** (import dynamique sous `__ANNOTATIONS__`, absent du site déployé) : touche A, panneau, liste, repères ; styles injectés par le module |
 
 **Conventions.** Chaque module exporte `installerX(lec)`. Ce qu'il emprunte aux modules installés
 avant lui est déstructuré en tête (`const { D, audio, rendre } = lec;`) ; ce qu'il expose est publié
@@ -1238,6 +1242,102 @@ réunion des messages de A, B et C doit égaler la vérification complète ; A e
 - Un 402 en cours de route arrête le script comme le plafond `--budget` : ce qui est fait est écrit.
 - Essai sans dépense : `DIAPORAMAS_GEMINI_SIMULER=402 python3 scripts/diaporamas/utile.py <slug> --n 5 --budget 0.05`.
 
+## Plans, lectures illustrées et galeries (spec 14)
+
+Deux fois plus d'images à narration identique (spec 14). Quatre champs, tous facultatifs : une
+période qui n'en a aucun se joue exactement comme avant. Partout, `image` a le format de l'image
+d'une diapositive (`commons`, `titre`, `titre_court`, `auteur`, `date`, `technique`, `conservation`,
+puis `fichier`, `licence`, `largeur`, `hauteur`, `utile`, `camera` écrits par la chaîne ; `recadrage`
+et `utile_manuel` admis).
+
+```jsonc
+// 1. Plans : sur une diapositive (1 ou 2 ; pas avec image.apres ni mosaique). Fichiers NNN-b.webp, NNN-c.webp.
+"plans": [{ "quand": "Des toits pleuvent les tuiles", "instant": 9.58, "image": { … } }]
+// 2a. Lecture illustrée : dans lectures[] (2 à 4 images ; `quand` = mots du texte lu, facultatif
+//     sinon réparties également ; la première est là dès le début). Fichiers lectures/<id>-<k>.webp.
+"images": [{ "image": { … } }, { "quand": "Georges la Fayette passa un drapeau", "image": { … } }]
+// 2b. Panneau d'épisode : dans episodes[].visuels, jamais en premier. Fichier episodes/<id>-<k>.webp.
+{ "type": "image", "quand": "La Chambre nouvelle est dissoute", "legende": "Phrase facultative.",
+  "position": "50% 35%", "image": { … } }
+// 3a. Galerie d'un intermède existant : dans musique.intermedes[] (3 à 5 images, réparties sur
+//     l'extrait ; `instant` facultatif, en s de l'extrait). Fichiers galeries/<id>-<k>.webp.
+"galerie": [{ "image": { … } }, { "image": { … } }, { "image": { … } }]
+// 3b. Galerie nouvelle sans voix : un intermède instrumental de plus, avec `theme` (20 à 30 s).
+{ "id": "galerie-barricades", "apres": 101, "fichier": "musique/galerie-barricades.m4a",
+  "titre": "…", "auteur": "…", "date": "…", "interprete": "…", "enregistrement": "…",
+  "source": { … du registre ou d'une piste de fond … }, "licence": "…", "debut": 96, "fin": 121,
+  "fondu_entree": 1.5, "fondu_sortie": 2.5, "instrumental": true, "paroles": [],
+  "cartouche": { "oeuvre": "…", "compositeur": "…" },
+  "theme": "Paris en armes : les barricades de juillet 1830", "galerie": [ … ] }
+```
+
+**Ordre des scripts** (tous idempotents ; seuls `utile.py` et `camera.py` paient Gemini, `--budget`
+obligatoire ; ~0,002 $ par zone utile, ~0,005 $ par image cadrée par le modèle) :
+
+```sh
+python3 scripts/diaporamas/images.py restauration --n 100,102,106      # téléchargement, licence, notice
+python3 scripts/diaporamas/utile.py restauration --budget 0.10         # zone utile des images nouvelles
+python3 scripts/diaporamas/musique.py restauration                     # galerie nouvelle : son extrait
+python3 scripts/diaporamas/surimpressions.py restauration              # `instant` des plans (avant camera.py)
+python3 scripts/diaporamas/camera.py restauration --n 100 102 --budget 0.20   # « 100 » : l'image et ses plans
+python3 scripts/diaporamas/camera.py restauration --audit              # puis --reparer --n … (gratuit)
+python3 scripts/diaporamas/verifier.py restauration --etape C --hors-ligne
+python3 scripts/diaporamas/captures.py restauration 100:p1+0.4 100:p1+3 109:g2+5 101:g3 --planche
+```
+
+- **Plans.** `quand` : mots exacts de la narration, cherchés après le plan précédent ; choisir le
+  **début d'une phrase**. `surimpressions.py` écrit `instant` : 0,3 s avant le passage, ou avant le
+  début de la phrase si le passage est dit dans les 1,5 s qui le suivent (le fondu de 0,8 s tombe
+  dans le silence). Chaque image reste **5 s au moins** (`verifier.py`, étape C : erreur) : la
+  première aussi, donc pas de plan sur une phrase qui commence avant 5,3 s, ni à moins de ~5 s de la
+  fin de la voix ; trois images demandent ~16 s et deux coupures bien placées (rare). Un plan qui
+  commence pendant une citation ou un chiffre affiché est signalé (avertissement).
+- **Caméra d'une diapositive à plans.** `camera.py` travaille sur des « vues » (`commun.vues_camera`) :
+  l'image principale n'est cadrée que sur la narration dite avant le premier plan (sa caméra est
+  donc **refaite** quand on ajoute un plan : empreinte changée), chaque plan (« 100b ») sur la
+  narration de sa fenêtre, minutage compté depuis son début. Les `quand` de la caméra d'un plan sont
+  pris dans cette fenêtre ; le lecteur les cherche à partir du début du plan. Clés de cache et de
+  planche : `100`, `100b`, `100c`. `--audit` et `--reparer` connaissent les plans. Un plan a son
+  `camera_manuelle` (dans l'entrée du plan, à côté de `quand`).
+- **Images sans narration** (lecture, galerie) : `camera.py` leur écrit **un seul cadre**, local et
+  gratuit (toute la largeur de la zone utile, bande posée sur les visages YuNet ; sinon un peu
+  au-dessus du centre), dès que `utile` existe ; `--n galerie:<id>:2` ou `--force` le refait. Le
+  corriger à la main si le sujet est coupé (le cadre n'est pas réécrit tant qu'il existe).
+- **Zone utile.** Clés `100b`, `lecture:dumas:1`, `galerie:<id>:2` (`utile.py --n` les accepte). Une
+  estampe à grandes marges est souvent **refusée** (zone < 50 %) : ne pas saisir une petite zone,
+  mais écrire `recadrage` (la zone proposée par le modèle, lue dans la sortie), relancer `images.py`
+  puis `utile.py` : l'image servie est nette. Le fichier pèse alors plus (jusqu'à ~800 Ko).
+- **Doublons.** Une image de la spec 14 déjà employée dans la période (diapositive, image après,
+  vignette, autre image de la spec 14) est une erreur ; `"reprise": true` dans l'entrée (à côté de
+  `image`) l'admet pour un détail voulu. État des licences : `.cache/…/images.json`, clés
+  `spec14:<genre>:<fichier Commons>`.
+- **Lecteur** (`plans.ts`) : les images d'une série sont posées dans `.lecteur__plans` du calque
+  (créées par le script : leurs styles sont en `:global`, comme la mosaïque). Plans : horloge de la
+  voix, fondu `FONDU_PLAN` (0,8 s) qui **commence à `instant`** ; galeries et lectures : horloge du
+  segment, `FONDU_GALERIE` (1,2 s). Chaque image est une vue dérivée (`planDe`) : sa zone utile, sa
+  caméra, sa fenêtre ; sa tenue a commencé `ELAN_PLAN` s plus tôt (elle entre en mouvement). Le
+  cartouche suit l'image (`legendeVoulue`, `legendeGalerie`). Lecture illustrée : carte
+  `citation--illustree` (voile translucide, légende `.citation__image`), et l'image suivante entre
+  en fondu enchaîné ordinaire (la carte ne couvre plus). Mouvement réduit : cadre fixe, fondu 0,3 s.
+- **Renumérotation** : `renumeroter.py` renomme `NNN-b.webp` ; relancer `images.py` ensuite.
+- **`verifier.py`** : famille « plans et galeries » aux étapes A (fichiers, licences, notices,
+  doublons, passages), B (zone utile, caméra), C (instants, durées) ; ligne « Images : n dont p
+  plan(s)… » ; avertissement de dosage sous 200 images (période ≥ 3 ou déjà enrichie).
+- **Piège de capture (élucidé le 2026-10-11)** : sur la diapositive 99 (mosaïque, après la plongée), la même
+  capture donnait deux images sur un **même** build, y compris celui d'avant la spec 14 : la photo
+  « pleine page » de Playwright redimensionne la fenêtre émulée, et le lecteur redessine l'image
+  pendant la prise (transformation modifiée en cours de photo). Ce n'était pas une régression du
+  conteneur `.lecteur__plans` (état du DOM identique dans les deux builds). `captures.py` photographie
+  désormais la fenêtre quand le lecteur y tient (résultat stable, identique à l'ancien hors de ce cas).
+- **Plan d'une diapositive qui ouvre un acte** (1, 14, 40, 59…) : l'ouverture en volets suit le temps
+  réel ; capturer avec `--attente 9000`, sinon l'image principale est encore à l'écran.
+- **Poids** : une image de la spec 14 ne dépasse pas ~400 Ko (`POIDS_MAX_SUP` d'`images.py` : qualité
+  abaissée par paliers jusqu'à 56, puis taille réduite par paliers de 10 %, jamais sous 1 200 px).
+- **Portraits serrés** : l'écran ne montre qu'une bande d'environ un tiers de la hauteur d'une image
+  en hauteur ; un portrait dont le visage occupe plus du tiers de l'image ne peut pas être montré
+  entier (plans retirés pour cette raison en période 03 : David par Navez, Musset, Charles X par
+  Tardif). Préférer les portraits en buste ou en pied, ou cadrer à la main (`camera_manuelle`).
+
 ## Captures (contrôle visuel et non-régression)
 
 `captures.py` photographie le lecteur à des instants précis, avec une horloge entièrement factice
@@ -1255,7 +1355,9 @@ python3 scripts/diaporamas/captures.py revolution 1:c5 2:12.5 20:5.5 7:s20 --dis
 
 - Plan : `n` ou `n:t` (voix de la diapositive n à t s, 2 par défaut, en pause), `n:sT` (segment après
   la voix, à T s), `n:cT` (carton de l'acte qui commence à n, T s après son début), `o:T` et `f:T`
-  (générique d'ouverture, récapitulatif de fin). Depuis le générique, la barre de progression et
+  (générique d'ouverture, récapitulatif de fin) ; `n:pK`, `n:pK+D`, `n:pK-D` (plan K de la diapositive n, D s après
+  son instant, 2 par défaut ; `+0.4` : milieu du fondu) et `n:gK+D` (image K de la galerie ou de la lecture
+  illustrée jouée après n) : spec 14. Depuis le générique, la barre de progression et
   le temps écoulé diffèrent d'un build antérieur (décalés de l'ouverture) : comparer les autres zones.
 - `--appareil ordinateur|telephone|les-deux` (1280 × 760, 390 × 844) ; fichiers `o-<n_t>.png`,
   `t-<n_t>.png` ; `--planche` : `planche.png` (3 colonnes, légendées) ; `--attente` : ms d'horloge
@@ -1274,3 +1376,159 @@ python3 scripts/diaporamas/captures.py revolution 1:c5 2:12.5 20:5.5 7:s20 --dis
   2:12.5 5:4 14:10.5 21:12 94:12 92:13.8 92:17.5 20:5.5 18:3 7:s20 92:s20 61:s30 72:s15 96:s10 114:s20`
   (+ téléphone `1:c5 2:12.5 7:s20 20:5.5`) ; Consulat et Empire `1:c6 89:3.5 86:s15 111:s20 65:s25
   3:s10 107:5 105:s30` (+ téléphone `65:s25 86:s15`).
+
+## Caméra proposée par Claude (banc_claude.py)
+
+`banc_claude.py` fait proposer la caméra par des sous-agents Claude (Sonnet retenu, à partir de la
+période 04), sans API : il écrit des fichiers de tâche qu'un agent lit (image comprise, par son
+outil Read) et auxquels il répond par un JSON ; les réponses passent par les contrôles de
+`camera.py`. 0 $. Seuls `appliquer` et `restaurer` écrivent dans le JSON de la période et dans
+`.cache/diaporamas/<slug>/camera.json` ; le reste tient dans `.cache/diaporamas/banc-claude/<horodatage>/`.
+
+Procédure pour une période (après `utile.py` et `surimpressions.py`, qui fixent zones utiles et `instant` des plans) :
+
+1. `python3 scripts/diaporamas/banc_claude.py preparer <slug> --toutes --etiquette sonnet`
+   (`--statiques` : seulement les vues sans caméra ou qui tiennent un cadre plus de 7 s ; `--n 12 100 100b` :
+   ces vues ; `--lot 15` : taille des lots). Une tâche par vue de `commun.vues_camera` (chaque image
+   d'une diapositive à plans a la narration et le minutage de sa fenêtre : `tache-100.md`, `tache-100b.md`),
+   en lots `lot-K/` avec chacun son `LISEZMOI.md`. Exclus : `camera_manuelle`, plans sans `instant`,
+   avant/après, image principale d'une mosaïque ; lectures et galeries restent à `camera.py`.
+2. Un sous-agent par lot : « Lis `<dossier>/lot-K/LISEZMOI.md` et suis-le » ; il écrit `reponse-NNN.sonnet.json`.
+3. Second tour (facultatif) : `… relire <dossier>/lot-K [--fautives]` écrit `retour-NNN.sonnet.md`
+   (erreurs à corriger, ou relance des tenues longues et relecture des cadres dessinés) ; l'agent
+   relit et réécrit sa réponse.
+4. `… noter <dossier>` : `comparatif.md`, `comparatif.json`, `planche-NN.jpg` (caméra du JSON et de
+   chaque étiquette ; mesure de `banc_gemini.py` : vues, visages, tête hors champ, étapes ignorées, repli).
+5. `… appliquer <dossier> --essai` puis sans `--essai` : pose les caméras acceptées ou réparées, sans
+   erreur ni repli, d'au moins autant d'étapes que l'actuelle (`--strict` : plus d'étapes ou tenue plus
+   courte), sur les vues inchangées depuis la préparation. Sauvegarde `sauvegarde-<horodatage>.json` ;
+   `… restaurer <dossier>` remet les caméras remplacées (celles changées depuis sont laissées, sauf `--force`).
+
+Pièges :
+- Une réponse refusée par le contrôle n'est pas renvoyée au modèle (sauf `relire`) : elle est réparée
+  comme par `camera.py --reparer`, sinon repli sur une étape (jamais appliqué).
+- Les narrations n'ont pas de minutage par mot (`audio.mots` n'existe que pour les lectures) : la tâche
+  donne l'instant de chaque mot au prorata dans sa phrase, comme `camera.instants` (ce que vérifie le contrôle).
+- Protection : `appliquer` remplace l'entrée de la vue dans le cache `camera.json` (empreinte actuelle,
+  `source: "claude:<étiquette>"`) ; `camera.py <slug>` ne refait donc pas ces caméras, mais
+  `camera.py --force` les referait. Ne pas lancer `appliquer` / `restaurer` pendant qu'un `camera.py`
+  tourne sur la période (il réécrit son cache en entier).
+- Banc d'essai (comparaison à Gemini) : `preparer camera consulat-empire` sans option reprend les
+  diapositives du dernier `banc_gemini.py camera` et y ajoute cinq autres ; `… factice <dossier>` écrit
+  des réponses d'essai tirées du JSON.
+
+## Annotations de visionnage (spec 15)
+
+Outil **local** : l'utilisateur regarde un diaporama, note d'une touche ce qu'il faut corriger ;
+Claude relit ces notes avec leur contexte. **Avant de retoucher un diaporama, lire
+`python3 scripts/diaporamas/annotations.py lister <slug> --a-faire`.**
+
+```sh
+npm run annoter                      # build en mode annotation (dist-annotations/) + serveur local, port libre affiché
+python3 scripts/diaporamas/annoter.py --port 4330 [--sans-build] [--sans-capture]
+python3 scripts/diaporamas/annotations.py lister restauration [--a-faire] [--categorie cadrage]
+python3 scripts/diaporamas/annotations.py lister restauration --detail 142512-037   # tout le contexte + chemin de la capture
+python3 scripts/diaporamas/annotations.py traiter 142512-037 "tête recadrée (camera_manuelle)"
+python3 scripts/diaporamas/annotations.py bilan restauration
+```
+
+- **Rien dans le site déployé.** `astro.config.mjs` définit `__ANNOTATIONS__` (vrai seulement si
+  `ANNOTATIONS=1`, posé par `annoter.py`) ; `lecteur.ts` n'importe `annotations.ts` que sous cette
+  condition, éliminée au build normal (pas de module, pas de style : `grep -ri annot dist/` ne trouve
+  que du contenu éditorial, « Johannot »). Le build d'annotation va dans `dist-annotations/`
+  (ignoré par git) : `dist/` et `astro preview` ne sont pas touchés.
+- **Serveur** (`annoter.py`, bibliothèque standard) : `127.0.0.1` seulement, fichiers statiques avec
+  requêtes Range, point d'écriture `/__annotations/<slug>[/<id>]` (GET, POST, PUT, DELETE ; même
+  origine exigée) qui n'écrit que sous `docs/annotations/` ; écritures atomiques (`annotations.py`).
+- **Raccourcis** (mode annotation) : **A** pause + panneau ; catégorie par **1…7 tant que le champ
+  est vide**, **Alt+1…7**, **Tab / Maj+Tab** ou clic (1 image, 2 cadrage, 3 texte, 4 voix, 5 musique,
+  6 surimpression, 7 autre ; défaut : autre) ; **Entrée** enregistre et reprend, **Maj+Entrée** saut
+  de ligne, **Échap** annule et reprend (texte vide : rien d'écrit). **L** (ou clic sur le compteur) :
+  liste ; ↑ ↓, **Entrée** ou clic saute à l'instant annoté en pause, **E** modifie, **Suppr** supprime
+  après confirmation (Entrée ou O), **Échap** ferme. Tant que le panneau ou la liste est ouvert, les
+  raccourcis du lecteur sont suspendus (écouteur en phase de capture sur `window`).
+- **Format** : `docs/annotations/<slug>.jsonl`, une ligne par annotation (spec 15) ; `id` =
+  `AAAAMMJJ-HHMMSS-NNN` (heure du navigateur, NNN = diapositive ; `annotations.py` accepte la fin de
+  l'identifiant s'il est unique). Le lecteur relève `lieu` et `ecran` à l'instant de la pause ; le
+  serveur complète l'identifiant de l'acte, `image.commons` / `titre_court` et la `phrase` exacte de
+  la narration (`audio.phrases`). Champs nuls selon l'état : `camera` hors diapositive et plan ;
+  `image` pendant un carton, un générique ou un épisode ; `phrase` pendant un carton, un générique,
+  une galerie instrumentale ; `n` et `acte` pendant le générique et le récapitulatif. `lieu.type` :
+  `chant` pour un intermède à paroles (même illustré : `image_galerie` renseigné), `galerie` pour une
+  série d'images sur un extrait instrumental. `sous_titre` : texte affiché (toute la narration de la
+  diapositive), `null` si les sous-titres sont coupés.
+- **Capture** : faite **par le serveur**, en tâche de fond (quelques secondes), en rejouant le lecteur sans tête au
+  même instant avec `captures.capturer` (horloge factice, fenêtre de l'utilisateur, sous-titres comme
+  chez lui, lecteur sans l'outil), puis JPEG de 1 280 px au plus dans `docs/annotations/<slug>/<id>.jpg`
+  et champ `capture` complété (`null` en attendant, ou si Playwright manque). Pas de capture dans le
+  navigateur : redessiner le DOM (transformations, calques, flous) demanderait une bibliothèque lourde
+  et infidèle, et la capture d'onglet une autorisation à chaque page. Limites : c'est une reconstitution
+  (pas le plein écran, pas l'état exact d'un fondu d'entrée ni de l'ouverture en volets, frise du bas
+  calculée depuis la diapositive 1). Les captures manquantes sont retentées au lancement suivant.
+- **Panne du serveur** : message dans le panneau, qui reste ouvert ; copie de secours dans
+  `localStorage` (`annotations-secours:<slug>`), renvoyée à l'annotation suivante ou au rechargement
+  (même `id` : pas de doublon) ; le compteur indique « n en attente d'envoi ».
+- **Saut depuis la liste** : diapositive, plan et segment à l'instant exact ; carton, générique et
+  récapitulatif à leur début (carton de l'acte, première ou dernière diapositive).
+- **Marquer traité** : `annotations.py traiter` ; le lecteur l'affiche (repère gris clair, ligne
+  grisée avec le traitement) après rechargement ou réouverture de la liste.
+
+## Images entières sur fond noir, repères des cartons (retours du 2026-10-11)
+
+Spec 12, « Retours du visionnage de la Restauration (2026-10-11) ».
+
+**Image entière (`image.entier`).** Valable pour l'image d'une diapositive, d'un plan et d'une
+galerie ; sans effet sur un avant / après ou une mosaïque ; pas sur les images de lecture.
+
+```jsonc
+"image": { …, "entier": true,                       // image entière, bandes noires de côté
+  "entier_vers": [0.18, 0.03, 0.68, 0.55],          // sujet du rapprochement (fractions de l'image servie)
+  "entier_zoom": 1.15,                              // zoom final (1 à 2 ; absent : 1,3)
+  "entier_manuel": true }                           // réglage à la main : le script n'y touche plus
+```
+
+```sh
+python3 scripts/diaporamas/camera.py restauration --entiers             # pose ou retire le drapeau (gratuit)
+python3 scripts/diaporamas/camera.py revolution --entiers --simuler     # compte seulement, n'écrit rien
+python3 scripts/diaporamas/camera.py restauration --entiers --n 22 54b --seuil 0.55
+```
+
+- **Règle** (`entier_propose`) : entier si la bande bord à bord (`RATIO_VUE` 2,5:1) montre moins de
+  `SEUIL_ENTIER` (50 %) de la hauteur de la zone utile, ou si la tête d'un portrait d'une personne
+  seule (`TETE_ENTIER` : 1,35 hauteur de visage) ne tient pas dans la bande. `entier_vers` : la tête
+  du portrait (`sujet_portrait`, visage agrandi) ; sinon le dernier cadre de `image.camera` s'il est
+  plus petit que la zone utile ; sinon rien (centre). `entier_zoom` : 1,3, abaissé par pas de 0,05
+  tant qu'un visage d'au moins 6 % de la hauteur n'est pas entier dans la vue finale, pour cinq
+  formes de scène (`SCENES_ENTIER` : téléphone, ordinateur, plein écran avec sous-titres).
+- **Idempotent** : relancer après `utile.py` et `camera.py` (la zone utile et les cadres servent à
+  la règle) ; une image qui ne répond plus à la règle perd son drapeau. `entier_manuel: true` la
+  protège (pour forcer bord à bord : `"entier": false, "entier_manuel": true`).
+- **À relire sur planche** : un portrait dont `recadrage` ou `utile` rogne la tête reste rogné
+  (39 et 40 de la Restauration : recadrage et zone utile repris à la main) ; un zoom à 1 (image
+  fixe) signale un visage au bord de l'image.
+- **Lecteur** : `camera.ts` (`zoneEntier`, `vueZoom`, `vueEntier`, `finEntier`, `cadreEntier`, branche
+  `entier` de `parametres`), `plans.ts` (fond `.lecteur__noir` d'une image de série), `rendu.ts`
+  (fond noir du calque), constantes `ENTIER_*`. `image.camera` reste exigé par `verifier.py` mais
+  n'est pas joué. `verifier.py` (étape A, « repères et images entières ») contrôle les champs.
+- **Périodes 01 et 02** : aucun drapeau posé (décision de l'utilisateur attendue) ; la règle en
+  basculerait 52 sur 122 (Révolution) et 39 sur 108 (Consulat et Empire) ; 73 et 55 au seuil de 55 %.
+
+**Dates clés d'un acte (`actes[].reperes`).** Facultatif, 2 ou 3 par acte, montrées à la fin de
+la frise animée du carton (`frise.ts` : `poserActe`, `majFriseCarton` ; constantes `CARTON_*`).
+
+```jsonc
+{ "id": "ultras", "titre": "Les ultras au pouvoir", "dates": "1820-1824", "debut": 40,
+  "reperes": [ { "date": "1821-12", "libelle": "Ministère Villèle" },
+               { "date": "1830-07-27", "date_fin": "1830-07-29", "libelle": "Les Trois Glorieuses" } ] }
+```
+
+Dates au format des diapositives (`AAAA`, `AAAA-MM`, `AAAA-MM-JJ`), prises dans la narration de
+l'acte ; libellé de 36 caractères au plus (avertissement au-delà). Le compteur d'années ne défile
+que si `dates` vaut « AAAA-AAAA ».
+
+**Médaillons de portrait** : hauteur moyenne entre l'ancienne taille et celle du 2026-10-09
+(`taillePortraits` dans `incrustations.ts`) ; `COIN_H_MAX` ne règle plus que le plafond de la
+grande taille et les objets.
+
+**Captures** : `captures.py --fenetre 1512x945` (taille de la fenêtre de l'ordinateur) et
+`--reduit` (prefers-reduced-motion).

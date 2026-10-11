@@ -9,43 +9,142 @@
       "id": "retour-du-roi",
       "titre": "Le retour du roi",
       "dates": "1814-1815",
-      "debut": 1
+      "debut": 1,
+      "reperes": [
+        {
+          "date": "1814-06-04",
+          "libelle": "La Charte"
+        },
+        {
+          "date": "1815-03",
+          "libelle": "Retour de Napoléon"
+        },
+        {
+          "date": "1815-07-08",
+          "libelle": "Second retour du roi"
+        }
+      ]
     },
     {
       "id": "terreur-blanche",
       "titre": "La Terreur blanche",
       "dates": "1815-1816",
-      "debut": 14
+      "debut": 14,
+      "reperes": [
+        {
+          "date": "1815-08",
+          "libelle": "La Chambre introuvable"
+        },
+        {
+          "date": "1815-12-07",
+          "libelle": "Exécution du maréchal Ney"
+        },
+        {
+          "date": "1816-09-05",
+          "libelle": "Dissolution de la Chambre"
+        }
+      ]
     },
     {
       "id": "moderes",
       "titre": "Le temps des modérés",
       "dates": "1816-1820",
-      "debut": 26
+      "debut": 26,
+      "reperes": [
+        {
+          "date": "1818-11",
+          "libelle": "Fin de l'occupation étrangère"
+        },
+        {
+          "date": "1819",
+          "libelle": "Lois de Serre sur la presse"
+        },
+        {
+          "date": "1820-02-13",
+          "libelle": "Assassinat du duc de Berry"
+        }
+      ]
     },
     {
       "id": "ultras",
       "titre": "Les ultras au pouvoir",
       "dates": "1820-1824",
-      "debut": 40
+      "debut": 40,
+      "reperes": [
+        {
+          "date": "1821-12",
+          "libelle": "Ministère Villèle"
+        },
+        {
+          "date": "1823-08-31",
+          "libelle": "Prise du Trocadéro"
+        },
+        {
+          "date": "1824-09-16",
+          "libelle": "Mort de Louis XVIII"
+        }
+      ]
     },
     {
       "id": "charles-x",
       "titre": "Charles X",
       "dates": "1824-1827",
-      "debut": 59
+      "debut": 59,
+      "reperes": [
+        {
+          "date": "1825-05-29",
+          "libelle": "Sacre de Charles X à Reims"
+        },
+        {
+          "date": "1827-04",
+          "libelle": "La garde nationale dissoute"
+        },
+        {
+          "date": "1827-10-20",
+          "libelle": "Bataille de Navarin"
+        }
+      ]
     },
     {
       "id": "trone-ebranle",
       "titre": "Le trône ébranlé",
       "dates": "1828-1830",
-      "debut": 78
+      "debut": 78,
+      "reperes": [
+        {
+          "date": "1828-01",
+          "libelle": "Ministère Martignac"
+        },
+        {
+          "date": "1829-08-08",
+          "libelle": "Ministère Polignac"
+        },
+        {
+          "date": "1830-07-05",
+          "libelle": "Prise d'Alger"
+        }
+      ]
     },
     {
       "id": "trois-glorieuses",
       "titre": "Les Trois Glorieuses",
       "dates": "juillet-août 1830",
-      "debut": 96
+      "debut": 96,
+      "reperes": [
+        {
+          "date": "1830-07-26",
+          "libelle": "Les ordonnances au Moniteur"
+        },
+        {
+          "date": "1830-07-27",
+          "date_fin": "1830-07-29",
+          "libelle": "Les Trois Glorieuses"
+        },
+        {
+          "date": "1830-08-09",
+          "libelle": "Louis-Philippe, roi des Français"
+        }
+      ]
     }
   ],
   "diapositives": [
@@ -74,21 +173,19 @@
         "camera": [
           {
             "cadre": [
-              0.22,
-              0.14,
-              0.94,
-              0.43
+              0.2,
+              0.12,
+              0.95,
+              0.42
             ]
-          },
-          {
-            "cadre": [
-              0.46,
-              0.14,
-              0.82,
-              0.35
-            ],
-            "quand": "rappellent sur le trône le frère"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.2,
+          0.12,
+          0.95,
+          0.42
         ]
       },
       "audio": {
@@ -119,6 +216,54 @@
           "id": "louis-xvi",
           "quand": "Louis XVI",
           "instant": 7.15
+        }
+      ],
+      "plans": [
+        {
+          "quand": "De 1814 à 1830, deux rois Bourbons",
+          "image": {
+            "commons": "File:Famille royale - estampe - btv1b6954297g.jpg",
+            "titre": "La Famille royale",
+            "titre_court": "La Famille royale",
+            "auteur": "anonyme, édité chez Noël à Paris",
+            "date": "1814",
+            "technique": "estampe",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "001-b.webp",
+            "licence": "Domaine public",
+            "largeur": 988,
+            "hauteur": 1440,
+            "recadrage": [
+              0.12,
+              0.048,
+              0.852,
+              0.858
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.15,
+                  0.08,
+                  0.85,
+                  0.35
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.15,
+              0.08,
+              0.85,
+              0.35
+            ]
+          },
+          "instant": 10.27
         }
       ]
     },
@@ -265,9 +410,9 @@
         "camera": [
           {
             "cadre": [
-              0.02,
-              0.45,
-              0.98,
+              0.03,
+              0.44,
+              0.97,
               0.98
             ]
           },
@@ -275,19 +420,10 @@
             "cadre": [
               0.55,
               0.65,
-              0.98,
+              0.95,
               0.98
             ],
             "quand": "fille de Louis XVI"
-          },
-          {
-            "cadre": [
-              0.05,
-              0.68,
-              0.55,
-              0.98
-            ],
-            "quand": "la vieille Garde, rangée sur son passage"
           }
         ]
       },
@@ -332,6 +468,54 @@
           "quand": "Louis XVI",
           "instant": 6.76
         }
+      ],
+      "plans": [
+        {
+          "quand": "La foule est curieuse",
+          "image": {
+            "commons": "File:Grenadiers a pied, off(i)cier porte drapeau gde tenue (ex-garde) (BM 1855,0414.77).jpg",
+            "titre": "Grenadiers à pied, officier porte-drapeau en grande tenue (ex-Garde)",
+            "titre_court": "Grenadier de l'ex-Garde, porte-drapeau",
+            "auteur": "Nicolas-Toussaint Charlet, imprimé par Delpech",
+            "date": "1819-1820",
+            "technique": "lithographie",
+            "conservation": "Londres, British Museum",
+            "licence": "Domaine public",
+            "recadrage": [
+              0.04,
+              0.02,
+              0.96,
+              0.88
+            ],
+            "utile": [
+              0.0,
+              0.047,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.16,
+                  0.22,
+                  0.92,
+                  0.5
+                ]
+              }
+            ],
+            "fichier": "003-b.webp",
+            "largeur": 978,
+            "hauteur": 1422,
+            "entier": true,
+            "entier_vers": [
+              0.16,
+              0.22,
+              0.92,
+              0.5
+            ]
+          },
+          "instant": 13.28
+        }
       ]
     },
     {
@@ -359,21 +543,19 @@
         "camera": [
           {
             "cadre": [
-              0.45,
-              0.22,
-              0.88,
-              0.39
+              0.626,
+              0.185,
+              0.876,
+              0.445
             ]
-          },
-          {
-            "cadre": [
-              0.28,
-              0.53,
-              0.68,
-              0.77
-            ],
-            "quand": "une Charte constitutionnelle"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.626,
+          0.185,
+          0.876,
+          0.445
         ]
       },
       "manuscrits": [
@@ -400,7 +582,56 @@
             17.08
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Elle garantit l'égalité devant la loi",
+          "image": {
+            "commons": "File:Louis XVIII. Consultant Saint Louis et Henri IV. pour la Charte Constitutionnelle - estampe - btv1b6954302b.jpg",
+            "titre": "Louis XVIII consultant Saint Louis et Henri IV pour la Charte constitutionnelle",
+            "titre_court": "Louis XVIII rédigeant la Charte",
+            "auteur": "François-Joseph Heim",
+            "date": "1814",
+            "technique": "estampe",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "004-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1271,
+            "hauteur": 1600,
+            "recadrage": [
+              0.23,
+              0.19,
+              0.74,
+              0.69
+            ],
+            "utile": [
+              0.016,
+              0.014,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.016,
+                  0.18,
+                  1.0,
+                  0.43
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.784,
+              0.05,
+              1.0,
+              0.29
+            ]
+          },
+          "instant": 9.31,
+          "camera_manuelle": true
+        }
+      ]
     },
     {
       "n": 5,
@@ -432,9 +663,9 @@
         "camera": [
           {
             "cadre": [
-              0.15,
+              0.03,
               0.0,
-              0.95,
+              0.97,
               0.69
             ]
           }
@@ -457,7 +688,64 @@
             16.41
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Pourtant le texte est daté",
+          "image": {
+            "commons": "File:Charte constitutionnelle du 4 juin 1814. Page 1 - Archives Nationales - AE-I-29.jpg",
+            "titre": "Charte constitutionnelle du 4 juin 1814, première page",
+            "titre_court": "La Charte de 1814, première page",
+            "auteur": "chancellerie royale",
+            "date": "1814",
+            "technique": "manuscrit sur parchemin, sceau de cire verte",
+            "conservation": "Paris, Archives nationales (AE/I/29)",
+            "fichier": "005-b.webp",
+            "licence": "Domaine public",
+            "largeur": 775,
+            "hauteur": 1600,
+            "recadrage": [
+              0.08,
+              0.04,
+              0.89,
+              0.98
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              0.983
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.05,
+                  0.94,
+                  0.24
+                ]
+              },
+              {
+                "cadre": [
+                  0.0,
+                  0.76,
+                  0.54,
+                  0.98
+                ],
+                "quand": "La Charte est octroyée"
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.0,
+              0.76,
+              0.54,
+              0.98
+            ]
+          },
+          "instant": 6.38
+        }
+      ]
     },
     {
       "n": 6,
@@ -489,6 +777,13 @@
               0.61
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.034,
+          0.16,
+          0.974,
+          0.61
         ]
       },
       "chiffres": [
@@ -585,7 +880,50 @@
           "id": "talleyrand",
           "quand": "Talleyrand"
         }
-      ]
+      ],
+      "plans": [
+        {
+          "quand": "À Vienne, où l'Europe redessine sa carte",
+          "image": {
+            "commons": "File:Charles Maurice de Talleyrand-Périgord - Pierre-Paul Prud'hon.jpg",
+            "titre": "Charles-Maurice de Talleyrand-Périgord",
+            "titre_court": "Talleyrand",
+            "auteur": "Pierre-Paul Prud'hon",
+            "date": "1817",
+            "technique": "huile sur toile",
+            "conservation": "New York, Metropolitan Museum of Art",
+            "fichier": "007-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1049,
+            "hauteur": 1600,
+            "utile": [
+              0.01,
+              0.01,
+              0.991,
+              0.99
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.26,
+                  0.08,
+                  0.68,
+                  0.38
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.359,
+              0.046,
+              0.567,
+              0.253
+            ]
+          },
+          "instant": 10.11
+        }
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 8,
@@ -611,12 +949,19 @@
         "camera": [
           {
             "cadre": [
-              0.15,
-              0.06,
-              0.78,
-              0.38
+              0.18,
+              0.08,
+              0.76,
+              0.45
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.18,
+          0.08,
+          0.76,
+          0.45
         ]
       },
       "audio": {
@@ -636,7 +981,56 @@
             14.02
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Des milliers d'officiers sont renvoyés",
+          "image": {
+            "commons": "File:Eh ben mon vieux le v'là à la demi solde, Paris Musées 20230906224345.jpg",
+            "titre": "Eh ben mon vieux, le v'là à la demi-solde",
+            "titre_court": "Le v'là à la demi-solde",
+            "auteur": "Pierre Langlumé",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "008-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1190,
+            "hauteur": 1600,
+            "recadrage": [
+              0.15,
+              0.1,
+              0.88,
+              0.84
+            ],
+            "utile": [
+              0.0,
+              0.071,
+              0.765,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.072,
+                  0.765,
+                  0.3
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.506,
+              0.071,
+              0.703,
+              0.31
+            ]
+          },
+          "instant": 6.1,
+          "camera_manuelle": true
+        }
+      ]
     },
     {
       "n": 9,
@@ -681,7 +1075,16 @@
           0.28,
           0.5,
           0.47
-        ]
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.1,
+          0.1,
+          0.8,
+          0.7
+        ],
+        "entier_zoom": 1.15,
+        "entier_manuel": true
       },
       "audio": {
         "fichier": "009.m4a",
@@ -728,20 +1131,11 @@
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.05,
-              0.97,
-              0.96
+              0.41,
+              0.56,
+              0.76,
+              1.0
             ]
-          },
-          {
-            "cadre": [
-              0.42,
-              0.51,
-              0.72,
-              0.95
-            ],
-            "quand": "Le régime place l'expiation"
           }
         ]
       },
@@ -779,6 +1173,47 @@
           "quand": "Louis XVI",
           "instant": 3.14
         }
+      ],
+      "plans": [
+        {
+          "quand": "Le régime place l'expiation",
+          "image": {
+            "commons": "File:Vue du monument expiatoire de Louis XVI. Rue d'Anjou S(t) Honoré N°15, Paris Musées 20230614205947.jpg",
+            "titre": "Vue du monument expiatoire de Louis XVI, rue d'Anjou-Saint-Honoré",
+            "titre_court": "Le monument expiatoire de Louis XVI",
+            "auteur": "Jean-Baptiste Arnout",
+            "date": "1836",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "010-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1206,
+            "recadrage": [
+              0.222,
+              0.222,
+              0.776,
+              0.831
+            ],
+            "utile": [
+              0.014,
+              0.014,
+              0.986,
+              0.986
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.01,
+                  0.33,
+                  0.99,
+                  0.85
+                ]
+              }
+            ]
+          },
+          "instant": 7.09
+        }
       ]
     },
     {
@@ -812,10 +1247,10 @@
         "camera": [
           {
             "cadre": [
-              0.04,
-              0.28,
-              0.96,
-              0.75
+              0.05,
+              0.32,
+              0.95,
+              0.79
             ]
           }
         ]
@@ -860,6 +1295,47 @@
           "id": "louis-xviii",
           "quand": "Louis XVIII"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Dans la nuit du 19 au 20 mars",
+          "image": {
+            "commons": "File:Départ Du Roi Le 20 mars 1815 - estampe - btv1b69545629.jpg",
+            "titre": "Départ du roi, le 20 mars 1815",
+            "titre_court": "Départ du roi, le 20 mars 1815",
+            "auteur": "anonyme, édité chez Osterwald l'aîné à Paris",
+            "date": "1815",
+            "technique": "estampe",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "011-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1114,
+            "recadrage": [
+              0.038,
+              0.041,
+              0.957,
+              0.785
+            ],
+            "utile": [
+              0.0,
+              0.014,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.38,
+                  1.0,
+                  0.95
+                ]
+              }
+            ]
+          },
+          "instant": 6.57
+        }
       ]
     },
     {
@@ -895,9 +1371,9 @@
           {
             "cadre": [
               0.02,
-              0.08,
+              0.05,
               0.98,
-              0.71
+              0.68
             ]
           }
         ]
@@ -936,6 +1412,55 @@
           "quand": "Chateaubriand",
           "instant": 6.05
         }
+      ],
+      "plans": [
+        {
+          "quand": "Chateaubriand y devient ministre",
+          "image": {
+            "commons": "File:Chateaubriand. G.41933.jpg",
+            "titre": "Chateaubriand",
+            "titre_court": "Chateaubriand",
+            "auteur": "anonyme, imprimé par Delpech",
+            "date": "1824",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "012-b.webp",
+            "licence": "Domaine public",
+            "largeur": 972,
+            "hauteur": 1200,
+            "recadrage": [
+              0.28,
+              0.25,
+              0.72,
+              0.65
+            ],
+            "utile": [
+              0.014,
+              0.037,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.014,
+                  0.15,
+                  1.0,
+                  0.41
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.014,
+              0.15,
+              1.0,
+              0.41
+            ]
+          },
+          "instant": 5.7,
+          "camera_manuelle": true
+        }
       ]
     },
     {
@@ -969,10 +1494,10 @@
         "camera": [
           {
             "cadre": [
-              0.13,
-              0.2,
-              0.83,
-              0.79
+              0.144,
+              0.249,
+              0.771,
+              0.771
             ]
           }
         ]
@@ -1062,6 +1587,48 @@
           "quand": "Chateaubriand",
           "instant": 11.45
         }
+      ],
+      "plans": [
+        {
+          "quand": "Il doit prendre pour ministres",
+          "image": {
+            "commons": "File:Fouché Joseph Duke of Otranto.jpg",
+            "titre": "Joseph Fouché, duc d'Otrante, en grand habit de ministre de la Police générale",
+            "titre_court": "Joseph Fouché, duc d'Otrante",
+            "auteur": "Claude-Marie Dubufe, d'après René Théodore Berthon",
+            "date": "première moitié du XIXe siècle",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national du château",
+            "fichier": "013-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1180,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.24,
+                  0.1,
+                  0.76,
+                  0.39
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.316,
+              0.024,
+              0.673,
+              0.379
+            ]
+          },
+          "instant": 7.09
+        }
       ]
     },
     {
@@ -1096,9 +1663,9 @@
           {
             "cadre": [
               0.0,
-              0.108,
+              0.088,
               0.94,
-              0.742
+              0.722
             ]
           }
         ]
@@ -1160,6 +1727,47 @@
           "id": "brune",
           "quand": "le maréchal Brune"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Le 2 août, à Avignon",
+          "image": {
+            "commons": "File:Pl. IIème. Assassinat du Maréchal Brune. G.43322.jpg",
+            "titre": "Assassinat du maréchal Brune, planche II",
+            "titre_court": "Assassinat du maréchal Brune (II)",
+            "auteur": "anonyme, édité par Plancher",
+            "date": "1815",
+            "technique": "eau-forte coloriée",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "014-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1007,
+            "recadrage": [
+              0.086,
+              0.067,
+              0.923,
+              0.864
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.22,
+                  1.0,
+                  0.86
+                ]
+              }
+            ]
+          },
+          "instant": 12.01
+        }
       ]
     },
     {
@@ -1187,10 +1795,10 @@
         "camera": [
           {
             "cadre": [
-              0.158,
-              0.063,
-              0.842,
-              0.423
+              0.14,
+              0.062,
+              0.86,
+              0.404
             ]
           }
         ]
@@ -1218,6 +1826,48 @@
           "id": "artois",
           "quand": "le comte d'Artois",
           "instant": 10.29
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Ces ultras, plus royalistes que le roi",
+          "image": {
+            "commons": "File:Gérard - Charles-Philippe de France (1757-1836), comte d'Artois, en uniforme de colonel général des Carabiniers, vers 1815.jpg",
+            "titre": "Charles-Philippe de France, comte d'Artois, en uniforme de colonel général des carabiniers",
+            "titre_court": "Le comte d'Artois",
+            "auteur": "François Gérard",
+            "date": "vers 1815",
+            "technique": "huile sur toile",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "015-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1059,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.26,
+                  0.08,
+                  0.74,
+                  0.34
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.402,
+              0.071,
+              0.604,
+              0.269
+            ]
+          },
+          "instant": 6.46
         }
       ]
     },
@@ -1511,21 +2161,19 @@
         "camera": [
           {
             "cadre": [
-              0.02,
-              0.15,
-              0.98,
-              0.63
-            ]
-          },
-          {
-            "cadre": [
               0.3,
               0.22,
-              0.66,
-              0.62
-            ],
-            "quand": "sa femme lui rend visite"
+              0.82,
+              0.7
+            ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.3,
+          0.22,
+          0.82,
+          0.7
         ]
       },
       "audio": {
@@ -1560,6 +2208,41 @@
         {
           "id": "lavalette",
           "quand": "Lavalette"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Le 20 décembre 1815, sa femme lui rend visite",
+          "image": {
+            "commons": "File:L'évasion celle de Lavalette, échangeant ses vêtements avec ceux de sa femme, G.41409.jpg",
+            "titre": "L'Évasion de Lavalette, échangeant ses vêtements avec ceux de sa femme",
+            "titre_court": "Lavalette échange ses vêtements",
+            "auteur": "anonyme",
+            "date": "XIXe siècle, date non précisée",
+            "technique": "manière noire et eau-forte",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "019-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1240,
+            "utile": [
+              0.034,
+              0.045,
+              0.963,
+              0.955
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.28,
+                  0.16,
+                  0.86,
+                  0.64
+                ]
+              }
+            ]
+          },
+          "instant": 8.45
         }
       ]
     },
@@ -1601,6 +2284,13 @@
               0.425
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.17,
+          0.06,
+          0.829,
+          0.68
         ]
       },
       "audio": {
@@ -1669,6 +2359,13 @@
               0.61
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.03,
+          0.23,
+          0.97,
+          0.61
         ]
       },
       "audio": {
@@ -1727,41 +2424,46 @@
       "narration": "Le 2 juillet 1816, la frégate la Méduse s'échoue au large de l'Afrique. Son commandant, un ancien émigré, n'avait pas navigué depuis plus de vingt ans. Les canots manquent : près de cent cinquante personnes sont abandonnées sur un radeau, qui dérive treize jours.",
       "date": "1816-07-02",
       "image": {
-        "commons": "File:Plan du Radeau de la Méduse.jpg",
-        "titre": "Plan du radeau de la Méduse, au moment de son abandon",
-        "titre_court": "Plan du radeau de la Méduse",
-        "auteur": "Alexandre Corréard",
-        "date": "1818",
+        "commons": "File:Naufrage de la Méduse-construction du radeau-gravure.jpg",
+        "titre": "Construction du radeau de la Méduse, en 1816",
+        "titre_court": "La Méduse échouée : on construit le radeau",
+        "auteur": "Jules Noël",
+        "date": "1873",
         "technique": "gravure",
-        "conservation": "planche du Naufrage de la frégate la Méduse (2e édition, 1818)",
+        "conservation": "planche des Naufrages célèbres de Zurcher et Margollé (Hachette, 3e édition, 1877)",
         "fichier": "022.webp",
         "licence": "Domaine public",
-        "largeur": 925,
-        "hauteur": 1600,
-        "utile": [
-          0.024,
-          0.033,
-          0.951,
-          0.966
+        "recadrage": [
+          0.085,
+          0.075,
+          0.92,
+          0.875
         ],
+        "largeur": 1600,
+        "hauteur": 1301,
+        "utile": [
+          0.012,
+          0.012,
+          0.988,
+          0.985
+        ],
+        "utile_manuel": true,
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.08,
-              0.95,
-              0.29
+              0.02,
+              0.28,
+              0.98,
+              0.8
             ]
-          },
-          {
-            "cadre": [
-              0.03,
-              0.65,
-              0.95,
-              0.86
-            ],
-            "quand": "abandonnées sur un radeau"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.02,
+          0.28,
+          0.98,
+          0.8
         ]
       },
       "chiffres": [
@@ -1801,7 +2503,43 @@
           "fond": "monde",
           "instant": 3.42
         }
-      ]
+      ],
+      "plans": [
+        {
+          "quand": "Les canots manquent",
+          "image": {
+            "commons": "File:Naufragedelameduse ch5 p0100.jpg",
+            "titre": "Le Radeau de la Méduse, planche du Naufrage de la frégate la Méduse de Corréard et Savigny",
+            "titre_court": "Le radeau, d'après le récit des rescapés",
+            "auteur": "lithographie anonyme d'après Montfort",
+            "date": "1821",
+            "technique": "lithographie",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "022-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1035,
+            "utile": [
+              0.0,
+              0.013,
+              0.986,
+              0.976
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.16,
+                  0.99,
+                  0.77
+                ]
+              }
+            ]
+          },
+          "instant": 10.0
+        }
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 23,
@@ -1827,10 +2565,10 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.47,
-              0.98,
-              1.0
+              0.05,
+              0.389,
+              0.95,
+              0.92
             ]
           }
         ]
@@ -1859,6 +2597,41 @@
           "quand": "Géricault",
           "instant": 13.19
         }
+      ],
+      "plans": [
+        {
+          "quand": "Au Salon de 1819, le jeune Géricault",
+          "image": {
+            "commons": "File:Théodore Géricault - Le Radeau de la Méduse esquisse.jpg",
+            "titre": "Esquisse du Radeau de la Méduse",
+            "titre_court": "Esquisse du Radeau de la Méduse",
+            "auteur": "Théodore Géricault",
+            "date": "1819",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée du Louvre",
+            "fichier": "023-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1275,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              0.976
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.05,
+                  0.22,
+                  0.95,
+                  0.72
+                ]
+              }
+            ]
+          },
+          "instant": 10.16
+        }
       ]
     },
     {
@@ -1885,12 +2658,19 @@
         "camera": [
           {
             "cadre": [
-              0.08,
+              0.15,
               0.27,
               0.72,
               0.6
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.15,
+          0.27,
+          0.72,
+          0.6
         ]
       },
       "audio": {
@@ -1916,6 +2696,49 @@
           "id": "gericault",
           "quand": "Géricault",
           "instant": 1.38
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Au sommet, il place un marin noir",
+          "image": {
+            "commons": "File:Théodore Géricault (French - Portrait Study - Google Art Project.jpg",
+            "titre": "Étude de portrait",
+            "titre_court": "Étude de portrait, vers 1818-1819",
+            "auteur": "Théodore Géricault",
+            "date": "vers 1818-1819",
+            "technique": "huile sur toile",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "024-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1301,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.32,
+                  1.0,
+                  0.58
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.0,
+              0.32,
+              1.0,
+              0.58
+            ]
+          },
+          "instant": 10.05,
+          "camera_manuelle": true
         }
       ]
     },
@@ -1944,12 +2767,19 @@
         "camera": [
           {
             "cadre": [
+              0.18,
               0.12,
-              0.1,
-              0.88,
-              0.41
+              0.82,
+              0.43
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.307,
+          0.025,
+          0.68,
+          0.447
         ]
       },
       "audio": {
@@ -1986,6 +2816,54 @@
           "id": "decazes",
           "quand": "Decazes"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Le 5 septembre 1816, conseillé par son favori Decazes",
+          "image": {
+            "commons": "File:Confirmation de la Charte de 1814, 5 septembre 1816, ND4214(2).jpg",
+            "titre": "Confirmation de la Charte de 1814, ordonnance du 5 septembre 1816",
+            "titre_court": "Médaille du 5 septembre 1816",
+            "auteur": "Raymond Gayrard",
+            "date": "1816",
+            "technique": "médaille de bronze",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "025-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1591,
+            "recadrage": [
+              0.217,
+              0.117,
+              0.789,
+              0.878
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.03,
+                  0.32,
+                  0.97,
+                  0.7
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.03,
+              0.32,
+              0.97,
+              0.7
+            ]
+          },
+          "instant": 5.71
+        }
       ]
     },
     {
@@ -2019,6 +2897,13 @@
               0.44
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.352,
+          0.07,
+          0.688,
+          0.438
         ]
       },
       "audio": {
@@ -2070,12 +2955,19 @@
         "camera": [
           {
             "cadre": [
-              0.28,
+              0.24,
               0.04,
               0.72,
-              0.32
+              0.35
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.35,
+          0.0,
+          0.607,
+          0.237
         ]
       },
       "audio": {
@@ -2100,6 +2992,54 @@
         {
           "id": "gouvion-saint-cyr",
           "quand": "Gouvion-Saint-Cyr"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Surtout, l'avancement se fait à l'ancienneté",
+          "image": {
+            "commons": "File:Maison du Roi et garde royale de Louis XVIII, 1817. - Ch. Aubry - btv1b8426910z (16 of 32).jpg",
+            "titre": "Garde royale : lancier, planche de Maison du Roi et garde royale de Louis XVIII",
+            "titre_court": "Lancier de la Garde royale",
+            "auteur": "Charles Aubry, imprimé par Delpech",
+            "date": "1817",
+            "technique": "lithographie coloriée",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "027-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1503,
+            "hauteur": 1600,
+            "recadrage": [
+              0.06,
+              0.11,
+              0.9,
+              0.77
+            ],
+            "utile": [
+              0.09,
+              0.041,
+              0.919,
+              0.986
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.18,
+                  0.05,
+                  0.69,
+                  0.36
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.18,
+              0.05,
+              0.69,
+              0.36
+            ]
+          },
+          "instant": 8.85
         }
       ]
     },
@@ -2182,6 +3122,48 @@
           "id": "henri-iv",
           "quand": "Henri IV",
           "instant": 5.51
+        }
+      ],
+      "plans": [
+        {
+          "quand": "En août 1818, des Parisiens s'attellent",
+          "image": {
+            "commons": "File:La statue d'Henri IV trainée par le peuple - estampe - btv1b6954842k.jpg",
+            "titre": "La Statue d'Henri IV traînée par le peuple",
+            "titre_court": "La statue d'Henri IV traînée par le peuple",
+            "auteur": "Auguste-Toussaint Lecler",
+            "date": "1818",
+            "technique": "lithographie",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "028-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1410,
+            "utile": [
+              0.034,
+              0.024,
+              0.966,
+              0.906
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.12,
+                  0.43,
+                  0.85,
+                  0.75
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.12,
+              0.43,
+              0.85,
+              0.75
+            ]
+          },
+          "instant": 8.84
         }
       ]
     },
@@ -2281,6 +3263,13 @@
               0.522
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.242,
+          0.015,
+          0.76,
+          0.618
         ]
       },
       "audio": {
@@ -2354,10 +3343,10 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.354,
-              1.0,
-              0.876
+              0.0,
+              0.38,
+              0.859,
+              0.88
             ]
           }
         ]
@@ -2379,7 +3368,48 @@
             15.57
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Les libéraux soutiennent l'école mutuelle",
+          "image": {
+            "commons": "File:Gravure d'une classe d'école mutuelle vers 1830.jpg",
+            "titre": "Une école d'enseignement mutuel",
+            "titre_court": "Une école d'enseignement mutuel",
+            "auteur": "imprimerie Dembour et Gangel, Metz",
+            "date": "vers 1830",
+            "technique": "lithographie coloriée",
+            "conservation": "Rouen, Musée national de l'Éducation",
+            "fichier": "031-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 961,
+            "recadrage": [
+              0.016,
+              0.071,
+              0.99,
+              0.88
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.032,
+                  0.143,
+                  0.618,
+                  0.728
+                ]
+              }
+            ]
+          },
+          "instant": 5.08
+        }
+      ]
     },
     {
       "n": 32,
@@ -2417,6 +3447,13 @@
               0.664
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.0,
+          0.052,
+          0.786,
+          0.867
         ]
       },
       "audio": {
@@ -2555,20 +3592,11 @@
         "camera": [
           {
             "cadre": [
-              0.04,
-              0.16,
-              0.96,
-              0.7
+              0.0,
+              0.18,
+              1.0,
+              0.72
             ]
-          },
-          {
-            "cadre": [
-              0.38,
-              0.28,
-              0.86,
-              0.81
-            ],
-            "quand": "Il éclaire d'abord un passage couvert"
           }
         ]
       },
@@ -2589,7 +3617,51 @@
             16.62
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Il éclaire d'abord un passage couvert",
+          "image": {
+            "commons": "File:Giuseppe Canella - La rue de la Paix - P1247 - Musée Carnavalet.jpg",
+            "titre": "La Rue de la Paix",
+            "titre_court": "La rue de la Paix en 1829",
+            "auteur": "Giuseppe Canella",
+            "date": "1829",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "034-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1243,
+            "utile": [
+              0.0,
+              0.01,
+              1.0,
+              0.992
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.48,
+                  0.92,
+                  0.99
+                ]
+              },
+              {
+                "cadre": [
+                  0.55,
+                  0.65,
+                  0.99,
+                  0.99
+                ],
+                "quand": "les boutiques restent ouvertes"
+              }
+            ]
+          },
+          "instant": 7.35
+        }
+      ]
     },
     {
       "n": 35,
@@ -2627,6 +3699,13 @@
               0.449
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.28,
+          0.011,
+          0.988,
+          0.895
         ]
       },
       "objets": [
@@ -2778,18 +3857,9 @@
             "cadre": [
               0.15,
               0.4,
-              0.53,
-              0.82
+              0.77,
+              0.85
             ]
-          },
-          {
-            "cadre": [
-              0.47,
-              0.36,
-              0.81,
-              0.82
-            ],
-            "quand": "La mort de Napoléon, en 1821"
           }
         ]
       },
@@ -2832,6 +3902,49 @@
         {
           "id": "napoleon",
           "quand": "Napoléon"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Charlet et Horace Vernet dessinent",
+          "image": {
+            "commons": "File:Le Champ de Bataille de Waterloo ou Grenadier de Waterloo - (estampe) (2e état, avec la signature du lithographe et la mention de l'imprimeur) - H. Vernet - btv1b10848487t.jpg",
+            "titre": "Le Champ de bataille de Waterloo, ou Grenadier de Waterloo",
+            "titre_court": "Le Grenadier de Waterloo",
+            "auteur": "Horace Vernet",
+            "date": "1817",
+            "technique": "lithographie",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "037-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 890,
+            "recadrage": [
+              0.11,
+              0.211,
+              0.89,
+              0.704
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.15,
+                  0.235,
+                  0.95,
+                  0.81
+                ]
+              }
+            ],
+            "utile_manuel": true
+          },
+          "instant": 6.34,
+          "camera_manuelle": true
         }
       ]
     },
@@ -3031,21 +4144,31 @@
           0.62
         ],
         "utile": [
-          0.239,
-          0.033,
-          0.911,
-          0.903
+          0.1,
+          0.0,
+          1.0,
+          0.94
         ],
         "camera": [
           {
             "cadre": [
-              0.18,
-              0.01,
-              0.72,
-              0.52
+              0.15,
+              0.0,
+              0.85,
+              0.45
             ]
           }
-        ]
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.15,
+          0.0,
+          0.75,
+          0.6
+        ],
+        "utile_manuel": true,
+        "entier_manuel": true,
+        "entier_zoom": 1.3
       },
       "audio": {
         "fichier": "039.m4a",
@@ -3123,7 +4246,8 @@
           "id": "louvel",
           "quand": "Louvel"
         }
-      ]
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 40,
@@ -3139,30 +4263,40 @@
         "conservation": "Paris, musée Carnavalet",
         "fichier": "040.webp",
         "licence": "Domaine public",
-        "largeur": 1432,
-        "hauteur": 1600,
         "recadrage": [
-          0.243,
-          0.295,
-          0.81,
-          0.754
+          0.22,
+          0.14,
+          0.84,
+          0.752
         ],
+        "largeur": 1175,
+        "hauteur": 1600,
         "utile": [
           0.0,
           0.0,
           1.0,
-          0.956
+          0.96
         ],
+        "utile_manuel": true,
         "camera": [
           {
             "cadre": [
-              0.15,
-              0.0,
-              0.95,
-              0.36
+              0.1,
+              0.02,
+              0.9,
+              0.4
             ]
           }
-        ]
+        ],
+        "entier": true,
+        "entier_manuel": true,
+        "entier_vers": [
+          0.3,
+          0.02,
+          0.75,
+          0.45
+        ],
+        "entier_zoom": 1.3
       },
       "audio": {
         "fichier": "040.m4a",
@@ -3181,7 +4315,56 @@
             13.85
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "En juin 1820, malgré l'émeute",
+          "image": {
+            "commons": "File:Lallemand. 3 juin 1820. G.23574.jpg",
+            "titre": "Lallemand, 3 juin 1820 (tombe au Père-Lachaise)",
+            "titre_court": "Tombe de Lallemand, tué le 3 juin 1820",
+            "auteur": "Louis Lassalle",
+            "date": "XIXe siècle, date non précisée",
+            "technique": "lithographie coloriée",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "040-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1222,
+            "hauteur": 1191,
+            "recadrage": [
+              0.244,
+              0.258,
+              0.776,
+              0.655
+            ],
+            "utile": [
+              0.011,
+              0.02,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.18,
+                  0.38,
+                  0.85,
+                  0.79
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.18,
+              0.38,
+              0.85,
+              0.79
+            ]
+          },
+          "instant": 6.54
+        }
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 41,
@@ -3208,30 +4391,19 @@
         "camera": [
           {
             "cadre": [
-              0.0,
+              0.08,
               0.18,
-              1.0,
+              0.92,
               0.46
             ]
-          },
-          {
-            "cadre": [
-              0.26,
-              0.35,
-              0.54,
-              0.55
-            ],
-            "quand": "l'enfant du miracle, le duc de Bordeaux"
-          },
-          {
-            "cadre": [
-              0.488,
-              0.345,
-              0.912,
-              0.515
-            ],
-            "quand": "château de Chambord"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.08,
+          0.18,
+          0.92,
+          0.46
         ]
       },
       "objets": [
@@ -3279,6 +4451,47 @@
           "id": "bordeaux",
           "quand": "le duc de Bordeaux"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Les royalistes saluent l'enfant du miracle",
+          "image": {
+            "commons": "File:Naissance du Duc de Bordeaux - estampe - btv1b8414314n.jpg",
+            "titre": "Naissance du duc de Bordeaux",
+            "titre_court": "Naissance du duc de Bordeaux",
+            "auteur": "Jean-Henri Marlet",
+            "date": "vers 1820",
+            "technique": "lithographie",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "041-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1440,
+            "hauteur": 910,
+            "recadrage": [
+              0.07,
+              0.09,
+              0.93,
+              0.83
+            ],
+            "utile": [
+              0.0,
+              0.01,
+              0.991,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.15,
+                  0.99,
+                  0.78
+                ]
+              }
+            ]
+          },
+          "instant": 7.78
+        }
       ]
     },
     {
@@ -3311,6 +4524,13 @@
               0.37
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.328,
+          0.0,
+          0.745,
+          0.47
         ]
       },
       "audio": {
@@ -3364,12 +4584,19 @@
         "camera": [
           {
             "cadre": [
-              0.18,
+              0.28,
               0.23,
-              0.82,
+              0.72,
               0.45
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.327,
+          0.14,
+          0.679,
+          0.508
         ]
       },
       "audio": {
@@ -3394,6 +4621,47 @@
         {
           "id": "villele",
           "quand": "Villèle"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Ses budgets sont en ordre",
+          "image": {
+            "commons": "File:Quartier de la Bourse. N°5. G.32503.jpg",
+            "titre": "Quartier de la Bourse",
+            "titre_court": "Quartier de la Bourse",
+            "auteur": "Eugène Lami, imprimé par Delpech",
+            "date": "1827",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "043-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1117,
+            "recadrage": [
+              0.196,
+              0.189,
+              0.806,
+              0.732
+            ],
+            "utile": [
+              0.0,
+              0.044,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.08,
+                  1.0,
+                  0.65
+                ]
+              }
+            ]
+          },
+          "instant": 11.66
         }
       ]
     },
@@ -3428,6 +4696,13 @@
               0.466
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.213,
+          0.0,
+          0.782,
+          0.636
         ]
       },
       "audio": {
@@ -3512,10 +4787,10 @@
         "camera": [
           {
             "cadre": [
-              0.439,
-              0.369,
-              0.711,
-              0.74
+              0.341,
+              0.26,
+              0.669,
+              0.68
             ]
           }
         ]
@@ -3554,6 +4829,64 @@
           "fond": "france",
           "instant": 1.82
         }
+      ],
+      "plans": [
+        {
+          "quand": "Le 21 septembre 1822, ils sont guillotinés",
+          "image": {
+            "commons": "File:Conspiration de la Rochelle. Boriea, Raoulx Goubin, Pommier. Morts pour la Liberté, le 21 7bre 1822. G.43594.jpg",
+            "titre": "Conspiration de La Rochelle : Bories, Raoulx, Goubin, Pommier, morts pour la liberté le 21 septembre 1822",
+            "titre_court": "Les quatre sergents, morts pour la liberté",
+            "auteur": "anonyme",
+            "date": "vers 1822",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "045-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1481,
+            "hauteur": 1600,
+            "recadrage": [
+              0.12,
+              0.17,
+              0.86,
+              0.8
+            ],
+            "utile": [
+              0.023,
+              0.0,
+              0.981,
+              0.97
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.52,
+                  0.65,
+                  0.74
+                ]
+              },
+              {
+                "cadre": [
+                  0.15,
+                  0.05,
+                  0.98,
+                  0.45
+                ],
+                "quand": "l'opposition tient ses martyrs"
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.15,
+              0.05,
+              0.98,
+              0.45
+            ],
+            "entier_zoom": 1.1
+          },
+          "instant": 8.75
+        }
       ]
     },
     {
@@ -3580,12 +4913,19 @@
         "camera": [
           {
             "cadre": [
-              0.15,
-              0.25,
-              0.85,
+              0.03,
+              0.24,
+              0.94,
               0.53
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.453,
+          0.228,
+          0.681,
+          0.443
         ]
       },
       "audio": {
@@ -3623,6 +4963,54 @@
           "id": "beranger",
           "quand": "Béranger"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Partout, on chante encore son Roi d'Yvetot",
+          "image": {
+            "commons": "File:Le roi d'Yvetot, G.581 (1 of 2).jpg",
+            "titre": "Le Roi d'Yvetot",
+            "titre_court": "Le Roi d'Yvetot, par Henry Monnier",
+            "auteur": "Henry Monnier, imprimé par Bernard",
+            "date": "1826",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "046-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1468,
+            "recadrage": [
+              0.24,
+              0.08,
+              0.78,
+              0.79
+            ],
+            "utile": [
+              0.034,
+              0.044,
+              0.966,
+              0.976
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.03,
+                  0.22,
+                  0.97,
+                  0.63
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.034,
+              0.22,
+              0.966,
+              0.63
+            ]
+          },
+          "instant": 8.7
+        }
       ]
     },
     {
@@ -3650,19 +5038,10 @@
           {
             "cadre": [
               0.06,
-              0.12,
+              0.22,
               0.93,
-              0.52
+              0.65
             ]
-          },
-          {
-            "cadre": [
-              0.06,
-              0.48,
-              0.93,
-              0.88
-            ],
-            "quand": "devant des foules mêlées"
           }
         ]
       },
@@ -3695,6 +5074,47 @@
           "quand": "Cousin",
           "instant": 6.33
         }
+      ],
+      "plans": [
+        {
+          "quand": "Dans les villes, des missionnaires prêchent",
+          "image": {
+            "commons": "File:Le Sermon D'Un Missionnaire - estampe - btv1b6955604h.jpg",
+            "titre": "Le Sermon d'un missionnaire",
+            "titre_court": "Le Sermon d'un missionnaire",
+            "auteur": "anonyme, édité chez Lambert et Martinet",
+            "date": "1819",
+            "technique": "estampe coloriée",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "047-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1106,
+            "recadrage": [
+              0.138,
+              0.129,
+              0.865,
+              0.763
+            ],
+            "utile": [
+              0.0,
+              0.017,
+              1.0,
+              0.988
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.078,
+                  0.097,
+                  0.442,
+                  0.49
+                ]
+              }
+            ]
+          },
+          "instant": 8.14
+        }
       ]
     },
     {
@@ -3723,11 +5143,18 @@
           {
             "cadre": [
               0.08,
-              0.25,
+              0.245,
               0.92,
-              0.57
+              0.565
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.25,
+          0.044,
+          0.815,
+          0.662
         ]
       },
       "objets": [
@@ -3767,6 +5194,57 @@
           "id": "champollion",
           "quand": "Champollion"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Champollion a comparé les noms",
+          "image": {
+            "commons": "File:Pierre de Rosette, dessin Jomard, gravure Bigand Description de l'Egypte 1822.jpg",
+            "titre": "La Pierre de Rosette, planche de la Description de l'Égypte",
+            "titre_court": "La pierre de Rosette",
+            "auteur": "dessin d'Edme-François Jomard, gravure de Bigand",
+            "date": "1822",
+            "technique": "gravure",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "048-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1283,
+            "hauteur": 1600,
+            "utile": [
+              0.049,
+              0.046,
+              0.946,
+              0.956
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.06,
+                  0.45,
+                  0.94,
+                  0.74
+                ]
+              },
+              {
+                "cadre": [
+                  0.15,
+                  0.05,
+                  0.82,
+                  0.32
+                ],
+                "quand": "ces signes notent à la fois"
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.15,
+              0.05,
+              0.82,
+              0.32
+            ]
+          },
+          "instant": 6.72
+        }
       ]
     },
     {
@@ -3795,19 +5273,17 @@
             "cadre": [
               0.01,
               0.04,
-              0.98,
+              0.99,
               0.34
             ]
-          },
-          {
-            "cadre": [
-              0.01,
-              0.46,
-              0.98,
-              0.74
-            ],
-            "quand": "Charles X lui confiera la section égyptienne"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.013,
+          0.04,
+          0.993,
+          0.34
         ]
       },
       "audio": {
@@ -3833,6 +5309,41 @@
           "id": "charles-x",
           "quand": "Charles X",
           "instant": 7.17
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Charles X lui confiera la section égyptienne",
+          "image": {
+            "commons": "File:Angelelli Franco-Tuscan Expedition to Egypt.jpg",
+            "titre": "L'Expédition franco-toscane en Égypte (détail)",
+            "titre_court": "L'expédition franco-toscane en Égypte",
+            "auteur": "Giuseppe Angelelli",
+            "date": "1834-1836",
+            "technique": "huile sur bois",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "049-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1030,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.17,
+                  0.1,
+                  0.63,
+                  0.72
+                ]
+              }
+            ]
+          },
+          "instant": 6.81
         }
       ]
     },
@@ -3995,6 +5506,56 @@
           "quand": "le duc d'Angoulême",
           "instant": 4.36
         }
+      ],
+      "plans": [
+        {
+          "quand": "On les appelle les Cent mille fils de Saint Louis",
+          "image": {
+            "commons": "File:1823 Guerre d'Espagne Campagne militaire. Paris Musées 20230528143649.jpg",
+            "titre": "Actions glorieuses et faits d'armes de l'armée d'Espagne",
+            "titre_court": "Faits d'armes de l'armée d'Espagne",
+            "auteur": "Charon, d'après Aaron Martinet, édité par Bulla",
+            "date": "vers 1823",
+            "technique": "aquatinte",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "051-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1048,
+            "recadrage": [
+              0.17,
+              0.141,
+              0.83,
+              0.78
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.35,
+                  0.05,
+                  0.65,
+                  0.52
+                ]
+              },
+              {
+                "cadre": [
+                  0.57,
+                  0.6,
+                  1.0,
+                  1.0
+                ],
+                "quand": "obéit sans broncher"
+              }
+            ]
+          },
+          "instant": 6.68
+        }
       ]
     },
     {
@@ -4117,6 +5678,13 @@
               0.435
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.2,
+          0.021,
+          0.91,
+          0.874
         ]
       },
       "audio": {
@@ -4148,33 +5716,43 @@
       "n": 54,
       "narration": "Augustin Fresnel, ingénieur des Ponts, prouve que la lumière est une onde. Il en tire une lentille taillée en anneaux, mince et légère, qui rassemble les rayons en un faisceau. En 1823, elle s'allume au phare de Cordouan ; toutes les côtes en seront bientôt équipées.",
       "image": {
-        "commons": "File:T4- d440 - Fig. 277 — Marche des rayons lumineux dans une lentille à échelons.png",
-        "titre": "Marche des rayons lumineux dans une lentille à échelons",
-        "titre_court": "La lentille à échelons de Fresnel",
-        "auteur": "planche des Merveilles de la science de Louis Figuier",
-        "date": "1870",
-        "technique": "gravure sur bois",
-        "conservation": "ouvrage imprimé (Les Merveilles de la science, tome IV)",
+        "commons": "File:Fresnel lighthouse lens, first order, made by L. Sautter & Sons, Paris, installed in the south lighthouse on Thacher Island, 1861 - Cape Ann Museum - Gloucester, MA - DSC01350.jpg",
+        "titre": "Lentille de Fresnel de premier ordre, construite à Paris par L. Sautter et Cie pour un phare américain (Thacher Island, 1861)",
+        "titre_court": "Une lentille de Fresnel, construite à Paris",
+        "auteur": "L. Sautter et Cie, constructeurs à Paris",
+        "date": "1861",
+        "technique": "optique de phare, verre taillé et métal",
+        "conservation": "Gloucester (Massachusetts), Cape Ann Museum ; photographie Daderot",
         "fichier": "054.webp",
         "licence": "Domaine public",
-        "largeur": 1422,
-        "hauteur": 1267,
+        "largeur": 1026,
+        "hauteur": 1600,
         "utile": [
-          0.048,
-          0.097,
-          0.819,
-          0.807
+          0.0,
+          0.0,
+          1.0,
+          1.0
         ],
+        "utile_manuel": true,
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.33,
-              0.9,
-              0.68
+              0.0,
+              0.05,
+              1.0,
+              0.5
             ]
           }
-        ]
+        ],
+        "entier": true,
+        "entier_manuel": true,
+        "entier_vers": [
+          0.08,
+          0.04,
+          0.92,
+          0.7
+        ],
+        "entier_zoom": 1.25
       },
       "audio": {
         "fichier": "054.m4a",
@@ -4210,7 +5788,50 @@
           "quand": "Augustin Fresnel",
           "instant": 0.18
         }
-      ]
+      ],
+      "plans": [
+        {
+          "quand": "En 1823, elle s'allume au phare de Cordouan",
+          "image": {
+            "commons": "File:Btv1b10572088s phare de Cordouan retouche.jpg",
+            "titre": "Le Phare de Cordouan à l'embouchure de la Gironde",
+            "titre_court": "Le phare de Cordouan",
+            "auteur": "Charles Mercereau",
+            "date": "entre 1853 et 1876",
+            "technique": "lithographie en couleurs",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "054-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1197,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.019,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.25,
+                  0.08,
+                  0.75,
+                  0.38
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.25,
+              0.08,
+              0.75,
+              0.38
+            ]
+          },
+          "instant": 10.35
+        }
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 55,
@@ -4238,11 +5859,18 @@
           {
             "cadre": [
               0.08,
-              0.05,
-              0.76,
-              0.58
+              0.204,
+              0.75,
+              0.466
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.046,
+          0.018,
+          0.946,
+          0.876
         ]
       },
       "audio": {
@@ -4275,6 +5903,63 @@
           "id": "sadi-carnot",
           "quand": "Sadi Carnot"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Sadi Carnot, fils du grand Carnot",
+          "image": {
+            "commons": "File:Zicht op de stoommachine van Chaillot La Pompe à feu de Chaillot (titel op object) Pittoreske gezichten op Parijs en omgeving (serietitel) Promenades pittoresques et lithographiques dans Paris et ses environs (serieti, RP-P-1961-274.jpg",
+            "titre": "La Pompe à feu de Chaillot",
+            "titre_court": "La pompe à feu de Chaillot",
+            "auteur": "anonyme, série des Promenades pittoresques et lithographiques dans Paris",
+            "date": "1822-1824",
+            "technique": "lithographie",
+            "conservation": "Amsterdam, Rijksmuseum",
+            "fichier": "055-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1068,
+            "hauteur": 1296,
+            "recadrage": [
+              0.207,
+              0.188,
+              0.787,
+              0.638
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.28,
+                  0.22,
+                  0.94,
+                  0.55
+                ]
+              },
+              {
+                "cadre": [
+                  0.03,
+                  0.67,
+                  0.97,
+                  1.0
+                ],
+                "quand": "Personne ne le lit"
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.03,
+              0.67,
+              0.97,
+              1.0
+            ]
+          },
+          "instant": 6.86
+        }
       ]
     },
     {
@@ -4302,12 +5987,28 @@
         "camera": [
           {
             "cadre": [
-              0.1,
-              0.397,
+              0.0,
+              0.08,
               1.0,
-              0.703
+              0.39
             ]
+          },
+          {
+            "cadre": [
+              0.6,
+              0.26,
+              1.0,
+              0.58
+            ],
+            "quand": "réduits en esclavage par les Turcs"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.6,
+          0.26,
+          1.0,
+          0.58
         ]
       },
       "audio": {
@@ -4344,6 +6045,48 @@
           "quand": "Delacroix",
           "instant": 3.74
         }
+      ],
+      "plans": [
+        {
+          "quand": "Ni héros ni leçon",
+          "image": {
+            "commons": "File:Jeune orpheline au cimetière (Delacroix) Louvre RF 1652.jpg",
+            "titre": "Jeune orpheline au cimetière",
+            "titre_court": "Jeune orpheline au cimetière",
+            "auteur": "Eugène Delacroix",
+            "date": "1824",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée du Louvre",
+            "fichier": "056-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1352,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.24,
+                  0.164,
+                  0.88,
+                  0.496
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.404,
+              0.0,
+              0.911,
+              0.601
+            ]
+          },
+          "instant": 9.62
+        }
       ]
     },
     {
@@ -4370,21 +6113,28 @@
         "camera": [
           {
             "cadre": [
-              0.12,
+              0.0,
               0.47,
-              0.62,
-              0.71
+              0.95,
+              0.72
             ]
           },
           {
             "cadre": [
-              0.28,
-              0.04,
-              0.72,
+              0.1,
+              0.03,
+              0.9,
               0.28
             ],
-            "quand": "la tradition contre le mouvement"
+            "quand": "à la Vierge"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.1,
+          0.03,
+          0.9,
+          0.28
         ]
       },
       "audio": {
@@ -4406,6 +6156,55 @@
           "id": "ingres",
           "quand": "Ingres",
           "instant": 1.46
+        }
+      ],
+      "plans": [
+        {
+          "quand": "La ligne pure contre la couleur",
+          "image": {
+            "commons": "File:Déjeunez avec le Classique, et dinez avec le Romantique, il y a de fort bonnes choses à manger dans les deux écoles. G.30444.jpg",
+            "titre": "Déjeunez avec le Classique et dînez avec le Romantique, il y a de fort bonnes choses à manger dans les deux écoles",
+            "titre_court": "Le Classique et le Romantique",
+            "auteur": "Hippolyte Bellangé",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "057-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1288,
+            "hauteur": 1296,
+            "recadrage": [
+              0.04,
+              0.05,
+              0.94,
+              0.81
+            ],
+            "utile": [
+              0.034,
+              0.038,
+              0.986,
+              0.976
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.03,
+                  0.28,
+                  0.98,
+                  0.66
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.567,
+              0.253,
+              0.671,
+              0.416
+            ],
+            "entier_zoom": 1.05
+          },
+          "instant": 7.33
         }
       ]
     },
@@ -4554,9 +6353,9 @@
           {
             "cadre": [
               0.28,
-              0.217,
-              0.65,
-              0.683
+              0.22,
+              0.62,
+              0.68
             ]
           }
         ]
@@ -4583,6 +6382,49 @@
         {
           "id": "charles-x",
           "quand": "Charles X"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Mais cet homme aimable n'a pas",
+          "image": {
+            "commons": "File:Charles X, roi de France (1757–1836).jpg",
+            "titre": "Charles X, roi de France (1757-1836)",
+            "titre_court": "Charles X, roi de France",
+            "auteur": "Jean-Pierre Franque, d'après Horace Vernet",
+            "date": "1838",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national du château",
+            "fichier": "059-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1274,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.22,
+                  1.0,
+                  0.475
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.258,
+              0.0,
+              0.747,
+              0.618
+            ]
+          },
+          "instant": 9.57,
+          "camera_manuelle": true
         }
       ]
     },
@@ -4611,10 +6453,10 @@
         "camera": [
           {
             "cadre": [
-              0.47,
-              0.52,
-              0.87,
-              0.95
+              0.375,
+              0.498,
+              0.925,
+              0.982
             ]
           }
         ]
@@ -4648,6 +6490,48 @@
         {
           "id": "charles-x",
           "quand": "Charles X"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Ingres reçoit la croix de la",
+          "image": {
+            "commons": "File:Jean-Auguste-Dominique Ingres - Autoportrait à vingt-quatre ans - Google Art Project.jpg",
+            "titre": "Autoportrait à vingt-quatre ans",
+            "titre_court": "Ingres, autoportrait à vingt-quatre ans",
+            "auteur": "Jean-Auguste-Dominique Ingres",
+            "date": "1804",
+            "technique": "huile sur toile",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "060-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1287,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.12,
+                  0.05,
+                  0.88,
+                  0.37
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.208,
+              0.0,
+              0.731,
+              0.501
+            ]
+          },
+          "instant": 5.55
         }
       ]
     },
@@ -4688,6 +6572,13 @@
               0.5
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.013,
+          0.18,
+          0.99,
+          0.5
         ]
       },
       "chiffres": [
@@ -4743,20 +6634,11 @@
         "camera": [
           {
             "cadre": [
-              0.01,
-              0.2,
+              0.0,
+              0.11,
               0.92,
-              0.56
+              0.54
             ]
-          },
-          {
-            "cadre": [
-              0.55,
-              0.51,
-              0.96,
-              0.88
-            ],
-            "quand": "de la Chambre des pairs"
           }
         ]
       },
@@ -4777,7 +6659,55 @@
             14.37
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Mais elle inscrit un dogme de",
+          "image": {
+            "commons": "File:Ah ah bien heureux martyr vous allez en tâter de votre Loi du sacrilège, Paris Musées 20230815101751.jpg",
+            "titre": "« Ah ! ah ! bien heureux martyr, vous allez en tâter de votre loi du sacrilège »",
+            "titre_court": "La loi du sacrilège, caricature de 1830",
+            "auteur": "auteur non identifié ; Charles Ratier, imprimeur-lithographe",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "062-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1516,
+            "hauteur": 1600,
+            "recadrage": [
+              0.12,
+              0.22,
+              0.77,
+              0.75
+            ],
+            "utile": [
+              0.013,
+              0.0,
+              1.0,
+              0.956
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.009,
+                  0.95,
+                  0.375
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.359,
+              0.0,
+              0.54,
+              0.231
+            ]
+          },
+          "instant": 7.44
+        }
+      ]
     },
     {
       "n": 63,
@@ -4804,10 +6734,10 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.257,
-              1.0,
-              0.983
+              0.373,
+              0.179,
+              0.847,
+              0.791
             ]
           }
         ]
@@ -4852,6 +6782,54 @@
         {
           "id": "charles-x",
           "quand": "Charles X"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "L'archevêque l'oint d'une huile sainte que",
+          "image": {
+            "commons": "File:Les onctions (BM 1869,0410.764).jpg",
+            "titre": "Les Onctions (sacre de Charles X dans la cathédrale de Reims)",
+            "titre_court": "Les Onctions du sacre, Reims, 1825",
+            "auteur": "Jean-Baptiste Arnout et Victor Adam (figures), d'après Nicolas Chapuy",
+            "date": "vers 1825",
+            "technique": "lithographie",
+            "conservation": "Londres, British Museum",
+            "fichier": "063-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1196,
+            "hauteur": 1600,
+            "recadrage": [
+              0.117,
+              0.054,
+              0.913,
+              0.835
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.73,
+                  1.0,
+                  1.0
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.0,
+              0.73,
+              1.0,
+              1.0
+            ]
+          },
+          "instant": 5.87
         }
       ]
     },
@@ -4954,12 +6932,19 @@
         "camera": [
           {
             "cadre": [
-              0.15,
-              0.192,
-              0.85,
-              0.488
+              0.12,
+              0.232,
+              0.88,
+              0.528
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.107,
+          0.034,
+          0.831,
+          0.718
         ]
       },
       "audio": {
@@ -4984,6 +6969,48 @@
         {
           "id": "rossini",
           "quand": "Rossini"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Ses crescendos font courir la bonne",
+          "image": {
+            "commons": "File:Eugène Du Faget - Costume designs for Guillaume Tell - 1-3. Laure Cinti-Damoreau as Mathilde, Adolphe Nourrit as Arnold Melchtal, and Nicolas Levasseur as Walter Furst.jpg",
+            "titre": "Costumes de Guillaume Tell : Laure Cinti-Damoreau (Mathilde), Adolphe Nourrit (Arnold) et Nicolas Levasseur (Walter Furst)",
+            "titre_court": "Costumes de Guillaume Tell, 1829",
+            "auteur": "Eugène Du Faget",
+            "date": "1829",
+            "technique": "dessins aquarellés (maquettes de costumes)",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "licence": "Domaine public",
+            "recadrage": [
+              0.01,
+              0.09,
+              0.98,
+              0.9
+            ],
+            "fichier": "065-b.webp",
+            "largeur": 1600,
+            "hauteur": 911,
+            "utile": [
+              0.0,
+              0.026,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.026,
+                  1.0,
+                  0.726
+                ]
+              }
+            ]
+          },
+          "instant": 13.22,
+          "camera_manuelle": true
         }
       ]
     },
@@ -5019,9 +7046,9 @@
         "camera": [
           {
             "cadre": [
-              0.04,
-              0.23,
-              0.81,
+              0.02,
+              0.22,
+              0.68,
               0.62
             ]
           }
@@ -5060,6 +7087,47 @@
           "id": "foy",
           "quand": "général Foy"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Une souscription réunit un million de",
+          "image": {
+            "commons": "File:Arnout - Vues de Paris - Tombeau du général Foy.png",
+            "titre": "Vues de Paris : tombeau du général Foy",
+            "titre_court": "Le tombeau du général Foy",
+            "auteur": "Jean-Baptiste Arnout",
+            "date": "1837",
+            "technique": "lithographie",
+            "conservation": "Paris, Bibliothèque historique de la Ville de Paris",
+            "fichier": "066-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1204,
+            "recadrage": [
+              0.06,
+              0.083,
+              0.932,
+              0.822
+            ],
+            "utile": [
+              0.01,
+              0.016,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.18,
+                  0.22,
+                  0.78,
+                  0.82
+                ]
+              }
+            ]
+          },
+          "instant": 8.86
+        }
       ]
     },
     {
@@ -5087,10 +7155,10 @@
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.28,
-              0.95,
-              0.68
+              0.22,
+              0.31,
+              0.78,
+              0.71
             ]
           }
         ]
@@ -5123,6 +7191,48 @@
           "id": "walter-scott",
           "quand": "Walter Scott",
           "instant": 12.63
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Le sujet vient de Walter Scott",
+          "image": {
+            "commons": "File:Sir Henry Raeburn - Portrait of Sir Walter Scott.jpg",
+            "titre": "Portrait de Sir Walter Scott",
+            "titre_court": "Walter Scott",
+            "auteur": "Henry Raeburn",
+            "date": "1822",
+            "technique": "huile sur toile",
+            "conservation": "Édimbourg, Galeries nationales d'Écosse (Scottish National Portrait Gallery)",
+            "fichier": "067-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1319,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.18,
+                  0.183,
+                  0.77,
+                  0.507
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.163,
+              0.0,
+              0.776,
+              0.675
+            ]
+          },
+          "instant": 11.62
         }
       ]
     },
@@ -5157,6 +7267,13 @@
               0.31
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.367,
+          0.021,
+          0.559,
+          0.227
         ]
       },
       "audio": {
@@ -5238,6 +7355,13 @@
               0.405
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.08,
+          0.17,
+          0.83,
+          0.405
         ]
       },
       "audio": {
@@ -5291,10 +7415,10 @@
         "camera": [
           {
             "cadre": [
-              0.01,
-              0.38,
-              0.99,
-              0.99
+              0.22,
+              0.42,
+              0.98,
+              0.96
             ]
           }
         ]
@@ -5335,6 +7459,54 @@
           "quand": "Rothschild",
           "instant": 10.25
         }
+      ],
+      "plans": [
+        {
+          "quand": "Les banquiers Laffitte et Rothschild prêtent",
+          "image": {
+            "commons": "File:Jacques Laffitte.jpg",
+            "titre": "Jacques Laffitte",
+            "titre_court": "Jacques Laffitte, banquier",
+            "auteur": "Émile Giroux, d'après Henry Scheffer",
+            "date": "1842 (Cormenin, Livre des orateurs)",
+            "technique": "gravure",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "070-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1062,
+            "hauteur": 1115,
+            "recadrage": [
+              0.06,
+              0.05,
+              0.94,
+              0.93
+            ],
+            "utile": [
+              0.013,
+              0.011,
+              1.0,
+              0.846
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.05,
+                  0.08,
+                  0.95,
+                  0.46
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.05,
+              0.08,
+              0.95,
+              0.46
+            ]
+          },
+          "instant": 9.07
+        }
       ]
     },
     {
@@ -5364,19 +7536,10 @@
           {
             "cadre": [
               0.21,
-              0.22,
+              0.24,
               0.8,
               0.58
             ]
-          },
-          {
-            "cadre": [
-              0.458,
-              0.318,
-              0.742,
-              0.582
-            ],
-            "quand": "le roi passe en revue la garde nationale"
           }
         ]
       },
@@ -5397,7 +7560,49 @@
             18.33
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Le 29, le roi passe en",
+          "image": {
+            "commons": "File:Charles X à la revue d'avril 1827. G.30896.jpg",
+            "titre": "Charles X à la revue d'avril 1827",
+            "titre_court": "Charles X à la revue d'avril 1827",
+            "auteur": "auteur non identifié",
+            "date": "1827 (date de la fiche)",
+            "technique": "gravure sur bois (illustration de périodique)",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "071-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1285,
+            "hauteur": 1600,
+            "utile": [
+              0.044,
+              0.034,
+              0.956,
+              0.936
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.25,
+                  0.94,
+                  0.6
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.08,
+              0.25,
+              0.94,
+              0.6
+            ]
+          },
+          "instant": 10.35
+        }
+      ]
     },
     {
       "n": 72,
@@ -5439,6 +7644,13 @@
             ],
             "quand": "elle a marché de Marseille à Paris"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.094,
+          0.405,
+          0.926,
+          0.663
         ]
       },
       "audio": {
@@ -5476,6 +7688,47 @@
           "quand": "Charles X",
           "instant": 4.69
         }
+      ],
+      "plans": [
+        {
+          "quand": "Des centaines de milliers de curieux",
+          "image": {
+            "commons": "File:Jardin des Plantes. G.17459(3).jpg",
+            "titre": "Jardin des Plantes (Les Quartiers de Paris)",
+            "titre_court": "La foule devant la girafe, 1827",
+            "auteur": "Henri Daniel Plattel",
+            "date": "1827",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "072-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1296,
+            "hauteur": 976,
+            "recadrage": [
+              0.222,
+              0.155,
+              0.758,
+              0.704
+            ],
+            "utile": [
+              0.01,
+              0.01,
+              0.99,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.01,
+                  0.16,
+                  0.99,
+                  0.68
+                ]
+              }
+            ]
+          },
+          "instant": 9.35
+        }
       ]
     },
     {
@@ -5509,6 +7762,13 @@
               0.53
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.03,
+          0.08,
+          0.97,
+          0.53
         ]
       },
       "audio": {
@@ -5545,6 +7805,47 @@
           "quand": "Nicéphore Niépce",
           "instant": 1.32
         }
+      ],
+      "plans": [
+        {
+          "quand": "Il la laisse des heures dans",
+          "image": {
+            "commons": "File:Chambre noire ayant servi à J. N. Niépce pour ses premiers essais - btv1b10848914g.jpg",
+            "titre": "Chambre noire ayant servi à Nicéphore Niépce pour ses premiers essais",
+            "titre_court": "Chambre noire de Niépce",
+            "auteur": "auteur non identifié",
+            "date": "XIXe siècle",
+            "technique": "photographie",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "073-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1288,
+            "recadrage": [
+              0.13,
+              0.1,
+              0.86,
+              0.8
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              0.895
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.15,
+                  0.2,
+                  0.78,
+                  0.78
+                ]
+              }
+            ]
+          },
+          "instant": 6.07
+        }
       ]
     },
     {
@@ -5571,20 +7872,11 @@
         "camera": [
           {
             "cadre": [
-              0.26,
-              0.14,
-              0.74,
-              0.38
-            ]
-          },
-          {
-            "cadre": [
-              0.46,
-              0.49,
+              0.08,
+              0.08,
               0.94,
-              0.86
-            ],
-            "quand": "s'associe avec Niépce"
+              0.92
+            ]
           }
         ]
       },
@@ -5616,6 +7908,48 @@
           "id": "niepce",
           "quand": "Niépce",
           "instant": 13.8
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Lui aussi veut fixer l'image de",
+          "image": {
+            "commons": "File:Louis Daguerre 2.jpg",
+            "titre": "Portrait de Louis Daguerre",
+            "titre_court": "Louis Daguerre en 1844",
+            "auteur": "Jean-Baptiste Sabatier-Blot",
+            "date": "1844",
+            "technique": "daguerréotype",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "074-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1250,
+            "hauteur": 1600,
+            "utile": [
+              0.034,
+              0.024,
+              0.956,
+              0.976
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.26,
+                  0.14,
+                  0.74,
+                  0.42
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.314,
+              0.071,
+              0.682,
+              0.466
+            ]
+          },
+          "instant": 8.34
         }
       ]
     },
@@ -5651,27 +7985,18 @@
             "cadre": [
               0.12,
               0.44,
-              0.74,
+              0.62,
               0.88
             ]
           },
           {
             "cadre": [
-              0.03,
-              0.35,
-              0.97,
+              0.05,
+              0.42,
+              0.95,
               0.95
             ],
             "quand": "premier chemin de fer de France"
-          },
-          {
-            "cadre": [
-              0.42,
-              0.58,
-              0.82,
-              0.9
-            ],
-            "quand": "remplacer les chevaux"
           }
         ]
       },
@@ -5709,6 +8034,41 @@
           "quand": "Marc Seguin",
           "instant": 14.18
         }
+      ],
+      "plans": [
+        {
+          "quand": "Bientôt, la locomotive à chaudière tubulaire",
+          "image": {
+            "commons": "File:SEt-Lyon Train divers.jpg",
+            "titre": "Chemin de fer de Lyon à Saint-Étienne",
+            "titre_court": "Le chemin de fer de Lyon à Saint-Étienne",
+            "auteur": "Engelmann père et fils (Godefroy Engelmann), Mulhouse",
+            "date": "vers 1834-1835",
+            "technique": "lithographie",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "075-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1180,
+            "utile": [
+              0.01,
+              0.009,
+              1.0,
+              0.985
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.66,
+                  0.75,
+                  0.98,
+                  0.98
+                ]
+              }
+            ]
+          },
+          "instant": 10.88
+        }
       ]
     },
     {
@@ -5741,15 +8101,6 @@
               1.0,
               0.75
             ]
-          },
-          {
-            "cadre": [
-              0.15,
-              0.1,
-              0.65,
-              0.55
-            ],
-            "quand": "détruisent la flotte turque et égyptienne"
           }
         ]
       },
@@ -5786,6 +8137,41 @@
           "id": "charles-x",
           "quand": "Charles X",
           "instant": 14.47
+        }
+      ],
+      "plans": [
+        {
+          "quand": "L'année suivante, un corps français débarque",
+          "image": {
+            "commons": "File:Entrevue du général Maison et d'Ibrahim Pacha, à Navarin, septembre 1828.jpg",
+            "titre": "Entrevue du général Maison et d'Ibrahim Pacha, à Navarin, septembre 1828",
+            "titre_court": "Maison et Ibrahim Pacha à Navarin, 1828",
+            "auteur": "Jean-Charles Langlois",
+            "date": "1838",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national du château",
+            "fichier": "076-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1193,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.4,
+                  0.52,
+                  0.78
+                ]
+              }
+            ]
+          },
+          "instant": 8.83
         }
       ]
     },
@@ -5889,6 +8275,13 @@
               0.63
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
         ]
       },
       "audio": {
@@ -5954,20 +8347,11 @@
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.15,
-              0.82,
-              0.83
+              0.06,
+              0.32,
+              0.79,
+              0.85
             ]
-          },
-          {
-            "cadre": [
-              0.3,
-              0.44,
-              0.65,
-              0.87
-            ],
-            "quand": "L'employé et la marchande y côtoient"
           }
         ]
       },
@@ -5988,7 +8372,57 @@
             16.85
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Ce sont les omnibus, les voitures",
+          "image": {
+            "commons": "File:Omnibus (BM 1861,1012.731).jpg",
+            "titre": "Omnibus",
+            "titre_court": "Un omnibus de l'Entreprise générale",
+            "auteur": "Auguste Raffet ; Gihaut frères, éditeurs",
+            "date": "1829",
+            "technique": "lithographie coloriée",
+            "conservation": "Londres, British Museum",
+            "fichier": "079-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1085,
+            "recadrage": [
+              0.098,
+              0.047,
+              0.871,
+              0.85
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.15,
+                  1.0,
+                  0.74
+                ]
+              },
+              {
+                "cadre": [
+                  0.18,
+                  0.32,
+                  0.58,
+                  0.58
+                ],
+                "quand": "la grande ville commence à se déplacer autrement"
+              }
+            ]
+          },
+          "instant": 7.06
+        }
+      ]
     },
     {
       "n": 80,
@@ -6021,10 +8455,10 @@
         "camera": [
           {
             "cadre": [
-              0.05,
-              0.08,
-              0.95,
-              0.68
+              0.06,
+              0.09,
+              0.94,
+              0.64
             ]
           }
         ]
@@ -6063,6 +8497,47 @@
           "quand": "Auber",
           "instant": 5.05
         }
+      ],
+      "plans": [
+        {
+          "quand": "Des pêcheurs de Naples s'y soulèvent",
+          "image": {
+            "commons": "File:La muette de Portici - E. Grand sig. - btv1b53116919q.jpg",
+            "titre": "La Muette de Portici, scène finale : le Vésuve en éruption (reprise de la fin du XIXe siècle)",
+            "titre_court": "Le Vésuve de la Muette (reprise, fin du XIXe siècle)",
+            "auteur": "E. Grand, dessinateur",
+            "date": "fin du XIXe siècle (reprise ; 1870-1913 selon la BnF)",
+            "technique": "estampe en couleurs",
+            "conservation": "Paris, Bibliothèque nationale de France, Bibliothèque-musée de l'Opéra",
+            "fichier": "080-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1082,
+            "recadrage": [
+              0.08,
+              0.11,
+              0.89,
+              0.87
+            ],
+            "utile": [
+              0.011,
+              0.01,
+              1.0,
+              0.99
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.01,
+                  0.2,
+                  1.0,
+                  0.78
+                ]
+              }
+            ]
+          },
+          "instant": 5.82
+        }
       ]
     },
     {
@@ -6089,10 +8564,10 @@
         "camera": [
           {
             "cadre": [
-              0.345,
-              0.09,
-              0.785,
-              0.4
+              0.26,
+              0.235,
+              0.54,
+              0.494
             ]
           }
         ]
@@ -6120,6 +8595,49 @@
           "id": "delacroix",
           "quand": "Delacroix",
           "instant": 1.1
+        }
+      ],
+      "plans": [
+        {
+          "quand": "La toile déborde de rouge et",
+          "image": {
+            "commons": "File:La Mort de Sardanapale, esquisse - Eugène Delacroix - Muse du Louvre Peintures RF 2488.jpg",
+            "titre": "La Mort de Sardanapale, esquisse",
+            "titre_court": "La Mort de Sardanapale, esquisse",
+            "auteur": "Eugène Delacroix",
+            "date": "1826",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée du Louvre",
+            "fichier": "081-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1288,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.05,
+                  0.65,
+                  0.35
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.08,
+              0.05,
+              0.65,
+              0.35
+            ],
+            "entier_zoom": 1.1
+          },
+          "instant": 9.32
         }
       ]
     },
@@ -6159,6 +8677,13 @@
               0.47
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.275,
+          0.0,
+          0.782,
+          0.583
         ]
       },
       "audio": {
@@ -6216,6 +8741,13 @@
               0.25
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.4,
+          0.037,
+          0.618,
+          0.244
         ]
       },
       "audio": {
@@ -6316,12 +8848,19 @@
         "camera": [
           {
             "cadre": [
-              0.15,
-              0.123,
-              0.88,
-              0.417
+              0.24,
+              0.088,
+              0.82,
+              0.382
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.266,
+          0.0,
+          0.811,
+          0.562
         ]
       },
       "audio": {
@@ -6354,6 +8893,41 @@
           "id": "stendhal",
           "quand": "Stendhal"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Mais sous les Bourbons, un fils",
+          "image": {
+            "commons": "File:StendhalRedandBlack03.jpg",
+            "titre": "Illustration pour Le Rouge et le Noir de Stendhal (Julien Sorel dans une église)",
+            "titre_court": "Julien Sorel, illustration de 1884",
+            "auteur": "Henri-Joseph Dubouchet",
+            "date": "1884 (Paris, L. Conquet)",
+            "technique": "eau-forte (illustration de livre)",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "084-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1397,
+            "hauteur": 1000,
+            "utile": [
+              0.018,
+              0.037,
+              0.979,
+              0.978
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.03,
+                  0.35,
+                  0.97,
+                  0.92
+                ]
+              }
+            ]
+          },
+          "instant": 10.98
+        }
       ]
     },
     {
@@ -6381,10 +8955,10 @@
         "camera": [
           {
             "cadre": [
-              0.066,
-              0.405,
-              0.894,
-              0.865
+              0.12,
+              0.38,
+              0.96,
+              0.88
             ]
           }
         ]
@@ -6422,6 +8996,54 @@
           "id": "duchesse-berry",
           "quand": "duchesse de Berry"
         }
+      ],
+      "plans": [
+        {
+          "quand": "En mars 1829, elle paraît en",
+          "image": {
+            "commons": "File:Marie Stuart representée par Son Altesse Royale Madame, Duchesse de Berry.jpg",
+            "titre": "Marie Stuart représentée par S.A.R. Madame, duchesse de Berry (album du bal costumé du 2 mars 1829)",
+            "titre_court": "La duchesse de Berry en Marie Stuart",
+            "auteur": "Eugène Lami",
+            "date": "1829",
+            "technique": "lithographie coloriée",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "085-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1283,
+            "hauteur": 1600,
+            "recadrage": [
+              0.106,
+              0.065,
+              0.893,
+              0.706
+            ],
+            "utile": [
+              0.024,
+              0.014,
+              0.976,
+              0.976
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.18,
+                  0.31,
+                  0.72,
+                  0.62
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.18,
+              0.31,
+              0.72,
+              0.62
+            ]
+          },
+          "instant": 7.97
+        }
       ]
     },
     {
@@ -6455,11 +9077,18 @@
           {
             "cadre": [
               0.08,
-              0.04,
+              0.05,
               0.88,
-              0.285
+              0.3
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.5,
+          0.097,
+          0.728,
+          0.284
         ]
       },
       "audio": {
@@ -6479,7 +9108,55 @@
             16.69
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Les journaux de modes, illustrés de",
+          "image": {
+            "commons": "File:Journal des Dames et des Modes 1830, Costumes Parisiens (2842), BI-1938-0115B-58.jpg",
+            "titre": "Journal des dames et des modes, 1830, Costumes parisiens (2842) : chapeau de satin, robe de velours, boa de martre",
+            "titre_court": "Journal des dames et des modes, 1830",
+            "auteur": "auteur non identifié",
+            "date": "1830",
+            "technique": "gravure coloriée",
+            "conservation": "Amsterdam, Rijksmuseum",
+            "fichier": "086-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1023,
+            "hauteur": 1440,
+            "recadrage": [
+              0.11,
+              0.12,
+              0.95,
+              0.85
+            ],
+            "utile": [
+              0.014,
+              0.0,
+              0.986,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.06,
+                  0.0,
+                  0.88,
+                  0.33
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.56,
+              0.03,
+              0.788,
+              0.248
+            ]
+          },
+          "instant": 10.51
+        }
+      ]
     },
     {
       "n": 87,
@@ -6512,6 +9189,13 @@
               0.52
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.29,
+          0.138,
+          0.771,
+          0.556
         ]
       },
       "audio": {
@@ -6576,6 +9260,13 @@
               0.88
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.313,
+          0.039,
+          0.805,
+          0.625
         ]
       },
       "audio": {
@@ -6678,7 +9369,14 @@
           0.72,
           0.256
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "entier": true,
+        "entier_vers": [
+          0.408,
+          0.052,
+          0.792,
+          0.304
+        ]
       },
       "audio": {
         "fichier": "089.m4a",
@@ -6774,21 +9472,19 @@
         "camera": [
           {
             "cadre": [
-              0.08,
-              0.19,
-              0.88,
-              0.43
-            ]
-          },
-          {
-            "cadre": [
-              0.22,
-              0.53,
+              0.05,
+              0.43,
               0.92,
-              0.77
-            ],
-            "quand": "les jeunes romantiques, chevelus et bruyants"
+              0.67
+            ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.053,
+          0.43,
+          0.923,
+          0.67
         ]
       },
       "audio": {
@@ -6830,6 +9526,56 @@
           "quand": "Théophile Gautier",
           "instant": 14.36
         }
+      ],
+      "plans": [
+        {
+          "quand": "Hugo y brise les règles de",
+          "image": {
+            "commons": "File:Je crèverai dans l'oeuf ta panse impériale. Sublime d'Hernani plat romantique - estampe - Lith. de Langlumé - btv1b8437942h.jpg",
+            "titre": "« Je crèverai dans l'œuf ta panse impériale. » Sublime d'Hernani, plat romantique",
+            "titre_court": "« Sublime d'Hernani », caricature de 1830",
+            "auteur": "Pierre Langlumé, lithographe",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "Paris, Bibliothèque nationale de France, Bibliothèque-musée de l'Opéra",
+            "fichier": "090-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1112,
+            "recadrage": [
+              0.1,
+              0.14,
+              0.91,
+              0.86
+            ],
+            "utile": [
+              0.021,
+              0.048,
+              1.0,
+              0.976
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.02,
+                  0.05,
+                  1.0,
+                  0.61
+                ]
+              },
+              {
+                "cadre": [
+                  0.02,
+                  0.42,
+                  1.0,
+                  0.98
+                ],
+                "quand": "applaudissent à tout rompre"
+              }
+            ]
+          },
+          "instant": 5.31
+        }
       ]
     },
     {
@@ -6863,6 +9609,13 @@
               0.54
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.196,
+          0.036,
+          0.906,
+          0.846
         ]
       },
       "objets": [
@@ -6911,7 +9664,83 @@
           "id": "royer-collard",
           "quand": "Royer-Collard"
         }
-      ]
+      ],
+      "plans": [
+        {
+          "quand": "Deux cent vingt et un députés",
+          "image": {
+            "commons": "File:Royer-Collard présente au roi Charles X l'adresse des 221.jpg",
+            "titre": "Royer-Collard présente au roi Charles X l'adresse des 221",
+            "titre_court": "L'adresse des 221 remise au roi",
+            "auteur": "auteur non identifié",
+            "date": "XIXe siècle",
+            "technique": "gravure",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "091-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1024,
+            "hauteur": 647,
+            "utile": [
+              0.017,
+              0.04,
+              0.981,
+              0.986
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.281,
+                  0.78,
+                  0.879
+                ]
+              }
+            ]
+          },
+          "instant": 5.53
+        },
+        {
+          "quand": "Le roi dissout la Chambre",
+          "image": {
+            "commons": "File:Proclamation du roi Charles X (13 juin 1830).jpg",
+            "titre": "Proclamation du roi Charles X aux Français, 13 juin 1830",
+            "titre_court": "Proclamation du roi, 13 juin 1830",
+            "auteur": "imprimerie E. Marais, Saint-Lô",
+            "date": "13 juin 1830",
+            "technique": "placard imprimé",
+            "conservation": "Saint-Lô, Archives départementales de la Manche",
+            "fichier": "091-c.webp",
+            "licence": "Domaine public",
+            "largeur": 1194,
+            "hauteur": 1458,
+            "utile": [
+              0.014,
+              0.014,
+              0.986,
+              0.986
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.08,
+                  0.05,
+                  0.92,
+                  0.37
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.08,
+              0.05,
+              0.92,
+              0.37
+            ]
+          },
+          "instant": 12.83
+        }
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 92,
@@ -7031,19 +9860,19 @@
           {
             "cadre": [
               0.03,
-              0.54,
-              0.97,
-              0.94
+              0.48,
+              0.98,
+              0.86
             ]
           },
           {
             "cadre": [
               0.03,
-              0.65,
-              0.65,
-              0.95
+              0.61,
+              0.52,
+              0.97
             ],
-            "quand": "débarquent sur une plage"
+            "quand": "Trois semaines plus tard, ils débarquent"
           }
         ]
       },
@@ -7079,6 +9908,48 @@
           "id": "bourmont",
           "quand": "Bourmont",
           "instant": 6.42
+        }
+      ],
+      "plans": [
+        {
+          "quand": "sur une plage à l'ouest d'Alger",
+          "image": {
+            "commons": "File:Débarquement à Sidi Ferruch Histoire de l'Algérie depuis les temps les plus anciens 1859.png",
+            "titre": "Débarquement à Sidi-Ferruch",
+            "titre_court": "Le débarquement à Sidi-Ferruch",
+            "auteur": "Karl Girardet",
+            "date": "1859 (J.-J.-É. Roy, Histoire de l'Algérie)",
+            "technique": "gravure",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "093-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1017,
+            "hauteur": 1600,
+            "utile": [
+              0.034,
+              0.044,
+              0.976,
+              0.936
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.35,
+                  0.42,
+                  0.98,
+                  0.67
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.346,
+              0.42,
+              0.976,
+              0.67
+            ]
+          },
+          "instant": 9.32
         }
       ]
     },
@@ -7174,12 +10045,19 @@
         "camera": [
           {
             "cadre": [
-              0.32,
-              0.17,
-              0.72,
-              0.43
+              0.28,
+              0.18,
+              0.73,
+              0.45
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.456,
+          0.144,
+          0.605,
+          0.345
         ]
       },
       "audio": {
@@ -7214,6 +10092,54 @@
         {
           "id": "charles-x",
           "quand": "Charles X"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Elles suspendent la liberté de la",
+          "image": {
+            "commons": "File:Les gueusards. Ils me laissent tout sur le dos.jpg",
+            "titre": "« Les gueusards. Ils me laissent tout sur le dos, avec ça qu'il n'y a plus de bornes »",
+            "titre_court": "Charles X sous le poids des ordonnances",
+            "auteur": "Philias Salvator Levilly, dit Hoster",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "095-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1497,
+            "hauteur": 1600,
+            "recadrage": [
+              0.09,
+              0.117,
+              0.89,
+              0.781
+            ],
+            "utile": [
+              0.037,
+              0.024,
+              0.976,
+              0.986
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.04,
+                  0.05,
+                  0.62,
+                  0.41
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.04,
+              0.05,
+              0.62,
+              0.41
+            ]
+          },
+          "instant": 6.54
         }
       ]
     },
@@ -7348,7 +10274,65 @@
           "fond": "paris",
           "instant": 11.07
         }
-      ]
+      ],
+      "plans": [
+        {
+          "quand": "Le soir, autour du Palais-Royal, la",
+          "image": {
+            "commons": "File:Sur la place des Victoires un garçon boulanger, après avoir déposé aux pieds de la statue de Louis XIV le cadavre de la femme qui fut la première victime des évènements, appelle le peuple à la vengeance avec... - btv1b84146153.jpg",
+            "titre": "« Éloquence » : place des Victoires, un garçon boulanger dépose le cadavre de la première victime et appelle le peuple à la vengeance",
+            "titre_court": "La première victime, 27 juillet 1830",
+            "auteur": "Michel Delaporte, lithographe ; Aubert, éditeur",
+            "date": "1830",
+            "technique": "lithographie coloriée",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "097-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1433,
+            "hauteur": 1600,
+            "recadrage": [
+              0.08,
+              0.09,
+              0.92,
+              0.79
+            ],
+            "utile": [
+              0.023,
+              0.024,
+              0.987,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.12,
+                  0.32,
+                  0.88,
+                  0.67
+                ]
+              },
+              {
+                "cadre": [
+                  0.03,
+                  0.61,
+                  0.65,
+                  0.96
+                ],
+                "quand": "la lueur des torches"
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.03,
+              0.61,
+              0.65,
+              0.96
+            ]
+          },
+          "instant": 9.69
+        }
+      ],
+      "camera_manuelle": true
     },
     {
       "n": 98,
@@ -7374,12 +10358,19 @@
         "camera": [
           {
             "cadre": [
-              0.373,
+              0.341,
               0.136,
-              0.727,
+              0.779,
               0.324
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.477,
+          0.141,
+          0.653,
+          0.289
         ]
       },
       "audio": {
@@ -7404,6 +10395,47 @@
         {
           "id": "marmont",
           "quand": "Marmont"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Il ne dispose que d'une douzaine",
+          "image": {
+            "commons": "File:Fuite du M.al Duc de Raguse, rue Montmartre, près la rue Joquelet - estampe - btv1b54001453q.jpg",
+            "titre": "Fuite du maréchal duc de Raguse, rue Montmartre, près la rue Joquelet",
+            "titre_court": "Les troupes de Marmont, rue Montmartre",
+            "auteur": "Victor Adam",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "098-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1296,
+            "hauteur": 884,
+            "recadrage": [
+              0.166,
+              0.125,
+              0.822,
+              0.72
+            ],
+            "utile": [
+              0.014,
+              0.014,
+              0.986,
+              0.986
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.01,
+                  0.42,
+                  0.99,
+                  0.98
+                ]
+              }
+            ]
+          },
+          "instant": 6.88
         }
       ]
     },
@@ -7613,13 +10645,21 @@
         "camera": [
           {
             "cadre": [
-              0.22,
-              0.22,
-              0.72,
-              0.42
+              0.089,
+              0.091,
+              0.871,
+              0.419
             ]
           }
-        ]
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.089,
+          0.091,
+          0.871,
+          0.419
+        ],
+        "entier_zoom": 1.0
       },
       "objets": [
         {
@@ -7652,6 +10692,54 @@
           "quand": "Marmont",
           "instant": 13.17
         }
+      ],
+      "plans": [
+        {
+          "quand": "Des toits pleuvent les tuiles",
+          "image": {
+            "commons": "File:Combat de la rue Saint-Antoine. (28 Juillet 1830). Paris Musées 20230619082052.jpg",
+            "titre": "Combat de la rue Saint-Antoine (28 juillet 1830)",
+            "titre_court": "Combat de la rue Saint-Antoine, 28 juillet",
+            "auteur": "Charlet et Jaime",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "100-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1304,
+            "hauteur": 1440,
+            "recadrage": [
+              0.169,
+              0.219,
+              0.838,
+              0.826
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.64,
+                  1.0,
+                  1.0
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.0,
+              0.64,
+              1.0,
+              1.0
+            ]
+          },
+          "instant": 9.58
+        }
       ]
     },
     {
@@ -7678,29 +10766,11 @@
         "camera": [
           {
             "cadre": [
-              0.18,
-              0.23,
-              0.82,
-              0.58
+              0.02,
+              0.245,
+              1.0,
+              0.775
             ]
-          },
-          {
-            "cadre": [
-              0.387,
-              0.378,
-              0.653,
-              0.632
-            ],
-            "quand": "tombe sous les balles"
-          },
-          {
-            "cadre": [
-              0.28,
-              0.58,
-              0.98,
-              0.98
-            ],
-            "quand": "La légende donne son nom au pont"
           }
         ]
       },
@@ -7730,6 +10800,48 @@
           "lat": 48.85639,
           "fond": "paris",
           "instant": 0.16
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Il aurait crié qu'il s'appelait Arcole.",
+          "image": {
+            "commons": "File:Anonymous - Combat du pont d'Arcole à Paris, le 28 juillet 1830 - P894 - Musée Carnavalet.jpg",
+            "titre": "Combat du pont d'Arcole à Paris, le 28 juillet 1830",
+            "titre_court": "Combat du pont d'Arcole, 28 juillet 1830",
+            "auteur": "auteur non identifié",
+            "date": "entre 1825 et 1835 (vers 1830)",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "101-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1328,
+            "utile": [
+              0.014,
+              0.014,
+              0.986,
+              0.986
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.24,
+                  0.35,
+                  0.44,
+                  0.68
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.24,
+              0.35,
+              0.44,
+              0.68
+            ]
+          },
+          "instant": 7.91
         }
       ]
     },
@@ -7765,9 +10877,9 @@
           {
             "cadre": [
               0.108,
-              0.128,
+              0.108,
               0.972,
-              0.642
+              0.622
             ]
           }
         ]
@@ -7796,6 +10908,47 @@
           "quand": "Charles X",
           "instant": 12.84
         }
+      ],
+      "plans": [
+        {
+          "quand": "puis envahit les Tuileries",
+          "image": {
+            "commons": "File:Prise des Tuileries par les Parisiens le 29 Juillet 1830, G.44331.jpg",
+            "titre": "Prise des Tuileries par les Parisiens le 29 juillet 1830",
+            "titre_court": "La prise des Tuileries, 29 juillet",
+            "auteur": "auteur non identifié",
+            "date": "vers 1830",
+            "technique": "gravure",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "102-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1440,
+            "hauteur": 931,
+            "recadrage": [
+              0.138,
+              0.117,
+              0.825,
+              0.796
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.25,
+                  1.0,
+                  0.87
+                ]
+              }
+            ]
+          },
+          "instant": 9.41
+        }
       ]
     },
     {
@@ -7823,20 +10976,11 @@
         "camera": [
           {
             "cadre": [
-              0.13,
-              0.15,
-              0.86,
-              0.44
-            ]
-          },
-          {
-            "cadre": [
-              0.34,
+              0.3,
               0.38,
-              0.75,
+              0.82,
               0.75
-            ],
-            "quand": "On enterre les victimes là où elles sont"
+            ]
           }
         ]
       },
@@ -7876,6 +11020,41 @@
           "lat": 48.86065,
           "fond": "paris",
           "instant": 12.81
+        }
+      ],
+      "plans": [
+        {
+          "quand": "On enterre les victimes là où",
+          "image": {
+            "commons": "File:Inhumation des victimes de Juillet 1830 devant le Louvre. D.3992.jpg",
+            "titre": "Inhumation des victimes de Juillet 1830 devant le Louvre",
+            "titre_court": "Inhumation des victimes devant le Louvre",
+            "auteur": "Charles-Nicolas Lemercier",
+            "date": "vers 1830 (date non précisée)",
+            "technique": "plume, lavis d'encre brune et gouache",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "103-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1383,
+            "hauteur": 976,
+            "utile": [
+              0.034,
+              0.044,
+              0.976,
+              0.956
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.03,
+                  0.43,
+                  0.95,
+                  0.95
+                ]
+              }
+            ]
+          },
+          "instant": 7.48
         }
       ]
     },
@@ -8085,12 +11264,19 @@
         "camera": [
           {
             "cadre": [
-              0.03,
-              0.28,
-              0.97,
-              0.56
+              0.024,
+              0.33,
+              0.976,
+              0.603
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.024,
+          0.027,
+          0.976,
+          0.966
         ]
       },
       "manuscrits": [
@@ -8123,6 +11309,48 @@
           "id": "berlioz",
           "quand": "Hector Berlioz"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Il vient d'écrire une œuvre inouïe",
+          "image": {
+            "commons": "File:Symphonie fantastique Titre.jpg",
+            "titre": "Symphonie fantastique, page de titre du manuscrit autographe",
+            "titre_court": "Symphonie fantastique, manuscrit",
+            "auteur": "Hector Berlioz",
+            "date": "1830",
+            "technique": "manuscrit autographe",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "106-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1176,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.013,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.18,
+                  0.22,
+                  0.98,
+                  0.44
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.18,
+              0.22,
+              0.98,
+              0.44
+            ]
+          },
+          "instant": 10.58
+        }
       ]
     },
     {
@@ -8150,12 +11378,19 @@
         "camera": [
           {
             "cadre": [
-              0.09,
-              0.191,
-              0.84,
-              0.489
+              0.15,
+              0.18,
+              0.75,
+              0.42
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.15,
+          0.18,
+          0.75,
+          0.42
         ]
       },
       "audio": {
@@ -8193,6 +11428,48 @@
           "id": "orleans",
           "quand": "Le duc d'Orléans"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Le duc d'Orléans, cousin du roi",
+          "image": {
+            "commons": "File:Joseph-Désiré Court - Le duc d'Orléans signant la proclamation de la lieutenance générale du royaume, le 31 juillet 1830, au Palais-Royal - P2357 - Musée Carnavalet.jpg",
+            "titre": "Le duc d'Orléans signant la proclamation de la lieutenance générale du royaume, 31 juillet 1830",
+            "titre_court": "Le duc d'Orléans signe la proclamation",
+            "auteur": "Joseph-Désiré Court",
+            "date": "1836",
+            "technique": "huile sur toile",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "107-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1254,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.22,
+                  0.53,
+                  0.76,
+                  0.74
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.22,
+              0.53,
+              0.76,
+              0.74
+            ]
+          },
+          "instant": 10.35
+        }
       ]
     },
     {
@@ -8220,12 +11497,19 @@
         "camera": [
           {
             "cadre": [
-              0.137,
-              0.488,
-              0.443,
-              0.802
+              0.149,
+              0.486,
+              0.491,
+              0.774
             ]
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.149,
+          0.486,
+          0.491,
+          0.774
         ]
       },
       "audio": {
@@ -8250,6 +11534,48 @@
         {
           "id": "orleans",
           "quand": "le duc d'Orléans"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Il se rend à l'Hôtel de Ville",
+          "image": {
+            "commons": "File:L'avènement de Louis-Philippe.jpg",
+            "titre": "Louis-Philippe, duc d'Orléans, nommé lieutenant général du royaume, arrive à l'Hôtel de Ville de Paris, 31 juillet 1830",
+            "titre_court": "Le duc d'Orléans arrive à l'Hôtel de Ville",
+            "auteur": "Éloi-Firmin Féron, d’après Charles-Philippe Larivière",
+            "date": "1836",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national du Château",
+            "fichier": "108-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1400,
+            "hauteur": 1138,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.15,
+                  0.45,
+                  0.95,
+                  0.89
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.15,
+              0.45,
+              0.95,
+              0.89
+            ]
+          },
+          "instant": 4.99
         }
       ]
     },
@@ -8283,7 +11609,7 @@
         "camera": [
           {
             "cadre": [
-              0.55,
+              0.47,
               0.0,
               0.95,
               0.3
@@ -8321,6 +11647,55 @@
           "id": "la-fayette",
           "quand": "La Fayette"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Le baiser républicain de La Fayette",
+          "image": {
+            "commons": "File:Voilà le roi qu'il nous fallait, c'est la meilleure des Républiques (BM 1911,0412.114).jpg",
+            "titre": "« Voilà le roi qu'il nous fallait, c'est la meilleure des Républiques »",
+            "titre_court": "« La meilleure des Républiques », 1830",
+            "auteur": "Antoine Maurin ; Lemercier, imprimeur",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "Londres, British Museum",
+            "fichier": "109-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1162,
+            "hauteur": 1600,
+            "recadrage": [
+              0.06,
+              0.04,
+              0.94,
+              0.86
+            ],
+            "utile": [
+              0.0,
+              0.067,
+              1.0,
+              0.967
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.067,
+                  1.0,
+                  0.357
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.506,
+              0.067,
+              0.725,
+              0.285
+            ]
+          },
+          "instant": 11.61,
+          "camera_manuelle": true
+        }
       ]
     },
     {
@@ -8354,10 +11729,10 @@
         "camera": [
           {
             "cadre": [
-              0.13,
-              0.05,
-              0.89,
-              0.54
+              0.106,
+              0.0,
+              0.53,
+              0.49
             ]
           }
         ]
@@ -8409,6 +11784,47 @@
         {
           "id": "charles-x",
           "quand": "Charles X"
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Personne n'en tient compte.",
+          "image": {
+            "commons": "File:Embarquement de Charles X et de sa famille le 1 août dans le Port de Cherbourg à bord du Great-Bretane,, Paris Musées 20230602224252.jpg",
+            "titre": "Embarquement de Charles X et de sa famille dans le port de Cherbourg, à bord du Great-Britain",
+            "titre_court": "Charles X embarque à Cherbourg",
+            "auteur": "Victor Adam, d'après Charles Dusaulchoy",
+            "date": "après 1830",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "110-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1440,
+            "hauteur": 1004,
+            "recadrage": [
+              0.153,
+              0.11,
+              0.857,
+              0.825
+            ],
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.43,
+                  0.95,
+                  0.99
+                ]
+              }
+            ]
+          },
+          "instant": 7.69
         }
       ]
     },
@@ -8511,21 +11927,28 @@
         "camera": [
           {
             "cadre": [
-              0.26,
-              0.2,
-              0.74,
-              0.44
+              0.15,
+              0.12,
+              0.85,
+              0.36
             ]
           },
           {
             "cadre": [
-              0.22,
-              0.64,
-              0.78,
-              0.88
+              0.28,
+              0.25,
+              0.72,
+              0.49
             ],
-            "quand": "Le drapeau tricolore redevient celui de la France"
+            "quand": "censure ne pourra jamais être rétablie"
           }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.28,
+          0.25,
+          0.72,
+          0.49
         ]
       },
       "audio": {
@@ -8545,7 +11968,42 @@
             14.74
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Le drapeau tricolore redevient",
+          "image": {
+            "commons": "File:Lar7 cogniet 001z.jpg",
+            "titre": "Scène de Juillet 1830, dit aussi Les Drapeaux",
+            "titre_court": "Les Drapeaux, scène de juillet 1830",
+            "auteur": "Léon Cogniet",
+            "date": "1830",
+            "technique": "huile sur toile (esquisse)",
+            "conservation": "Orléans, musée des Beaux-Arts",
+            "fichier": "112-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1253,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.05,
+                  0.18,
+                  0.95,
+                  0.59
+                ]
+              }
+            ]
+          },
+          "instant": 10.1
+        }
+      ]
     },
     {
       "n": 113,
@@ -8618,6 +12076,49 @@
           "id": "louis-philippe",
           "quand": "Louis-Philippe Ier"
         }
+      ],
+      "plans": [
+        {
+          "quand": "Il devient Louis-Philippe Ier, non plus",
+          "image": {
+            "commons": "File:Louis-Philippe I King of the French (by Franz Xaver Winterhalter).jpg",
+            "titre": "Louis-Philippe Ier, roi des Français (1773-1850)",
+            "titre_court": "Louis-Philippe, roi des Français",
+            "auteur": "Franz Xaver Winterhalter",
+            "date": "1841",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national du château",
+            "fichier": "113-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1036,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.17,
+                  1.0,
+                  0.38
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.218,
+              0.0,
+              0.506,
+              0.24
+            ]
+          },
+          "instant": 6.51,
+          "camera_manuelle": true
+        }
       ]
     },
     {
@@ -8650,13 +12151,21 @@
         "camera": [
           {
             "cadre": [
-              0.05,
+              0.06,
               0.23,
-              0.95,
-              0.59
+              0.94,
+              0.58
             ]
           }
-        ]
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.06,
+          0.23,
+          0.94,
+          0.58
+        ],
+        "entier_zoom": 1.05
       },
       "audio": {
         "fichier": "114.m4a",
@@ -8675,7 +12184,51 @@
             15.81
           ]
         ]
-      }
+      },
+      "plans": [
+        {
+          "quand": "Mais les ouvriers des barricades n'ont",
+          "image": {
+            "commons": "File:Un héros de juillet. G.21217 (3 of 3).jpg",
+            "titre": "Un héros de Juillet, mai 1831",
+            "titre_court": "Un héros de Juillet, mai 1831",
+            "auteur": "Honoré Daumier ; Aubert, éditeur",
+            "date": "1831",
+            "technique": "lithographie coloriée",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "114-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1317,
+            "hauteur": 1600,
+            "utile": [
+              0.034,
+              0.06,
+              0.966,
+              0.916
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.034,
+                  0.13,
+                  0.966,
+                  0.375
+                ]
+              }
+            ],
+            "utile_manuel": true,
+            "entier": true,
+            "entier_vers": [
+              0.034,
+              0.13,
+              0.966,
+              0.375
+            ]
+          },
+          "instant": 8.03,
+          "camera_manuelle": true
+        }
+      ]
     }
   ],
   "lectures": [
@@ -11203,6 +14756,30 @@
           "source": "Charte constitutionnelle du 4 juin 1814, articles 38 et 40 ; Pierre Rosanvallon, Le Sacre du citoyen, Gallimard, 1992"
         },
         {
+          "type": "image",
+          "quand": "Ce sont surtout de grands propriétaires",
+          "legende": "« Le Ventru », 1819 : le député du pays légal vu par les caricaturistes.",
+          "image": {
+            "commons": "File:Le Ventru - estampe - btv1b6955824z.jpg",
+            "titre": "Le Ventru",
+            "titre_court": "Le Ventru, caricature",
+            "auteur": "anonyme, édité chez Martinet",
+            "date": "1819",
+            "technique": "estampe coloriée",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "episodes/pays-legal-2.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1303,
+            "recadrage": [
+              0.19,
+              0.16,
+              0.8,
+              0.78
+            ]
+          }
+        },
+        {
           "type": "chronologie",
           "quand": "En 1817, la loi Lainé",
           "titre": "Les lois électorales de la Restauration",
@@ -11419,6 +14996,30 @@
             ]
           ],
           "source": "Fond Natural Earth ; itinéraire d'après Emmanuel Larroche, L'Expédition d'Espagne, 2013"
+        },
+        {
+          "type": "image",
+          "quand": "En six mois, la campagne a coûté",
+          "legende": "Le duc d'Angoulême entre à Madrid, le 24 mai 1823.",
+          "image": {
+            "commons": "File:Entrée du duc d'Angoulême à Madrid - estampe - btv1b84144607.jpg",
+            "titre": "Entrée du duc d'Angoulême à Madrid",
+            "titre_court": "Entrée du duc d'Angoulême à Madrid",
+            "auteur": "anonyme, imprimé par Villain",
+            "date": "vers 1823",
+            "technique": "lithographie",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "episodes/espagne-3.webp",
+            "licence": "Domaine public",
+            "largeur": 1296,
+            "hauteur": 926,
+            "recadrage": [
+              0.11,
+              0.13,
+              0.87,
+              0.79
+            ]
+          }
         }
       ],
       "sources": [
@@ -11591,6 +15192,24 @@
           "source": "Fond Natural Earth ; itinéraire d'après Charles-André Julien, Histoire de l'Algérie contemporaine, t. I, PUF, 1964"
         },
         {
+          "type": "image",
+          "quand": "Puis l'armée traîne ses canons",
+          "legende": "La flotte de l'amiral Duperré bombarde Alger par la mer, le 3 juillet 1830.",
+          "image": {
+            "commons": "File:Bombardement d'Alger - 1830.jpg",
+            "titre": "Attaque d'Alger par mer, 3 juillet 1830",
+            "titre_court": "Attaque d'Alger par mer, 3 juillet 1830",
+            "auteur": "Antoine Léon Morel-Fatio",
+            "date": "entre 1836 et 1837",
+            "technique": "huile sur toile",
+            "conservation": "Versailles, musée national du château",
+            "fichier": "episodes/alger-3.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1089
+          }
+        },
+        {
           "type": "chiffres",
           "quand": "L'expédition a duré six semaines",
           "titre": "L'expédition d'Alger",
@@ -11718,6 +15337,30 @@
             }
           ],
           "source": "Guillaume de Bertier de Sauvigny, La Restauration, Flammarion, 1955 ; Emmanuel de Waresquiel et Benoît Yvert, Histoire de la Restauration, 1814-1830, Perrin, 1996"
+        },
+        {
+          "type": "image",
+          "quand": "La Chambre nouvelle est dissoute",
+          "legende": "Paris apprend les ordonnances, le 26 juillet au soir.",
+          "image": {
+            "commons": "File:Palais Royal. Lecture du Moniteur le lundi 26 juillet à 7 heures du soir. G.39093.jpg",
+            "titre": "Palais-Royal. Lecture du Moniteur le lundi 26 juillet à 7 heures du soir",
+            "titre_court": "Lecture du Moniteur au Palais-Royal, 26 juillet",
+            "auteur": "Victor Adam",
+            "date": "1830",
+            "technique": "lithographie",
+            "conservation": "Paris, musée Carnavalet",
+            "fichier": "episodes/article-14-3.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 931,
+            "recadrage": [
+              0.095,
+              0.105,
+              0.925,
+              0.735
+            ]
+          }
         },
         {
           "type": "chiffres",
@@ -11904,8 +15547,8 @@
           "oeuvre": "Sémiramis, ouverture",
           "compositeur": "Gioachino Rossini, 1823"
         },
-        "fin": 416,
-        "duree": 416.0
+        "fin": 450,
+        "duree": 450.0
       },
       {
         "id": "fond-charles-x-1",
@@ -11952,8 +15595,8 @@
           "oeuvre": "Guillaume Tell, ouverture",
           "compositeur": "Gioachino Rossini, 1829"
         },
-        "fin": 478,
-        "duree": 478.0
+        "fin": 510,
+        "duree": 510.0
       },
       {
         "id": "fond-trois-glorieuses-1",
@@ -11993,11 +15636,235 @@
           "oeuvre": "Symphonie fantastique, Rêveries, Passions",
           "compositeur": "Hector Berlioz, 1830"
         },
-        "fin": 112,
-        "duree": 112.0
+        "fin": 135,
+        "duree": 135.0
       }
     ],
     "intermedes": [
+      {
+        "id": "galerie-caricatures",
+        "apres": 40,
+        "fichier": "musique/galerie-caricatures.m4a",
+        "titre": "Le Barbier de Séville, ouverture",
+        "auteur": "Gioachino Rossini",
+        "date": "1816",
+        "interprete": "Orchestre symphonique de Chicago, direction Fritz Reiner (disque RCA Victor LSC 2318, 1959)",
+        "enregistrement": "RCA Victor, 1959",
+        "source": {
+          "type": "archive",
+          "id": "lp_rossini-overtures_gioacchino-rossini-the-chicago-symphony-or_0",
+          "fichier": "disc1/02.01. The Barber Of Seville.mp3",
+          "publication": "1959"
+        },
+        "licence": "Domaine public en Europe (disque publié avant 1963)",
+        "filtres": "microsillon",
+        "debut": 255,
+        "fin": 281,
+        "fondu_entree": 1.5,
+        "fondu_sortie": 2.5,
+        "cartouche": {
+          "oeuvre": "Le Barbier de Séville, ouverture",
+          "compositeur": "Gioachino Rossini, 1816"
+        },
+        "instrumental": true,
+        "paroles": [],
+        "theme": "Girouettes, éteignoirs et écrevisses : la caricature contre les ultras",
+        "galerie": [
+          {
+            "image": {
+              "commons": "File:Pièce satyrique contre le prince de Talleyrand - estampe - L'Homme aux 6 têtes - btv1b8413990s.jpg",
+              "titre": "L'Homme aux six têtes, pièce satirique contre le prince de Talleyrand",
+              "titre_court": "L'Homme aux six têtes (Talleyrand)",
+              "auteur": "anonyme, publié par Le Nain jaune",
+              "date": "15 avril 1815",
+              "technique": "estampe coloriée",
+              "conservation": "Paris, Bibliothèque nationale de France",
+              "fichier": "galeries/galerie-caricatures-1.webp",
+              "licence": "Domaine public",
+              "largeur": 1410,
+              "hauteur": 1600,
+              "recadrage": [
+                0.05,
+                0.05,
+                0.95,
+                0.8
+              ],
+              "utile": [
+                0.012,
+                0.059,
+                0.987,
+                0.99
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.012,
+                    0.078,
+                    0.987,
+                    0.451
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.012,
+                0.078,
+                0.987,
+                0.451
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:N°3Réception d'un chevalier de l'éteignoir, G.27553.jpg",
+              "titre": "Réception d'un chevalier de l'Éteignoir",
+              "titre_court": "Réception d'un chevalier de l'Éteignoir",
+              "auteur": "anonyme, publié par Le Nain jaune",
+              "date": "vers 1815",
+              "technique": "eau-forte coloriée",
+              "conservation": "Paris, musée Carnavalet",
+              "fichier": "galeries/galerie-caricatures-2.webp",
+              "licence": "Domaine public",
+              "largeur": 1440,
+              "hauteur": 936,
+              "recadrage": [
+                0.05,
+                0.134,
+                0.871,
+                0.771
+              ],
+              "utile": [
+                0.0,
+                0.0,
+                1.0,
+                0.981
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.199,
+                    1.0,
+                    0.868
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Famille des Eteignoirs. (IFF 3), G.12356(1).jpg",
+              "titre": "Famille des Éteignoirs",
+              "titre_court": "Famille des Éteignoirs",
+              "auteur": "Achille Devéria, imprimé par Charles Motte",
+              "date": "1819",
+              "technique": "lithographie coloriée",
+              "conservation": "Paris, musée Carnavalet",
+              "fichier": "galeries/galerie-caricatures-3.webp",
+              "licence": "Domaine public",
+              "largeur": 1600,
+              "hauteur": 906,
+              "recadrage": [
+                0.1,
+                0.09,
+                0.93,
+                0.78
+              ],
+              "utile": [
+                0.0,
+                0.175,
+                0.99,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.175,
+                    0.99,
+                    0.935
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:LES ULTRAS EN JOUISSANCE. G.43483.jpg",
+              "titre": "Les Ultras en jouissance",
+              "titre_court": "Les Ultras en jouissance",
+              "auteur": "anonyme",
+              "date": "1819",
+              "technique": "eau-forte coloriée",
+              "conservation": "Paris, musée Carnavalet",
+              "fichier": "galeries/galerie-caricatures-4.webp",
+              "licence": "Domaine public",
+              "largeur": 1600,
+              "hauteur": 1085,
+              "recadrage": [
+                0.089,
+                0.052,
+                0.934,
+                0.896
+              ],
+              "utile": [
+                0.028,
+                0.024,
+                0.99,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.028,
+                    0.024,
+                    0.99,
+                    0.641
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Les Ecrevisses à Longchamps - estampe - Eugène Delacroix - btv1b100296856.jpg",
+              "titre": "Les Écrevisses à Longchamps",
+              "titre_court": "Les Écrevisses à Longchamps",
+              "auteur": "Eugène Delacroix",
+              "date": "1822",
+              "technique": "lithographie",
+              "conservation": "Paris, Bibliothèque nationale de France",
+              "fichier": "galeries/galerie-caricatures-5.webp",
+              "licence": "Domaine public",
+              "largeur": 1440,
+              "hauteur": 927,
+              "recadrage": [
+                0.06,
+                0.01,
+                0.94,
+                0.75
+              ],
+              "utile": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.675
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "duree": 26.0
+      },
       {
         "id": "chant-roi-yvetot",
         "apres": 46,
@@ -12186,7 +16053,115 @@
           ]
         ],
         "duree": 15.3,
-        "calage": "mot"
+        "calage": "mot",
+        "galerie": [
+          {
+            "image": {
+              "commons": "File:Le Roi d'Yvetot, BAL2007.71.jpg",
+              "titre": "Le Roi d'Yvetot, planche des Chansons de Béranger",
+              "titre_court": "Le Roi d'Yvetot, par Henry Monnier (1828)",
+              "auteur": "Henry Monnier",
+              "date": "1828",
+              "technique": "lithographie aquarellée",
+              "conservation": "Paris, Maison de Balzac",
+              "fichier": "galeries/chant-roi-yvetot-1.webp",
+              "licence": "Domaine public",
+              "largeur": 1433,
+              "hauteur": 987,
+              "recadrage": [
+                0.268,
+                0.266,
+                0.662,
+                0.655
+              ],
+              "utile": [
+                0.011,
+                0.011,
+                0.989,
+                0.989
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.011,
+                    0.011,
+                    0.989,
+                    0.628
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:La goguette des Joyeux à Belleville par Daumier 2.jpg",
+              "titre": "La Goguette des Joyeux à Belleville",
+              "titre_court": "Une goguette à Belleville",
+              "auteur": "Honoré Daumier",
+              "date": "1845",
+              "technique": "gravure sur bois",
+              "conservation": "lieu de conservation non identifié",
+              "fichier": "galeries/chant-roi-yvetot-2.webp",
+              "licence": "Domaine public",
+              "largeur": 1600,
+              "hauteur": 1260,
+              "utile": [
+                0.019,
+                0.044,
+                0.981,
+                0.976
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.019,
+                    0.244,
+                    0.981,
+                    0.776
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Pierre-Jean Béranger.jpg",
+              "titre": "Pierre-Jean de Béranger",
+              "titre_court": "Béranger, par Ary Scheffer",
+              "auteur": "Ary Scheffer",
+              "date": "vers 1830",
+              "technique": "huile sur toile",
+              "conservation": "Paris, musée Carnavalet",
+              "fichier": "galeries/chant-roi-yvetot-3.webp",
+              "licence": "Domaine public",
+              "largeur": 1332,
+              "hauteur": 1600,
+              "utile": [
+                0.024,
+                0.014,
+                0.976,
+                0.986
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.024,
+                    0.242,
+                    0.976,
+                    0.586
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.121,
+                0.014,
+                0.813,
+                0.75
+              ]
+            }
+          }
+        ]
       },
       {
         "id": "musique-dame-blanche",
@@ -12215,7 +16190,171 @@
           "compositeur": "François-Adrien Boieldieu, 1825"
         },
         "paroles": [],
-        "duree": 24.5
+        "duree": 24.5,
+        "galerie": [
+          {
+            "image": {
+              "commons": "File:Théâtre royal de l'Opéra-Comique. Décoration du 1er Acte de la Dame Blanche - estampe - Gué pinx. et del.t ; Lith. de Engelmann - btv1b84371984.jpg",
+              "titre": "Théâtre royal de l'Opéra-Comique : décoration du premier acte de La Dame blanche",
+              "titre_court": "La Dame blanche, décor du premier acte",
+              "auteur": "Godefroy Engelmann, d'après Julien-Michel Gué",
+              "date": "1827",
+              "technique": "lithographie",
+              "conservation": "Paris, Bibliothèque nationale de France, Bibliothèque-musée de l'Opéra",
+              "fichier": "galeries/musique-dame-blanche-1.webp",
+              "licence": "Domaine public",
+              "largeur": 1296,
+              "hauteur": 976,
+              "recadrage": [
+                0.187,
+                0.144,
+                0.803,
+                0.787
+              ],
+              "utile": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.423,
+                    1.0,
+                    1.0
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:La Dame blanche, opéra-comique de Boieldieu et Scribe - costume de Mme Boulanger (rôle de Jenny) - gravé par Maleuvre - btv1b7001520p.jpg",
+              "titre": "La Dame blanche : costume de Mme Boulanger, rôle de Jenny",
+              "titre_court": "Mme Boulanger en Jenny, 1825",
+              "auteur": "Louis Maleuvre ; Martinet, éditeur",
+              "date": "1825",
+              "technique": "gravure coloriée",
+              "conservation": "Paris, Bibliothèque nationale de France",
+              "fichier": "galeries/musique-dame-blanche-2.webp",
+              "licence": "Domaine public",
+              "largeur": 1036,
+              "hauteur": 1600,
+              "recadrage": [
+                0.1,
+                0.106,
+                0.843,
+                0.865
+              ],
+              "utile": [
+                0.0,
+                0.093,
+                0.986,
+                0.966
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.094,
+                    0.986,
+                    0.371
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.43,
+                0.103,
+                0.643,
+                0.295
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:La Dame Blanche, Acte II, sc VII - Georges, Ah ! Que cette main est jolie ! - estampe - Blanchard sculp. (sig.) ; Tony Johannot (sig.) - btv1b84372015.jpg",
+              "titre": "La Dame blanche, acte II, scène VII : « Ah ! que cette main est jolie ! »",
+              "titre_court": "La Dame blanche, acte II",
+              "auteur": "Auguste Blanchard, d'après Tony Johannot",
+              "date": "1825",
+              "technique": "gravure",
+              "conservation": "Paris, Bibliothèque nationale de France, Bibliothèque-musée de l'Opéra",
+              "fichier": "galeries/musique-dame-blanche-3.webp",
+              "licence": "Domaine public",
+              "largeur": 1321,
+              "hauteur": 1600,
+              "recadrage": [
+                0.158,
+                0.088,
+                0.835,
+                0.62
+              ],
+              "utile": [
+                0.042,
+                0.0,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.042,
+                    0.201,
+                    1.0,
+                    0.545
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.64,
+                0.28,
+                0.769,
+                0.437
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:La dame blanche par Scribe et Melesville, musique de Boieldieu (acte III Scène dernière). Théâtre de l'Opéra-Comique - Album théâtral n°8 - estampe - Tassaert del. - btv1b8437197q.jpg",
+              "titre": "La Dame blanche, acte III, scène dernière",
+              "titre_court": "La Dame blanche, scène dernière",
+              "auteur": "Octave Tassaert",
+              "date": "1827",
+              "technique": "lithographie",
+              "conservation": "Paris, Bibliothèque nationale de France, Bibliothèque-musée de l'Opéra",
+              "fichier": "galeries/musique-dame-blanche-4.webp",
+              "licence": "Domaine public",
+              "largeur": 1440,
+              "hauteur": 998,
+              "recadrage": [
+                0.12,
+                0.11,
+                0.87,
+                0.8
+              ],
+              "utile": [
+                0.0,
+                0.181,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.181,
+                    1.0,
+                    0.808
+                  ]
+                }
+              ]
+            }
+          }
+        ]
       },
       {
         "id": "musique-muette",
@@ -12244,7 +16383,557 @@
         },
         "paroles": [],
         "fondu_entree": 0.8,
-        "duree": 24.0
+        "duree": 24.0,
+        "galerie": [
+          {
+            "image": {
+              "commons": "File:La muette de Portici, 2 scènes - (d'après les décors de Cicéri) ; lith. de Engelmann - btv1b53116916c.jpg",
+              "titre": "La Muette de Portici, deux scènes d'après les décors de Cicéri",
+              "titre_court": "La Muette de Portici, décors de Cicéri",
+              "auteur": "Godefroy Engelmann, d'après Pierre-Luc-Charles Cicéri",
+              "date": "1828",
+              "technique": "lithographie",
+              "conservation": "Paris, Bibliothèque nationale de France, Bibliothèque-musée de l'Opéra",
+              "fichier": "galeries/musique-muette-1.webp",
+              "licence": "Domaine public",
+              "largeur": 1600,
+              "hauteur": 833,
+              "recadrage": [
+                0.023,
+                0.136,
+                0.973,
+                0.824
+              ],
+              "utile": [
+                0.0,
+                0.009,
+                1.0,
+                0.926
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.009,
+                    1.0,
+                    0.844
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:La muette de Portici, opéra d'Auber, Scribe et Germain Delavigne - costume d'Adolphe Nourrit (rôle de Masaniello) - gravé par Maleuvre - btv1b7001760w.jpg",
+              "titre": "La Muette de Portici : costume d'Adolphe Nourrit, rôle de Masaniello",
+              "titre_court": "Adolphe Nourrit en Masaniello, 1828",
+              "auteur": "Louis Maleuvre ; Martinet, éditeur",
+              "date": "1828",
+              "technique": "gravure coloriée",
+              "conservation": "Paris, Bibliothèque nationale de France",
+              "fichier": "galeries/musique-muette-2.webp",
+              "licence": "Domaine public",
+              "largeur": 1075,
+              "hauteur": 1600,
+              "recadrage": [
+                0.11,
+                0.11,
+                0.84,
+                0.79
+              ],
+              "utile": [
+                0.009,
+                0.0,
+                1.0,
+                0.976
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.009,
+                    0.065,
+                    1.0,
+                    0.355
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.463,
+                0.12,
+                0.591,
+                0.286
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:La muette de Portici, opéra d'Auber, Scribe et Germain Delavigne - costume de Melle Noblet (rôle de Fenella) - gravé par Maleuvre - btv1b70017619.jpg",
+              "titre": "La Muette de Portici : costume de Mlle Noblet, rôle de Fenella",
+              "titre_court": "Mlle Noblet en Fenella, 1828",
+              "auteur": "Louis Maleuvre ; Martinet, éditeur",
+              "date": "1828",
+              "technique": "gravure coloriée",
+              "conservation": "Paris, Bibliothèque nationale de France",
+              "fichier": "galeries/musique-muette-3.webp",
+              "licence": "Domaine public",
+              "largeur": 975,
+              "hauteur": 1600,
+              "recadrage": [
+                0.126,
+                0.125,
+                0.812,
+                0.835
+              ],
+              "utile": [
+                0.0,
+                0.139,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.139,
+                    1.0,
+                    0.404
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.351,
+                0.139,
+                0.624,
+                0.374
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:La muette de Portici, 4e acte, 2e tableau - d'après le décor de Cicéri - btv1b53116915x.jpg",
+              "titre": "La Muette de Portici, quatrième acte, deuxième tableau, d'après le décor de Cicéri",
+              "titre_court": "La Muette de Portici, acte IV",
+              "auteur": "d'après Pierre-Luc-Charles Cicéri",
+              "date": "1828",
+              "technique": "lithographie",
+              "conservation": "Paris, Bibliothèque nationale de France, Bibliothèque-musée de l'Opéra",
+              "fichier": "galeries/musique-muette-4.webp",
+              "licence": "Domaine public",
+              "largeur": 1259,
+              "hauteur": 1296,
+              "recadrage": [
+                0.103,
+                0.109,
+                0.957,
+                0.83
+              ],
+              "utile": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.454,
+                    1.0,
+                    0.876
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.0,
+                0.454,
+                1.0,
+                0.876
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "galerie-salon-1827",
+        "apres": 81,
+        "fichier": "musique/galerie-salon-1827.m4a",
+        "titre": "Sémiramis, ouverture",
+        "auteur": "Gioachino Rossini",
+        "date": "1823",
+        "interprete": "Orchestre du Concertgebouw d’Amsterdam, direction Eduard van Beinum (disque London LL 358, 1952)",
+        "enregistrement": "London, 1952",
+        "source": {
+          "type": "archive",
+          "id": "lp_famous-overtures_gioacchino-rossini-concertgebouworkest-edu",
+          "fichier": "disc1/02.01. Semiramis.mp3",
+          "publication": "1952"
+        },
+        "licence": "Domaine public en Europe (disque publié avant 1963)",
+        "filtres": "microsillon",
+        "debut": 37.5,
+        "fin": 62.5,
+        "fondu_entree": 1.5,
+        "fondu_sortie": 2.5,
+        "cartouche": {
+          "oeuvre": "Sémiramis, ouverture",
+          "compositeur": "Gioachino Rossini, 1823"
+        },
+        "instrumental": true,
+        "paroles": [],
+        "theme": "Au Salon de 1827 : classiques et romantiques",
+        "galerie": [
+          {
+            "image": {
+              "commons": "File:Homère déifié, dit aussi L'apothéose d'Homère - Jean-Auguste Dominique Ingres - Musée du Louvre Peintures INV 5417 ; C 196.jpg",
+              "titre": "Homère déifié, dit aussi L'Apothéose d'Homère",
+              "titre_court": "L'Apothéose d'Homère",
+              "auteur": "Jean-Auguste-Dominique Ingres",
+              "date": "1827",
+              "technique": "huile sur toile",
+              "conservation": "Paris, musée du Louvre",
+              "fichier": "galeries/galerie-salon-1827-1.webp",
+              "licence": "Domaine public",
+              "largeur": 1600,
+              "hauteur": 1191,
+              "utile": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.291,
+                    1.0,
+                    0.875
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Eugène Devéria - Naissance de Henri IV.jpg",
+              "titre": "Naissance de Henri IV, esquisse",
+              "titre_court": "Naissance de Henri IV, esquisse",
+              "auteur": "Eugène Devéria",
+              "date": "1827",
+              "technique": "huile sur toile",
+              "conservation": "Pau, musée national du château",
+              "fichier": "galeries/galerie-salon-1827-2.webp",
+              "licence": "Domaine public",
+              "largeur": 1424,
+              "hauteur": 1600,
+              "utile": [
+                0.014,
+                0.0,
+                0.936,
+                0.986
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.014,
+                    0.174,
+                    0.936,
+                    0.531
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.014,
+                0.174,
+                0.936,
+                0.531
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Delacroix - The Execution of the Doge Marino Faliero, 1825 - 1826.jpg",
+              "titre": "Exécution du doge Marino Faliero",
+              "titre_court": "Exécution du doge Marino Faliero",
+              "auteur": "Eugène Delacroix",
+              "date": "1825-1826",
+              "technique": "huile sur toile",
+              "conservation": "Londres, Wallace Collection",
+              "fichier": "galeries/galerie-salon-1827-3.webp",
+              "licence": "Domaine public",
+              "largeur": 1235,
+              "hauteur": 1600,
+              "utile": [
+                0.0,
+                0.0,
+                1.0,
+                0.976
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.34,
+                    1.0,
+                    0.676
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.0,
+                0.34,
+                1.0,
+                0.676
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:The Women of Souli (Scheffer).png",
+              "titre": "Les Femmes souliotes",
+              "titre_court": "Les Femmes souliotes",
+              "auteur": "Ary Scheffer",
+              "date": "1827",
+              "technique": "huile sur toile",
+              "conservation": "Paris, musée du Louvre",
+              "fichier": "galeries/galerie-salon-1827-4.webp",
+              "licence": "Domaine public",
+              "largeur": 1448,
+              "hauteur": 1047,
+              "utile": [
+                0.0,
+                0.0,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.142,
+                    1.0,
+                    0.744
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Corot - The Bridge at Narni, 1827.jpg",
+              "titre": "Vue prise à Narni (Le Pont de Narni)",
+              "titre_court": "Vue prise à Narni",
+              "auteur": "Camille Corot",
+              "date": "1827",
+              "technique": "huile sur toile",
+              "conservation": "Ottawa, Musée des beaux-arts du Canada",
+              "fichier": "galeries/galerie-salon-1827-5.webp",
+              "licence": "Domaine public",
+              "largeur": 1200,
+              "hauteur": 876,
+              "utile": [
+                0.019,
+                0.021,
+                0.981,
+                0.972
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.019,
+                    0.11,
+                    0.981,
+                    0.682
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "duree": 25.0
+      },
+      {
+        "id": "galerie-barricades",
+        "apres": 101,
+        "fichier": "musique/galerie-barricades.m4a",
+        "titre": "Symphonie fantastique : Marche au supplice",
+        "auteur": "Hector Berlioz",
+        "date": "1830",
+        "interprete": "Orchestre Lamoureux, direction Igor Markevitch (disque Deutsche Grammophon, 1962)",
+        "enregistrement": "Deutsche Grammophon, 1962",
+        "source": {
+          "type": "commons",
+          "fichier": "File:Hector Berlioz - Symphonie fantastique, op. 14 - 4. Marche au supplice (Igor Markevitch, Orchestre Lamoureux, 1962).flac"
+        },
+        "licence": "Domaine public",
+        "debut": 96,
+        "fin": 121,
+        "fondu_entree": 1.5,
+        "fondu_sortie": 2.5,
+        "instrumental": true,
+        "paroles": [],
+        "cartouche": {
+          "oeuvre": "Symphonie fantastique, Marche au supplice",
+          "compositeur": "Hector Berlioz, 1830"
+        },
+        "theme": "Paris en armes : les barricades de juillet 1830",
+        "galerie": [
+          {
+            "image": {
+              "commons": "File:Une barricade boulevard des Italiens. G.44043.jpg",
+              "titre": "Une barricade boulevard des Italiens",
+              "titre_court": "Une barricade boulevard des Italiens",
+              "auteur": "auteur non identifié",
+              "date": "vers 1830",
+              "technique": "lithographie",
+              "conservation": "Paris, musée Carnavalet",
+              "fichier": "galeries/galerie-barricades-1.webp",
+              "licence": "Domaine public",
+              "largeur": 1296,
+              "hauteur": 1020,
+              "recadrage": [
+                0.201,
+                0.117,
+                0.787,
+                0.781
+              ],
+              "utile": [
+                0.011,
+                0.019,
+                0.989,
+                0.99
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.014,
+                    0.159,
+                    0.984,
+                    0.695
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Barricade de la rue Dauphine, G.44350.jpg",
+              "titre": "Barricade de la rue Dauphine",
+              "titre_court": "Barricade de la rue Dauphine",
+              "auteur": "Victor Hippolyte Delaporte",
+              "date": "vers 1830",
+              "technique": "lithographie",
+              "conservation": "Paris, musée Carnavalet",
+              "fichier": "galeries/galerie-barricades-2.webp",
+              "licence": "Domaine public",
+              "largeur": 1600,
+              "hauteur": 1230,
+              "utile": [
+                0.115,
+                0.13,
+                0.894,
+                0.836
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.115,
+                    0.395,
+                    0.894,
+                    0.836
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:28 juillet 1830. Combat Des Boulevards Porte Saint Denis, et Porte Saint Martin - estampe - btv1b54000805q.jpg",
+              "titre": "28 juillet 1830. Combat des boulevards, porte Saint-Denis et porte Saint-Martin",
+              "titre_court": "Combat des boulevards, 28 juillet",
+              "auteur": "Blanc et Petit, lithographes",
+              "date": "1830",
+              "technique": "lithographie",
+              "conservation": "Paris, Bibliothèque nationale de France",
+              "fichier": "galeries/galerie-barricades-3.webp",
+              "licence": "Domaine public",
+              "largeur": 1440,
+              "hauteur": 998,
+              "recadrage": [
+                0.187,
+                0.134,
+                0.852,
+                0.749
+              ],
+              "utile": [
+                0.0,
+                0.014,
+                1.0,
+                0.986
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.01,
+                    0.119,
+                    0.991,
+                    0.734
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Attaque de la Caserne de Babylone, G.44258.jpg",
+              "titre": "Attaque de la caserne de Babylone",
+              "titre_court": "Attaque de la caserne de Babylone, 29 juillet",
+              "auteur": "François Villain",
+              "date": "vers 1830",
+              "technique": "lithographie",
+              "conservation": "Paris, musée Carnavalet",
+              "fichier": "galeries/galerie-barricades-4.webp",
+              "licence": "Domaine public",
+              "largeur": 1296,
+              "hauteur": 1076,
+              "recadrage": [
+                0.228,
+                0.155,
+                0.778,
+                0.813
+              ],
+              "utile": [
+                0.0,
+                0.011,
+                1.0,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.446,
+                    1.0,
+                    0.97
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.0,
+                0.446,
+                1.0,
+                0.97
+              ]
+            }
+          }
+        ],
+        "duree": 25.0
       },
       {
         "id": "musique-fantastique",
@@ -12270,7 +16959,128 @@
           "compositeur": "Hector Berlioz, 1830"
         },
         "paroles": [],
-        "duree": 25.0
+        "duree": 25.0,
+        "galerie": [
+          {
+            "image": {
+              "commons": "File:Portrait d'Henrietta Constance Smithson (1802-1854), actrice irlandaise. (IFF 47), G.12261 (1 of 3).jpg",
+              "titre": "Portrait de Harriet Smithson, actrice irlandaise",
+              "titre_court": "Harriet Smithson, l’actrice aimée de Berlioz",
+              "auteur": "Achille Devéria",
+              "date": "1827",
+              "technique": "lithographie",
+              "conservation": "Paris, musée Carnavalet",
+              "fichier": "galeries/musique-fantastique-1.webp",
+              "licence": "Domaine public",
+              "largeur": 1169,
+              "hauteur": 1600,
+              "utile": [
+                0.134,
+                0.07,
+                0.857,
+                0.806
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.134,
+                    0.107,
+                    0.857,
+                    0.337
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.328,
+                0.128,
+                0.499,
+                0.302
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Harriet Smithson dans \"Jane Shore\" de Nicholas Rowe - lithogr. par Deveria et Boulanger - btv1b105249119.jpg",
+              "titre": "Harriet Smithson dans « Jane Shore » de Nicholas Rowe",
+              "titre_court": "Harriet Smithson sur scène à Paris, 1827",
+              "auteur": "Achille Devéria et Louis Boulanger",
+              "date": "1827",
+              "technique": "lithographie",
+              "conservation": "Paris, Bibliothèque nationale de France",
+              "fichier": "galeries/musique-fantastique-2.webp",
+              "licence": "Domaine public",
+              "largeur": 1600,
+              "hauteur": 1269,
+              "recadrage": [
+                0.155,
+                0.129,
+                0.88,
+                0.817
+              ],
+              "utile": [
+                0.0,
+                0.009,
+                0.991,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.0,
+                    0.125,
+                    0.991,
+                    0.668
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "image": {
+              "commons": "File:Berlioz en een dame op een bal, RP-P-1922-604.jpg",
+              "titre": "Symphonie fantastique : Un bal",
+              "titre_court": "« Un bal », vu par Fantin-Latour",
+              "auteur": "Henri Fantin-Latour",
+              "date": "1888",
+              "technique": "lithographie",
+              "conservation": "Amsterdam, Rijksmuseum",
+              "fichier": "galeries/musique-fantastique-3.webp",
+              "licence": "Domaine public",
+              "largeur": 1055,
+              "hauteur": 1600,
+              "recadrage": [
+                0.22,
+                0.185,
+                0.776,
+                0.778
+              ],
+              "utile": [
+                0.014,
+                0.0,
+                0.986,
+                1.0
+              ],
+              "camera": [
+                {
+                  "cadre": [
+                    0.014,
+                    0.281,
+                    0.986,
+                    0.559
+                  ]
+                }
+              ],
+              "entier": true,
+              "entier_vers": [
+                0.014,
+                0.281,
+                0.986,
+                0.559
+              ]
+            }
+          }
+        ]
       }
     ]
   }

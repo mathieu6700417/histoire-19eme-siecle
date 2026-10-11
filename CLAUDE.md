@@ -60,6 +60,9 @@ Section « Le siècle raconté par ses écrivains » : suivre `docs/specs/00-cha
 (règles et procédure, qui prévalent sur les specs 02 et 03) et les scripts de `scripts/ecrivains/`.
 `npm run verifier:ecrivains` doit confirmer tous les extraits mot pour mot avant de finir un chapitre.
 
+Diaporamas : avant de retoucher un diaporama, lire `python3 scripts/diaporamas/annotations.py lister <slug> --a-faire`
+(annotations de visionnage de l'utilisateur, spec 15 ; `traiter <id> "<ce qui a été fait>"` une fois corrigé).
+
 ## Git
 
 Ne pas committer ni pousser sans demande explicite de l'utilisateur.

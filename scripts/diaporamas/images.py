@@ -32,6 +32,12 @@ Avant / après et mosaïques (points 3 et 5 des « Enrichissements visuels ») :
 NNN-apres.webp (1600 px, `recadrage` admis) ; `mosaique.vignettes` → NNN-mK.webp (1000 px), la
 vignette `principale` reprenant l'image de la diapositive. Même contrôle de licence et de largeur.
 
+Spec 14 (plans, lectures illustrées, galeries, panneaux `image`) : `diapositives[].plans[].image` →
+NNN-b.webp, NNN-c.webp ; `lectures[].images[].image` → lectures/<id>-<k>.webp ;
+`musique.intermedes[].galerie[].image` → galeries/<id>-<k>.webp ; visuels « image » des épisodes →
+episodes/<id>-<k>.webp (1600 px, `recadrage` admis, notice complétée, licence et largeur contrôlées).
+`--n 3,7,12` : ces diapositives et les images de la spec 14 qui s'y rattachent (plans, segment « après n »).
+
 Cadrage des vignettes (2026-10-09) : `mosaique.vignettes[].cadre` = le visage principal de la
 vignette ([x0, y0, x1, y1], fractions du WebP servi), relevé localement et gratuitement (YuNet,
 `visages_local.py`) à chaque passe ; le lecteur centre la case sur lui (dans la zone utile) au lieu
@@ -53,6 +59,12 @@ COTE_DOCUMENT = 2400
 COTE_VIGNETTE = 1000   # vignettes d'une mosaïque (une case de la grille)
 VISAGE_VIGNETTE_MIN = 0.06   # hauteur minimale (fraction de la vignette) d'un visage de cadrage
 QUALITE = 74
+# Spec 14 : une image supplémentaire (plan, lecture, galerie, panneau) ne dépasse pas ~400 Ko ; une
+# lithographie recadrée, très détaillée, est réencodée en baissant la qualité par paliers, puis, si
+# cela ne suffit pas, réduite par paliers de 10 % (jamais sous COTE_MIN_SUP px de grand côté).
+POIDS_MAX_SUP = 400_000
+QUALITE_MIN_SUP = 56
+COTE_MIN_SUP = 1200
 
 
 def telecharger(url: str) -> bytes:
@@ -67,7 +79,7 @@ def telecharger(url: str) -> bytes:
     return donnees
 
 
-def en_webp(donnees: bytes, destination: Path, cote: int, recadrage=None) -> tuple[int, int]:
+def en_webp(donnees: bytes, destination: Path, cote: int, recadrage=None, poids_max: int | None = None) -> tuple[int, int]:
     im = Image.open(io.BytesIO(donnees))
     im.load()
     if recadrage:
@@ -84,12 +96,37 @@ def en_webp(donnees: bytes, destination: Path, cote: int, recadrage=None) -> tup
     im.thumbnail((cote, cote), Image.LANCZOS)
     destination.parent.mkdir(parents=True, exist_ok=True)
     im.save(destination, 'WEBP', quality=QUALITE, method=6)
+    qualite = QUALITE
+    while poids_max and destination.stat().st_size > poids_max:
+        if qualite > QUALITE_MIN_SUP:
+            qualite = max(QUALITE_MIN_SUP, qualite - 6)
+        elif max(im.size) * 0.9 >= COTE_MIN_SUP:
+            im = im.resize((round(im.width * 0.9), round(im.height * 0.9)), Image.LANCZOS)
+        else:
+            break
+        im.save(destination, 'WEBP', quality=qualite, method=6)
     return im.size
 
 
-def annexes(d: dict, dossier: Path, etat: dict, force: bool) -> list[str]:
-    """Portraits des lectures et fac-similés des épisodes (voir le docstring du module)."""
+def annexes(d: dict, dossier: Path, etat: dict, force: bool, ns: list[int] | None = None) -> list[str]:
+    """Portraits des lectures et fac-similés des épisodes (voir le docstring du module) ; images de
+    la spec 14 (plans, lectures illustrées, galeries, panneaux `image`). `ns` : seulement les images
+    de la spec 14 rattachées à ces diapositives."""
     a_faire = []  # (clé d'état, dictionnaire image, côté)
+    # Spec 14 : plans (NNN-b.webp), images des lectures (lectures/<id>-k.webp), galeries des intermèdes
+    # (galeries/<id>-k.webp), panneaux `image` des épisodes (episodes/<id>-k.webp). Clés d'état par
+    # fichier Commons ; le nom du fichier d'un plan suit le numéro de la diapositive.
+    for s in c.images_supplementaires(d, ns):
+        img = s['image']
+        if not img.get('commons'):
+            continue
+        if s['genre'] == 'plan':
+            img['fichier'] = s['fichier']
+        else:
+            img.setdefault('fichier', s['fichier'])
+        a_faire.append((f"spec14:{s['genre']}:{img['commons']}", img, GRAND_COTE))
+    if ns is not None:
+        return _annexes(a_faire, dossier, etat, force)
     for l in d.get('lectures', []):
         po = l.get('portrait') or {}
         if po.get('commons'):
@@ -119,6 +156,10 @@ def annexes(d: dict, dossier: Path, etat: dict, force: bool) -> list[str]:
                 continue
             v['fichier'] = c.nom(x['n'], 'webp').replace('.webp', f'-m{k}.webp')
             a_faire.append((f"vignette:{v['commons']}", v, COTE_VIGNETTE))
+    return _annexes(a_faire, dossier, etat, force)
+
+
+def _annexes(a_faire: list, dossier: Path, etat: dict, force: bool) -> list[str]:
     if not a_faire:
         return []
     infos = c.infos_fichiers([img['commons'] for _, img, _ in a_faire])
@@ -135,7 +176,16 @@ def annexes(d: dict, dossier: Path, etat: dict, force: bool) -> list[str]:
         if not libre:
             echecs.append(f"{cle} : licence refusée ({licence}) : {img['commons']}")
             continue
-        if cle.startswith(('apres:', 'vignette:')) and (info['largeur'] or 0) < LARGEUR_MIN:
+        sup = cle.startswith('spec14:')
+        if sup:
+            # Notice manquante : complétée depuis Commons (à relire), comme pour une diapositive.
+            meta = info['meta']
+            etat[cle].update(auteur=c.texte_meta(meta.get('Artist')), date=c.texte_meta(meta.get('DateTimeOriginal')),
+                             titre=c.titre_objet(meta.get('ObjectName')))
+            for champ in ('titre', 'auteur', 'date'):
+                if not img.get(champ) and etat[cle][champ]:
+                    img[champ] = etat[cle][champ][:160]
+        if (cle.startswith(('apres:', 'vignette:')) or sup) and (info['largeur'] or 0) < LARGEUR_MIN:
             echecs.append(f"{cle} : image trop petite ({info['largeur']} px)")
         img['commons'] = info['titre_fichier']
         img['licence'] = 'Domaine public'
@@ -146,7 +196,8 @@ def annexes(d: dict, dossier: Path, etat: dict, force: bool) -> list[str]:
             continue
         try:
             infos_l = c.infos_fichiers([img['commons']], largeur=max(cote, 2400 if cote == GRAND_COTE else cote))[img['commons']]
-            largeur, hauteur = en_webp(telecharger(infos_l['vignette']), sortie, cote, img.get('recadrage'))
+            largeur, hauteur = en_webp(telecharger(infos_l['vignette']), sortie, cote, img.get('recadrage'),
+                                       POIDS_MAX_SUP if sup else None)
         except Exception as e:  # noqa: BLE001
             echecs.append(f'{cle} : téléchargement ou conversion impossible ({e})')
             continue
@@ -269,7 +320,9 @@ def lot(fichier: Path, nombre: int) -> int:
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('slug', nargs='?')
-    p.add_argument('--n', type=int, help='une seule diapositive')
+    p.add_argument('--n', type=lambda v: [int(k) for k in v.replace(',', ' ').split()], metavar='N[,N…]',
+                   help='ces diapositives seulement (« 3,7,12 »), avec leurs plans et les images de la spec 14\n'
+                        'qui s’y rattachent (lecture, galerie ou épisode « après n »)')
     p.add_argument('--force', action='store_true', help='refaire les WebP déjà présents')
     p.add_argument('--chercher', nargs='+', metavar=('REQUETE', 'NOMBRE'))
     p.add_argument('--infos', nargs='+', metavar='FICHIER', help='métadonnées Commons complètes de fichiers')
@@ -311,7 +364,7 @@ def main() -> int:
             print(ligne)
         c.ecrire(f, d)
         return 0
-    diapos = [x for x in d['diapositives'] if a.n is None or x['n'] == a.n]
+    diapos = [x for x in d['diapositives'] if a.n is None or x['n'] in a.n]
     infos = c.infos_fichiers([x['image']['commons'] for x in diapos])
     etat_f = c.CACHE / d['slug'] / 'images.json'
     etat = json.loads(etat_f.read_text()) if etat_f.exists() else {}
@@ -359,6 +412,8 @@ def main() -> int:
         img['largeur'], img['hauteur'] = largeur, hauteur
         print(f"{x['n']:3d} {img['fichier']} {largeur}×{hauteur} {sortie.stat().st_size // 1024} Ko · {img['commons']}")
 
+    if a.n is not None:
+        echecs += annexes(d, dossier, etat, a.force, a.n)
     if a.n is None:
         echecs += annexes(d, dossier, etat, a.force)
         for ligne in cadrer_vignettes(d, dossier):

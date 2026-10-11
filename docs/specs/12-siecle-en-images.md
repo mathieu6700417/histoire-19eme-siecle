@@ -11,6 +11,7 @@ Décidé avec l'utilisateur le 2026-10-07. Nouvelle section du site : le XIXe si
 | Échelle | **~100 images par période** (90 à 110), soit ~900 images au total. |
 | Périodes | Les **9 périodes de la section écrivains** (`src/data/chapitres-ecrivains.ts`) : prologue (vers 1770-1789), Révolution, Consulat et Empire, Restauration, monarchie de Juillet, 1848 et IIe République, Second Empire, année terrible, IIIe République jusqu'à 1900. Mêmes slugs. |
 | Voix | Fichiers audio **générés à l'avance** par script, **Gemini 3.8 Flash TTS** (`gemini-3.8-flash-tts`), **voix Charon**, par l'API Gemini directe (`GEMINI_API_KEY` dans `.env`, non versionné). |
+| Densité (révisée) | Révisée par la **spec 14** (2026-10-11) : ~220 à 260 images par période, une image toutes les 7 à 12 s, à narration identique (plans, lectures et épisodes illustrés, galeries). Les lignes « Échelle » et « Rythme » valent pour les **diapositives** et leur narration. |
 | Rythme | **2 à 3 phrases par image, ~18 s** en moyenne (14 à 24 s, soit ~40 à 55 mots), soit ~30 à 35 min par période, ~5 h pour le siècle (révisé le 2026-10-07 : le pilote à ~10 s allait trop vite). |
 | Couleur | Les images s'affichent **en couleur** (le diaporama est une visionneuse, même exception que la spec 11). Tout le reste reste monochrome : contrôles, légendes, page. |
 | Lecteur | **Complet et sobre** (détail plus bas). Musique ajoutée le 2026-10-07 (voir « Musique »). |
@@ -1107,6 +1108,18 @@ suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan
   le registre des enregistrements libres (`registre_musique.py chercher <mots>`), avant toute
   recherche sur Commons ou l'Internet Archive ; après `musique.py`, y verser les pistes retenues
   (`ajouter --depuis <slug>`) et y noter ce qui a été écarté ou cherché en vain.
+- **Caméra proposée par Claude, sans API externe (décidé le 2026-10-11, à partir de la période 04)** :
+  les cadres de la caméra ne sont plus demandés à Gemini mais à des **sous-agents Claude Sonnet** de
+  la session, qui regardent les images et répondent à des fichiers de tâche (`banc_claude.py` :
+  `preparer`, `relire`, `noter`, `appliquer`, `restaurer` ; lots d'environ 15 diapositives, plusieurs
+  agents en parallèle). Les réponses passent par les mêmes contrôles et la même réparation mécanique
+  que celles de Gemini ; une caméra n'est appliquée que sans erreur ni repli. Banc du 2026-10-11 sur
+  10 diapositives de Consulat et Empire (`.cache/diaporamas/banc-claude/20261011-1340/`) : Sonnet,
+  en un seul jet, 17 étapes contre 11 en production, 1 repli, 1 erreur ; Haiku 16 étapes, 2 replis,
+  pour deux fois plus de tokens. Gain attendu : caméra plus vivante sur les scènes et les cartes,
+  plus de dépendance aux crédits Gemini pour cette étape. **Gemini reste** pour la voix (synthèse et
+  contrôle de fidélité) et, en repli, pour la zone utile. Les périodes 01 à 03 gardent leur caméra
+  actuelle tant que l'utilisateur ne demande pas de les refaire.
 
 ### Consulat et Empire enrichi (2026-10-09)
 
@@ -1118,6 +1131,83 @@ sénatus-consulte, non tous levés) ; deux épisodes cartographiques nouveaux : 
 et retour » (après 91 : bandes à la manière de Minard, largeur proportionnelle aux effectifs, aller en gris moyen,
 retour en gris foncé décalé au sud, puis barres 422 000 / 100 000 / 10 000 selon Minard). La diapositive à image
 de la conscription existait déjà (71, Boilly).
+
+## Retours du visionnage de la Restauration (2026-10-11)
+
+Huit annotations laissées par l'utilisateur sur la période 03 (spec 15). Trois décisions, dont deux
+révisent des règles antérieures.
+
+### Images entières sur fond noir (révise « Sans bordures », 2026-10-08)
+
+La scène est une bande large : d'une image en hauteur montrée bord à bord, on ne voyait qu'une
+tranche (un nez et une perruque, une oreille, le milieu d'un corps). Désormais, **une image peut
+être montrée en entier, centrée sur fond noir**, avec des bandes noires de côté.
+
+- **Piloté par les données**, pas par le lecteur : drapeau `image.entier` (image d'une diapositive,
+  d'un plan, d'une galerie). Une période sans drapeau se joue exactement comme avant (périodes 01
+  et 02 inchangées tant que l'utilisateur ne décide pas de les passer).
+- **Règle** (`camera.py <slug> --entiers`, gratuit) : l'image passe en entier quand la vue bord à
+  bord montrerait **moins de 50 % de la hauteur** de sa zone utile (zone utile de proportions
+  inférieures à 1,25 : toutes les images en hauteur et les presque carrées), ou quand la tête d'un
+  portrait (visage et cheveux) ne tient pas dans la bande. Exclus : avant / après, mosaïques,
+  images de lecture (fond d'une carte). Correction à la main : `entier_manuel: true` et le script
+  n'y touche plus (`entier: false` ou `true`, `entier_vers`, `entier_zoom` saisis).
+- **Rendu** : l'image entière tient dans la scène (en plein écran : entre le bandeau de l'acte et
+  ceux du bas) ; seule la zone utile est montrée ; cartouches, frise, médaillons et autres
+  surimpressions gardent leurs places (les cartouches de coin tombent sur les bandes noires).
+- **Caméra** : 1,2 s sur l'image entière, puis **un seul rapprochement lent** (1,6 % par seconde,
+  mise en route et arrêt doux) vers le sujet `entier_vers` (la tête du portrait ; sinon le dernier
+  cadre nommé par la narration ; sinon le centre), jusqu'au zoom `entier_zoom` (1,3 au plus : on
+  voit encore les trois quarts de l'image). Le sujet reste entier dans la vue finale, et le script
+  abaisse le zoom tant qu'un visage net (6 % de la hauteur) serait coupé, pour toutes les formes de
+  scène. Les étapes de `image.camera` ne sont plus jouées pour ces images (elles restent dans les
+  données). Fondu croisé ordinaire avec les images voisines, bandes comprises (un plan ou une image
+  de galerie porte son propre fond noir). Détail d'ouverture d'un acte : inchangé, le recul finit
+  sur l'image entière. Mouvement réduit : image entière, fixe. Téléphone : même règle (la scène y
+  est presque carrée : bandes plus étroites, parfois en haut et en bas).
+- **Restauration** : 110 images sur 211 (dont 4 réglées à la main : 9, 39, 40, 54).
+
+### Médaillons de portrait à taille intermédiaire (révise « médaillon plus grand »)
+
+La hauteur des ovales est la **moyenne** de l'ancienne taille (25 % de la scène, 110 à 180 px ;
+70 px au moins sur téléphone) et de celle du 2026-10-09 (1,5 fois l'ancienne, plafonnée à 30 % de
+la scène, 27 % sur téléphone debout) : 1,25 fois l'ancienne au plus. Étiquettes et largeurs suivent
+(`--ovale-h`). Réglage global (les trois périodes) ; la place réservée à la caméra au-dessus de la
+rangée diminue d'autant : les images des diapositives à portraits se décalent de quelques pixels.
+Les objets de musée ne changent pas.
+
+### Carton d'acte : la frise se dessine (révise « Frise simplifiée », carton seulement)
+
+Sur le carton, la frise est plus grande (46 rem au plus, 60 rem en plein écran) et animée, au
+rythme de l'horloge du carton (figée en pause ; état final si l'on passe le carton) :
+
+1. de 0,9 à 2,5 s, le filet **se trace de gauche à droite** ; les graduations paraissent à son
+   passage, les **actes déjà vus** restent en **gris** (segments de 3 px), la dernière année arrive
+   au bout du tracé ;
+2. quand le titre est écrit (2,8 à 4,4 s selon sa longueur), le **segment de l'acte** avance de sa
+   première à sa dernière date en 2,5 s et **s'épaissit** (2 à 5 px) pendant que **les années
+   défilent** sous le titre (« 1820 », « 1820-1821 »… « 1820-1824 » ; texte fixe si les dates de
+   l'acte ne sont pas deux années) ;
+3. puis **deux ou trois dates clés** de l'acte paraissent l'une après l'autre (0,45 s d'écart) :
+   un petit repère sur la frise, la date en petites capitales grises et un libellé court dessous.
+   Elles viennent du champ facultatif `reperes` de l'acte (`date`, `date_fin`, `libelle`) ; sans
+   lui (périodes 01 et 02 pour l'instant), le carton montre le tracé, les actes passés, le segment
+   et le compteur.
+
+Durée du carton inchangée (12 s, volets à 8,5 s : la frise est copiée dans les volets à son état
+final). Monochrome, serif. Mouvement réduit : état final d'emblée. La frise du bas de l'image ne
+change pas.
+
+### Images remplacées
+
+- 22 : le *Plan du radeau* cède la place à la gravure de Jules Noël, *Construction du radeau de la
+  Méduse* (Zurcher et Margollé, *Les Naufrages célèbres*, Hachette, 1877 ; domaine public) : la
+  frégate échouée et le radeau, lisibles au premier regard.
+- 54 : la planche de Figuier (rayons en pointillés) cède la place à une vraie lentille de Fresnel
+  de premier ordre, construite à Paris par L. Sautter et Cie en 1861 (Cape Ann Museum ;
+  photographie Daderot, CC0).
+- 40 : *L'Éteignoir* recadré plus large (le recadrage coupait la tête et le bonnet) ; 39 : zone
+  utile de *Louvel* élargie (le profil était rogné).
 
 ## Portail (`/diaporamas/`)
 

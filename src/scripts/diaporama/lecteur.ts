@@ -5,6 +5,7 @@ import { installerEtat } from './etat';
 import { installerCamera } from './camera';
 import { installerAvantApres } from './avant-apres';
 import { installerMosaique } from './mosaique';
+import { installerPlans } from './plans';
 import { installerRendu } from './rendu';
 import { installerFrise } from './frise';
 import { installerTextes } from './textes';
@@ -24,12 +25,17 @@ import { installerControles } from './controles';
 import { installerReprise } from './reprise';
 import type { Lecteur } from './contexte';
 
+/** Vrai seulement dans le build de `npm run annoter` (astro.config.mjs) ; faux, la branche et son
+ *  module disparaissent du site construit (spec 15 : rien de l'outil dans le site déployé). */
+declare const __ANNOTATIONS__: boolean;
+
 function monter(racine: HTMLElement) {
   const lec = { racine } as Lecteur;
   installerEtat(lec);
   installerCamera(lec);
   installerAvantApres(lec);
   installerMosaique(lec);
+  installerPlans(lec);
   installerRendu(lec);
   installerFrise(lec);
   installerTextes(lec);
@@ -47,6 +53,7 @@ function monter(racine: HTMLElement) {
   installerTests(lec);
   installerControles(lec);
   installerReprise(lec);
+  if (__ANNOTATIONS__) import('./annotations').then((m) => m.installerAnnotations(lec));
 }
 
 for (const r of document.querySelectorAll<HTMLElement>('.diaporama')) monter(r);

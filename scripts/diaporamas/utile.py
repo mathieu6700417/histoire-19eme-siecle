@@ -221,6 +221,10 @@ def elements(d: dict) -> list[dict]:
         for k, v in enumerate(mo.get('vignettes', [])):
             if k != mo.get('principale') and v.get('fichier'):
                 sortie.append({'n': f"{x['n']}m{k}", 'image': v})
+    # Spec 14 : plans (clé « 97b »), images des lectures et des galeries (clé « lecture:dumas:1 »).
+    for s in c.images_supplementaires(d):
+        if s['genre'] != 'episode' and s['image'].get('fichier'):
+            sortie.append({'n': s['cle'], 'image': s['image']})
     return sortie
 
 
@@ -283,7 +287,7 @@ def planche(slug: str, d: dict, cache: dict, par_page: int = 15, colonnes: int =
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('slug')
-    p.add_argument('--n', type=int, nargs='+', help='diapositive(s) à (re)faire')
+    p.add_argument('--n', nargs='+', help='image(s) à (re)faire : diapositive (97), plan (97b), « lecture:dumas:1 », « galerie:<id>:2 »')
     p.add_argument('--force', action='store_true', help='tout refaire (sauf manuelles)')
     p.add_argument('--planche', action='store_true', help='planche de contrôle seulement')
     p.add_argument('--pixels', action='store_true', help='analyse des bords seule (sans modèle)')
@@ -310,7 +314,7 @@ def main() -> int:
         e = cache.get(str(x['n']))
         emp = empreinte(d['slug'], x)
         if a.n is not None:
-            if x['n'] in a.n:
+            if str(x['n']) in a.n:
                 a_faire.append(x)
         elif a.force or not e or e.get('empreinte') != emp or (e.get('vision') is None and not a.pixels):
             a_faire.append(x)

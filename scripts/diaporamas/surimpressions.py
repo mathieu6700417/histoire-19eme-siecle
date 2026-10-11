@@ -18,6 +18,8 @@ Pour chaque diapositive qui porte `lieux` ou `citations`, l'audio de la narratio
   premier mot du nom tel qu'il est dit (`quand`), chaque passage cherché après le précédent ;
 - chaque objet de musée et chaque manuscrit (`objets`, `manuscrits`, objets.py) reçoit `instant` :
   début du premier mot de son passage `quand` (première occurrence) ;
+- chaque plan (`plans`, spec 14) reçoit `instant` : 0,3 s avant son passage `quand`, ou avant le
+  début de la phrase si le passage est dit dans les 1,5 s qui suivent ce début ;
 - chaque chiffre clé (`chiffres`) et chaque date du calendrier républicain (`dates_republicaines`)
   reçoit `instant` de même (« Enrichissements visuels », point 4) ; la date reçoit en plus
   `gregorien`, sa correspondance calculée par `commun.date_republicaine` (tables officielles : années
@@ -39,7 +41,7 @@ import commun as c
 
 
 # Surimpressions dont les passages sont calés sur la voix.
-CLES = ('lieux', 'citations', 'personnes', 'objets', 'manuscrits', 'chiffres', 'dates_republicaines')
+CLES = ('lieux', 'citations', 'personnes', 'objets', 'manuscrits', 'chiffres', 'dates_republicaines', 'plans')
 
 
 def empreinte_audio(fichier, narration: str) -> str:
@@ -170,6 +172,23 @@ def main() -> int:
                     continue
                 ob['instant'] = mots_du_passage(x['narration'], ob['quand'], inst)[0][0]
                 bilan.append(f"{ob.get('id', ob['quand'])} {ob['instant']:.2f} s")
+        # Plans (spec 14) : l'image paraît AVANCE_PLAN s avant le passage `quand` ; si ce passage
+        # est dit à moins de PROCHE_DEBUT s du début de sa phrase, avant le début de la phrase (le
+        # changement d'image tombe dans le silence qui la précède). Chaque passage est cherché
+        # après le précédent.
+        depuis = 0
+        ph = c._phrases_horodatees(x)
+        for pl in x.get('plans', []):
+            pos = x['narration'].find(pl.get('quand') or '\0', depuis)
+            if pos < 0:
+                print(f"{x['n']:3d} : plan « {pl.get('quand')} » introuvable (après le plan précédent), passé")
+                continue
+            depuis = pos + 1
+            t_mot = mots_du_passage(x['narration'], pl['quand'], inst, pos)[0][0]
+            t_phrase = next(q for q in reversed(ph) if q[0] <= pos)[2]
+            au_debut = t_mot - t_phrase <= c.PROCHE_DEBUT
+            pl['instant'] = round(max(0.0, (t_phrase if au_debut else t_mot) - c.AVANCE_PLAN), 2)
+            bilan.append(f"plan {pl['instant']:.2f} s ({'début de phrase' if au_debut else 'en cours de phrase'})")
         print(f"{x['n']:3d} : " + ' ; '.join(bilan))
     cache_f.parent.mkdir(parents=True, exist_ok=True)
     cache_f.write_text(json.dumps(cache, ensure_ascii=False) + '\n')

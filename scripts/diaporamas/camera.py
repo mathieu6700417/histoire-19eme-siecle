@@ -981,7 +981,8 @@ def planche(slug: str, d: dict, cache: dict, par_page: int = 12, colonnes: int =
     vl, vh, texte_h = 600, 420, 120
     police, petite = _police(22), _police(15)
     sorties = []
-    diapos = [x for x in d['diapositives'] if ns is None or x['n'] in ns]
+    diapos = [x for x in c.vues_camera(d) if (ns is None or demande(x, [str(n) for n in ns]))
+              and x['image'].get('fichier') and (c.PUBLIC / slug / x['image']['fichier']).exists()]
     nom = 'planche' if ns is None else 'planche-choix'
     for p in range(0, len(diapos), par_page):
         lot = diapos[p:p + par_page]
@@ -1002,6 +1003,8 @@ def planche(slug: str, d: dict, cache: dict, par_page: int = 12, colonnes: int =
             feuille.paste(im, (ox + (vl - im.width) // 2, oy + 5))
             info = cache.get(str(x['n']), {})
             marque = ' MANUEL' if x.get('camera_manuelle') else (' REPLI' if info.get('repli') else '')
+            if x.get('fenetre'):   # plan (spec 14) : sa fenêtre de temps dans la voix
+                marque += f"  {x['fenetre']['t'][0] or 0:.1f}-{x['fenetre']['t'][1] or 0:.1f} s"
             dessin.text((ox + 8, oy + vh + 2), f"{x['n']}{marque}", fill=(0, 0, 0), font=police)
             montre = info.get('montre') or []
             lignes_txt = []
@@ -1333,9 +1336,57 @@ def reparer_tete(slug: str, x: dict) -> tuple[list[dict] | None, list[str]]:
     return (sortie, []) if not e else (None, e)
 
 
+# --- Plans, lectures illustrées et galeries (spec 14) -----------------------------------------
+# Tout le programme travaille sur les « vues » de `commun.vues_camera` : une diapositive sans plans
+# est sa propre vue ; une diapositive à plans donne une vue par image (la principale, n entier, puis
+# « 97b », « 97c »), chacune avec la narration dite pendant sa fenêtre de temps et son minutage
+# compté depuis le début de la fenêtre : le modèle cadre chaque image sur ce que la voix dit
+# pendant qu'elle est à l'écran. Les images sans narration (lecture, galerie : n « galerie:<id>:2 »)
+# reçoivent un seul cadre, calculé localement (visages YuNet), sans appel.
+RATIO_SERIE = 2.3       # largeur / hauteur de la scène pendant une galerie ou une lecture
+
+
+def cadre_serie(slug: str, x: dict) -> list[dict]:
+    """Cadre unique d'une image de galerie ou de lecture : toute la largeur de la zone utile, et la
+    bande de hauteur que la scène peut montrer, posée sur les visages (centre pondéré par leur
+    taille, le plus grand gardé entier) ; sans visage, un peu au-dessus du centre."""
+    L, H = dims(x)
+    u = utile_de(x)
+    uw, uh = (u[2] - u[0]) * L, (u[3] - u[1]) * H
+    h = min(uh, uw / RATIO_SERIE)
+    if h >= uh - 1:
+        return [{'cadre': [round(v, 3) for v in u]}]
+    faces = _nets(visages(slug, x, appeler=False) or [])
+    if faces:
+        poids = [(k[3] - k[1]) ** 2 for k in faces]
+        cy = sum(p * (k[1] + k[3]) / 2 for p, k in zip(poids, faces)) / sum(poids) * H
+        y = cy - h / 2
+        g = max(faces, key=lambda k: k[3] - k[1])
+        if (g[3] - g[1]) * H <= 0.8 * h:   # le plus grand visage, entier, avec un peu d'air
+            y = max(min(y, g[1] * H - 0.1 * h), g[3] * H + 0.1 * h - h)
+    else:
+        y = u[1] * H + 0.42 * uh - h / 2
+    y = min(max(y, u[1] * H), u[3] * H - h)
+    return [{'cadre': [round(u[0], 3), round(y / H, 3), round(u[2], 3), round((y + h) / H, 3)]}]
+
+
+def demande(x: dict, ns: list[str] | None) -> bool:
+    """La vue est-elle visée par `--n` (« 97 » : la diapositive et ses plans ; « 97b » : ce plan) ?"""
+    return ns is not None and (str(x['n']) in ns or str(x.get('diapositive', '')) in ns)
+
+
+def ecrire_cameras(slug: str, cameras: dict) -> None:
+    """Relit le JSON juste avant d'écrire et n'y change que ces caméras (clé : n de la vue)."""
+    f2, d2 = c.lire(slug)
+    for y in c.vues_camera(d2):
+        if y['n'] in cameras:
+            y['image']['camera'] = cameras[y['n']]
+    c.ecrire(f2, d2)
+
+
 def audit(d: dict) -> list[tuple[int, list[str]]]:
     fautes = []
-    for x in d['diapositives']:
+    for x in c.vues_camera(d, series=False):
         cam = x['image'].get('camera')
         if not cam:
             continue
@@ -1347,12 +1398,153 @@ def audit(d: dict) -> list[tuple[int, list[str]]]:
     return fautes
 
 
+# --- Images entières sur fond noir (spec 12, « Retours du visionnage de la Restauration ») -----
+# La scène montre une image « bord à bord » : d'une image en hauteur, on ne voit qu'une bande
+# (`RATIO_VUE`:1), soit une tranche du sujet. Règle : une image est montrée **en entier, sur fond
+# noir** (`image.entier`) quand la bande montrerait moins de `SEUIL_ENTIER` de la hauteur de la zone
+# utile, ou quand la tête d'un portrait (visage et cheveux) n'y tient pas. Le lecteur part alors de
+# l'image entière et s'approche lentement de `entier_vers` (tête du portrait, sinon dernier cadre
+# nommé par la narration) jusqu'à `entier_zoom` : le plus fort zoom (1,3 au plus) dont la vue finale
+# garde entiers tous les visages nets, pour toutes les formes de scène (téléphone, ordinateur,
+# plein écran avec sous-titres).
+SEUIL_ENTIER = 0.5            # part de la hauteur de la zone utile que la bande doit montrer
+TETE_ENTIER = 1.35            # hauteur de la tête (cheveux, menton) en hauteurs de visage
+ZOOM_ENTIER = 1.3             # zoom final le plus fort (ENTIER_ZOOM du lecteur)
+AIR_ENTIER = 1.06             # ENTIER_AIR du lecteur
+FACE_ENTIER = 0.06            # visages gardés entiers dans la vue finale (part de la hauteur)
+SCENES_ENTIER = (1.0, 1.35, 1.64, 1.9, 2.3)   # largeur / hauteur de la zone où l'image tient
+
+
+def part_visible(x: dict) -> float:
+    """Part de la hauteur de la zone utile que montre la vue bord à bord (bande RATIO_VUE:1)."""
+    L, H = dims(x)
+    u = utile_de(x)
+    uw, uh = (u[2] - u[0]) * L, (u[3] - u[1]) * H
+    return min(uw / RATIO_VUE, uh / (1 + BANDE_HAUT + BANDE_BAS)) / uh
+
+
+def _vers_zone(r: list[float], u: list[float]) -> list[float]:
+    """Rectangle (fractions de l'image) exprimé dans la zone utile, borné à elle."""
+    w, h = u[2] - u[0], u[3] - u[1]
+    return [min(1, max(0, (r[0] - u[0]) / w)), min(1, max(0, (r[1] - u[1]) / h)),
+            min(1, max(0, (r[2] - u[0]) / w)), min(1, max(0, (r[3] - u[1]) / h))]
+
+
+def vue_fin_entier(a: float, A: float, vers: list[float] | None, z: float) -> list[float]:
+    """Vue finale du rapprochement (fractions de la zone utile ; `finEntier` du lecteur) : image de
+    proportions `a` dans une zone de proportions `A`, sujet `vers`, zoom `z` au plus."""
+    tw, th = (A / a, 1.0) if a < A else (1.0, a / A)
+    k = max(1.0, z)
+    cx = cy = 0.5
+    if vers:
+        k = max(1.0, min(k, tw / ((vers[2] - vers[0]) * AIR_ENTIER), th / ((vers[3] - vers[1]) * AIR_ENTIER)))
+        cx, cy = (vers[0] + vers[2]) / 2, (vers[1] + vers[3]) / 2
+    w, h = tw / k, th / k
+    poser = lambda c0, t: (1 - t) / 2 if t >= 1 else min(max(c0 - t / 2, 0), 1 - t)
+    x0, y0 = poser(cx, w), poser(cy, h)
+    return [x0, y0, x0 + w, y0 + h]
+
+
+def entier_propose(slug: str, x: dict, seuil: float = SEUIL_ENTIER) -> dict | None:
+    """Réglage « image entière » proposé par la règle pour la vue `x` (None : l'image reste bord à
+    bord) : {'raison', 'entier_vers', 'entier_zoom'}."""
+    L, H = dims(x)
+    u = utile_de(x)
+    part = part_visible(x)
+    faces = visages(slug, x, appeler=False) or []
+    sujet = sujet_portrait(faces, x) if faces else None
+    raison = None
+    if part < seuil:
+        raison = f'bande {part:.0%} de la hauteur'
+    elif sujet is not None and personne_seule(faces, x) is not None \
+            and (sujet[3] - sujet[1]) * TETE_ENTIER > part * (u[3] - u[1]):
+        raison = f'tête du portrait plus haute que la bande ({part:.0%})'
+    if raison is None:
+        return None
+    vers = None
+    if sujet is not None:
+        fw, fh = sujet[2] - sujet[0], sujet[3] - sujet[1]
+        vers = [sujet[0] - 0.3 * fw, sujet[1] - 0.5 * fh, sujet[2] + 0.3 * fw, sujet[3] + 0.35 * fh]   # la tête
+    else:
+        cam = x['image'].get('camera') or []
+        cadre = cam[-1]['cadre'] if cam else None
+        if cadre and (cadre[2] - cadre[0]) * (cadre[3] - cadre[1]) < 0.9 * (u[2] - u[0]) * (u[3] - u[1]):
+            vers = list(cadre)
+    vers = [round(v, 3) for v in dans_utile(vers, u)] if vers else None
+    vz = _vers_zone(vers, u) if vers else None
+    a = (u[2] - u[0]) * L / ((u[3] - u[1]) * H)
+    nets = [_vers_zone(k, u) for k in faces if k[3] - k[1] >= FACE_ENTIER and (k[2] - k[0]) <= 3 * (k[3] - k[1])]
+
+    def entiers(z: float) -> bool:
+        for A in SCENES_ENTIER:
+            v = vue_fin_entier(a, A, vz, z)
+            for k in nets:
+                aire = (k[2] - k[0]) * (k[3] - k[1])
+                i = max(0, min(k[2], v[2]) - max(k[0], v[0])) * max(0, min(k[3], v[3]) - max(k[1], v[1]))
+                if aire > 0 and i / aire < 0.97:
+                    return False
+        return True
+    z = ZOOM_ENTIER
+    while z > 1.0 and not entiers(z):
+        z = round(z - 0.05, 2)
+    sortie = {'raison': raison, 'entier_zoom': max(1.0, z)}
+    if vers:
+        sortie['entier_vers'] = vers
+    return sortie
+
+
+def vues_entier(d: dict) -> list[dict]:
+    """Vues soumises à la règle : images principales (sauf avant / après et mosaïque), plans et
+    images de galerie ; pas les images de lecture (fond d'une carte)."""
+    return [x for x in c.vues_camera(d)
+            if not x['image'].get('apres') and not x.get('mosaique') and not str(x['n']).startswith('lecture:')
+            and x['image'].get('largeur')]
+
+
+def entiers(slug: str, d: dict, ns: list[str] | None, simuler: bool, seuil: float) -> int:
+    """`--entiers` : pose (ou retire) `entier`, `entier_vers`, `entier_zoom` selon la règle ; une image
+    à `entier_manuel` n'est jamais touchée. `--simuler` : compte seulement, sans écrire."""
+    choix, manuels = {}, []
+    for x in vues_entier(d):
+        if ns and not demande(x, ns) and str(x['n']) not in ns:
+            continue
+        if x['image'].get('entier_manuel'):
+            manuels.append(str(x['n']))
+            continue
+        choix[x['n']] = entier_propose(slug, x, seuil)
+    oui = {n: r for n, r in choix.items() if r}
+    if not simuler:
+        f2, d2 = c.lire(slug)
+        for y in c.vues_camera(d2):
+            if y['n'] not in choix:
+                continue
+            im = y['image']
+            for cle in ('entier', 'entier_vers', 'entier_zoom'):
+                im.pop(cle, None)
+            r = choix[y['n']]
+            if r:
+                im['entier'] = True
+                if r.get('entier_vers'):
+                    im['entier_vers'] = r['entier_vers']
+                if abs(r['entier_zoom'] - ZOOM_ENTIER) > 1e-6:
+                    im['entier_zoom'] = r['entier_zoom']
+        c.ecrire(f2, d2)
+    for n, r in oui.items():
+        print(f"  {n} : {r['raison']} ; zoom {r['entier_zoom']:g}" + ('' if r.get('entier_vers') else ' ; sans sujet (centre)'))
+    print(f"{len(oui)} image(s) entière(s) sur {len(choix)} examinée(s) (seuil {seuil:.0%})"
+          + (f" ; {len(manuels)} manuelle(s) laissée(s) : {', '.join(manuels)}" if manuels else '')
+          + (' ; simulation, rien d\'écrit.' if simuler else '.'))
+    print('Entières : ' + ', '.join(str(n) for n in oui))
+    return 0
+
+
 # --- Programme -------------------------------------------------------------------------
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument('slug')
-    p.add_argument('--n', type=int, nargs='+', help='diapositive(s) à (re)faire')
+    p.add_argument('--n', nargs='+', help='diapositive(s) à (re)faire (« 97 » : avec ses plans ; « 97b » : ce plan ; '
+                                          '« galerie:<id>:2 », « lecture:<id>:1 » : cette image)')
     p.add_argument('--force', action='store_true', help='refaire toutes les diapositives non manuelles')
     p.add_argument('--planche', action='store_true', help='planche-contact seulement')
     p.add_argument('--tenues', action='store_true',
@@ -1370,6 +1562,10 @@ def main() -> int:
                    help='relever les visages par Gemini (un appel payant par image, en cache), sans cadrer')
     p.add_argument('--source-visages', choices=['union', 'local', 'gemini'],
                    help='visages utilisés par les contrôles (défaut : DIAPORAMAS_VISAGES ou « union »)')
+    p.add_argument('--entiers', action='store_true',
+                   help='pose le drapeau « image entière sur fond noir » selon la règle (gratuit, sans appel)')
+    p.add_argument('--simuler', action='store_true', help='avec --entiers : compte sans écrire')
+    p.add_argument('--seuil', type=float, default=SEUIL_ENTIER, help='avec --entiers : part de hauteur visible minimale')
     p.add_argument('--paralleles', type=int, default=4)
     gemini.options(p, ['camera', 'visages'])
     a = p.parse_args()
@@ -1381,20 +1577,26 @@ def main() -> int:
     f, d = c.lire(a.slug)
     etat_f = c.CACHE / d['slug'] / 'camera.json'
     cache = json.loads(etat_f.read_text()) if etat_f.exists() else {}
+    vues = c.vues_camera(d)                      # diapositives, plans, images de lecture et de galerie
+    narrees = [x for x in vues if not x.get('serie')]
+    presentes = [x for x in vues if x['image'].get('fichier') and (c.PUBLIC / d['slug'] / x['image']['fichier']).exists()]
 
     global SOURCE_VISAGES
     if a.source_visages:
         SOURCE_VISAGES = a.source_visages
     if SOURCE_VISAGES != 'gemini':
-        nb = preparer_visages_locaux(d['slug'], d['diapositives'])
+        nb = preparer_visages_locaux(d['slug'], presentes)
         if nb:
             print(f'Visages locaux relevés pour {nb} image(s) (YuNet, gratuit).')
     if a.visages:
         cle = lambda x: empreinte_image(d['slug'], x)
         locaux = _visages_locaux_cache(d['slug'])[1]
-        print(f"{sum(len(locaux.get(cle(x), [])) for x in d['diapositives'])} visages locaux sur "
-              f"{len(d['diapositives'])} images (source des contrôles : {SOURCE_VISAGES}).")
+        print(f"{sum(len(locaux.get(cle(x), [])) for x in presentes)} visages locaux sur "
+              f"{len(presentes)} images (source des contrôles : {SOURCE_VISAGES}).")
         return 0
+
+    if a.entiers:
+        return entiers(d['slug'], d, a.n, a.simuler, a.seuil)
 
     if a.visages_gemini:
         with ThreadPoolExecutor(max_workers=a.paralleles) as pool:
@@ -1403,15 +1605,15 @@ def main() -> int:
                     return x['n'], visages_gemini(d['slug'], x)
                 except gemini.BudgetAtteint:
                     return x['n'], None
-            res = list(pool.map(un, d['diapositives']))
+            res = list(pool.map(un, narrees))
         print(f"{sum(len(v or []) for _, v in res)} visages sur {len(res)} images. {gemini.bilan()}")
         return 0
 
     if a.reparer:
         faites, echecs = [], []
         for n, e in audit(d):
-            x = next(y for y in d['diapositives'] if y['n'] == n)
-            if a.n and n not in a.n:
+            x = next(y for y in narrees if y['n'] == n)
+            if a.n and not demande(x, a.n):
                 continue
             if x.get('camera_manuelle'):
                 echecs.append((n, ['manuelle'] + e))
@@ -1429,20 +1631,16 @@ def main() -> int:
                 continue
             x['image']['camera'] = cam
             faites.append(n)
-        f2, d2 = c.lire(a.slug)            # relu juste avant d'écrire : seules les caméras changent
-        for y in d2['diapositives']:
-            if y['n'] in faites:
-                y['image']['camera'] = next(x for x in d['diapositives'] if x['n'] == y['n'])['image']['camera']
-        c.ecrire(f2, d2)
+        ecrire_cameras(a.slug, {x['n']: x['image']['camera'] for x in narrees if x['n'] in faites})
         print(f"Réparées : {len(faites)} : {' '.join(map(str, faites))}")
         for n, r in echecs:
-            print(f'{n:3d} NON RÉPARÉE : ' + ' | '.join(r)[:300])
+            print(f'{n!s:>4} NON RÉPARÉE : ' + ' | '.join(r)[:300])
         return 0
 
     if a.audit:
         fautes = audit(d)
         for n, e in fautes:
-            print(f'{n:3d} ' + ' | '.join(e))
+            print(f'{n!s:>4} ' + ' | '.join(e))
         print(f"{len(fautes)} diapositive(s) à revoir : {' '.join(str(n) for n, _ in fautes)}")
         return 0
 
@@ -1452,13 +1650,22 @@ def main() -> int:
             print(s.relative_to(c.RACINE))
         return 0
 
+    # Images sans narration (lecture, galerie) : un cadre local, sans appel.
+    for x in vues:
+        if x.get('serie') and x in presentes and x['image'].get('utile') is not None \
+                and (a.force or demande(x, a.n) or not x['image'].get('camera')):
+            x['image']['camera'] = cadre_serie(d['slug'], x)
+            print(f"{x['n']!s:>4} cadre local : {x['image']['camera'][0]['cadre']}")
+    attente = sorted({str(x['diapositive']) for x in narrees if x.get('sans_instant')})
+    if attente:
+        print(f"Plans sans `instant` (lancer surimpressions.py d'abord), diapositives laissées : {' '.join(attente)}.")
     a_faire = []
-    for x in d['diapositives']:
-        if x.get('camera_manuelle'):
+    for x in narrees:
+        if x.get('camera_manuelle') or x.get('sans_instant') or x not in presentes:
             continue
         cles = empreintes_valides(x, d['slug'])
         if a.n is not None:
-            if x['n'] in a.n:
+            if demande(x, a.n):
                 a_faire.append(x)
         elif a.tenues:
             if tenue_max(x) > TENUE_MAX and (a.force or cache.get(str(x['n']), {}).get('empreinte') != empreinte(x)):
@@ -1470,7 +1677,7 @@ def main() -> int:
                 x['image']['camera'] = e['camera']
                 continue
             a_faire.append(x)
-    manuelles = [x['n'] for x in d['diapositives'] if x.get('camera_manuelle')]
+    manuelles = [x['n'] for x in narrees if x.get('camera_manuelle')]
     print(f'{len(a_faire)} diapositive(s) à cadrer ({MODELE}) ; manuelles laissées telles quelles : '
           f'{manuelles or "aucune"}.')
 
@@ -1490,7 +1697,7 @@ def main() -> int:
                         fu.cancel()
                 continue
             except Exception as e:  # noqa: BLE001
-                print(f"{x['n']:3d} ERREUR {e}")
+                print(f"{x['n']!s:>4} ERREUR {e}")
                 continue
             x['image']['camera'] = r['camera']
             x['image'].pop('cadrage', None)
@@ -1500,22 +1707,22 @@ def main() -> int:
             note = f" [REPLI : {r['erreur']}]" if r['repli'] else ''
             if r['non_identifies']:
                 note += f" [non identifié(s) : {', '.join(r['non_identifies'])}]"
-            print(f"{x['n']:3d} {len(r['camera'])} étape(s) : {etapes}{note}")
+            print(f"{x['n']!s:>4} {len(r['camera'])} étape(s) : {etapes}{note}")
             with verrou:
                 c.ecrire(f, d)
                 etat_f.parent.mkdir(parents=True, exist_ok=True)
                 etat_f.write_text(json.dumps(cache, ensure_ascii=False, indent=1))
 
-    for x in d['diapositives']:
+    for x in vues:
         x['image'].pop('cadrage', None)
     c.ecrire(f, d)
     print(f"\n{time.time() - debut:.0f} s. {gemini.bilan()}")
     from collections import Counter
-    print('Étapes par diapositive :', dict(sorted(Counter(len(x['image'].get('camera') or [])
-                                                            for x in d['diapositives']).items())))
+    print('Étapes par image :', dict(sorted(Counter(len(x['image'].get('camera') or [])
+                                                      for x in narrees).items())))
     replis = [k for k, v in cache.items() if v.get('repli')]
     if replis:
-        print('Replis sur une étape unique :', ', '.join(sorted(replis, key=int)))
+        print('Replis sur une étape unique :', ', '.join(sorted(replis, key=lambda k: (len(k), k))))
     for s in planche(d['slug'], d, cache):
         print('Planche :', s.relative_to(c.RACINE))
     return 0

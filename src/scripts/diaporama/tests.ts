@@ -25,7 +25,8 @@ export function installerTests(lec: Lecteur) {
     const r = cadreA(xp, t);
     const ap = x.ap && t >= x.ap.t ? (() => { const xa = apresDe(x); return { cadre: cadreA(xa, t), plan: plan(xa).map((e) => ({ t: e.t, de: e.de, a: e.a })) }; })() : null;
     const mos = x.mos && !x.ouv ? (() => { const g = plongee(x); return { debut: g.t0, duree: g.d, fin: g.a0, sigma: g.sigma }; })() : null;
-    return { ap, mos, cadre: r, vue: vue(x, r), utile: x.u, etapes: x.camera, duree: x.duree, effectives: mouvementReduit.matches ? x.camera.length : plan(xp).length,
+    const plans = (x.plans ?? []).map((p, k, P) => { const xq = lec.planDe(x, p, k + 1 < P.length ? P[k + 1].t + 0.8 : x.duree || 6); return { t: p.t, visible: t >= p.t, cadre: cadreA(xq, t), plan: plan(xq).map((e) => ({ t: e.t, de: e.de, a: e.a })) }; });
+    return { ap, mos, plans, cadre: r, vue: vue(x, r), utile: x.u, etapes: x.camera, duree: x.duree, effectives: mouvementReduit.matches ? x.camera.length : plan(xp).length,
       plan: plan(xp).map((e, k, P) => ({ t: e.t, de: e.de, a: e.a, ...(k ? ampleur(P[k - 1].v, e.v) : {}) })) };
   };
 }

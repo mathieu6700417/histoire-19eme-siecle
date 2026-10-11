@@ -131,6 +131,7 @@ export function installerCartons(lec: Lecteur) {
       lecteur.classList.remove('en-carton'); // fondu court (CSS)
       return;
     }
+    lec.majFriseCarton(); // la frise animée, à son état du moment, est copiée dans les volets
     const els = (['haut', 'bas'] as const).map((cote) => {
       const v = elCarton.cloneNode(true) as HTMLElement;
       v.classList.add('lecteur__volet', `lecteur__volet--${cote}`);

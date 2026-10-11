@@ -80,7 +80,8 @@ def main() -> int:
         # Image « après » d'un avant / après (NNN-apres.webp) et vignettes d'une mosaïque (NNN-mK.webp ;
         # la principale reprend le fichier de l'image).
         if o != nv:
-            autres = [x['image'].get('apres') or {}] + list((x.get('mosaique') or {}).get('vignettes', []))
+            autres = ([x['image'].get('apres') or {}] + list((x.get('mosaique') or {}).get('vignettes', []))
+                      + [p.get('image') or {} for p in x.get('plans') or []])   # plans de la spec 14 (NNN-b.webp)
             for obj in autres:
                 f_ = obj.get('fichier') or ''
                 if f_.startswith(f'{o:03d}-'):

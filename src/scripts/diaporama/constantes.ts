@@ -25,6 +25,14 @@ export const SOUFFLE = Math.log(1.12);  // zoom maximal d'une tenue (log d'éche
 export const SOUFFLE_VITESSE = 0.012;   // log d'échelle par seconde (~1,2 %/s) : une tenue courte zoome moins
 export const RAMPE_SOUFFLE = 1.2;       // s : mise en route (et arrêt) du zoom de tenue, courte pour qu'il se voie tôt
 export const MISE_EN_ROUTE = 2.5;       // s (mise en route, et arrêt)
+// Image entière sur fond noir (spec 12, « Retours du visionnage de la Restauration », 2026-10-11 ;
+// drapeau `image.entier`) : l'image est d'abord montrée en entier, puis la caméra s'approche
+// lentement du sujet, à vitesse constante, jusqu'au zoom de l'image (`entier_zoom`, 1,3 au plus).
+export const ENTIER_TENUE = 1.2;        // s : l'image entière, immobile, avant le rapprochement
+export const ENTIER_VITESSE = 0.016;    // log d'échelle par seconde (~1,6 %/s)
+export const ENTIER_RAMPE = 1.5;        // s : mise en route (et arrêt) du rapprochement
+export const ENTIER_ZOOM = 1.3;         // zoom final par défaut (on voit encore ~77 % de l'image)
+export const ENTIER_AIR = 1.06;         // le sujet tient dans la vue finale avec 6 % d'air
 // Entrée d'une image (spec 12, « Animations d'entrée ») : fondu enchaîné, révélation
 // gris → couleur, recul de ~4 % jusqu'au cadre de la caméra. Horloge propre à l'entrée,
 // indépendante de l'audio : la caméra n'est jamais décalée. L'entrée est une transition
@@ -35,6 +43,11 @@ export const REVELATION = 1.8;   // s : les couleurs montent
 export const RECUL = 0.04;       // agrandissement de départ
 export const DUREE_RECUL = 1.5;  // s
 export const FONDU_REDUIT = 0.3; // s, prefers-reduced-motion : fondu simple, ni recul ni gris
+// Plans, lectures illustrées et galeries (spec 14) : fondu croisé d'une image à la suivante ; la
+// tenue de l'image entrante a commencé `ELAN_PLAN` s plus tôt (elle entre déjà en mouvement).
+export const FONDU_PLAN = 0.8;     // s : entre deux images d'une même diapositive
+export const FONDU_GALERIE = 1.2;  // s : entre deux images d'une galerie ou d'une lecture
+export const ELAN_PLAN = 1.2;      // s (la mise en route du zoom de tenue, RAMPE_SOUFFLE)
 // Avant / après et mosaïque, prefers-reduced-motion : fondu enchaîné vers l'image après, et
 // fondu de la grille (complète d'emblée) vers l'image principale.
 export const FONDU_APRES_REDUIT = 1;
@@ -53,6 +66,16 @@ export const RAMPE_RECUL = 0.4;      // part du recul en mise en route (et autan
 // 0,5 à 1,5 s, cf. CSS).
 export const DUREE_FRISE = 4;   // s
 export const FONDU_FRISE = 0.6; // s (transition de sortie, cf. CSS)
+// Frise animée du carton d'acte (spec 12, « Retours du visionnage de la Restauration », 2026-10-11),
+// en secondes de l'horloge du carton (12 s ; les volets s'ouvrent à 8,5 s).
+export const CARTON_TRACE = 0.9;        // début du tracé du filet (de gauche à droite)
+export const CARTON_TRACE_DUREE = 1.6;
+export const CARTON_ACTE_MIN = 2.8;     // le segment de l'acte part au plus tôt ici (après le tracé)…
+export const CARTON_ACTE_MAX = 4.4;     // … et au plus tard là (titre très long)
+export const CARTON_ACTE_DUREE = 2.5;   // avancée du segment, années qui défilent
+export const CARTON_REPERES = 0.3;      // pause avant les dates clés
+export const CARTON_REPERE_PAS = 0.45;  // d'une date clé à la suivante
+export const CARTON_REPERE_FONDU = 0.5;
 // Rangée de portraits : fondu de l'ovale et de son étiquette quand la voix dit le nom (s).
 export const PORTRAIT_FONDU = 0.45;
 // Portraits et objets du bas (révision du 2026-10-09 : 1,5 fois plus grands) : hauteur de l'ovale

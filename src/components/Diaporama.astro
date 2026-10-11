@@ -39,7 +39,7 @@ import EpisodeVisuels from './EpisodeVisuels.astro';
 import Surimpressions from './Surimpressions.astro';
 import Generique from './Generique.astro';
 import { dureesGenerique, imagesGenerique, indicatif, urlCommun } from '../utils/diaporamas';
-import { CARTON, PAUSE, MOSAIQUE, VOLET, avantApres, debutPlongee, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
+import { CARTON, PAUSE, MOSAIQUE, VOLET, avantApres, debutPlongee, instantsSerie, plansDe, texteLu, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type ImageDiapo, type ImageSerie, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
 
 interface Props { diaporama: Diaporama }
 const { diaporama: d } = Astro.props;
@@ -85,6 +85,42 @@ function cartoucheMusique(p: PisteFond) {
   const auteur = p.cartouche?.compositeur ?? [p.compositeur, p.date].filter(Boolean).join(', ');
   const voix = p.interprete ? `<span class="m-voix">${esc(t(p.interprete))}</span>` : '';
   return `<span class="m-ligne"><cite>${esc(t(oeuvre))}</cite></span><span class="m-auteur">${esc(t(auteur))}</span>${voix}`;
+}
+/** Image entière sur fond noir (drapeau `image.entier`) : sujet du rapprochement (dans la zone
+ *  utile) et zoom final ; null sans le drapeau. */
+function entierDe(i: ImageDiapo, u: [number, number, number, number]) {
+  if (!i.entier) return null;
+  return { v: i.entier_vers ? versUtile(i.entier_vers, u) : null, z: Math.min(2, Math.max(1, i.entier_zoom ?? 1.3)) };
+}
+/** Image d'une série pour le lecteur (spec 14) : zone utile, dimensions, cartouche, instant et
+ *  étapes de caméra (cadres ramenés dans la zone utile). */
+function planLecteur(i: ImageDiapo, legende: string, instant: number, camera: { c: [number, number, number, number]; t: number }[], entier = true) {
+  const u = zoneUtileDe(i);
+  return { en: entier ? entierDe(i, u) : null, img: urlMedia(d.slug, i.fichier), u, l: (i.largeur ?? 1600) * (u[2] - u[0]), h: (i.hauteur ?? 1200) * (u[3] - u[1]),
+    alt: t(i.titre), legende, t: instant, camera: camera.map((e) => ({ c: versUtile(e.c, u), t: e.t })) };
+}
+/** Série sans narration (galerie, lecture) : un cadre par image, tenu de son instant à la suivante. */
+function serieLecteur(images: ImageSerie[], duree: number, legende: (i: ImageDiapo) => string, situes: (number | null)[] = []) {
+  const T = instantsSerie(images, duree, situes);
+  return images.map((g, k) => planLecteur(g.image, legende(g.image), T[k], [{ c: g.image.camera?.[0]?.cadre ?? [0, 0, 1, 1], t: T[k] }]));
+}
+/** Ligne d'une image dans un cartouche ou une carte : titre court, auteur, date (HTML échappé). */
+const ligneImage = (i: ImageDiapo) => [`<i>${esc(t(i.titre_court || i.titre))}</i>`, i.auteur && esc(t(i.auteur)), i.date && esc(t(i.date))].filter(Boolean).join(', ');
+/** Cartouche d'une image de galerie (spec 14) : sous l'œuvre entendue, la ligne de l'image ; pour
+ *  une galerie nouvelle (`theme`), le thème en tête, puis l'image, la musique au survol. */
+function cartoucheGalerie(c: Intermede, i: ImageDiapo) {
+  if (!c.theme) return `${cartoucheIntermede(c)}<span class="lecteur__legende-image">${ligneImage(i)}</span>`;
+  const musique = [c.cartouche?.oeuvre ?? c.titre, c.cartouche?.compositeur ?? c.auteur].filter(Boolean).map((v) => esc(t(v))).join(', ');
+  return `<cite>${esc(t(c.theme))}</cite><span class="lecteur__legende-image">${ligneImage(i)}</span><span class="lecteur__legende-voix">Musique : ${musique}</span>`;
+}
+/** Instants des images d'une lecture qui portent `quand` : début du premier mot du passage. */
+function instantsLecture(l: Lecture, mots: number[]) {
+  const texte = texteLu(l), bornes = motsLus(texte);
+  return (l.images ?? []).map((g) => {
+    const pos = g.quand ? texte.indexOf(g.quand) : -1;
+    const k = pos < 0 ? -1 : bornes.findIndex((b) => b.f > pos);
+    return k < 0 ? null : Math.max(0, mots[k] - 0.3);
+  });
 }
 const intermedeApres = new Map((d.musique?.intermedes ?? []).filter((c) => c.duree).map((c) => [c.apres, c]));
 // Lectures d'époque et épisodes (spec 12, révision du 2026-10-07) : insérés après la voix d'une
@@ -160,7 +196,9 @@ const donnees = {
   slug: d.slug,
   pause: PAUSE,
   carton: CARTON,
-  actes: d.actes.map((a) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut })),
+  // `reperes` : dates clés de l'acte pour la frise animée du carton (position en %, date, libellé).
+  actes: d.actes.map((a) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut,
+    reperes: frise ? (a.reperes ?? []).slice(0, 3).map((r) => { const p = frise.dater(r.date, r.date_fin); return { x: Math.round((p.x0 + p.x1) * 50) / 100, date: t(p.libelle), texte: t(r.libelle) }; }) : [] })),
   diapos: d.diapositives.map((x, k) => ({
     n: x.n,
     // Clé stable de la reprise : le fichier Commons de l'image, qui survit aux renumérotations
@@ -171,6 +209,7 @@ const donnees = {
     // `l` × `h` en sont les dimensions (px de l'image servie) et tous les cadres (caméra,
     // ouverture, intermède) y sont exprimés, ramenés dedans.
     u: zoneUtile(x),
+    en: x.image.apres || x.mosaique ? null : entierDe(x.image, zoneUtile(x)),
     l: (x.image.largeur ?? 1600) * (zoneUtile(x)[2] - zoneUtile(x)[0]),
     h: (x.image.hauteur ?? 1200) * (zoneUtile(x)[3] - zoneUtile(x)[1]),
     alt: t(x.image.titre),
@@ -191,6 +230,8 @@ const donnees = {
       return { img: urlMedia(d.slug, ap.fichier), u, l: (ap.largeur ?? 1600) * (u[2] - u[0]), h: (ap.hauteur ?? 1200) * (u[3] - u[1]),
         alt: t(ap.titre), legende: cartoucheImage(ap), t: a.t, camera: a.camera };
     })() : null,
+    // Plans (spec 14) : images suivantes de la diapositive, chacune à son instant de la voix.
+    plans: x.plans?.length && !x.image.apres && !x.mosaique ? plansDe(x).map((p) => planLecteur(p.image, cartoucheImage(p.image), p.t, p.camera)) : null,
     // Mosaïque (point 5) : vignettes (la principale est l'image de la diapositive), cartouche d'une ligne.
     mos: x.mosaique ? {
       legende: `<cite>${esc(t(x.mosaique.legende))}</cite>`,
@@ -203,12 +244,14 @@ const donnees = {
     // Segment joué après la voix : intermède chanté, lecture d'époque ou épisode.
     suite: intermedeApres.has(x.n) ? (() => {
       const c = intermedeApres.get(x.n)!;
-      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheIntermede(c), paroles: c.paroles.map(([s, v, m]) => [s, t(v), m && motsLus(t(v)).length === m.length ? m.map(([d]) => d) : null]), instrumental: !!c.instrumental, cadre: c.cadre ? versUtile(c.cadre, zoneUtile(x)) : null };
+      return { type: 'chant', src: urlMedia(d.slug, c.fichier), duree: c.duree!, legende: cartoucheIntermede(c), paroles: c.paroles.map(([s, v, m]) => [s, t(v), m && motsLus(t(v)).length === m.length ? m.map(([d]) => d) : null]), instrumental: !!c.instrumental, cadre: c.cadre ? versUtile(c.cadre, zoneUtile(x)) : null,
+        galerie: c.galerie?.length ? serieLecteur(c.galerie, c.duree!, (i) => cartoucheGalerie(c, i)) : null };
     })() : lectureApres.has(x.n) ? (() => {
       const l = lectureApres.get(x.n)!;
       const m = minutageLecture(l);
       return { type: 'lecture', id: l.id, src: urlMedia(d.slug, l.audio!.fichier), duree: l.audio!.duree, mots: m.mots, phrases: m.phrases,
-        date: frise && l.date ? { ...frise.dater(l.date), libelle: t(frise.dater(l.date).libelle) } : null };
+        date: frise && l.date ? { ...frise.dater(l.date), libelle: t(frise.dater(l.date).libelle) } : null,
+        images: l.images?.length ? serieLecteur(l.images, l.audio!.duree, ligneImage, instantsLecture(l, m.mots)) : null };
     })() : episodeApres.has(x.n) ? (() => {
       const e = episodeApres.get(x.n)!;
       return { type: 'episode', id: e.id, src: urlMedia(d.slug, e.audio!.fichier), duree: e.audio!.duree, phrases: phrasesEpisode(e),
@@ -241,9 +284,10 @@ function friseHtml(classe: string) {
   const a0 = frise.annees[0].a, a1 = frise.annees.at(-1)!.a;
   return `<div class="frise-t ${classe}" aria-hidden="true"><span class="frise-t__borne">${a0}</span><div class="frise-t__piste"><span class="frise-t__date"></span><span class="frise-t__filet"></span>${crans}${classe === 'frise-t--carton' ? '<span class="frise-t__acte"></span>' : ''}<span class="frise-t__curseur"></span></div><span class="frise-t__borne">${a1}</span></div>`;
 }
-// Dans chaque calque, après l'image : l'image « après » d'un avant / après (sous un volet qui la
+// Dans chaque calque, après l'image : les plans et les galeries de la spec 14 (images posées par le
+// script, en fondu croisé), l'image « après » d'un avant / après (sous un volet qui la
 // découvre, et sa ligne), puis la grille d'une mosaïque. Vides et masqués hors de ces diapositives.
-const CALQUE_SUITE = '<div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
+const CALQUE_SUITE = '<div class="lecteur__plans" hidden></div><div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
 const sectionsLivre = d.actes.map((a, i) => ({
   ...a,
   diapos: d.diapositives.filter((x) => x.n >= a.debut && (i === d.actes.length - 1 || x.n < d.actes[i + 1].debut)),
@@ -267,8 +311,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
         <span class="lecteur__carton-filet"></span>
         <p class="lecteur__carton-dates"></p>
         {frise && <Fragment set:html={friseHtml('frise-t--carton')} />}
+        {frise && <ul class="carton-reperes" aria-hidden="true"></ul>}
       </div>
-      {[...lectureApres.values()].map((l) => <CarteCitation lecture={l} portrait={portraitDe(l)} fond={fondDe(l)} mode="lecteur" />)}
+      {[...lectureApres.values()].map((l) => <CarteCitation lecture={l} portrait={portraitDe(l)} fond={fondDe(l)} illustree={Boolean(l.images?.length)} mode="lecteur" />)}
       {[...episodeApres.values()].map((e) => <EpisodeVisuels episode={e} slug={d.slug} fonds={fonds} mode="lecteur" />)}
       {frise && <Fragment set:html={friseHtml('frise-t--surimpression')} />}
       <Surimpressions diaporama={d} fonds={fonds} plan={plan} />
@@ -338,6 +383,12 @@ const sectionsLivre = d.actes.map((a, i) => ({
                   <figcaption set:html={`<span class="livre__marque">Après :</span> ${legendeImage(x.image.apres)}`} />
                 </figure>
               )}
+              {(x.plans ?? []).map((p) => (
+                <figure class="livre__apres">
+                  <img src={urlMedia(d.slug, p.image.fichier)} alt={t(p.image.titre)} width={p.image.largeur} height={p.image.hauteur} loading="lazy" decoding="async" />
+                  <figcaption set:html={`<span class="livre__marque">Puis :</span> ${legendeImage(p.image)}`} />
+                </figure>
+              ))}
               {x.mosaique && (
                 <div class="livre__mosaique">
                   <p class="livre__marque">{t(x.mosaique.legende)}</p>
@@ -356,12 +407,34 @@ const sectionsLivre = d.actes.map((a, i) => ({
                 <div class="livre__chant">
                   <p class="livre__chant-titre" set:html={`${intermedeApres.get(x.n)!.instrumental ? 'Intermède musical' : 'Intermède chanté'} : ${cartoucheChant(intermedeApres.get(x.n)!).replace(/<span[^>]*>/g, ' — ').replace(/<\/span>/g, '')}`} />
                   {intermedeApres.get(x.n)!.paroles.length > 0 && <p class="livre__paroles">{intermedeApres.get(x.n)!.paroles.map(([, v], k) => <Fragment>{k > 0 && <br />}{t(v)}</Fragment>)}</p>}
+                  {(intermedeApres.get(x.n)!.galerie ?? []).length > 0 && (
+                    <div class="livre__mosaique">
+                      <p class="livre__marque">{t(intermedeApres.get(x.n)!.theme ?? 'Images montrées pendant la musique')}</p>
+                      <ul>{intermedeApres.get(x.n)!.galerie!.map((g) => (
+                        <li><figure>
+                          <img src={urlMedia(d.slug, g.image.fichier)} alt={t(g.image.titre)} width={g.image.largeur} height={g.image.hauteur} loading="lazy" decoding="async" />
+                          <figcaption set:html={legendeImage(g.image)} />
+                        </figure></li>
+                      ))}</ul>
+                    </div>
+                  )}
                 </div>
               )}
               {lectureApres.has(x.n) && (
                 <div class="livre__lecture">
                   <p class="livre__segment-titre">Lecture</p>
                   <CarteCitation lecture={lectureApres.get(x.n)!} portrait={portraitDe(lectureApres.get(x.n)!)} mode="livre" />
+                  {(lectureApres.get(x.n)!.images ?? []).length > 0 && (
+                    <div class="livre__mosaique">
+                      <p class="livre__marque">Images montrées pendant la lecture</p>
+                      <ul>{lectureApres.get(x.n)!.images!.map((g) => (
+                        <li><figure>
+                          <img src={urlMedia(d.slug, g.image.fichier)} alt={t(g.image.titre)} width={g.image.largeur} height={g.image.hauteur} loading="lazy" decoding="async" />
+                          <figcaption set:html={legendeImage(g.image)} />
+                        </figure></li>
+                      ))}</ul>
+                    </div>
+                  )}
                 </div>
               )}
               {episodeApres.has(x.n) && (() => {
@@ -447,7 +520,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
   /* Avant / après : l'image après, au-dessus de l'image avant, découverte par un volet (clip-path
      posé par le script) dont le bord est une ligne verticale fine (blanc cassé bordé de gris). */
   .lecteur__calque :global(.lecteur__apres) { position: absolute; inset: 0; overflow: hidden; }
-  .lecteur__calque :global(.lecteur__apres img), .lecteur__calque :global(.mosaique img) {
+  .lecteur__calque :global(.lecteur__plans) { position: absolute; inset: 0; overflow: hidden; }
+  .lecteur__calque :global(.lecteur__plans img) { will-change: transform, opacity; }
+  .lecteur__calque :global(.lecteur__plans img), .lecteur__calque :global(.lecteur__apres img), .lecteur__calque :global(.mosaique img) {
     display: block;
     position: absolute;
     left: 0;
@@ -456,6 +531,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     transform-origin: 0 0;
     will-change: transform;
   }
+  /* Image entière d'une série (drapeau `image.entier`) : fond noir sous l'image, même fondu. */
+  .lecteur__calque :global(.lecteur__noir) { position: absolute; inset: 0; background: #000; will-change: opacity; }
   .lecteur__calque :global(.lecteur__trait) {
     position: absolute;
     top: 0;
@@ -910,6 +987,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
   }
   /* Citation en surimpression : ses mots sont sur l'image, le sous-titre se tait. */
   .lecteur.avec-citation .lecteur__soustitre { visibility: hidden; }
+  /* Galerie (spec 14) : la ligne de l'image montrée, sous l'œuvre entendue ou le thème. */
+  .lecteur__legende :global(.lecteur__legende-image) { font-variant: normal; letter-spacing: 0; }
   .lecteur__legende :global(.lecteur__legende-voix) { display: none; font-variant: normal; font-style: italic; letter-spacing: 0; font-size: 0.8rem; }
   .lecteur__legende:hover :global(.lecteur__legende-voix) { display: block; }
 
@@ -1092,21 +1171,81 @@ const sectionsLivre = d.actes.map((a, i) => ({
   }
 
   /* Dans le carton : sous le titre et les dates ; le curseur glisse à partir de 0,6 s. */
-  .diaporama .frise-t--carton { max-width: min(38rem, 100%); margin-top: var(--e-3); text-align: left; }
-  /* Carton : l'intervalle de l'acte en segment noir épais (6 px au moins, centré sur l'intervalle),
-     en fondu ; ni curseur ni date (les dates de l'acte sont sous le titre). */
+  /* Carton (retour du 2026-10-11, « la frise se dessine ») : frise plus grande, animée par le script
+     au rythme de l'horloge du carton (frise.ts, `majFriseCarton`) : le filet se trace de gauche à
+     droite, les actes déjà vus restent en gris, le segment de l'acte avance et s'épaissit pendant
+     que les années défilent sous le titre, puis deux ou trois dates clés paraissent (petit repère
+     sur la frise, date et libellé dessous). Ni curseur ni date. Monochrome. */
+  .diaporama .frise-t--carton { max-width: min(46rem, 100%); margin-top: var(--e-3); text-align: left; column-gap: 0.9rem; }
   .diaporama .frise-t--carton .frise-t__curseur, .diaporama .frise-t--carton .frise-t__date { display: none; }
-  .diaporama .frise-t--carton .frise-t__piste { height: 1.2rem; }
-  .diaporama .frise-t__acte {
+  .diaporama .frise-t--carton .frise-t__piste { height: 1.9rem; }
+  .diaporama .frise-t--carton .frise-t__borne { font-size: 0.95rem; }
+  .diaporama .frise-t--carton .frise-t__filet { transform-origin: 0 50%; }
+  .diaporama .frise-t__passe {
     position: absolute;
     bottom: calc(0.45rem - 1px);
     height: 3px;
+    background: #b4b1a9;
+  }
+  .diaporama .frise-t__acte {
+    position: absolute;
+    bottom: 0.45rem;
+    height: 5px;
     min-width: 6px;
     background: var(--c-texte);
-    transform: translateX(-50%);
+    transform: translate(-50%, calc(50% - 0.5px));
   }
-  .diaporama .en-carton .frise-t__acte { animation: frise-acte 700ms ease 900ms both; }
-  @keyframes frise-acte { from { opacity: 0; } to { opacity: 1; } }
+  .diaporama .frise-t__repere {
+    position: absolute;
+    bottom: calc(0.45rem + 5px);
+    width: 1px;
+    height: 9px;
+    margin-left: -0.5px;
+    background: var(--c-texte);
+  }
+  .diaporama .frise-t__repere::before {
+    content: '';
+    position: absolute;
+    left: -2px;
+    top: -5px;
+    width: 5px;
+    height: 5px;
+    border: 1px solid var(--c-texte);
+    border-radius: 50%;
+    box-sizing: border-box;
+    background: var(--c-fond);
+  }
+  .diaporama .carton-reperes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 2.4rem;
+    min-height: 2.6rem;
+    max-width: min(52rem, 100%);
+    margin: var(--e-2) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .diaporama .carton-reperes:empty { display: none; }
+  .diaporama .carton-reperes li { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; margin: 0; }
+  .diaporama .carton-reperes .r-date {
+    font-size: 0.82rem;
+    font-variant: small-caps;
+    font-variant-numeric: oldstyle-nums;
+    letter-spacing: 0.05em;
+    color: var(--c-texte-doux);
+  }
+  .diaporama .carton-reperes .r-texte { font-size: 1rem; line-height: 1.25; color: var(--c-texte); }
+  .diaporama .lecteur:fullscreen .frise-t--carton { max-width: min(60rem, 80%); }
+  .diaporama .lecteur:fullscreen .frise-t--carton .frise-t__borne { font-size: 1.15rem; }
+  .diaporama .lecteur:fullscreen .carton-reperes { gap: 0.6rem 3.2rem; max-width: min(66rem, 88%); }
+  .diaporama .lecteur:fullscreen .carton-reperes .r-date { font-size: 1rem; }
+  .diaporama .lecteur:fullscreen .carton-reperes .r-texte { font-size: 1.25rem; }
+  @media (max-width: 700px) {
+    .diaporama .carton-reperes { gap: 0.35rem 1.2rem; }
+    .diaporama .carton-reperes .r-date { font-size: 0.72rem; }
+    .diaporama .carton-reperes .r-texte { font-size: 0.86rem; }
+  }
   .diaporama .en-carton .frise-t--carton { animation: frise-entree 900ms cubic-bezier(0.2, 0.6, 0.3, 1) 300ms both; }
   @keyframes frise-entree { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
@@ -1141,7 +1280,6 @@ const sectionsLivre = d.actes.map((a, i) => ({
   @media (prefers-reduced-motion: reduce) {
     .diaporama .frise-t__curseur, .diaporama .frise-t__date { transition: none !important; }
     .diaporama .en-carton .frise-t--carton { animation: none; }
-    .diaporama .en-carton .frise-t__acte { animation: frise-acte 200ms ease both; }
     .diaporama .frise-t--surimpression, .diaporama .frise-t--surimpression.est-visible {
       transform: translate(-50%, 0);
       transition: opacity 200ms ease, visibility 0s linear 200ms;
