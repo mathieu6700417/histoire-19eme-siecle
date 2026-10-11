@@ -985,7 +985,7 @@ DATES_CONNUES = {'1er vendémiaire an I': '22 septembre 1792', '22 prairial an I
                  '9 thermidor an II': '27 juillet 1794', '1er prairial an III': '20 mai 1795',
                  '13 vendémiaire an IV': '5 octobre 1795', '18 fructidor an V': '4 septembre 1797',
                  '18 brumaire an VIII': '9 novembre 1799', '10 nivôse an XIV': '31 décembre 1805'}
-PRUDENCES = ('plus de', 'près de', 'environ', 'moins de', 'quelque', 'presque')
+PRUDENCES = ('plus de', 'près de', 'environ', 'moins de', 'quelque', 'presque', "jusqu'à", 'au moins')
 
 
 def _iso(texte: str) -> str:

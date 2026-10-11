@@ -1132,6 +1132,26 @@ et retour » (après 91 : bandes à la manière de Minard, largeur proportionnel
 retour en gris foncé décalé au sud, puis barres 422 000 / 100 000 / 10 000 selon Minard). La diapositive à image
 de la conscription existait déjà (71, Boilly).
 
+### Monarchie de Juillet (2026-10-11)
+
+Dosage atteint : 116 diapositives en 8 actes, 219 images (75 plans, 23 images de galerie, 5 d'épisode), 46 min ;
+48 lieux, 5 citations, 40 personnes montrées en portrait (31 portraits nouveaux au registre), 10 objets, 4 manuscrits,
+16 chiffres, 4 avant/après (32, 51, 54, 65), 2 mosaïques (42, 70), 115 images entières sur fond noir. Épisodes :
+« La conquête de l'Algérie » (après 78, carte), « L'étoile de Legrand » (après 87, carte des grandes lignes et
+réseau en service), « La réforme refusée » (après 103), « La crise de 1846-1847 » (après 105, carte des émeutes de
+subsistances). Particularités :
+- **caméra proposée par Claude** (sous-agents Sonnet, `banc_claude.py`) : 176 vues sur 185, 0 $ de Gemini ; les
+  9 replis et les vues hors banc (avant/après, images principales des mosaïques) sont posés à la main
+  (`camera_manuelle`). Une vue ne peut pas montrer le haut de l'image (bande du cartouche) : une tête collée au
+  bord supérieur demande une zone utile remontée ou une image entière ;
+- **plan de Paris de 1838** (Tardieu, `paris-1838`) pour les médaillons `fond: "paris"` de la période et de la
+  suivante ; la Restauration reste sur Verniquet ;
+- **chant remplacé** : *Le Chant des ouvriers* de Pierre Dupont (1846) n'existe pas en enregistrement libre ;
+  l'intermède chanté après 100 est *Les Bœufs* (1845), du même auteur, que la narration nomme aussi ;
+- cartes d'épisode : une carte de la France entière a de petits libellés (fond presque carré) ; quand trois ou
+  quatre villes suffisent, poser un `cadre` serré (carte de la crise) ; des villes voisines demandent des
+  `position` choisies une à une (Mascara, Tlemcen, Tagdempt, Taguin).
+
 ## Retours du visionnage de la Restauration (2026-10-11)
 
 Huit annotations laissées par l'utilisateur sur la période 03 (spec 15). Trois décisions, dont deux

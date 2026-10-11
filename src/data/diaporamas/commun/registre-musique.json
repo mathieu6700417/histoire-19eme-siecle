@@ -1192,9 +1192,17 @@
       "oeuvre": "Fra Diavolo, ouverture (1830 ; disque London LL 1157, 1955 ; même disque : Le Cheval de bronze, Les Diamants de la couronne)",
       "compositeur": "Daniel-François-Esprit Auber",
       "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff",
-      "structure": [],
-      "periodes": [],
-      "statut": "possible",
+      "structure": [
+        [
+          205.0,
+          230.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
       "verifie": "2026-10-10"
     },
     {
@@ -1222,9 +1230,17 @@
       "oeuvre": "Zampa, ouverture (1831 ; disque London LLP 351, 1951)",
       "compositeur": "Ferdinand Hérold",
       "interprete": "Orchestre philharmonique de Londres, direction Jean Martinon",
-      "structure": [],
-      "periodes": [],
-      "statut": "possible",
+      "structure": [
+        [
+          0.0,
+          290,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
       "verifie": "2026-10-10"
     },
     {
@@ -1287,6 +1303,559 @@
       "statut": "ecarte",
       "motif": "arrangement pour harmonie d'Arthur Prevost (mort en 1967) : arrangeur non tombé dans le domaine public",
       "verifie": "2026-10-10"
+    },
+    {
+      "id": "commons:File:Le chemin de fer - Alkan.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Le chemin de fer - Alkan.ogg"
+      },
+      "oeuvre": "Le Chemin de fer, opus 27 (1844)",
+      "compositeur": "",
+      "interprete": "« Alton » (CC BY 3.0)",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "nature de l'enregistrement invérifiable (dépôt personnel de 2008, peut-être un rendu par ordinateur)",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:gli-ugonotti#(item entier)",
+      "source": {
+        "type": "archive",
+        "id": "gli-ugonotti",
+        "fichier": "(item entier)"
+      },
+      "oeuvre": "Les Huguenots (en italien)",
+      "compositeur": "",
+      "interprete": "direction Tullio Serafin",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "captation radiophonique (RAI, 1955), pas un disque publié avant 1963",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:78_troop-les-huguenots_the-band-of-hm-royal-air-force-dan-godfrey-flight-lieut-j-a_gbia7002753a#Troop les Huguenots - THE BAND OF H.M. ROYAL AIR FORCE.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_troop-les-huguenots_the-band-of-hm-royal-air-force-dan-godfrey-flight-lieut-j-a_gbia7002753a",
+        "fichier": "Troop les Huguenots - THE BAND OF H.M. ROYAL AIR FORCE.flac"
+      },
+      "oeuvre": "Troop « Les Huguenots » (marche lente d'après Meyerbeer, arr. Dan Godfrey ; 78 tours HMV, vers 1925-1931, date à vérifier)",
+      "compositeur": "Giacomo Meyerbeer, arrangement Dan Godfrey",
+      "interprete": "Band of H.M. Royal Air Force, direction J. Amers",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "commons:File:Chopin-Berceuse.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Chopin-Berceuse.ogg"
+      },
+      "oeuvre": "Berceuse opus 57 (concert public, 2002, PD-self)",
+      "compositeur": "Frédéric Chopin",
+      "interprete": "Veronica van der Knaap, piano",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho#disc1/02.01. Benvenuto Cellini, Op.23.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho",
+        "fichier": "disc1/02.01. Benvenuto Cellini, Op.23.mp3"
+      },
+      "oeuvre": "Benvenuto Cellini, ouverture (1838 ; disque RCA Victor, 1961 ; même disque : Le Carnaval romain, Le Corsaire, Béatrice et Bénédict)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "Orchestre symphonique de Boston, direction Charles Munch",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_funeral-and-triumphal-symphony-for-large-b_hector-berlioz-fritz-straub#disc1/lp_funeral-and-triumphal-symphony-for-large-b_hector-berlioz-fritz-straub_disc1side1.flac",
+      "source": {
+        "type": "archive",
+        "id": "lp_funeral-and-triumphal-symphony-for-large-b_hector-berlioz-fritz-straub",
+        "fichier": "disc1/lp_funeral-and-triumphal-symphony-for-large-b_hector-berlioz-fritz-straub_disc1side1.flac"
+      },
+      "oeuvre": "Symphonie funèbre et triomphale (disque Lyrichord, 1953 ; faces entières)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "direction Fritz Straub",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_requiem_hector-berlioz-emile-passani-choir-emile-p#disc2/03.01. Requiem: VI - Lacrymosa.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_requiem_hector-berlioz-emile-passani-choir-emile-p",
+        "fichier": "disc2/03.01. Requiem: VI - Lacrymosa.mp3"
+      },
+      "oeuvre": "Requiem : Lacrymosa (1837 ; disque Columbia Masterworks, 1951 ; tous les numéros sur l'item)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "Chorale et orchestre Émile Passani, direction Jean Fournet",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_romeo-and-juliet_hector-berlioz-boston-symphony-orchestra-c#disc2/03.01. Second Part:: 3. Scherzo: Queen Mab Or The Fairy Of Dreams.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_romeo-and-juliet_hector-berlioz-boston-symphony-orchestra-c",
+        "fichier": "disc2/03.01. Second Part:: 3. Scherzo: Queen Mab Or The Fairy Of Dreams.mp3"
+      },
+      "oeuvre": "Roméo et Juliette : La Reine Mab, scherzo (1839 ; disque RCA Victor, 1953 ; œuvre entière sur l'item)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "Orchestre symphonique de Boston, direction Charles Munch",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada#disc1/02.01. If I Were King.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_francois-adrien-boieldieu-adolphe-c-ada",
+        "fichier": "disc1/02.01. If I Were King.mp3"
+      },
+      "oeuvre": "Si j'étais roi, ouverture (1852 ; disque London LLP 351, 1951)",
+      "compositeur": "Adolphe Adam",
+      "interprete": "Orchestre philharmonique de Londres, direction Jean Martinon",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0#disc1/01.01. First Movement: Harold In The Mountains.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0",
+        "fichier": "disc1/01.01. First Movement: Harold In The Mountains.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Harold en Italie : Harold aux montagnes",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1834",
+      "interprete": "William Primrose, alto, Orchestre symphonique de Boston, direction Charles Munch (disque RCA Victor, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0",
+      "duree": 729.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          420,
+          "fond, Harold aux montagnes"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or#disc1/01.02. The Bronze Horse.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or",
+        "fichier": "disc1/01.02. The Bronze Horse.mp3",
+        "publication": "1955"
+      },
+      "oeuvre": "Le Cheval de bronze, ouverture",
+      "compositeur": "Daniel-François-Esprit Auber",
+      "date_oeuvre": "1835",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff (disque London LL 1157, 1955)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1955 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1955, avant 1963) ; https://archive.org/details/lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or",
+      "duree": 468.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          365,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de#disc1/01.02. Overture: Benvenuto Cellini, Op. 23.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de",
+        "fichier": "disc1/01.02. Overture: Benvenuto Cellini, Op. 23.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "Benvenuto Cellini, ouverture",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1838",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Jean Martinon (disque Decca, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de",
+      "duree": 627.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          425,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_funeral-and-triumphal-symphony_hector-berlioz-orchester-der-wiener-sta#disc1/01.01. Marche Funèbre.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_funeral-and-triumphal-symphony_hector-berlioz-orchester-der-wiener-sta",
+        "fichier": "disc1/01.01. Marche Funèbre.mp3",
+        "publication": "1956"
+      },
+      "oeuvre": "Grande symphonie funèbre et triomphale : Marche funèbre",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1840",
+      "interprete": "Orchestre de l’Opéra d’État de Vienne, direction Ernst Graf (disque Urania, 1956)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/lp_funeral-and-triumphal-symphony_hector-berlioz-orchester-der-wiener-sta",
+      "duree": 696.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          290,
+          "fond, Marche funèbre"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_requiem_hector-berlioz-emile-passani-choir-emile-p#disc1/01.01. Requiem: I - Requiem Et Kyrie.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_requiem_hector-berlioz-emile-passani-choir-emile-p",
+        "fichier": "disc1/01.01. Requiem: I - Requiem Et Kyrie.mp3",
+        "publication": "1951"
+      },
+      "oeuvre": "Requiem (Grande Messe des morts) : Requiem et Kyrie",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1837",
+      "interprete": "Chorale et orchestre Émile Passani, direction Jean Fournet (enregistrement de 1943 ; disque Columbia Masterworks, 1951)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1951 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1951, avant 1963) ; https://archive.org/details/lp_requiem_hector-berlioz-emile-passani-choir-emile-p",
+      "duree": 465.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          350,
+          "fond, Requiem et Kyrie"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_romeo-and-juliet_hector-berlioz-boston-symphony-orchestra-c#disc1/01.02. Second Part:: 1. Romeo Alone, Sadness-Distant Sounds Of Music And Dancing, Great Festivities In Capulet's Palace (Part 1).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_romeo-and-juliet_hector-berlioz-boston-symphony-orchestra-c",
+        "fichier": "disc1/01.02. Second Part:: 1. Romeo Alone, Sadness-Distant Sounds Of Music And Dancing, Great Festivities In Capulet's Palace (Part 1).mp3",
+        "publication": "1953"
+      },
+      "oeuvre": "Roméo et Juliette : Roméo seul, Tristesse, Bruits lointains de concert et de bal",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1839",
+      "interprete": "Orchestre symphonique de Boston, direction Charles Munch (disque RCA Victor, 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1953 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1953, avant 1963) ; https://archive.org/details/lp_romeo-and-juliet_hector-berlioz-boston-symphony-orchestra-c",
+      "duree": 503.6,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          478,
+          "fond, Roméo seul, Tristesse, Bruits lointains de concert et de bal"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de#disc1/01.01. Overture: Le Carnaval Romain, Op. 9.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de",
+        "fichier": "disc1/01.01. Overture: Le Carnaval Romain, Op. 9.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "Le Carnaval romain, ouverture",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1844",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Jean Martinon (disque Decca, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de",
+      "duree": 557.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          200,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de#disc1/02.01. Hungarian March From La Damnation De Faust, Op. 24.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de",
+        "fichier": "disc1/02.01. Hungarian March From La Damnation De Faust, Op. 24.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "La Damnation de Faust : Marche hongroise",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1846",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Jean Martinon (disque Decca, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_music-of-berlioz_hector-berlioz-jean-martinon-orchestre-de",
+      "duree": 290.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Marche hongroise"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "commons:File:Chopin - Nocturne No. 2 in E-flat major, Op. 9 No. 2 (Frank Levy).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Chopin - Nocturne No. 2 in E-flat major, Op. 9 No. 2 (Frank Levy).flac"
+      },
+      "oeuvre": "Nocturnes",
+      "compositeur": "Frédéric Chopin",
+      "date_oeuvre": "1832",
+      "interprete": "Frank Lévy, piano (Musopen, « Set Chopin Free », vers 2014)",
+      "enregistrement": "Musopen, vers 2014",
+      "genre": "instrumental",
+      "licence": "Domaine public (Musopen)",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Chopin_-_Nocturne_No._2_in_E-flat_major,_Op._9_No._2_(Frank_Levy).flac",
+      "duree": 271.5,
+      "structure": [
+        [
+          0.7,
+          25.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or#disc1/02.02. The Crown Diamonds.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or",
+        "fichier": "disc1/02.02. The Crown Diamonds.mp3",
+        "publication": "1955"
+      },
+      "oeuvre": "Les Diamants de la couronne, ouverture",
+      "compositeur": "Daniel-François-Esprit Auber",
+      "date_oeuvre": "1841",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff (disque London LL 1157, 1955)",
+      "enregistrement": "London, 1955",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1955 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1955, avant 1963) ; https://archive.org/details/lp_famous-overtures_danielfrancoisesprit-auber-albert-wolff-or",
+      "duree": 547.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          291.0,
+          316.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "commons:File:Huguenots Bénédiction 1909.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Huguenots Bénédiction 1909.ogg"
+      },
+      "oeuvre": "Les Huguenots",
+      "compositeur": "Giacomo Meyerbeer, sur un livret d’Eugène Scribe et Émile Deschamps",
+      "date_oeuvre": "1836",
+      "interprete": "Marthe Bakkers, Pierre d’Assy, Émile Boussagol, chœurs et orchestre, direction Alfred Fock (1909)",
+      "enregistrement": "Disque de 1909 (Bibliothèque nationale de France)",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Huguenots_B%C3%A9n%C3%A9diction_1909.ogg",
+      "duree": 218.0,
+      "filtres": "78tours",
+      "structure": [
+        [
+          7.5,
+          31.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "commons:File:1 Chopin, Berceuse (piano-Christine Hartley).ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:1 Chopin, Berceuse (piano-Christine Hartley).ogg"
+      },
+      "oeuvre": "Berceuse en ré bémol majeur, opus 57",
+      "compositeur": "Frédéric Chopin",
+      "date_oeuvre": "1844",
+      "interprete": "Christine Hartley-Troskie, piano",
+      "enregistrement": "Enregistrement publié sur Wikimedia Commons",
+      "genre": "instrumental",
+      "licence": "CC BY 2.5",
+      "preuve_date": "licence relevée par musique.py : CC BY 2.5 ; https://commons.wikimedia.org/wiki/File:1_Chopin,_Berceuse_(piano-Christine_Hartley).ogg",
+      "duree": 313.3,
+      "structure": [
+        [
+          8.5,
+          37.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:lp_funeral-and-triumphal-symphony_hector-berlioz-orchester-der-wiener-sta#disc1/02.01. Oraison Funèbre - Apothéose.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_funeral-and-triumphal-symphony_hector-berlioz-orchester-der-wiener-sta",
+        "fichier": "disc1/02.01. Oraison Funèbre - Apothéose.mp3",
+        "publication": "1956"
+      },
+      "oeuvre": "Symphonie funèbre et triomphale",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1840",
+      "interprete": "Orchestre de l’Opéra d’État de Vienne, direction Ernst Graf (disque Urania, 1956)",
+      "enregistrement": "Urania, 1956",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/lp_funeral-and-triumphal-symphony_hector-berlioz-orchester-der-wiener-sta",
+      "duree": 926.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          420.0,
+          444.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:78_les-boeufs_marcel-journet-pierre-dupont-victor-parizot_gbia0335097a#Les Boeufs - Marcel Journet - Pierre Dupont.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_les-boeufs_marcel-journet-pierre-dupont-victor-parizot_gbia0335097a",
+        "fichier": "Les Boeufs - Marcel Journet - Pierre Dupont.flac",
+        "publication": "1917"
+      },
+      "oeuvre": "Les Bœufs",
+      "compositeur": "Pierre Dupont",
+      "date_oeuvre": "1845",
+      "interprete": "Marcel Journet, basse, avec orchestre",
+      "enregistrement": "Victor (Victrola), 1917",
+      "genre": "chant",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1917 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1917, avant 1963) ; https://archive.org/details/78_les-boeufs_marcel-journet-pierre-dupont-victor-parizot_gbia0335097a",
+      "duree": 201.6,
+      "filtres": "78tours",
+      "structure": [
+        [
+          15.0,
+          36.6,
+          "« J’ai deux grands bœufs dans mon étable, »"
+        ]
+      ],
+      "periodes": [
+        "04-monarchie-de-juillet"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-11"
     }
   ],
   "introuvables": [
@@ -1361,6 +1930,36 @@
       "compositeur": "Pierre-Jean de Béranger",
       "cherche": "2026-10-10",
       "ou": "Internet Archive (beranger collection:78rpm ; titres) et Commons (Béranger chanson) : rien ; Le Roi d'Yvetot existe en français (Pierre Bertin, Lumen 33.011)"
+    },
+    {
+      "oeuvre": "Le Chant des ouvriers",
+      "compositeur": "Pierre Dupont",
+      "cherche": "2026-10-11",
+      "ou": "cherché le 2026-10-11 : Commons (Chant des ouvriers, Pierre Dupont) : rien ; Internet Archive (title:\"chant des ouvriers\", dupont ouvriers, creator Pierre Dupont 78rpm) : seulement un 33 tours de 1970 (La Commune en chantant, non libre) ; remplacé dans la période 04 par Les Bœufs"
+    },
+    {
+      "oeuvre": "Les Huguenots, ouverture (orchestre seul)",
+      "compositeur": "Giacomo Meyerbeer",
+      "cherche": "2026-10-11",
+      "ou": "cherché le 2026-10-11 : Commons (Meyerbeer Huguenots) : deux extraits chantés de 1909 ; Internet Archive (huguenots/hugenotten/ugonotti + overture, ouverture, prelude, lp_) : aucun enregistrement d'orchestre seul publié avant 1963, seulement des airs chantés"
+    },
+    {
+      "oeuvre": "Le Désert",
+      "compositeur": "Félicien David",
+      "cherche": "2026-10-11",
+      "ou": "cherché le 2026-10-11 : Commons, Internet Archive (creator Félicien David ; lp_ desert david) : seulement Charmant oiseau (La Perle du Brésil, 1851)"
+    },
+    {
+      "oeuvre": "Le Postillon de Lonjumeau, ouverture",
+      "compositeur": "Adolphe Adam",
+      "cherche": "2026-10-11",
+      "ou": "cherché le 2026-10-11 : Commons : rien ; Internet Archive : seulement l'air du postillon chanté en allemand (1932-1936)"
+    },
+    {
+      "oeuvre": "Œuvres d'Alkan et d'Onslow (disques d'avant 1963)",
+      "compositeur": "Charles-Valentin Alkan ; George Onslow",
+      "cherche": "2026-10-11",
+      "ou": "cherché le 2026-10-11 : Internet Archive (lp_ creator alkan, onslow) : rien"
     }
   ]
 }

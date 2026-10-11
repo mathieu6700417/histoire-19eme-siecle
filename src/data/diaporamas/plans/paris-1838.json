@@ -1,0 +1,113 @@
+{
+  "nom": "paris-1838",
+  "fichier": "fonds/paris-1838.webp",
+  "largeur": 2000,
+  "hauteur": 1318,
+  "titre": "Plan de Paris en 1838 avec le tracé de ses anciennes enceintes",
+  "auteur": "Ambroise Tardieu",
+  "date": "1838",
+  "credit": "Plan de Tardieu, 1838",
+  "commons": "File:Ambroise Tardieu, Plan de Paris en 1838 avec le tracé de ses anciennes enceintes, 1838 - Gallica.jpg",
+  "licence": "Domaine public",
+  "licence_relevee": "Public domain",
+  "slugs": [
+    "monarchie-de-juillet",
+    "deuxieme-republique"
+  ],
+  "calage": {
+    "u": [
+      8.177427469324751,
+      0.05190835807413253,
+      -21.19699330430696
+    ],
+    "v": [
+      -0.025445582693433926,
+      -18.848621252595276,
+      921.4811949734266
+    ],
+    "metres_par_pixel": 4.48,
+    "ecart_moyen_m": 12,
+    "points": [
+      [
+        "Observatoire (milieu de l’édifice)",
+        3755,
+        4973,
+        48.836389,
+        2.337229,
+        25
+      ],
+      [
+        "Notre-Dame (milieu de l’édifice)",
+        4550,
+        3452,
+        48.853,
+        2.3498,
+        12
+      ],
+      [
+        "Dôme des Invalides",
+        2300,
+        3275,
+        48.855,
+        2.3125,
+        13
+      ],
+      [
+        "Colonne Vendôme",
+        3314,
+        2131,
+        48.86747,
+        2.32941,
+        5
+      ],
+      [
+        "Place des Victoires (centre)",
+        4020,
+        2286,
+        48.86583,
+        2.34111,
+        12
+      ],
+      [
+        "Place Royale, auj. des Vosges (statue)",
+        5489,
+        3206,
+        48.85556,
+        2.36556,
+        11
+      ],
+      [
+        "Chapelle de la Salpêtrière",
+        5410,
+        4743,
+        48.83888,
+        2.36413,
+        13
+      ],
+      [
+        "Rotonde de la Villette",
+        5733,
+        666,
+        48.88333,
+        2.36944,
+        5
+      ],
+      [
+        "Place du Trône, auj. de la Nation (centre)",
+        7316,
+        3877,
+        48.84833,
+        2.39583,
+        4
+      ],
+      [
+        "Rotonde de Chartres (parc Monceau)",
+        2091,
+        951,
+        48.88025,
+        2.30908,
+        8
+      ]
+    ]
+  }
+}

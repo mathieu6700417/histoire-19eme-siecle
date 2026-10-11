@@ -2326,5 +2326,541 @@
       0.487
     ],
     "fichier": "portraits/angouleme.webp"
+  },
+  {
+    "id": "louis-philippe",
+    "nom": "Louis-Philippe",
+    "dates": "1773-1850",
+    "commons": "File:Louis-Philippe de Bourbon.jpg",
+    "auteur": "Franz Xaver Winterhalter",
+    "date": "1841",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:1841_portrait_painting_of_Louis_Philippe_I_(King_of_the_French)_by_Winterhalter.jpg",
+    "cadre_visage": [
+      0.456,
+      0.19,
+      0.578,
+      0.289
+    ],
+    "fichier": "portraits/louis-philippe.webp"
+  },
+  {
+    "id": "soult",
+    "nom": "Maréchal Soult",
+    "dates": "1769-1851",
+    "commons": "File:Nicolas Jean de Dieu Soult.jpg",
+    "auteur": "Louis-Henri de Rudder, copie d'après Jean Broc (original du premier quart du XIXe siècle)",
+    "date": "1856",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Nicolas_Jean_de_Dieu_Soult.jpg",
+    "cadre_visage": [
+      0.437,
+      0.099,
+      0.612,
+      0.221
+    ],
+    "fichier": "portraits/soult.webp"
+  },
+  {
+    "id": "ferdinand-philippe",
+    "nom": "Duc d'Orléans",
+    "dates": "1810-1842",
+    "commons": "File:75 - Musée du Louvre - Ferdinand-Philippe d'Orléans par Ingres - RF 2005-13.jpg",
+    "auteur": "Jean-Auguste-Dominique Ingres",
+    "date": "1842",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:75_-_Mus%C3%A9e_du_Louvre_-_Ferdinand-Philippe_d%27Orl%C3%A9ans_par_Ingres_-_RF_2005-13.jpg",
+    "cadre_visage": [
+      0.388,
+      0.112,
+      0.563,
+      0.283
+    ],
+    "fichier": "portraits/ferdinand-philippe.webp"
+  },
+  {
+    "id": "lamarque",
+    "nom": "Général Lamarque",
+    "dates": "1770-1832",
+    "commons": "File:Portret van Jean Maximilien Lamarque, RP-P-1911-2440.jpg",
+    "auteur": "Antoine Maurin (lithographie)",
+    "date": "1832",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_Jean_Maximilien_Lamarque,_RP-P-1911-2440.jpg",
+    "cadre_visage": [
+      0.41,
+      0.3,
+      0.555,
+      0.425
+    ],
+    "fichier": "portraits/lamarque.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "philipon",
+    "nom": "Philipon",
+    "dates": "1800-1862",
+    "commons": "File:Charles Philipon by Nadar B&W.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "1856-1858",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_Philipon_by_Nadar_B%26W.jpg",
+    "cadre_visage": [
+      0.306,
+      0.001,
+      0.649,
+      0.374
+    ],
+    "fichier": "portraits/philipon.webp"
+  },
+  {
+    "id": "girardin",
+    "nom": "Émile de Girardin",
+    "dates": "1802-1881",
+    "commons": "File:Portret van de Émile de Girardin, hoofdredacteur van La Presse, RP-P-1911-861.jpg",
+    "auteur": "Lithographie anonyme (série de portraits de célébrités)",
+    "date": "1848",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_de_%C3%89mile_de_Girardin,_hoofdredacteur_van_La_Presse,_RP-P-1911-861.jpg",
+    "cadre_visage": [
+      0.449,
+      0.275,
+      0.589,
+      0.384
+    ],
+    "fichier": "portraits/girardin.webp"
+  },
+  {
+    "id": "balzac",
+    "nom": "Balzac",
+    "dates": "1799-1850",
+    "commons": "File:Balzac (par Boulanger).jpg",
+    "auteur": "Louis Boulanger",
+    "date": "1836",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Balzac_(par_Boulanger).jpg",
+    "cadre_visage": [
+      0.33,
+      0.08,
+      0.59,
+      0.33
+    ],
+    "fichier": "portraits/balzac.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "barbes",
+    "nom": "Barbès",
+    "dates": "1809-1870",
+    "commons": "File:Armand Barbès en Prison by Traviès de Villers.jpg",
+    "auteur": "Charles-Joseph Traviès",
+    "date": "1835",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Armand_Barb%C3%A8s_en_Prison_by_Travi%C3%A8s_de_Villers.jpg",
+    "cadre_visage": [
+      0.405,
+      0.19,
+      0.535,
+      0.32
+    ],
+    "fichier": "portraits/barbes.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "berlioz",
+    "nom": "Berlioz",
+    "dates": "1803-1869",
+    "commons": "File:Berlioz 1845 Litho.jpg",
+    "auteur": "Josef Kriehuber (lithographie)",
+    "date": "1845",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Berlioz_1845_Litho.jpg",
+    "cadre_visage": [
+      0.361,
+      0.129,
+      0.549,
+      0.277
+    ],
+    "fichier": "portraits/berlioz.webp"
+  },
+  {
+    "id": "joinville",
+    "nom": "Prince de Joinville",
+    "dates": "1818-1900",
+    "commons": "File:1843 portrait of Prince Francois of Orléans, Prince of Joinville by Winterhalter (Versailles).jpg",
+    "auteur": "Franz Xaver Winterhalter",
+    "date": "vers 1843-1847",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:1843_portrait_of_Prince_Francois_of_Orl%C3%A9ans,_Prince_of_Joinville_by_Winterhalter_(Versailles).jpg",
+    "cadre_visage": [
+      0.419,
+      0.051,
+      0.572,
+      0.171
+    ],
+    "fichier": "portraits/joinville.webp"
+  },
+  {
+    "id": "abd-el-kader",
+    "nom": "Abd el-Kader",
+    "dates": "1808-1883",
+    "commons": "File:L'Émir Abd-el-Kader. Album Souvenirs d'Afrique 1842.jpg",
+    "auteur": "Benjamin Roubaud (lithographie)",
+    "date": "1842-1843",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:L%27%C3%89mir_Abd-el-Kader._Album_Souvenirs_d%27Afrique_1842.jpg",
+    "cadre_visage": [
+      0.439,
+      0.128,
+      0.652,
+      0.317
+    ],
+    "fichier": "portraits/abd-el-kader.webp"
+  },
+  {
+    "id": "bugeaud",
+    "nom": "Bugeaud",
+    "dates": "1784-1849",
+    "commons": "File:Charles-Philippe Larivière - Thomas-Robert Bugeaud de la Piconnerie (1845).jpg",
+    "auteur": "Charles-Philippe Larivière",
+    "date": "1845",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles-Philippe_Larivi%C3%A8re_-_Thomas-Robert_Bugeaud_de_la_Piconnerie_(1845).jpg",
+    "cadre_visage": [
+      0.399,
+      0.078,
+      0.581,
+      0.2
+    ],
+    "fichier": "portraits/bugeaud.webp"
+  },
+  {
+    "id": "aumale",
+    "nom": "Duc d'Aumale",
+    "dates": "1822-1897",
+    "commons": "File:1843 painting of Prince Henri of Orléans, Duke of Aumale (Winterhalter).jpg",
+    "auteur": "Copie d'après Franz Xaver Winterhalter (original de 1843)",
+    "date": "1845",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:1843_painting_of_Prince_Henri_of_Orl%C3%A9ans,_Duke_of_Aumale_(Winterhalter).jpg",
+    "cadre_visage": [
+      0.407,
+      0.11,
+      0.565,
+      0.232
+    ],
+    "fichier": "portraits/aumale.webp"
+  },
+  {
+    "id": "lamoriciere",
+    "nom": "Lamoricière",
+    "dates": "1806-1865",
+    "commons": "File:Portret van generaal Louis Juchault de Lamoricière, RP-P-1911-865.jpg",
+    "auteur": "Lithographie anonyme (série de portraits de célébrités)",
+    "date": "1848",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_generaal_Louis_Juchault_de_Lamorici%C3%A8re,_RP-P-1911-865.jpg",
+    "cadre_visage": [
+      0.44,
+      0.252,
+      0.564,
+      0.354
+    ],
+    "fichier": "portraits/lamoriciere.webp"
+  },
+  {
+    "id": "fourier",
+    "nom": "Charles Fourier",
+    "dates": "1772-1837",
+    "commons": "File:Portrait de Charles Fourier - (estampe) (2e état, avec les noms des artistes et la date) - Peint par Gigoux ; Disegnato e Inciso da L. Calamatta - btv1b53128710x.jpg",
+    "auteur": "Luigi Calamatta, gravure d'après le portrait peint par Jean Gigoux du vivant de Fourier",
+    "date": "1846",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Charles_Fourier_-_(estampe)_(2e_%C3%A9tat,_avec_les_noms_des_artistes_et_la_date)_-_Peint_par_Gigoux_;_Disegnato_e_Inciso_da_L._Calamatta_-_btv1b53128710x.jpg",
+    "cadre_visage": [
+      0.486,
+      0.257,
+      0.583,
+      0.34
+    ],
+    "fichier": "portraits/fourier.webp"
+  },
+  {
+    "id": "sue",
+    "nom": "Eugène Sue",
+    "dates": "1804-1857",
+    "commons": "File:GabrielLepaulleEugeneSue.JPG",
+    "auteur": "François-Gabriel Lépaulle",
+    "date": "1835",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:GabrielLepaulleEugeneSue.JPG",
+    "cadre_visage": [
+      0.299,
+      0.093,
+      0.699,
+      0.411
+    ],
+    "fichier": "portraits/sue.webp"
+  },
+  {
+    "id": "dumas",
+    "nom": "Alexandre Dumas",
+    "dates": "1802-1870",
+    "commons": "File:Alexander Dumas père par Nadar - Google Art Project.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "1855",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Alexander_Dumas_p%C3%A8re_par_Nadar_-_Google_Art_Project.jpg",
+    "cadre_visage": [
+      0.315,
+      0.177,
+      0.662,
+      0.471
+    ],
+    "fichier": "portraits/dumas.webp"
+  },
+  {
+    "id": "meyerbeer",
+    "nom": "Meyerbeer",
+    "dates": "1791-1864",
+    "commons": "File:Meyerbeer d'après P. Petit b 1865.jpg",
+    "auteur": "Estampe d'après une photographie de Pierre Petit",
+    "date": "1865",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Meyerbeer_d%27apr%C3%A8s_P._Petit_b_1865.jpg",
+    "cadre_visage": [
+      0.318,
+      0.123,
+      0.738,
+      0.482
+    ],
+    "fichier": "portraits/meyerbeer.webp"
+  },
+  {
+    "id": "daumier",
+    "nom": "Daumier",
+    "dates": "1808-1879",
+    "commons": "File:Honore Daumier-Nadar.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "vers 1856",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Honore_Daumier-Nadar.jpg",
+    "cadre_visage": [
+      0.4,
+      0.097,
+      0.686,
+      0.398
+    ],
+    "fichier": "portraits/daumier.webp"
+  },
+  {
+    "id": "mortier",
+    "nom": "Maréchal Mortier",
+    "dates": "1768-1835",
+    "commons": "File:Mortier, Edouard.jpg",
+    "auteur": "Georges-François-Marie Gabriel",
+    "date": "premier quart du XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Mortier,_Edouard.jpg",
+    "cadre_visage": [
+      0.379,
+      0.161,
+      0.609,
+      0.373
+    ],
+    "fichier": "portraits/mortier.webp"
+  },
+  {
+    "id": "arago",
+    "nom": "Arago",
+    "dates": "1786-1853",
+    "commons": "File:François Arago par Ary Scheffer.jpg",
+    "auteur": "Ary Scheffer",
+    "date": "1842",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Fran%C3%A7ois_Arago_par_Ary_Scheffer.jpg",
+    "cadre_visage": [
+      0.29,
+      0.142,
+      0.68,
+      0.514
+    ],
+    "fichier": "portraits/arago.webp"
+  },
+  {
+    "id": "viollet-le-duc",
+    "nom": "Viollet-le-Duc",
+    "dates": "1814-1879",
+    "commons": "File:Viollet-le-Duc Dujardin & Reutlinger.png",
+    "auteur": "Paul Dujardin, héliogravure d'après une photographie de Charles Reutlinger",
+    "date": "vers 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Viollet-le-Duc_Dujardin_%26_Reutlinger.png",
+    "cadre_visage": [
+      0.278,
+      0.169,
+      0.67,
+      0.531
+    ],
+    "fichier": "portraits/viollet-le-duc.webp"
+  },
+  {
+    "id": "rude",
+    "nom": "François Rude",
+    "dates": "1784-1855",
+    "commons": "File:Sophie Rude - Portrait of Francois Rude.jpg",
+    "auteur": "Sophie Rude",
+    "date": "1842",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Sophie_Rude_-_Portrait_of_Francois_Rude.jpg",
+    "cadre_visage": [
+      0.433,
+      0.198,
+      0.678,
+      0.438
+    ],
+    "fichier": "portraits/rude.webp"
+  },
+  {
+    "id": "blanqui",
+    "nom": "Blanqui",
+    "dates": "1805-1881",
+    "commons": "File:Louis auguste blanqui.jpg",
+    "auteur": "Amélie-Suzanne Serre, son épouse",
+    "date": "vers 1835",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_auguste_blanqui.jpg",
+    "cadre_visage": [
+      0.304,
+      0.161,
+      0.603,
+      0.479
+    ],
+    "fichier": "portraits/blanqui.webp"
+  },
+  {
+    "id": "damremont",
+    "nom": "Général Damrémont",
+    "dates": "1783-1837",
+    "commons": "File:Comte Denis de Damrémont - (lithogr. de) Julien - btv1b84542575.jpg",
+    "auteur": "Julien (lithographie)",
+    "date": "années 1830",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Comte_Denis_de_Damr%C3%A9mont_-_(lithogr._de)_Julien_-_btv1b84542575.jpg",
+    "cadre_visage": [
+      0.364,
+      0.265,
+      0.581,
+      0.455
+    ],
+    "fichier": "portraits/damremont.webp"
+  },
+  {
+    "id": "pelissier",
+    "nom": "Pélissier",
+    "dates": "1794-1864",
+    "commons": "File:Portret van maarschalk Aimable Pélissier tijdens de Krimoorlog Maréchal Pelissier (titel op object), RP-F-F80055.jpg",
+    "auteur": "Photographie anonyme (Rijksmuseum)",
+    "date": "1855",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_maarschalk_Aimable_P%C3%A9lissier_tijdens_de_Krimoorlog_Mar%C3%A9chal_Pelissier_(titel_op_object),_RP-F-F80055.jpg",
+    "cadre_visage": [
+      0.337,
+      0.208,
+      0.505,
+      0.368
+    ],
+    "fichier": "portraits/pelissier.webp"
+  },
+  {
+    "id": "marie-amelie",
+    "nom": "Reine Marie-Amélie",
+    "dates": "1782-1866",
+    "commons": "File:Louis Hersent - Marie-Amélie de Bourbon, princesse des Deux-Siciles, reine des Français.jpg",
+    "auteur": "Louis Hersent",
+    "date": "1836",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_Hersent_-_Marie-Am%C3%A9lie_de_Bourbon,_princesse_des_Deux-Siciles,_reine_des_Fran%C3%A7ais.jpg",
+    "cadre_visage": [
+      0.426,
+      0.171,
+      0.555,
+      0.273
+    ],
+    "fichier": "portraits/marie-amelie.webp"
+  },
+  {
+    "id": "villerme",
+    "nom": "Villermé",
+    "dates": "1782-1863",
+    "commons": "File:Louis-René Villermé.jpg",
+    "auteur": "Dessin de Boilly (reproduit dans Les Biographies médicales, 1933)",
+    "date": "XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis-Ren%C3%A9_Villerm%C3%A9.jpg",
+    "cadre_visage": [
+      0.285,
+      0.16,
+      0.646,
+      0.497
+    ],
+    "fichier": "portraits/villerme.webp"
+  },
+  {
+    "id": "pierre-dupont",
+    "nom": "Pierre Dupont",
+    "dates": "1821-1870",
+    "commons": "File:Portrait de Pierre Dupont (1821-1870), (chansonnier), PH49923 (1 of 2).jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "avant 1870",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Pierre_Dupont_(1821-1870),_(chansonnier),_PH49923_(1_of_2).jpg",
+    "cadre_visage": [
+      0.342,
+      0.142,
+      0.654,
+      0.36
+    ],
+    "fichier": "portraits/pierre-dupont.webp"
+  },
+  {
+    "id": "couture",
+    "nom": "Thomas Couture",
+    "dates": "1815-1879",
+    "commons": "File:Thomas Couture Carjat BNF.jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "vers 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Thomas_Couture_Carjat_BNF.jpg",
+    "cadre_visage": [
+      0.333,
+      0.114,
+      0.708,
+      0.382
+    ],
+    "fichier": "portraits/couture.webp"
+  },
+  {
+    "id": "victoria",
+    "nom": "Reine Victoria",
+    "dates": "1819-1901",
+    "commons": "File:Winterhalter - Queen Victoria 1843.jpg",
+    "auteur": "Franz Xaver Winterhalter",
+    "date": "1843",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Winterhalter_-_Queen_Victoria_1843.jpg",
+    "cadre_visage": [
+      0.351,
+      0.165,
+      0.727,
+      0.508
+    ],
+    "fichier": "portraits/victoria.webp"
+  },
+  {
+    "id": "teste",
+    "nom": "Teste",
+    "dates": "1780-1852",
+    "note": "Aucun portrait libre et identifié sur Commons ni image sur Wikidata (recherche du 2026-10-11)."
   }
 ]

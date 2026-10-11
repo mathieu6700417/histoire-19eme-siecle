@@ -718,8 +718,13 @@ Paris, à leur première mention dans la période (pas à chaque « à Paris »)
   sert les périodes de son champ `slugs`. Calage : 6 à 10 monuments repérés sur l'original
   (pixels lus sur des agrandissements quadrillés) et leurs coordonnées Wikidata, transformation
   affine par moindres carrés ; `carte.py` affiche l'écart (Verniquet 1790 : ~15 m en moyenne,
-  29 m au plus). Le crédit (« Plan de Verniquet, 1790 ») est dans le médaillon. Image servie :
-  2 000 px, gris, papier blanchi, ~440 Ko, chargée à la première diapositive qui en a besoin.
+  29 m au plus ; Tardieu 1838 : ~12 m en moyenne, 25 m au plus). Le crédit (« Plan de Verniquet,
+  1790 ») est dans le médaillon. Image servie : 2 000 px, gris, papier blanchi, ~440 Ko, chargée à
+  la première diapositive qui en a besoin.
+- Deux plans : `paris-1790` (Verniquet) du prologue à la Restauration ; `paris-1838` (Ambroise
+  Tardieu, « Plan de Paris en 1838 », Gallica, ~540 Ko) pour `monarchie-de-juillet` et
+  `deuxieme-republique` (ajout du 2026-10-11 ; la Restauration, déjà publiée, reste sur Verniquet).
+  Une nouvelle période reçoit un plan en ajoutant son slug au champ `slugs`, puis `carte.py --plans`.
 
 **Plusieurs lieux sur une diapositive** (révision du 2026-10-08) : quand la voix nomme plusieurs
 lieux utiles sur un même écran (départ des Tuileries et arrestation à Varennes ; Lyon, Marseille,
@@ -951,6 +956,10 @@ l'objet avec la surimpression de son coin ni le manuscrit avec la citation ; obj
 en avertissement.
 
 Révolution : 10 objets, 3 manuscrits (liste avec `objets.py revolution --relever`).
+Monarchie de Juillet (2026-10-11) : 10 objets (sept médailles et jetons de Carnavalet, pièce de 25 centimes de 1847,
+chambre à daguerréotype Susse Frères, locomotive Buddicom nº 33) et 4 manuscrits (page de titre de *Notre-Dame de
+Paris*, BnF NAF 13378 ; lettre aux maires de Lyon du 20 novembre 1831 ; dépêche de l'arrestation de la duchesse de
+Berry ; *Histoire des Girondins*).
 Consulat et Empire : 10 objets (pièces de 5 et 20 francs, main de justice, couronne dite de Charlemagne, chapeau,
 épée d'Austerlitz, télégraphe Chappe, métier Jacquard, bouteille d'Appert, masque mortuaire) et 3 manuscrits
 (Constitution de l'an VIII, proclamation de Golfe-Juan, Acte additionnel). Rien de libre pour une aigle de drapeau
@@ -1048,6 +1057,11 @@ de la diapositive, zones utiles, pas sur une ouverture d'acte, grille et plongé
 dosage (3 à 4 avant/après, 2 mosaïques) en avertissement. `renumeroter.py` renomme aussi les
 `NNN-apres.webp` et `NNN-mK.webp`.
 
+Monarchie de Juillet (2026-10-11) : avant/après 32 (Louis-Philippe par Gérard → les croquades de Philipon : le roi
+changé en poire), 51 (la place Louis XVI → l'obélisque dressé), 54 (Notre-Dame en daguerréotype → la flèche de
+Viollet-le-Duc), 65 (l'éléphant de la Bastille → la colonne de Juillet) ; mosaïques 42 (attentat de Fieschi) et 70
+(retour des cendres) ; raccords approchés (sujets à des échelles trop différentes pour une superposition exacte).
+
 Consulat et Empire (2026-10-09) : avant/après 5 (David → Delaroche, la propagande et le mulet), 33 (Gros,
 *Bonaparte au pont d'Arcole* → Ingres, le trône), 47 (statue de Louis XIV abattue en 1792 → colonne de la Grande
 Armée), 66 (Grand Châtelet en démolition, 1802 → fontaine du Palmier) ; cadres relevés sur grille, `camera_manuelle` ;
@@ -1116,6 +1130,9 @@ année seule : la date de la diapositive doit y tomber).
   autres surimpressions sont déjà là (raccourcis, reportés ou omis) ; l'objet, placé avant, garde sa
   fenêtre ; la frise ne cède plus (révision du 2026-10-09) : elle pousse les autres plus haut ;
 - mouvement réduit : ni défilement ni montée, fondu de 200 ms.
+
+Prudences reconnues par `verifier.py` (`PRUDENCES`) : « plus de », « près de », « environ », « moins de »,
+« quelque », « presque », et depuis le 2026-10-11 « jusqu'à » et « au moins ».
 
 `verifier.py` : champs, `quand` exacts, nombre du `quand` égal à `valeur`, prudence reprise, unité et
 source, conversions recalculées, instants présents, à jour et dans l'audio ; fenêtres recalculées

@@ -82,6 +82,31 @@ PLANS = {
             ('Chapelle de la Salpêtrière', 4070, 3815, 48.83888, 2.36413),
         ],
     },
+    # Monarchie de Juillet et Deuxième République (ajout du 2026-10-11). La Restauration, déjà publiée,
+    # reste sur Verniquet. Plan orienté au nord, ~1,21 m par pixel de l'original (8 250 × 6 266).
+    'paris-1838': {
+        'commons': 'File:Ambroise Tardieu, Plan de Paris en 1838 avec le tracé de ses anciennes enceintes, 1838 - Gallica.jpg',
+        'titre': 'Plan de Paris en 1838 avec le tracé de ses anciennes enceintes',
+        'auteur': 'Ambroise Tardieu',
+        'date': '1838',
+        'credit': 'Plan de Tardieu, 1838',
+        'slugs': ['monarchie-de-juillet', 'deuxieme-republique'],
+        # La ville dans le mur des Fermiers généraux, de Passy à la barrière du Trône (le titre, en
+        # haut à droite, et un bout des renvois, en bas à gauche, restent hors les murs).
+        'recadrage': [450, 485, 7830, 5350], 'largeur': 2000, 'qualite': 55,
+        'points': [
+            ('Observatoire (milieu de l’édifice)', 3755, 4973, 48.836389, 2.337229),
+            ('Notre-Dame (milieu de l’édifice)', 4550, 3452, 48.85300, 2.34980),
+            ('Dôme des Invalides', 2300, 3275, 48.85500, 2.31250),
+            ('Colonne Vendôme', 3314, 2131, 48.86747, 2.32941),
+            ('Place des Victoires (centre)', 4020, 2286, 48.86583, 2.34111),
+            ('Place Royale, auj. des Vosges (statue)', 5489, 3206, 48.85556, 2.36556),
+            ('Chapelle de la Salpêtrière', 5410, 4743, 48.83888, 2.36413),
+            ('Rotonde de la Villette', 5733, 666, 48.88333, 2.36944),
+            ('Place du Trône, auj. de la Nation (centre)', 7316, 3877, 48.84833, 2.39583),
+            ('Rotonde de Chartres (parc Monceau)', 2091, 951, 48.88025, 2.30908),
+        ],
+    },
 }
 
 
