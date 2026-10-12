@@ -12,17 +12,52 @@ la main) et les anciens numéros `n` servent de clés.
 
 Tout renvoi par numéro est recalculé : `n`, fichiers `NNN.webp` / `NNN.m4a` (renommés dans
 public/diaporamas/<slug>/, en deux temps pour éviter les collisions), `image.fichier` et
-`audio.fichier` (et `NNN-apres.webp`, `NNN-mK.webp` des avant/après et mosaïques), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
+`audio.fichier` (et `NNN-apres.webp`, `NNN-mK.webp` des avant/après et mosaïques, `NNN-mouvement.mp4` et
+`NNN-couleur.webp`, `NNN-b-couleur.webp` de la couche générée, spec 16 ; les recettes de colorisation,
+indexées par fichier Commons, ne bougent pas), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
 `portrait.diapositive` des lectures. Les états de .cache/diaporamas/<slug>/ indexés par numéro
 (images.json, voix.json, camera.json) sont réindexés : les voix, licences et cadrages inchangés
 restent reconnus, rien n'est resynthétisé (l'empreinte du texte fait foi). L'empreinte de
 caméra, qui contient le nom du fichier image, est recalculée pour les entrées encore valables.
+Les annotations de visionnage (docs/annotations/<slug>.jsonl, spec 15) suivent : `lieu.n` et
+`ecran.image.fichier` (NNN.webp, NNN-b.webp) passent au nouveau numéro, un champ `renumerote` garde
+le numéro d'origine ; identifiant (qui finit par l'ancien numéro) et capture ne changent pas.
 `--essai` affiche la correspondance sans rien écrire.
 """
-import argparse, json, sys
+import argparse, re, json, sys
+from datetime import date
 
 import commun as c
 import camera
+import annotations
+
+
+def suivre_annotations(slug: str, m: dict, essai: bool = False) -> list[str]:
+    """Reporte la renumérotation `m` (ancien n → nouveau n) dans les annotations de visionnage.
+
+    Renvoie les lignes « identifiant : ancien → nouveau ». Le numéro d'origine (celui de
+    l'identifiant et de la capture) est conservé dans `renumerote` d'une renumérotation à l'autre."""
+    if not annotations.fichier(slug).exists():
+        return []
+    liste, suivi = annotations.lire(slug), []
+    for a in liste:
+        lieu = a.get('lieu') or {}
+        o = lieu.get('n')
+        if not isinstance(o, int) or m.get(o, o) == o:
+            continue
+        nv = m[o]
+        lieu['n'] = nv
+        img = (a.get('ecran') or {}).get('image') or {}
+        f_ = img.get('fichier') or ''
+        if re.match(rf'{o:03d}[-.]', f_):
+            img['fichier'] = f'{nv:03d}' + f_[3:]
+        avant = re.match(r'diapositive (\d+) devenue', a.get('renumerote') or '')
+        origine = int(avant[1]) if avant else o
+        a['renumerote'] = f'diapositive {origine} devenue {nv} (renumeroter.py, {date.today().isoformat()})'
+        suivi.append(f"{annotations.court(a['id'])} : {o}→{nv}")
+    if suivi and not essai:
+        annotations.ecrire(slug, liste)
+    return suivi
 
 
 def main() -> int:
@@ -64,6 +99,8 @@ def main() -> int:
           f"{len(deplaces)} renumérotée(s).")
     if a.essai:
         print('Correspondance (ancien → nouveau) :', ', '.join(f'{o}→{nv}' for o, nv in deplaces.items()))
+        suivi = suivre_annotations(d['slug'], m, essai=True)
+        print(f'Annotations de visionnage à renuméroter : {len(suivi)}' + (' (' + ', '.join(suivi) + ')' if suivi else '') + '.')
         return 0
 
     # 1. Fichiers : ancien nom → nom temporaire → nouveau nom.
@@ -81,7 +118,10 @@ def main() -> int:
         # la principale reprend le fichier de l'image).
         if o != nv:
             autres = ([x['image'].get('apres') or {}] + list((x.get('mosaique') or {}).get('vignettes', []))
-                      + [p.get('image') or {} for p in x.get('plans') or []])   # plans de la spec 14 (NNN-b.webp)
+                      + [p.get('image') or {} for p in x.get('plans') or []]   # plans de la spec 14 (NNN-b.webp)
+                      + [x['image'].get('video') or {}]   # clip de la couche générée (spec 16, NNN-mouvement.mp4)
+                      # versions colorisées (spec 16) : NNN-couleur.webp, NNN-b-couleur.webp
+                      + [x['image'].get('couleur') or {}] + [(p.get('image') or {}).get('couleur') or {} for p in x.get('plans') or []])
             for obj in autres:
                 f_ = obj.get('fichier') or ''
                 if f_.startswith(f'{o:03d}-'):
@@ -116,16 +156,19 @@ def main() -> int:
         e['apres'] = m[e['apres']]
 
     # 3. États du cache indexés par numéro.
-    for nom_etat in ('images.json', 'voix.json', 'camera.json'):
+    # utile.json a aussi des clés « 18m2 », « 20a » (mosaïques, avant / après) ; personnes.json et
+    # surimpressions.json sont indexés par numéro (ajout du 2026-10-12, avec la couche générée).
+    for nom_etat in ('images.json', 'voix.json', 'camera.json', 'utile.json', 'personnes.json', 'surimpressions.json'):
         ef = c.CACHE / d['slug'] / nom_etat
         if not ef.exists():
             continue
         etat = json.loads(ef.read_text())
         nouvel = {}
         for cle, v in etat.items():
-            if cle.isdigit():
-                if int(cle) in m:
-                    nouvel[str(m[int(cle)])] = v
+            mm = re.fullmatch(r'(\d+)((?:m\d+|a)?)', cle)
+            if mm:
+                if int(mm[1]) in m:
+                    nouvel[str(m[int(mm[1])]) + mm[2]] = v
             else:
                 nouvel[cle] = v   # lectures, épisodes, annexes : clés par identifiant
         if nom_etat == 'camera.json':
@@ -135,7 +178,40 @@ def main() -> int:
                 if v and ancien in cam_valide:
                     v['empreinte'] = camera.empreinte(x)
         ef.write_text(json.dumps(nouvel, ensure_ascii=False, indent=1))
+    # 4. Couche générée (spec 16) : lot src/data/diaporamas/generation/<slug>.json, manifeste et fichiers
+    # du cache (.cache/diaporamas/<slug>/generation/{sources,clips,bruts,planches}/NNN…). Le kit zip, lui,
+    # garde les anciens numéros : le refaire par `generation.py preparer` avant un nouveau `lancer`.
+    lot = c.DONNEES / 'generation' / f"{d['slug']}.json"
+    if lot.exists():
+        l = json.loads(lot.read_text())
+        for el in l.get('elements', []):
+            el['n'] = m.get(el['n'], el['n'])
+        lot.write_text(json.dumps(l, ensure_ascii=False, indent=2) + '\n')
+    gen = c.CACHE / d['slug'] / 'generation'
+    if gen.is_dir():
+        deux = []
+        for sous in ('sources', 'clips', 'bruts', 'planches'):
+            for g in sorted((gen / sous).glob('[0-9][0-9][0-9]*')):
+                o = int(g.name[:3])
+                if o in m and m[o] != o:
+                    tmp = g.with_name(g.name + '.renum')
+                    g.rename(tmp)
+                    deux.append((tmp, g.with_name(f'{m[o]:03d}' + g.name[3:])))
+        for tmp, dst in deux:
+            tmp.rename(dst)
+        mf = gen / 'manifeste.json'
+        if mf.exists():
+            man = json.loads(mf.read_text())
+            for el in man.get('elements', []):
+                nv = m.get(el['n'], el['n'])
+                el['id'] = f'{nv:03d}' + el['id'][3:]
+                el['source'] = el['source'].replace(f"{el['n']:03d}", f'{nv:03d}')
+                el['n'] = nv
+            mf.write_text(json.dumps(man, ensure_ascii=False, indent=1))
     c.ecrire(f, d)
+    suivi = suivre_annotations(d['slug'], m)
+    if suivi:
+        print(f'{len(suivi)} annotation(s) de visionnage renumérotée(s) : ' + ', '.join(suivi) + '.')
     print(f'{len(temporaires)} fichier(s) renommé(s) ; débuts d’actes : {[x["debut"] for x in d["actes"]]}.')
     return 0
 

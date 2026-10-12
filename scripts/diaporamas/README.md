@@ -29,6 +29,9 @@ Les commandes se lancent depuis la racine du projet.
 par numéro de diapositive ; après une insertion, `renumeroter.py` les réindexe en même temps que
 les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelles ou retouchées
 (l'empreinte du texte fait foi). Ne jamais renommer `NNN.webp` / `NNN.m4a` à la main.
+Depuis le 2026-10-12, il met aussi à jour les annotations de visionnage `docs/annotations/<slug>.jsonl` :
+`lieu.n` et `ecran.image.fichier` passent au nouveau numéro, un champ `renumerote` (« diapositive 22 devenue 23 … »)
+garde le numéro d'origine ; l'identifiant et la capture ne changent pas ; `--essai` liste les annotations concernées.
 
 ## Fichiers
 
@@ -50,10 +53,11 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage par le détecteur local YuNet depuis le 2026-10-10, Gemini en repli demandé seulement, webp ovale), contrôle de visibilité des personnes sur les images (consignes au titre de la période du JSON), planche de contrôle. `--lot FICHIER` : lignes `id|nom`, Wikidata en une ligne par personne et pré-remplissage du registre (`--essai` : sans écrire). Options Gemini : `--budget`, `--reflexion`, `--modele`. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
-| `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques ») ; générique : 8 à 12 images de la période, deux par acte au plus, indicatif commun (licence, fichiers, durées). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. `--etape A|B|C` (spec 13) : contrôles d’une étape, sortie résumée. |
+| `verifier.py` | Contrôle d'une période avant publication (110 à 135 diapositives pour les périodes 01 à 05 ; 135 à 160 et environ une heure à partir de la 06, avertissement hors de 55 à 65 min) ; générique : 8 à 12 images de la période, deux par acte au plus, indicatif commun (licence, fichiers, durées). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. `--etape A|B|C` (spec 13) : contrôles d’une étape, sortie résumée. |
 | `tester_etapes.py` | Contrôle de `verifier.py --etape` : la réunion des étapes A, B et C égale la vérification complète. |
 | `registre_musique.py` | Registre des enregistrements libres commun aux périodes (`commun/registre-musique.json`) : `chercher`, `ajouter --depuis`, `ecarter`, `possible`, `introuvable`, `--amorcer` (voir « Registre des enregistrements libres »). |
 | `generation.py` | Couche générée (spec 16) : `preparer <slug>` (kit zip pour Colab : manifeste et sources JPEG réduites à la zone utile), `lancer <slug>` (session Colab par la CLI `colab`, calcul par `scripts/colab/mouvement.py`, rapatriement, arrêt), `encoder <slug> [zip|dossier]` (clips aller-retour H.264 sans son, encodés pour le site, dans `.cache/diaporamas/<slug>/generation/clips/`), `planche <slug>` (page HTML de visionnage), `publier <slug> [--seulement n,n]` (clips → `public/diaporamas/<slug>/NNN-mouvement.mp4` et champ `image.video`), `retirer <slug> --seulement n`. Lot : `src/data/diaporamas/generation/<slug>.json` (voir « Couche générée »). |
+| `couleur.py` | Images colorisées par IA (spec 16) : `publier <slug> <lot.json> [--seulement 86 34b] [--sauf …] [--jugement bon] [--essai]` (retrouve chaque image par son `commons`, contrôle zone utile et taille, copie `NNN-couleur.webp` / `NNN-b-couleur.webp`, écrit `image.couleur`, consigne la recette dans `src/data/diaporamas/generation/<slug>-couleur.json`), `retirer <slug> 86 34b` (ou `--tout`), `lister <slug>` (voir « Couche générée », « Colorisation »). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
@@ -383,6 +387,65 @@ l'Égypte » ; sur téléphone, le lecteur ignore le gros plan, vue presque iden
   en relecture). Ancien chiffre : ~2 appels par diapositive (proposition + relecture), environ 0,01 $ par
   diapositive, soit ~1 $ par période (tarif Gemini Flash supposé, à confirmer sur la facture).
 
+### Entrée en scène d'une grande vue (`image.entree`, 2026-10-12)
+
+Spec 12, « Entrée en scène des grandes vues ». Un mouvement d'arrivée propre à l'image, pensé
+comme un plan de cinéma, **sans lien avec la voix**, qui finit exactement sur la première vue ;
+la caméra habituelle reprend ensuite. Sans le champ, rien ne change (rien n'est écrit dans les
+données du lecteur).
+
+```jsonc
+"image": { …, "camera": [ … ],
+  "entree": { "cadres": [[0.15, 0.16, 0.70, 0.46], [0.33, 0.34, 0.96, 0.67]],  // 1 ou 2 cadres de départ (fractions de l'image servie)
+              "duree": 5,                                                        // 4 à 7 s (absent : 5)
+              "intention": "Des toits des Tuileries, on descend la façade jusqu'à la foule." } }
+```
+
+- **Où** : image d'une diapositive ou d'un plan (le mouvement part de l'instant du plan). Sans
+  effet (erreur de `verifier.py`) avec `ouverture`, un avant / après ou une mosaïque ; pas sur
+  les galeries ni les lectures. Mouvement réduit : pas d'entrée, premier cadre d'emblée.
+- **Lecteur** (`camera.ts` : `arrivee`, `cadreArrivee` ; même profil que le recul d'ouverture,
+  rampes de 40 %) : la durée demandée est **allongée** tant que la vitesse au plus fort dépasse
+  les plafonds de la caméra calme, puis **bornée à 75 % de la fenêtre** de l'image (jusqu'au plan
+  suivant ou la fin de la voix : `ENTREE_PART`). Deux cadres : les deux trajets se chevauchent
+  sur leurs rampes, sans arrêt au milieu. La première tenue commence à la fin de l'entrée ; les
+  étapes suivantes gardent leurs instants si elles tiennent encore (1 s de tenue, puis la transition).
+- **Image entière** (`entier`) : l'entrée **précède** le rapprochement ; elle finit sur l'image
+  entière, puis `entier_vers` joue comme d'habitude (1,2 s, rapprochement lent). Les cadres de
+  départ sont montrés sans bandes noires dès qu'ils sont plus larges que hauts.
+- **Choisir le cadre de départ** : c'est la **vue réelle** qui compte. Sur ordinateur, la bande
+  libre est très large : tout cadre plus haut que ~45 % de l'image est montré pleine largeur, et
+  deux cadres hauts donnent la même vue (aucun mouvement). Une montée ou une descente se fait
+  donc à pleine largeur (30 à 35 % de la hauteur de course) ; un recul ou un travelling latéral
+  demande un cadre de départ **bas et serré** (hauteur ≤ 35 %). Garder pour la fin ce que le
+  spectateur doit découvrir en dernier : le vérifier sur la planche, pas sur le cadre.
+- **Pièges** : une image qui ne reste que 7 à 8 s avec deux étapes de caméra perd sa deuxième
+  étape derrière le plan suivant (ne pas lui donner d'entrée) ; ne pas partir du plan large si la
+  caméra existante finit par s'élargir (mouvement inversé) ; zoom total ≤ ×2,4 (`verifier.py`).
+- **Contrôle** : `python3 scripts/diaporamas/captures.py <slug> 8:0.1 8:1.4 8:2.8 8:4.2 8:5.5
+  --dist <build> --planche` (plan b : `34:p1+0.1` … ; première diapositive d'un acte :
+  `--attente 7000`). `__camera(n, t)` donne la fin de l'entrée (`plan[0].a`) et les étapes retenues.
+
+- **Généraliser à une période** (`entree.py`, 0 $) : `plans <slug> --dist <build> --sortie plans.json`
+  (étapes retenues par le lecteur, ordinateur et téléphone), `candidates <slug> --plans plans.json
+  --planches <dossier>` (tri mécanique, puis tri à l'œil des lieux et des scènes sur les vignettes),
+  `preparer <slug> --plans plans.json --n …` (une tâche par image, en lots ; un sous-agent Sonnet par
+  lot : « Lis `<dossier>/lot-K/LISEZMOI.md` et suis-le »), `planche <dossier>` (vues de départ en
+  pointillé rouge, première vue en vert : à relire), `appliquer <dossier> [--sauf …]` (n'écrit que
+  `entree`), `retirer <slug> --n …`, `bilan <slug> [--detail]`. Après build : `plans` sur le nouveau
+  build puis `etapes <slug> --avant … --apres …` : 0 écart attendu.
+- **Règle de fenêtre** (2026-10-12) : l'entrée ne décale ni ne supprime aucune étape de caméra.
+  L'image reste au moins 9 s si sa caméra a une deuxième étape, 6 s sinon ; et l'entrée finit 1 s
+  avant le départ de la transition vers la deuxième étape (relevé du lecteur ; sans relevé : 3 s
+  avant son `quand`). Écartées aussi : première image d'un acte (les volets sont son entrée), clip
+  `video`, portrait, document. `entree.py regle <slug>` relit les entrées posées.
+- **Relecture obligatoire sur le lecteur** : trois captures par image (0,1 s, mi-entrée, fin + 0,2 s).
+  Ce qui ne passe pas l'écran : travelling ou recul parti d'un cadre bas et serré (vues de début et
+  de fin presque identiques), montée partie du premier plan d'une foule (têtes coupées en haut).
+  Les descentes et les reculs d'image entière (`entier`) sont les plus sûrs.
+- **Périodes neuves** : `banc_claude.py preparer` joint la demande d'entrée à la tâche de caméra des
+  grandes vues, et `appliquer` pose le champ avec la caméra (voir « Caméra proposée par Claude »).
+
 ## Frise du temps : dates des diapositives
 
 - `date` : date des **faits racontés** (pas de l'œuvre), ISO partiel `AAAA`, `AAAA-MM` ou
@@ -402,8 +465,9 @@ l'Égypte » ; sur téléphone, le lecteur ignore le gros plan, vue presque iden
   (`libelleDate`). Plus de segments d'actes ni d'années intermédiaires. Monochrome ; sur
   téléphone, même dessin pleine largeur.
 - Carton d'acte (**révisé le 2026-10-11** : frise animée, voir « Images entières sur fond noir,
-  repères des cartons ») : la même frise, sans curseur ni date, avec l'intervalle de l'acte en segment
-  noir épais (de la première à la dernière date de ses diapositives, `poserActe`), en fondu ;
+  repères des cartons » ; **le 2026-10-12** : période de l'acte en couleur `--c-accent`, zone teintée
+  et onde, plus de dates clés) : la même frise, sans curseur ni date, avec l'intervalle de l'acte en segment
+  épais (de la première à la dernière date de ses diapositives, `poserActe`), en fondu ;
   6 px au moins, centré sur l'intervalle.
 - Affichage en bas de l'image : pendant 4 s (fondu, glissement ~1 s, lecture, fondu de 0,6 s) à chaque
   **changement d'année** (année de début de la date) par rapport à la diapositive précédente
@@ -687,6 +751,32 @@ contrôle.
 - Fonds de carte : `carte.py` (Natural Earth 1:50 m, domaine public ; projection
   équirectangulaire corrigée, cadre et fleuves dans `FONDS`). Les éléments sont donnés en
   [longitude, latitude].
+
+**Carte de l'empire colonial (spec 12, « Les colonies au fil du récit », 2026-10-12).** Une carte par
+période, même fond et même dessin (fil rouge). Pour la carte d'une autre date :
+1. Fond commun `empire` (`carte.py --fond empire` ; monde de Tahiti à la Nouvelle-Calédonie, 2 015 unités de
+   large, coordonnées au dixième, métropole seule en « france ») : ne pas le refaire ni le recadrer.
+2. Possessions en données : `src/data/diaporamas/commun/empire.json` (`de`/`a` : années d'entrée et de
+   sortie ; `zone` ou point ; `vues` et `position` du libellé par vue). Renseigné pour 1789 : mettre `a` à
+   ce qui est perdu, ajouter les acquisitions (avec `source`), une vue (`vues`) si la région manque.
+   Depuis la période 02 : `periodes` ([[de, a], …]) remplace `de`/`a` pour une possession perdue puis rendue
+   (perte = année de la prise ; retour = année du traité, la remise effective étant notée dans `reprise`, à
+   vérifier) ; `noms` ([[année, nom], …]) donne le nom d'époque (La Réunion, île Bourbon). Renseigné de 1789 à 1815.
+   Libellés avec année (« Saint-Pierre-et-Miquelon (1803) ») : trop longs à gauche ou à droite sur téléphone,
+   les placer en `haut` ou en `bas` dans l'épisode (modèle : `empire-1811`, période 02).
+3. `python3 scripts/diaporamas/empire.py 1811 --depuis 1802 --vue monde` (puis `--vue antilles`…) écrit le
+   visuel `carte` : tenu = point plein ou zone pleine, perdu depuis = cercle vide ou hachures avec l'année,
+   gagné = année d'entrée. Le coller dans `visuels` de l'épisode, ajouter les `quand`, la légende, la source.
+4. Deux cartes au plus par épisode. Depuis le 2026-10-12, le tracé de chaque fond de carte d'épisode est écrit
+   une seule fois par page (`svg.fonds-partages` dans `Diaporama.astro`, repris par `<use>` dans
+   `EpisodeVisuels.astro`) : une carte de plus ne coûte que ses éléments. Sur la vue du monde, libellés à gauche en Amérique, pas de libellé de flèche au départ de France.
+5. Contrôle : `captures.py <slug> N:s30 N:s58` (ordinateur et téléphone) ; modèle : épisode `empire-1789`.
+6. Depuis la période 04 (2026-10-12) : vues `monde-pacifique` (cadre de Tahiti à l'Inde, `large` : les zones y
+   deviennent des points, comme sur `monde`) et `afrique` ; acquisitions de 1830 à 1847 (`de` = année de la prise de
+   possession ou du poste, le traité est dans `source` ; `statut: protectorat` à écrire à la main dans le libellé).
+   Modèle : épisode `empire-1847` (`empire.py 1847 --depuis 1815 --vue monde-pacifique`, puis `--vue afrique`).
+`renumeroter.py` suit depuis le 2026-10-12 les clips `NNN-mouvement.mp4`, le lot de génération et les caches
+`utile`, `personnes` et `surimpressions` (le kit zip de génération garde les anciens numéros : `preparer`).
 
 **Lecteur.** Carte de citation (`CarteCitation.astro`) et panneaux (`EpisodeVisuels.astro`)
 sont rendus au build, cachés sur la scène ; le lecteur les montre après la voix, règle leurs
@@ -1173,11 +1263,12 @@ est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir direct
 | `horloge.ts` | `maintenant`, `Chrono`, `HorlogeLissee` |
 | `outils.ts` | `motsLus`, `lire` / `ecrire` (localStorage protégé), `mouvementReduit`, `mmss` |
 | `etat.ts` | données, éléments du DOM, durées et débuts, variables d'état (`lec.i`, `lec.joue`…) |
-| `camera.ts` | taille des calques, marges couvertes, vue, plan des transitions, `cadreA`, intermède |
+| `camera.ts` | taille des calques, marges couvertes, vue, plan des transitions, entrée en scène (`arrivee`), `cadreA`, intermède |
 | `avant-apres.ts` | image avant / après, raccord, rendu du volet |
 | `mosaique.ts` | grille, vignettes, plongée dans l'image principale |
 | `plans.ts` | spec 14 : plans d'une diapositive, galerie d'un intermède, images d'une lecture (fondu croisé, caméra par image) |
 | `mouvement.ts` | spec 16 : clip d'une image mise en mouvement par IA (`x.video`), posé sur la zone utile avec la transformation de l'image, fondu après l'entrée, joue avec la voix, préchargement |
+| `couleur.ts` | spec 16 : version colorisée par IA d'une image (`x.coul`, `p.coul` d'un plan), posée sur la zone utile avec la transformation de l'image, fondu lent calé sur l'horloge de la voix (`opaciteCouleur`), mention du cartouche (`en-couleur`), préchargement |
 | `rendu.ts` | préparation des calques, `instant`, `rendre`, boucle d'animation, `montrerImage` |
 | `frise.ts` | frise du carton et du bas de l'image, poussée des surimpressions |
 | `textes.ts` | cartouche (fondu croisé, estompe) et sous-titre |
@@ -1403,10 +1494,13 @@ python3 scripts/diaporamas/captures.py revolution 1:c5 2:12.5 20:5.5 7:s20 --dis
   d'acte juste après) passe par des Web Animations en temps réel, donc non reproductibles ; quelques
   pixels de la barre de progression peuvent varier dans les captures de carton (bruit mesuré entre
   deux passages identiques : 1 à 70 px). Faire deux passages de référence pour connaître le bruit.
-- Plan de non-régression du découpage du lecteur (34 captures) : Révolution `1:c5 15:c7 4:4 4:11
-  2:12.5 5:4 14:10.5 21:12 94:12 92:13.8 92:17.5 20:5.5 18:3 7:s20 92:s20 61:s30 72:s15 96:s10 114:s20`
-  (+ téléphone `1:c5 2:12.5 7:s20 20:5.5`) ; Consulat et Empire `1:c6 89:3.5 86:s15 111:s20 65:s25
-  3:s10 107:5 105:s30` (+ téléphone `65:s25 86:s15`).
+- Plan de non-régression du découpage du lecteur (32 captures ; instants `n:sT` revus le 2026-10-12
+  après les renumérotations : un `n:sT` sur une diapositive sans segment fait planter tout le
+  passage) : Révolution `1:c5 15:c7 4:4 4:11 2:12.5 5:4 14:10.5 21:12 94:12 92:13.8 92:17.5 20:5.5
+  18:3 7:s20 61:s30 76:s15 97:s10 109:s20` (+ téléphone `1:c5 2:12.5 7:s20 20:5.5`) ; Consulat et
+  Empire `1:c6 89:3.5 90:s15 116:s20 67:s25 3:s10 107:5 109:s30` (+ téléphone `67:s25 90:s15`).
+  `76:s15` (Révolution) varie de quelques dizaines de pixels entre deux passages du même build.
+  Diapositives à segment d'une période : les `apres` de ses lectures, épisodes et intermèdes.
 
 ## Caméra proposée par Claude (banc_claude.py)
 
@@ -1434,6 +1528,13 @@ Procédure pour une période (après `utile.py` et `surimpressions.py`, qui fixe
    erreur ni repli, d'au moins autant d'étapes que l'actuelle (`--strict` : plus d'étapes ou tenue plus
    courte), sur les vues inchangées depuis la préparation. Sauvegarde `sauvegarde-<horodatage>.json` ;
    `… restaurer <dossier>` remet les caméras remplacées (celles changées depuis sont laissées, sauf `--force`).
+
+Entrée en scène (2026-10-12) : la tâche d'une image qui peut en recevoir une (ni portrait, ni document,
+ni `ouverture`, ni avant/après, ni mosaïque, ni clip, ni première image d'un acte) porte une section
+« Entrée en scène » (répertoire de mouvements, règle de fenêtre) et attend un champ `entree` (ou
+null) dans la réponse ; `appliquer` le pose avec la caméra s'il passe `entree.depuis_camera` (règle de
+fenêtre contre la caméra retenue, mouvement perceptible, zoom ≤ ×2,4, durée permise). Relire ensuite
+sur planche (`captures.py`) et vérifier par `entree.py plans` / `etapes`.
 
 Pièges :
 - Une réponse refusée par le contrôle n'est pas renvoyée au modèle (sauf `relire`) : elle est réparée
@@ -1544,8 +1645,10 @@ python3 scripts/diaporamas/camera.py restauration --entiers --n 22 54b --seuil 0
 - **Périodes 01 et 02** : aucun drapeau posé (décision de l'utilisateur attendue) ; la règle en
   basculerait 52 sur 122 (Révolution) et 39 sur 108 (Consulat et Empire) ; 73 et 55 au seuil de 55 %.
 
-**Dates clés d'un acte (`actes[].reperes`).** Facultatif, 2 ou 3 par acte, montrées à la fin de
-la frise animée du carton (`frise.ts` : `poserActe`, `majFriseCarton` ; constantes `CARTON_*`).
+**Dates clés d'un acte (`actes[].reperes`).** **Plus affichées depuis le 2026-10-12** (annotations
+de visionnage : la période de l'acte est mise en couleur à la place, `frise.ts` : `poserActe`,
+`majFriseCarton` ; constantes `CARTON_*`). Le champ reste admis et contrôlé, sans effet à l'écran.
+Facultatif, 2 ou 3 par acte.
 
 ```jsonc
 { "id": "ultras", "titre": "Les ultras au pouvoir", "dates": "1820-1824", "debut": 40,
@@ -1651,3 +1754,50 @@ d'eux-mêmes, `essais`), et une session ouverte par un autre travail bloque tout
   ffprobe, proportions de la zone utile (erreur au-delà de 6 % : source changée), modèle, usage,
   entrée dans le lot, plafond de 15 clips par période, poids (avertissement au-delà de 4,5 Mo),
   incompatibilités.
+
+### Colorisation (spec 16, « la colorisation couleur seule »)
+
+Gravures, lithographies et photographies monochromes de scènes : le lecteur montre l'original, puis
+un fondu lent vers une version colorisée (seule la chrominance change, le trait est celui de
+l'original). Pilote : période 05, 46 images (2026-10-12).
+
+```bash
+# Lot fabriqué et jugé hors du site (Colab ; .cache/diaporamas/photos-qwen/<slug>/final-couleur.json)
+python3 scripts/diaporamas/couleur.py publier deuxieme-republique .cache/diaporamas/photos-qwen/deuxieme-republique/final-couleur.json --essai
+python3 scripts/diaporamas/couleur.py publier deuxieme-republique .cache/diaporamas/photos-qwen/deuxieme-republique/final-couleur.json
+python3 scripts/diaporamas/couleur.py lister deuxieme-republique
+python3 scripts/diaporamas/couleur.py retirer deuxieme-republique 86 34b     # ou --tout
+python3 scripts/diaporamas/verifier.py deuxieme-republique && npm run build
+```
+
+- **Données** : `image.couleur` `{ fichier, largeur, hauteur, modele, genere_le }` sur l'image d'une
+  diapositive ou d'un plan ; fichier `public/diaporamas/<slug>/NNN-couleur.webp` ou
+  `NNN-b-couleur.webp`, **exactement aux dimensions de la zone utile en pixels** (arrondi de chaque
+  bord, `couleur.zone_px`). Recette (consigne, graine, saturation, méthode) dans
+  `src/data/diaporamas/generation/<slug>-couleur.json`, par fichier Commons.
+- **Publication** : la clé est `commons` (elle survit aux renumérotations) ; `publier` refuse une
+  image dont la zone utile a changé depuis la fabrication ou dont le WebP n'a pas la bonne taille,
+  et les incompatibilités. Les cibles de `--seulement`, `--sauf` et `retirer` sont des numéros
+  actuels (`86`, `34b`). `renumeroter.py` suit fichiers et champs.
+- **Incompatibilités** : jamais avec un clip `video`, un avant / après ou une mosaïque ; galeries,
+  lectures illustrées et épisodes hors champ (`verifier.py` refuse).
+- **Lecteur** (`couleur.ts`) : un `<img class="lecteur__couleur">` par image colorisée (dans le
+  calque après l'image ; dans `.lecteur__plans` après l'image du plan), à la taille de la zone
+  utile, avec la transformation de l'image suivie d'une translation vers la zone utile : caméra,
+  entrée en scène, image entière, recul d'entrée s'appliquent tels quels. L'opacité dérive de
+  l'instant de la voix, sans transition CSS (pause, saut, reprise, captures : même image) ;
+  pendant l'entrée de l'image, le calque couleur suit son fondu et son gris (après un saut au
+  milieu d'une diapositive, l'image arrive déjà colorisée).
+- **Règle de temps** (`constantes.ts`, `COULEUR_*`) : fenêtre de l'image = de son apparition au plan
+  suivant ou à la fin de la voix ; le fondu (2 s depuis le 2026-10-12, 2,8 s avant) part dès 1,5 s (au tiers de la fenêtre et au plus tôt 2,5 s avant cette date)
+  après l'apparition et 0,5 s après la fin de l'entrée en scène, avancé au besoin pour finir 2 s
+  avant la fin de la fenêtre. Fenêtre de moins de 5,5 s (7,3 s avant le 2026-10-12) : le fondu part à 1,5 s et finit avec
+  l'image (`verifier.py` avertit).
+- **Signalement** : cartouche, ligne « colorisée par IA » repliée puis dépliée tant que la couleur
+  est à l'écran (classe `en-couleur` du lecteur, seuil `COULEUR_SEUIL`) ; livre d'images : la
+  version colorisée sous l'image, avec sa mention et le modèle ; page de la période : section
+  « Images colorisées ».
+- **`prefers-reduced-motion`** : aucune version colorisée chargée, l'original seul, pas de mention.
+- `verifier.py`, famille « couleur (spec 16) » (étape C) : champs, nom et présence du fichier,
+  WebP, dimensions déclarées et réelles = zone utile, incompatibilités, recette, poids
+  (avertissement au-delà de 900 ko), fenêtre trop courte (avertissement).

@@ -71,6 +71,73 @@ premier essai réel de `generation.py lancer` (CLI). Réserve : 7 clips avant le
 4. `generation.py publier <slug>`, `verifier.py <slug>`, `npm run build`, visionnage dans le lecteur ;
    `generation.py retirer <slug> --seulement n` pour un clip qui déplaît après coup.
 
+## Transformation en photographie (décidé le 2026-10-12)
+
+Annotations de visionnage de la période 05 (diapositives 82 et 86) : coloriser les photographies,
+transformer les gravures en « photo moderne », et montrer la transition dans le diaporama. Essai de
+quatre images sur Colab le 2026-10-12 (planche `.cache/diaporamas/essais-colorisation/planche.html`,
+journal `docs/journal/generation-colorisation.jsonl`) : DDColor, FLUX.2 klein 4B (dont une variante
+« couleur seule », fidèle au trait) et Qwen-Image-Edit-2509. L'agent d'essai recommandait la
+colorisation « couleur seule » et déconseillait la transformation des gravures (coiffures,
+drapeaux, gestes et visages inventés). **Décisions de l'utilisateur, après avoir vu la planche :**
+
+| Sujet | Décision |
+|---|---|
+| Usage | **Pas de colorisation.** Photographies et gravures sont **transformées en photographie** (rendu photographique en couleur de la même scène), avec une **transition** de l'original vers la photo dans le diaporama. |
+| Modèle | **Qwen-Image-Edit-2509** (Apache 2.0), dans tous les cas (≈ 96 s par image sur A100, 40 pas). |
+| Pilote | **Période 05 d'abord** : toutes ses gravures, lithographies et photographies qui montrent une scène ou un lieu ; jugé dans le diaporama avant de décider pour les autres périodes. Le plafond de 8 reconstitutions par période ne s'applique pas à ce pilote. |
+| Visages | **Scènes oui, portraits non** : on transforme une scène même si une personne nommée y figure de loin (Lamartine à la tribune, le prince à cheval) ; on ne transforme ni les portraits ni les photographies de personnes, où le visage est le sujet. Le garde-fou « jamais de visage régénéré d'une personne nommée » est assoupli d'autant. |
+| Exclus aussi | Les photographies montrées pour leur technique ou comme œuvre photographique (annotation 82), les peintures déjà en couleur, les documents, cartes, caricatures, objets et manuscrits. |
+| Signalement | Obligatoire : cartouche « transformée en photo par IA » tant que la photo est à l'écran, crédits et livre d'images ; l'original est toujours montré d'abord. |
+
+### Révision du même jour : la colorisation « couleur seule » remplace la transformation
+
+Le lot de la période 05 (56 gravures, lithographies et photographies de scènes ; journal
+`docs/journal/generation-colorisation.jsonl`, planches dans
+`.cache/diaporamas/photos-qwen/deuxieme-republique/`) a été jugé par l'utilisateur :
+
+- **Transformation en photo : abandonnée.** FLUX.2 klein 4B (2,9 s par image) : 7 bonnes, 36 avec
+  défaut, 13 ratées ; Qwen-Image-Edit-2509 (97 s par image, 4 images faites) tient mieux la
+  composition mais invente aussi. Verdict de l'utilisateur : « ça invente trop de trucs ».
+  Les décisions du tableau ci-dessus sur l'usage, le modèle et les visages ne s'appliquent plus.
+- **Colorisation « couleur seule » : retenue** (36 bonnes, 18 avec défaut, 2 ratées sur 56).
+  Méthode : FLUX.2 klein 4B (Apache 2.0) reçoit l'image et une consigne stricte de colorisation ;
+  **on ne garde que la chrominance de sa sortie, posée sur la luminance de l'original**. Aucun
+  trait n'est redessiné, le fondu est exact au pixel. Les coloriseurs dédiés DDColor (7 bonnes)
+  et DeOldify (3 bonnes) ne donnent qu'un voile sépia : écartés.
+- **Rendu** : une gravure colorisée ressemble à une estampe rehaussée à la main, pas à une photo.
+- **Consigne** : texte commun neutre (ni drapeaux, ni costumes, ni personnages cités) ; une phrase
+  par image pour ce qui y figure vraiment, avec les couleurs à respecter (drapeau tricolore,
+  uniformes) ; saturation modérée.
+- **Champ** : gravures, lithographies et photographies monochromes de scènes et de lieux. Exclus :
+  les estampes déjà coloriées (gain nul), les photographies montrées pour leur technique ou comme
+  œuvre, les portraits et photographies de personnes, les peintures, documents, cartes, caricatures.
+- **Relecture obligatoire image par image avant publication** : les couleurs sont plausibles, pas
+  documentées (un drapeau teint en rouge en 1848 serait un contresens).
+- **Dans le diaporama** : l'original d'abord, puis un fondu vers la version colorisée ; mention
+  « colorisée par IA » au cartouche tant qu'elle est à l'écran, crédits et livre d'images.
+- **Pilote** : période 05 (accord de l'utilisateur du 2026-10-12 : les 36 bonnes telles quelles,
+  relance des 18 à défaut avec saturation réduite et couleurs précisées, fondu dans le lecteur).
+  Les autres périodes après son visionnage.
+
+**Mise en œuvre (2026-10-12).** Champ `image.couleur` `{ fichier, largeur, hauteur, modele, genere_le }`
+(image d'une diapositive ou d'un plan), fichier `NNN-couleur.webp` / `NNN-b-couleur.webp` aux
+dimensions exactes de la zone utile ; `couleur.py publier | retirer | lister` (clé : `commons`),
+recettes dans `src/data/diaporamas/generation/<slug>-couleur.json`, suivi par `renumeroter.py`,
+famille « couleur (spec 16) » de `verifier.py`.
+
+| Sujet | Décision |
+|---|---|
+| Rendu | `couleur.ts` : la version colorisée est posée sur la zone utile avec la transformation de l'image (caméra, entrée en scène, image entière, plans). Opacité calculée à chaque rendu d'après l'horloge de la voix, sans transition CSS : pause, saut et reprise justes. |
+| Temps | **Révisé le 2026-10-12 après visionnage (« la transition devrait arriver plus vite ») : fondu de 2 s, dès 1,5 s après l'apparition de l'image** (0,5 s après la fin d'une entrée en scène). Première version : fondu de 2,8 s, sans lien avec les mots : départ au tiers de la fenêtre de l'image (jusqu'au plan suivant ou la fin de la voix), au plus tôt à 2,5 s et 0,5 s après l'entrée en scène, fini 2 s avant la fin si la fenêtre le permet (moins de 7,3 s : `verifier.py` avertit). |
+| Mouvement réduit | L'original seul : ni version colorisée ni mention (le plus sobre, comme pour les clips). |
+| Signalement | Ligne « colorisée par IA » du cartouche, dépliée tant que la couleur est à l'écran ; livre d'images (version colorisée sous l'original) ; section « Images colorisées » de la page. |
+| Incompatibilités | Clip `video`, avant / après, mosaïque : refusés. Galeries, lectures illustrées, épisodes : hors champ pour l'instant. |
+
+**Pilote publié** : période 05, lot final de 48 images, **46 publiées** (30 images de diapositives,
+16 plans ; 24 Mo), 2 refusées par incompatibilité (40 : mosaïque ; 89 : clip). Écartées à la
+fabrication : 5 estampes déjà coloriées et 3 ratées. À juger au visionnage.
+
 ## Reste à décider
 
 - Les deux autres usages (reconstitution photo d'après gravure, colorisation des vraies

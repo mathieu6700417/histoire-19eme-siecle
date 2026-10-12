@@ -89,7 +89,7 @@
       "id": "napoleon-revient",
       "titre": "Napoléon revient",
       "dates": "1840-1842",
-      "debut": 64,
+      "debut": 65,
       "reperes": [
         {
           "date": "1840-07-28",
@@ -109,7 +109,7 @@
       "id": "algerie",
       "titre": "La conquête de l'Algérie",
       "dates": "1830-1847",
-      "debut": 75,
+      "debut": 76,
       "reperes": [
         {
           "date": "1837-10-13",
@@ -129,7 +129,7 @@
       "id": "vapeur-misere",
       "titre": "La vapeur et la misère",
       "dates": "1837-1847",
-      "debut": 85,
+      "debut": 86,
       "reperes": [
         {
           "date": "1841-03-22",
@@ -149,7 +149,7 @@
       "id": "regime-use",
       "titre": "Le régime s'use",
       "dates": "1843-1848",
-      "debut": 101,
+      "debut": 102,
       "reperes": [
         {
           "date": "1847-01-13",
@@ -1694,7 +1694,19 @@
             ],
             "quand": "la garde nationale tire"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.174,
+              0.575,
+              0.576
+            ]
+          ],
+          "duree": 4.0,
+          "intention": "On part des immeubles et de la barrière à gauche, puis la caméra glisse vers la droite en s'ouvrant sur toute la place où charge la troupe."
+        }
       },
       "manuscrits": [
         {
@@ -1739,7 +1751,19 @@
                   0.75
                 ]
               }
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.02,
+                  0.0,
+                  0.5,
+                  0.44
+                ]
+              ],
+              "duree": 5,
+              "intention": "On part du pont en flammes et des fumées à gauche, puis on recule en glissant sur le fleuve jusqu'au combat des ouvriers sur le pont Morand."
+            }
           },
           "instant": 9.58
         }
@@ -3982,7 +4006,19 @@
           0.3,
           0.88,
           0.56
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.02,
+              0.48,
+              0.98,
+              0.98
+            ]
+          ],
+          "duree": 5.5,
+          "intention": "On part des soldats qui avancent et de la barricade éventrée, puis on remonte la façade de l'immeuble jusqu'à ses toits."
+        }
       },
       "lieux": [
         {
@@ -4886,7 +4922,118 @@
       }
     },
     {
+      "narration": "Outre-mer aussi, le régime réforme à petits pas. Dès 1831, une loi punit sévèrement la traite, et la France convient avec l'Angleterre d'un droit de visite réciproque des navires suspects. En 1833, les libres de couleur obtiennent les droits civils et politiques, l'année où Londres vote l'abolition de l'esclavage dans ses colonies.",
+      "date": "1833-04",
+      "image": {
+        "commons": "File:The Slave Trade by Auguste Francois Biard.jpg",
+        "titre": "La Traite des esclaves",
+        "titre_court": "La Traite des esclaves, par Biard",
+        "auteur": "François-Auguste Biard",
+        "date": "vers 1833",
+        "technique": "huile sur toile",
+        "conservation": "lieu de conservation non identifié",
+        "fichier": "047.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1148,
+        "utile": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.2,
+              0.88,
+              0.6
+            ]
+          }
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.28,
+              0.08,
+              0.72,
+              0.33
+            ]
+          ],
+          "duree": 5.5,
+          "intention": "On part du navire au large dans le ciel rose, puis on recule et on s'abaisse jusqu'à la grève où la cargaison humaine est entassée."
+        }
+      },
+      "plans": [
+        {
+          "quand": "En 1833, les libres de couleur",
+          "image": {
+            "commons": "File:Proclamation of the abolition of slavery in the Colony of Jamaica, August 1, 1838, in Spanish Town.jpg",
+            "titre": "Proclamation de l'abolition de l'esclavage à la Jamaïque, Spanish Town, 1er août 1838",
+            "titre_court": "L'abolition proclamée à la Jamaïque, 1838",
+            "auteur": "R. Cartwright, d'après Thomas Picken",
+            "date": "1838",
+            "technique": "lithographie",
+            "conservation": "Londres, Royal Museums Greenwich",
+            "fichier": "047-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1280,
+            "hauteur": 933,
+            "utile": [
+              0.014,
+              0.014,
+              0.986,
+              0.832
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.01,
+                  0.43,
+                  0.99,
+                  0.83
+                ]
+              }
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.49,
+                  0.01,
+                  0.99,
+                  0.28
+                ]
+              ],
+              "duree": 4.5,
+              "intention": "On descend du grand drapeau et du feuillage au sommet du mât, puis on s'ouvre sur la place de Spanish Town noire de monde devant l'hôtel du gouvernement."
+            }
+          },
+          "instant": 12.19
+        }
+      ],
       "n": 47,
+      "audio": {
+        "fichier": "047.m4a",
+        "duree": 19.71,
+        "phrases": [
+          [
+            0.0,
+            2.86
+          ],
+          [
+            3.75,
+            11.12
+          ],
+          [
+            12.49,
+            19.71
+          ]
+        ]
+      }
+    },
+    {
+      "n": 48,
       "narration": "Ministre de l'Instruction publique, Guizot fait voter, le 28 juin 1833, une loi décisive pour le pays. Chaque commune doit entretenir une école primaire de garçons, chaque département une école normale pour former les maîtres. L'école n'est ni gratuite ni obligatoire, mais elle s'installe dans presque chaque village.",
       "date": "1833-06-28",
       "image": {
@@ -4897,7 +5044,7 @@
         "date": "1831",
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "047.webp",
+        "fichier": "048.webp",
         "licence": "Domaine public",
         "largeur": 1292,
         "hauteur": 1600,
@@ -4949,7 +5096,7 @@
               0.858,
               0.805
             ],
-            "fichier": "047-b.webp",
+            "fichier": "048-b.webp",
             "licence": "Domaine public",
             "largeur": 1296,
             "hauteur": 1115,
@@ -4981,7 +5128,7 @@
         }
       ],
       "audio": {
-        "fichier": "047.m4a",
+        "fichier": "048.m4a",
         "duree": 19.65,
         "phrases": [
           [
@@ -5000,7 +5147,7 @@
       }
     },
     {
-      "n": 48,
+      "n": 49,
       "narration": "En quinze ans, le nombre d'élèves passe d'environ deux millions à plus de trois millions. Les filles restent à l'écart de la loi, et beaucoup d'enfants quittent la classe dès les beaux jours pour les champs. Mais la France apprend à lire.",
       "date": "1833",
       "date_fin": "1848",
@@ -5012,7 +5159,7 @@
         "date": "1844",
         "technique": "huile sur toile",
         "conservation": "Aix-en-Provence, musée Granet",
-        "fichier": "048.webp",
+        "fichier": "049.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1136,
@@ -5031,7 +5178,19 @@
               0.94
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.05,
+              0.5,
+              0.35
+            ]
+          ],
+          "duree": 5,
+          "intention": "On part de la fenêtre baignée de lumière, on glisse le long du mur vers la grande image de la Vierge, puis on s'ouvre sur les enfants rassemblés dans la salle d'asile."
+        }
       },
       "chiffres": [
         {
@@ -5044,7 +5203,7 @@
         }
       ],
       "audio": {
-        "fichier": "048.m4a",
+        "fichier": "049.m4a",
         "duree": 13.18,
         "phrases": [
           [
@@ -5063,7 +5222,7 @@
       }
     },
     {
-      "n": 49,
+      "n": 50,
       "narration": "Face à Guizot, Adolphe Thiers, Marseillais petit et bavard, journaliste devenu ministre à trente-cinq ans. Il a maté les émeutes de 1834 et rêve de gloire nationale. Sa formule résume l'opposition des deux hommes : « Le roi règne et ne gouverne pas ».",
       "date": "1836-02-22",
       "image": {
@@ -5080,7 +5239,7 @@
           0.945,
           0.888
         ],
-        "fichier": "049.webp",
+        "fichier": "050.webp",
         "licence": "Domaine public",
         "largeur": 1228,
         "hauteur": 1600,
@@ -5175,7 +5334,7 @@
               0.907,
               0.766
             ],
-            "fichier": "049-b.webp",
+            "fichier": "050-b.webp",
             "licence": "Domaine public",
             "largeur": 1431,
             "hauteur": 1600,
@@ -5208,7 +5367,7 @@
         }
       ],
       "audio": {
-        "fichier": "049.m4a",
+        "fichier": "050.m4a",
         "duree": 17.97,
         "phrases": [
           [
@@ -5227,7 +5386,7 @@
       }
     },
     {
-      "n": 50,
+      "n": 51,
       "narration": "Thiers veut réconcilier les Français autour de leurs gloires. Le 29 juillet 1836, il inaugure l'Arc de triomphe de l'Étoile, commencé par Napoléon trente ans plus tôt. Sur un pilier, la Marseillaise de Rude appelle aux armes les volontaires de 1792.",
       "date": "1836-07-29",
       "image": {
@@ -5244,7 +5403,7 @@
           0.976,
           0.882
         ],
-        "fichier": "050.webp",
+        "fichier": "051.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1189,
@@ -5309,7 +5468,7 @@
             "date": "1833-1836",
             "technique": "pierre",
             "conservation": "Paris, Arc de triomphe de l'Étoile",
-            "fichier": "050-b.webp",
+            "fichier": "051-b.webp",
             "licence": "Domaine public",
             "largeur": 998,
             "hauteur": 1600,
@@ -5341,7 +5500,7 @@
         }
       ],
       "audio": {
-        "fichier": "050.m4a",
+        "fichier": "051.m4a",
         "duree": 15.88,
         "phrases": [
           [
@@ -5360,7 +5519,7 @@
       }
     },
     {
-      "n": 51,
+      "n": 52,
       "narration": "Le 25 octobre 1836, deux cent mille Parisiens se pressent place de la Concorde ; on y dresse l'obélisque de Louxor, offert par l'Égypte. L'ingénieur Lebas hisse ce bloc de plus de deux cents tonnes avec des cabestans et des centaines d'artilleurs. Le roi applaudit du balcon de la Marine.",
       "date": "1836-10-25",
       "image": {
@@ -5386,7 +5545,7 @@
             0.8
           ],
           "quand": "L'ingénieur Lebas hisse",
-          "fichier": "051-apres.webp",
+          "fichier": "052-apres.webp",
           "licence": "Domaine public",
           "largeur": 1600,
           "hauteur": 680,
@@ -5403,7 +5562,7 @@
             0.933
           ]
         },
-        "fichier": "051.webp",
+        "fichier": "052.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1168,
@@ -5446,7 +5605,7 @@
         }
       ],
       "audio": {
-        "fichier": "051.m4a",
+        "fichier": "052.m4a",
         "duree": 17.97,
         "phrases": [
           [
@@ -5465,7 +5624,7 @@
       }
     },
     {
-      "n": 52,
+      "n": 53,
       "narration": "À Versailles, le roi paie de sa cassette un musée dédié à toutes les gloires de la France. Inaugurée en juin 1837, la galerie des Batailles aligne trente-trois victoires, de Tolbiac à Wagram. Rois, Révolution et Empire y sont réunis : c'est toute la politique du règne.",
       "date": "1837-06-10",
       "image": {
@@ -5476,7 +5635,7 @@
         "date": "1837",
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national du château",
-        "fichier": "052.webp",
+        "fichier": "053.webp",
         "licence": "Domaine public",
         "largeur": 1263,
         "hauteur": 900,
@@ -5534,7 +5693,7 @@
             "date": "XIXe siècle",
             "technique": "reproduction photomécanique",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "052-b.webp",
+            "fichier": "053-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1312,
@@ -5560,7 +5719,7 @@
         }
       ],
       "audio": {
-        "fichier": "052.m4a",
+        "fichier": "053.m4a",
         "duree": 18.69,
         "phrases": [
           [
@@ -5579,7 +5738,7 @@
       }
     },
     {
-      "n": 53,
+      "n": 54,
       "narration": "Sauver les monuments devient une affaire d'État. Depuis 1834, l'écrivain Prosper Mérimée, inspecteur général des monuments historiques, sillonne la France en diligence. Il dresse la première liste des édifices en péril, églises, abbayes, remparts, et confie les chantiers à de jeunes architectes.",
       "image": {
         "commons": "File:Prosper Mérimée, D.4352.jpg",
@@ -5589,7 +5748,7 @@
         "date": "1852",
         "technique": "pastel",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "053.webp",
+        "fichier": "054.webp",
         "licence": "Domaine public",
         "largeur": 1308,
         "hauteur": 1600,
@@ -5640,7 +5799,7 @@
               0.9,
               0.822
             ],
-            "fichier": "053-b.webp",
+            "fichier": "054-b.webp",
             "licence": "Domaine public",
             "largeur": 1321,
             "hauteur": 1600,
@@ -5675,13 +5834,25 @@
               0.6,
               1.0,
               0.93
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.45,
+                  0.0,
+                  1.0,
+                  0.55
+                ]
+              ],
+              "duree": 5,
+              "intention": "On part du clocher roman, en haut à droite, et la caméra recule en descendant la façade jusqu'à l'église entière."
+            }
           },
           "instant": 10.55
         }
       ],
       "audio": {
-        "fichier": "053.m4a",
+        "fichier": "054.m4a",
         "duree": 18.51,
         "phrases": [
           [
@@ -5700,7 +5871,7 @@
       }
     },
     {
-      "n": 54,
+      "n": 55,
       "narration": "Le plus doué a vingt-six ans : Eugène Viollet-le-Duc sauve Vézelay, qui menaçait ruine. En 1844, avec Lassus, il obtient le chantier de Notre-Dame de Paris. En vingt ans de travaux, il rendra à la cathédrale ses statues, ses gargouilles et une flèche.",
       "date": "1840",
       "date_fin": "1844",
@@ -5721,7 +5892,7 @@
           "technique": "photographie",
           "conservation": "Providence, Brown University Library",
           "quand": "En vingt ans de travaux",
-          "fichier": "054-apres.webp",
+          "fichier": "055-apres.webp",
           "licence": "Domaine public",
           "largeur": 1600,
           "hauteur": 1148,
@@ -5738,7 +5909,7 @@
             0.58
           ]
         },
-        "fichier": "054.webp",
+        "fichier": "055.webp",
         "licence": "Domaine public",
         "largeur": 1237,
         "hauteur": 1600,
@@ -5787,7 +5958,7 @@
         }
       ],
       "audio": {
-        "fichier": "054.m4a",
+        "fichier": "055.m4a",
         "duree": 15.41,
         "phrases": [
           [
@@ -5806,7 +5977,7 @@
       }
     },
     {
-      "n": 55,
+      "n": 56,
       "narration": "Cette société d'argent a son romancier. En 1835, dans le Père Goriot, Honoré de Balzac lance Rastignac à l'assaut de Paris. Il a l'idée de faire revenir ses personnages d'un livre à l'autre : ce sera la Comédie humaine, plus de quatre-vingt-dix romans et nouvelles.",
       "image": {
         "commons": "File:Balzac (par Boulanger).jpg",
@@ -5816,7 +5987,7 @@
         "date": "1836",
         "technique": "huile sur toile",
         "conservation": "Tours, musée des Beaux-Arts",
-        "fichier": "055.webp",
+        "fichier": "056.webp",
         "licence": "Domaine public",
         "largeur": 1301,
         "hauteur": 1600,
@@ -5861,7 +6032,7 @@
             "date": "1842",
             "technique": "gravure sur bois",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "055-b.webp",
+            "fichier": "056-b.webp",
             "licence": "Domaine public",
             "largeur": 1098,
             "hauteur": 1600,
@@ -5893,7 +6064,7 @@
         }
       ],
       "audio": {
-        "fichier": "055.m4a",
+        "fichier": "056.m4a",
         "duree": 15.08,
         "phrases": [
           [
@@ -5912,7 +6083,7 @@
       }
     },
     {
-      "n": 56,
+      "n": 57,
       "narration": "Le 1er juillet 1836, Émile de Girardin lance la Presse à quarante francs par an, moitié prix des autres journaux. Le Siècle l'imite aussitôt. La différence, on la demande aux annonces ; et pour retenir l'abonné, on invente le roman-feuilleton, publié par tranches.",
       "date": "1836-07-01",
       "image": {
@@ -5929,7 +6100,7 @@
           0.925,
           0.919
         ],
-        "fichier": "056.webp",
+        "fichier": "057.webp",
         "licence": "Domaine public",
         "largeur": 1190,
         "hauteur": 1600,
@@ -5983,7 +6154,7 @@
             "date": "1836",
             "technique": "imprimé",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "056-b.webp",
+            "fichier": "057-b.webp",
             "licence": "Domaine public",
             "largeur": 918,
             "hauteur": 1296,
@@ -6024,7 +6195,7 @@
         }
       ],
       "audio": {
-        "fichier": "056.m4a",
+        "fichier": "057.m4a",
         "duree": 16.91,
         "phrases": [
           [
@@ -6043,7 +6214,7 @@
       }
     },
     {
-      "n": 57,
+      "n": 58,
       "narration": "Les vieux journaux crient au commerce. Armand Carrel, directeur du National, provoque Girardin en duel et y laisse la vie. Mais le public suit : Dumas, Balzac, puis Eugène Sue tiennent en haleine, jour après jour, des centaines de milliers de lecteurs.",
       "date": "1836-07-22",
       "image": {
@@ -6054,7 +6225,7 @@
         "date": "1833",
         "technique": "huile sur toile",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "057.webp",
+        "fichier": "058.webp",
         "licence": "Domaine public",
         "largeur": 1238,
         "hauteur": 1600,
@@ -6127,7 +6298,7 @@
               0.881,
               0.716
             ],
-            "fichier": "057-b.webp",
+            "fichier": "058-b.webp",
             "licence": "Domaine public",
             "largeur": 1257,
             "hauteur": 1296,
@@ -6160,7 +6331,7 @@
         }
       ],
       "audio": {
-        "fichier": "057.m4a",
+        "fichier": "058.m4a",
         "duree": 16.4,
         "phrases": [
           [
@@ -6179,7 +6350,7 @@
       }
     },
     {
-      "n": 58,
+      "n": 59,
       "narration": "Le soir, la bourgeoisie triomphante se montre à l'Opéra de la rue Le Peletier, dans ses loges. On y donne un genre nouveau, le grand opéra : cinq actes, des foules, des décors à machines. En février 1836, les Huguenots de Meyerbeer mettent en scène la Saint-Barthélemy, et font courir tout Paris.",
       "image": {
         "commons": "File:Vue de la nouvelle salle de l'Opéra prise de la rue de Provence - NYPL Digital Collections.jpg",
@@ -6189,7 +6360,7 @@
         "date": "années 1820",
         "technique": "gravure coloriée",
         "conservation": "New York Public Library",
-        "fichier": "058.webp",
+        "fichier": "059.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 988,
@@ -6228,7 +6399,7 @@
             "date": "publié en 1858",
             "technique": "lithographie",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "058-b.webp",
+            "fichier": "059-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1249,
@@ -6247,7 +6418,19 @@
                   0.85
                 ]
               }
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.02,
+                  0.13,
+                  0.98,
+                  0.62
+                ]
+              ],
+              "duree": 5,
+              "intention": "On descend des draperies de scène et des pignons gothiques vers le cortège qui emplit la place."
+            }
           },
           "instant": 5.18
         },
@@ -6267,7 +6450,7 @@
               0.961,
               0.909
             ],
-            "fichier": "058-c.webp",
+            "fichier": "059-c.webp",
             "licence": "Domaine public",
             "largeur": 1440,
             "hauteur": 1038,
@@ -6286,13 +6469,25 @@
                   0.9
                 ]
               }
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.46,
+                  0.58,
+                  0.92,
+                  0.84
+                ]
+              ],
+              "duree": 5,
+              "intention": "On recule depuis le grand escalier du parc pour découvrir peu à peu le château et les dames au bord de l'eau."
+            }
           },
           "instant": 12.15
         }
       ],
       "audio": {
-        "fichier": "058.m4a",
+        "fichier": "059.m4a",
         "duree": 19.34,
         "phrases": [
           [
@@ -6311,7 +6506,7 @@
       }
     },
     {
-      "n": 59,
+      "n": 60,
       "narration": "Le 7 janvier 1839, devant l'Académie des sciences, le savant François Arago annonce une invention prodigieuse. Louis Daguerre, peintre de décors, fixe l'image de la chambre noire sur une plaque de cuivre argentée, sensible à la lumière. Chaque daguerréotype est unique, d'une netteté qui stupéfie.",
       "date": "1839-01-07",
       "image": {
@@ -6322,7 +6517,7 @@
         "date": "1838",
         "technique": "daguerréotype",
         "conservation": "Munich, Bayerisches Nationalmuseum",
-        "fichier": "059.webp",
+        "fichier": "060.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1149,
@@ -6341,7 +6536,19 @@
               0.68
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.36,
+              1.0,
+              0.92
+            ]
+          ],
+          "duree": 5,
+          "intention": "On monte le long de la façade du premier plan, par-dessus les toits, jusqu'au boulevard et à ses arbres."
+        }
       },
       "personnes": [
         {
@@ -6374,7 +6581,7 @@
             "date": "1844",
             "technique": "daguerréotype",
             "conservation": "Rochester, George Eastman Museum",
-            "fichier": "059-b.webp",
+            "fichier": "060-b.webp",
             "licence": "Domaine public",
             "largeur": 1247,
             "hauteur": 1600,
@@ -6406,7 +6613,7 @@
         }
       ],
       "audio": {
-        "fichier": "059.m4a",
+        "fichier": "060.m4a",
         "duree": 18.73,
         "phrases": [
           [
@@ -6425,7 +6632,7 @@
       }
     },
     {
-      "n": 60,
+      "n": 61,
       "narration": "Le 19 août, l'État, qui a acheté le procédé contre une pension pour Daguerre, l'offre au monde. En quelques semaines, Paris se couvre d'appareils braqués sur les monuments. Il faut encore poser de longues minutes : les rues des premières vues semblent désertes.",
       "date": "1839-08-19",
       "image": {
@@ -6436,7 +6643,7 @@
         "date": "1840",
         "technique": "lithographie",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "060.webp",
+        "fichier": "061.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1182,
@@ -6484,7 +6691,7 @@
             "date": "1842",
             "technique": "daguerréotype",
             "conservation": "Los Angeles, J. Paul Getty Museum",
-            "fichier": "060-b.webp",
+            "fichier": "061-b.webp",
             "licence": "Domaine public",
             "largeur": 1148,
             "hauteur": 1600,
@@ -6516,7 +6723,7 @@
         }
       ],
       "audio": {
-        "fichier": "060.m4a",
+        "fichier": "061.m4a",
         "duree": 14.91,
         "phrases": [
           [
@@ -6535,7 +6742,7 @@
       }
     },
     {
-      "n": 61,
+      "n": 62,
       "narration": "Louis-Philippe, lui, entend bien gouverner. Il use les ministres, écarte Thiers puis Guizot, et s'appuie sur le comte Molé, plus docile. En 1839, tous les chefs de la Chambre se coalisent contre ce gouvernement personnel, et finissent par le faire tomber.",
       "image": {
         "commons": "File:Jean-auguste-dominique ingres, ritratto del conte mathieu-louis molé, 1834, 02.jpg",
@@ -6545,7 +6752,7 @@
         "date": "1834",
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
-        "fichier": "061.webp",
+        "fichier": "062.webp",
         "licence": "Domaine public",
         "largeur": 1067,
         "hauteur": 1600,
@@ -6608,7 +6815,7 @@
               0.953,
               0.819
             ],
-            "fichier": "061-b.webp",
+            "fichier": "062-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 433,
@@ -6633,7 +6840,7 @@
         }
       ],
       "audio": {
-        "fichier": "061.m4a",
+        "fichier": "062.m4a",
         "duree": 16.57,
         "phrases": [
           [
@@ -6652,7 +6859,7 @@
       }
     },
     {
-      "n": 62,
+      "n": 63,
       "narration": "Un prétendant inattendu tente alors sa chance ; le 30 octobre 1836, à Strasbourg, Louis-Napoléon Bonaparte, neveu de l'Empereur, soulève un régiment d'artillerie. L'affaire dure deux heures, et finit au poste. Le roi, indulgent, l'expédie en Amérique sans procès ; un jury acquitte ses complices.",
       "date": "1836-10-30",
       "image": {
@@ -6669,7 +6876,7 @@
           0.749,
           0.555
         ],
-        "fichier": "062.webp",
+        "fichier": "063.webp",
         "licence": "Domaine public",
         "largeur": 1337,
         "hauteur": 1600,
@@ -6715,7 +6922,7 @@
         }
       ],
       "audio": {
-        "fichier": "062.m4a",
+        "fichier": "063.m4a",
         "duree": 18.76,
         "phrases": [
           [
@@ -6734,7 +6941,7 @@
       }
     },
     {
-      "n": 63,
+      "n": 64,
       "narration": "Les sociétés secrètes n'ont pas désarmé ; le 12 mai 1839, quelques centaines d'hommes des Saisons, menés par Barbès et Blanqui, attaquent l'Hôtel de Ville. Paris ne bouge pas. Les deux chefs, condamnés à mort puis graciés, partent pour les cachots du Mont-Saint-Michel.",
       "date": "1839-05-12",
       "image": {
@@ -6745,7 +6952,7 @@
         "date": "1839",
         "technique": "dessin",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "063.webp",
+        "fichier": "064.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1053,
@@ -6773,7 +6980,19 @@
             ],
             "quand": "attaquent l'Hôtel de Ville"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.02,
+              0.15,
+              0.98,
+              0.73
+            ]
+          ],
+          "duree": 4,
+          "intention": "On descend de la haute façade dans la nuit vers les soldats et les cavaliers massés sur la place."
+        }
       },
       "lieux": [
         {
@@ -6808,7 +7027,7 @@
             "date": "1835",
             "technique": "huile sur toile",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "063-b.webp",
+            "fichier": "064-b.webp",
             "licence": "Domaine public",
             "largeur": 1206,
             "hauteur": 1600,
@@ -6840,7 +7059,7 @@
         }
       ],
       "audio": {
-        "fichier": "063.m4a",
+        "fichier": "064.m4a",
         "duree": 16.33,
         "phrases": [
           [
@@ -6859,7 +7078,7 @@
       }
     },
     {
-      "n": 64,
+      "n": 65,
       "narration": "En mars 1840, Thiers revient au pouvoir. L'été venu, l'Angleterre et les puissances règlent sans la France le sort de l'Égypte de Méhémet Ali, son protégé. Paris crie à l'humiliation, chante la Marseillaise dans les théâtres et réclame la frontière du Rhin.",
       "date": "1840-07-15",
       "image": {
@@ -6876,7 +7095,7 @@
           0.905,
           0.845
         ],
-        "fichier": "064.webp",
+        "fichier": "065.webp",
         "licence": "Domaine public",
         "largeur": 1307,
         "hauteur": 1600,
@@ -6925,7 +7144,7 @@
         }
       ],
       "audio": {
-        "fichier": "064.m4a",
+        "fichier": "065.m4a",
         "duree": 15.15,
         "phrases": [
           [
@@ -6945,7 +7164,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 65,
+      "n": 66,
       "narration": "Place de la Bastille pourrit depuis plus de vingt-cinq ans un éléphant de plâtre, maquette d'une fontaine voulue par Napoléon. Le 28 juillet 1840, on inaugure à côté la colonne de Juillet. Dans son caveau reposent les morts de 1830 ; pour eux, Berlioz a écrit sa Symphonie funèbre et triomphale.",
       "date": "1840-07-28",
       "image": {
@@ -6971,7 +7190,7 @@
             0.82
           ],
           "quand": "Le 28 juillet 1840",
-          "fichier": "065-apres.webp",
+          "fichier": "066-apres.webp",
           "licence": "Domaine public",
           "largeur": 1600,
           "hauteur": 1006,
@@ -6999,7 +7218,7 @@
             }
           ]
         },
-        "fichier": "065.webp",
+        "fichier": "066.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1098,
@@ -7044,7 +7263,7 @@
         }
       ],
       "audio": {
-        "fichier": "065.m4a",
+        "fichier": "066.m4a",
         "duree": 17.43,
         "phrases": [
           [
@@ -7063,7 +7282,7 @@
       }
     },
     {
-      "n": 66,
+      "n": 67,
       "narration": "Le 6 août 1840, Louis-Napoléon débarque près de Boulogne avec une cinquantaine de fidèles, et, dit-on, un aigle apprivoisé. Nouveau fiasco. Cette fois, il est condamné à la prison perpétuelle et enfermé au fort de Ham ; il y écrit, et attend.",
       "date": "1840-08-06",
       "image": {
@@ -7074,7 +7293,7 @@
         "date": "1849",
         "technique": "gravure sur bois",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "066.webp",
+        "fichier": "067.webp",
         "licence": "Domaine public",
         "largeur": 994,
         "hauteur": 1600,
@@ -7152,7 +7371,7 @@
               0.911,
               0.876
             ],
-            "fichier": "066-b.webp",
+            "fichier": "067-b.webp",
             "licence": "Domaine public",
             "largeur": 1143,
             "hauteur": 1600,
@@ -7184,7 +7403,7 @@
         }
       ],
       "audio": {
-        "fichier": "066.m4a",
+        "fichier": "067.m4a",
         "duree": 17.65,
         "phrases": [
           [
@@ -7203,7 +7422,7 @@
       }
     },
     {
-      "n": 67,
+      "n": 68,
       "narration": "Thiers arme, rappelle des soldats, et décide de fortifier Paris. Une enceinte de près de trente-quatre kilomètres, bordée d'un fossé, et seize forts détachés entoureront la capitale. Les républicains y voient des canons braqués sur les faubourgs ; l'ouvrage sera achevé vers 1845.",
       "date": "1840-09",
       "image": {
@@ -7214,7 +7433,7 @@
         "date": "1841",
         "technique": "carte gravée",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "067.webp",
+        "fichier": "068.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1219,
@@ -7262,7 +7481,7 @@
         }
       ],
       "audio": {
-        "fichier": "067.m4a",
+        "fichier": "068.m4a",
         "duree": 16.81,
         "phrases": [
           [
@@ -7281,7 +7500,7 @@
       }
     },
     {
-      "n": 68,
+      "n": 69,
       "narration": "Le roi ne veut pas la guerre. En octobre 1840, il renvoie Thiers et appelle Guizot, sous la présidence nominale du maréchal Soult. Le ministère durera plus de sept ans ; son programme tient en peu de mots : la paix, les affaires, et aucune réforme.",
       "image": {
         "commons": "File:F. Guizot - estampe - (L. Calamatta, graveur) ; (d'après P. Delaroche) - btv1b10537940f.jpg",
@@ -7297,7 +7516,7 @@
           0.83,
           0.772
         ],
-        "fichier": "068.webp",
+        "fichier": "069.webp",
         "licence": "Domaine public",
         "largeur": 1275,
         "hauteur": 1600,
@@ -7344,7 +7563,7 @@
         }
       ],
       "audio": {
-        "fichier": "068.m4a",
+        "fichier": "069.m4a",
         "duree": 16.19,
         "phrases": [
           [
@@ -7363,7 +7582,7 @@
       }
     },
     {
-      "n": 69,
+      "n": 70,
       "narration": "Car la légende de l'oncle grandit toujours ; pour s'en parer, Thiers a obtenu de Londres le retour des restes de Napoléon. Le prince de Joinville, fils du roi, va les chercher à Sainte-Hélène sur la frégate la Belle-Poule. Le cercueil est ouvert : le corps est intact.",
       "date": "1840-10-15",
       "image": {
@@ -7374,7 +7593,7 @@
         "date": "1842",
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national du château",
-        "fichier": "069.webp",
+        "fichier": "070.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1015,
@@ -7393,7 +7612,19 @@
               0.75
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.69,
+              0.5,
+              1.0
+            ]
+          ],
+          "duree": 5,
+          "intention": "On part des barques et des piques au ras de l'eau, puis la caméra recule et s'élève vers le cercueil dans la fumée."
+        }
       },
       "lieux": [
         {
@@ -7434,7 +7665,7 @@
             "date": "vers 1843",
             "technique": "huile sur toile",
             "conservation": "Versailles, musée national du château",
-            "fichier": "069-b.webp",
+            "fichier": "070-b.webp",
             "licence": "Domaine public",
             "largeur": 1042,
             "hauteur": 1600,
@@ -7466,7 +7697,7 @@
         }
       ],
       "audio": {
-        "fichier": "069.m4a",
+        "fichier": "070.m4a",
         "duree": 16.39,
         "phrases": [
           [
@@ -7485,7 +7716,7 @@
       }
     },
     {
-      "n": 70,
+      "n": 71,
       "narration": "Le 15 décembre 1840, par un froid glacial, le cortège descend les Champs-Élysées. Des centaines de milliers de personnes se pressent pour voir passer le char, haut de dix mètres. Aux Invalides, le roi reçoit le cercueil au nom de la France.",
       "date": "1840-12-15",
       "image": {
@@ -7502,7 +7733,7 @@
           1,
           0.968
         ],
-        "fichier": "070.webp",
+        "fichier": "071.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 778,
@@ -7535,7 +7766,7 @@
             "date": "vers 1840",
             "technique": "gravure sur bois coloriée",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "070-m0.webp",
+            "fichier": "071-m0.webp",
             "licence": "Domaine public",
             "largeur": 1000,
             "hauteur": 736,
@@ -7554,7 +7785,7 @@
             "date": "après 1840",
             "technique": "lithographie",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "070-m1.webp",
+            "fichier": "071-m1.webp",
             "licence": "Domaine public",
             "largeur": 1000,
             "hauteur": 709,
@@ -7580,7 +7811,7 @@
             "date": "1840",
             "technique": "lithographie",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "070-m2.webp",
+            "fichier": "071-m2.webp",
             "licence": "Domaine public",
             "largeur": 1000,
             "hauteur": 717,
@@ -7599,7 +7830,7 @@
             "date": "1840",
             "technique": "huile sur toile",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "070-m3.webp",
+            "fichier": "071-m3.webp",
             "licence": "Domaine public",
             "largeur": 1000,
             "hauteur": 635,
@@ -7612,7 +7843,7 @@
           },
           {
             "commons": "File:Funérailles de l'Empereur Napoléon - Passage du char funèbre aux Champs-Elysées.png",
-            "fichier": "070.webp",
+            "fichier": "071.webp",
             "titre": "Funérailles de l'empereur Napoléon : passage du char funèbre aux Champs-Élysées",
             "auteur": "auteur non identifié",
             "date": "1840",
@@ -7635,7 +7866,7 @@
         }
       ],
       "audio": {
-        "fichier": "070.m4a",
+        "fichier": "071.m4a",
         "duree": 14.63,
         "phrases": [
           [
@@ -7655,7 +7886,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 71,
+      "n": 72,
       "narration": "Le régime voulait capter la gloire impériale ; il l'a réveillée. Dans les campagnes, les anciens soldats racontent leurs batailles, et les images d'Épinal font le reste. Depuis 1833 déjà, la statue de Napoléon a retrouvé sa place au sommet de la colonne Vendôme.",
       "image": {
         "commons": "File:Le char funèbre de Napoléon. QB.370.jpg",
@@ -7671,7 +7902,7 @@
           0.882,
           0.68
         ],
-        "fichier": "071.webp",
+        "fichier": "072.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 646,
@@ -7726,7 +7957,7 @@
             "date": "1833",
             "technique": "gravure",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "071-b.webp",
+            "fichier": "072-b.webp",
             "licence": "Domaine public",
             "largeur": 1127,
             "hauteur": 1600,
@@ -7758,14 +7989,26 @@
               0.131,
               0.454,
               0.238
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.01,
+                  0.363,
+                  0.78,
+                  0.927
+                ]
+              ],
+              "duree": 4.5,
+              "intention": "On part du piédestal en écailles de bronze et la caméra s'élève, en reculant, jusqu'à la statue de l'Empereur."
+            }
           },
           "instant": 9.74,
           "camera_manuelle": true
         }
       ],
       "audio": {
-        "fichier": "071.m4a",
+        "fichier": "072.m4a",
         "duree": 16.17,
         "phrases": [
           [
@@ -7784,7 +8027,7 @@
       }
     },
     {
-      "n": 72,
+      "n": 73,
       "narration": "Sous le dôme des Invalides, où le cercueil attend dans une chapelle, on creuse une crypte ouverte pour recevoir l'Empereur. L'architecte Visconti y dessine un sarcophage de pierre rouge, veillé par douze Victoires. Le chantier durera vingt ans : le tombeau ne sera achevé qu'en 1861.",
       "date": "1842",
       "image": {
@@ -7801,7 +8044,7 @@
           0.948,
           0.973
         ],
-        "fichier": "072.webp",
+        "fichier": "073.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1245,
@@ -7833,7 +8076,7 @@
             "date": "entre 1842 et 1853",
             "technique": "dessin",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "072-b.webp",
+            "fichier": "073-b.webp",
             "licence": "Domaine public",
             "largeur": 1165,
             "hauteur": 1600,
@@ -7859,13 +8102,25 @@
               0.49,
               0.85,
               0.74
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.05,
+                  0.01,
+                  0.95,
+                  0.5
+                ]
+              ],
+              "duree": 6,
+              "intention": "On part de la niche et de l'évêque de pierre, puis la caméra recule en descendant vers le sarcophage et ses ornements dorés."
+            }
           },
           "instant": 7.38
         }
       ],
       "audio": {
-        "fichier": "072.m4a",
+        "fichier": "073.m4a",
         "duree": 18.38,
         "phrases": [
           [
@@ -7884,7 +8139,7 @@
       }
     },
     {
-      "n": 73,
+      "n": 74,
       "narration": "Le 13 juillet 1842, les chevaux du duc d'Orléans s'emballent sur la route de Neuilly. Le prince saute de la voiture et se brise le crâne. À trente et un ans, l'héritier du trône, soldat populaire et libéral, était l'espoir de la dynastie.",
       "date": "1842-07-13",
       "image": {
@@ -7895,7 +8150,7 @@
         "date": "1842",
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
-        "fichier": "073.webp",
+        "fichier": "074.webp",
         "licence": "Domaine public",
         "largeur": 1294,
         "hauteur": 1600,
@@ -7953,7 +8208,7 @@
               0.842,
               0.785
             ],
-            "fichier": "073-b.webp",
+            "fichier": "074-b.webp",
             "licence": "Domaine public",
             "largeur": 1440,
             "hauteur": 995,
@@ -7978,7 +8233,7 @@
         }
       ],
       "audio": {
-        "fichier": "073.m4a",
+        "fichier": "074.m4a",
         "duree": 14.74,
         "phrases": [
           [
@@ -7997,7 +8252,7 @@
       }
     },
     {
-      "n": 74,
+      "n": 75,
       "narration": "Le roi a soixante-huit ans, et son petit-fils, le comte de Paris, n'en a pas quatre. Une loi confie la régence future au duc de Nemours, le moins aimé des princes. Désormais, le régime repose sur la santé d'un vieillard.",
       "date": "1842-08-30",
       "image": {
@@ -8008,7 +8263,7 @@
         "date": "1839",
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national du château",
-        "fichier": "074.webp",
+        "fichier": "075.webp",
         "licence": "Domaine public",
         "largeur": 1060,
         "hauteur": 1600,
@@ -8038,7 +8293,7 @@
         "entier_zoom": 1.0
       },
       "audio": {
-        "fichier": "074.m4a",
+        "fichier": "075.m4a",
         "duree": 14.52,
         "phrases": [
           [
@@ -8057,7 +8312,7 @@
       }
     },
     {
-      "n": 75,
+      "n": 76,
       "narration": "Charles X avait pris Alger ; Louis-Philippe hérite d'une conquête dont personne ne sait que faire. On garde d'abord quelques ports : Alger, Oran, Bône. Mais dans l'Ouest, un jeune chef de vingt-quatre ans, Abd el-Kader, proclamé émir en 1832, unit les tribus contre l'envahisseur.",
       "date": "1832-11",
       "image": {
@@ -8068,7 +8323,7 @@
         "date": "1835",
         "technique": "carte gravée",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "075.webp",
+        "fichier": "076.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1072,
@@ -8160,7 +8415,7 @@
               0.852,
               0.666
             ],
-            "fichier": "075-b.webp",
+            "fichier": "076-b.webp",
             "licence": "Domaine public",
             "largeur": 1492,
             "hauteur": 1600,
@@ -8193,7 +8448,7 @@
         }
       ],
       "audio": {
-        "fichier": "075.m4a",
+        "fichier": "076.m4a",
         "duree": 18.46,
         "phrases": [
           [
@@ -8212,7 +8467,7 @@
       }
     },
     {
-      "n": 76,
+      "n": 77,
       "narration": "La France traite d'abord avec lui : en 1837, le traité de la Tafna lui reconnaît les deux tiers de l'Algérie. La même année, l'armée prend d'assaut Constantine, dans l'Est. Le général Damrémont y est tué ; à ses funérailles, aux Invalides, on crée le Requiem de Berlioz.",
       "date": "1837-10-13",
       "image": {
@@ -8223,7 +8478,7 @@
         "date": "1838",
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national du château",
-        "fichier": "076.webp",
+        "fichier": "077.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1595,
@@ -8258,7 +8513,19 @@
           0.26,
           0.99,
           0.54
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.5,
+              1.0,
+              1.0
+            ]
+          ],
+          "duree": 5.5,
+          "intention": "On part de la mêlée des soldats au pied de la brèche, puis la caméra recule et monte vers les ruines, le drapeau et le mur."
+        }
       },
       "lieux": [
         {
@@ -8293,7 +8560,7 @@
             "date": "1844",
             "technique": "manuscrit autographe",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "076-b.webp",
+            "fichier": "077-b.webp",
             "licence": "Domaine public",
             "largeur": 1245,
             "hauteur": 1600,
@@ -8325,7 +8592,7 @@
         }
       ],
       "audio": {
-        "fichier": "076.m4a",
+        "fichier": "077.m4a",
         "duree": 17.5,
         "phrases": [
           [
@@ -8344,7 +8611,7 @@
       }
     },
     {
-      "n": 77,
+      "n": 78,
       "narration": "En 1839, la guerre reprend. En février 1840, à Mazagran, cent vingt-trois soldats retranchés dans un fortin repoussent pendant quatre jours des assaillants bien plus nombreux. La France entière célèbre le capitaine Lelièvre. La guerre d'Afrique a ses héros et ses chansons ; elle n'a pas encore de but.",
       "date": "1840-02",
       "image": {
@@ -8355,7 +8622,7 @@
         "date": "1842",
         "technique": "huile sur toile",
         "conservation": "Narbonne, musée d'Art et d'Histoire",
-        "fichier": "077.webp",
+        "fichier": "078.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1289,
@@ -8403,7 +8670,7 @@
         }
       ],
       "audio": {
-        "fichier": "077.m4a",
+        "fichier": "078.m4a",
         "duree": 19.42,
         "phrases": [
           [
@@ -8426,7 +8693,7 @@
       }
     },
     {
-      "n": 78,
+      "n": 79,
       "narration": "Le général Bugeaud, nommé gouverneur à la fin de 1840, lui en donne un : la conquête totale. Il reçoit jusqu'à cent mille hommes, le tiers de l'armée. Sa méthode : des colonnes légères, et la razzia. On brûle les récoltes, on enlève les troupeaux, on affame les tribus pour les soumettre.",
       "date": "1840-12-29",
       "image": {
@@ -8437,7 +8704,7 @@
         "date": "1845",
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national du château",
-        "fichier": "078.webp",
+        "fichier": "079.webp",
         "licence": "Domaine public",
         "largeur": 1044,
         "hauteur": 1600,
@@ -8498,7 +8765,7 @@
               0.843,
               0.83
             ],
-            "fichier": "078-b.webp",
+            "fichier": "079-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1217,
@@ -8523,7 +8790,7 @@
         }
       ],
       "audio": {
-        "fichier": "078.m4a",
+        "fichier": "079.m4a",
         "duree": 18.62,
         "phrases": [
           [
@@ -8546,7 +8813,7 @@
       }
     },
     {
-      "n": 79,
+      "n": 80,
       "narration": "Le 16 mai 1843, le duc d'Aumale, fils du roi, surprend avec quelques centaines de cavaliers la smala d'Abd el-Kader. C'est sa capitale de tentes : des dizaines de milliers de personnes, ses troupeaux, ses archives. Horace Vernet en tire la plus grande toile du siècle, longue de vingt et un mètres.",
       "date": "1843-05-16",
       "image": {
@@ -8557,7 +8824,7 @@
         "date": "1844",
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national du château",
-        "fichier": "079.webp",
+        "fichier": "080.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 355,
@@ -8629,7 +8896,7 @@
             "date": "XIXe siècle",
             "technique": "gravure",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "079-b.webp",
+            "fichier": "080-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1296,
@@ -8662,7 +8929,7 @@
         }
       ],
       "audio": {
-        "fichier": "079.m4a",
+        "fichier": "080.m4a",
         "duree": 17.99,
         "phrases": [
           [
@@ -8687,7 +8954,7 @@
       ]
     },
     {
-      "n": 80,
+      "n": 81,
       "narration": "Traqué, Abd el-Kader se réfugie au Maroc, dont le sultan Moulay Abd er-Rahman le soutient un temps. Le 14 août 1844, Bugeaud écrase l'armée marocaine sur l'oued Isly ; la flotte de Joinville bombarde Tanger et Mogador. Le Maroc lâche l'émir, et Bugeaud devient duc d'Isly.",
       "date": "1844-08-14",
       "image": {
@@ -8698,7 +8965,7 @@
         "date": "1845",
         "technique": "huile sur toile",
         "conservation": "Toulouse, musée des Augustins",
-        "fichier": "080.webp",
+        "fichier": "081.webp",
         "licence": "Domaine public",
         "largeur": 1442,
         "hauteur": 1600,
@@ -8764,7 +9031,7 @@
             "date": "1846",
             "technique": "huile sur toile",
             "conservation": "Versailles, musée national du château",
-            "fichier": "080-b.webp",
+            "fichier": "081-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 769,
@@ -8783,13 +9050,25 @@
                   0.833
                 ]
               }
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.0,
+                  0.45,
+                  0.5,
+                  0.95
+                ]
+              ],
+              "duree": 5,
+              "intention": "On quitte le camp marocain et ses tentes, puis on glisse vers la mêlée qui occupe le centre du champ de bataille."
+            }
           },
           "instant": 6.75
         }
       ],
       "audio": {
-        "fichier": "080.m4a",
+        "fichier": "081.m4a",
         "duree": 18.57,
         "phrases": [
           [
@@ -8808,7 +9087,7 @@
       }
     },
     {
-      "n": 81,
+      "n": 82,
       "narration": "La guerre s'enfonce dans l'horreur. En juin 1845, dans le massif du Dahra, le colonel Pélissier fait allumer des feux à l'entrée de grottes où une tribu s'est réfugiée. Plusieurs centaines d'hommes, de femmes et d'enfants meurent asphyxiés. À Paris, la Chambre des pairs s'indigne ; Bugeaud couvre son officier.",
       "date": "1845-06-18",
       "image": {
@@ -8819,7 +9098,7 @@
         "date": "1847",
         "technique": "gravure sur bois",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "081.webp",
+        "fichier": "082.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1127,
@@ -8881,7 +9160,7 @@
         }
       ],
       "audio": {
-        "fichier": "081.m4a",
+        "fichier": "082.m4a",
         "duree": 19.08,
         "phrases": [
           [
@@ -8904,7 +9183,7 @@
       }
     },
     {
-      "n": 82,
+      "n": 83,
       "narration": "Derrière l'armée viennent les colons. On confisque les terres des tribus révoltées pour y fonder des villages. Ils sont environ cent mille Européens en 1847, Français, Espagnols, Italiens, Maltais, pour plus de deux millions d'Algériens appauvris par quinze ans de guerre.",
       "date": "1847",
       "image": {
@@ -8921,7 +9200,7 @@
           0.915,
           0.894
         ],
-        "fichier": "082.webp",
+        "fichier": "083.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1176,
@@ -8962,7 +9241,7 @@
         }
       ],
       "audio": {
-        "fichier": "082.m4a",
+        "fichier": "083.m4a",
         "duree": 16.03,
         "phrases": [
           [
@@ -8982,7 +9261,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 83,
+      "n": 84,
       "narration": "L'Algérie conquise fascine les peintres, qui y cherchent la lumière, les costumes et un monde qu'ils croient immobile. Delacroix, passé par Alger en 1832 au retour du Maroc, en rapporte des carnets et un chef-d'œuvre, les Femmes d'Alger dans leur appartement. L'Orient entre dans la peinture française, rêvé plus que compris.",
       "image": {
         "commons": "File:Eugène Delacroix - Album de voyage au Maroc - Google Art Project.jpg",
@@ -8992,7 +9271,7 @@
         "date": "1832",
         "technique": "mine de plomb et aquarelle",
         "conservation": "Paris, musée du Louvre",
-        "fichier": "083.webp",
+        "fichier": "084.webp",
         "licence": "Domaine public",
         "largeur": 1025,
         "hauteur": 1600,
@@ -9039,7 +9318,7 @@
             "date": "1834",
             "technique": "huile sur toile",
             "conservation": "Paris, musée du Louvre",
-            "fichier": "083-b.webp",
+            "fichier": "084-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1254,
@@ -9064,7 +9343,7 @@
         }
       ],
       "audio": {
-        "fichier": "083.m4a",
+        "fichier": "084.m4a",
         "duree": 21.57,
         "phrases": [
           [
@@ -9083,7 +9362,7 @@
       }
     },
     {
-      "n": 84,
+      "n": 85,
       "narration": "Le 23 décembre 1847, traqué des deux côtés de la frontière, Abd el-Kader se rend au général Lamoricière. Le duc d'Aumale lui promet l'exil en Orient ; la France le retiendra prisonnier cinq ans. La conquête a duré dix-sept ans, mais la guerre n'est pas finie.",
       "date": "1847-12-23",
       "image": {
@@ -9100,7 +9379,7 @@
           0.956,
           0.958
         ],
-        "fichier": "084.webp",
+        "fichier": "085.webp",
         "licence": "Domaine public",
         "largeur": 1403,
         "hauteur": 1600,
@@ -9156,7 +9435,7 @@
             "date": "d'après un original de 1843",
             "technique": "huile sur toile",
             "conservation": "Versailles, musée national du château",
-            "fichier": "084-b.webp",
+            "fichier": "085-b.webp",
             "licence": "Domaine public",
             "largeur": 1010,
             "hauteur": 1600,
@@ -9188,7 +9467,7 @@
         }
       ],
       "audio": {
-        "fichier": "084.m4a",
+        "fichier": "085.m4a",
         "duree": 16.04,
         "phrases": [
           [
@@ -9207,7 +9486,7 @@
       }
     },
     {
-      "n": 85,
+      "n": 86,
       "narration": "Le 24 août 1837, la reine Marie-Amélie inaugure le premier chemin de fer de voyageurs parti de Paris. La locomotive brûle du charbon pour faire bouillir l'eau ; la vapeur pousse les pistons, qui entraînent les roues. On atteint Le Pecq, près de Saint-Germain, en moins d'une demi-heure.",
       "date": "1837-08-24",
       "image": {
@@ -9218,7 +9497,7 @@
         "date": "1837",
         "technique": "lithographie",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "085.webp",
+        "fichier": "086.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 814,
@@ -9281,7 +9560,7 @@
             "date": "vers 1837",
             "technique": "lithographie",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "085-b.webp",
+            "fichier": "086-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1222,
@@ -9306,7 +9585,7 @@
         }
       ],
       "audio": {
-        "fichier": "085.m4a",
+        "fichier": "086.m4a",
         "duree": 17.58,
         "phrases": [
           [
@@ -9325,7 +9604,7 @@
       }
     },
     {
-      "n": 86,
+      "n": 87,
       "narration": "Le 8 mai 1842, un train bondé qui revient des grandes eaux de Versailles déraille à Meudon. Les wagons de bois, fermés à clé, prennent feu. Au moins cinquante-cinq voyageurs périssent, dont l'explorateur Dumont d'Urville ; c'est la première grande catastrophe du rail.",
       "date": "1842-05-08",
       "image": {
@@ -9336,7 +9615,7 @@
         "date": "1842",
         "technique": "estampe coloriée",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "086.webp",
+        "fichier": "087.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1008,
@@ -9394,7 +9673,7 @@
               0.909,
               0.777
             ],
-            "fichier": "086-b.webp",
+            "fichier": "087-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 849,
@@ -9428,7 +9707,7 @@
         }
       ],
       "audio": {
-        "fichier": "086.m4a",
+        "fichier": "087.m4a",
         "duree": 15.18,
         "phrases": [
           [
@@ -9447,7 +9726,7 @@
       }
     },
     {
-      "n": 87,
+      "n": 88,
       "narration": "La catastrophe n'arrête rien ; un mois plus tard, la loi du 11 juin 1842 partage les rôles. L'État achète les terrains et bâtit ponts et tunnels ; des compagnies privées posent les rails et exploitent les lignes. Le réseau formera une étoile autour de Paris.",
       "date": "1842-06-11",
       "image": {
@@ -9464,7 +9743,7 @@
           0.933,
           0.93
         ],
-        "fichier": "087.webp",
+        "fichier": "088.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1232,
@@ -9502,7 +9781,7 @@
               0.968,
               0.881
             ],
-            "fichier": "087-b.webp",
+            "fichier": "088-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1046,
@@ -9527,7 +9806,7 @@
         }
       ],
       "audio": {
-        "fichier": "087.m4a",
+        "fichier": "088.m4a",
         "duree": 14.52,
         "phrases": [
           [
@@ -9546,7 +9825,7 @@
       }
     },
     {
-      "n": 88,
+      "n": 89,
       "narration": "En mai 1843, à quelques jours d'intervalle, on inaugure les lignes de Paris-Orléans et de Paris-Rouen. Le voyage de Rouen tombe d'une douzaine d'heures de diligence à quatre heures environ. En juin 1846, la ligne du Nord relie Paris à Lille, puis à Bruxelles.",
       "date": "1843-05",
       "image": {
@@ -9557,7 +9836,7 @@
         "date": "vers 1843",
         "technique": "lithographie",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "088.webp",
+        "fichier": "089.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1249,
@@ -9623,7 +9902,7 @@
             "date": "1843",
             "technique": "gravure sur bois",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "088-b.webp",
+            "fichier": "089-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1255,
@@ -9658,7 +9937,7 @@
         }
       ],
       "audio": {
-        "fichier": "088.m4a",
+        "fichier": "089.m4a",
         "duree": 18.57,
         "phrases": [
           [
@@ -9677,7 +9956,7 @@
       }
     },
     {
-      "n": 89,
+      "n": 90,
       "narration": "Le train a ses classes, comme la société. En première, des fauteuils et des vitres. En troisième, des bancs de bois dans des wagons longtemps découverts, où l'on reçoit la pluie et les escarbilles. Daumier, voyageur attentif, dessine les uns et les autres, sans jamais flatter personne.",
       "date": "1846",
       "image": {
@@ -9694,7 +9973,7 @@
           0.987,
           0.925
         ],
-        "fichier": "089.webp",
+        "fichier": "090.webp",
         "licence": "Domaine public",
         "largeur": 1452,
         "hauteur": 1600,
@@ -9740,7 +10019,7 @@
             "date": "vers 1862-1864",
             "technique": "huile sur toile",
             "conservation": "New York, Metropolitan Museum of Art",
-            "fichier": "089-b.webp",
+            "fichier": "090-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1157,
@@ -9765,7 +10044,7 @@
         }
       ],
       "audio": {
-        "fichier": "089.m4a",
+        "fichier": "090.m4a",
         "duree": 18.27,
         "phrases": [
           [
@@ -9788,7 +10067,7 @@
       }
     },
     {
-      "n": 90,
+      "n": 91,
       "narration": "Le chemin de fer est aussi une fièvre. À la Bourse, les actions des compagnies s'arrachent ; des fortunes se font et se défont en une séance. En 1848, la France compte plus de mille huit cents kilomètres de voies, bien moins que l'Angleterre.",
       "date": "1845",
       "date_fin": "1848",
@@ -9806,7 +10085,7 @@
           0.863,
           0.815
         ],
-        "fichier": "090.webp",
+        "fichier": "091.webp",
         "licence": "Domaine public",
         "largeur": 1072,
         "hauteur": 1600,
@@ -9845,7 +10124,7 @@
         }
       ],
       "audio": {
-        "fichier": "090.m4a",
+        "fichier": "091.m4a",
         "duree": 14.63,
         "phrases": [
           [
@@ -9864,7 +10143,7 @@
       }
     },
     {
-      "n": 91,
+      "n": 92,
       "narration": "Le long des voies court un fil. En 1845, on installe entre Paris et Rouen le premier télégraphe électrique français. Une impulsion de courant fait bouger deux aiguilles à l'autre bout de la ligne. La dépêche, que la nuit et le brouillard arrêtaient sur les tours de Chappe, passe désormais à toute heure.",
       "date": "1845",
       "image": {
@@ -9875,7 +10154,7 @@
         "date": "1868",
         "technique": "gravure sur bois",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "091.webp",
+        "fichier": "092.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1035,
@@ -9916,7 +10195,7 @@
             "date": "1868",
             "technique": "gravure sur bois",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "091-b.webp",
+            "fichier": "092-b.webp",
             "licence": "Domaine public",
             "largeur": 1012,
             "hauteur": 1600,
@@ -9948,7 +10227,7 @@
         }
       ],
       "audio": {
-        "fichier": "091.m4a",
+        "fichier": "092.m4a",
         "duree": 19.16,
         "phrases": [
           [
@@ -9971,7 +10250,7 @@
       }
     },
     {
-      "n": 92,
+      "n": 93,
       "narration": "La vapeur transforme aussi l'usine. Au Creusot, les frères Schneider, installés en 1836, fabriquent rails et locomotives ; à Fourchambault, à Decazeville, les hauts fourneaux passent au coke. Mulhouse file le coton à la mécanique ; mais la France reste un pays d'ateliers et de paysans.",
       "date": "1836",
       "date_fin": "1847",
@@ -9989,7 +10268,7 @@
           0.988,
           0.946
         ],
-        "fichier": "092.webp",
+        "fichier": "093.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1025,
@@ -10065,7 +10344,7 @@
             "date": "1840",
             "technique": "lithographie",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "092-b.webp",
+            "fichier": "093-b.webp",
             "licence": "Domaine public",
             "largeur": 1515,
             "hauteur": 1137,
@@ -10090,7 +10369,7 @@
         }
       ],
       "audio": {
-        "fichier": "092.m4a",
+        "fichier": "093.m4a",
         "duree": 19.26,
         "phrases": [
           [
@@ -10109,7 +10388,7 @@
       }
     },
     {
-      "n": 93,
+      "n": 94,
       "narration": "En 1840, le docteur Villermé publie une vaste enquête sur les ouvriers du textile, menée d'atelier en atelier. Il a vu, à Mulhouse, des enfants de six ans retenus quinze heures par jour dans les filatures. À Lille, des familles entières vivent dans des caves ; son Tableau bouleverse l'opinion.",
       "date": "1840",
       "image": {
@@ -10120,7 +10399,7 @@
         "date": "1840",
         "technique": "lithographie",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "093.webp",
+        "fichier": "094.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1201,
@@ -10159,7 +10438,7 @@
             "date": "1840",
             "technique": "lithographie",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "093-b.webp",
+            "fichier": "094-b.webp",
             "licence": "Domaine public",
             "largeur": 1536,
             "hauteur": 1176,
@@ -10184,7 +10463,7 @@
         }
       ],
       "audio": {
-        "fichier": "093.m4a",
+        "fichier": "094.m4a",
         "duree": 18.47,
         "phrases": [
           [
@@ -10203,7 +10482,7 @@
       }
     },
     {
-      "n": 94,
+      "n": 95,
       "narration": "Le 22 mars 1841, une loi interdit le travail avant huit ans dans les manufactures et limite la journée à huit heures jusqu'à douze ans. C'est la première loi sociale française. Mais faute d'inspecteurs payés, elle reste presque sans effet.",
       "date": "1841-03-22",
       "image": {
@@ -10214,7 +10493,7 @@
         "date": "vers 1840",
         "technique": "plume et encre brune",
         "conservation": "Jarville-la-Malgrange, musée de l'Histoire du fer",
-        "fichier": "094.webp",
+        "fichier": "095.webp",
         "licence": "Domaine public",
         "largeur": 1072,
         "hauteur": 1600,
@@ -10243,7 +10522,7 @@
         ]
       },
       "audio": {
-        "fichier": "094.m4a",
+        "fichier": "095.m4a",
         "duree": 13.31,
         "phrases": [
           [
@@ -10262,7 +10541,7 @@
       }
     },
     {
-      "n": 95,
+      "n": 96,
       "narration": "Car la misère ouvrière a désormais un nom : le paupérisme. À Paris, à Lille, à Rouen, on s'entasse dans des garnis sans air, et les enfants meurent en bas âge. Les romanciers s'en emparent. En 1842, les Mystères de Paris d'Eugène Sue passionnent la France entière.",
       "date": "1842",
       "image": {
@@ -10279,7 +10558,7 @@
           0.9,
           0.9
         ],
-        "fichier": "095.webp",
+        "fichier": "096.webp",
         "licence": "Domaine public",
         "largeur": 1183,
         "hauteur": 1600,
@@ -10331,7 +10610,7 @@
               0.906,
               0.941
             ],
-            "fichier": "095-b.webp",
+            "fichier": "096-b.webp",
             "licence": "Domaine public",
             "largeur": 1106,
             "hauteur": 1600,
@@ -10363,7 +10642,7 @@
         }
       ],
       "audio": {
-        "fichier": "095.m4a",
+        "fichier": "096.m4a",
         "duree": 17.6,
         "phrases": [
           [
@@ -10386,7 +10665,7 @@
       }
     },
     {
-      "n": 96,
+      "n": 97,
       "narration": "Des penseurs cherchent le remède ; les disciples de Saint-Simon veulent confier la société aux savants et aux industriels. Leur chef, le Père Enfantin, fonde en 1832 une communauté à Ménilmontant. La police la disperse, mais ses ingénieurs bâtiront les chemins de fer.",
       "image": {
         "commons": "File:Saint-Simon, fondateur de la religion nouvelle.jpg",
@@ -10402,7 +10681,7 @@
           0.73,
           0.705
         ],
-        "fichier": "096.webp",
+        "fichier": "097.webp",
         "licence": "Domaine public",
         "largeur": 1333,
         "hauteur": 1600,
@@ -10467,7 +10746,7 @@
               0.85,
               0.78
             ],
-            "fichier": "096-b.webp",
+            "fichier": "097-b.webp",
             "licence": "Domaine public",
             "largeur": 1285,
             "hauteur": 1600,
@@ -10499,7 +10778,7 @@
         }
       ],
       "audio": {
-        "fichier": "096.m4a",
+        "fichier": "097.m4a",
         "duree": 15.84,
         "phrases": [
           [
@@ -10518,7 +10797,7 @@
       }
     },
     {
-      "n": 97,
+      "n": 98,
       "narration": "Charles Fourier, lui, rêve de phalanstères, vastes palais-ateliers où environ seize cents associés travailleraient par plaisir et selon leurs goûts. Étienne Cabet décrit l'Icarie, cité de l'égalité parfaite, et popularise le mot communisme. Ces rêveurs, qu'on dira utopistes, posent une question neuve : à qui appartient le travail ?",
       "date": "1840",
       "image": {
@@ -10529,7 +10808,7 @@
         "date": "vers 1840",
         "technique": "lithographie",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "097.webp",
+        "fichier": "098.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 751,
@@ -10574,7 +10853,7 @@
             "date": "XIXe siècle",
             "technique": "dessin",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "097-b.webp",
+            "fichier": "098-b.webp",
             "licence": "Domaine public",
             "largeur": 1203,
             "hauteur": 1600,
@@ -10614,7 +10893,7 @@
             "date": "1846",
             "technique": "gravure",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "097-c.webp",
+            "fichier": "098-c.webp",
             "licence": "Domaine public",
             "largeur": 1163,
             "hauteur": 1600,
@@ -10647,7 +10926,7 @@
         }
       ],
       "audio": {
-        "fichier": "097.m4a",
+        "fichier": "098.m4a",
         "duree": 21.6,
         "phrases": [
           [
@@ -10666,7 +10945,7 @@
       }
     },
     {
-      "n": 98,
+      "n": 99,
       "narration": "En 1840, deux livres font scandale chez les bien-pensants. Louis Blanc, dans l'Organisation du travail, demande à l'État de créer des ateliers pour les ouvriers. Pierre-Joseph Proudhon, fils d'un tonnelier, pose une question et y répond : « La propriété, c'est le vol ! »",
       "date": "1840",
       "image": {
@@ -10683,7 +10962,7 @@
           0.82,
           0.82
         ],
-        "fichier": "098.webp",
+        "fichier": "099.webp",
         "licence": "Domaine public",
         "largeur": 1055,
         "hauteur": 1600,
@@ -10761,7 +11040,7 @@
             "date": "1862",
             "technique": "photographie",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "098-b.webp",
+            "fichier": "099-b.webp",
             "licence": "Domaine public",
             "largeur": 1200,
             "hauteur": 1600,
@@ -10793,7 +11072,7 @@
         }
       ],
       "audio": {
-        "fichier": "098.m4a",
+        "fichier": "099.m4a",
         "duree": 18.03,
         "phrases": [
           [
@@ -10812,7 +11091,7 @@
       }
     },
     {
-      "n": 99,
+      "n": 100,
       "narration": "Une femme va plus loin encore. En 1843, Flora Tristan appelle tous les ouvriers à former une seule union, et y inclut les ouvrières. Elle part prêcher de ville en ville, et meurt, épuisée, à Bordeaux en 1844, à quarante et un ans.",
       "date": "1843",
       "date_fin": "1844",
@@ -10824,7 +11103,7 @@
         "date": "1844",
         "technique": "lithographie",
         "conservation": "Paris, maison de Victor Hugo",
-        "fichier": "099.webp",
+        "fichier": "100.webp",
         "licence": "Domaine public",
         "largeur": 1532,
         "hauteur": 1600,
@@ -10869,7 +11148,7 @@
         }
       ],
       "audio": {
-        "fichier": "099.m4a",
+        "fichier": "100.m4a",
         "duree": 15.23,
         "phrases": [
           [
@@ -10888,7 +11167,7 @@
       }
     },
     {
-      "n": 100,
+      "n": 101,
       "narration": "La loi interdit toujours les grèves et les syndicats, et l'ouvrier doit présenter son livret, où le patron note ses dettes. Pourtant, en 1845, les charpentiers de Paris tiennent trois mois de grève. L'année suivante, Pierre Dupont, le chansonnier lyonnais des Bœufs, écrit pour eux tous le Chant des ouvriers.",
       "date": "1845",
       "date_fin": "1846",
@@ -10906,7 +11185,7 @@
           0.8,
           0.92
         ],
-        "fichier": "100.webp",
+        "fichier": "101.webp",
         "licence": "Domaine public",
         "largeur": 1145,
         "hauteur": 1600,
@@ -10953,7 +11232,7 @@
             "date": "1848",
             "technique": "partition imprimée",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "100-b.webp",
+            "fichier": "101-b.webp",
             "licence": "Domaine public",
             "largeur": 1287,
             "hauteur": 1600,
@@ -10985,7 +11264,7 @@
         }
       ],
       "audio": {
-        "fichier": "100.m4a",
+        "fichier": "101.m4a",
         "duree": 17.68,
         "phrases": [
           [
@@ -11005,7 +11284,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 101,
+      "n": 102,
       "narration": "Guizot gouverne pour durer, et d'abord en paix avec l'Angleterre. En septembre 1843, la jeune reine Victoria débarque au Tréport et séjourne au château d'Eu, chez Louis-Philippe. Aucun souverain anglais n'avait rendu visite à un roi de France depuis plus de trois siècles ; on parle d'entente cordiale.",
       "date": "1843-09-02",
       "image": {
@@ -11016,7 +11295,7 @@
         "date": "1844",
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national du château",
-        "fichier": "101.webp",
+        "fichier": "102.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 957,
@@ -11090,7 +11369,7 @@
             "date": "1843",
             "technique": "huile sur toile",
             "conservation": "Versailles, musée national du château",
-            "fichier": "101-b.webp",
+            "fichier": "102-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 919,
@@ -11115,7 +11394,7 @@
         }
       ],
       "audio": {
-        "fichier": "101.m4a",
+        "fichier": "102.m4a",
         "duree": 17.24,
         "phrases": [
           [
@@ -11134,7 +11413,324 @@
       }
     },
     {
-      "n": 102,
+      "narration": "Sur les mers pourtant, les deux pays rivalisent, et la marine française cherche des points d'appui. Sur la côte d'Afrique, ses officiers signent des traités avec des chefs, comme le roi Denis, au Gabon, en 1839. Près de Madagascar, la reine Tsiomeko cède Nossi-Bé, et le sultan Andriantsoly vend Mayotte en 1841, contre une rente.",
+      "image": {
+        "commons": "File:E. Bouët-Willaumez et les chefs indigènes.jpg",
+        "titre": "Palabre entre le commandant Bouët-Willaumez et les chefs de la côte de Krou",
+        "titre_court": "Bouët-Willaumez et des chefs de la côte d'Afrique",
+        "auteur": "Stanislas Darondeau",
+        "date": "avant 1841, publiée en 1890",
+        "technique": "aquarelle, gravée pour l'édition de 1890",
+        "conservation": "New York Public Library",
+        "fichier": "103.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1158,
+        "utile": [
+          0.02,
+          0.011,
+          0.981,
+          0.923
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.03,
+              0.35,
+              0.96,
+              0.88
+            ]
+          }
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.02,
+              0.08,
+              0.52,
+              0.46
+            ]
+          ],
+          "duree": 5,
+          "intention": "On recule depuis le palmier, qui situe la côte d'Afrique, jusqu'à la palabre sous la case."
+        }
+      },
+      "plans": [
+        {
+          "quand": "Près de Madagascar",
+          "image": {
+            "commons": "File:Carte de l'île Mayotte - lith. Charpentier - btv1b53088264g.jpg",
+            "titre": "Carte de l'île Mayotte",
+            "titre_court": "Carte de l'île Mayotte, 1845",
+            "auteur": "lithographie de Henri-Désiré Charpentier",
+            "date": "1845",
+            "technique": "carte lithographiée",
+            "conservation": "Paris, Bibliothèque nationale de France",
+            "fichier": "103-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1177,
+            "hauteur": 1600,
+            "utile": [
+              0.092,
+              0.08,
+              0.946,
+              0.932
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.28,
+                  0.35,
+                  0.9,
+                  0.6
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.28,
+              0.35,
+              0.9,
+              0.6
+            ]
+          },
+          "instant": 12.93,
+          "camera_manuelle": true
+        }
+      ],
+      "n": 103,
+      "audio": {
+        "fichier": "103.m4a",
+        "duree": 21.38,
+        "phrases": [
+          [
+            0.0,
+            5.16
+          ],
+          [
+            6.25,
+            12.66
+          ],
+          [
+            13.23,
+            21.38
+          ]
+        ]
+      }
+    },
+    {
+      "narration": "Dans le Pacifique, l'amiral Dupetit-Thouars prend possession des îles Marquises en 1842. Puis, de sa propre initiative, il fait voile vers Tahiti, royaume gagné au protestantisme par des missionnaires anglais. Sous la menace de ses canons, la reine Pomaré IV signe, en septembre, un traité de protectorat.",
+      "image": {
+        "commons": "File:Rapport adressé à M. le Ministre de la marine et des colonies par M. le contre-amiral Dupetit-Thouars sur la prise en possession, au nom du Roi, des îles Marquises... - estampe - btv1b8414958w.jpg",
+        "titre": "Rapport du contre-amiral Dupetit-Thouars sur la prise de possession, au nom du roi, des îles Marquises",
+        "titre_court": "La prise de possession des Marquises, feuille illustrée",
+        "auteur": "anonyme, imprimerie Chassaignon, Paris",
+        "date": "1842",
+        "technique": "estampe et texte imprimé",
+        "conservation": "Paris, Bibliothèque nationale de France",
+        "fichier": "104.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 773,
+        "recadrage": [
+          0.03,
+          0.02,
+          0.97,
+          0.57
+        ],
+        "utile": [
+          0.068,
+          0.175,
+          0.946,
+          1.0
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.13,
+              0.18,
+              0.74,
+              0.69
+            ]
+          }
+        ],
+        "entier": true,
+        "entier_manuel": true,
+        "entier_vers": [
+          0.2,
+          0.2,
+          0.7,
+          0.72
+        ],
+        "entier_zoom": 1.2
+      },
+      "plans": [
+        {
+          "quand": "Sous la menace de ses canons",
+          "image": {
+            "commons": "File:TahitiDupetitThouars.jpg",
+            "titre": "Dupetit-Thouars prend possession de Tahiti, 9 septembre 1842",
+            "titre_court": "L'escadre française à Tahiti, 9 septembre 1842",
+            "auteur": "Louis Le Breton",
+            "date": "non datée",
+            "technique": "estampe",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "104-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 827,
+            "utile": [
+              0.0,
+              0.286,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.077,
+                  0.316,
+                  0.923,
+                  0.793
+                ]
+              }
+            ]
+          },
+          "instant": 13.81
+        }
+      ],
+      "n": 104,
+      "audio": {
+        "fichier": "104.m4a",
+        "duree": 19.4,
+        "phrases": [
+          [
+            0.0,
+            5.38
+          ],
+          [
+            6.31,
+            12.73
+          ],
+          [
+            14.11,
+            19.4
+          ]
+        ]
+      },
+      "camera_manuelle": true
+    },
+    {
+      "narration": "La reine résiste, conseillée par le pasteur Pritchard, consul d'Angleterre ; en novembre 1843, l'amiral annexe l'île. En 1844, les Français emprisonnent puis expulsent Pritchard, et Londres exige des excuses et une indemnité. Guizot accepte d'indemniser le pasteur et s'en tient au protectorat ; l'opposition l'accuse de servilité, et la guerre dure à Tahiti jusqu'en 1846.",
+      "date": "1844",
+      "personnes": [
+        {
+          "id": "guizot",
+          "quand": "Guizot",
+          "instant": 16.59
+        }
+      ],
+      "image": {
+        "commons": "File:Pomare, Queen of Tahiti, the persecuted Christian, by George Baxter, 1845 (frameless, digital restoration).jpg",
+        "titre": "Pomaré, reine de Tahiti, « la chrétienne persécutée », avec sa famille au moment du débarquement français",
+        "titre_court": "La reine Pomaré IV et sa famille, estampe anglaise",
+        "auteur": "George Baxter",
+        "date": "1845",
+        "technique": "estampe en couleurs",
+        "conservation": "Canberra, National Library of Australia",
+        "fichier": "105.webp",
+        "licence": "Domaine public",
+        "largeur": 1361,
+        "hauteur": 1600,
+        "utile": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.28,
+              0.188,
+              0.85,
+              0.522
+            ]
+          }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.28,
+          0.188,
+          0.85,
+          0.522
+        ]
+      },
+      "plans": [
+        {
+          "quand": "En 1844, les Français",
+          "image": {
+            "commons": "File:George Pritchard, Her Britannic Majesty's Consul (1845) by George Baxter (cropped).jpg",
+            "titre": "George Pritchard, consul de Sa Majesté britannique, devant la baie de Papeete",
+            "titre_court": "George Pritchard, consul britannique",
+            "auteur": "George Baxter",
+            "date": "1845",
+            "technique": "estampe en couleurs",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "105-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1365,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.42,
+                  0.16,
+                  0.85,
+                  0.5
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.42,
+              0.16,
+              0.85,
+              0.5
+            ],
+            "entier_zoom": 1.25
+          },
+          "instant": 8.3
+        }
+      ],
+      "n": 105,
+      "audio": {
+        "fichier": "105.m4a",
+        "duree": 25.69,
+        "phrases": [
+          [
+            0.0,
+            7.83
+          ],
+          [
+            8.6,
+            15.32
+          ],
+          [
+            16.54,
+            25.69
+          ]
+        ]
+      }
+    },
+    {
+      "n": 106,
       "narration": "À la Chambre, Guizot s'appuie sur une majorité de fonctionnaires-députés, tenus par les places. À ceux qui réclament le droit de vote, il aurait répondu : « Enrichissez-vous ». La formule, dont on discute le texte exact, voulait dire : devenez électeurs par le travail et l'épargne. Elle est restée comme un aveu.",
       "image": {
         "commons": "File:Guizot - DPLA - 3beb0aeed48aac6903be90dccfa89a91.jpg",
@@ -11150,7 +11746,7 @@
           0.815,
           0.855
         ],
-        "fichier": "102.webp",
+        "fichier": "106.webp",
         "licence": "Domaine public",
         "largeur": 1332,
         "hauteur": 1600,
@@ -11200,7 +11796,7 @@
         }
       ],
       "audio": {
-        "fichier": "102.m4a",
+        "fichier": "106.m4a",
         "duree": 18.93,
         "phrases": [
           [
@@ -11223,7 +11819,111 @@
       }
     },
     {
-      "n": 103,
+      "narration": "Dans les colonies aussi, on temporise : l'esclavage dure toujours. Depuis 1834, une société abolitionniste, présidée par le duc de Broglie, réclame une émancipation prudente. Victor Schœlcher, revenu des Antilles, la veut immédiate. En 1845, les lois Mackau limitent le fouet et permettent à l'esclave de racheter sa liberté ; les conseils des colons résistent.",
+      "date": "1845-07",
+      "personnes_vues": [
+        {
+          "id": "schoelcher",
+          "quand": "Victor Schœlcher"
+        }
+      ],
+      "image": {
+        "commons": "File:Esclaves de la Guadeloupe charroyant du fumier.png",
+        "titre": "Esclaves de la Guadeloupe charroyant du fumier, planche de la Revue des colonies de Cyrille Bissette",
+        "titre_court": "Esclaves de la Guadeloupe",
+        "auteur": "Rigo frères, d'après Edward May",
+        "date": "vers 1835",
+        "technique": "lithographie",
+        "conservation": "Londres, Royal Museums Greenwich",
+        "fichier": "107.webp",
+        "licence": "Domaine public",
+        "largeur": 1208,
+        "hauteur": 843,
+        "utile": [
+          0.105,
+          0.145,
+          0.886,
+          0.866
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.1,
+              0.38,
+              0.89,
+              0.82
+            ]
+          }
+        ]
+      },
+      "plans": [
+        {
+          "quand": "Victor Schœlcher, revenu",
+          "image": {
+            "commons": "File:Victor Schœlcher par Henri Decaisne.jpg",
+            "titre": "Portrait de Victor Schœlcher",
+            "titre_court": "Victor Schœlcher en 1832",
+            "auteur": "Henri Decaisne",
+            "date": "1832",
+            "technique": "huile sur toile",
+            "conservation": "lieu de conservation non identifié",
+            "fichier": "107-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1199,
+            "hauteur": 1600,
+            "utile": [
+              0.0,
+              0.0,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.24,
+                  0.06,
+                  0.67,
+                  0.38
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.259,
+              0.0,
+              0.648,
+              0.437
+            ]
+          },
+          "instant": 12.3
+        }
+      ],
+      "n": 107,
+      "audio": {
+        "fichier": "107.m4a",
+        "duree": 24.23,
+        "phrases": [
+          [
+            0.0,
+            3.93
+          ],
+          [
+            4.52,
+            11.96
+          ],
+          [
+            12.6,
+            15.93
+          ],
+          [
+            16.67,
+            24.23
+          ]
+        ]
+      }
+    },
+    {
+      "n": 108,
       "narration": "En 1846, le pays compte environ deux cent quarante mille électeurs pour trente-cinq millions d'habitants. L'opposition demande d'abaisser le cens à cent francs et d'ajouter les diplômés. Guizot refuse tout : pour lui, le régime est achevé. Les élections de 1846 lui donnent sa plus forte majorité.",
       "date": "1846-08",
       "image": {
@@ -11240,7 +11940,7 @@
           0.952,
           0.931
         ],
-        "fichier": "103.webp",
+        "fichier": "108.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1078,
@@ -11288,7 +11988,7 @@
         }
       ],
       "audio": {
-        "fichier": "103.m4a",
+        "fichier": "108.m4a",
         "duree": 19.32,
         "phrases": [
           [
@@ -11311,7 +12011,7 @@
       }
     },
     {
-      "n": 104,
+      "n": 109,
       "narration": "Le roi a soixante-treize ans ; il a échappé à plusieurs attentats et se croit indispensable. Il n'écoute plus que Guizot et sa sœur, Madame Adélaïde, qui meurt à la fin de 1847. Aux Tuileries, on ne voit pas le pays changer.",
       "date": "1847",
       "image": {
@@ -11322,7 +12022,7 @@
         "date": "1847",
         "technique": "huile sur toile",
         "conservation": "collection particulière",
-        "fichier": "104.webp",
+        "fichier": "109.webp",
         "licence": "Domaine public",
         "largeur": 848,
         "hauteur": 1600,
@@ -11371,7 +12071,7 @@
         }
       ],
       "audio": {
-        "fichier": "104.m4a",
+        "fichier": "109.m4a",
         "duree": 14.68,
         "phrases": [
           [
@@ -11390,7 +12090,7 @@
       }
     },
     {
-      "n": 105,
+      "n": 110,
       "narration": "L'orage vient d'ailleurs. En 1845, une maladie détruit les pommes de terre ; en 1846, la sécheresse brûle les blés. Le prix du pain double presque en quelques mois. Dans les campagnes, on arrête les convois de grains ; à Buzançais, en janvier 1847, l'émeute tue un propriétaire.",
       "date": "1846",
       "date_fin": "1847-01",
@@ -11408,7 +12108,7 @@
           0.921,
           0.834
         ],
-        "fichier": "105.webp",
+        "fichier": "110.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 990,
@@ -11458,7 +12158,7 @@
         }
       ],
       "audio": {
-        "fichier": "105.m4a",
+        "fichier": "110.m4a",
         "duree": 21.16,
         "phrases": [
           [
@@ -11481,7 +12181,7 @@
       }
     },
     {
-      "n": 106,
+      "n": 111,
       "narration": "La disette ruine le commerce : les familles n'achètent plus que du pain. Les ateliers ferment, les chantiers de chemin de fer s'arrêtent, la Banque de France manque d'or. En 1847, des centaines de milliers d'ouvriers sont sans travail ; le pouvoir attend que cela passe.",
       "date": "1847",
       "image": {
@@ -11498,7 +12198,7 @@
           1,
           0.962
         ],
-        "fichier": "106.webp",
+        "fichier": "111.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 573,
@@ -11538,7 +12238,7 @@
         ]
       },
       "audio": {
-        "fichier": "106.m4a",
+        "fichier": "111.m4a",
         "duree": 18.31,
         "phrases": [
           [
@@ -11557,7 +12257,7 @@
       }
     },
     {
-      "n": 107,
+      "n": 112,
       "narration": "Au même moment, les scandales éclaboussent les sommets. En juillet 1847, la Chambre des pairs juge deux anciens ministres. Le général Cubières a versé près de cent mille francs à l'ancien ministre Teste, pour obtenir une mine de sel. Teste est condamné à trois ans de prison.",
       "date": "1847-07",
       "image": {
@@ -11574,7 +12274,7 @@
           0.88,
           0.82
         ],
-        "fichier": "107.webp",
+        "fichier": "112.webp",
         "licence": "Domaine public",
         "largeur": 1482,
         "hauteur": 1600,
@@ -11627,7 +12327,7 @@
             "date": "vers 1889",
             "technique": "gravure sur bois",
             "conservation": "Paris, maison de Victor Hugo",
-            "fichier": "107-b.webp",
+            "fichier": "112-b.webp",
             "licence": "Domaine public",
             "largeur": 627,
             "hauteur": 720,
@@ -11674,7 +12374,7 @@
         }
       ],
       "audio": {
-        "fichier": "107.m4a",
+        "fichier": "112.m4a",
         "duree": 18.18,
         "phrases": [
           [
@@ -11697,7 +12397,7 @@
       }
     },
     {
-      "n": 108,
+      "n": 113,
       "narration": "Un mois plus tard, le duc de Choiseul-Praslin, pair de France, tue sa femme d'une trentaine de coups de couteau. Le crime a lieu dans leur hôtel du faubourg Saint-Honoré. Arrêté, il s'empoisonne à l'arsenic avant d'être jugé. Dans la rue, on murmure que les grands ont décidément tous les droits.",
       "date": "1847-08-18",
       "image": {
@@ -11714,7 +12414,7 @@
           0.782,
           0.833
         ],
-        "fichier": "108.webp",
+        "fichier": "113.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1217,
@@ -11761,7 +12461,7 @@
               0.867,
               0.859
             ],
-            "fichier": "108-b.webp",
+            "fichier": "113-b.webp",
             "licence": "Domaine public",
             "largeur": 1434,
             "hauteur": 1600,
@@ -11800,7 +12500,7 @@
         }
       ],
       "audio": {
-        "fichier": "108.m4a",
+        "fichier": "113.m4a",
         "duree": 17.74,
         "phrases": [
           [
@@ -11823,7 +12523,7 @@
       }
     },
     {
-      "n": 109,
+      "n": 114,
       "narration": "Au Salon de 1847, la foule s'arrête devant une toile immense de Thomas Couture, les Romains de la décadence. Chacun y lit le portrait du régime. La même année, l'Histoire des Girondins de Lamartine rend à la Révolution son éclat ; on se l'arrache.",
       "date": "1847",
       "image": {
@@ -11834,7 +12534,7 @@
         "date": "1847",
         "technique": "huile sur toile",
         "conservation": "Paris, musée d'Orsay",
-        "fichier": "109.webp",
+        "fichier": "114.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 955,
@@ -11895,7 +12595,7 @@
             "date": "vers 1840",
             "technique": "gravure",
             "conservation": "Amsterdam, Rijksmuseum",
-            "fichier": "109-b.webp",
+            "fichier": "114-b.webp",
             "licence": "Domaine public",
             "largeur": 1183,
             "hauteur": 1600,
@@ -11927,7 +12627,7 @@
         }
       ],
       "audio": {
-        "fichier": "109.m4a",
+        "fichier": "114.m4a",
         "duree": 16.4,
         "phrases": [
           [
@@ -11946,7 +12646,7 @@
       }
     },
     {
-      "n": 110,
+      "n": 115,
       "narration": "Les réunions politiques étant interdites, l'opposition trouve une ruse : des banquets, où l'on porte des toasts à la réforme. Le premier réunit douze cents convives à Paris, au Château-Rouge, le 9 juillet 1847. En six mois, environ soixante-dix banquets se tiennent dans tout le pays.",
       "date": "1847-07-09",
       "image": {
@@ -11957,7 +12657,7 @@
         "date": "vers 1847",
         "technique": "feuille de chanson",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "110.webp",
+        "fichier": "115.webp",
         "licence": "Domaine public",
         "largeur": 1095,
         "hauteur": 1600,
@@ -11997,7 +12697,7 @@
         }
       ],
       "audio": {
-        "fichier": "110.m4a",
+        "fichier": "115.m4a",
         "duree": 17.46,
         "phrases": [
           [
@@ -12017,7 +12717,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 111,
+      "n": 116,
       "narration": "Les modérés, autour d'Odilon Barrot, chef de la gauche dynastique, ne veulent qu'élargir un peu le droit de vote. Mais à Lille, à Dijon, à Chalon, des radicaux prennent la parole : Ledru-Rollin y réclame le suffrage universel et parle des droits des travailleurs. Le toast au roi disparaît.",
       "date": "1847-11",
       "image": {
@@ -12034,7 +12734,7 @@
           0.874,
           0.928
         ],
-        "fichier": "111.webp",
+        "fichier": "116.webp",
         "licence": "Domaine public",
         "largeur": 1038,
         "hauteur": 1600,
@@ -12108,7 +12808,7 @@
               0.902,
               0.815
             ],
-            "fichier": "111-b.webp",
+            "fichier": "116-b.webp",
             "licence": "Domaine public",
             "largeur": 1245,
             "hauteur": 1600,
@@ -12141,7 +12841,7 @@
         }
       ],
       "audio": {
-        "fichier": "111.m4a",
+        "fichier": "116.m4a",
         "duree": 17.52,
         "phrases": [
           [
@@ -12160,7 +12860,7 @@
       }
     },
     {
-      "n": 112,
+      "n": 117,
       "narration": "Le 27 janvier 1848, Alexis de Tocqueville monte à la tribune de la Chambre. Il décrit des classes ouvrières gagnées par des idées qui visent la société elle-même. Et il prévient : « je crois que nous nous endormons à l'heure qu'il est sur un volcan ». La majorité n'écoute pas.",
       "date": "1848-01-27",
       "image": {
@@ -12171,7 +12871,7 @@
         "date": "1850",
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national du château",
-        "fichier": "112.webp",
+        "fichier": "117.webp",
         "licence": "Domaine public",
         "largeur": 1183,
         "hauteur": 1600,
@@ -12267,7 +12967,7 @@
         }
       ],
       "audio": {
-        "fichier": "112.m4a",
+        "fichier": "117.m4a",
         "duree": 16.3,
         "phrases": [
           [
@@ -12290,7 +12990,7 @@
       }
     },
     {
-      "n": 113,
+      "n": 118,
       "narration": "Le roi, dans son discours du trône, a dénoncé des passions ennemies ou aveugles. Un dernier banquet, prévu à Paris le 22 février 1848, est interdit. Les députés renoncent ; les étudiants et les ouvriers, eux, descendent quand même vers la Madeleine.",
       "date": "1848-02-22",
       "image": {
@@ -12307,7 +13007,7 @@
           0.92,
           0.86
         ],
-        "fichier": "113.webp",
+        "fichier": "118.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1123,
@@ -12335,7 +13035,19 @@
             ],
             "quand": "les étudiants et les ouvriers"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.14,
+              0.14,
+              0.5,
+              0.44
+            ]
+          ],
+          "duree": 5,
+          "intention": "On descend le long de la colonne rostrale et de ses lanternes jusqu'à la foule massée sur la place de la Concorde."
+        }
       },
       "objets": [
         {
@@ -12345,7 +13057,7 @@
         }
       ],
       "audio": {
-        "fichier": "113.m4a",
+        "fichier": "118.m4a",
         "duree": 16.26,
         "phrases": [
           [
@@ -12364,7 +13076,7 @@
       }
     },
     {
-      "n": 114,
+      "n": 119,
       "narration": "Le 23, la garde nationale elle-même crie vive la réforme ; le roi, stupéfait, renvoie Guizot. Mais le soir, boulevard des Capucines, un coup de feu part, la troupe tire dans la foule : des dizaines de morts. On promène les cadavres dans une charrette, à la lueur des torches, en criant vengeance.",
       "date": "1848-02-23",
       "image": {
@@ -12381,7 +13093,7 @@
           0.838,
           0.839
         ],
-        "fichier": "114.webp",
+        "fichier": "119.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1221,
@@ -12445,7 +13157,7 @@
               0.777,
               0.729
             ],
-            "fichier": "114-b.webp",
+            "fichier": "119-b.webp",
             "licence": "Domaine public",
             "largeur": 1083,
             "hauteur": 1600,
@@ -12477,7 +13189,7 @@
         }
       ],
       "audio": {
-        "fichier": "114.m4a",
+        "fichier": "119.m4a",
         "duree": 20.41,
         "phrases": [
           [
@@ -12496,7 +13208,7 @@
       }
     },
     {
-      "n": 115,
+      "n": 120,
       "narration": "Au matin du 24 février, Paris est couvert de barricades. Aux Tuileries, le vieux roi passe une dernière fois ses troupes en revue ; la garde nationale l'accueille par des cris hostiles. Vers midi, il abdique en faveur de son petit-fils, et part en fiacre.",
       "date": "1848-02-24",
       "image": {
@@ -12507,7 +13219,7 @@
         "date": "1848",
         "technique": "huile sur toile",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "115.webp",
+        "fichier": "120.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1193,
@@ -12526,7 +13238,19 @@
               0.8
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.53,
+              0.142,
+              0.97,
+              0.478
+            ]
+          ],
+          "duree": 5,
+          "intention": "On recule depuis le clocher et la fumée, à droite, jusqu'à la place où brûlent les voitures du Château-d'Eau."
+        }
       },
       "lieux": [
         {
@@ -12555,7 +13279,7 @@
               0.736,
               0.647
             ],
-            "fichier": "115-b.webp",
+            "fichier": "120-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 965,
@@ -12580,7 +13304,7 @@
         }
       ],
       "audio": {
-        "fichier": "115.m4a",
+        "fichier": "120.m4a",
         "duree": 13.91,
         "phrases": [
           [
@@ -12599,7 +13323,7 @@
       }
     },
     {
-      "n": 116,
+      "n": 121,
       "narration": "Dix-huit ans plus tôt, les barricades avaient fait ce roi ; elles le défont. La monarchie de Juillet laisse l'école primaire, les chemins de fer, l'Algérie conquise, et un peuple qu'elle n'a pas voulu entendre. La foule emporte le trône des Tuileries et le brûle place de la Bastille : la République commence.",
       "image": {
         "commons": "File:Le gamin de Paris aux Tuileries, Paris Musées 20230513172737.jpg",
@@ -12615,7 +13339,7 @@
           0.932,
           0.802
         ],
-        "fichier": "116.webp",
+        "fichier": "121.webp",
         "licence": "Domaine public",
         "largeur": 1405,
         "hauteur": 1600,
@@ -12669,7 +13393,7 @@
               0.833,
               0.741
             ],
-            "fichier": "116-b.webp",
+            "fichier": "121-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1101,
@@ -12694,7 +13418,7 @@
         }
       ],
       "audio": {
-        "fichier": "116.m4a",
+        "fichier": "121.m4a",
         "duree": 18.91,
         "phrases": [
           [
@@ -13610,7 +14334,7 @@
         "largeur": 520,
         "hauteur": 640
       },
-      "apres": 70,
+      "apres": 71,
       "source": {
         "page": "Choses_vues/1840/Funérailles_de_Napoléon",
         "edition": "texte de l'édition Ollendorff (1913)"
@@ -14029,7 +14753,7 @@
       "reference": "rapport de la commission de la Chambre des députés, première partie",
       "ecrivains": "algerie",
       "portrait": {
-        "diapositive": 112,
+        "diapositive": 117,
         "cadre": [
           0.32,
           0.11,
@@ -14037,7 +14761,7 @@
           0.4
         ]
       },
-      "apres": 81,
+      "apres": 82,
       "source": {
         "page": "Œuvres_complètes_d’Alexis_de_Tocqueville,_Lévy/Rapport_sur_les_affaires_d’Afrique/Première_partie",
         "edition": "texte des Œuvres complètes, Michel Lévy (1866)"
@@ -14535,7 +15259,7 @@
         "largeur": 504,
         "hauteur": 640
       },
-      "apres": 88,
+      "apres": 89,
       "source": {
         "page": "Les_Destinées_(recueil)/La_Maison_du_berger",
         "edition": "texte de l'édition de 1864"
@@ -15023,7 +15747,7 @@
       "reference": "chapitre III, « Le pourquoi je mentionne les femmes »",
       "ecrivains": "tristan",
       "portrait": {
-        "diapositive": 99,
+        "diapositive": 100,
         "cadre": [
           0.28,
           0.1,
@@ -15031,7 +15755,7 @@
           0.62
         ]
       },
-      "apres": 99,
+      "apres": 100,
       "source": {
         "page": "Union_ouvrière/Chapitre_3",
         "edition": "texte de la 2e édition (1844)"
@@ -15521,7 +16245,7 @@
       "sources": [
         "Charles-André Julien, Histoire de l'Algérie contemporaine, t. I, La Conquête et les débuts de la colonisation (1827-1871), PUF, 1964"
       ],
-      "apres": 78,
+      "apres": 79,
       "audio": {
         "fichier": "episodes/algerie.m4a",
         "duree": 56.32,
@@ -15884,7 +16608,7 @@
         "Loi du 11 juin 1842 relative à l'établissement de grandes lignes de chemins de fer",
         "François Caron, Histoire des chemins de fer en France, t. I, 1740-1883, Fayard, 1997"
       ],
-      "apres": 87,
+      "apres": 88,
       "audio": {
         "fichier": "episodes/etoile.m4a",
         "duree": 39.6,
@@ -15928,6 +16652,582 @@
           [
             35.1,
             39.6
+          ]
+        ]
+      }
+    },
+    {
+      "id": "empire-1847",
+      "apres": 105,
+      "titre": "L'empire en 1847",
+      "date": "1847",
+      "narration": "Que possède la France outre-mer en 1847 ? Elle garde ses vieilles colonies, rendues en 1814 : la Martinique, la Guadeloupe, la Guyane et l'île Bourbon, où l'esclavage dure toujours. Elle tient aussi Saint-Pierre-et-Miquelon, les comptoirs du Sénégal et ceux de l'Inde. La grande nouveauté est au sud de la Méditerranée : l'Algérie. À l'autre bout du monde, dans le Pacifique, son drapeau flotte sur les îles Marquises et sur Tahiti, royaume placé sous protectorat. Entre les deux, quelques points jalonnent les côtes de l'Afrique. Sur la côte d'Afrique, la marine a bâti des postes fortifiés à Grand-Bassam, à Assinie et au Gabon. Près de Madagascar, elle occupe deux îles, Nossi-Bé et Mayotte. Tout cela s'est fait en moins de vingt ans. Alger tombe en 1830. Nossi-Bé est occupée en 1841, les Marquises et Tahiti suivent en 1842, puis Mayotte et les postes d'Afrique en 1843. En 1847, Abd el-Kader se rend. Hors l'Algérie, ce ne sont que des escales pour les navires. Mais la France a repris pied sur trois océans.",
+      "visuels": [
+        {
+          "type": "carton",
+          "texte": "L'empire en 1847",
+          "sous": "Ce qui s'est ajouté depuis 1815"
+        },
+        {
+          "type": "carte",
+          "fond": "empire",
+          "titre": "L'empire en 1847 : avec leur année, les acquisitions depuis 1815",
+          "elements": [
+            {
+              "type": "ville",
+              "lieu": [
+                -56.3,
+                46.9
+              ],
+              "libelle": "Saint-Pierre-et-Miquelon",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "Saint-Pierre-et-Miquelon"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -61.0,
+                14.6
+              ],
+              "libelle": "Martinique, Guadeloupe",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "la Martinique"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -54.3,
+                  6.5
+                ],
+                [
+                  -51.0,
+                  5.2
+                ],
+                [
+                  -51.65,
+                  4.0
+                ],
+                [
+                  -52.0,
+                  3.2
+                ],
+                [
+                  -52.6,
+                  2.4
+                ],
+                [
+                  -53.8,
+                  2.2
+                ],
+                [
+                  -54.6,
+                  2.3
+                ],
+                [
+                  -54.2,
+                  2.9
+                ],
+                [
+                  -54.0,
+                  3.6
+                ],
+                [
+                  -54.45,
+                  4.4
+                ],
+                [
+                  -54.45,
+                  5.0
+                ],
+                [
+                  -54.0,
+                  5.7
+                ]
+              ],
+              "style": "hachures",
+              "quand": "la Guyane"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -52.33,
+                4.93
+              ],
+              "libelle": "Guyane",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "la Guyane"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -16.5,
+                16.03
+              ],
+              "libelle": "Saint-Louis",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "les comptoirs du Sénégal"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -17.4,
+                14.67
+              ],
+              "libelle": "Gorée",
+              "rebelle": true,
+              "position": "gauche",
+              "quand": "les comptoirs du Sénégal"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                55.5,
+                -21.1
+              ],
+              "libelle": "Île Bourbon",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "l'île Bourbon"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                79.83,
+                11.93
+              ],
+              "libelle": "Pondichéry",
+              "rebelle": true,
+              "position": "gauche",
+              "quand": "ceux de l'Inde"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                88.37,
+                22.87
+              ],
+              "libelle": "Chandernagor",
+              "rebelle": true,
+              "position": "gauche",
+              "quand": "ceux de l'Inde"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -2.2,
+                  35.6
+                ],
+                [
+                  -2.2,
+                  35.0
+                ],
+                [
+                  -1.7,
+                  34.5
+                ],
+                [
+                  -1.2,
+                  34.0
+                ],
+                [
+                  1.0,
+                  33.9
+                ],
+                [
+                  3.0,
+                  34.2
+                ],
+                [
+                  5.7,
+                  34.6
+                ],
+                [
+                  7.6,
+                  34.6
+                ],
+                [
+                  8.3,
+                  35.0
+                ],
+                [
+                  8.4,
+                  36.2
+                ],
+                [
+                  8.7,
+                  37.3
+                ],
+                [
+                  5.0,
+                  37.6
+                ],
+                [
+                  1.0,
+                  37.2
+                ]
+              ],
+              "style": "hachures",
+              "quand": "l'Algérie"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                3.06,
+                36.78
+              ],
+              "libelle": "Algérie (1830)",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "l'Algérie"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -3.5,
+                5.15
+              ],
+              "libelle": "Grand-Bassam, Assinie (1843)",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "quelques points jalonnent"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                9.45,
+                0.39
+              ],
+              "libelle": "Gabon (1843)",
+              "rebelle": true,
+              "position": "droite",
+              "quand": "quelques points jalonnent"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                46.7,
+                -13.0
+              ],
+              "libelle": "Nossi-Bé, Mayotte (1841, 1843)",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "quelques points jalonnent"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -139.5,
+                -9.4
+              ],
+              "libelle": "Îles Marquises (1842)",
+              "rebelle": true,
+              "position": "droite",
+              "quand": "les îles Marquises"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -149.4,
+                -17.65
+              ],
+              "libelle": "Tahiti (protectorat, 1842)",
+              "rebelle": true,
+              "position": "droite",
+              "quand": "sur Tahiti"
+            }
+          ],
+          "legende": [
+            [
+              "rebelle",
+              "île, comptoir ou poste français"
+            ],
+            [
+              "zone",
+              "territoire aux limites incertaines"
+            ]
+          ],
+          "source": "Fond Natural Earth ; acquisitions d'après les traités et prises de possession de 1830 à 1843 (voir les sources de l'épisode) ; limites de l'Algérie simplifiées",
+          "cadre": [
+            -160,
+            -36,
+            95,
+            60
+          ],
+          "quand": "Elle garde ses vieilles colonies"
+        },
+        {
+          "type": "carte",
+          "fond": "empire",
+          "titre": "Les côtes de l'Afrique et l'océan Indien en 1847",
+          "elements": [
+            {
+              "type": "ville",
+              "lieu": [
+                -16.5,
+                16.03
+              ],
+              "libelle": "Saint-Louis",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -17.4,
+                14.67
+              ],
+              "libelle": "Gorée",
+              "rebelle": true,
+              "position": "gauche"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                55.5,
+                -21.1
+              ],
+              "libelle": "Île Bourbon",
+              "rebelle": true,
+              "position": "bas"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -2.2,
+                  35.6
+                ],
+                [
+                  -2.2,
+                  35.0
+                ],
+                [
+                  -1.7,
+                  34.5
+                ],
+                [
+                  -1.2,
+                  34.0
+                ],
+                [
+                  1.0,
+                  33.9
+                ],
+                [
+                  3.0,
+                  34.2
+                ],
+                [
+                  5.7,
+                  34.6
+                ],
+                [
+                  7.6,
+                  34.6
+                ],
+                [
+                  8.3,
+                  35.0
+                ],
+                [
+                  8.4,
+                  36.2
+                ],
+                [
+                  8.7,
+                  37.3
+                ],
+                [
+                  5.0,
+                  37.6
+                ],
+                [
+                  1.0,
+                  37.2
+                ]
+              ],
+              "libelle": "Algérie (1830)",
+              "style": "hachures",
+              "etiquette": [
+                3.5,
+                31.5
+              ]
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -3.5,
+                5.15
+              ],
+              "libelle": "Grand-Bassam et Assinie (1843)",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "à Grand-Bassam"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                9.45,
+                0.39
+              ],
+              "libelle": "Gabon (1843)",
+              "rebelle": true,
+              "position": "droite",
+              "quand": "au Gabon"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                48.27,
+                -13.33
+              ],
+              "libelle": "Nossi-Bé (1841)",
+              "rebelle": true,
+              "position": "droite",
+              "quand": "deux îles"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                45.15,
+                -12.8
+              ],
+              "libelle": "Mayotte (1843)",
+              "rebelle": true,
+              "position": "gauche",
+              "quand": "deux îles"
+            }
+          ],
+          "legende": [
+            [
+              "rebelle",
+              "île, comptoir ou poste français"
+            ],
+            [
+              "zone",
+              "territoire aux limites incertaines"
+            ]
+          ],
+          "source": "Fond Natural Earth ; acquisitions d'après les traités et prises de possession de 1830 à 1843 (voir les sources de l'épisode) ; limites de l'Algérie simplifiées",
+          "cadre": [
+            -37,
+            -30,
+            82,
+            40
+          ],
+          "quand": "Sur la côte d'Afrique, la marine"
+        },
+        {
+          "type": "chronologie",
+          "quand": "Tout cela s'est fait",
+          "titre": "Dix-sept ans d'acquisitions",
+          "debut": "1830",
+          "fin": "1848",
+          "evenements": [
+            {
+              "date": "1830",
+              "libelle": "Prise d'Alger",
+              "precision": "5 juillet",
+              "quand": "Alger tombe"
+            },
+            {
+              "date": "1841",
+              "libelle": "Nossi-Bé",
+              "precision": "prise de possession",
+              "quand": "Nossi-Bé est occupée"
+            },
+            {
+              "date": "1842",
+              "libelle": "Marquises, Tahiti",
+              "precision": "Tahiti : protectorat",
+              "quand": "les Marquises et Tahiti suivent"
+            },
+            {
+              "date": "1843",
+              "libelle": "Mayotte, postes d'Afrique",
+              "precision": "Gabon, Grand-Bassam, Assinie",
+              "quand": "puis Mayotte"
+            },
+            {
+              "date": "1847",
+              "libelle": "Reddition d'Abd el-Kader",
+              "precision": "23 décembre",
+              "quand": "Abd el-Kader se rend"
+            }
+          ],
+          "source": "Dates des prises de possession et des postes (voir les sources de l'épisode)"
+        }
+      ],
+      "sources": [
+        "Nossi-Bé : traité du 14 juillet 1840 avec la reine Tsiomeko, prise de possession en 1841 ; Mayotte : traité du 25 avril 1841 avec le sultan Andriantsoly, prise de possession le 13 juin 1843 (mjp.univ-perp.fr/france/mayotte1846.htm)",
+        "Marquises : prise de possession à partir du 1er mai 1842 ; Tahiti : protectorat du 9 septembre 1842 (mjp.univ-perp.fr/constit/pf.htm ; Wikipédia, « Pōmare IV », « Îles Marquises »)",
+        "Gabon : convention du 9 février 1839 avec Denis Rapontchombo, poste fortifié de 1843 ; Grand-Bassam et Assinie : forts de 1843 (Wikipédia, « Histoire du Gabon », « Grand-Bassam », « Assinie-Mafia »)"
+      ],
+      "audio": {
+        "fichier": "episodes/empire-1847.m4a",
+        "duree": 59.33,
+        "phrases": [
+          [
+            0.0,
+            2.28
+          ],
+          [
+            3.13,
+            10.23
+          ],
+          [
+            11.08,
+            14.28
+          ],
+          [
+            15.13,
+            18.33
+          ],
+          [
+            19.4,
+            24.77
+          ],
+          [
+            25.85,
+            27.84
+          ],
+          [
+            28.81,
+            38.15
+          ],
+          [
+            39.24,
+            40.62
+          ],
+          [
+            41.38,
+            42.73
+          ],
+          [
+            43.34,
+            45.04
+          ],
+          [
+            45.51,
+            50.0
+          ],
+          [
+            51.0,
+            53.38
+          ],
+          [
+            54.52,
+            56.9
+          ],
+          [
+            57.66,
+            59.33
           ]
         ]
       }
@@ -16034,7 +17334,7 @@
         "Pierre Rosanvallon, Le Sacre du citoyen, Gallimard, 1992",
         "Paul Thureau-Dangin, Histoire de la monarchie de Juillet, t. VII, Plon, 1892"
       ],
-      "apres": 103,
+      "apres": 108,
       "audio": {
         "fichier": "episodes/reforme.m4a",
         "duree": 39.49,
@@ -16224,7 +17524,7 @@
       "sources": [
         "Ernest Labrousse (dir.), Aspects de la crise et de la dépression de l'économie française au milieu du XIXe siècle, 1846-1851, Bibliothèque de la révolution de 1848, 1956"
       ],
-      "apres": 105,
+      "apres": 110,
       "audio": {
         "fichier": "episodes/crise.m4a",
         "duree": 45.31,
@@ -16475,8 +17775,8 @@
           "oeuvre": "Le Carnaval romain, ouverture",
           "compositeur": "Hector Berlioz, 1844"
         },
-        "fin": 200,
-        "duree": 200.0
+        "fin": 280.5,
+        "duree": 280.5
       },
       {
         "id": "fond-regime-use-2",
@@ -17039,7 +18339,7 @@
         "id": "musique-huguenots",
         "instrumental": true,
         "paroles": [],
-        "apres": 58,
+        "apres": 59,
         "galerie": [
           {
             "image": {
@@ -17176,7 +18476,7 @@
         "theme": "Le monde saisi par la lumière : premières photographies",
         "instrumental": true,
         "paroles": [],
-        "apres": 60,
+        "apres": 61,
         "galerie": [
           {
             "image": {
@@ -17374,7 +18674,7 @@
         "id": "musique-symphonie-funebre",
         "instrumental": true,
         "paroles": [],
-        "apres": 65,
+        "apres": 66,
         "galerie": [
           {
             "image": {
@@ -17547,7 +18847,7 @@
       },
       {
         "id": "chant-boeufs",
-        "apres": 100,
+        "apres": 101,
         "fichier": "musique/chant-boeufs.m4a",
         "titre": "Les Bœufs",
         "auteur": "Pierre Dupont",

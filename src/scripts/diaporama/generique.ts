@@ -16,7 +16,9 @@ const O = { apparition: 0.2, fondu: 1.4, pasApparition: 0.07, titre: 0.4, lettre
   dates: 6.4, couleur: 3.2, finCouleur: 9.4, dureeCouleur: 1.6, derive: 0.08 };
 // Récapitulatif : la mosaïque revient en couleur, chaque vignette passe au gris à son tour, puis
 // elles s'assombrissent ; « Fin » paraît sur l'accord final (`G.fin.accord`), titre et dates une seconde après.
-const F = { fondu: 1.2, gris: 1.2, avantAccord: 1.6, dureeGris: 0.9, pali: 0.5, fonduFin: 0.35, titre: 1, fonduTexte: 1 };
+// Annotation du 2026-10-12 : couleurs plus éclatantes (saturation relevée, images moins assombries à la fin).
+const ECLAT = 'saturate(1.25)';
+const F = { fondu: 1.2, gris: 1.2, avantAccord: 1.6, dureeGris: 0.9, pali: 0.72, fonduFin: 0.35, titre: 1, fonduTexte: 1 };
 
 const lisse = (x: number) => { const v = Math.max(0, Math.min(1, x)); return v * v * (3 - 2 * v); };
 const entre = (t: number, a: number, d: number) => lisse((t - a) / d);
@@ -83,7 +85,7 @@ export function installerGenerique(lec: Lecteur) {
         const a = reduit ? entre(t, 0.2, 0.6) : entre(t, O.apparition + k * O.pasApparition, O.fondu);
         const c = reduit ? entre(t, O.couleur + 1, 0.5) : entre(t, O.couleur + k * (O.finCouleur - O.couleur) / Math.max(1, n), O.dureeCouleur);
         v.style.opacity = a.toFixed(3);
-        v.style.filter = c >= 1 ? '' : `grayscale(${(1 - c).toFixed(3)})`;
+        v.style.filter = c >= 1 ? ECLAT : `grayscale(${(1 - c).toFixed(3)}) ${ECLAT}`;
       }
       titres.style.opacity = '1';
       elFin.style.opacity = '0';
@@ -99,7 +101,7 @@ export function installerGenerique(lec: Lecteur) {
       for (const { v, k } of vignettes) {
         const g = entre(t, F.gris + k * pas, reduit ? 0.4 : F.dureeGris);
         v.style.opacity = (entre(t, 0, F.fondu) * pali).toFixed(3);
-        v.style.filter = g <= 0 ? '' : `grayscale(${g.toFixed(3)})`;
+        v.style.filter = g <= 0 ? ECLAT : `grayscale(${g.toFixed(3)}) ${ECLAT}`;
       }
       // « Fin », puis le titre et les dates : en fondu.
       elFin.style.opacity = entre(t, accord - 0.05, F.fonduFin).toFixed(3);

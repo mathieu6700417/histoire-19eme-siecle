@@ -13,7 +13,9 @@ export function installerPlans(lec: Lecteur) {
   const { cadreA, calques, couches, horlogeSuite, sa, scene, transformation } = lec;
   Object.assign(lec, { galerieDe, legendeGalerie, majGalerie, majPlans, planDe, poserPlans, preparerPlans, taillerPlans });
   const boite = (c: HTMLElement) => c.querySelector<HTMLElement>('.lecteur__plans')!;
-  const images = (c: HTMLElement) => boite(c).querySelectorAll<HTMLImageElement>('img');
+  const images = (c: HTMLElement) => boite(c).querySelectorAll<HTMLImageElement>('img:not(.lecteur__couleur)');
+  /** Version colorisée d'un plan (spec 16) : l'élément qui suit son image, s'il y en a une. */
+  const teinte = (im: HTMLImageElement) => (im.nextElementSibling?.classList.contains('lecteur__couleur') ? (im.nextElementSibling as HTMLImageElement) : null);
   /** Série d'images du segment joué après la voix (galerie d'un intermède, images d'une lecture). */
   function galerieDe(x: Diapo): Plan[] | null {
     const s = x.suite;
@@ -22,10 +24,11 @@ export function installerPlans(lec: Lecteur) {
   const toutes = (x: Diapo) => [...(x.plans ?? []), ...(galerieDe(x) ?? [])];
   /** Vue dérivée d'une image de série pour la caméra : sa zone utile, ses étapes, sa fenêtre de
    *  temps [p.t, fin] ; la tenue a commencé un peu avant (`ELAN_PLAN`) : l'image entre déjà en
-   *  mouvement. */
+   *  mouvement. Avec une entrée en scène (`p.ent`), son mouvement d'arrivée part de `p.t`. */
   function planDe(x: Diapo, p: Plan, fin: number): Diapo {
-    return { ...x, img: p.img, u: p.u, l: p.l, h: p.h, camera: p.camera, en: p.en ?? null, ouv: null, ap: null, mos: null, plans: null,
-      suite: null, t0: p.t - ELAN_PLAN, a0: p.t - ELAN_PLAN, v0: undefined, duree: fin };
+    const t0 = p.ent ? p.t : p.t - ELAN_PLAN;
+    return { ...x, img: p.img, u: p.u, l: p.l, h: p.h, camera: p.camera, en: p.en ?? null, ent: p.ent ?? null, ouv: null, ap: null, mos: null, plans: null,
+      suite: null, t0, a0: t0, v0: undefined, duree: fin };
   }
   /** Pose les images de la série dans le calque (une fois par diapositive). */
   function preparerPlans(c: HTMLElement, x: Diapo) {
@@ -37,11 +40,22 @@ export function installerPlans(lec: Lecteur) {
         const im = document.createElement('img');
         im.alt = ''; im.decoding = 'async'; im.src = p.img;
         im.style.visibility = 'hidden';
-        if (!p.en) return [im];
-        const fond = document.createElement('i');
-        fond.className = 'lecteur__noir';
-        fond.style.visibility = 'hidden';
-        return [fond, im];
+        const els: HTMLElement[] = [im];
+        if (p.en) {
+          const fond = document.createElement('i');
+          fond.className = 'lecteur__noir';
+          fond.style.visibility = 'hidden';
+          els.unshift(fond);
+        }
+        // Version colorisée par IA (spec 16, couleur.ts) : au-dessus de l'image, même transformation.
+        if (p.coul && !mouvementReduit.matches) {
+          const co = document.createElement('img');
+          co.className = 'lecteur__couleur';
+          co.alt = ''; co.decoding = 'async'; co.src = p.coul.src;
+          co.style.visibility = 'hidden';
+          els.push(co);
+        }
+        return els;
       }));
       b.dataset.n = String(x.n);
     }
@@ -62,20 +76,23 @@ export function installerPlans(lec: Lecteur) {
         ? `inset(${(u[1] * 100).toFixed(3)}% ${((1 - u[2]) * 100).toFixed(3)}% ${((1 - u[3]) * 100).toFixed(3)}% ${(u[0] * 100).toFixed(3)}%)` : '';
     });
   }
+  /** Opacité de la version colorisée du plan montré (0 : aucune), posée par `serie`. */
+  let couleurCourante = 0;
   /** Rend la série `P` (images `els[de…]`) à l'instant `t` de son horloge ; `fin` : fin de la
    *  dernière fenêtre. Rend le rang de l'image montrée (-1 : aucune). */
   function serie(c: HTMLElement, x: Diapo, P: Plan[], de: number, t: number, fin: number, fondu: number, gris: number) {
     const els = images(c), d = mouvementReduit.matches ? FONDU_REDUIT : fondu;
     let courant = -1;
+    couleurCourante = 0;
     P.forEach((p, k) => {
       const im = els[de + k] as HTMLImageElement | undefined;
       if (!im) return;
       const o = adoucir((t - p.t) / d);
-      if (t >= p.t) courant = k;
+      if (t >= p.t) { courant = k; couleurCourante = 0; }
       const fond = p.en ? (im.previousElementSibling as HTMLElement | null) : null;
       // Invisible avant son instant, et une fois couverte par la suivante.
       if (o <= 0 || (k + 1 < P.length && t >= P[k + 1].t + d)) {
-        if (im.style.visibility !== 'hidden') { im.style.visibility = 'hidden'; if (fond) fond.style.visibility = 'hidden'; }
+        if (im.style.visibility !== 'hidden') { im.style.visibility = 'hidden'; if (fond) fond.style.visibility = 'hidden'; const co = teinte(im); if (co) co.style.visibility = 'hidden'; }
         return;
       }
       if (fond) { fond.style.visibility = ''; fond.style.opacity = o.toFixed(3); }
@@ -84,14 +101,22 @@ export function installerPlans(lec: Lecteur) {
       im.style.opacity = o.toFixed(3);
       im.style.transform = transformation(c, xp, cadreA(xp, t), 1, im);
       im.style.filter = gris > 0.002 ? `grayscale(${gris.toFixed(3)})` : '';
+      // Version colorisée (spec 16) : sur la fenêtre du plan, de son instant au plan suivant.
+      const co = p.coul ? teinte(im) : null;
+      if (co) {
+        const oc = lec.teinter(co, im, p.coul!, im.style.transform, lec.opaciteCouleur(xp, p.t, k + 1 < P.length ? P[k + 1].t : fin, t), im.style.filter);
+        if (k === courant) couleurCourante = oc;
+      }
     });
     return courant;
   }
-  /** Plans de la diapositive à l'instant `t` de la voix. */
+  /** Plans de la diapositive à l'instant `t` de la voix. Rend l'opacité de la version colorisée
+   *  du plan montré (spec 16 ; 0 : aucune), ou -1 avant le premier plan. */
   function majPlans(c: HTMLElement, x: Diapo, t: number, gris = 0) {
-    if (!x.plans) return;
-    serie(c, x, x.plans, 0, t, x.duree || 6, FONDU_PLAN, gris);
+    if (!x.plans) return -1;
+    const k = serie(c, x, x.plans, 0, t, x.duree || 6, FONDU_PLAN, gris);
     couches[calques.indexOf(c)].tp = t;
+    return k < 0 ? -1 : couleurCourante;
   }
   /** Instant du segment en cours (-1 hors segment). */
   const instantSuite = (x: Diapo) => (lec.suiteFini ? x.suite!.duree : lec.enSuite ? horlogeSuite.lire(sa) : -1);

@@ -45,6 +45,12 @@ const mosaiquesMontrees = d.diapositives.filter((x) => x.mosaique).map((x) => ({
 // modèle à poids ouverts, signalés dans le cartouche ; l'image d'origine reste la seule authentique.
 const videosMontrees = d.diapositives.filter((x) => x.image.video && !x.image.apres).map((x) => ({ n: x.n, i: x.image, v: x.image.video! }));
 const modelesVideo = [...new Set(videosMontrees.map((x) => x.v.modele))];
+// Crédits des images colorisées par IA (spec 16) : images de diapositives et de plans.
+const couleursMontrees = d.diapositives.flatMap((x) => (x.image.apres || x.mosaique ? [] : [
+  ...(x.image.couleur && !x.image.video ? [{ n: x.n, i: x.image }] : []),
+  ...(x.plans ?? []).filter((p) => p.image.couleur).map((p) => ({ n: x.n, i: p.image })),
+]));
+const modelesCouleur = [...new Set(couleursMontrees.map((x) => x.i.couleur!.modele.split('/').pop()!.replace(/-/g, ' ')))];
 const notice = (v: { titre?: string; auteur?: string; date?: string; technique?: string; conservation?: string }) =>
   t([v.auteur, v.titre ? `« ${v.titre} »` : '', v.date, v.technique, v.conservation].filter(Boolean).join(', '));
 /** Licence en milieu de phrase : minuscule initiale, sauf sigle (CC0, CC BY…). */
@@ -176,6 +182,15 @@ const urlLicence = (x: string) => {
         <p>{typographie(`Sur ${videosMontrees.length} diapositives, l'image d'époque s'anime quelques secondes : fumées, drapeaux, foule. Ce court clip muet est calculé par un modèle d'intelligence artificielle à poids ouverts (${modelesVideo.join(', ')}) à partir du document lui-même, qui reste seul authentique ; rien n'y est ajouté qui ne soit dans l'image. Le cartouche le signale ; avec la préférence « réduire les animations », l'image reste fixe.`)}</p>
         <ul>
           {videosMontrees.map(({ n, i }) => <li>Diapositive {n} : {notice(i)}. <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a>, domaine public.</li>)}
+        </ul>
+      </section>
+    )}
+    {couleursMontrees.length > 0 && (
+      <section class="musiques portraits-credits" aria-labelledby="titre-couleur">
+        <h2 id="titre-couleur">Images colorisées</h2>
+        <p>{typographie(`Sur ${couleursMontrees.length} gravures, lithographies et photographies en noir et blanc, le lecteur montre d'abord le document tel qu'il est, puis passe lentement à une version colorisée. Les couleurs sont ajoutées par un modèle d'intelligence artificielle à poids ouverts (${modelesCouleur.join(', ')}) sans retoucher le trait : seule la teinte change, le dessin reste celui de l'original. Elles sont plausibles, non documentées : le document original, visible dans le livre d'images et sur Commons, reste seul authentique. Le cartouche signale la colorisation tant qu'elle est à l'écran ; avec la préférence « réduire les animations », l'image reste en noir et blanc.`)}</p>
+        <ul>
+          {couleursMontrees.map(({ n, i }) => <li>Diapositive {n} : {notice(i)}. <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a>, {licence(i.licence ?? 'Domaine public')}.</li>)}
         </ul>
       </section>
     )}

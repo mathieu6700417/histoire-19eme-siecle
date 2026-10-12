@@ -55,6 +55,13 @@ FONDS = {
     'europe': {'cadre': [-12.0, 26.0, 42.0, 60.5], 'echelle': 20, 'tolerance': 1.0, 'fleuves': []},
     # Sud à -20° (2026-10-09) : Sainte-Hélène (-15,9°), qui revient après 1815 (retour des Cendres, 1840).
     'monde': {'cadre': [-100.0, -20.0, 50.0, 64.0], 'echelle': 6, 'tolerance': 0.9, 'fleuves': []},
+    # Carte de l'empire colonial (spec 12, « Les colonies au fil du récit », 2026-10-12) : le monde de
+    # Tahiti à la Nouvelle-Calédonie, commun à toutes les périodes ; chaque carte y prend son `cadre`.
+    # Largeur ~2 000 unités (libellés du lecteur à ~3 % de la largeur d'une vue) ; coordonnées au dixième
+    # (`decimales`), une tolérance fine et les petites îles gardées (`aire_min`) pour les zooms.
+    # `metropole` : le contour « france » se limite à l'Europe (sans les départements d'outre-mer actuels).
+    'empire': {'cadre': [-160.0, -48.0, 180.0, 66.0], 'echelle': 6, 'tolerance': 0.8, 'fleuves': [],
+               'decimales': 1, 'aire_min': 2, 'metropole': True},
 }
 
 # Plans de Paris d'époque (domaine public, Commons) et leur calage : points
@@ -194,10 +201,10 @@ def projeter_fn(fond):
     return (lambda p: [(p[0] - lon0) * cx * k, (lat1 - p[1]) * k]), round((lon1 - lon0) * cx * k), round((lat1 - lat0) * k), cx
 
 
-def chemin(pts, ferme=True):
+def chemin(pts, ferme=True, dec=0):
     if len(pts) < 2:
         return ''
-    s = 'M' + ' '.join(f'{p[0]:.0f},{p[1]:.0f}' for p in pts)
+    s = 'M' + ' '.join(f'{p[0]:.{dec}f},{p[1]:.{dec}f}' for p in pts)
     return s + ('Z' if ferme else '')
 
 
@@ -205,24 +212,28 @@ def fabriquer(nom: str, fond: dict) -> dict:
     proj, largeur, hauteur, cx = projeter_fn(fond)
     tol = fond['tolerance']
     cadre = fond['cadre']
+    dec, aire_min = fond.get('decimales', 0), fond.get('aire_min', 40)
 
-    def polygones(geoms):
+    def polygones(geoms, europe=False):
         sortie = []
         for g in geoms:
             for r in anneaux(g):
+                if europe and not (-6 < r[0][0] < 10 and 41 < r[0][1] < 52):
+                    continue
                 pts = decouper(r, cadre)
                 if len(pts) < 3:
                     continue
                 pts = simplifier([proj(p) for p in pts] + [proj(pts[0])], tol)
                 # Îlots minuscules ignorés.
                 aire = abs(sum(pts[i][0] * pts[i - 1][1] - pts[i - 1][0] * pts[i][1] for i in range(len(pts)))) / 2
-                if len(pts) >= 4 and aire > 40:
-                    sortie.append(chemin(pts[:-1]))
+                if len(pts) >= 4 and aire > aire_min:
+                    sortie.append(chemin(pts[:-1], dec=dec))
         return ''.join(sortie)
 
     terres = polygones([f['geometry'] for f in charger('terres')['features']])
     pays = charger('pays')['features']
-    france = polygones([f['geometry'] for f in pays if f['properties'].get('ADM0_A3') == 'FRA'])
+    france = polygones([f['geometry'] for f in pays if f['properties'].get('ADM0_A3') == 'FRA'],
+                       europe=fond.get('metropole', False))
     fleuves = []
     for f in charger('fleuves')['features']:
         if f['properties'].get('name') in fond['fleuves']:

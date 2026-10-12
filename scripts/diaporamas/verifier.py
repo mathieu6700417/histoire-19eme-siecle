@@ -14,7 +14,7 @@ finale : surimpressions, portraits, objets, chiffres, avant/après et mosaïques
 (vérification complète). Code de sortie 1 s'il y a des erreurs de l'étape. Sans `--etape` : tout,
 comme avant. `tester_etapes.py <slug>` contrôle que la réunion des étapes égale la vérification complète.
 
-Vérifie : nombre de diapositives (110 à 130 depuis la révision « Arts et techniques ») et d'actes (6 à 10), numérotation continue,
+Vérifie : nombre de diapositives (110 à 135 pour les périodes 01 à 05, 135 à 160 ensuite : « Durée visée : une heure ») et d'actes (6 à 10), numérotation continue,
 actes cohérents (débuts croissants, titre et dates du carton d'acte : « 1787-1789 »,
 « juillet-octobre 1789 »), chaque image et chaque audio présents dans public/diaporamas/<slug>/,
 licences libres (relevées par images.py depuis l'API Commons), métadonnées complètes
@@ -332,6 +332,57 @@ def controler_ouverture(x: dict, debut_acte: bool) -> tuple[list[str], list[str]
     if isinstance(c0, list) and len(c0) == 4 and taille(c0) < 1.6 * taille(r):
         avert.append(f'ouverture : zoom faible (×{taille(c0) / taille(r):.1f} par rapport au premier cadre ; ×2 visé)')
     return [], avert
+
+
+ENTREE_DUREES = (4.0, 7.0)   # s : durée d'une entrée en scène (spec 12, « Entrée en scène des grandes vues »)
+ENTREE_AMPLEUR = 0.88        # log du rapport de zoom qu'une entrée de 7 s peut faire sous les plafonds de vitesse
+ENTREE_FENETRE = 5.0         # s : fenêtre de l'image en deçà de laquelle l'entrée est écourtée (75 % de la fenêtre)
+
+
+def controler_entree(x: dict, fenetre: float | None = None) -> tuple[list[str], list[str]]:
+    """`image.entree` (spec 12, « Entrée en scène des grandes vues ») : un ou deux cadres de départ
+    valides, durée de 4 à 7 s, pas avec `ouverture`, un avant / après ou une mosaïque.
+    Avertissements : cadre flou, mouvement imperceptible ou trop ample pour la durée, fenêtre de
+    l'image trop courte, intention non notée. `x` : diapositive ou vue d'un plan (`x['image']`)."""
+    i = x['image']
+    if 'entree' not in i:
+        return [], []
+    e = i['entree']
+    if not isinstance(e, dict) or not isinstance(e.get('cadres'), list) or not 1 <= len(e['cadres']) <= 2:
+        return ['entrée en scène : « cadres » attendu, un ou deux cadres [x0, y0, x1, y1]'], []
+    erreurs, avert = [], []
+    for r in e['cadres']:
+        if not (isinstance(r, list) and len(r) == 4 and all(isinstance(v, (int, float)) for v in r)
+                and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
+            erreurs.append(f'entrée en scène : cadre invalide ({r})')
+    d = e.get('duree', 5)
+    if not isinstance(d, (int, float)) or not ENTREE_DUREES[0] <= d <= ENTREE_DUREES[1]:
+        erreurs.append(f'entrée en scène : durée {d} hors de {ENTREE_DUREES[0]:.0f}-{ENTREE_DUREES[1]:.0f} s')
+    if i.get('ouverture') or i.get('apres') or x.get('mosaique'):
+        erreurs.append('entrée en scène : sans effet avec un détail d\'ouverture, un avant / après ou une mosaïque (à retirer)')
+    if erreurs:
+        return erreurs, []
+    if not (e.get('intention') or '').strip():
+        avert.append('entrée en scène : intention non notée (une ligne : « on descend de la voûte vers les bancs »)')
+    L, H = i.get('largeur') or 1600, i.get('hauteur') or 1200
+    taille = lambda c: max((c[2] - c[0]) * L, (c[3] - c[1]) * H * CAMERA_RATIO)
+    cam = i.get('camera') or []
+    c0 = [0, 0, 1, 1] if i.get('entier') or not cam else cam[0].get('cadre') or [0, 0, 1, 1]
+    suite, total = e['cadres'] + [c0], 0.0
+    for k, r in enumerate(e['cadres']):
+        if taille(r) < 400:
+            avert.append(f'entrée en scène : cadre très serré ({r}, {taille(r):.0f} px), image floue')
+        s = suite[k + 1]
+        zoom = abs(math.log(taille(s) / taille(r)))
+        glisse = max(abs(r[0] + r[2] - s[0] - s[2]), abs(r[1] + r[3] - s[1] - s[3])) / 2
+        total += zoom
+        if zoom < 0.1 and glisse < 0.08:
+            avert.append(f'entrée en scène : le cadre {k + 1} diffère à peine du suivant, mouvement imperceptible')
+    if total > ENTREE_AMPLEUR:
+        avert.append(f'entrée en scène : mouvement ample (zoom ×{math.exp(total):.1f}) : le lecteur l\'allongera au-delà de 7 s ou le pressera')
+    if fenetre is not None and fenetre < ENTREE_FENETRE:
+        avert.append(f'entrée en scène : l\'image ne reste que {fenetre:.1f} s, l\'entrée sera écourtée ({0.75 * fenetre:.1f} s au plus)')
+    return erreurs, avert
 
 
 UTILE_AIRE_MIN = 0.25     # zone utile plus petite : erreur (moins de 50 % : avertissement, sauf saisie à la main)
@@ -1920,8 +1971,11 @@ def controler_plans(d: dict, img_etat: dict, dossier) -> tuple[dict, dict, dict]
                 if f_ and f_[0] - 0.2 < pl['instant'] < f_[1] - 0.3:
                     A['C'].append(f"{p} : le plan {c.LETTRES_PLANS[k]} commence ({pl['instant']:.1f} s) pendant {nom_} "
                                   f"({f_[0]:.1f}-{f_[1]:.1f} s) : le décaler à la phrase suivante")
-        for v in c.vues_camera({'diapositives': [x]}, series=False)[1:]:
+        for k, v in enumerate(c.vues_camera({'diapositives': [x]}, series=False)[1:]):
             E['B'] += [f"{v['n']} : {e}" for e in controler_camera(v)]
+            e_en, a_en = controler_entree(v, bornes[k + 2] - bornes[k + 1] if k + 2 < len(bornes) else None)
+            E['B'] += [f"{v['n']} : {e}" for e in e_en]
+            A['B'] += [f"{v['n']} : {e}" for e in a_en]
             e_ut, a_ut = controler_utile(v)
             E['B'] += [f"{v['n']} : {e}" for e in e_ut if 'absente' not in e and 'invalide' not in e]
             A['B'] += [f"{v['n']} : {e}" for e in a_ut]
@@ -2070,6 +2124,74 @@ def controler_mouvement(d: dict, dossier) -> tuple[list[str], list[str], int, in
     return erreurs, avert, n_clips, poids
 
 
+# Colorisation (spec 16) : fenêtre d'écran minimale pour que le fondu tienne (constantes de
+# src/scripts/diaporama/constantes.ts : COULEUR_MIN + COULEUR_FONDU + COULEUR_FIN).
+FENETRE_COULEUR_MIN = 1.5 + 2 + 2   # COULEUR_MIN + COULEUR_FONDU + COULEUR_FIN (constantes.ts)
+POIDS_COULEUR_MAX = 900_000      # octets : au-delà, avertissement (0,2 à 0,8 Mo attendus)
+
+
+def controler_couleur(d: dict, dossier) -> tuple[list[str], list[str], int, int]:
+    """Images colorisées par IA (spec 16, `image.couleur`, image d'une diapositive ou d'un plan) :
+    champs, fichier WebP présent, dimensions déclarées et réelles égales à la zone utile en pixels
+    (le calque couleur s'y superpose : une zone utile retouchée depuis la fabrication décale tout),
+    modèle nommé (crédits), recette consignée ; jamais avec un clip `video`, un avant / après ou une
+    mosaïque, ni sur une image de galerie, de lecture ou d'épisode ; fenêtre d'écran assez longue
+    pour le fondu. Rend (erreurs, avertissements, images colorisées, poids en octets)."""
+    from pathlib import Path
+    from PIL import Image
+    import couleur as co
+    erreurs, avert = [], []
+    for e in c.images_supplementaires(d):
+        if e['genre'] != 'plan' and e['image'].get('couleur'):
+            erreurs.append(f"{e['cle']} : « couleur » hors champ sur une image de {e['genre']} (diapositives et plans seulement)")
+    recettes = co.lire_recettes(d['slug'])['images']
+    n = poids = 0
+    for e in co.images(d):
+        i, v = e['image'], e['image'].get('couleur')
+        if v is None:
+            continue
+        p = f"{e['cle']:>4}"
+        if not isinstance(v, dict):
+            erreurs.append(f'{p} : « couleur » doit être un objet (fichier, largeur, hauteur, modele)')
+            continue
+        n += 1
+        manquants = [k for k in ('fichier', 'largeur', 'hauteur', 'modele') if not v.get(k)]
+        if manquants:
+            erreurs.append(f"{p} : couleur : champs manquants ({', '.join(manquants)})")
+        if not v.get('genere_le'):
+            avert.append(f'{p} : image colorisée sans date de calcul (genere_le)')
+        pb = co.incompatibilite(e)
+        if pb:
+            erreurs.append(f'{p} : couleur incompatible : {pb} (couleur.py retirer)')
+        if i.get('commons') not in recettes:
+            avert.append(f"{p} : image colorisée sans recette dans {co.recettes_f(d['slug']).relative_to(c.RACINE)} (consigne, graine)")
+        attendu = Path(i.get('fichier') or '').with_suffix('').as_posix() + co.SUFFIXE
+        if v.get('fichier') and v['fichier'] != attendu:
+            erreurs.append(f"{p} : fichier couleur « {v['fichier']} » (attendu : {attendu})")
+        f = dossier / (v.get('fichier') or '')
+        if not v.get('fichier') or not f.is_file():
+            erreurs.append(f"{p} : image colorisée absente ({v.get('fichier')})")
+            continue
+        poids += f.stat().st_size
+        if f.stat().st_size > POIDS_COULEUR_MAX:
+            avert.append(f'{p} : image colorisée de {f.stat().st_size / 1e3:.0f} ko ({POIDS_COULEUR_MAX / 1e3:.0f} ko au plus visés)')
+        with Image.open(f) as im:
+            taille, fmt = im.size, im.format
+        if fmt != 'WEBP':
+            erreurs.append(f'{p} : image colorisée au format {fmt} (WebP attendu)')
+        if taille != (v.get('largeur'), v.get('hauteur')):
+            erreurs.append(f"{p} : image colorisée {taille[0]}×{taille[1]} ≠ {v.get('largeur')}×{v.get('hauteur')} déclarées")
+        x0, y0, x1, y1 = co.zone_px(i)
+        if taille != (x1 - x0, y1 - y0):
+            erreurs.append(f'{p} : image colorisée {taille[0]}×{taille[1]} ≠ zone utile {x1 - x0}×{y1 - y0} : zone utile ou image changée '
+                           f'depuis la fabrication (refaire la colorisation, ou couleur.py retirer)')
+        # Fenêtre d'écran : de l'apparition de l'image au plan suivant, ou à la fin de la voix.
+        fen = c.fenetres_plans(e['x'])[0 if e['plan'] is None else e['plan'] + 1]['t']
+        if fen[0] is not None and fen[1] is not None and fen[1] - fen[0] < FENETRE_COULEUR_MIN:
+            avert.append(f'{p} : image à l\'écran {fen[1] - fen[0]:.1f} s seulement : le fondu vers la couleur ({FENETRE_COULEUR_MIN:.1f} s au moins visées) finit avec elle')
+    return erreurs, avert, n, poids
+
+
 ETAPES = {'A': 'texte, images, enrichissements prévus', 'B': 'voix, zone utile, caméra, musique',
           'C': 'surimpressions et vérification complète'}
 FAMILLES = {
@@ -2077,7 +2199,7 @@ FAMILLES = {
     'B': ('audio', 'ouverture', 'zone utile', 'caméra', 'musique', 'registre musical', 'lectures et épisodes', 'boucles',
           'plans et galeries (zone utile, caméra)'),
     'C': ('surimpressions', 'portraits', 'objets et manuscrits', 'chiffres et dates', 'avant/après et mosaïques',
-          'plans et galeries (instants, durées)', 'mouvement (spec 16)'),
+          'plans et galeries (instants, durées)', 'mouvement (spec 16)', 'couleur (spec 16)'),
 }
 MAX_AVERT = 15   # avertissements affichés par `--etape` (tous avec `--tout`)
 # Messages d'un contrôle d'une étape qui relèvent d'une autre (donnée écrite plus tôt) : (motif, étape, famille).
@@ -2125,8 +2247,11 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
     SANS_WIKISOURCE = etape == 'A'
 
     erreurs = []
-    if not 110 <= len(diapos) <= 130:
-        erreurs.append(f'{len(diapos)} diapositives (attendu : 110 à 130)')
+    # Durée visée (spec 12, « Durée visée : une heure », 2026-10-12) : à partir de la période 06,
+    # environ une heure, soit 135 à 160 diapositives ; les périodes 01 à 05 gardent 110 à 135.
+    n_min, n_max = (135, 160) if d.get('numero', 0) >= 6 else (110, 135)
+    if not n_min <= len(diapos) <= n_max:
+        erreurs.append(f'{len(diapos)} diapositives (attendu : {n_min} à {n_max})')
     if not 6 <= len(d['actes']) <= 10:
         erreurs.append(f"{len(d['actes'])} actes (attendu : 6 à 10)")
     if [x['n'] for x in diapos] != list(range(1, len(diapos) + 1)):
@@ -2196,6 +2321,9 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
             R.plus('B', 'caméra', [f'{p} : {e}' for e in controler_camera(x)])
             e_ouv, a_ouv = controler_ouverture(x, n in debuts)
             R.plus('B', 'ouverture', [f'{p} : {e}' for e in e_ouv], [f'{p} : {e}' for e in a_ouv])
+            pl0 = (x.get('plans') or [{}])[0].get('instant')
+            e_en, a_en = controler_entree(x, pl0 if pl0 is not None else (x.get('audio') or {}).get('duree'))
+            R.plus('B', 'entrée en scène', [f'{p} : {e}' for e in e_en], [f'{p} : {e}' for e in a_en])
             cadre_inter = next((s.get('cadre') for s in (d.get('musique') or {}).get('intermedes', []) if s.get('apres') == n), None)
             e_ut, a_ut = controler_utile(x, cadre_inter)
             R.plus('B', 'zone utile', [f'{p} : {e}' for e in e_ut], [f'{p} : {e}' for e in a_ut])
@@ -2261,7 +2389,7 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         R.plus('C', 'surimpressions', e_sur, a_sur)
         e_por, a_por, n_portraits, n_gens = controler_portraits(d)
         R.plus('C', 'portraits', e_por, a_por)
-    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = n_clips = poids_clips = 0
+    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = n_clips = poids_clips = n_couleurs = poids_couleurs = 0
     if fait('A') or fait('C'):
         e_obj, a_obj, n_objets, n_manuscrits, n_deux = controler_objets(d)
         R.plus('C', 'objets et manuscrits', e_obj, a_obj)
@@ -2271,6 +2399,8 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         R.plus('C', 'avant/après et mosaïques', e_am, a_am, REGLES_MOSAIQUES)
         e_mv, a_mv, n_clips, poids_clips = controler_mouvement(d, dossier)
         R.plus('C', 'mouvement (spec 16)', e_mv, a_mv)
+        e_co, a_co, n_couleurs, poids_couleurs = controler_couleur(d, dossier)
+        R.plus('C', 'couleur (spec 16)', e_co, a_co)
     if fait('A'):
         e_gen, a_gen, duree_generique = controler_generique(d)
         R.plus('A', 'générique', e_gen, a_gen)
@@ -2294,6 +2424,8 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         print(f'Générique : {len(d.get("generique") or [])} images, {duree_generique:.1f} s (ouverture et récapitulatif).')
         print(f'Durée totale (pauses, cartons d’acte, intermèdes et générique compris) : {total / 60:.1f} min ; moyenne {sum(durees) / len(durees):.1f} s par diapositive '
               f'(de {min(durees):.1f} à {max(durees):.1f} s ; visé : ~18 s).')
+        if d.get('numero', 0) >= 6 and not 55 <= total / 60 <= 65:
+            print(f'  avertissement : durée de {total / 60:.1f} min pour environ 60 min visées (55 à 65) à partir de la période 06.')
     if chiffres and n_images > len(diapos):
         print(f"Images : {n_images} dont {n_sup['plan']} plan(s), {n_sup['lecture']} de lecture(s), {n_sup['galerie']} de galerie(s) "
               f"({n_sup['nouvelles']} galerie(s) nouvelle(s)), {n_sup['episode']} d'épisode(s) ; une image toutes les "
@@ -2347,6 +2479,8 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         print(f"Images mises en mouvement (spec 16) : {n_clips} clip(s) (diapositives "
               f"{', '.join(str(x['n']) for x in diapos if (x['image'].get('video') or {}).get('type') == 'mouvement')}), "
               f'{poids_clips / 1e6:.1f} Mo ; {PLAFOND_CLIPS} au plus par période.')
+    if n_couleurs and not etape:
+        print(f'Images colorisées (spec 16) : {n_couleurs} image(s) de diapositives et de plans, {poids_couleurs / 1e6:.1f} Mo.')
     if not etape:
         datees = sum(1 for x in diapos if 'date' in x)
         print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} apparition(s) en bas de l\'image '

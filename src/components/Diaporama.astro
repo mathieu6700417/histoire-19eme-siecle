@@ -60,15 +60,37 @@ function legendeImage(i: { titre?: string; auteur?: string; date?: string; techn
  *  auteur, « date · technique » (HTML échappé). Le titre officiel reste dans le livre et l'`alt`.
  *  Image mise en mouvement par IA (spec 16) : une quatrième ligne le signale (masquée par le CSS
  *  avec la préférence « réduire les animations », où l'image reste fixe). */
-function cartouche(x: Diaporama['diapositives'][number]) { return cartoucheImage(x.image, Boolean(videoDe(x))); }
-function cartoucheImage(i: { titre: string; titre_court?: string; auteur?: string; date?: string; technique?: string }, ia = false) {
+function cartouche(x: Diaporama['diapositives'][number]) { return cartoucheImage(x.image, Boolean(videoDe(x)), Boolean(couleurDe(x))); }
+function cartoucheImage(i: { titre: string; titre_court?: string; auteur?: string; date?: string; technique?: string }, ia = false, couleur = false) {
   const quand = [i.date && esc(t(i.date)), i.technique && esc(t(i.technique))].filter(Boolean).join(' · ');
   return `<cite>${esc(t(i.titre_court || i.titre))}</cite>${i.auteur ? `<span>${esc(t(i.auteur))}</span>` : ''}${quand ? `<span>${quand}</span>` : ''}`
-    + (ia ? '<span class="lecteur__legende-ia">mise en mouvement par IA</span>' : '');
+    + (ia ? '<span class="lecteur__legende-ia">mise en mouvement par IA</span>' : '')
+    // Image colorisée par IA (spec 16) : ligne repliée, montrée tant que la couleur est à l'écran.
+    + (couleur ? '<span class="lecteur__legende-ia lecteur__legende-couleur">colorisée par IA</span>' : '');
 }
 /** Clip d'une image mise en mouvement (spec 16) ; sans effet sur un avant / après (sur une mosaïque,
  *  il paraît après la plongée). */
 const videoDe = (x: Diaporama['diapositives'][number]) => (x.image.video && !x.image.apres ? x.image.video : null);
+/** Version colorisée par IA de l'image d'une diapositive (spec 16) ; sans effet avec un clip, un
+ *  avant / après ou une mosaïque (verifier.py les refuse). */
+const couleurDe = (x: Diaporama['diapositives'][number]) => (x.image.couleur && !x.image.video && !x.image.apres && !x.mosaique ? x.image.couleur : null);
+/** Version colorisée d'un plan (mêmes conditions que dans le lecteur : ni avant / après ni mosaïque). */
+const couleurPlan = (x: Diaporama['diapositives'][number], k: number) => (!x.image.apres && !x.mosaique ? x.plans?.[k]?.image.couleur ?? null : null);
+/** Livre d'images (sans JavaScript) : la version colorisée sous l'image, avec sa mention et le modèle. */
+function livreCouleur(i: ImageDiapo) {
+  const c = i.couleur!;
+  return `<figure class="livre__apres livre__couleur"><img src="${esc(urlMedia(d.slug, c.fichier))}" alt="${esc(t(`${i.titre}, version colorisée`))}" width="${c.largeur}" height="${c.hauteur}" loading="lazy" decoding="async" />`
+    + `<figcaption><span class="livre__marque">Colorisée par IA :</span> ${esc(t(`couleurs ajoutées à l'image ci-dessus par le modèle ${nomModele(c.modele)} (poids ouverts), sans retoucher le trait ; elles sont plausibles, non documentées. Seul le document original fait foi.`))}</figcaption></figure>`;
+}
+/** Nom d'un modèle sans son éditeur (« black-forest-labs/FLUX.2-klein-4B » → « FLUX.2 klein 4B »). */
+const nomModele = (m: string) => m.split('/').pop()!.replace(/-/g, ' ');
+/** Données du lecteur pour une version colorisée : le rectangle qu'elle recouvre est la zone utile
+ *  arrondie au pixel (comme à la fabrication : superposition exacte). */
+function couleurLecteur(i: ImageDiapo) {
+  const c = i.couleur!, u = zoneUtileDe(i), L = i.largeur ?? 1600, H = i.hauteur ?? 1200;
+  const x0 = Math.round(u[0] * L), y0 = Math.round(u[1] * H);
+  return { src: urlMedia(d.slug, c.fichier), u: [x0 / L, y0 / H, (x0 + c.largeur) / L, (y0 + c.hauteur) / H] };
+}
 
 /** Cartouche d'un intermède dans le lecteur : *œuvre* et compositeur rédigés à la main
  *  (`cartouche`), sans troncature ; l'interprète au survol seulement. */
@@ -98,12 +120,18 @@ function entierDe(i: ImageDiapo, u: [number, number, number, number]) {
   if (!i.entier) return null;
   return { v: i.entier_vers ? versUtile(i.entier_vers, u) : null, z: Math.min(2, Math.max(1, i.entier_zoom ?? 1.3)) };
 }
+/** Entrée en scène (`image.entree`) : cadres de départ ramenés dans la zone utile, durée ;
+ *  undefined sans le champ (rien n'est écrit dans les données du lecteur). */
+function entreeDe(i: ImageDiapo, u: [number, number, number, number]) {
+  if (!i.entree?.cadres?.length) return undefined;
+  return { c: i.entree.cadres.slice(0, 2).map((c) => versUtile(c, u)), d: Math.min(7, Math.max(4, i.entree.duree ?? 5)) };
+}
 /** Image d'une série pour le lecteur (spec 14) : zone utile, dimensions, cartouche, instant et
  *  étapes de caméra (cadres ramenés dans la zone utile). */
-function planLecteur(i: ImageDiapo, legende: string, instant: number, camera: { c: [number, number, number, number]; t: number }[], entier = true) {
+function planLecteur(i: ImageDiapo, legende: string, instant: number, camera: { c: [number, number, number, number]; t: number }[], entier = true, entree = false, couleur = false) {
   const u = zoneUtileDe(i);
-  return { en: entier ? entierDe(i, u) : null, img: urlMedia(d.slug, i.fichier), u, l: (i.largeur ?? 1600) * (u[2] - u[0]), h: (i.hauteur ?? 1200) * (u[3] - u[1]),
-    alt: t(i.titre), legende, t: instant, camera: camera.map((e) => ({ c: versUtile(e.c, u), t: e.t })) };
+  return { en: entier ? entierDe(i, u) : null, ent: entree ? entreeDe(i, u) : undefined, img: urlMedia(d.slug, i.fichier), u, l: (i.largeur ?? 1600) * (u[2] - u[0]), h: (i.hauteur ?? 1200) * (u[3] - u[1]),
+    alt: t(i.titre), legende, t: instant, camera: camera.map((e) => ({ c: versUtile(e.c, u), t: e.t })), coul: couleur && i.couleur ? couleurLecteur(i) : undefined };
 }
 /** Série sans narration (galerie, lecture) : un cadre par image, tenu de son instant à la suivante. */
 function serieLecteur(images: ImageSerie[], duree: number, legende: (i: ImageDiapo) => string, situes: (number | null)[] = []) {
@@ -135,6 +163,9 @@ const lectureApres = new Map((d.lectures ?? []).filter((l) => l.audio?.duree).ma
 const episodeApres = new Map((d.episodes ?? []).filter((e) => e.audio?.duree).map((e) => [e.apres, e]));
 const fonds: Record<string, FondCarte> = Object.fromEntries(
   Object.values(import.meta.glob<{ default: FondCarte }>('../data/diaporamas/fonds/*.json', { eager: true })).map((m) => [m.default.nom, m.default]));
+/** Fonds employés par les cartes d'épisode : écrits une fois dans la page, repris par `<use>`. */
+const fondsEpisodes: FondCarte[] = [...new Set((d.episodes ?? []).flatMap((e) => e.visuels.filter((v) => v.type === 'carte').map((v) => (v as { fond: string }).fond)))]
+  .map((n) => fonds[n]).filter(Boolean);
 
 /** Portrait d'une lecture : l'image d'une diapositive (recadrée) ou son propre fichier. */
 function portraitDe(l: Lecture) {
@@ -202,9 +233,7 @@ const donnees = {
   slug: d.slug,
   pause: PAUSE,
   carton: CARTON,
-  // `reperes` : dates clés de l'acte pour la frise animée du carton (position en %, date, libellé).
-  actes: d.actes.map((a) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut,
-    reperes: frise ? (a.reperes ?? []).slice(0, 3).map((r) => { const p = frise.dater(r.date, r.date_fin); return { x: Math.round((p.x0 + p.x1) * 50) / 100, date: t(p.libelle), texte: t(r.libelle) }; }) : [] })),
+  actes: d.actes.map((a) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut })),
   diapos: d.diapositives.map((x, k) => ({
     n: x.n,
     // Clé stable de la reprise : le fichier Commons de l'image, qui survit aux renumérotations
@@ -228,6 +257,8 @@ const donnees = {
     camera: etapesCamera(x).map((e) => ({ ...e, c: versUtile(e.c, zoneUtile(x)) })),
     // Détail zoomé découvert à la sortie du carton d'acte (première diapositive d'un acte).
     ouv: x.image.ouverture ? versUtile(x.image.ouverture, zoneUtile(x)) : null,
+    // Entrée en scène d'une grande vue (pas après un détail d'ouverture, ni avant / après, ni mosaïque).
+    ent: x.image.ouverture || x.image.apres || x.mosaique ? undefined : entreeDe(x.image, zoneUtile(x)),
     date: frise ? { ...frise.diapos[k], libelle: t(frise.diapos[k].libelle) } : null,
     ...surimpressions(x),
     // Avant / après (point 3) : image après, instant du volet, étapes de la caméra sur l'image après.
@@ -237,7 +268,9 @@ const donnees = {
         alt: t(ap.titre), legende: cartoucheImage(ap), t: a.t, camera: a.camera };
     })() : null,
     // Plans (spec 14) : images suivantes de la diapositive, chacune à son instant de la voix.
-    plans: x.plans?.length && !x.image.apres && !x.mosaique ? plansDe(x).map((p) => planLecteur(p.image, cartoucheImage(p.image), p.t, p.camera)) : null,
+    plans: x.plans?.length && !x.image.apres && !x.mosaique ? plansDe(x).map((p) => planLecteur(p.image, cartoucheImage(p.image, false, Boolean(p.image.couleur)), p.t, p.camera, true, true, true)) : null,
+    // Image colorisée par IA (spec 16) : version posée sur la zone utile après un fondu lent (couleur.ts).
+    coul: couleurDe(x) ? couleurLecteur(x.image) : undefined,
     // Image mise en mouvement par IA (spec 16) : clip muet en boucle sur la zone utile (mouvement.ts).
     video: videoDe(x) ? { src: urlMedia(d.slug, videoDe(x)!.fichier), duree: videoDe(x)!.duree } : null,
     // Mosaïque (point 5) : vignettes (la principale est l'image de la diapositive), cartouche d'une ligne.
@@ -290,13 +323,15 @@ function friseHtml(classe: string) {
   if (!frise) return '';
   const crans = [...frise.annees.map((a) => a.x0), 100].map((x, k, X) => `<span class="frise-t__cran${k === 0 || k === X.length - 1 ? ' frise-t__cran--borne' : ''}" style="left:${x}%"></span>`).join('');
   const a0 = frise.annees[0].a, a1 = frise.annees.at(-1)!.a;
-  return `<div class="frise-t ${classe}" aria-hidden="true"><span class="frise-t__borne">${a0}</span><div class="frise-t__piste"><span class="frise-t__date"></span><span class="frise-t__filet"></span>${crans}${classe === 'frise-t--carton' ? '<span class="frise-t__acte"></span>' : ''}<span class="frise-t__curseur"></span></div><span class="frise-t__borne">${a1}</span></div>`;
+  return `<div class="frise-t ${classe}" aria-hidden="true"><span class="frise-t__borne">${a0}</span><div class="frise-t__piste"><span class="frise-t__date"></span><span class="frise-t__filet"></span>${crans}${classe === 'frise-t--carton' ? '<span class="frise-t__zone"></span><span class="frise-t__onde"></span><span class="frise-t__acte"></span>' : ''}<span class="frise-t__curseur"></span></div><span class="frise-t__borne">${a1}</span></div>`;
 }
-// Dans chaque calque, après l'image : la boîte du clip d'une image mise en mouvement (spec 16,
+// Dans chaque calque, après l'image : sa version colorisée par IA (spec 16, couleur.ts : sur la zone
+// utile, même transformation), la boîte du clip d'une image mise en mouvement (spec 16,
 // mouvement.ts : même transformation que l'image), les plans et les galeries de la spec 14 (images
 // posées par le script, en fondu croisé), l'image « après » d'un avant / après (sous un volet qui la
 // découvre, et sa ligne), puis la grille d'une mosaïque. Vides et masqués hors de ces diapositives.
-const CALQUE_SUITE = '<div class="lecteur__video" hidden><video muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video></div>'
+const CALQUE_SUITE = '<img class="lecteur__couleur" alt="" decoding="async" aria-hidden="true" hidden />'
+  + '<div class="lecteur__video" hidden><video muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video></div>'
   + '<div class="lecteur__plans" hidden></div><div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
 const sectionsLivre = d.actes.map((a, i) => ({
   ...a,
@@ -321,9 +356,23 @@ const sectionsLivre = d.actes.map((a, i) => ({
         <span class="lecteur__carton-filet"></span>
         <p class="lecteur__carton-dates"></p>
         {frise && <Fragment set:html={friseHtml('frise-t--carton')} />}
-        {frise && <ul class="carton-reperes" aria-hidden="true"></ul>}
       </div>
       {[...lectureApres.values()].map((l) => <CarteCitation lecture={l} portrait={portraitDe(l)} fond={fondDe(l)} illustree={Boolean(l.images?.length)} mode="lecteur" />)}
+      {/* Fonds partagés : le tracé de chaque fond de carte d'épisode est écrit une seule fois par page ;
+          les cartes (lecteur et livre) le reprennent par <use>. */}
+      {fondsEpisodes.length > 0 && (
+        <svg class="fonds-partages" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+          <defs>
+            {fondsEpisodes.map((f) => (
+              <Fragment>
+                <path id={`fond-${f.nom}-terres`} d={f.terres} />
+                <path id={`fond-${f.nom}-france`} d={f.france} />
+                {f.fleuves.map((tr, i) => <path id={`fond-${f.nom}-fleuve-${i}`} d={tr} />)}
+              </Fragment>
+            ))}
+          </defs>
+        </svg>
+      )}
       {[...episodeApres.values()].map((e) => <EpisodeVisuels episode={e} slug={d.slug} fonds={fonds} mode="lecteur" />)}
       {frise && <Fragment set:html={friseHtml('frise-t--surimpression')} />}
       <Surimpressions diaporama={d} fonds={fonds} plan={plan} />
@@ -393,6 +442,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
                   <figcaption set:html={`<span class="livre__marque">Mise en mouvement par IA :</span> ${esc(t(`clip muet de ${Math.round(videoDe(x)!.duree)} s calculé d'après l'image ci-dessus par le modèle ${videoDe(x)!.modele} (poids ouverts) ; seul le document original fait foi.`))}`} />
                 </figure>
               )}
+              {couleurDe(x) && <Fragment set:html={livreCouleur(x.image)} />}
               {x.image.apres && (
                 <figure class="livre__apres">
                   <img src={urlMedia(d.slug, x.image.apres.fichier)} alt={t(x.image.apres.titre)} width={x.image.apres.largeur} height={x.image.apres.hauteur} loading="lazy" decoding="async" />
@@ -404,7 +454,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
                   <img src={urlMedia(d.slug, p.image.fichier)} alt={t(p.image.titre)} width={p.image.largeur} height={p.image.hauteur} loading="lazy" decoding="async" />
                   <figcaption set:html={`<span class="livre__marque">Puis :</span> ${legendeImage(p.image)}`} />
                 </figure>
-              ))}
+              )).flatMap((f, k) => (couleurPlan(x, k) ? [f, <Fragment set:html={livreCouleur(x.plans![k].image)} />] : [f]))}
               {x.mosaique && (
                 <div class="livre__mosaique">
                   <p class="livre__marque">{t(x.mosaique.legende)}</p>
@@ -544,6 +594,14 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .lecteur__calque :global(.lecteur__video.est-vivante) { opacity: 1; }
   .lecteur__calque :global(.lecteur__video) { transition: opacity 1.2s ease; }
   .lecteur__calque :global(.lecteur__video video) { display: block; position: absolute; max-width: none; object-fit: fill; background: transparent; }
+  /* Image colorisée par IA (spec 16) : la version colorisée, aux dimensions de la zone utile, est
+     posée sur elle avec la transformation de l'image ; taille, opacité et filtre viennent du
+     script (couleur.ts : fondu lent calé sur l'horloge de la voix, aucune transition CSS). */
+  .lecteur__calque :global(.lecteur__couleur) {
+    display: block; position: absolute; left: 0; top: 0; max-width: none; transform-origin: 0 0;
+    will-change: transform, opacity; pointer-events: none;
+  }
+  .lecteur__calque :global(.lecteur__couleur[hidden]) { display: none; }
   .lecteur__calque :global(.lecteur__plans img) { will-change: transform, opacity; }
   .lecteur__calque :global(.lecteur__plans img), .lecteur__calque :global(.lecteur__apres img), .lecteur__calque :global(.mosaique img) {
     display: block;
@@ -1018,6 +1076,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
      avec la préférence « réduire les animations », l'image reste fixe et la ligne disparaît. */
   .lecteur__legende :global(.lecteur__legende-ia) { font-size: 0.78rem; letter-spacing: 0.04em; }
   @media (prefers-reduced-motion: reduce) { .lecteur__legende :global(.lecteur__legende-ia) { display: none; } }
+  /* Image colorisée par IA (spec 16) : la ligne se déplie tant que la couleur est à l'écran
+     (classe `en-couleur` posée par couleur.ts) ; jamais avec « réduire les animations ». */
+  .lecteur__legende :global(.lecteur__legende-couleur) { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.6s ease, opacity 0.9s ease; }
+  .lecteur.en-couleur .lecteur__legende :global(.lecteur__legende-couleur) { max-height: 3em; opacity: 1; }
   .livre__video video { display: block; width: 100%; height: auto; background: #000; }
 
   /* Plein écran : fond blanc cassé ; légende et contrôles s'effacent après inactivité. */
@@ -1202,8 +1264,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
   /* Carton (retour du 2026-10-11, « la frise se dessine ») : frise plus grande, animée par le script
      au rythme de l'horloge du carton (frise.ts, `majFriseCarton`) : le filet se trace de gauche à
      droite, les actes déjà vus restent en gris, le segment de l'acte avance et s'épaissit pendant
-     que les années défilent sous le titre, puis deux ou trois dates clés paraissent (petit repère
-     sur la frise, date et libellé dessous). Ni curseur ni date. Monochrome. */
+     que les années défilent sous le titre. Ni curseur ni date. Révision du 2026-10-12 : plus de dates
+     clés dessous ; la période de l'acte est en couleur (--c-accent : segment, zone teintée, onde),
+     seule exception de couleur avec les œuvres de la visionneuse. */
   .diaporama .frise-t--carton { max-width: min(46rem, 100%); margin-top: var(--e-3); text-align: left; column-gap: 0.9rem; }
   .diaporama .frise-t--carton .frise-t__curseur, .diaporama .frise-t--carton .frise-t__date { display: none; }
   .diaporama .frise-t--carton .frise-t__piste { height: 1.9rem; }
@@ -1220,60 +1283,22 @@ const sectionsLivre = d.actes.map((a, i) => ({
     bottom: 0.45rem;
     height: 5px;
     min-width: 6px;
-    background: var(--c-texte);
+    background: var(--c-accent);
     transform: translate(-50%, calc(50% - 0.5px));
   }
-  .diaporama .frise-t__repere {
+  .diaporama .frise-t__zone, .diaporama .frise-t__onde {
     position: absolute;
-    bottom: calc(0.45rem + 5px);
-    width: 1px;
-    height: 9px;
-    margin-left: -0.5px;
-    background: var(--c-texte);
+    bottom: 0.45rem;
+    height: 1.1rem;
+    border-radius: 2px;
+    opacity: 0;
+    transform: translate(-50%, calc(50% - 0.5px));
+    pointer-events: none;
   }
-  .diaporama .frise-t__repere::before {
-    content: '';
-    position: absolute;
-    left: -2px;
-    top: -5px;
-    width: 5px;
-    height: 5px;
-    border: 1px solid var(--c-texte);
-    border-radius: 50%;
-    box-sizing: border-box;
-    background: var(--c-fond);
-  }
-  .diaporama .carton-reperes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.5rem 2.4rem;
-    min-height: 2.6rem;
-    max-width: min(52rem, 100%);
-    margin: var(--e-2) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .diaporama .carton-reperes:empty { display: none; }
-  .diaporama .carton-reperes li { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; margin: 0; }
-  .diaporama .carton-reperes .r-date {
-    font-size: 0.82rem;
-    font-variant: small-caps;
-    font-variant-numeric: oldstyle-nums;
-    letter-spacing: 0.05em;
-    color: var(--c-texte-doux);
-  }
-  .diaporama .carton-reperes .r-texte { font-size: 1rem; line-height: 1.25; color: var(--c-texte); }
+  .diaporama .frise-t__zone { background: var(--c-accent); }
+  .diaporama .frise-t__onde { border: 1px solid var(--c-accent); box-sizing: border-box; }
   .diaporama .lecteur:fullscreen .frise-t--carton { max-width: min(60rem, 80%); }
   .diaporama .lecteur:fullscreen .frise-t--carton .frise-t__borne { font-size: 1.15rem; }
-  .diaporama .lecteur:fullscreen .carton-reperes { gap: 0.6rem 3.2rem; max-width: min(66rem, 88%); }
-  .diaporama .lecteur:fullscreen .carton-reperes .r-date { font-size: 1rem; }
-  .diaporama .lecteur:fullscreen .carton-reperes .r-texte { font-size: 1.25rem; }
-  @media (max-width: 700px) {
-    .diaporama .carton-reperes { gap: 0.35rem 1.2rem; }
-    .diaporama .carton-reperes .r-date { font-size: 0.72rem; }
-    .diaporama .carton-reperes .r-texte { font-size: 0.86rem; }
-  }
   .diaporama .en-carton .frise-t--carton { animation: frise-entree 900ms cubic-bezier(0.2, 0.6, 0.3, 1) 300ms both; }
   @keyframes frise-entree { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 

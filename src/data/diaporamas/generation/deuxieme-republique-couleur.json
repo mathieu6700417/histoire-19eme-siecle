@@ -1,0 +1,328 @@
+{
+  "usage": "couleur",
+  "images": {
+    "File:Tirez si vous voulez (23 Février 1848.).jpg": {
+      "consigne": "Add colours to this 1848 etching, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Infantry in dark blue coats with red trousers on the left; grey paving stones, pale stone house fronts.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:23 FEVRIER, BOULEVARD DES CAPUCINES. Paris Musées 20230514105622.jpg": {
+      "consigne": "Add colours to this 1848 print, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Night scene lit by a torch; dark clothes, warm torchlight.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:La Duchesse d'Orléans à la Chambre des Députés - estampe - btv1b530138280.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Interior of the Chamber of Deputies: pale stone columns, brown wooden desks, men in black and dark grey coats, a woman in black; the flags are French tricolours with three vertical bands, blue at the hoist, white in the middle, red at the fly.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "teintes sobres ; drapeaux bleu-blanc-rouge"
+    },
+    "File:Ateliers nationaux (Victor Adam).jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Pale sandy earth, pale sky; workers in faded blue smocks and grey or brown trousers, straw and felt hats; the small flag on the mound is a French tricolour (blue, white, red).",
+      "graine": 1848,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "blouses bleu passé, petit drapeau tricolore"
+    },
+    "File:Luxembourg Commission.jpg": {
+      "consigne": "Add colours to this 1848 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Interior hall with wooden benches and pale stone, dark coats.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Barricade St Julien à Rouen Avril 1848. Paris Musées 20230509145406.jpg": {
+      "consigne": "Add colours to this 1848 etching, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Street in Rouen, half-timbered houses, grey smoke, soldiers in dark blue.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Révolte d'esclaves à la Martinique en mai 1848.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Tropical landscape, green palm trees, pale sky, white gunsmoke.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Mourir pour la Patrie !!! (Choeur des Girondins) - estampe - btv1b530136482.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Men in cream shirts, grey and brown trousers, one faded blue smock; grey smoke and grey stones; natural skin.",
+      "graine": 1848,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "chemises crème, plus de vert arbitraire"
+    },
+    "File:15 mai 1848, envahissement de l'Assemblée. (IFF 11), G.12466.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Large hall in neutral tones: brown wooden galleries and benches, pale walls, crowd in black and grey coats; no red or orange cast.",
+      "graine": 1848,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "salle en tons neutres, plus de dominante rouge"
+    },
+    "File:L'Archevêque de Paris sur la barricade du faubourg St Antoine, le 25 Juin 1848. Paris Musées 20230509145815.jpg": {
+      "consigne": "Add colours to this 1848 etching, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Only the archbishop, the central figure in a long cassock, wears violet; the other men wear black or grey coats and faded blue smocks, black top hats; brown wooden barrels, grey paving stones.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "violet sur le seul archevêque"
+    },
+    "File:Barrière Fontainebleau - Le Général Bréa, Victime d'une trahison.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Pale beige stone buildings with grey slate roofs, pale sky; crowd in faded blue smocks, grey and black coats; no vivid yellow.",
+      "graine": 1848,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "pierre claire, plus de jaune vif"
+    },
+    "File:Insurgés poursuivis dans les carrières Montmartre.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Pale grey-beige limestone cliff, brown earth, sparse dull green grass, pale sky; small figures in dark blue and grey.",
+      "graine": 1848,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "falaise gris-beige"
+    },
+    "File:Tombeau de Chateaubriand sur le grand Bé, île située en face de Saint-Malo. PH11548.jpg": {
+      "consigne": "Add natural colours to this old photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour. Green grass, grey granite, grey-blue sea and sky.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "herbe verte, mer et ciel bleus : colorisation de photographie convaincante"
+    },
+    "File:Louis Napoléon Bonaparte prête serment à la Constitution.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Parliament hall with wooden tribune; men in black coats.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Reconnaissance (...) (Siège de Rome. 11 Juin 1849) - estampe - btv1b53018636g.jpg": {
+      "consigne": "Add colours to this 1849 lithograph, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Dry Roman countryside, officers in dark blue uniforms on brown horses.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Journée du 13 juin 1849.JPG": {
+      "consigne": "Add colours to this 1849 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale house fronts, green trees, soldiers in dark blue, crowd in dark coats.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Récompense nationales. Louis Napoléon Bonaparte au Val-de-Grace, Paris Musées 20230510121346.jpg": {
+      "consigne": "Add colours to this 1849 lithograph, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Hospital ward with white bed curtains, nuns in white cornettes, men in dark coats and uniforms.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Commission de révision de la loi électorale (1850).jpg": {
+      "consigne": "Add colours to this 1850 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. A salon with a table and wooden chairs; men in black coats.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:T2- d195 - Fig. 108. — Dévidement du câble.png": {
+      "consigne": "Add colours to this 1851 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Pale wooden deck planks, dark grey iron wheel and machinery, brown masts and ropes, sailors in dark blue, grey-green sea.",
+      "graine": 1848,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "pont de bois clair, mer gris-vert"
+    },
+    "File:La revue de Satory, Paris Musées 20230509174650.jpg": {
+      "consigne": "Add colours to this 1850 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Dusty plain, pale grey sky, white-grey gunsmoke; officers in dark blue coats with red trousers on brown and bay horses; cuirassiers with steel breastplates; the flags are French tricolours with three vertical bands, blue at the hoist, white in the middle, red at the fly.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "plaine et fumée sobres ; petits drapeaux tricolores, à vérifier en grand"
+    },
+    "File:Coup d'État 2 décembre 1851.jpg": {
+      "consigne": "Add colours to this 1851 engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. A salon by lamplight; men in black evening coats, red and gold furniture.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Coup d'État du 2 décembre 1851 - Arrest of General Changarnier.jpg": {
+      "consigne": "Add colours to this 1851 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A bedroom by lamplight in warm tones; the general wears a white nightshirt; policemen in black and dark grey overcoats and black hats; dark red curtains, brown wooden furniture.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "manteaux sombres, chemise blanche"
+    },
+    "File:Pierre-Antoine Berryer à la fenêtre de la mairie du 10e arrondissement de Paris le 2 décembre 1851.jpg": {
+      "consigne": "Add colours to this 1851 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale stone town hall and houses, crowd and soldiers in dark clothes.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Cavalerie rues paris (1851).jpg": {
+      "consigne": "Add colours to this 1851 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale Paris house fronts, cavalry in dark blue with steel helmets, brown and black horses.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Histoire d'un crime - Le Massacre par A. Marie.jpg": {
+      "consigne": "Add colours to this 1851 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Night street; a woman in a black dress, wet grey pavement.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:The Illustrated London News - La police recherche des armes.jpg": {
+      "consigne": "Add colours to this 1851 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. A bourgeois interior; policemen in dark coats, a woman in a pale dress.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:The Illustrated London News - plébiciste décembre 1851.jpg": {
+      "consigne": "Add colours to this 1851 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale Paris house fronts, crowd in dark coats.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Désarmement de la garde nationale de Paris.jpg": {
+      "consigne": "Add colours to this 1852 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale stone arcades, men in dark coats and blue uniforms.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Proclamation de l'Empire, à l'Hôtel de ville, le 2 décembre 1852.jpg": {
+      "consigne": "Add colours to this 1852 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale stone town hall façade, troops in dark blue on a grey square.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Bivouac des volontaires dans la cour de l'Hôtel de Ville, 26 février 1848.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale stone vaulted hall, dark coats.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:M. de Lamartine, haranguant le peuple à l'Hôtel de Ville, 26 février 1848.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale stone town hall façade, crowd in dark coats, white priestly surplices in the foreground.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Assemblée 1848.jpg": {
+      "consigne": "Add colours to this 1848 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Pale stone tribune; crowd in black and grey coats and faded blue smocks; banners are pale cream cloth with dark letters; the flags are French tricolours with three vertical bands, blue at the hoist, white in the middle, red at the fly.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "drapeau tricolore, bannières claires"
+    },
+    "File:Arrestation de Barbès à l'Hôtel-de-Ville, Paris Musées 20230513121803.jpg": {
+      "consigne": "Add colours to this 1848 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. National Guards in dark blue uniforms with white cross-belts, pale stone street.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Attaque de l'entrée du Faubourg du Temple.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Pale beige house fronts, grey roofs, black and grey smoke only, no flames; grey stone bridge, grey-green water; soldiers in dark blue.",
+      "graine": 1848,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "fumée grise, plus de flammes"
+    },
+    "File:Etat de la maison faisant l'angle de la rue du Faubourg-Saint-Antoine et de Charenton pendant les journées de juin 1848. D.6506.jpg": {
+      "consigne": "Add colours to this 1848 drawing, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. A pale plastered house with dark holes, grey sky.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Les insurgés de Juin 1848—Séance du Conseil de guerre.png": {
+      "consigne": "Add colours to this 1848 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Panelled hall, officers in dark blue uniforms.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Le general Cavaignac et son etat-major a la revue du 3 septembre 1848.jpg": {
+      "consigne": "Add colours to this 1848 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. The general rides a white horse and wears a dark blue coat, red trousers and a black bicorne hat; infantry in dark blue coats with red trousers and dark shakos; the regimental flag is a French tricolour (blue, white, red); pale stone houses, grey dome, pale sky. Leave the paper background uncoloured.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "cheval blanc, habit bleu sombre, drapeau tricolore ; les pantalons garance sortent rosés sur le papier clair"
+    },
+    "File:Liège de Rome, 30 Juni 1849, RP-P-1941-221.jpg": {
+      "consigne": "Add colours to this 1849 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Muted ochre and grey city walls, dull olive-green and brown hills, grey smoke, pale blue-grey sky; no orange cast.",
+      "graine": 1848,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "murs ocre éteint, collines olive"
+    },
+    "File:Cérémonie de l'inauguration du chemin de fer de Chartres - 5 juillet 1849.jpg": {
+      "consigne": "Add colours to this 1849 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Black steam locomotive, pale sky, grey cathedral in the distance; the flags are French tricolours.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Arrestation adolphe Thiers.png": {
+      "consigne": "Add colours to this 1851 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Night scene; men in dark overcoats, grey stone doorway.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Les Châtiments, III, X L'empereur s'amuse Le boulevard Montmartre, 2017.0.3146.jpg": {
+      "consigne": "Add colours to this 1851 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Night scene; dark clothes, grey pavement.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Abd-el-Kader rendant visite au Prince-Président.jpg": {
+      "consigne": "Add colours to this 1852 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. A theatre box with red and gold draperies; a man in a white burnous, men in dark uniforms.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:\"Présentation du plébiscite, à Saint-Cloud, le 1.er décembre 1852. - D'après un croquis de M. Henri de Montaut\" (Napoléon III, debout devant le trône et ayant à sa gauche le roi Jérôme en grand uniforme) - btv1b53020220d.jpg": {
+      "consigne": "Add colours to this 1852 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Official ceremony; dark uniforms and coats, pale palace walls.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Entrée de l'Empereur à Paris, par l'Arc de triomphe de la barrière de l'Étoile.jpg": {
+      "consigne": "Add colours to this 1852 wood engraving, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale stone triumphal arch, pale sky, crowd in dark clothes.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    },
+    "File:Vue générale à vol d'oiseau des palais du Louvre et des Tuileries, 1852.jpg": {
+      "consigne": "Add colours to this 1852 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Pale beige stone palaces with blue-grey slate roofs, dull green gardens and trees, grey-blue river, pale sky; no vivid green.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "jardins vert éteint, toits d'ardoise"
+    },
+    "File:Révolution Française 1848 Le Trône des Tuileries transporté par le peuple à La Bastille. 24 février. Paris Musées 20230620205253.jpg": {
+      "consigne": "Add colours to this 1848 lithograph, like a carefully hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour, with clean flat tints that stay inside the shapes. Pale stone houses, a red and gold throne; the flags are French tricolours.",
+      "graine": 1848,
+      "saturation": 1.0,
+      "jugement": "bon",
+      "remarque": "aspect d'estampe coloriée à la main"
+    }
+  },
+  "methode": "FLUX.2 klein 4B (4 pas), consigne de pure colorisation ; luminance de l'original + chrominance du modèle (YCbCr, chrominance floutée, saturation indiquée par image)"
+}

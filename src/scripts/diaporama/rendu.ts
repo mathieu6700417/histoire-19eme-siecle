@@ -48,6 +48,7 @@ export function installerRendu(lec: Lecteur) {
     } else { mo.replaceChildren(); delete mo.dataset.n; }
     preparerPlans(c, x);
     preparerVideo(c, x);
+    lec.preparerCouleur(c, x);
   }
   lec.legendeMontree = '';
 
@@ -65,6 +66,7 @@ export function installerRendu(lec: Lecteur) {
     const img = calques[k].querySelector('img')!;
     img.style.transform = transformation(calques[k], x, couches[k].r);
     poserVideo(calques[k], img.style.transform);
+    lec.poserCouleur(calques[k], x, img.style.transform);
     const ra = couches[k].ra;
     if (x.ap && ra) {
       const imgA = calques[k].querySelector<HTMLImageElement>('.lecteur__apres img')!;
@@ -82,7 +84,7 @@ export function installerRendu(lec: Lecteur) {
   function rendre(t = instant()) {
     lec.majVolets();
     const c = calques[lec.visible], x = couches[lec.visible].x;
-    if (x !== D.diapos[lec.i]) return; // carton : l'image de la diapositive n'est pas encore entrée
+    if (x !== D.diapos[lec.i]) { lec.marquerCouleur(0); return; } // carton : l'image de la diapositive n'est pas encore entrée
     const img = c.querySelector('img')!;
     const reduit = mouvementReduit.matches;
     // Pendant l'ouverture du carton, l'entrée et la caméra suivent l'horloge du carton (figée
@@ -91,7 +93,7 @@ export function installerRendu(lec: Lecteur) {
     const e = ouv ? tempsOuverture() : lec.enEntree ? chronoEntree.t : Infinity;
     const opacite = lec.entreeNette ? 1 : adoucir(e / (reduit ? FONDU_REDUIT : FONDU));
     const gris = reduit ? 0 : 1 - adoucir(e / revelation(x));
-    const f = reduit || x.ouv ? 1 : 1 + RECUL * (1 - adoucir(e / DUREE_RECUL));
+    const f = reduit || x.ouv || x.ent ? 1 : 1 + RECUL * (1 - adoucir(e / DUREE_RECUL));
     lec.majSurimpressions(t);
     // Intermède avec un cadre : la caméra suit l'horloge de l'intermède.
     const su = x.suite;
@@ -107,7 +109,7 @@ export function installerRendu(lec: Lecteur) {
     if (x.ap) majApres(c, x, tv);
     if (x.mos && !x.ouv) majMosaique(c, x, tv);
     // Plans (horloge de la voix), puis galerie du segment en cours (horloge du segment) : spec 14.
-    if (x.plans) majPlans(c, x, tv, gris);
+    const op = x.plans ? majPlans(c, x, tv, gris) : -1;
     const g = su && (su.type === 'chant' ? su.galerie : su.type === 'lecture' ? su.images : null) ? majGalerie(c, x) : -1;
     if (lec.lance && !lec.enCarton && !lec.enSuite && !lec.suiteFini) {
       const v = legendeVoulue(x, tv);
@@ -117,6 +119,10 @@ export function installerRendu(lec: Lecteur) {
       if (v != null && v !== lec.legendeMontree) lec.changerLegende(v);
     }
     img.style.filter = gris > 0.002 ? `grayscale(${gris.toFixed(3)})` : '';
+    // Image colorisée par IA (spec 16) : même transformation et même filtre que l'image ; le
+    // cartouche le signale tant que la couleur de l'image montrée (ou du plan) est à l'écran.
+    const oc = x.coul ? lec.majCouleur(c, x, img.style.transform, tv, img.style.filter) : 0;
+    lec.marquerCouleur(lec.lance && !lec.enCarton ? (op >= 0 ? op : oc) : 0);
     c.style.opacity = opacite.toFixed(3);
     if (opacite >= 1 && lec.sortant >= 0) {
       calques[lec.sortant].style.opacity = '0';

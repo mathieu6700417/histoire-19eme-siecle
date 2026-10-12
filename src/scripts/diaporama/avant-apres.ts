@@ -22,7 +22,7 @@ export function installerAvantApres(lec: Lecteur) {
   /** Image après : sa caméra part de la vue de raccord à la fin du volet. */
   function apresDe(x: Diapo): Diapo {
     const A = x.ap!;
-    const xa: Diapo = { ...x, img: A.img, u: A.u, l: A.l, h: A.h, camera: A.camera, ouv: null, ap: null, mos: null, t0: A.t, a0: A.t + VOLET_S };
+    const xa: Diapo = { ...x, img: A.img, u: A.u, l: A.l, h: A.h, camera: A.camera, ouv: null, ent: null, ap: null, mos: null, t0: A.t, a0: A.t + VOLET_S };
     if (!mouvementReduit.matches) xa.v0 = raccord(x, xa);
     return xa;
   }

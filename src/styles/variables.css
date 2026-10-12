@@ -13,6 +13,9 @@
   --c-bleu-nuit: #1a1a1a;     /* titres : noir */
   --c-filet: #dcd9d2;         /* filets fins */
   --c-lien: var(--c-bordeaux);
+  /* Couleur d'accent du thème (2026-10-12) : rouge de rubrique des éditions savantes (8,6:1 sur le
+     fond). Seule couleur admise ; pour l'instant, la période de l'acte sur la frise des cartons. */
+  --c-accent: #8a2b22;
 
   /* Typographie */
   --f-texte: 'EB Garamond', Garamond, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;

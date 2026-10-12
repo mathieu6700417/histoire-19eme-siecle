@@ -3033,5 +3033,136 @@
       0.313
     ],
     "fichier": "portraits/cavaignac.webp"
+  },
+  {
+    "id": "sonthonax",
+    "nom": "Sonthonax",
+    "dates": "1763-1813",
+    "commons": "File:Sonthonax.jpg",
+    "auteur": "Peintre anonyme",
+    "date": "fin du XVIIIe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Sonthonax.jpg",
+    "cadre_visage": [
+      0.55,
+      0.15,
+      0.76,
+      0.34
+    ],
+    "fichier": "portraits/sonthonax.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "belley",
+    "nom": "Jean-Baptiste Belley",
+    "dates": "1746-1805",
+    "commons": "File:Girodet le cytoyen Belley 1798.jpg",
+    "auteur": "Anne-Louis Girodet",
+    "date": "1797",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Girodet_le_cytoyen_Belley_1798.jpg",
+    "cadre_visage": [
+      0.33,
+      0.1,
+      0.52,
+      0.27
+    ],
+    "fichier": "portraits/belley.webp",
+    "cadre_visage_manuel": true,
+    "note_dates": "né en 1746 ou 1747"
+  },
+  {
+    "id": "chavannes",
+    "nom": "Jean-Baptiste Chavannes",
+    "dates": "1748-1791",
+    "note": "Aucun portrait d'époque connu (le portrait de Verschueren, fin du XIXe siècle, est imaginaire). Naissance vers 1748 (date incertaine)."
+  },
+  {
+    "id": "biassou",
+    "nom": "Biassou",
+    "dates": "1741-1801",
+    "note": "Aucun portrait d'époque fiable (gravures imaginaires du XIXe siècle)."
+  },
+  {
+    "id": "polverel",
+    "nom": "Polverel",
+    "dates": "1740-1795",
+    "note": "Aucun portrait d'époque identifié sur Commons."
+  },
+  {
+    "id": "mills",
+    "nom": "Jean-Baptiste Mills",
+    "dates": "1749-1806",
+    "note": "Aucun portrait d'époque connu."
+  },
+  {
+    "id": "boukman",
+    "nom": "Boukman",
+    "dates": "1767-1791",
+    "note": "Aucun portrait d'époque. Naissance vers 1767 (date incertaine)."
+  },
+  {
+    "id": "dufay",
+    "nom": "Dufay",
+    "dates": "1752-1804",
+    "note": "Aucun portrait d'époque identifié sur Commons. Mort à une date inconnue, probablement en 1804."
+  },
+  {
+    "id": "richepance",
+    "nom": "Richepance",
+    "dates": "1770-1802",
+    "note": "Pas de portrait d'époque sûr retenu : la lithographie de la Library of Congress (« Le Général Richepanse ») est postérieure à sa mort (colonies, 2026-10-12)."
+  },
+  {
+    "id": "delgres",
+    "nom": "Louis Delgrès",
+    "dates": "1766-1802",
+    "note": "Aucun portrait d'époque identifié sur Commons ; les effigies connues sont des œuvres commémoratives du XXe siècle (colonies, 2026-10-12)."
+  },
+  {
+    "id": "achard",
+    "nom": "Achard",
+    "dates": "1753-1821",
+    "note": "Franz Karl Achard : portrait non recherché (mention unique, colonies, 2026-10-12)."
+  },
+  {
+    "id": "delessert",
+    "nom": "Benjamin Delessert",
+    "dates": "1773-1847",
+    "note": "Pas de portrait d'époque libre retenu : le buste de Daumier (vers 1832-1835) est une charge (colonies, 2026-10-12)."
+  },
+  {
+    "id": "bissette",
+    "nom": "Cyrille Bissette",
+    "dates": "1795-1858",
+    "commons": "File:Cyrille Bissette by François Le Villain.jpg",
+    "auteur": "François Le Villain, lithographe",
+    "date": "1828",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Cyrille_Bissette_by_Fran%C3%A7ois_Le_Villain.jpg",
+    "cadre_visage": [
+      0.403,
+      0.113,
+      0.839,
+      0.475
+    ],
+    "fichier": "portraits/bissette.webp"
+  },
+  {
+    "id": "caillie",
+    "nom": "René Caillié",
+    "dates": "1799-1838",
+    "commons": "File:René Caillié.jpg",
+    "auteur": "Amélie Legrand de Saint-Aubin",
+    "date": "1830",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Ren%C3%A9_Cailli%C3%A9.jpg",
+    "cadre_visage": [
+      0.232,
+      0.117,
+      0.608,
+      0.429
+    ],
+    "fichier": "portraits/caillie.webp"
   }
 ]

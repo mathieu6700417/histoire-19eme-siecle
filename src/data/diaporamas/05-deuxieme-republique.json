@@ -89,7 +89,7 @@
       "id": "ordre",
       "titre": "L'Ordre contre la Montagne",
       "dates": "1849",
-      "debut": 61,
+      "debut": 65,
       "reperes": [
         {
           "date": "1849-05-13",
@@ -109,7 +109,7 @@
       "id": "conservatrice",
       "titre": "La République conservatrice",
       "dates": "1850-1851",
-      "debut": 75,
+      "debut": 79,
       "reperes": [
         {
           "date": "1850-03-15",
@@ -129,7 +129,7 @@
       "id": "coup",
       "titre": "Le coup d'État",
       "dates": "décembre 1851",
-      "debut": 93,
+      "debut": 97,
       "reperes": [
         {
           "date": "1851-12-02",
@@ -149,7 +149,7 @@
       "id": "empire",
       "titre": "Vers l'Empire",
       "dates": "1852",
-      "debut": 106,
+      "debut": 110,
       "reperes": [
         {
           "date": "1852-01-14",
@@ -372,7 +372,14 @@
             ],
             "quand": "Vive la réforme"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "003-couleur.webp",
+          "largeur": 1512,
+          "hauteur": 1018,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "personnes": [
         {
@@ -455,7 +462,14 @@
             ],
             "quand": "tués ou blessés"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "004-couleur.webp",
+          "largeur": 1520,
+          "hauteur": 1029,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -859,6 +873,7 @@
     },
     {
       "n": 8,
+      "camera_manuelle": true,
       "narration": "La foule envahit aussitôt le palais ; on s'assoit sur le trône, on déchire les tentures, on vide les caves. Mais des élèves de l'École polytechnique emportent en procession le crucifix de la chapelle. Gustave Flaubert, témoin de ces journées, en tirera une scène de son roman l'Éducation sentimentale.",
       "date": "1848-02-24",
       "image": {
@@ -888,7 +903,25 @@
               0.87
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.15,
+              0.16,
+              0.7,
+              0.46
+            ],
+            [
+              0.33,
+              0.34,
+              0.96,
+              0.67
+            ]
+          ],
+          "duree": 5,
+          "intention": "On part des toits et des pavillons des Tuileries, on descend la façade, et on arrive sur la foule qui charge."
+        }
       },
       "plans": [
         {
@@ -914,13 +947,25 @@
             "camera": [
               {
                 "cadre": [
-                  0.15,
                   0.18,
-                  0.61,
-                  0.43
+                  0.33,
+                  0.6,
+                  0.68
                 ]
               }
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.07,
+                  0.09,
+                  0.71,
+                  0.44
+                ]
+              ],
+              "duree": 5,
+              "intention": "On descend la façade du palais jusqu'au crucifix porté par les polytechniciens."
+            }
           },
           "instant": 7.75
         }
@@ -991,7 +1036,19 @@
           0.3,
           0.991,
           0.62
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0,
+              0,
+              1,
+              0.425
+            ]
+          ],
+          "duree": 5.5,
+          "intention": "On recule depuis le sommet de la colonne de Juillet jusqu'à la place et au trône en flammes."
+        }
       },
       "lieux": [
         {
@@ -1034,7 +1091,14 @@
                   0.69
                 ]
               }
-            ]
+            ],
+            "couleur": {
+              "fichier": "009-b-couleur.webp",
+              "largeur": 1016,
+              "hauteur": 716,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.33
         }
@@ -1104,7 +1168,14 @@
           0.7
         ],
         "entier_manuel": true,
-        "entier_zoom": 1.15
+        "entier_zoom": 1.15,
+        "couleur": {
+          "fichier": "010-couleur.webp",
+          "largeur": 1485,
+          "hauteur": 1050,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -1153,10 +1224,10 @@
             "camera": [
               {
                 "cadre": [
-                  0.42,
-                  0.165,
-                  0.72,
-                  0.36
+                  0.4,
+                  0.065,
+                  0.74,
+                  0.365
                 ]
               }
             ]
@@ -1278,7 +1349,26 @@
               0.33,
               0.966,
               0.7
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.08,
+                  0,
+                  0.92,
+                  0.42
+                ]
+              ],
+              "duree": 5,
+              "intention": "On descend de la voûte et des arcades vers les volontaires qui bivouaquent."
+            },
+            "couleur": {
+              "fichier": "011-b-couleur.webp",
+              "largeur": 1492,
+              "hauteur": 1452,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 5.91
         }
@@ -1590,7 +1680,14 @@
                 ],
                 "quand": "la foule cède"
               }
-            ]
+            ],
+            "couleur": {
+              "fichier": "013-b-couleur.webp",
+              "largeur": 1474,
+              "hauteur": 1151,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.92
         }
@@ -1790,7 +1887,14 @@
             ],
             "quand": "cent dix-sept mille"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "015-couleur.webp",
+          "largeur": 1032,
+          "hauteur": 562,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "chiffres": [
         {
@@ -1867,7 +1971,26 @@
           0.52,
           0.67,
           0.72
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0,
+              0.584,
+              1,
+              1
+            ]
+          ],
+          "duree": 5,
+          "intention": "On monte des bancs du premier plan vers la tribune et la salle du Luxembourg."
+        },
+        "couleur": {
+          "fichier": "016-couleur.webp",
+          "largeur": 1201,
+          "hauteur": 1388,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -2910,7 +3033,14 @@
             ],
             "quand": "À Rouen, les ouvriers dressent"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "027-couleur.webp",
+          "largeur": 1573,
+          "hauteur": 825,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -3110,7 +3240,14 @@
             ],
             "quand": "se soulèvent"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "029-couleur.webp",
+          "largeur": 1600,
+          "hauteur": 1000,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -3556,7 +3693,14 @@
           0.19,
           0.82,
           0.49
-        ]
+        ],
+        "couleur": {
+          "fichier": "033-couleur.webp",
+          "largeur": 1204,
+          "hauteur": 1434,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "citations": [
         {
@@ -3773,7 +3917,19 @@
                   0.72
                 ]
               }
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.3,
+                  0.3,
+                  0.72,
+                  0.62
+                ]
+              ],
+              "duree": 4,
+              "intention": "On part de la tribune drapée, sous la devise, et on recule : l'hémicycle comble se découvre de part et d'autre."
+            }
           },
           "instant": 11.2
         }
@@ -3925,7 +4081,14 @@
             ],
             "quand": "un meneur la déclare dissoute"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "036-couleur.webp",
+          "largeur": 1544,
+          "hauteur": 955,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "personnes": [
         {
@@ -3969,7 +4132,14 @@
                   0.68
                 ]
               }
-            ]
+            ],
+            "couleur": {
+              "fichier": "036-b-couleur.webp",
+              "largeur": 1540,
+              "hauteur": 1100,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 7.94
         },
@@ -4008,7 +4178,14 @@
                   0.55
                 ]
               }
-            ]
+            ],
+            "couleur": {
+              "fichier": "036-c-couleur.webp",
+              "largeur": 1337,
+              "hauteur": 775,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 14.16
         }
@@ -4142,7 +4319,19 @@
                 ],
                 "quand": "et la concorde n'est déjà qu'un décor"
               }
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.1,
+                  0.42,
+                  0.7,
+                  0.78
+                ]
+              ],
+              "duree": 4,
+              "intention": "Travelling vers la droite au ras de la foule, depuis le pylône tricolore jusqu'au char."
+            }
           },
           "instant": 9.8
         }
@@ -4721,7 +4910,26 @@
               0.43,
               0.95,
               0.73
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0,
+                  0.077,
+                  1,
+                  0.623
+                ]
+              ],
+              "duree": 4.5,
+              "intention": "On descend de la fumée et des toits vers la passerelle et les soldats."
+            },
+            "couleur": {
+              "fichier": "042-c-couleur.webp",
+              "largeur": 958,
+              "hauteur": 1296,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 11.34
         }
@@ -4782,7 +4990,14 @@
               0.43
             ]
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "043-couleur.webp",
+          "largeur": 1573,
+          "hauteur": 770,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "personnes": [
         {
@@ -4932,7 +5147,14 @@
               0.82
             ]
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "044-couleur.webp",
+          "largeur": 1551,
+          "hauteur": 1004,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "044.m4a",
@@ -5122,7 +5344,14 @@
               0.3,
               0.82,
               0.48
-            ]
+            ],
+            "couleur": {
+              "fichier": "046-b-couleur.webp",
+              "largeur": 718,
+              "hauteur": 1312,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 7.65
         }
@@ -5265,7 +5494,26 @@
               0.75
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.02,
+              0.12,
+              0.67,
+              0.44
+            ]
+          ],
+          "duree": 5,
+          "intention": "On descend de la falaise de la carrière vers les soldats lancés à la poursuite des insurgés."
+        },
+        "couleur": {
+          "fichier": "048-couleur.webp",
+          "largeur": 1536,
+          "hauteur": 1112,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -5314,7 +5562,14 @@
                   0.44
                 ]
               }
-            ]
+            ],
+            "couleur": {
+              "fichier": "048-b-couleur.webp",
+              "largeur": 1556,
+              "hauteur": 1047,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.85
         }
@@ -5474,7 +5729,26 @@
               0.58
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.21,
+              0.5,
+              0.69,
+              0.75
+            ]
+          ],
+          "duree": 5,
+          "intention": "On remonte la pente d'herbe du Grand-Bé jusqu'à la grille du tombeau, face à la mer."
+        },
+        "couleur": {
+          "fichier": "050-couleur.webp",
+          "largeur": 1077,
+          "hauteur": 852,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -5665,7 +5939,14 @@
                   0.33
                 ]
               }
-            ]
+            ],
+            "couleur": {
+              "fichier": "051-b-couleur.webp",
+              "largeur": 1296,
+              "hauteur": 990,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.36
         }
@@ -5811,7 +6092,66 @@
       }
     },
     {
+      "narration": "Outre-mer, les anciens esclaves votent pour la première fois. Le 22 août 1848, la Guadeloupe élit Louisy Mathieu, ouvrier typographe à Pointe-à-Pitre, comme suppléant de Victor Schœlcher. Esclave au printemps encore, il vient siéger à Paris à l'automne, sur les bancs de l'extrême gauche, quand Schœlcher choisit la Martinique.",
+      "date": "1848-08-22",
+      "image": {
+        "commons": "File:Louisy Mathieu représentant du peuple.jpg",
+        "titre": "Louisy Mathieu, représentant du peuple (Guadeloupe)",
+        "titre_court": "Louisy Mathieu, représentant de la Guadeloupe",
+        "auteur": "Alexandre Collette",
+        "date": "vers 1848",
+        "technique": "lithographie",
+        "conservation": "Lieu de conservation non précisé par la notice Commons",
+        "fichier": "053.webp",
+        "licence": "Domaine public",
+        "largeur": 1203,
+        "hauteur": 1600,
+        "utile": [
+          0.114,
+          0.124,
+          0.846,
+          0.866
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.15,
+              0.1,
+              0.85,
+              0.65
+            ]
+          }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.203,
+          0.124,
+          0.71,
+          0.622
+        ]
+      },
       "n": 53,
+      "audio": {
+        "fichier": "053.m4a",
+        "duree": 17.39,
+        "phrases": [
+          [
+            0.0,
+            3.04
+          ],
+          [
+            3.6,
+            10.64
+          ],
+          [
+            11.23,
+            17.39
+          ]
+        ]
+      }
+    },
+    {
+      "n": 54,
       "narration": "L'Assemblée écrit la Constitution. Le droit au travail, promis en février, disparaît du texte : la République ne doit plus qu'une assistance aux plus pauvres. Sur les bancs de gauche, une poignée de députés défend encore l'héritage social de février ; on les appelle les montagnards.",
       "date": "1848-09",
       "date_fin": "1848-10",
@@ -5829,7 +6169,7 @@
           0.953,
           0.841
         ],
-        "fichier": "053.webp",
+        "fichier": "054.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 921,
@@ -5851,7 +6191,7 @@
         ]
       },
       "audio": {
-        "fichier": "053.m4a",
+        "fichier": "054.m4a",
         "duree": 15.99,
         "phrases": [
           [
@@ -5870,7 +6210,127 @@
       }
     },
     {
-      "n": 54,
+      "narration": "Que faire des ouvriers parisiens sans travail ? Le 19 septembre 1848, l'Assemblée vote cinquante millions pour fonder en Algérie quarante-deux colonies agricoles. Le 8 octobre, un premier convoi de chalands quitte le quai de Bercy ; seize autres suivent jusqu'en mars. Environ treize mille personnes partent ainsi cultiver une terre conquise.",
+      "date": "1848-09",
+      "date_fin": "1849-03",
+      "image": {
+        "commons": "File:Départ des colons pour l'Algérie. Paris Musées 20230527000918.jpg",
+        "titre": "Départ des colons pour l'Algérie",
+        "titre_court": "Le départ des colons pour l'Algérie",
+        "auteur": "F. Bastin",
+        "date": "1848",
+        "technique": "lithographie",
+        "conservation": "Paris, musée Carnavalet",
+        "recadrage": [
+          0.225,
+          0.18,
+          0.805,
+          0.835
+        ],
+        "fichier": "055.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1416,
+        "utile": [
+          0.014,
+          0.013,
+          0.983,
+          0.981
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.02,
+              0.45,
+              0.9,
+              0.9
+            ]
+          }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.25,
+          0.45,
+          0.75,
+          0.88
+        ],
+        "entier_manuel": true
+      },
+      "plans": [
+        {
+          "quand": "Le 8 octobre, un premier convoi",
+          "image": {
+            "commons": "File:Départ des premiers colons français pour l'Algérie, 8 octobre 1848, ND12659(2).jpg",
+            "titre": "Médaille du départ des premiers colons français pour l'Algérie, 8 octobre 1848",
+            "titre_court": "Médaille du premier départ, 8 octobre 1848",
+            "auteur": "Anonyme",
+            "date": "1848",
+            "technique": "médaille de cuivre",
+            "conservation": "Paris, musée Carnavalet",
+            "recadrage": [
+              0.3,
+              0.22,
+              0.71,
+              0.82
+            ],
+            "fichier": "055-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1574,
+            "hauteur": 1533,
+            "utile": [
+              0.114,
+              0.084,
+              0.902,
+              0.906
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.11,
+                  0.35,
+                  0.89,
+                  0.67
+                ]
+              }
+            ],
+            "entier": true,
+            "entier_vers": [
+              0.114,
+              0.35,
+              0.894,
+              0.67
+            ]
+          },
+          "instant": 10.0
+        }
+      ],
+      "n": 55,
+      "audio": {
+        "fichier": "055.m4a",
+        "duree": 19.71,
+        "phrases": [
+          [
+            0.0,
+            2.04
+          ],
+          [
+            2.79,
+            9.39
+          ],
+          [
+            10.3,
+            13.65
+          ],
+          [
+            14.28,
+            19.71
+          ]
+        ]
+      },
+      "camera_manuelle": true
+    },
+    {
+      "n": 56,
       "narration": "Qui élira le président ? Le député Jules Grévy propose de s'en passer : un chef nommé par l'Assemblée suffirait. Lamartine répond qu'il faut s'en remettre au peuple, même s'il se trompe : « Alea jacta est ! » Le sort en est jeté. L'amendement Grévy est repoussé.",
       "date": "1848-10-06",
       "date_fin": "1848-10-07",
@@ -5888,7 +6348,7 @@
           0.828,
           0.999
         ],
-        "fichier": "054.webp",
+        "fichier": "056.webp",
         "licence": "Domaine public",
         "largeur": 919,
         "hauteur": 1600,
@@ -5958,7 +6418,7 @@
             "date": "1850",
             "technique": "gravure sur bois",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "054-b.webp",
+            "fichier": "056-b.webp",
             "licence": "Domaine public",
             "largeur": 1187,
             "hauteur": 1600,
@@ -5990,7 +6450,7 @@
         }
       ],
       "audio": {
-        "fichier": "054.m4a",
+        "fichier": "056.m4a",
         "duree": 17.83,
         "phrases": [
           [
@@ -6013,7 +6473,7 @@
       }
     },
     {
-      "n": 55,
+      "n": 57,
       "narration": "La Constitution est votée le 4 novembre et proclamée le 12, place de la Concorde, sous la neige. Une Assemblée unique de sept cent cinquante membres fait la loi. Un président élu pour quatre ans par tous les citoyens gouverne ; il ne peut pas se représenter. Rien n'est prévu s'ils se disputent.",
       "date": "1848-11-12",
       "image": {
@@ -6024,7 +6484,7 @@
         "date": "1848",
         "technique": "huile sur toile",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "055.webp",
+        "fichier": "057.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 783,
@@ -6045,7 +6505,7 @@
           }
         ],
         "video": {
-          "fichier": "055-mouvement.mp4",
+          "fichier": "057-mouvement.mp4",
           "type": "mouvement",
           "duree": 18.29,
           "largeur": 1344,
@@ -6082,7 +6542,7 @@
             "date": "1848",
             "technique": "huile sur toile",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "055-b.webp",
+            "fichier": "057-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1115,
@@ -6101,13 +6561,25 @@
                   0.85
                 ]
               }
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0.2,
+                  0.1,
+                  0.8,
+                  0.42
+                ]
+              ],
+              "duree": 5,
+              "intention": "On part de l'horizon de Paris, la Seine et les Tuileries au loin, et on descend en reculant : la place illuminée se découvre."
+            }
           },
           "instant": 10.28
         }
       ],
       "audio": {
-        "fichier": "055.m4a",
+        "fichier": "057.m4a",
         "duree": 18.41,
         "phrases": [
           [
@@ -6130,7 +6602,136 @@
       }
     },
     {
-      "n": 56,
+      "narration": "Cette Constitution déclare aussi l'Algérie territoire français. Le 9 décembre 1848, un arrêté découpe le nord du pays en trois départements : Alger, Oran et Constantine. Mais ils ne comprennent que les territoires civils, où s'installent les colons ; tout le reste demeure sous l'autorité de l'armée.",
+      "date": "1848-12-09",
+      "image": {
+        "commons": "File:Algérie - dessinée et gravée par S. Jacobs, d'après les cartes publiées par le Dépôt g(énéra)l de la Guerre - btv1b531361716.jpg",
+        "titre": "Algérie, carte dessinée et gravée par S. Jacobs d'après les cartes du Dépôt général de la Guerre",
+        "titre_court": "L'Algérie et ses trois provinces, carte de 1851",
+        "auteur": "S. Jacobs",
+        "date": "1851",
+        "technique": "carte gravée, limites coloriées",
+        "conservation": "Paris, Bibliothèque nationale de France",
+        "recadrage": [
+          0.155,
+          0.165,
+          0.845,
+          0.79
+        ],
+        "fichier": "058.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1168,
+        "utile": [
+          0.014,
+          0.014,
+          0.986,
+          0.976
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.1,
+              0.75,
+              0.55
+            ]
+          },
+          {
+            "cadre": [
+              0.25,
+              0.1,
+              1.0,
+              0.55
+            ],
+            "quand": "Alger, Oran et Constantine"
+          }
+        ]
+      },
+      "lieux": [
+        {
+          "nom": "Alger",
+          "quand": "Alger, Oran",
+          "lon": 3.05861,
+          "lat": 36.77639,
+          "fond": "europe",
+          "instant": 9.36
+        },
+        {
+          "nom": "Oran",
+          "quand": "Oran",
+          "lon": -0.63306,
+          "lat": 35.69694,
+          "fond": "europe",
+          "instant": 10.27
+        },
+        {
+          "nom": "Constantine",
+          "quand": "Constantine",
+          "lon": 6.61472,
+          "lat": 36.365,
+          "fond": "europe",
+          "instant": 11.13
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Mais ils ne comprennent",
+          "image": {
+            "commons": "File:Port d'Alger 1847.jpg",
+            "titre": "Le port d'Alger en 1847",
+            "titre_court": "Le port d'Alger en 1847",
+            "auteur": "Théodore Bettinger",
+            "date": "1847",
+            "technique": "lithographie en couleurs",
+            "conservation": "Lieu de conservation non précisé par la notice Commons",
+            "fichier": "058-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1108,
+            "hauteur": 802,
+            "utile": [
+              0.0,
+              0.101,
+              1.0,
+              1.0
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.0,
+                  0.35,
+                  1.0,
+                  0.9
+                ]
+              }
+            ]
+          },
+          "instant": 12.53
+        }
+      ],
+      "n": 58,
+      "audio": {
+        "fichier": "058.m4a",
+        "duree": 18.36,
+        "phrases": [
+          [
+            0.0,
+            3.11
+          ],
+          [
+            4.1,
+            11.68
+          ],
+          [
+            12.83,
+            18.36
+          ]
+        ]
+      },
+      "camera_manuelle": true
+    },
+    {
+      "n": 59,
       "narration": "Plusieurs candidats se présentent, dont Cavaignac, Ledru-Rollin et Lamartine ; le plus inattendu est Louis-Napoléon Bonaparte. Il a tenté deux coups de force, à Strasbourg puis à Boulogne, et s'est évadé du fort de Ham ; les chefs conservateurs le soutiennent. Thiers aurait dit : « C'est un crétin que l'on mènera. »",
       "date": "1848-11",
       "date_fin": "1848-12",
@@ -6142,7 +6743,7 @@
         "date": "décembre 1848",
         "technique": "lithographie",
         "conservation": "Paris, maison de Victor Hugo",
-        "fichier": "056.webp",
+        "fichier": "059.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1218,
@@ -6230,7 +6831,7 @@
               0.833,
               0.818
             ],
-            "fichier": "056-b.webp",
+            "fichier": "059-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1225,
@@ -6255,7 +6856,7 @@
         }
       ],
       "audio": {
-        "fichier": "056.m4a",
+        "fichier": "059.m4a",
         "duree": 19.02,
         "phrases": [
           [
@@ -6274,7 +6875,7 @@
       }
     },
     {
-      "n": 57,
+      "n": 60,
       "narration": "Dans les campagnes, un seul nom est connu de tous : Napoléon. Il rappelle la gloire, l'ordre, et la revanche des petits contre les notables. Le candidat promet tout à chacun : la sécurité aux propriétaires, l'amnistie aux ouvriers. Les paysans voteront aussi contre la République des quarante-cinq centimes.",
       "date": "1848-12",
       "image": {
@@ -6291,7 +6892,7 @@
           0.909,
           0.907
         ],
-        "fichier": "057.webp",
+        "fichier": "060.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1253,
@@ -6322,7 +6923,7 @@
         ]
       },
       "audio": {
-        "fichier": "057.m4a",
+        "fichier": "060.m4a",
         "duree": 17.59,
         "phrases": [
           [
@@ -6345,7 +6946,7 @@
       }
     },
     {
-      "n": 58,
+      "n": 61,
       "narration": "Le 10 décembre 1848, le résultat stupéfie la classe politique. Louis-Napoléon obtient environ cinq millions et demi de voix, soit soixante-quatorze pour cent des suffrages. Cavaignac n'en réunit pas un million et demi. Lamartine, le héros de février, n'en recueille qu'une vingtaine de milliers.",
       "date": "1848-12-10",
       "image": {
@@ -6356,7 +6957,7 @@
         "date": "1848",
         "technique": "huile sur toile",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "058.webp",
+        "fichier": "061.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1100,
@@ -6375,7 +6976,19 @@
               0.95
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.1,
+              0.05,
+              0.75,
+              0.5
+            ]
+          ],
+          "duree": 6,
+          "intention": "On descend du ciel du soir le long de la Seine jusqu'aux tours illuminées de Notre-Dame."
+        }
       },
       "chiffres": [
         {
@@ -6387,7 +7000,7 @@
         }
       ],
       "audio": {
-        "fichier": "058.m4a",
+        "fichier": "061.m4a",
         "duree": 16.81,
         "phrases": [
           [
@@ -6410,7 +7023,7 @@
       }
     },
     {
-      "n": 59,
+      "n": 62,
       "narration": "Le 20 décembre, à la tribune, le prince prête serment : « je jure de rester fidèle à la République démocratique ». Il s'installe au palais de l'Élysée. Pour former son ministère, il choisit Odilon Barrot et des hommes qui servaient Louis-Philippe. La République n'a déjà plus beaucoup de républicains à sa tête.",
       "date": "1848-12-20",
       "image": {
@@ -6421,7 +7034,7 @@
         "date": "vers 1848-1849",
         "technique": "lithographie",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "059.webp",
+        "fichier": "062.webp",
         "licence": "Domaine public",
         "largeur": 1108,
         "hauteur": 1600,
@@ -6447,7 +7060,14 @@
           0.155,
           0.772,
           0.275
-        ]
+        ],
+        "couleur": {
+          "fichier": "062-couleur.webp",
+          "largeur": 987,
+          "hauteur": 1348,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -6521,7 +7141,7 @@
             "date": "1849",
             "technique": "lithographie",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "059-b.webp",
+            "fichier": "062-b.webp",
             "licence": "Domaine public",
             "largeur": 1205,
             "hauteur": 1600,
@@ -6553,7 +7173,7 @@
         }
       ],
       "audio": {
-        "fichier": "059.m4a",
+        "fichier": "062.m4a",
         "duree": 19.05,
         "phrases": [
           [
@@ -6576,7 +7196,81 @@
       }
     },
     {
-      "n": 60,
+      "narration": "Ce même 20 décembre, dans l'océan Indien, le commissaire Sarda Garriga proclame la liberté à La Réunion. Plus de soixante mille esclaves sont affranchis ; il leur impose aussitôt un contrat de travail. En avril 1849, l'Assemblée vote l'indemnité promise aux anciens maîtres : cent vingt-six millions de francs.",
+      "date": "1848-12-20",
+      "image": {
+        "commons": "File:L'abolition de l'esclavage à la Réunion (20 décembre 1848).jpg",
+        "titre": "L'abolition de l'esclavage à La Réunion, 20 décembre 1848 : Sarda Garriga et les affranchis",
+        "titre_court": "Sarda Garriga proclame l'abolition à La Réunion",
+        "auteur": "D'après Alphonse Garreau",
+        "date": "vers 1849",
+        "technique": "estampe d'après le tableau, reproduction de 1972",
+        "conservation": "Paris, Bibliothèque nationale de France, Estampes (planche conservée au musée Carnavalet)",
+        "fichier": "063.webp",
+        "licence": "Domaine public",
+        "largeur": 1339,
+        "hauteur": 1600,
+        "recadrage": [
+          0.012,
+          0.025,
+          0.655,
+          0.985
+        ],
+        "utile": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.05,
+              0.16,
+              0.88,
+              0.49
+            ]
+          }
+        ],
+        "entier": true,
+        "entier_vers": [
+          0.05,
+          0.16,
+          0.88,
+          0.49
+        ]
+      },
+      "chiffres": [
+        {
+          "quand": "cent vingt-six millions",
+          "valeur": 126000000,
+          "unite": "de francs d'indemnité aux anciens maîtres",
+          "source": "Wikipédia, « Abolition de l'esclavage à La Réunion » (https://fr.wikipedia.org/wiki/Abolition_de_l'esclavage_à_La_Réunion) : loi du 30 avril 1849, 126 millions de francs ; Portail de l'esclavage à La Réunion, d'après la base Repairs du CNRS : 6 millions en numéraire et une rente de 6 millions pendant vingt ans.",
+          "instant": 16.95
+        }
+      ],
+      "n": 63,
+      "audio": {
+        "fichier": "063.m4a",
+        "duree": 17.97,
+        "phrases": [
+          [
+            0.0,
+            5.92
+          ],
+          [
+            6.54,
+            11.13
+          ],
+          [
+            12.08,
+            17.97
+          ]
+        ]
+      }
+    },
+    {
+      "n": 64,
       "narration": "Le premier janvier 1849 paraît le premier timbre-poste français. Jusque-là, le destinataire payait la lettre, selon la distance ; désormais, l'expéditeur colle d'avance une vignette de vingt centimes, valable pour tout le pays. Elle montre Cérès, déesse des moissons : le profil de la République voyage sur chaque enveloppe.",
       "date": "1849-01-01",
       "image": {
@@ -6587,7 +7281,7 @@
         "date": "1849",
         "technique": "timbre-poste, typographie",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "060.webp",
+        "fichier": "064.webp",
         "licence": "Domaine public",
         "largeur": 1250,
         "hauteur": 1500,
@@ -6635,7 +7329,7 @@
             "date": "1849-1850",
             "technique": "timbres-poste",
             "conservation": "collections particulières",
-            "fichier": "060-b.webp",
+            "fichier": "064-b.webp",
             "licence": "Domaine public",
             "largeur": 1224,
             "hauteur": 720,
@@ -6660,7 +7354,7 @@
         }
       ],
       "audio": {
-        "fichier": "060.m4a",
+        "fichier": "064.m4a",
         "duree": 20.6,
         "phrases": [
           [
@@ -6679,7 +7373,7 @@
       }
     },
     {
-      "n": 61,
+      "n": 65,
       "narration": "En 1849, deux camps se font face. Le parti de l'Ordre réunit, rue de Poitiers, les monarchistes de toutes nuances : Thiers, Molé, Berryer, le catholique Montalembert. Ils se disputent sur le roi à venir ; mais ils s'accordent sur trois mots : ordre, propriété, religion.",
       "date": "1849",
       "image": {
@@ -6696,7 +7390,7 @@
           0.767,
           0.735
         ],
-        "fichier": "061.webp",
+        "fichier": "065.webp",
         "licence": "Domaine public",
         "largeur": 1291,
         "hauteur": 1600,
@@ -6763,7 +7457,7 @@
               0.838,
               0.702
             ],
-            "fichier": "061-b.webp",
+            "fichier": "065-b.webp",
             "licence": "Domaine public",
             "largeur": 1243,
             "hauteur": 1533,
@@ -6796,7 +7490,7 @@
         }
       ],
       "audio": {
-        "fichier": "061.m4a",
+        "fichier": "065.m4a",
         "duree": 20.22,
         "phrases": [
           [
@@ -6816,7 +7510,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 62,
+      "n": 66,
       "narration": "En face, les républicains avancés et les socialistes s'unissent derrière Ledru-Rollin ; on les nomme démocrates-socialistes, ou la Montagne, en souvenir de 1793. Ils promettent l'école gratuite, le crédit bon marché, l'impôt sur les riches. Leurs almanachs et leurs chansons gagnent les villages.",
       "date": "1849",
       "image": {
@@ -6833,7 +7527,7 @@
           0.938,
           0.711
         ],
-        "fichier": "062.webp",
+        "fichier": "066.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 865,
@@ -6855,7 +7549,7 @@
         ]
       },
       "audio": {
-        "fichier": "062.m4a",
+        "fichier": "066.m4a",
         "duree": 19.37,
         "phrases": [
           [
@@ -6874,7 +7568,7 @@
       }
     },
     {
-      "n": 63,
+      "n": 67,
       "narration": "Aux élections du 13 mai 1849, le parti de l'Ordre emporte près des deux tiers des sièges. Mais la Montagne en obtient un quart, et les républicains modérés s'effondrent. Sur la carte, une France rouge apparaît : le Centre, le Limousin, la vallée du Rhône, une partie du Midi.",
       "date": "1849-05-13",
       "image": {
@@ -6891,7 +7585,7 @@
           0.923,
           0.98
         ],
-        "fichier": "063.webp",
+        "fichier": "067.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1302,
@@ -6932,7 +7626,7 @@
             "date": "1849",
             "technique": "imprimé",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "063-b.webp",
+            "fichier": "067-b.webp",
             "licence": "Domaine public",
             "largeur": 1053,
             "hauteur": 825,
@@ -6964,7 +7658,7 @@
         }
       ],
       "audio": {
-        "fichier": "063.m4a",
+        "fichier": "067.m4a",
         "duree": 16.24,
         "phrases": [
           [
@@ -6983,7 +7677,7 @@
       }
     },
     {
-      "n": 64,
+      "n": 68,
       "narration": "Une affaire lointaine met le feu aux poudres. À Rome, des républicains ont chassé le pape ; la France envoie une armée, officiellement pour protéger la ville des Autrichiens. Le 30 avril, le général Oudinot attaque : il est repoussé. Après un siège, il entre dans Rome le 3 juillet et rétablit le pape.",
       "date": "1849-04-30",
       "date_fin": "1849-07-03",
@@ -7001,7 +7695,7 @@
           0.779,
           0.642
         ],
-        "fichier": "064.webp",
+        "fichier": "068.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 829,
@@ -7020,7 +7714,14 @@
               0.85
             ]
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "068-couleur.webp",
+          "largeur": 1524,
+          "hauteur": 800,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -7049,7 +7750,7 @@
               0.866,
               0.778
             ],
-            "fichier": "064-b.webp",
+            "fichier": "068-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1058,
@@ -7077,13 +7778,20 @@
                 ],
                 "quand": "il entre dans Rome le 3 juillet"
               }
-            ]
+            ],
+            "couleur": {
+              "fichier": "068-b-couleur.webp",
+              "largeur": 1472,
+              "hauteur": 964,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.65
         }
       ],
       "audio": {
-        "fichier": "064.m4a",
+        "fichier": "068.m4a",
         "duree": 18.55,
         "phrases": [
           [
@@ -7106,7 +7814,7 @@
       }
     },
     {
-      "n": 65,
+      "n": 69,
       "narration": "Or la Constitution dit que la République « n'emploie jamais ses forces contre la liberté d'aucun peuple ». Le 13 juin 1849, Ledru-Rollin appelle à manifester ; le général Changarnier balaie le cortège sur les boulevards. Les députés montagnards, réfugiés au Conservatoire des arts et métiers, s'enfuient par les fenêtres.",
       "date": "1849-06-13",
       "image": {
@@ -7117,7 +7825,7 @@
         "date": "1865",
         "technique": "gravure sur bois",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "065.webp",
+        "fichier": "069.webp",
         "licence": "Domaine public",
         "largeur": 1590,
         "hauteur": 1600,
@@ -7152,7 +7860,26 @@
           0.2,
           0.95,
           0.46
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0,
+              0,
+              0.84,
+              0.42
+            ]
+          ],
+          "duree": 6,
+          "intention": "On descend de l'enseigne de la quincaillerie et des toits du Conservatoire vers la foule rassemblée."
+        },
+        "couleur": {
+          "fichier": "069-couleur.webp",
+          "largeur": 1445,
+          "hauteur": 1466,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -7216,7 +7943,7 @@
         }
       ],
       "audio": {
-        "fichier": "065.m4a",
+        "fichier": "069.m4a",
         "duree": 19.25,
         "phrases": [
           [
@@ -7235,7 +7962,7 @@
       }
     },
     {
-      "n": 66,
+      "n": 70,
       "narration": "Ledru-Rollin gagne Londres, où il restera une vingtaine d'années ; des dizaines de députés sont poursuivis. Lyon, soulevée à son tour, est reprise au canon. L'Assemblée en profite : elle restreint les clubs et la presse. La Montagne perd ses chefs, mais garde ses électeurs.",
       "date": "1849-06",
       "date_fin": "1849-08",
@@ -7253,7 +7980,7 @@
           0.796,
           0.706
         ],
-        "fichier": "066.webp",
+        "fichier": "070.webp",
         "licence": "Domaine public",
         "largeur": 1335,
         "hauteur": 1600,
@@ -7305,7 +8032,7 @@
         }
       ],
       "audio": {
-        "fichier": "066.m4a",
+        "fichier": "070.m4a",
         "duree": 16.86,
         "phrases": [
           [
@@ -7329,7 +8056,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 67,
+      "n": 71,
       "narration": "Le même printemps, le choléra revient, comme en 1832. Il tue par milliers dans les quartiers pauvres de Paris, puis dans les ports ; le maréchal Bugeaud en meurt le 10 juin. À Marseille, on porte en procession la Vierge de la Garde pour arrêter le fléau.",
       "date": "1849-03",
       "date_fin": "1849-09",
@@ -7341,7 +8068,7 @@
         "date": "vers 1849",
         "technique": "aquarelle",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "067.webp",
+        "fichier": "071.webp",
         "licence": "Domaine public",
         "largeur": 1426,
         "hauteur": 1043,
@@ -7371,7 +8098,7 @@
           }
         ],
         "video": {
-          "fichier": "067-mouvement.mp4",
+          "fichier": "071-mouvement.mp4",
           "type": "mouvement",
           "duree": 18.62,
           "largeur": 1088,
@@ -7391,7 +8118,7 @@
         }
       ],
       "audio": {
-        "fichier": "067.m4a",
+        "fichier": "071.m4a",
         "duree": 18.71,
         "phrases": [
           [
@@ -7410,7 +8137,7 @@
       }
     },
     {
-      "n": 68,
+      "n": 72,
       "narration": "Le prince-président, lui, visite alors les hôpitaux militaires, distribue des croix et se montre partout. Son ministre des Affaires étrangères est alors un penseur célèbre, Alexis de Tocqueville ; il observe le président de près. Dans ses Souvenirs, écrits en secret, il le décrit rêveur, obstiné, et plus habile qu'on ne croit.",
       "date": "1849-06",
       "date_fin": "1849-10",
@@ -7428,7 +8155,7 @@
           0.848,
           0.748
         ],
-        "fichier": "068.webp",
+        "fichier": "072.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1091,
@@ -7447,7 +8174,14 @@
               0.49
             ]
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "072-couleur.webp",
+          "largeur": 1528,
+          "hauteur": 913,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "plans": [
         {
@@ -7460,7 +8194,7 @@
             "date": "1850",
             "technique": "huile sur toile",
             "conservation": "Versailles, musée national du château",
-            "fichier": "068-b.webp",
+            "fichier": "072-b.webp",
             "licence": "Domaine public",
             "largeur": 1031,
             "hauteur": 1382,
@@ -7506,7 +8240,7 @@
               0.814,
               0.971
             ],
-            "fichier": "068-c.webp",
+            "fichier": "072-c.webp",
             "licence": "Domaine public",
             "largeur": 773,
             "hauteur": 1600,
@@ -7538,7 +8272,7 @@
         }
       ],
       "audio": {
-        "fichier": "068.m4a",
+        "fichier": "072.m4a",
         "duree": 21.61,
         "phrases": [
           [
@@ -7563,7 +8297,7 @@
       ]
     },
     {
-      "n": 69,
+      "n": 73,
       "narration": "Le 9 juillet 1849, Victor Hugo, élu de la droite, monte à la tribune. Il décrit les taudis de Paris, les familles couchées sur des chiffons. Puis il lance : « je suis de ceux qui pensent et qui affirment qu'on peut détruire la misère ». La droite murmure. Hugo commence à changer de camp.",
       "date": "1849-07-09",
       "image": {
@@ -7580,7 +8314,7 @@
           0.745,
           0.852
         ],
-        "fichier": "069.webp",
+        "fichier": "073.webp",
         "licence": "Domaine public",
         "largeur": 892,
         "hauteur": 1600,
@@ -7674,7 +8408,7 @@
         }
       ],
       "audio": {
-        "fichier": "069.m4a",
+        "fichier": "073.m4a",
         "duree": 18.52,
         "phrases": [
           [
@@ -7707,7 +8441,7 @@
       ]
     },
     {
-      "n": 70,
+      "n": 74,
       "narration": "L'Opéra, lui, triomphe avec le Prophète de Meyerbeer, créé le 16 avril 1849. On y voit une révolte populaire qui tourne au fanatisme : le public de l'après-Juin frissonne. Au troisième acte, un soleil se lève sur la scène ; c'est une lampe à arc : la première lumière électrique au théâtre.",
       "date": "1849-04-16",
       "image": {
@@ -7718,7 +8452,7 @@
         "date": "1849",
         "technique": "estampe",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "070.webp",
+        "fichier": "074.webp",
         "licence": "Domaine public",
         "largeur": 1575,
         "hauteur": 1175,
@@ -7737,7 +8471,19 @@
               0.64
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.15,
+              0.45,
+              0.85,
+              0.99
+            ]
+          ],
+          "duree": 5,
+          "intention": "On monte du dallage de la cathédrale vers les arcades et les voûtes du décor."
+        }
       },
       "lieux": [
         {
@@ -7773,7 +8519,7 @@
               0.665,
               0.736
             ],
-            "fichier": "070-b.webp",
+            "fichier": "074-b.webp",
             "licence": "Domaine public",
             "largeur": 880,
             "hauteur": 1600,
@@ -7805,7 +8551,7 @@
         }
       ],
       "audio": {
-        "fichier": "070.m4a",
+        "fichier": "074.m4a",
         "duree": 19.42,
         "phrases": [
           [
@@ -7824,7 +8570,7 @@
       }
     },
     {
-      "n": 71,
+      "n": 75,
       "narration": "Au Salon de 1849, l'État achète une grande toile commandée l'année précédente à une jeune femme, Rosa Bonheur. Le Labourage nivernais montre deux attelages de bœufs qui ouvrent la terre, sous un ciel clair. Pas un héros, pas une anecdote : le travail des champs, peint grandeur de fresque.",
       "date": "1849",
       "image": {
@@ -7835,7 +8581,7 @@
         "date": "1849",
         "technique": "huile sur toile",
         "conservation": "Paris, musée d'Orsay",
-        "fichier": "071.webp",
+        "fichier": "075.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 818,
@@ -7874,7 +8620,7 @@
           }
         ],
         "video": {
-          "fichier": "071-mouvement.mp4",
+          "fichier": "075-mouvement.mp4",
           "type": "mouvement",
           "duree": 18.62,
           "largeur": 1312,
@@ -7901,7 +8647,7 @@
         }
       ],
       "audio": {
-        "fichier": "071.m4a",
+        "fichier": "075.m4a",
         "duree": 18.65,
         "phrases": [
           [
@@ -7920,7 +8666,7 @@
       }
     },
     {
-      "n": 72,
+      "n": 76,
       "narration": "Un peintre de trente ans, Gustave Courbet, va plus loin. Au même Salon, son Après-dînée à Ornans reçoit une médaille. Puis il peint deux Casseurs de pierres, un vieux et un gamin, en haillons au bord d'une route. Ni pitié ni leçon : on nomme cela le réalisme.",
       "date": "1849",
       "image": {
@@ -7931,7 +8677,7 @@
         "date": "1849",
         "technique": "huile sur toile",
         "conservation": "Lille, palais des Beaux-Arts",
-        "fichier": "072.webp",
+        "fichier": "076.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1190,
@@ -7980,7 +8726,7 @@
             "date": "1849",
             "technique": "huile sur toile",
             "conservation": "autrefois à Dresde, Gemäldegalerie ; détruit en 1945",
-            "fichier": "072-b.webp",
+            "fichier": "076-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 976,
@@ -8005,7 +8751,7 @@
         }
       ],
       "audio": {
-        "fichier": "072.m4a",
+        "fichier": "076.m4a",
         "duree": 18.53,
         "phrases": [
           [
@@ -8028,7 +8774,7 @@
       }
     },
     {
-      "n": 73,
+      "n": 77,
       "narration": "Le 17 octobre 1849, Frédéric Chopin meurt à Paris, à trente-neuf ans. Il avait donné son dernier concert parisien en février 1848, une semaine avant la révolution. Le 30 octobre, à la Madeleine, on joue pour ses obsèques le Requiem de Mozart et sa propre Marche funèbre.",
       "date": "1849-10-17",
       "date_fin": "1849-10-30",
@@ -8040,7 +8786,7 @@
         "date": "vers 1849",
         "technique": "photographie d'après un daguerréotype",
         "conservation": "Paris, musée de la Musique (d'après la notice Commons)",
-        "fichier": "073.webp",
+        "fichier": "077.webp",
         "licence": "Domaine public",
         "largeur": 1157,
         "hauteur": 1600,
@@ -8075,7 +8821,7 @@
         }
       ],
       "audio": {
-        "fichier": "073.m4a",
+        "fichier": "077.m4a",
         "duree": 18.63,
         "phrases": [
           [
@@ -8094,7 +8840,7 @@
       }
     },
     {
-      "n": 74,
+      "n": 78,
       "narration": "Le 31 octobre 1849, le président renvoie ses ministres, pourtant soutenus par l'Assemblée. Il les remplace par des hommes à lui, sans chef. Le nom de Napoléon, écrit-il aux députés, est à lui seul un programme ; le prince, que l'on croyait docile, entend gouverner lui-même.",
       "date": "1849-10-31",
       "image": {
@@ -8105,7 +8851,7 @@
         "date": "1851",
         "technique": "daguerréotype",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "074.webp",
+        "fichier": "078.webp",
         "licence": "Domaine public",
         "largeur": 1207,
         "hauteur": 1600,
@@ -8140,7 +8886,7 @@
         }
       ],
       "audio": {
-        "fichier": "074.m4a",
+        "fichier": "078.m4a",
         "duree": 17.97,
         "phrases": [
           [
@@ -8159,7 +8905,7 @@
       }
     },
     {
-      "n": 75,
+      "n": 79,
       "narration": "La majorité veut d'abord tenir l'école. La loi du 15 mars 1850, préparée par le ministre Falloux, donne à l'Église une large place dans l'enseignement. Les congrégations peuvent ouvrir des collèges, et les évêques siègent dans les conseils. L'instituteur, soupçonné de socialisme, passe sous la surveillance du curé et du préfet.",
       "date": "1850-03-15",
       "image": {
@@ -8170,7 +8916,7 @@
         "date": "vers 1870",
         "technique": "photographie",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "075.webp",
+        "fichier": "079.webp",
         "licence": "Domaine public",
         "largeur": 995,
         "hauteur": 1600,
@@ -8221,7 +8967,7 @@
             "date": "vers 1845",
             "technique": "lithographie",
             "conservation": "Londres, British Museum",
-            "fichier": "075-b.webp",
+            "fichier": "079-b.webp",
             "licence": "Domaine public",
             "largeur": 780,
             "hauteur": 1075,
@@ -8260,7 +9006,7 @@
         }
       ],
       "audio": {
-        "fichier": "075.m4a",
+        "fichier": "079.m4a",
         "duree": 20.76,
         "phrases": [
           [
@@ -8283,7 +9029,7 @@
       }
     },
     {
-      "n": 76,
+      "n": 80,
       "narration": "Au printemps 1850, Paris élit pourtant des députés rouges, dont le romancier Eugène Sue. La majorité prend peur ; la loi du 31 mai exige trois ans de résidence pour voter. Près de trois millions d'électeurs sur neuf sont rayés, surtout des ouvriers. Thiers parle de la « vile multitude ».",
       "date": "1850-05-31",
       "image": {
@@ -8294,7 +9040,7 @@
         "date": "11 mai 1850",
         "technique": "gravure sur bois de L'Illustration",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "076.webp",
+        "fichier": "080.webp",
         "licence": "Domaine public",
         "largeur": 1421,
         "hauteur": 951,
@@ -8313,7 +9059,14 @@
               0.475
             ]
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "080-couleur.webp",
+          "largeur": 1421,
+          "hauteur": 951,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "personnes": [
         {
@@ -8365,7 +9118,7 @@
             "date": "1851",
             "technique": "lithographie",
             "conservation": "Washington, National Gallery of Art",
-            "fichier": "076-b.webp",
+            "fichier": "080-b.webp",
             "licence": "Domaine public",
             "largeur": 1296,
             "hauteur": 1600,
@@ -8397,7 +9150,7 @@
         }
       ],
       "audio": {
-        "fichier": "076.m4a",
+        "fichier": "080.m4a",
         "duree": 19.0,
         "phrases": [
           [
@@ -8420,7 +9173,7 @@
       }
     },
     {
-      "n": 77,
+      "n": 81,
       "narration": "Les auteurs de la loi sont de vieux chefs monarchistes ; on les surnomme les Burgraves, comme les vieillards d'un drame de Victor Hugo. En juillet 1850, ils s'en prennent aux journaux : la caution et le timbre sont alourdis, et chaque article doit être signé. Daumier les dessine partant en guerre.",
       "date": "1850-07",
       "image": {
@@ -8431,7 +9184,7 @@
         "date": "1850",
         "technique": "lithographie",
         "conservation": "Washington, National Gallery of Art",
-        "fichier": "077.webp",
+        "fichier": "081.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1307,
@@ -8453,7 +9206,7 @@
         ]
       },
       "audio": {
-        "fichier": "077.m4a",
+        "fichier": "081.m4a",
         "duree": 17.98,
         "phrases": [
           [
@@ -8472,7 +9225,7 @@
       }
     },
     {
-      "n": 78,
+      "n": 82,
       "narration": "Le 18 août 1850, Honoré de Balzac meurt à Paris, épuisé, à cinquante et un ans. Sa Comédie humaine a peint toute une société, ses banquiers, ses paysans, ses ambitieux. Au cimetière du Père-Lachaise, Victor Hugo prononce l'adieu ; le roman, désormais, se veut le miroir du siècle.",
       "date": "1850-08-18",
       "image": {
@@ -8483,7 +9236,7 @@
         "date": "1842",
         "technique": "daguerréotype",
         "conservation": "Paris, maison de Balzac",
-        "fichier": "078.webp",
+        "fichier": "082.webp",
         "licence": "Domaine public",
         "largeur": 1328,
         "hauteur": 1600,
@@ -8528,7 +9281,7 @@
         }
       ],
       "audio": {
-        "fichier": "078.m4a",
+        "fichier": "082.m4a",
         "duree": 20.96,
         "phrases": [
           [
@@ -8547,7 +9300,7 @@
       }
     },
     {
-      "n": 79,
+      "n": 83,
       "narration": "Le Salon ouvre à la fin de décembre 1850. Courbet y accroche une toile immense : Un enterrement à Ornans. Des dizaines de villageois, peints grandeur nature, entourent une fosse. Ni héros ni ciel ouvert. Les critiques crient au laid ; d'autres saluent la peinture d'un peuple enfin montré tel qu'il est.",
       "date": "1850-12-30",
       "image": {
@@ -8558,7 +9311,7 @@
         "date": "1849-1850",
         "technique": "huile sur toile",
         "conservation": "Paris, musée d'Orsay",
-        "fichier": "079.webp",
+        "fichier": "083.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 735,
@@ -8606,7 +9359,7 @@
             "date": "1850, repris en 1855",
             "technique": "huile sur toile",
             "conservation": "Besançon, musée des Beaux-Arts et d'Archéologie",
-            "fichier": "079-b.webp",
+            "fichier": "083-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1221,
@@ -8640,7 +9393,7 @@
         }
       ],
       "audio": {
-        "fichier": "079.m4a",
+        "fichier": "083.m4a",
         "duree": 20.48,
         "phrases": [
           [
@@ -8668,7 +9421,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 80,
+      "n": 84,
       "narration": "Au même Salon, Millet expose le Semeur ; un paysan descend un champ à grands pas, le bras lancé, dans le soir qui tombe. Les uns y voient la dignité du travail, les autres une menace : cet homme sème peut-être la révolte. Depuis 1848, peindre un paysan, c'est déjà parler de politique.",
       "date": "1850-12-30",
       "image": {
@@ -8679,7 +9432,7 @@
         "date": "1850",
         "technique": "huile sur toile",
         "conservation": "Boston, Museum of Fine Arts",
-        "fichier": "080.webp",
+        "fichier": "084.webp",
         "licence": "Domaine public",
         "largeur": 1299,
         "hauteur": 1600,
@@ -8733,7 +9486,7 @@
         }
       ],
       "audio": {
-        "fichier": "080.m4a",
+        "fichier": "084.m4a",
         "duree": 20.87,
         "phrases": [
           [
@@ -8752,7 +9505,7 @@
       }
     },
     {
-      "n": 81,
+      "n": 85,
       "narration": "La photographie change aussi de nature ; le daguerréotype donnait une image unique, sur métal. Le calotype part d'un négatif sur papier : on peut en tirer autant d'épreuves qu'on veut. Hippolyte Bayard, Henri Le Secq, Gustave Le Gray adoptent ce procédé. L'image devient un tirage que l'on colle dans un album.",
       "date": "1850",
       "date_fin": "1851",
@@ -8764,7 +9517,7 @@
         "date": "1847",
         "technique": "épreuve sur papier salé",
         "conservation": "Los Angeles, J. Paul Getty Museum",
-        "fichier": "081.webp",
+        "fichier": "085.webp",
         "licence": "Domaine public",
         "largeur": 1176,
         "hauteur": 1600,
@@ -8803,7 +9556,7 @@
             "date": "1851",
             "technique": "épreuve sur papier salé",
             "conservation": "Los Angeles, J. Paul Getty Museum",
-            "fichier": "081-b.webp",
+            "fichier": "085-b.webp",
             "licence": "Domaine public",
             "largeur": 1179,
             "hauteur": 1600,
@@ -8829,13 +9582,25 @@
               0.15,
               0.85,
               0.44
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0,
+                  0.527,
+                  1,
+                  1
+                ]
+              ],
+              "duree": 5,
+              "intention": "On monte des toits d'ardoise le long des contreforts jusqu'à la galerie des rois de la tour."
+            }
           },
           "instant": 12.2
         }
       ],
       "audio": {
-        "fichier": "081.m4a",
+        "fichier": "085.m4a",
         "duree": 20.17,
         "phrases": [
           [
@@ -8858,7 +9623,7 @@
       }
     },
     {
-      "n": 82,
+      "n": 86,
       "narration": "En 1851, l'État passe sa première grande commande photographique. La Commission des monuments historiques envoie cinq photographes relever cent soixante-quinze édifices à travers la France ; c'est la Mission héliographique. Cathédrales, remparts et ponts sont fixés avant leur restauration, ou avant leur ruine.",
       "date": "1851",
       "image": {
@@ -8869,7 +9634,7 @@
         "date": "1851",
         "technique": "épreuve sur papier salé",
         "conservation": "New York, Metropolitan Museum of Art",
-        "fichier": "082.webp",
+        "fichier": "086.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1138,
@@ -8920,7 +9685,7 @@
         }
       ],
       "audio": {
-        "fichier": "082.m4a",
+        "fichier": "086.m4a",
         "duree": 18.38,
         "phrases": [
           [
@@ -8939,7 +9704,7 @@
       }
     },
     {
-      "n": 83,
+      "n": 87,
       "narration": "Autre nouveauté : le télégraphe électrique. Un courant envoyé dans un fil fait tourner, à des lieues de là, l'aiguille d'un cadran, lettre après lettre. Les fils suivent les voies ferrées. Longtemps réservé à l'État, le télégraphe s'ouvre au public au début des années 1850.",
       "date": "1850",
       "date_fin": "1851",
@@ -8951,7 +9716,7 @@
         "date": "vers 1868",
         "technique": "gravure sur bois",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "083.webp",
+        "fichier": "087.webp",
         "licence": "Domaine public",
         "largeur": 1426,
         "hauteur": 1062,
@@ -8992,7 +9757,7 @@
             "date": "vers 1868",
             "technique": "gravure sur bois",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "083-b.webp",
+            "fichier": "087-b.webp",
             "licence": "Domaine public",
             "largeur": 1431,
             "hauteur": 1440,
@@ -9024,7 +9789,7 @@
         }
       ],
       "audio": {
-        "fichier": "083.m4a",
+        "fichier": "087.m4a",
         "duree": 17.83,
         "phrases": [
           [
@@ -9047,7 +9812,7 @@
       }
     },
     {
-      "n": 84,
+      "n": 88,
       "narration": "En 1850, on tente de relier la France à l'Angleterre par un fil posé au fond de la Manche ; il se rompt presque aussitôt. L'année suivante, un câble renforcé, à quatre conducteurs, tient bon. Paris et Londres échangent des nouvelles en quelques minutes : la Bourse s'en empare la première.",
       "date": "1850",
       "date_fin": "1851",
@@ -9059,7 +9824,7 @@
         "date": "vers 1868",
         "technique": "gravure sur bois",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "084.webp",
+        "fichier": "088.webp",
         "licence": "Domaine public",
         "largeur": 1185,
         "hauteur": 1600,
@@ -9085,7 +9850,26 @@
           0.3,
           0.95,
           0.59
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0,
+              0.549,
+              1,
+              1
+            ]
+          ],
+          "duree": 5,
+          "intention": "On remonte le pont du navire, des planches et du cordage jusqu'au grand tambour du câble."
+        },
+        "couleur": {
+          "fichier": "088-couleur.webp",
+          "largeur": 1168,
+          "hauteur": 1600,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -9108,7 +9892,7 @@
             "date": "vers 1868",
             "technique": "gravure sur bois",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "084-b.webp",
+            "fichier": "088-b.webp",
             "licence": "Domaine public",
             "largeur": 1276,
             "hauteur": 1600,
@@ -9140,7 +9924,7 @@
         }
       ],
       "audio": {
-        "fichier": "084.m4a",
+        "fichier": "088.m4a",
         "duree": 18.97,
         "phrases": [
           [
@@ -9159,7 +9943,7 @@
       }
     },
     {
-      "n": 85,
+      "n": 89,
       "narration": "Le rail avance, malgré la crise. Paris a désormais ses gares monumentales, et les grandes lignes s'allongent vers Chartres, vers Dijon, vers Strasbourg. Le prince-président ne manque aucune inauguration ; il voyage, serre des mains, parle de prospérité : chaque gare nouvelle devient une tribune.",
       "date": "1849-07-05",
       "date_fin": "1852-07-18",
@@ -9171,7 +9955,7 @@
         "date": "vers 1850",
         "technique": "lithographie",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "085.webp",
+        "fichier": "089.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1147,
@@ -9192,7 +9976,7 @@
           }
         ],
         "video": {
-          "fichier": "085-mouvement.mp4",
+          "fichier": "089-mouvement.mp4",
           "type": "mouvement",
           "duree": 19.62,
           "largeur": 1152,
@@ -9245,7 +10029,7 @@
             "date": "1865",
             "technique": "gravure sur bois",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "085-b.webp",
+            "fichier": "089-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1121,
@@ -9273,13 +10057,20 @@
                 ],
                 "quand": "gare nouvelle devient une tribune"
               }
-            ]
+            ],
+            "couleur": {
+              "fichier": "089-b-couleur.webp",
+              "largeur": 1552,
+              "hauteur": 1054,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.28
         }
       ],
       "audio": {
-        "fichier": "085.m4a",
+        "fichier": "089.m4a",
         "duree": 19.9,
         "phrases": [
           [
@@ -9298,7 +10089,7 @@
       }
     },
     {
-      "n": 86,
+      "n": 90,
       "narration": "Le 10 octobre 1850, à Satory, près de Versailles, il passe l'armée en revue. On a distribué aux soldats du saucisson et du champagne. La cavalerie défile en criant : « Vive l'Empereur ! » Le général Changarnier, qui commande Paris et protège l'Assemblée, s'en indigne.",
       "date": "1850-10-10",
       "image": {
@@ -9315,7 +10106,7 @@
           0.813,
           0.782
         ],
-        "fichier": "086.webp",
+        "fichier": "090.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1089,
@@ -9343,7 +10134,26 @@
             ],
             "quand": "La cavalerie défile en criant"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.38,
+              0.42,
+              0.66
+            ]
+          ],
+          "duree": 6,
+          "intention": "On part de la charge des cavaliers, à gauche, et on recule : le prince-président à cheval entre par la droite."
+        },
+        "couleur": {
+          "fichier": "090-couleur.webp",
+          "largeur": 1524,
+          "hauteur": 989,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -9372,7 +10182,7 @@
         }
       ],
       "audio": {
-        "fichier": "086.m4a",
+        "fichier": "090.m4a",
         "duree": 16.65,
         "phrases": [
           [
@@ -9391,7 +10201,7 @@
       }
     },
     {
-      "n": 87,
+      "n": 91,
       "narration": "Daumier donne alors un corps à ces menées ; il modèle une statuette : Ratapoil, vieux soldat efflanqué, moustache en crocs, gourdin derrière le dos. C'est l'agent de la Société du Dix-Décembre, qui acclame le prince et rosse les républicains. Daumier le promène ensuite dans ses lithographies.",
       "date": "1850-10",
       "date_fin": "1851",
@@ -9403,7 +10213,7 @@
         "date": "modèle de 1851, fonte vers 1891",
         "technique": "bronze",
         "conservation": "Washington, National Gallery of Art",
-        "fichier": "087.webp",
+        "fichier": "091.webp",
         "licence": "Domaine public",
         "largeur": 1143,
         "hauteur": 1600,
@@ -9459,7 +10269,7 @@
             "date": "1851",
             "technique": "lithographie",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "087-b.webp",
+            "fichier": "091-b.webp",
             "licence": "Domaine public",
             "largeur": 1056,
             "hauteur": 1600,
@@ -9491,7 +10301,7 @@
         }
       ],
       "audio": {
-        "fichier": "087.m4a",
+        "fichier": "091.m4a",
         "duree": 20.2,
         "phrases": [
           [
@@ -9510,7 +10320,7 @@
       }
     },
     {
-      "n": 88,
+      "n": 92,
       "narration": "En janvier 1851, le président destitue le général Changarnier. L'Assemblée vient de perdre son épée. Thiers le comprend aussitôt et lance à la tribune : « L'Empire est fait. » La majorité proteste, renverse un ministère, puis se résigne. Elle est trop divisée entre ses deux familles royales pour agir.",
       "date": "1851-01",
       "image": {
@@ -9527,7 +10337,7 @@
           0.806,
           0.733
         ],
-        "fichier": "088.webp",
+        "fichier": "092.webp",
         "licence": "Domaine public",
         "largeur": 1097,
         "hauteur": 1600,
@@ -9604,7 +10414,7 @@
               0.809,
               0.793
             ],
-            "fichier": "088-b.webp",
+            "fichier": "092-b.webp",
             "licence": "Domaine public",
             "largeur": 1336,
             "hauteur": 1600,
@@ -9637,7 +10447,7 @@
         }
       ],
       "audio": {
-        "fichier": "088.m4a",
+        "fichier": "092.m4a",
         "duree": 19.98,
         "phrases": [
           [
@@ -9660,7 +10470,7 @@
       }
     },
     {
-      "n": 89,
+      "n": 93,
       "narration": "Au printemps 1851, Paris court au Panthéon ; le physicien Léon Foucault y a suspendu une boule de métal à un fil de soixante-sept mètres. Le pendule oscille, et son plan semble tourner lentement. En réalité, c'est le sol qui tourne dessous : on voit la Terre tourner.",
       "date": "1851-03",
       "image": {
@@ -9677,7 +10487,7 @@
           0.83,
           0.743
         ],
-        "fichier": "089.webp",
+        "fichier": "093.webp",
         "licence": "Domaine public",
         "largeur": 1174,
         "hauteur": 1600,
@@ -9731,7 +10541,7 @@
             "date": "1895",
             "technique": "gravure",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "089-b.webp",
+            "fichier": "093-b.webp",
             "licence": "Domaine public",
             "largeur": 958,
             "hauteur": 1600,
@@ -9772,7 +10582,7 @@
         }
       ],
       "audio": {
-        "fichier": "089.m4a",
+        "fichier": "093.m4a",
         "duree": 19.16,
         "phrases": [
           [
@@ -9791,7 +10601,7 @@
       }
     },
     {
-      "n": 90,
+      "n": 94,
       "narration": "Le mandat du président s'achève en mai 1852, et la Constitution lui interdit de se représenter ; il faut donc la réviser. En juillet 1851, quatre cent quarante-six députés votent pour, deux cent soixante-dix-huit contre. C'est une majorité, mais il fallait les trois quarts des voix ; la voie légale est fermée.",
       "date": "1851-07",
       "image": {
@@ -9802,7 +10612,7 @@
         "date": "26 juin 1851",
         "technique": "gravure sur bois de L'Illustration",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "090.webp",
+        "fichier": "094.webp",
         "licence": "Domaine public",
         "largeur": 1127,
         "hauteur": 748,
@@ -9842,7 +10652,7 @@
         }
       ],
       "audio": {
-        "fichier": "090.m4a",
+        "fichier": "094.m4a",
         "duree": 21.42,
         "phrases": [
           [
@@ -9862,7 +10672,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 91,
+      "n": 95,
       "narration": "Pendant ce débat, Victor Hugo, passé à gauche, accuse le président de préparer l'Empire. Il s'écrie : « parce que nous avons eu Napoléon le Grand, il faut que nous ayons Napoléon le Petit ! » Le surnom restera. Son fils Charles, journaliste, vient d'être condamné à la prison pour un article.",
       "date": "1851-07-17",
       "image": {
@@ -9879,7 +10689,7 @@
           0.762,
           0.748
         ],
-        "fichier": "091.webp",
+        "fichier": "095.webp",
         "licence": "Domaine public",
         "largeur": 1132,
         "hauteur": 1600,
@@ -9981,7 +10791,7 @@
         }
       ],
       "audio": {
-        "fichier": "091.m4a",
+        "fichier": "095.m4a",
         "duree": 18.15,
         "phrases": [
           [
@@ -10006,7 +10816,7 @@
       ]
     },
     {
-      "n": 92,
+      "n": 96,
       "narration": "À l'automne, le président joue une carte habile : il propose de rétablir le suffrage universel. L'Assemblée refuse, de quelques voix. Puis elle renonce à se donner le droit d'appeler elle-même la troupe ; elle est désormais sans défense, et brouillée avec le peuple.",
       "date": "1851-11",
       "image": {
@@ -10017,7 +10827,7 @@
         "date": "1851",
         "technique": "lithographie",
         "conservation": "Providence, bibliothèque de l'université Brown",
-        "fichier": "092.webp",
+        "fichier": "096.webp",
         "licence": "Domaine public",
         "largeur": 1296,
         "hauteur": 1600,
@@ -10056,7 +10866,7 @@
             "date": "1851",
             "technique": "lithographie",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "092-b.webp",
+            "fichier": "096-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1081,
@@ -10081,7 +10891,7 @@
         }
       ],
       "audio": {
-        "fichier": "092.m4a",
+        "fichier": "096.m4a",
         "duree": 15.06,
         "phrases": [
           [
@@ -10100,7 +10910,7 @@
       }
     },
     {
-      "n": 93,
+      "n": 97,
       "narration": "Le complot ne réunit qu'une poignée d'hommes. Morny, demi-frère du président, prendra le ministère de l'Intérieur. Le général de Saint-Arnaud tient la Guerre, et Maupas la police ; le nom de code est Rubicon. La date est choisie : le 2 décembre, anniversaire du sacre de Napoléon et de la victoire d'Austerlitz.",
       "date": "1851-12-01",
       "image": {
@@ -10117,7 +10927,7 @@
           0.973,
           0.911
         ],
-        "fichier": "093.webp",
+        "fichier": "097.webp",
         "licence": "Domaine public",
         "largeur": 1148,
         "hauteur": 1600,
@@ -10149,7 +10959,14 @@
           0.17,
           0.833,
           0.39
-        ]
+        ],
+        "couleur": {
+          "fichier": "097-couleur.webp",
+          "largeur": 1104,
+          "hauteur": 1495,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "plans": [
         {
@@ -10162,7 +10979,7 @@
             "date": "1854",
             "technique": "huile sur toile",
             "conservation": "Versailles, musée national du château",
-            "fichier": "093-b.webp",
+            "fichier": "097-b.webp",
             "licence": "Domaine public",
             "largeur": 1038,
             "hauteur": 1600,
@@ -10202,7 +11019,7 @@
             "date": "vers 1860",
             "technique": "photographie",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "093-c.webp",
+            "fichier": "097-c.webp",
             "licence": "Domaine public",
             "largeur": 1205,
             "hauteur": 1600,
@@ -10235,7 +11052,7 @@
         }
       ],
       "audio": {
-        "fichier": "093.m4a",
+        "fichier": "097.m4a",
         "duree": 18.89,
         "phrases": [
           [
@@ -10258,7 +11075,7 @@
       }
     },
     {
-      "n": 94,
+      "n": 98,
       "narration": "Dans la nuit, pendant qu'on danse encore à l'Élysée, la troupe occupe l'Imprimerie nationale et le Palais-Bourbon. Avant l'aube, des commissaires de police arrêtent dans leur lit les chefs de l'opposition. Les généraux Cavaignac, Changarnier et Lamoricière sont emmenés à la prison de Mazas, et Thiers avec eux.",
       "date": "1851-12-02",
       "image": {
@@ -10269,7 +11086,7 @@
         "date": "13 décembre 1851",
         "technique": "gravure sur bois",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "094.webp",
+        "fichier": "098.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 899,
@@ -10297,7 +11114,14 @@
             ],
             "quand": "Avant l'aube, des commissaires"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "098-couleur.webp",
+          "largeur": 1543,
+          "hauteur": 836,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "personnes": [
         {
@@ -10322,7 +11146,7 @@
             "date": "1878",
             "technique": "gravure sur bois",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "094-b.webp",
+            "fichier": "098-b.webp",
             "licence": "Domaine public",
             "largeur": 938,
             "hauteur": 1296,
@@ -10348,13 +11172,20 @@
               0.22,
               1.0,
               0.51
-            ]
+            ],
+            "couleur": {
+              "fichier": "098-b-couleur.webp",
+              "largeur": 938,
+              "hauteur": 1296,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 13.19
         }
       ],
       "audio": {
-        "fichier": "094.m4a",
+        "fichier": "098.m4a",
         "duree": 21.82,
         "phrases": [
           [
@@ -10373,7 +11204,7 @@
       }
     },
     {
-      "n": 95,
+      "n": 99,
       "narration": "Au matin du 2 décembre, les Parisiens lisent les affiches. L'Assemblée est dissoute, l'état de siège proclamé. Mais le suffrage universel est rétabli, et le peuple est appelé à voter. Le président viole son serment et se présente comme le défenseur de la République contre une Assemblée de royalistes.",
       "date": "1851-12-02",
       "image": {
@@ -10384,7 +11215,7 @@
         "date": "2 décembre 1851",
         "technique": "affiche",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "095.webp",
+        "fichier": "099.webp",
         "licence": "Domaine public",
         "largeur": 1253,
         "hauteur": 1600,
@@ -10424,7 +11255,7 @@
             "date": "vers 1851",
             "technique": "lithographie",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "095-b.webp",
+            "fichier": "099-b.webp",
             "licence": "Domaine public",
             "largeur": 1001,
             "hauteur": 1600,
@@ -10458,7 +11289,7 @@
         }
       ],
       "audio": {
-        "fichier": "095.m4a",
+        "fichier": "099.m4a",
         "duree": 17.71,
         "phrases": [
           [
@@ -10481,7 +11312,7 @@
       }
     },
     {
-      "n": 96,
+      "n": 100,
       "narration": "Plus de deux cents députés, presque tous de droite, se réunissent à la mairie du dixième arrondissement. Ils votent la déchéance du président, comme la Constitution l'ordonne ; la troupe les arrête. On les conduit à pied, entre deux haies de soldats, jusqu'à une caserne.",
       "date": "1851-12-02",
       "image": {
@@ -10492,7 +11323,7 @@
         "date": "vers 1852",
         "technique": "gravure sur bois",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "096.webp",
+        "fichier": "100.webp",
         "licence": "Domaine public",
         "largeur": 1024,
         "hauteur": 693,
@@ -10529,10 +11360,17 @@
             ],
             "quand": "entre deux haies de soldats"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "100-couleur.webp",
+          "largeur": 912,
+          "hauteur": 587,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
-        "fichier": "096.m4a",
+        "fichier": "100.m4a",
         "duree": 14.03,
         "phrases": [
           [
@@ -10551,7 +11389,7 @@
       }
     },
     {
-      "n": 97,
+      "n": 101,
       "narration": "Le peuple de Paris, lui, regarde passer les soldats ; les ouvriers n'ont pas oublié Juin, ni la loi du 31 mai. Pourquoi mourir pour cette Assemblée ? Quelques députés de gauche, dont Victor Hugo et Victor Schœlcher, forment un comité de résistance et courent les faubourgs.",
       "date": "1851-12-02",
       "date_fin": "1851-12-03",
@@ -10563,7 +11401,7 @@
         "date": "13 décembre 1851",
         "technique": "gravure sur bois",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "097.webp",
+        "fichier": "101.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1164,
@@ -10591,7 +11429,14 @@
             ],
             "quand": "Pourquoi mourir pour cette Assemblée"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "101-couleur.webp",
+          "largeur": 1600,
+          "hauteur": 1164,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "personnes": [
         {
@@ -10616,7 +11461,7 @@
             "date": "vers 1869",
             "technique": "huile sur toile",
             "conservation": "Paris, musée Carnavalet",
-            "fichier": "097-b.webp",
+            "fichier": "101-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 1228,
@@ -10641,7 +11486,7 @@
         }
       ],
       "audio": {
-        "fichier": "097.m4a",
+        "fichier": "101.m4a",
         "duree": 16.09,
         "phrases": [
           [
@@ -10660,7 +11505,7 @@
       }
     },
     {
-      "n": 98,
+      "n": 102,
       "narration": "Le 3 décembre, faubourg Saint-Antoine, une petite barricade s'élève ; des ouvriers raillent les députés et leur indemnité de vingt-cinq francs par jour. Le représentant Alphonse Baudin aurait répondu : « Vous allez voir comment on meurt pour vingt-cinq francs ! » Il monte sur la barricade. Une décharge le tue.",
       "date": "1851-12-03",
       "image": {
@@ -10671,7 +11516,7 @@
         "date": "1869",
         "technique": "huile sur toile",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "098.webp",
+        "fichier": "102.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1056,
@@ -10699,7 +11544,19 @@
             ],
             "quand": "Le représentant Alphonse Baudin aurait répondu"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.08,
+              0.36,
+              0.4
+            ]
+          ],
+          "duree": 4,
+          "intention": "On part du fond du faubourg, la colonne de la Bastille dans la brume derrière Baudin, et on recule : la barricade et les ouvriers se découvrent."
+        }
       },
       "personnes_vues": [
         {
@@ -10754,7 +11611,7 @@
         }
       ],
       "audio": {
-        "fichier": "098.m4a",
+        "fichier": "102.m4a",
         "duree": 17.89,
         "phrases": [
           [
@@ -10773,7 +11630,7 @@
       }
     },
     {
-      "n": 99,
+      "n": 103,
       "narration": "Le 4 décembre, des barricades barrent les rues du centre. L'armée les enlève une à une. Puis, sur les grands boulevards, la troupe ouvre soudain le feu sur les passants, les curieux, les fenêtres. La fusillade fait des centaines de victimes, morts et blessés. Paris, frappé de stupeur, ne bougera plus.",
       "date": "1851-12-04",
       "image": {
@@ -10784,7 +11641,7 @@
         "date": "1879",
         "technique": "gravure sur bois",
         "conservation": "lieu de conservation non identifié",
-        "fichier": "099.webp",
+        "fichier": "103.webp",
         "licence": "Domaine public",
         "largeur": 1084,
         "hauteur": 1600,
@@ -10810,7 +11667,14 @@
           0.294,
           0.428,
           0.451
-        ]
+        ],
+        "couleur": {
+          "fichier": "103-couleur.webp",
+          "largeur": 1032,
+          "hauteur": 1508,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -10833,7 +11697,7 @@
             "date": "vers 1872",
             "technique": "gravure sur bois",
             "conservation": "Paris, maison de Victor Hugo",
-            "fichier": "099-b.webp",
+            "fichier": "103-b.webp",
             "licence": "Domaine public",
             "largeur": 1158,
             "hauteur": 1600,
@@ -10868,13 +11732,20 @@
               0.58,
               0.785,
               0.81
-            ]
+            ],
+            "couleur": {
+              "fichier": "103-b-couleur.webp",
+              "largeur": 916,
+              "hauteur": 1284,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 5.44
         }
       ],
       "audio": {
-        "fichier": "099.m4a",
+        "fichier": "103.m4a",
         "duree": 19.07,
         "phrases": [
           [
@@ -10901,7 +11772,7 @@
       }
     },
     {
-      "n": 100,
+      "n": 104,
       "narration": "Au cimetière Montmartre, on aligne les corps, la tête hors de terre, pour que les familles viennent les reconnaître. Parmi eux, des femmes, des vieillards, un enfant. Hugo, caché dans Paris, note tout. De ce carnet sortiront un livre, Histoire d'un crime, et les vers des Châtiments.",
       "date": "1851-12-05",
       "image": {
@@ -10912,7 +11783,7 @@
         "date": "décembre 1851",
         "technique": "gravure coloriée",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "100.webp",
+        "fichier": "104.webp",
         "licence": "Domaine public",
         "largeur": 1357,
         "hauteur": 1015,
@@ -10943,7 +11814,7 @@
         ]
       },
       "audio": {
-        "fichier": "100.m4a",
+        "fichier": "104.m4a",
         "duree": 17.29,
         "phrases": [
           [
@@ -10966,7 +11837,7 @@
       }
     },
     {
-      "n": 101,
+      "n": 105,
       "narration": "La surprise vient de la province. Dans près d'une trentaine de départements, des républicains prennent les armes pour défendre la Constitution. À Clamecy, dans la Nièvre, puis dans le Var et les Basses-Alpes, des colonnes de paysans et d'artisans marchent sur les préfectures. Digne est occupée plusieurs jours.",
       "date": "1851-12-05",
       "date_fin": "1851-12-10",
@@ -10984,7 +11855,7 @@
           0.796,
           0.969
         ],
-        "fichier": "101.webp",
+        "fichier": "105.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1595,
@@ -11049,7 +11920,7 @@
         }
       ],
       "audio": {
-        "fichier": "101.m4a",
+        "fichier": "105.m4a",
         "duree": 16.28,
         "phrases": [
           [
@@ -11072,7 +11943,7 @@
       }
     },
     {
-      "n": 102,
+      "n": 106,
       "narration": "Le pouvoir retourne aussitôt l'événement à son profit. Ses journaux décrivent des pillages, des viols, une jacquerie de partageux ; les notables, épouvantés, se rallient. La caricature d'opposition a juste le temps de demander si la République est bien morte. Puis elle se tait.",
       "date": "1851-12",
       "image": {
@@ -11089,7 +11960,7 @@
           0.922,
           0.978
         ],
-        "fichier": "102.webp",
+        "fichier": "106.webp",
         "licence": "Domaine public",
         "largeur": 1233,
         "hauteur": 1600,
@@ -11134,7 +12005,7 @@
               0.966,
               0.933
             ],
-            "fichier": "102-b.webp",
+            "fichier": "106-b.webp",
             "licence": "Domaine public",
             "largeur": 1287,
             "hauteur": 1600,
@@ -11166,7 +12037,7 @@
         }
       ],
       "audio": {
-        "fichier": "102.m4a",
+        "fichier": "106.m4a",
         "duree": 15.66,
         "phrases": [
           [
@@ -11189,7 +12060,7 @@
       }
     },
     {
-      "n": 103,
+      "n": 107,
       "narration": "La répression est massive. Près de vingt-sept mille personnes sont arrêtées. Dans chaque département, une commission mixte, formée du préfet, d'un général et d'un magistrat, les juge sans les entendre. Plus de neuf mille sont envoyées en Algérie, deux cent trente-neuf au bagne de Cayenne.",
       "date": "1852-01",
       "date_fin": "1852-03",
@@ -11201,7 +12072,7 @@
         "date": "10 janvier 1852",
         "technique": "gravure sur bois",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "103.webp",
+        "fichier": "107.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1176,
@@ -11238,7 +12109,14 @@
             ],
             "quand": "Plus de neuf mille sont envoyées en"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "107-couleur.webp",
+          "largeur": 1542,
+          "hauteur": 1113,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -11261,7 +12139,7 @@
         }
       ],
       "audio": {
-        "fichier": "103.m4a",
+        "fichier": "107.m4a",
         "duree": 18.87,
         "phrases": [
           [
@@ -11284,7 +12162,7 @@
       }
     },
     {
-      "n": 104,
+      "n": 108,
       "narration": "Hugo passe la frontière sous un faux nom et gagne Bruxelles. En janvier 1852, un décret bannit soixante-six anciens députés, dont lui, Schœlcher et Raspail. D'autres vaincus partent pour Londres ou pour la Suisse ; la République a désormais ses proscrits, qui écrivent, et attendent.",
       "date": "1851-12-11",
       "date_fin": "1852-01",
@@ -11296,7 +12174,7 @@
         "date": "vers 1853-1855",
         "technique": "photographie",
         "conservation": "Paris, maison de Victor Hugo",
-        "fichier": "104.webp",
+        "fichier": "108.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1451,
@@ -11361,7 +12239,7 @@
         }
       ],
       "audio": {
-        "fichier": "104.m4a",
+        "fichier": "108.m4a",
         "duree": 19.19,
         "phrases": [
           [
@@ -11380,7 +12258,7 @@
       }
     },
     {
-      "n": 105,
+      "n": 109,
       "narration": "Les 20 et 21 décembre, on vote par oui ou par non ; la presse est muselée, l'état de siège pèse sur de nombreux départements. Le résultat est écrasant : près de sept millions et demi de oui, contre moins de sept cent mille non. Le président se dit absous par le peuple.",
       "date": "1851-12-20",
       "date_fin": "1851-12-21",
@@ -11392,7 +12270,7 @@
         "date": "27 décembre 1851",
         "technique": "gravure sur bois",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "105.webp",
+        "fichier": "109.webp",
         "licence": "Domaine public",
         "largeur": 1014,
         "hauteur": 1600,
@@ -11427,7 +12305,26 @@
           0.62,
           0.96,
           0.85
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0,
+              0.016,
+              1,
+              0.464
+            ]
+          ],
+          "duree": 5,
+          "intention": "On recule depuis l'affiche « Vote du peuple » collée sous l'arche pour découvrir la queue des électeurs."
+        },
+        "couleur": {
+          "fichier": "109-couleur.webp",
+          "largeur": 938,
+          "hauteur": 1448,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "objets": [
         {
@@ -11447,7 +12344,7 @@
             "date": "décembre 1851",
             "technique": "imprimé",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "105-b.webp",
+            "fichier": "109-b.webp",
             "licence": "Domaine public",
             "largeur": 1071,
             "hauteur": 1600,
@@ -11488,7 +12385,7 @@
         }
       ],
       "audio": {
-        "fichier": "105.m4a",
+        "fichier": "109.m4a",
         "duree": 16.65,
         "phrases": [
           [
@@ -11507,7 +12404,7 @@
       }
     },
     {
-      "n": 106,
+      "n": 110,
       "narration": "En quatre ans, l'exilé de Londres est devenu le maître du pays. En 1848, les journaux publiaient le portrait d'un inconnu au grand nom. En 1852, le photographe Gustave Le Gray fait poser le prince-président, la main sur la hanche : un chef d'État sûr de durer.",
       "date": "1852",
       "image": {
@@ -11533,7 +12430,7 @@
           "technique": "épreuve sur papier albuminé",
           "conservation": "New York, Metropolitan Museum of Art",
           "quand": "En 1852, le photographe",
-          "fichier": "106-apres.webp",
+          "fichier": "110-apres.webp",
           "licence": "Domaine public",
           "largeur": 1172,
           "hauteur": 1600,
@@ -11550,7 +12447,7 @@
             0.456
           ]
         },
-        "fichier": "106.webp",
+        "fichier": "110.webp",
         "licence": "Domaine public",
         "largeur": 1166,
         "hauteur": 1600,
@@ -11579,7 +12476,7 @@
       },
       "camera_manuelle": true,
       "audio": {
-        "fichier": "106.m4a",
+        "fichier": "110.m4a",
         "duree": 16.32,
         "phrases": [
           [
@@ -11598,7 +12495,7 @@
       }
     },
     {
-      "n": 107,
+      "n": 111,
       "narration": "La Constitution du 14 janvier 1852 est copiée sur celle du Consulat. Le président, élu pour dix ans, nomme les ministres, qui ne dépendent que de lui ; il a seul l'initiative des lois. Un Corps législatif élu les vote, sans pouvoir les proposer ; un Sénat nommé veille sur le régime.",
       "date": "1852-01-14",
       "image": {
@@ -11609,7 +12506,7 @@
         "date": "1852",
         "technique": "placard imprimé",
         "conservation": "Paris, Bibliothèque nationale de France",
-        "fichier": "107.webp",
+        "fichier": "111.webp",
         "licence": "Domaine public",
         "largeur": 1159,
         "hauteur": 1600,
@@ -11647,7 +12544,7 @@
         ]
       },
       "audio": {
-        "fichier": "107.m4a",
+        "fichier": "111.m4a",
         "duree": 17.87,
         "phrases": [
           [
@@ -11666,7 +12563,7 @@
       }
     },
     {
-      "n": 108,
+      "n": 112,
       "narration": "Les décrets se succèdent ; la garde nationale, qui avait fait les révolutions, est désarmée. Les biens de la famille d'Orléans sont confisqués ; un magistrat démissionne, et l'on répète ce mot : c'est le premier vol de l'aigle. Sur les monuments, on gratte la devise Liberté, Égalité, Fraternité.",
       "date": "1852-01",
       "image": {
@@ -11677,7 +12574,7 @@
         "date": "24 janvier 1852",
         "technique": "gravure sur bois de L'Illustration",
         "conservation": "Providence, bibliothèque de l'université Brown",
-        "fichier": "108.webp",
+        "fichier": "112.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1058,
@@ -11705,10 +12602,29 @@
             ],
             "quand": "Sur les monuments, on gratte"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.3,
+              1.0,
+              0.9
+            ]
+          ],
+          "duree": 5,
+          "intention": "On remonte des pavés et du gamin au premier plan vers les gardes nationaux et leurs fusils sous l'arcade."
+        },
+        "couleur": {
+          "fichier": "112-couleur.webp",
+          "largeur": 1600,
+          "hauteur": 1043,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
-        "fichier": "108.m4a",
+        "fichier": "112.m4a",
         "duree": 19.28,
         "phrases": [
           [
@@ -11727,7 +12643,7 @@
       }
     },
     {
-      "n": 109,
+      "n": 113,
       "narration": "La presse est mise au pas, sans censure apparente. Un journal doit obtenir une autorisation, et quelques avertissements suffisent à le faire suspendre. Aux élections, le ministre de l'Intérieur, Persigny, désigne aux électeurs le bon candidat, dit candidat officiel, et combat tous les autres.",
       "date": "1852-02",
       "date_fin": "1852-03",
@@ -11745,7 +12661,7 @@
           0.695,
           0.636
         ],
-        "fichier": "109.webp",
+        "fichier": "113.webp",
         "licence": "Domaine public",
         "largeur": 894,
         "hauteur": 1305,
@@ -11781,7 +12697,7 @@
         }
       ],
       "audio": {
-        "fichier": "109.m4a",
+        "fichier": "113.m4a",
         "duree": 19.88,
         "phrases": [
           [
@@ -11800,7 +12716,108 @@
       }
     },
     {
-      "n": 110,
+      "narration": "La Guyane ne recevra pas que des proscrits. Le 27 mars 1852, un décret y envoie les forçats de Brest, de Rochefort et de Toulon. Le ministre Ducos vante un climat sain ; le 31 mars, trois cents premiers condamnés quittent Brest pour les îles du Salut. Les fièvres y tueront des milliers d'hommes.",
+      "date": "1852-03-27",
+      "image": {
+        "commons": "File:Édouard Riou - Ile Royale, maison du commandant.jpg",
+        "titre": "Île Royale, maison du commandant",
+        "titre_court": "L'île Royale, aux îles du Salut",
+        "auteur": "Édouard Riou",
+        "date": "1867",
+        "technique": "gravure sur bois, dans Frédéric Bouyer, La Guyane française (voyage de 1862-1863)",
+        "conservation": "Lieu de conservation non précisé par la notice Commons",
+        "fichier": "114.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1327,
+        "utile": [
+          0.059,
+          0.075,
+          0.936,
+          0.876
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.06,
+              0.32,
+              0.94,
+              0.74
+            ]
+          }
+        ]
+      },
+      "lieux": [
+        {
+          "nom": "Îles du Salut, Guyane",
+          "quand": "les îles du Salut",
+          "lon": -52.583,
+          "lat": 5.287,
+          "fond": "monde",
+          "instant": 15.25
+        }
+      ],
+      "plans": [
+        {
+          "quand": "Le ministre Ducos vante",
+          "image": {
+            "commons": "File:Édouard Riou - Cimetière des transportés aux Iles du Salut.jpg",
+            "titre": "Cimetière des transportés aux îles du Salut",
+            "titre_court": "Le cimetière des transportés : la mer",
+            "auteur": "Édouard Riou",
+            "date": "1867",
+            "technique": "gravure sur bois, dans Frédéric Bouyer, La Guyane française (voyage de 1862-1863)",
+            "conservation": "Lieu de conservation non précisé par la notice Commons",
+            "fichier": "114-b.webp",
+            "licence": "Domaine public",
+            "largeur": 1600,
+            "hauteur": 1332,
+            "utile": [
+              0.064,
+              0.078,
+              0.946,
+              0.882
+            ],
+            "camera": [
+              {
+                "cadre": [
+                  0.06,
+                  0.22,
+                  0.95,
+                  0.64
+                ]
+              }
+            ]
+          },
+          "instant": 8.99
+        }
+      ],
+      "n": 114,
+      "audio": {
+        "fichier": "114.m4a",
+        "duree": 18.51,
+        "phrases": [
+          [
+            0.0,
+            2.06
+          ],
+          [
+            2.91,
+            8.33
+          ],
+          [
+            9.29,
+            15.89
+          ],
+          [
+            16.8,
+            18.51
+          ]
+        ]
+      }
+    },
+    {
+      "n": 115,
       "narration": "Le 10 mai 1852, au Champ-de-Mars, le prince remet à l'armée de nouveaux drapeaux. Au sommet des hampes, l'aigle de l'oncle a repris sa place. Les régiments défilent pendant des heures, et le clergé bénit les étendards ; il ne manque plus à ce régime que son nom.",
       "date": "1852-05-10",
       "image": {
@@ -11811,7 +12828,7 @@
         "date": "1852",
         "technique": "huile sur toile",
         "conservation": "Paris, musée de l'Armée",
-        "fichier": "110.webp",
+        "fichier": "115.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1200,
@@ -11841,7 +12858,7 @@
           }
         ],
         "video": {
-          "fichier": "110-mouvement.mp4",
+          "fichier": "115-mouvement.mp4",
           "type": "mouvement",
           "duree": 16.62,
           "largeur": 1088,
@@ -11867,7 +12884,7 @@
               0.97,
               0.95
             ],
-            "fichier": "110-b.webp",
+            "fichier": "115-b.webp",
             "licence": "Domaine public",
             "largeur": 1600,
             "hauteur": 978,
@@ -11892,7 +12909,7 @@
         }
       ],
       "audio": {
-        "fichier": "110.m4a",
+        "fichier": "115.m4a",
         "duree": 16.65,
         "phrases": [
           [
@@ -11911,7 +12928,7 @@
       }
     },
     {
-      "n": 111,
+      "n": 116,
       "narration": "À l'automne 1852, le prince parcourt en triomphe le Centre et le Midi de la France. Sur le chemin du retour, il libère l'émir Abd el-Kader, prisonnier à Amboise. Paris l'accueille sous des arcs de triomphe. À Bordeaux, le 9 octobre, il a rassuré l'Europe : « L'Empire, c'est la paix. »",
       "date": "1852-10-09",
       "date_fin": "1852-10-16",
@@ -11923,7 +12940,7 @@
         "date": "23 octobre 1852",
         "technique": "gravure sur bois de L'Illustration",
         "conservation": "Providence, bibliothèque de l'université Brown",
-        "fichier": "111.webp",
+        "fichier": "116.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1108,
@@ -11990,7 +13007,7 @@
             "date": "1852",
             "technique": "gravure sur bois de L'Illustration",
             "conservation": "Providence, bibliothèque de l'université Brown",
-            "fichier": "111-b.webp",
+            "fichier": "116-b.webp",
             "licence": "Domaine public",
             "largeur": 1156,
             "hauteur": 1440,
@@ -12016,13 +13033,32 @@
               0.4,
               0.8,
               0.72
-            ]
+            ],
+            "entree": {
+              "cadres": [
+                [
+                  0,
+                  0,
+                  1,
+                  0.42
+                ]
+              ],
+              "duree": 5,
+              "intention": "On descend de la couronne et de l'aigle des draperies jusqu'aux personnages de la loge."
+            },
+            "couleur": {
+              "fichier": "116-b-couleur.webp",
+              "largeur": 1099,
+              "hauteur": 1360,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 5.52
         }
       ],
       "audio": {
-        "fichier": "111.m4a",
+        "fichier": "116.m4a",
         "duree": 18.63,
         "phrases": [
           [
@@ -12055,7 +13091,7 @@
       ]
     },
     {
-      "n": 112,
+      "n": 117,
       "narration": "De Bruxelles, Hugo riposte. En août 1852, il publie Napoléon le Petit, un pamphlet qui passe la frontière en fraude et circule sous le manteau. Lui-même s'embarque alors pour l'île de Jersey ; sa voix ne se taira plus, mais elle viendra désormais de l'exil.",
       "date": "1852-08",
       "image": {
@@ -12072,7 +13108,7 @@
           0.724,
           0.812
         ],
-        "fichier": "112.webp",
+        "fichier": "117.webp",
         "licence": "Domaine public",
         "largeur": 972,
         "hauteur": 1600,
@@ -12124,7 +13160,7 @@
         }
       ],
       "audio": {
-        "fichier": "112.m4a",
+        "fichier": "117.m4a",
         "duree": 16.92,
         "phrases": [
           [
@@ -12143,7 +13179,7 @@
       }
     },
     {
-      "n": 113,
+      "n": 118,
       "narration": "Les 21 et 22 novembre 1852, un second plébiscite demande aux Français de rétablir l'Empire. Sept millions huit cent mille disent oui, deux cent cinquante mille non. Deux millions d'électeurs se sont abstenus. L'Hôtel de Ville de Paris, où la République fut proclamée, se couvre de drapeaux et d'aigles.",
       "date": "1852-11-21",
       "date_fin": "1852-11-22",
@@ -12155,7 +13191,7 @@
         "date": "décembre 1852",
         "technique": "épreuve sur papier salé",
         "conservation": "Paris, musée Carnavalet",
-        "fichier": "113.webp",
+        "fichier": "118.webp",
         "licence": "Domaine public",
         "largeur": 1154,
         "hauteur": 1600,
@@ -12181,7 +13217,19 @@
           0.3,
           0.976,
           0.574
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.1,
+              0.48,
+              0.9,
+              0.98
+            ]
+          ],
+          "duree": 6,
+          "intention": "On monte du perron le long de la façade pavoisée, en reculant jusqu'à l'Hôtel de Ville entier."
+        }
       },
       "chiffres": [
         {
@@ -12203,7 +13251,7 @@
             "date": "1852",
             "technique": "gravure sur bois",
             "conservation": "Paris, Bibliothèque nationale de France",
-            "fichier": "113-b.webp",
+            "fichier": "118-b.webp",
             "licence": "Domaine public",
             "largeur": 1091,
             "hauteur": 1600,
@@ -12238,13 +13286,20 @@
               0.45,
               0.92,
               0.67
-            ]
+            ],
+            "couleur": {
+              "fichier": "118-b-couleur.webp",
+              "largeur": 875,
+              "hauteur": 1281,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.87
         }
       ],
       "audio": {
-        "fichier": "113.m4a",
+        "fichier": "118.m4a",
         "duree": 18.64,
         "phrases": [
           [
@@ -12268,7 +13323,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 114,
+      "n": 119,
       "narration": "Le 2 décembre 1852, un an jour pour jour après le coup d'État, l'Empire est proclamé. Louis-Napoléon devient Napoléon III, empereur des Français. Il entre dans Paris à cheval, par l'Arc de triomphe ; la Deuxième République a vécu moins de cinq ans.",
       "date": "1852-12-02",
       "image": {
@@ -12279,7 +13334,7 @@
         "date": "décembre 1852",
         "technique": "gravure sur bois de L'Illustration",
         "conservation": "Providence, bibliothèque de l'université Brown",
-        "fichier": "114.webp",
+        "fichier": "119.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1186,
@@ -12307,7 +13362,14 @@
             ],
             "quand": "Louis-Napoléon devient Napoléon III"
           }
-        ]
+        ],
+        "couleur": {
+          "fichier": "119-couleur.webp",
+          "largeur": 1531,
+          "hauteur": 1091,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "objets": [
         {
@@ -12327,7 +13389,7 @@
             "date": "décembre 1852",
             "technique": "gravure sur bois de L'Illustration",
             "conservation": "Providence, bibliothèque de l'université Brown",
-            "fichier": "114-b.webp",
+            "fichier": "119-b.webp",
             "licence": "Domaine public",
             "largeur": 1159,
             "hauteur": 1600,
@@ -12353,13 +13415,20 @@
               0.4,
               0.95,
               0.68
-            ]
+            ],
+            "couleur": {
+              "fichier": "119-b-couleur.webp",
+              "largeur": 1121,
+              "hauteur": 1485,
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.99
         }
       ],
       "audio": {
-        "fichier": "114.m4a",
+        "fichier": "119.m4a",
         "duree": 15.75,
         "phrases": [
           [
@@ -12378,7 +13447,7 @@
       }
     },
     {
-      "n": 115,
+      "n": 120,
       "narration": "Que reste-t-il de 1848 ? Le suffrage universel, que nul n'osera plus retirer aux hommes. L'esclavage aboli ; le souvenir de Juin, aussi, et la peur qu'il a laissée. Karl Marx écrit que l'histoire se répète, « la première fois comme tragédie, la seconde fois comme farce ». Le Second Empire commence ; il durera dix-huit ans.",
       "date": "1852-12",
       "image": {
@@ -12389,7 +13458,7 @@
         "date": "28 août 1852",
         "technique": "gravure sur bois de L'Illustration",
         "conservation": "Providence, bibliothèque de l'université Brown",
-        "fichier": "115.webp",
+        "fichier": "120.webp",
         "licence": "Domaine public",
         "largeur": 1600,
         "hauteur": 1066,
@@ -12417,7 +13486,26 @@
             ],
             "quand": "Le Second Empire commence "
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.02,
+              0.48,
+              0.55,
+              0.92
+            ]
+          ],
+          "duree": 6,
+          "intention": "On part des statues du premier plan et on s'élève au-dessus des toits vers les palais réunis."
+        },
+        "couleur": {
+          "fichier": "120-couleur.webp",
+          "largeur": 1566,
+          "hauteur": 1025,
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "citations": [
         {
@@ -12468,7 +13556,7 @@
         }
       ],
       "audio": {
-        "fichier": "115.m4a",
+        "fichier": "120.m4a",
         "duree": 22.79,
         "phrases": [
           [
@@ -13974,7 +15062,7 @@
       "reference": "proclamation affichée à Paris le matin du 2 décembre 1851",
       "ecrivains": "appel",
       "portrait": {
-        "diapositive": 74,
+        "diapositive": 78,
         "cadre": [
           0.28,
           0.04,
@@ -13982,7 +15070,7 @@
           0.48
         ]
       },
-      "apres": 95,
+      "apres": 99,
       "source": {
         "page": "Coup_d’État_du_2_décembre_1851",
         "edition": "texte de la Collection complète des lois de J.-B. Duvergier (tome 51, 1851)"
@@ -14380,7 +15468,7 @@
       "ecrivains": "nuit-du-4",
       "poeme": true,
       "portrait": {
-        "diapositive": 91,
+        "diapositive": 95,
         "cadre": [
           0.22,
           0.12,
@@ -14388,7 +15476,7 @@
           0.6
         ]
       },
-      "apres": 100,
+      "apres": 104,
       "source": {
         "page": "Les_Châtiments/Souvenir_de_la_nuit_du_4",
         "edition": "texte de l'édition Hetzel-Quantin (1882)"
@@ -15188,7 +16276,7 @@
       "sources": [
         "Wikipédia, « Élection présidentielle française de 1848 » (https://fr.wikipedia.org/wiki/Élection_présidentielle_française_de_1848)"
       ],
-      "apres": 58,
+      "apres": 61,
       "audio": {
         "fichier": "episodes/dix-decembre.m4a",
         "duree": 44.81,
@@ -15373,7 +16461,7 @@
       "sources": [
         "Wikipédia, « Coup d'État du 2 décembre 1851 » (https://fr.wikipedia.org/wiki/Coup_d'État_du_2_décembre_1851)"
       ],
-      "apres": 101,
+      "apres": 105,
       "audio": {
         "fichier": "episodes/province.m4a",
         "duree": 49.16,
@@ -15429,6 +16517,714 @@
           [
             47.61,
             49.16
+          ]
+        ]
+      }
+    },
+    {
+      "id": "empire-1852",
+      "apres": 114,
+      "titre": "L'empire en 1852",
+      "date": "1852",
+      "narration": "Que devient l'empire entre 1847 et 1852 ? Sur la carte, presque rien ne bouge. La France garde ses vieilles colonies : la Martinique, la Guadeloupe, la Guyane et l'île Bourbon, redevenue La Réunion en 1848. Elle garde ses comptoirs du Sénégal et de l'Inde, l'Algérie, ses postes d'Afrique et ses îles du Pacifique. Ce qui change, ce sont les statuts. D'abord, l'esclavage disparaît. Le décret est signé à Paris le 27 avril 1848. Il s'applique à la Martinique le 23 mai, à la Guadeloupe le 27, en Guyane le 10 août, à La Réunion le 20 décembre. Environ deux cent cinquante mille personnes deviennent libres. Leurs anciens maîtres se partagent cent vingt-six millions de francs. Ensuite, la Constitution déclare ces terres territoire français, et l'Algérie du nord est découpée en trois départements. Enfin, en 1852, la Guyane devient une terre de bagne. L'empire n'a pas grandi ; il a changé de lois.",
+      "visuels": [
+        {
+          "type": "carte",
+          "fond": "empire",
+          "titre": "L'empire en 1852 : les mêmes terres qu'en 1847",
+          "elements": [
+            {
+              "type": "ville",
+              "lieu": [
+                -56.3,
+                46.9
+              ],
+              "libelle": "Saint-Pierre-et-Miquelon",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "ses vieilles colonies"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -61.0,
+                14.6
+              ],
+              "libelle": "Martinique, Guadeloupe",
+              "rebelle": true,
+              "position": "gauche",
+              "quand": "la Martinique"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -54.3,
+                  6.5
+                ],
+                [
+                  -51.0,
+                  5.2
+                ],
+                [
+                  -51.65,
+                  4.0
+                ],
+                [
+                  -52.0,
+                  3.2
+                ],
+                [
+                  -52.6,
+                  2.4
+                ],
+                [
+                  -53.8,
+                  2.2
+                ],
+                [
+                  -54.6,
+                  2.3
+                ],
+                [
+                  -54.2,
+                  2.9
+                ],
+                [
+                  -54.0,
+                  3.6
+                ],
+                [
+                  -54.45,
+                  4.4
+                ],
+                [
+                  -54.45,
+                  5.0
+                ],
+                [
+                  -54.0,
+                  5.7
+                ]
+              ],
+              "style": "hachures",
+              "quand": "la Guyane"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -52.33,
+                4.93
+              ],
+              "libelle": "Guyane",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "la Guyane"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -16.5,
+                16.03
+              ],
+              "libelle": "Saint-Louis",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "ses comptoirs du Sénégal"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -17.4,
+                14.67
+              ],
+              "libelle": "Gorée",
+              "rebelle": true,
+              "position": "gauche",
+              "quand": "ses comptoirs du Sénégal"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                55.5,
+                -21.1
+              ],
+              "libelle": "La Réunion",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "l'île Bourbon"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                79.83,
+                11.93
+              ],
+              "libelle": "Pondichéry",
+              "rebelle": true,
+              "position": "gauche",
+              "quand": "de l'Inde"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                88.37,
+                22.87
+              ],
+              "libelle": "Chandernagor",
+              "rebelle": true,
+              "position": "gauche",
+              "quand": "de l'Inde"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -2.2,
+                  35.6
+                ],
+                [
+                  -2.2,
+                  35.0
+                ],
+                [
+                  -1.7,
+                  34.5
+                ],
+                [
+                  -1.2,
+                  34.0
+                ],
+                [
+                  1.0,
+                  33.9
+                ],
+                [
+                  3.0,
+                  34.2
+                ],
+                [
+                  5.7,
+                  34.6
+                ],
+                [
+                  7.6,
+                  34.6
+                ],
+                [
+                  8.3,
+                  35.0
+                ],
+                [
+                  8.4,
+                  36.2
+                ],
+                [
+                  8.7,
+                  37.3
+                ],
+                [
+                  5.0,
+                  37.6
+                ],
+                [
+                  1.0,
+                  37.2
+                ]
+              ],
+              "style": "hachures",
+              "quand": "l'Algérie"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                3.06,
+                36.78
+              ],
+              "libelle": "Algérie",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "l'Algérie"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -3.5,
+                5.15
+              ],
+              "libelle": "Grand-Bassam, Assinie",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "ses postes d'Afrique"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                9.45,
+                0.39
+              ],
+              "libelle": "Gabon",
+              "rebelle": true,
+              "position": "droite",
+              "quand": "ses postes d'Afrique"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                46.7,
+                -13.0
+              ],
+              "libelle": "Nossi-Bé, Mayotte",
+              "rebelle": true,
+              "position": "haut",
+              "quand": "ses postes d'Afrique"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -139.5,
+                -9.4
+              ],
+              "libelle": "Îles Marquises",
+              "rebelle": true,
+              "position": "droite",
+              "quand": "ses îles du Pacifique"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -149.4,
+                -17.65
+              ],
+              "libelle": "Tahiti (protectorat)",
+              "rebelle": true,
+              "position": "droite",
+              "quand": "ses îles du Pacifique"
+            }
+          ],
+          "legende": [
+            [
+              "rebelle",
+              "île, comptoir ou poste français"
+            ],
+            [
+              "zone",
+              "territoire aux limites incertaines"
+            ]
+          ],
+          "source": "Fond Natural Earth ; possessions inchangées depuis 1847 ; statuts d'après le décret du 27 avril 1848, la Constitution du 4 novembre 1848, l'arrêté du 9 décembre 1848 et le décret du 27 mars 1852 ; limites de l'Algérie simplifiées",
+          "cadre": [
+            -160,
+            -36,
+            95,
+            60
+          ]
+        },
+        {
+          "type": "chronologie",
+          "quand": "D'abord, l'esclavage disparaît",
+          "titre": "1848 : la liberté, colonie par colonie",
+          "debut": "1848-04-01",
+          "fin": "1848-12-31",
+          "evenements": [
+            {
+              "date": "1848-04-27",
+              "libelle": "Décret d'abolition",
+              "precision": "27 avril, à Paris",
+              "quand": "Le décret est signé"
+            },
+            {
+              "date": "1848-05-23",
+              "libelle": "Martinique",
+              "precision": "23 mai, après le soulèvement du 22",
+              "quand": "à la Martinique le 23 mai"
+            },
+            {
+              "date": "1848-05-27",
+              "libelle": "Guadeloupe",
+              "precision": "27 mai, sans attendre le décret",
+              "quand": "à la Guadeloupe le 27"
+            },
+            {
+              "date": "1848-08-10",
+              "libelle": "Guyane",
+              "precision": "10 août, près de 13 000 personnes",
+              "quand": "en Guyane le 10 août"
+            },
+            {
+              "date": "1848-12-20",
+              "libelle": "La Réunion",
+              "precision": "20 décembre, plus de 60 000 personnes",
+              "quand": "à La Réunion le 20 décembre"
+            }
+          ],
+          "source": "Wikipédia, « Abolition de l'esclavage en Guadeloupe », « Histoire de la Guyane », « Abolition de l'esclavage à La Réunion », « 1848 en France »"
+        },
+        {
+          "type": "chiffres",
+          "quand": "Environ deux cent cinquante mille",
+          "titre": "L'abolition de 1848 en chiffres",
+          "items": [
+            {
+              "valeur": "environ 250 000",
+              "unite": "personnes",
+              "libelle": "libérées de l'esclavage",
+              "quand": "Environ deux cent cinquante mille"
+            },
+            {
+              "valeur": "126 millions",
+              "unite": "de francs",
+              "libelle": "d'indemnité aux anciens maîtres, loi du 30 avril 1849",
+              "quand": "cent vingt-six millions",
+              "accent": true
+            }
+          ],
+          "source": "Wikipédia, « Décret d'abolition de l'esclavage du 27 avril 1848 » ; indemnité : base Repairs du CNRS, citée par le Portail de l'esclavage à La Réunion"
+        },
+        {
+          "type": "carte",
+          "fond": "empire",
+          "titre": "L'empire en 1852 : entre parenthèses, l'abolition (1848) et les nouveaux statuts",
+          "elements": [
+            {
+              "type": "ville",
+              "lieu": [
+                -56.3,
+                46.9
+              ],
+              "libelle": "Saint-Pierre-et-Miquelon",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -61.0,
+                14.6
+              ],
+              "libelle": "Martinique, Guadeloupe (1848)",
+              "rebelle": true,
+              "position": "gauche"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -54.3,
+                  6.5
+                ],
+                [
+                  -51.0,
+                  5.2
+                ],
+                [
+                  -51.65,
+                  4.0
+                ],
+                [
+                  -52.0,
+                  3.2
+                ],
+                [
+                  -52.6,
+                  2.4
+                ],
+                [
+                  -53.8,
+                  2.2
+                ],
+                [
+                  -54.6,
+                  2.3
+                ],
+                [
+                  -54.2,
+                  2.9
+                ],
+                [
+                  -54.0,
+                  3.6
+                ],
+                [
+                  -54.45,
+                  4.4
+                ],
+                [
+                  -54.45,
+                  5.0
+                ],
+                [
+                  -54.0,
+                  5.7
+                ]
+              ],
+              "style": "hachures",
+              "quand": "la Guyane devient"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -52.33,
+                4.93
+              ],
+              "libelle": "Guyane (1848 ; bagne, 1852)",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "la Guyane devient"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -16.5,
+                16.03
+              ],
+              "libelle": "Saint-Louis",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -17.4,
+                14.67
+              ],
+              "libelle": "Gorée",
+              "rebelle": true,
+              "position": "gauche"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                55.5,
+                -21.1
+              ],
+              "libelle": "La Réunion (1848)",
+              "rebelle": true,
+              "position": "bas"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                79.83,
+                11.93
+              ],
+              "libelle": "Pondichéry",
+              "rebelle": true,
+              "position": "gauche"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                88.37,
+                22.87
+              ],
+              "libelle": "Chandernagor",
+              "rebelle": true,
+              "position": "gauche"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -2.2,
+                  35.6
+                ],
+                [
+                  -2.2,
+                  35.0
+                ],
+                [
+                  -1.7,
+                  34.5
+                ],
+                [
+                  -1.2,
+                  34.0
+                ],
+                [
+                  1.0,
+                  33.9
+                ],
+                [
+                  3.0,
+                  34.2
+                ],
+                [
+                  5.7,
+                  34.6
+                ],
+                [
+                  7.6,
+                  34.6
+                ],
+                [
+                  8.3,
+                  35.0
+                ],
+                [
+                  8.4,
+                  36.2
+                ],
+                [
+                  8.7,
+                  37.3
+                ],
+                [
+                  5.0,
+                  37.6
+                ],
+                [
+                  1.0,
+                  37.2
+                ]
+              ],
+              "style": "hachures",
+              "quand": "l'Algérie du nord"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                3.06,
+                36.78
+              ],
+              "libelle": "Algérie (départements, 1848)",
+              "rebelle": true,
+              "position": "bas",
+              "quand": "l'Algérie du nord"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -3.5,
+                5.15
+              ],
+              "libelle": "Grand-Bassam, Assinie",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                9.45,
+                0.39
+              ],
+              "libelle": "Gabon",
+              "rebelle": true,
+              "position": "droite"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                46.7,
+                -13.0
+              ],
+              "libelle": "Nossi-Bé, Mayotte",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -139.5,
+                -9.4
+              ],
+              "libelle": "Îles Marquises",
+              "rebelle": true,
+              "position": "droite"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -149.4,
+                -17.65
+              ],
+              "libelle": "Tahiti (protectorat)",
+              "rebelle": true,
+              "position": "droite"
+            }
+          ],
+          "legende": [
+            [
+              "rebelle",
+              "île, comptoir ou poste français"
+            ],
+            [
+              "zone",
+              "territoire aux limites incertaines"
+            ]
+          ],
+          "source": "Fond Natural Earth ; possessions inchangées depuis 1847 ; statuts d'après le décret du 27 avril 1848, la Constitution du 4 novembre 1848, l'arrêté du 9 décembre 1848 et le décret du 27 mars 1852 ; limites de l'Algérie simplifiées",
+          "cadre": [
+            -160,
+            -36,
+            95,
+            60
+          ],
+          "quand": "Ensuite, la Constitution"
+        }
+      ],
+      "sources": [
+        "Abolition, colonie par colonie : Wikipédia, « 1848 en France » (Martinique, 23 mai), « Abolition de l'esclavage en Guadeloupe » (27 mai), « Histoire de la Guyane » (10 août, près de 13 000 personnes), « Abolition de l'esclavage à La Réunion » (20 décembre, 60 000 à 62 000 personnes)",
+        "Indemnité : loi du 30 avril 1849, 126 millions de francs, dont 6 en numéraire et une rente de 6 millions pendant vingt ans (base Repairs du CNRS, citée par le Portail de l'esclavage à La Réunion, portail-esclavage-reunion.fr)",
+        "Algérie : Constitution du 4 novembre 1848, article 109 (Wikisource) ; arrêté du 9 décembre 1848 (Wikipédia, « Départementalisation de l'Algérie française »)",
+        "Bagne de Guyane : décret du 27 mars 1852 (Wikipédia, « Bagne de la Guyane française ») ; rapport du ministre Ducos, Le Moniteur universel du 21 février 1852, cité par RetroNews, « 1852 : création du bagne de Guyane »",
+        "Nom de La Réunion repris par arrêté du 7 mars 1848 (Wikipédia, « Histoire de La Réunion »)"
+      ],
+      "audio": {
+        "fichier": "episodes/empire-1852.m4a",
+        "duree": 55.23,
+        "phrases": [
+          [
+            0.0,
+            3.23
+          ],
+          [
+            4.12,
+            4.67
+          ],
+          [
+            4.96,
+            13.62
+          ],
+          [
+            14.6,
+            19.64
+          ],
+          [
+            20.55,
+            21.19
+          ],
+          [
+            21.59,
+            22.24
+          ],
+          [
+            23.18,
+            25.02
+          ],
+          [
+            25.88,
+            33.8
+          ],
+          [
+            34.16,
+            38.0
+          ],
+          [
+            38.69,
+            41.08
+          ],
+          [
+            42.05,
+            47.91
+          ],
+          [
+            49.0,
+            52.18
+          ],
+          [
+            52.88,
+            55.23
           ]
         ]
       }
@@ -15562,8 +17358,8 @@
           "compositeur": "Hector Berlioz, 1834"
         },
         "filtres": "microsillon",
-        "fin": 288,
-        "duree": 288.0
+        "fin": 370.2,
+        "duree": 370.2
       },
       {
         "id": "fond-ordre-1",
@@ -15681,8 +17477,8 @@
           "compositeur": "Adolphe Adam, 1852"
         },
         "filtres": "microsillon",
-        "fin": 218,
-        "duree": 218.0
+        "fin": 292.8,
+        "duree": 292.8
       }
     ],
     "intermedes": [
@@ -16246,7 +18042,7 @@
         "id": "musique-prophete",
         "instrumental": true,
         "paroles": [],
-        "apres": 70,
+        "apres": 74,
         "galerie": [
           {
             "image": {
@@ -16434,7 +18230,7 @@
         "id": "musique-chopin",
         "instrumental": true,
         "paroles": [],
-        "apres": 73,
+        "apres": 77,
         "galerie": [
           {
             "image": {
@@ -16569,7 +18365,7 @@
         "theme": "La France des monuments : calotypes de 1851",
         "instrumental": true,
         "paroles": [],
-        "apres": 82,
+        "apres": 86,
         "galerie": [
           {
             "image": {

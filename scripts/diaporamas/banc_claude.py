@@ -44,6 +44,11 @@ Décisions :
   étape sur une fenêtre de plus de 7 s ; une étape sur une fenêtre plus courte n'a rien à gagner),
   hors `camera_manuelle`, plans sans `instant`, avant/après et mosaïques ; sans option : les
   diapositives du dernier banc Gemini caméra, plus AUTRES (banc).
+- Entrée en scène (spec 12, « Entrée en scène des grandes vues ») : la tâche d'une image qui peut en
+  recevoir une (entree.motif_image : ni portrait, ni document, ni ouverture, ni avant/après, ni
+  mosaïque, ni clip, ni première image d'un acte) demande en plus le champ `entree` (consigne
+  d'entree.consigne_banc, avec la règle de fenêtre) ; `appliquer` le pose avec la caméra s'il passe
+  entree.depuis_camera. Contrôle après build : `entree.py plans` puis `entree.py etapes`.
 - Lots d'environ 15 tâches (--lot) dès qu'il y en a plus, ou avec --statiques / --toutes : un sous-agent par lot.
 - Minutage mot à mot : les narrations n'ont que `audio.phrases` (pas d'alignement par mot) ; la
   tâche donne donc l'instant de chaque mot tel que la chaîne le calcule (prorata des caractères
@@ -76,6 +81,7 @@ from PIL import Image, ImageDraw
 
 import commun as c
 import camera as cam
+import entree as ent
 import gemini
 
 DOSSIER = c.CACHE / 'banc-claude'
@@ -92,6 +98,12 @@ FORMAT = """\
   {"quand": "passage exact de la narration", "montre": "…", "cadre": [x0, y0, x1, y1]}
  ],
  "non_identifies": []}"""
+
+
+# Tâche d'une grande vue (image qui peut recevoir une entrée en scène : entree.motif_image) : la
+# réponse porte en plus le champ `entree`, posé par `appliquer` s'il passe les contrôles d'entree.py.
+FORMAT_ENTREE = FORMAT[:-1] + """,
+ "entree": {"cadres": [[x0, y0, x1, y1]], "duree": 5, "intention": "le mouvement, en une phrase"}}"""
 
 
 # --- Sans effet de bord -----------------------------------------------------------------------
@@ -207,7 +219,7 @@ def minutage_mots(x: dict) -> str:
     return '\n'.join(lignes)
 
 
-def texte_tache(slug: str, x: dict, L: int, H: int, faces: list, img: Path, reponse: Path) -> str:
+def texte_tache(slug: str, x: dict, L: int, H: int, faces: list, img: Path, reponse: Path, entree: bool = False) -> str:
     u = cam.utile_de(x)
     hmax = min((u[2] - u[0]) * L / cam.RATIO_VUE, (u[3] - u[1]) * H / (1 + cam.BANDE_HAUT + cam.BANDE_BAS)) / H
     k = cam.RATIO_VUE * H / L
@@ -237,11 +249,14 @@ def texte_tache(slug: str, x: dict, L: int, H: int, faces: list, img: Path, repo
         f"moins {cam.FACE_MIN}) : chacun doit être ENTIER dans la vue, ou FRANCHEMENT à l'écart (ni à cheval sur "
         f"un bord, ni au ras). Avant d'écrire, calcule la vue de chaque cadre et compare ses quatre bords aux "
         f"rectangles ; au besoin élargis le cadre pour englober le visage voisin, ou écarte-le nettement.\n\n"
+        + (f'## Entrée en scène (spec 12, « Entrée en scène des grandes vues »)\n\n{ent.consigne_banc(hmax, k)}\n\n' if entree else '') +
         f'## Image à regarder (outil Read)\n\n{img}\n\n'
         f'Elle porte la grille graduée de 0 à 1 ; les cadres et les visages sont en fractions de cette image.\n\n'
         f'## Réponse attendue\n\n'
         f'Un objet JSON, et rien d\'autre, écrit dans `{reponse}` :\n\n'
-        f'```json\n{FORMAT}\n```\n\n'
+        f'```json\n{FORMAT_ENTREE if entree else FORMAT}\n```\n\n'
+        + ('- `entree` : null si l\'image ne se prête pas à une entrée en scène, sinon `cadres` (un ou deux cadres '
+           'de départ), `duree` (4 à 7 s) et `intention` (une phrase) ;\n' if entree else '') +
         f'- `etapes` : 1 à {cam.MAX_ETAPES} ; `quand` vaut null pour la première, un passage exact de la '
         f'narration (2 à 8 mots) pour les suivantes ;\n'
         f'- `cadre` : quatre nombres entre 0 et 1, x0 < x1 et y0 < y1 ;\n'
@@ -312,7 +327,7 @@ def preparer(a) -> int:
     nb_lots = math.ceil(len(choix) / a.lot) if par_lots else 1
     taille = math.ceil(len(choix) / nb_lots)
     suffixe = f'.{a.etiquette}' if a.etiquette else ''
-    taches = []
+    taches, actes = [], ent.debuts_actes(d)
     for i, x in enumerate(choix):
         lot = f'lot-{i // taille + 1}' if par_lots else None
         rep = sortie / lot if lot else sortie
@@ -323,10 +338,11 @@ def preparer(a) -> int:
         faces = cam.visages(slug, x, appeler=False) or []
         img = rep / f'image-{ident}.jpg'
         cam.avec_grille(cam.reduire(image)).save(img, 'JPEG', quality=85)
+        grande_vue = ent.motif_image(d, x, actes) is None
         (rep / f'tache-{ident}.md').write_text(
-            texte_tache(slug, x, L, H, faces, img, rep / f'reponse-{ident}{suffixe}.json'))
+            texte_tache(slug, x, L, H, faces, img, rep / f'reponse-{ident}{suffixe}.json', grande_vue))
         fige = {k: v for k, v in x.items() if k != 'plan'}
-        taches.append({'id': ident, 'n': x['n'], 'lot': lot, 'commune': str(x['n']) in communes, 'visages': faces,
+        taches.append({'id': ident, 'n': x['n'], 'lot': lot, 'commune': str(x['n']) in communes, 'visages': faces, 'entree': grande_vue,
                        'nature': NATURES.get(slug, {}).get(x['n']) or (x['image'].get('technique') or '?'), 'x': fige})
     for lot in dict.fromkeys(t['lot'] for t in taches):
         rep = sortie / lot if lot else sortie
@@ -704,6 +720,19 @@ def appliquer(a) -> int:
         print(f"Laissées ({len(ids)}) : {raison} : {' '.join(ids)}")
     print(f"{'À poser' if a.essai else 'Posées'} : {len(poser)} caméra(s) de « {et} » sur {len(rep[et])} réponse(s) ; "
           f"étapes {sum(len(p[3]) for p in poser)} → {sum(len(p[2]['resultat']) for p in poser)}.")
+    # Entrées en scène jointes aux caméras posées (tâches de grandes vues) : contrôles d'entree.py
+    # contre la caméra retenue (règle de fenêtre, visages, ampleur) ; les autres sont laissées.
+    entrees = {}
+    for t, v, r, avant in poser:
+        e = lire_reponse(rep[et][t['id']])[0].get('entree') if t.get('entree') else None
+        if e and not v['image'].get('entree'):
+            bonne, raison = ent.depuis_camera(v, r['resultat'], e, t['visages'])
+            if bonne:
+                entrees[str(t['n'])] = bonne
+            else:
+                print(f"{t['id']:>5} entrée en scène laissée : {raison}")
+    if entrees:
+        print(f"{'À poser' if a.essai else 'Posées'} : {len(entrees)} entrée(s) en scène : {' '.join(entrees)}")
     if a.essai or not poser:
         return 0
     fc, cache = _cache_camera(slug)
@@ -721,6 +750,8 @@ def appliquer(a) -> int:
                               'dossier': str(rel(dossier))}
     fc.parent.mkdir(parents=True, exist_ok=True)
     fc.write_text(json.dumps(cache, ensure_ascii=False, indent=1))
+    if entrees:
+        ent.poser(slug, entrees)
     print(f'JSON et cache caméra écrits ; sauvegarde : {rel(sauvegarde)}')
     return 0
 

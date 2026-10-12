@@ -2,7 +2,7 @@
 // plan des transitions, cadre à l'instant t (`cadreA`), cadre d'un intermède. Lit `lec.D`, marges.
 // Spec 12, « Caméra calée sur la narration », « Caméra calme et lente », « Caméra plus vivante ».
 // README : « Caméra : format et pièges », « Zone utile », « Marges des surimpressions du bas ».
-import { DUREE_MIN, ECART_MIN, ENTIER_AIR, ENTIER_RAMPE, ENTIER_TENUE, ENTIER_VITESSE, ENTIER_ZOOM, MICRO, MISE_EN_ROUTE, OUVERTURE, POUSSEE, RAMPE_RECUL, RECUL_OUVERTURE, RETARD, SOUFFLE, TENUE_MIN, VISE_GLISSE, VISE_ZOOM } from './constantes';
+import { DUREE_MIN, ECART_MIN, ENTREE_DUREE, ENTREE_MELANGE, ENTREE_PART, ENTIER_AIR, ENTIER_RAMPE, ENTIER_TENUE, ENTIER_VITESSE, ENTIER_ZOOM, MICRO, MISE_EN_ROUTE, OUVERTURE, POUSSEE, RAMPE_RECUL, RECUL_OUVERTURE, RETARD, SOUFFLE, TENUE_MIN, VISE_GLISSE, VISE_ZOOM } from './constantes';
 import { ampleur, echelle, profil, souffle, trajet } from './geometrie';
 import { mouvementReduit } from './outils';
 import type { Diapo, Rect, SuiteChant } from './types';
@@ -233,12 +233,13 @@ export function installerCamera(lec: Lecteur) {
   function plan(x: Diapo) {
     const E = x.camera, finVoix = x.duree || 6;
     // Image entière : une seule vue (le rapprochement lent est fait par `cadreEntier`).
-    if (x.en) { const v = vueZoom(x, 1); return [{ v, c: x.en.v ?? v, t: x.t0 ?? 0, de: 0, a: x.ouv ? dureeRecul(x) : x.a0 ?? 0 }]; }
+    if (x.en) { const v = vueZoom(x, 1); return [{ v, c: x.en.v ?? v, t: x.t0 ?? 0, de: 0, a: x.ouv ? dureeRecul(x) : finArrivee(x, v) }]; }
     // Après un détail d'ouverture, la première vue n'est atteinte qu'à la fin du recul : aucune
     // étape ne commence avant (la tenue minimale court à partir de là).
     // Image après d'un avant / après, ou fin de la plongée d'une mosaïque : la première vue
     // (imposée par `v0`, sinon celle du premier cadre) n'est quittée qu'après `a0`.
-    const etapes = [{ v: x.v0 ?? vue(x, E[0].c), c: E[0].c, t: x.t0 ?? 0, de: 0, a: x.ouv ? dureeRecul(x) : x.a0 ?? 0 }];
+    const v0 = x.v0 ?? vue(x, E[0].c);
+    const etapes = [{ v: v0, c: E[0].c, t: x.t0 ?? 0, de: 0, a: x.ouv ? dureeRecul(x) : finArrivee(x, v0) }];
     for (let k = 1; k < E.length; k++) {
       const p = etapes[etapes.length - 1], v = vue(x, E[k].c);
       if (E[k].t - p.t < ECART_MIN) continue;
@@ -275,6 +276,51 @@ export function installerCamera(lec: Lecteur) {
     return Math.min(d, 0.5 * (x.duree || 6));
   }
 
+  // --- Entrée en scène (`x.ent`, spec 12 « Entrée en scène des grandes vues ») ------------------
+  // Même principe que le recul d'ouverture, généralisé : un mouvement d'arrivée, doux aux deux
+  // bouts, qui part d'un cadre propre à l'image (deux au plus) et finit sur la première vue ;
+  // la tenue habituelle prend le relais à vitesse nulle. Rien ne dépend des mots de la voix.
+  const cout = (a: Rect, b: Rect) => { const { zoom, glisse } = ampleur(a, b); return Math.max(zoom / VISE_ZOOM, glisse / VISE_GLISSE); };
+  /** Mouvement d'entrée vers la première vue `v0` : vues parcourues, début et durée de chaque
+   *  trajet (s après le début de l'entrée), durée totale. La durée demandée est allongée tant que
+   *  la vitesse au plus fort dépasse les plafonds, puis bornée à `ENTREE_PART` de la fenêtre de
+   *  l'image (jusqu'au plan suivant, ou la fin de la voix). Deux temps : les trajets se
+   *  chevauchent sur leurs rampes (l'un ralentit pendant que l'autre démarre : pas d'arrêt). */
+  function arrivee(x: Diapo, v0: Rect) {
+    const V = [...x.ent!.c.slice(0, 2).map((c) => vue(x, c)), v0], de = x.a0 ?? 0;
+    const fenetre = Math.max(1, (x.plans?.[0]?.t ?? (x.duree || 6)) - de), R = RAMPE_RECUL;
+    const voulu = x.ent!.d || ENTREE_DUREE, max = ENTREE_PART * fenetre;
+    if (V.length === 2) {
+      const d = Math.min(Math.max(voulu, cout(V[0], V[1]) / (1 - R)), max);
+      return { V, T: [0], D: [d], d };
+    }
+    const u = [cout(V[0], V[1]), cout(V[1], V[2])], s = u[0] + u[1];
+    const a = s < 1e-6 ? 0.5 : Math.min(ENTREE_MELANGE[1], Math.max(ENTREE_MELANGE[0], u[0] / s)), b = 1 - a;
+    const k = 1 - R * Math.min(a, b); // durée totale = k × (somme des deux trajets), chevauchement déduit
+    const L = Math.min(Math.max(voulu / k, u[0] / ((1 - R) * a), u[1] / ((1 - R) * b)), max / k);
+    const D = [a * L, b * L], d = k * L;
+    return { V, T: [0, d - D[1]], D, d };
+  }
+  /** Fin du mouvement d'entrée (début de la première tenue) ; sans entrée : `a0`. */
+  const finArrivee = (x: Diapo, v0: Rect) => (x.a0 ?? 0) + (x.ent ? arrivee(x, v0).d : 0);
+  /** Vue à l'instant `t` du mouvement d'entrée. Deux temps : le second trajet (une similitude
+   *  qui mène la vue intermédiaire à la première vue) s'applique à la vue courante du premier ;
+   *  la vue reste dans l'image (sauf image entière : bandes noires). */
+  function cadreArrivee(x: Diapo, t: number, v0: Rect): Rect {
+    const { V, T, D } = arrivee(x, v0), u = t - (x.a0 ?? 0);
+    let r = trajet(V[0], V[1], profil(u - T[0], D[0], RAMPE_RECUL * D[0]));
+    if (V.length === 3) {
+      const B = trajet(V[1], V[2], profil(u - T[1], D[1], RAMPE_RECUL * D[1]));
+      const k = (B[2] - B[0]) / (V[1][2] - V[1][0]);
+      r = r.map((v, i) => B[i] + k * (v - V[1][i])) as Rect;
+      if (!x.en) {
+        const dx = Math.max(0, -r[0]) - Math.max(0, r[2] - 1), dy = Math.max(0, -r[1]) - Math.max(0, r[3] - 1);
+        r = [r[0] + dx, r[1] + dy, r[2] + dx, r[3] + dy];
+      }
+    }
+    return r;
+  }
+
   /** Cadre (vue) montré à l'instant `t` (secondes dans l'audio) d'une diapositive. Un instant
    *  négatif (−OUVERTURE à 0) est l'ouverture du carton d'acte, avant la voix. */
   function cadreA(x: Diapo, t: number): Rect {
@@ -298,6 +344,8 @@ export function installerCamera(lec: Lecteur) {
       const dr = P[0].a;
       if (t < dr) return trajet(Op, P[0].v, profil(t, dr, RAMPE_RECUL * dr));
     }
+    // Entrée en scène : mouvement d'arrivée propre à l'image, jusqu'à la première vue.
+    if (x.ent && !x.ouv && t < P[0].a) return cadreArrivee(x, t, P[0].v);
     if (x.en) return cadreEntier(x, t, P[0].a);
     const tenue = (k: number, u: number) => {
       const jusqua = k + 1 < P.length ? P[k + 1].de : finVoix;

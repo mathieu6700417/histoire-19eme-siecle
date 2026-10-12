@@ -56,6 +56,19 @@ export const DEBUT_CLIP = 1.8;        // s de la voix
 export const DEBUT_CLIP_MOSAIQUE = 0.3; // s après la fin de la plongée
 export const FONDU_CLIP = 1.2;        // s : fondu CSS du clip (même valeur dans le CSS)
 export const DERIVE_CLIP = 0.3;       // s : au-delà, le clip est recalé sur la voix (pause, saut)
+// Image colorisée par IA (spec 16, « la colorisation couleur seule ») : l'original d'abord, puis un
+// fondu lent vers la version colorisée, qui reste jusqu'à la fin de l'image. Sans lien avec les mots
+// de la voix : le fondu part dès que l'original a été vu (retour de l'utilisateur du 2026-10-12 : « la
+// transition devrait arriver plus vite » ; avant : au tiers de la fenêtre de l'image, fondu de 2,8 s),
+// au plus tôt `COULEUR_MIN` s après son apparition et
+// `COULEUR_APRES_ENTREE` s après la fin de son entrée en scène ; il est avancé au besoin pour finir
+// `COULEUR_FIN` s avant la fin de l'image (verifier.py avertit d'une fenêtre trop courte).
+export const COULEUR_PART = 0;            // part de la fenêtre de l'image où le fondu commence (0 : dès que possible)
+export const COULEUR_MIN = 1.5;           // s : jamais avant (entrée de l'image finie, original vu)
+export const COULEUR_APRES_ENTREE = 0.5;  // s après la fin de l'entrée en scène (`image.entree`)
+export const COULEUR_FONDU = 2;           // s : durée du fondu
+export const COULEUR_FIN = 2;             // s : le fondu ne déborde pas sur la fin de l'image
+export const COULEUR_SEUIL = 0.04;        // opacité à partir de laquelle le cartouche le signale
 // Avant / après et mosaïque, prefers-reduced-motion : fondu enchaîné vers l'image après, et
 // fondu de la grille (complète d'emblée) vers l'image principale.
 export const FONDU_APRES_REDUIT = 1;
@@ -70,6 +83,13 @@ export const OUVERTURE = 3.5;        // s : ouverture des volets (prise sur la f
 export const POUSSEE = 0.025;        // resserrement pendant l'ouverture (arrêt doux à la fin)
 export const RECUL_OUVERTURE = 5;    // s : recul du détail vers le premier cadre (après l'ouverture)
 export const RAMPE_RECUL = 0.4;      // part du recul en mise en route (et autant en arrêt)
+// Entrée en scène d'une grande vue (spec 12, « Entrée en scène des grandes vues », `image.entree`) :
+// mouvement d'arrivée propre à l'image, sans lien avec la voix, qui finit sur la première vue.
+// Mêmes rampes que le recul d'ouverture ; la durée demandée est allongée pour tenir les plafonds
+// de vitesse, et bornée à une part de la fenêtre de l'image (jusqu'au plan suivant ou la fin de la voix).
+export const ENTREE_DUREE = 5;       // s : durée par défaut (les données donnent 4 à 7 s)
+export const ENTREE_PART = 0.75;     // part de la fenêtre de l'image, au plus
+export const ENTREE_MELANGE = [0.3, 0.7]; // deux temps : part de chaque trajet dans le mouvement (bornes)
 // Frise du temps en bas de l'image : 4 s en tout, fondu de sortie compris (le curseur glisse de
 // 0,5 à 1,5 s, cf. CSS).
 export const DUREE_FRISE = 4;   // s
@@ -81,9 +101,7 @@ export const CARTON_TRACE_DUREE = 1.6;
 export const CARTON_ACTE_MIN = 2.8;     // le segment de l'acte part au plus tôt ici (après le tracé)…
 export const CARTON_ACTE_MAX = 4.4;     // … et au plus tard là (titre très long)
 export const CARTON_ACTE_DUREE = 2.5;   // avancée du segment, années qui défilent
-export const CARTON_REPERES = 0.3;      // pause avant les dates clés
-export const CARTON_REPERE_PAS = 0.45;  // d'une date clé à la suivante
-export const CARTON_REPERE_FONDU = 0.5;
+export const CARTON_ONDE = 1.5;         // période de l'onde autour de la période de l'acte (après l'avancée)
 // Rangée de portraits : fondu de l'ovale et de son étiquette quand la voix dit le nom (s).
 export const PORTRAIT_FONDU = 0.45;
 // Portraits et objets du bas (révision du 2026-10-09 : 1,5 fois plus grands) : hauteur de l'ovale

@@ -15,43 +15,43 @@
       "id": "vers-empire",
       "titre": "Vers l'Empire",
       "dates": "1803-1804",
-      "debut": 19
+      "debut": 21
     },
     {
       "id": "grande-armee",
       "titre": "La Grande Armée",
       "dates": "1805-1807",
-      "debut": 34
+      "debut": 36
     },
     {
       "id": "espagne-autriche",
       "titre": "L'Espagne et l'Autriche",
       "dates": "1808-1810",
-      "debut": 49
+      "debut": 51
     },
     {
       "id": "france-imperiale",
       "titre": "La France impériale",
       "dates": "1810-1811",
-      "debut": 65
+      "debut": 68
     },
     {
       "id": "russie",
       "titre": "La campagne de Russie",
       "dates": "1812",
-      "debut": 82
+      "debut": 86
     },
     {
       "id": "chute",
       "titre": "La chute",
       "dates": "1813-1814",
-      "debut": 93
+      "debut": 97
     },
     {
       "id": "cent-jours",
       "titre": "Les Cent-Jours",
       "dates": "1815",
-      "debut": 104
+      "debut": 108
     }
   ],
   "diapositives": [
@@ -473,7 +473,19 @@
             ],
             "quand": "la division du général Desaix"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.37,
+              0.52,
+              0.65
+            ]
+          ],
+          "duree": 6,
+          "intention": "On longe la ligne française depuis les arbres de la gauche, dans la fumée, puis la plaine de Marengo s'ouvre tout entière."
+        }
       },
       "audio": {
         "fichier": "006.m4a",
@@ -1200,7 +1212,7 @@
     },
     {
       "n": 16,
-      "narration": "Outre-mer, la paix sert un autre dessein. À Saint-Domingue, l'ancien esclave Toussaint Louverture gouverne la colonie, où la Révolution a aboli l'esclavage. Bonaparte y envoie une armée et, le 20 mai 1802, une loi maintient l'esclavage dans les colonies rendues par l'Angleterre. Il est rétabli en Guadeloupe peu après.",
+      "narration": "Outre-mer, la paix sert un autre dessein. À Saint-Domingue, l'ancien esclave Toussaint Louverture gouverne la colonie, où la Révolution a aboli l'esclavage. Bonaparte y envoie une armée et, le 20 mai 1802, une loi maintient l'esclavage dans les colonies rendues par l'Angleterre, comme la Martinique.",
       "date": "1802-05-20",
       "image": {
         "commons": "File:Toussaint L'Ouverture.jpg",
@@ -1233,23 +1245,19 @@
       },
       "audio": {
         "fichier": "016.m4a",
-        "duree": 20.46,
+        "duree": 18.68,
         "phrases": [
           [
             0.0,
-            2.44
+            2.58
           ],
           [
-            3.36,
-            10.05
+            3.34,
+            9.99
           ],
           [
-            10.96,
-            17.74
-          ],
-          [
-            18.5,
-            20.46
+            11.04,
+            18.68
           ]
         ]
       },
@@ -1260,22 +1268,14 @@
           "lon": -72.2,
           "lat": 19.75,
           "fond": "monde",
-          "instant": 3.42
-        },
-        {
-          "nom": "Guadeloupe",
-          "quand": "en Guadeloupe",
-          "lon": -61.73278,
-          "lat": 15.99694,
-          "fond": "monde",
-          "instant": 19.26
+          "instant": 3.4
         }
       ],
       "personnes": [
         {
           "id": "bonaparte",
           "quand": "Bonaparte",
-          "instant": 10.99
+          "instant": 11.1
         }
       ],
       "personnes_vues": [
@@ -1286,8 +1286,111 @@
       ]
     },
     {
+      "narration": "En Guadeloupe, l'esclavage est aboli depuis 1794. En mai 1802, le général Richepance débarque avec environ trois mille cinq cents soldats. Un officier de couleur, Louis Delgrès, appelle à résister. Cerné le 28 mai à Matouba, au-dessus de Basse-Terre, il se fait sauter avec environ trois cents compagnons. En juillet, l'esclavage est rétabli dans l'île.",
+      "date": "1802-05-28",
+      "lieux": [
+        {
+          "nom": "Guadeloupe",
+          "quand": "En Guadeloupe",
+          "lon": -61.73278,
+          "lat": 15.99694,
+          "fond": "monde",
+          "instant": 0.16
+        }
+      ],
+      "personnes": [
+        {
+          "id": "richepance",
+          "quand": "Richepance",
+          "instant": 6.4
+        },
+        {
+          "id": "delgres",
+          "quand": "Louis Delgrès",
+          "instant": 11.17
+        }
+      ],
+      "image": {
+        "commons": "File:Mouillage de Basse-Terre en Guadeloupe en 1776.jpg",
+        "titre": "La ville de Basse-Terre dans l'île de la Guadeloupe, vue du mouillage",
+        "titre_court": "Basse-Terre, en Guadeloupe",
+        "auteur": "Nicolas Ozanne (dessin), Jeanne-Françoise Ozanne (gravure)",
+        "date": "1776",
+        "technique": "eau-forte",
+        "conservation": "Paris, Bibliothèque nationale de France",
+        "fichier": "017.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 908,
+        "utile": [
+          0.014,
+          0.051,
+          0.986,
+          0.826
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.01,
+              0.25,
+              0.99,
+              0.82
+            ]
+          },
+          {
+            "cadre": [
+              0.36,
+              0.38,
+              0.98,
+              0.77
+            ],
+            "quand": "au-dessus de Basse-Terre"
+          }
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.11,
+              0.38,
+              0.35,
+              0.68
+            ]
+          ],
+          "duree": 6,
+          "intention": "On recule depuis la frégate au mouillage, ses vergues chargées de matelots, pour découvrir la rade et la ville de Basse-Terre."
+        }
+      },
       "n": 17,
-      "narration": "Toussaint, arrêté par traîtrise, meurt en captivité dans le Jura en avril 1803. Mais les insurgés reprennent la lutte, et la fièvre jaune décime les soldats français. Vaincus à Vertières en novembre 1803, ils évacuent l'île, qui proclame son indépendance sous le nom d'Haïti le 1er janvier 1804.",
+      "audio": {
+        "fichier": "017.m4a",
+        "duree": 22.58,
+        "phrases": [
+          [
+            0.0,
+            3.68
+          ],
+          [
+            4.25,
+            9.23
+          ],
+          [
+            9.81,
+            12.71
+          ],
+          [
+            13.33,
+            19.18
+          ],
+          [
+            19.88,
+            22.58
+          ]
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "narration": "À Saint-Domingue, Toussaint, arrêté par traîtrise, meurt en captivité dans le Jura en avril 1803. Mais les nouvelles de Guadeloupe relancent l'insurrection, et la fièvre jaune décime les soldats français. Vaincus à Vertières en novembre 1803, ils évacuent l'île, qui proclame son indépendance sous le nom d'Haïti le 1er janvier 1804.",
       "date": "1802-06",
       "date_fin": "1803-11",
       "image": {
@@ -1299,7 +1402,7 @@
         "technique": "gravure sur bois",
         "conservation": "illustration de l'Histoire de Napoléon de Norvins, 1839",
         "licence": "Domaine public",
-        "fichier": "017.webp",
+        "fichier": "018.webp",
         "largeur": 1395,
         "hauteur": 1032,
         "utile": [
@@ -1320,20 +1423,20 @@
         ]
       },
       "audio": {
-        "fichier": "017.m4a",
-        "duree": 21.51,
+        "fichier": "018.m4a",
+        "duree": 21.35,
         "phrases": [
           [
             0.0,
-            5.85
+            6.22
           ],
           [
-            6.62,
-            11.09
+            7.12,
+            12.25
           ],
           [
-            12.2,
-            21.51
+            13.35,
+            21.35
           ]
         ]
       },
@@ -1341,12 +1444,103 @@
         {
           "id": "toussaint-louverture",
           "quand": "Toussaint",
-          "instant": 0.16
+          "instant": 1.22
         }
       ]
     },
     {
-      "n": 18,
+      "narration": "Sans Saint-Domingue, la Louisiane perd son intérêt. L'Espagne venait de rendre à la France cet immense territoire, à l'ouest du Mississippi. Faute de pouvoir le défendre, Bonaparte le vend aux États-Unis le 30 avril 1803, pour quatre-vingts millions de francs. À La Nouvelle-Orléans, cette gravure fête l'événement : sous les ailes de l'aigle américain, tout prospère.",
+      "date": "1803-04-30",
+      "lieux": [
+        {
+          "nom": "La Nouvelle-Orléans",
+          "quand": "À La Nouvelle-Orléans",
+          "lon": -90.07,
+          "lat": 29.95,
+          "fond": "monde",
+          "instant": 14.13
+        }
+      ],
+      "personnes": [
+        {
+          "id": "bonaparte",
+          "quand": "Bonaparte",
+          "instant": 9.05
+        }
+      ],
+      "image": {
+        "commons": "File:View of New Orleans Under My Wings Every Thing Prospers.jpg",
+        "titre": "Vue de La Nouvelle-Orléans prise de la plantation de Marigny (« Under my wings every thing prospers »)",
+        "titre_court": "La Nouvelle-Orléans en 1803",
+        "auteur": "John L. Boqueta de Woiseri",
+        "date": "1803",
+        "technique": "aquatinte coloriée",
+        "conservation": "Chicago, Chicago History Museum",
+        "fichier": "019.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 932,
+        "utile": [
+          0.064,
+          0.114,
+          0.926,
+          0.866
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.06,
+              0.44,
+              0.93,
+              0.87
+            ]
+          },
+          {
+            "cadre": [
+              0.06,
+              0.48,
+              0.55,
+              0.77
+            ],
+            "quand": "à l'ouest du Mississippi"
+          },
+          {
+            "cadre": [
+              0.18,
+              0.16,
+              0.82,
+              0.44
+            ],
+            "quand": "sous les ailes de l'aigle américain"
+          }
+        ]
+      },
+      "n": 19,
+      "audio": {
+        "fichier": "019.m4a",
+        "duree": 19.08,
+        "phrases": [
+          [
+            0.0,
+            2.52
+          ],
+          [
+            3.05,
+            6.84
+          ],
+          [
+            7.63,
+            13.38
+          ],
+          [
+            14.09,
+            19.08
+          ]
+        ]
+      }
+    },
+    {
+      "n": 20,
       "narration": "En France, la popularité du Premier consul est à son comble. En août 1802, un plébiscite le fait consul à vie, avec le droit de désigner son successeur. Ingres le peint en habit rouge, la main posée sur un décret en faveur de la ville de Liège. Bientôt, son profil orne les pièces d'or.",
       "date": "1802-08-02",
       "image": {
@@ -1358,7 +1552,7 @@
         "technique": "huile sur toile",
         "conservation": "Liège, musée des Beaux-Arts, La Boverie",
         "licence": "Domaine public",
-        "fichier": "018.webp",
+        "fichier": "020.webp",
         "largeur": 1018,
         "hauteur": 1600,
         "utile": [
@@ -1397,7 +1591,7 @@
         ]
       },
       "audio": {
-        "fichier": "018.m4a",
+        "fichier": "020.m4a",
         "duree": 17.1,
         "phrases": [
           [
@@ -1435,7 +1629,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 19,
+      "n": 21,
       "narration": "En mai 1803, la guerre reprend avec l'Angleterre. Outre-Manche, la peur d'une invasion gagne le pays, et les caricaturistes la conjurent. Gillray promet à Bonaparte un sort expéditif : quarante-huit heures après son débarquement, sa tête finirait au bout d'une fourche, brandie par un John Bull triomphant.",
       "date": "1803-05",
       "image": {
@@ -1447,7 +1641,7 @@
         "technique": "eau-forte coloriée",
         "conservation": "Londres, British Museum",
         "licence": "Domaine public",
-        "fichier": "019.webp",
+        "fichier": "021.webp",
         "largeur": 1153,
         "hauteur": 1600,
         "utile": [
@@ -1486,7 +1680,7 @@
         ]
       },
       "audio": {
-        "fichier": "019.m4a",
+        "fichier": "021.m4a",
         "duree": 18.39,
         "phrases": [
           [
@@ -1518,7 +1712,7 @@
       ]
     },
     {
-      "n": 20,
+      "n": 22,
       "narration": "En France, on rêve tout haut de franchir la Manche. Cette estampe présente le projet d'un certain Thilorier : une montgolfière géante portant trois mille hommes. Le principe est connu depuis 1783, l'air chauffé fait monter le ballon. Mais nul ne sait le diriger contre le vent, et l'idée reste une chimère.",
       "image": {
         "commons": "File:La Thiloriere ou Descente en Angleterre Projet d'une Montgolfiere capable d'enlever 3.000 Hommes et qui ne coutera que 300.000 Francs (etc.) - (estampe). Numérisation de IB-4 (1)-FOL - btv1b8509550q.jpg",
@@ -1529,7 +1723,7 @@
         "technique": "eau-forte coloriée",
         "conservation": "Paris, Bibliothèque nationale de France, département des Estampes et de la photographie",
         "licence": "Domaine public",
-        "fichier": "020.webp",
+        "fichier": "022.webp",
         "largeur": 1091,
         "hauteur": 1600,
         "utile": [
@@ -1559,7 +1753,7 @@
         ]
       },
       "audio": {
-        "fichier": "020.m4a",
+        "fichier": "022.m4a",
         "duree": 17.42,
         "phrases": [
           [
@@ -1590,7 +1784,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 21,
+      "n": 23,
       "narration": "Le vrai projet est plus terrestre. De 1803 à 1805, environ cent cinquante mille hommes s'entraînent au camp de Boulogne et sur les côtes de la Manche. On construit pour eux plus d'un millier de bateaux plats. Pour passer, il faudrait être maître de la mer quelques jours.",
       "date": "1803-06",
       "date_fin": "1805-08",
@@ -1603,7 +1797,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "021.webp",
+        "fichier": "023.webp",
         "largeur": 1600,
         "hauteur": 983,
         "utile": [
@@ -1630,10 +1824,22 @@
             ],
             "quand": "plus d'un millier de bateaux plats"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.1,
+              0.45,
+              0.5,
+              0.78
+            ]
+          ],
+          "duree": 5.5,
+          "intention": "On recule depuis le cortège de l'Empereur sur la route de la falaise pour découvrir la rade et les bateaux du camp."
+        }
       },
       "audio": {
-        "fichier": "021.m4a",
+        "fichier": "023.m4a",
         "duree": 16.19,
         "phrases": [
           [
@@ -1666,7 +1872,7 @@
       ]
     },
     {
-      "n": 22,
+      "n": 24,
       "narration": "Un ingénieur américain, Robert Fulton, propose même à la France un bateau sous-marin, le Nautilus. On remplit des réservoirs d'eau pour plonger, on les vide pour remonter, et une hélice tourne à la main. Les essais de 1800 et 1801 déçoivent. La Marine renonce, comme elle ignore son bateau à vapeur essayé sur la Seine en 1803.",
       "image": {
         "commons": "File:Fultondesign7.jpg",
@@ -1677,7 +1883,7 @@
         "technique": "dessin à la plume et lavis",
         "conservation": "Washington, Library of Congress",
         "licence": "Domaine public",
-        "fichier": "022.webp",
+        "fichier": "024.webp",
         "largeur": 1600,
         "hauteur": 1097,
         "utile": [
@@ -1707,7 +1913,7 @@
         ]
       },
       "audio": {
-        "fichier": "022.m4a",
+        "fichier": "024.m4a",
         "duree": 19.94,
         "phrases": [
           [
@@ -1737,7 +1943,7 @@
       ]
     },
     {
-      "n": 23,
+      "n": 25,
       "narration": "À Paris, la police déjoue au début de 1804 une conspiration royaliste. Son chef, le Breton Georges Cadoudal, voulait enlever ou tuer le Premier consul. Le général Pichegru y est mêlé, Moreau compromis puis exilé. Cadoudal est guillotiné en juin.",
       "date": "1804-02",
       "image": {
@@ -1749,7 +1955,7 @@
         "technique": "gravure",
         "conservation": "Paris, musée Carnavalet - Histoire de Paris",
         "licence": "Domaine public",
-        "fichier": "023.webp",
+        "fichier": "025.webp",
         "largeur": 1237,
         "hauteur": 1600,
         "utile": [
@@ -1771,7 +1977,7 @@
         ]
       },
       "audio": {
-        "fichier": "023.m4a",
+        "fichier": "025.m4a",
         "duree": 18.65,
         "phrases": [
           [
@@ -1812,7 +2018,7 @@
       ]
     },
     {
-      "n": 24,
+      "n": 26,
       "narration": "Les conjurés attendaient un prince. Bonaparte fait enlever en territoire allemand le duc d'Enghien, un Bourbon, qui n'était sans doute pas du complot. Jugé en hâte, il est fusillé dans les fossés de Vincennes, la nuit du 21 mars 1804. L'Europe des rois est indignée.",
       "date": "1804-03-21",
       "image": {
@@ -1830,7 +2036,7 @@
           0.897,
           0.795
         ],
-        "fichier": "024.webp",
+        "fichier": "026.webp",
         "largeur": 1236,
         "hauteur": 1600,
         "utile": [
@@ -1860,7 +2066,7 @@
         ]
       },
       "audio": {
-        "fichier": "024.m4a",
+        "fichier": "026.m4a",
         "duree": 17.06,
         "phrases": [
           [
@@ -1895,7 +2101,7 @@
       ]
     },
     {
-      "n": 25,
+      "n": 27,
       "narration": "Le même jour est promulgué le Code civil des Français. Ses deux mille deux cent quatre-vingt-un articles donnent à tous la même loi : égalité civile, propriété garantie, mariage civil et divorce. Mais la femme mariée y doit obéissance à son mari, et le père règne sur la famille.",
       "image": {
         "commons": "File:Code civil des Français.jpg",
@@ -1906,7 +2112,7 @@
         "technique": "livre imprimé, page de titre",
         "conservation": "Paris, bibliothèque interuniversitaire Cujas",
         "licence": "Domaine public",
-        "fichier": "025.webp",
+        "fichier": "027.webp",
         "largeur": 1061,
         "hauteur": 1400,
         "utile": [
@@ -1936,7 +2142,7 @@
         ]
       },
       "audio": {
-        "fichier": "025.m4a",
+        "fichier": "027.m4a",
         "duree": 19.41,
         "phrases": [
           [
@@ -1964,7 +2170,7 @@
       ]
     },
     {
-      "n": 26,
+      "n": 28,
       "narration": "Pour décourager les complots, Bonaparte veut rendre son pouvoir héréditaire. Le 18 mai 1804, à Saint-Cloud, le Sénat vient lui présenter le texte qui le proclame empereur des Français. Un plébiscite l'approuve. La République ne survit plus que sur les pièces de monnaie, jusqu'en 1808.",
       "date": "1804-05-18",
       "image": {
@@ -1976,7 +2182,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "026.webp",
+        "fichier": "028.webp",
         "largeur": 1600,
         "hauteur": 966,
         "utile": [
@@ -2006,7 +2212,7 @@
         ]
       },
       "audio": {
-        "fichier": "026.m4a",
+        "fichier": "028.m4a",
         "duree": 17.69,
         "phrases": [
           [
@@ -2042,7 +2248,7 @@
       ]
     },
     {
-      "n": 27,
+      "n": 29,
       "narration": "Joséphine de Beauharnais, son épouse depuis 1796, devient impératrice. Prud'hon la peint rêveuse, dans le parc de la Malmaison, sa demeure près de Paris. Elle y cultive roses et plantes rares venues du monde entier, et y fait travailler botanistes et peintres de fleurs.",
       "image": {
         "commons": "File:Pierre-Paul Prud'hon 001.jpg",
@@ -2053,7 +2259,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "027.webp",
+        "fichier": "029.webp",
         "largeur": 1188,
         "hauteur": 1600,
         "utile": [
@@ -2074,7 +2280,7 @@
         ]
       },
       "audio": {
-        "fichier": "027.m4a",
+        "fichier": "029.m4a",
         "duree": 16.67,
         "phrases": [
           [
@@ -2106,7 +2312,7 @@
       ]
     },
     {
-      "n": 28,
+      "n": 30,
       "narration": "Le 15 juillet 1804, aux Invalides, l'Empereur remet les premières croix de la Légion d'honneur, créée deux ans plus tôt. Elle récompense les mérites militaires et civils, sans distinction de naissance. « C'est avec des hochets que l'on mène les hommes », aurait-il répondu à ses critiques.",
       "date": "1804-07-15",
       "image": {
@@ -2118,7 +2324,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "028.webp",
+        "fichier": "030.webp",
         "largeur": 1600,
         "hauteur": 1212,
         "utile": [
@@ -2139,7 +2345,7 @@
         ]
       },
       "audio": {
-        "fichier": "028.m4a",
+        "fichier": "030.m4a",
         "duree": 16.57,
         "phrases": [
           [
@@ -2213,7 +2419,7 @@
       ]
     },
     {
-      "n": 29,
+      "n": 31,
       "narration": "Au Salon de septembre 1804, la grande exposition de peinture, la foule se presse devant ce tableau de Gros. Il montre Bonaparte touchant sans crainte un pestiféré, comme un roi guérisseur. Il tait qu'en Syrie, cinq ans plus tôt, le général avait fait exécuter des milliers de prisonniers.",
       "date": "1804-09",
       "image": {
@@ -2225,7 +2431,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "029.webp",
+        "fichier": "031.webp",
         "largeur": 1600,
         "hauteur": 1158,
         "utile": [
@@ -2246,7 +2452,7 @@
         ]
       },
       "audio": {
-        "fichier": "029.m4a",
+        "fichier": "031.m4a",
         "duree": 16.42,
         "phrases": [
           [
@@ -2278,7 +2484,7 @@
       ]
     },
     {
-      "n": 30,
+      "n": 32,
       "narration": "Le 2 décembre 1804, à Notre-Dame, a lieu le sacre. Le pape Pie VII est venu de Rome, mais Napoléon se couronne lui-même. David choisit de peindre l'instant suivant : l'Empereur pose la couronne sur la tête de Joséphine, agenouillée devant lui.",
       "date": "1804-12-02",
       "image": {
@@ -2290,7 +2496,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "030.webp",
+        "fichier": "032.webp",
         "largeur": 1600,
         "hauteur": 1006,
         "utile": [
@@ -2308,10 +2514,22 @@
               1.0
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.07,
+              0.16,
+              1.0,
+              0.75
+            ]
+          ],
+          "duree": 6,
+          "intention": "On descend des arcades et des tentures de Notre-Dame vers le cortège et le couronnement de Joséphine."
+        }
       },
       "audio": {
-        "fichier": "030.m4a",
+        "fichier": "032.m4a",
         "duree": 16.06,
         "phrases": [
           [
@@ -2358,7 +2576,7 @@
       ]
     },
     {
-      "n": 31,
+      "n": 33,
       "narration": "Le tableau, immense, compte plus de cent cinquante personnages. Au centre, dans une tribune, trône Madame Mère, la mère de l'Empereur. En réalité, brouillée avec son fils, elle n'était pas venue. Devenu premier peintre de l'Empereur, David arrange l'histoire à la gloire du régime.",
       "image": {
         "commons": "File:Jacques-Louis David - The Coronation of Napoleon (1805-1807).jpg",
@@ -2369,7 +2587,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "031.webp",
+        "fichier": "033.webp",
         "largeur": 1600,
         "hauteur": 1006,
         "utile": [
@@ -2408,7 +2626,7 @@
         ]
       },
       "audio": {
-        "fichier": "031.m4a",
+        "fichier": "033.m4a",
         "duree": 17.51,
         "phrases": [
           [
@@ -2444,7 +2662,7 @@
       ]
     },
     {
-      "n": 32,
+      "n": 34,
       "narration": "Trois jours plus tard, au Champ-de-Mars, l'Empereur remet à chaque régiment un drapeau surmonté d'un aigle doré. Les officiers jurent de le défendre au prix de leur vie. Le tableau de David fait de ce serment un élan de l'armée tout entière, tendue vers son chef. Le Chant du départ, hymne des armées de la Révolution, résonne désormais aux fêtes de l'Empire.",
       "date": "1804-12-05",
       "image": {
@@ -2456,7 +2674,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "032.webp",
+        "fichier": "034.webp",
         "largeur": 1600,
         "hauteur": 999,
         "utile": [
@@ -2486,7 +2704,7 @@
         ]
       },
       "audio": {
-        "fichier": "032.m4a",
+        "fichier": "034.m4a",
         "duree": 20.89,
         "phrases": [
           [
@@ -2526,7 +2744,7 @@
       ]
     },
     {
-      "n": 33,
+      "n": 35,
       "narration": "En 1796, Gros peignait un jeune général tout en élan, au pont d'Arcole. Ingres, lui, peint l'Empereur comme une idole : de face, immobile, avec le sceptre, la main de justice et le manteau d'hermine semé d'abeilles. Il emprunte aux rois du Moyen Âge et à Dieu le Père ; au Salon de 1806, on le juge étrange et gothique.",
       "image": {
         "commons": "File:Antoine-Jean Gros - Bonaparte au pont d'Arcole.jpg",
@@ -2537,7 +2755,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "033.webp",
+        "fichier": "035.webp",
         "camera": [
           {
             "cadre": [
@@ -2565,7 +2783,7 @@
             1.0,
             1.0
           ],
-          "fichier": "033-apres.webp",
+          "fichier": "035-apres.webp",
           "cadre": [
             0.0,
             0.128,
@@ -2596,7 +2814,7 @@
         "utile_manuel": true
       },
       "audio": {
-        "fichier": "033.m4a",
+        "fichier": "035.m4a",
         "duree": 21.23,
         "phrases": [
           [
@@ -2635,7 +2853,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 34,
+      "n": 36,
       "narration": "En 1805, l'Angleterre, l'Autriche et la Russie forment une troisième coalition contre la France. Gillray résume l'enjeu : Pitt et Napoléon découpent le globe comme un pudding, l'Anglais se taillant les océans, le Français l'Europe. Napoléon se fait bientôt couronner roi d'Italie.",
       "date": "1805-02",
       "image": {
@@ -2647,7 +2865,7 @@
         "technique": "eau-forte coloriée",
         "conservation": "New York, Metropolitan Museum of Art",
         "licence": "Domaine public",
-        "fichier": "034.webp",
+        "fichier": "036.webp",
         "largeur": 1600,
         "hauteur": 1156,
         "utile": [
@@ -2668,7 +2886,7 @@
         ]
       },
       "audio": {
-        "fichier": "034.m4a",
+        "fichier": "036.m4a",
         "duree": 18.41,
         "phrases": [
           [
@@ -2708,7 +2926,7 @@
       ]
     },
     {
-      "n": 35,
+      "n": 37,
       "narration": "Faute de maîtriser la Manche, l'Empereur lève le camp de Boulogne à la fin de l'été et jette son armée vers le Danube. Elle prend le nom de Grande Armée. Encerclé à Ulm, le général autrichien Mack capitule le 20 octobre avec plus de vingt mille hommes.",
       "date": "1805-10-20",
       "image": {
@@ -2720,7 +2938,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "035.webp",
+        "fichier": "037.webp",
         "largeur": 1600,
         "hauteur": 1052,
         "utile": [
@@ -2747,10 +2965,22 @@
             ],
             "quand": "le général autrichien Mack capitule"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.489,
+              0.292,
+              0.961,
+              0.618
+            ]
+          ],
+          "duree": 5.0,
+          "intention": "On part des remparts d'Ulm sous l'arbre de droite et on glisse sur la plaine et les troupes jusqu'aux officiers sur la hauteur."
+        }
       },
       "audio": {
-        "fichier": "035.m4a",
+        "fichier": "037.m4a",
         "duree": 14.53,
         "phrases": [
           [
@@ -2785,7 +3015,7 @@
       ]
     },
     {
-      "n": 36,
+      "n": 38,
       "narration": "Le lendemain, au large de l'Espagne, la flotte franco-espagnole de l'amiral Villeneuve est détruite à Trafalgar par l'Anglais Nelson, tué au combat. Ici, le Redoutable, vaisseau français, lutte bord à bord avec le Victory de Nelson. L'Angleterre restera maîtresse des mers jusqu'à la fin de l'Empire.",
       "date": "1805-10-21",
       "image": {
@@ -2797,7 +3027,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée national de la Marine",
         "licence": "Domaine public",
-        "fichier": "036.webp",
+        "fichier": "038.webp",
         "largeur": 1600,
         "hauteur": 1040,
         "utile": [
@@ -2827,7 +3057,7 @@
         ]
       },
       "audio": {
-        "fichier": "036.m4a",
+        "fichier": "038.m4a",
         "duree": 17.26,
         "phrases": [
           [
@@ -2873,7 +3103,7 @@
       ]
     },
     {
-      "n": 37,
+      "n": 39,
       "narration": "Le soir du 1er décembre 1805, en Moravie, l'Empereur visite ses bivouacs, coiffé de son petit chapeau. Les soldats allument des torches de paille pour l'éclairer : c'est l'anniversaire du sacre. Face à eux, les armées russe et autrichienne, conduites par leurs deux empereurs, comptent l'écraser le lendemain.",
       "date": "1805-12-01",
       "image": {
@@ -2885,7 +3115,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "037.webp",
+        "fichier": "039.webp",
         "largeur": 1600,
         "hauteur": 1296,
         "utile": [
@@ -2915,7 +3145,7 @@
         ]
       },
       "audio": {
-        "fichier": "037.m4a",
+        "fichier": "039.m4a",
         "duree": 17.93,
         "phrases": [
           [
@@ -2941,7 +3171,7 @@
       ]
     },
     {
-      "n": 38,
+      "n": 40,
       "narration": "Le 2 décembre, à Austerlitz, Napoléon laisse l'ennemi dégarnir son centre, puis l'enfonce sur le plateau de Pratzen. Le tableau montre le général Rapp lui présentant drapeaux et prisonniers de la garde du tsar. L'épée qu'il portait ce jour-là, dit-on, est aujourd'hui aux Invalides. Il raconte aussitôt sa victoire à Joséphine.",
       "date": "1805-12-02",
       "image": {
@@ -2953,7 +3183,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "038.webp",
+        "fichier": "040.webp",
         "largeur": 1600,
         "hauteur": 793,
         "utile": [
@@ -2974,7 +3204,7 @@
         ]
       },
       "audio": {
-        "fichier": "038.m4a",
+        "fichier": "040.m4a",
         "duree": 18.87,
         "phrases": [
           [
@@ -3031,7 +3261,7 @@
       ]
     },
     {
-      "n": 39,
+      "n": 41,
       "narration": "Le 4 décembre, près d'un moulin, l'empereur d'Autriche vient demander la paix. Signée à Presbourg à la fin du mois, elle lui enlève Venise et le Tyrol. En 1806, Napoléon fait de ses frères des rois, Joseph à Naples, Louis en Hollande, et le Saint-Empire romain germanique disparaît.",
       "date": "1805-12-04",
       "image": {
@@ -3043,7 +3273,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "039.webp",
+        "fichier": "041.webp",
         "largeur": 1600,
         "hauteur": 1149,
         "utile": [
@@ -3064,7 +3294,7 @@
         ]
       },
       "audio": {
-        "fichier": "039.m4a",
+        "fichier": "041.m4a",
         "duree": 16.79,
         "phrases": [
           [
@@ -3119,7 +3349,7 @@
       ]
     },
     {
-      "n": 40,
+      "n": 42,
       "narration": "Vient le tour de la Prusse. Le 14 octobre 1806, à Iéna, Napoléon écrase une armée prussienne, tandis que le maréchal Davout en bat une autre, plus forte, à Auerstaedt. Le tableau montre un jeune grenadier de la Garde criant « En avant ! » à l'Empereur, impatient d'attaquer.",
       "date": "1806-10-14",
       "image": {
@@ -3131,7 +3361,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "040.webp",
+        "fichier": "042.webp",
         "largeur": 1600,
         "hauteur": 1126,
         "utile": [
@@ -3161,7 +3391,7 @@
         ]
       },
       "audio": {
-        "fichier": "040.m4a",
+        "fichier": "042.m4a",
         "duree": 19.12,
         "phrases": [
           [
@@ -3211,7 +3441,7 @@
       ]
     },
     {
-      "n": 41,
+      "n": 43,
       "narration": "Le 27 octobre, la Grande Armée entre dans Berlin par la porte de Brandebourg : la Prusse a été abattue en quelques semaines. De Berlin, l'Empereur décrète le 21 novembre le blocus continental. Plus aucune marchandise anglaise ne doit entrer dans l'Europe qu'il domine.",
       "date": "1806-10-27",
       "image": {
@@ -3223,7 +3453,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "041.webp",
+        "fichier": "043.webp",
         "largeur": 1600,
         "hauteur": 1060,
         "utile": [
@@ -3241,10 +3471,22 @@
               0.786
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.08,
+              0.06,
+              0.48,
+              0.38
+            ]
+          ],
+          "duree": 6,
+          "intention": "On recule depuis la porte de Brandebourg et sa quadrige pour découvrir l'armée qui entre sur la place."
+        }
       },
       "audio": {
-        "fichier": "041.m4a",
+        "fichier": "043.m4a",
         "duree": 17.23,
         "phrases": [
           [
@@ -3273,7 +3515,7 @@
       ]
     },
     {
-      "n": 42,
+      "n": 44,
       "narration": "Puisqu'il ne peut vaincre l'Angleterre sur mer, Napoléon veut la ruiner en lui fermant les marchés du continent. Londres répond en bloquant à son tour les ports français : c'est blocus contre blocus, dit cette caricature anglaise. Contrebande, pénuries et hausse des prix suivront de part et d'autre.",
       "date": "1806-11-21",
       "image": {
@@ -3285,7 +3527,7 @@
         "technique": "eau-forte coloriée",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "042.webp",
+        "fichier": "044.webp",
         "largeur": 1600,
         "hauteur": 1161,
         "utile": [
@@ -3306,7 +3548,7 @@
         ]
       },
       "audio": {
-        "fichier": "042.m4a",
+        "fichier": "044.m4a",
         "duree": 18.08,
         "phrases": [
           [
@@ -3331,7 +3573,7 @@
       ]
     },
     {
-      "n": 43,
+      "n": 45,
       "narration": "La guerre se poursuit en Pologne contre les Russes. Le 8 février 1807, à Eylau, on se bat dans une tempête de neige ; les pertes sont terribles des deux côtés, sans vrai vainqueur. Gros montre l'Empereur au milieu des morts, le regard compatissant : la propagande change le carnage en scène de pitié.",
       "date": "1807-02-08",
       "image": {
@@ -3343,7 +3585,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "043.webp",
+        "fichier": "045.webp",
         "largeur": 1600,
         "hauteur": 1052,
         "utile": [
@@ -3364,7 +3606,7 @@
         ]
       },
       "audio": {
-        "fichier": "043.m4a",
+        "fichier": "045.m4a",
         "duree": 16.89,
         "phrases": [
           [
@@ -3400,7 +3642,7 @@
       ]
     },
     {
-      "n": 44,
+      "n": 46,
       "narration": "Le 14 juin 1807, à Friedland, Napoléon prend sa revanche et bat l'armée russe. C'est l'anniversaire de Marengo, rappelle-t-il à ses soldats. Ici, un cuirassier blessé lui présente un drapeau pris à l'ennemi. Le tsar Alexandre Ier se résout à traiter.",
       "date": "1807-06-14",
       "image": {
@@ -3412,7 +3654,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "044.webp",
+        "fichier": "046.webp",
         "largeur": 1600,
         "hauteur": 1366,
         "utile": [
@@ -3433,7 +3675,7 @@
         ]
       },
       "audio": {
-        "fichier": "044.m4a",
+        "fichier": "046.m4a",
         "duree": 17.26,
         "phrases": [
           [
@@ -3479,7 +3721,7 @@
       ]
     },
     {
-      "n": 45,
+      "n": 47,
       "narration": "Le 25 juin, les deux empereurs se rencontrent sur un radeau ancré au milieu du Niémen, le fleuve frontière. À Tilsit, ils se partagent l'Europe : la Russie rejoint le blocus, la Prusse perd la moitié de ses terres. Napoléon est au sommet de sa puissance.",
       "date": "1807-06-25",
       "image": {
@@ -3497,7 +3739,7 @@
           0.864,
           0.787
         ],
-        "fichier": "045.webp",
+        "fichier": "047.webp",
         "largeur": 1600,
         "hauteur": 1129,
         "utile": [
@@ -3518,7 +3760,7 @@
         ]
       },
       "audio": {
-        "fichier": "045.m4a",
+        "fichier": "047.m4a",
         "duree": 18.36,
         "phrases": [
           [
@@ -3553,7 +3795,7 @@
       ]
     },
     {
-      "n": 46,
+      "n": 48,
       "narration": "À Paris, l'Empereur fait inscrire ses victoires dans la pierre. Entre 1806 et 1808, Percier et Fontaine élèvent l'arc de triomphe du Carrousel, à l'imitation des arcs romains. Il est d'abord couronné des chevaux de bronze antiques enlevés à Venise. Rendus en 1815, ils sont remplacés en 1828 par le quadrige qu'on voit ici.",
       "image": {
         "commons": "File:Arc de Triomphe du Carrousel 1890-1900.jpg",
@@ -3564,7 +3806,7 @@
         "technique": "photochrome",
         "conservation": "Washington, Library of Congress",
         "licence": "Domaine public",
-        "fichier": "046.webp",
+        "fichier": "048.webp",
         "largeur": 1600,
         "hauteur": 1170,
         "utile": [
@@ -3604,7 +3846,7 @@
         ]
       },
       "audio": {
-        "fichier": "046.m4a",
+        "fichier": "048.m4a",
         "duree": 23.69,
         "phrases": [
           [
@@ -3649,7 +3891,7 @@
       ]
     },
     {
-      "n": 47,
+      "n": 49,
       "narration": "Sur la place Vendôme, la statue de Louis XIV a été abattue en août 1792. À sa place s'élève la colonne de la Grande Armée, inaugurée en 1810. Son revêtement de bronze vient, dit-on, des canons pris à Austerlitz. Une frise en spirale y déroule la campagne de 1805, comme sur la colonne de Trajan.",
       "image": {
         "commons": "File:Destruction par les Révolutionnaires de la statue équestre de Louis XIV sur la place Vendôme le 10août 1972.jpg",
@@ -3660,7 +3902,7 @@
         "technique": "eau-forte",
         "conservation": "Paris, musée Carnavalet - Histoire de Paris",
         "licence": "Domaine public",
-        "fichier": "047.webp",
+        "fichier": "049.webp",
         "camera": [
           {
             "cadre": [
@@ -3694,7 +3936,7 @@
             0.986,
             0.974
           ],
-          "fichier": "047-apres.webp",
+          "fichier": "049-apres.webp",
           "cadre": [
             0.07,
             0.16,
@@ -3725,7 +3967,7 @@
         "utile_manuel": true
       },
       "audio": {
-        "fichier": "047.m4a",
+        "fichier": "049.m4a",
         "duree": 19.69,
         "phrases": [
           [
@@ -3759,7 +4001,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 48,
+      "n": 50,
       "narration": "Pour gouverner un si vaste empire, il faut des nouvelles rapides. Le télégraphe des frères Chappe, né sous la Révolution, transmet de tour en tour des signaux formés par des bras articulés, lus à la longue-vue. L'Empire étend ses lignes jusqu'à Milan, Venise et Amsterdam.",
       "image": {
         "commons": "File:L’église Saint Pierre surmontée d’un télégraphe Chappe, circa 1840.jpg",
@@ -3776,7 +4018,7 @@
           0.93,
           0.885
         ],
-        "fichier": "048.webp",
+        "fichier": "050.webp",
         "largeur": 1300,
         "hauteur": 1600,
         "utile": [
@@ -3797,7 +4039,7 @@
         ]
       },
       "audio": {
-        "fichier": "048.m4a",
+        "fichier": "050.m4a",
         "duree": 18.05,
         "phrases": [
           [
@@ -3849,7 +4091,7 @@
       ]
     },
     {
-      "n": 49,
+      "n": 51,
       "narration": "En 1808, Napoléon veut mettre la main sur l'Espagne, alliée jugée trop faible. À Bayonne, il obtient l'abdication du roi Charles IV et de son fils, et donne le trône à son frère Joseph. Mais le 2 mai, Madrid se soulève contre les troupes françaises et leurs cavaliers mamelouks.",
       "date": "1808-05-02",
       "image": {
@@ -3861,7 +4103,7 @@
         "technique": "huile sur toile",
         "conservation": "Madrid, musée du Prado",
         "licence": "Domaine public",
-        "fichier": "049.webp",
+        "fichier": "051.webp",
         "largeur": 1600,
         "hauteur": 1237,
         "utile": [
@@ -3882,7 +4124,7 @@
         ]
       },
       "audio": {
-        "fichier": "049.m4a",
+        "fichier": "051.m4a",
         "duree": 18.34,
         "phrases": [
           [
@@ -3936,7 +4178,7 @@
       ]
     },
     {
-      "n": 50,
+      "n": 52,
       "narration": "La répression est immédiate. Dans la nuit et le lendemain, les soldats de Murat fusillent des dizaines d'insurgés. Goya peint la scène six ans plus tard : face aux fusils sans visage, un homme en chemise blanche lève les bras. L'Espagne entière entre en guerre.",
       "date": "1808-05-03",
       "image": {
@@ -3948,7 +4190,7 @@
         "technique": "huile sur toile",
         "conservation": "Madrid, musée du Prado",
         "licence": "Domaine public",
-        "fichier": "050.webp",
+        "fichier": "052.webp",
         "largeur": 1600,
         "hauteur": 1221,
         "utile": [
@@ -3970,7 +4212,7 @@
         ]
       },
       "audio": {
-        "fichier": "050.m4a",
+        "fichier": "052.m4a",
         "duree": 15.58,
         "phrases": [
           [
@@ -4005,7 +4247,7 @@
       ]
     },
     {
-      "n": 51,
+      "n": 53,
       "narration": "En juillet 1808, à Bailén, en Andalousie, le général Dupont capitule avec près de dix-huit mille hommes devant l'armée espagnole. C'est la première grande défaite d'une armée impériale. Toute l'Europe apprend que les Français ne sont pas invincibles.",
       "date": "1808-07-22",
       "image": {
@@ -4017,7 +4259,7 @@
         "technique": "huile sur toile",
         "conservation": "Madrid, musée du Prado",
         "licence": "Domaine public",
-        "fichier": "051.webp",
+        "fichier": "053.webp",
         "largeur": 1600,
         "hauteur": 1082,
         "utile": [
@@ -4038,7 +4280,7 @@
         ]
       },
       "audio": {
-        "fichier": "051.m4a",
+        "fichier": "053.m4a",
         "duree": 12.95,
         "phrases": [
           [
@@ -4083,7 +4325,7 @@
       ]
     },
     {
-      "n": 52,
+      "n": 54,
       "narration": "L'inquiétude gagne jusqu'aux fidèles. À Erfurt, en octobre 1808, Talleyrand, l'ancien ministre des Relations extérieures, conseille en secret au tsar de résister à Napoléon. L'Empereur, qui le soupçonne, l'insulte et le disgracie en janvier 1809, mais Talleyrand garde son influence.",
       "date": "1808-10",
       "image": {
@@ -4095,7 +4337,7 @@
         "technique": "huile sur toile",
         "conservation": "New York, Metropolitan Museum of Art",
         "licence": "Domaine public",
-        "fichier": "052.webp",
+        "fichier": "054.webp",
         "largeur": 1095,
         "hauteur": 1600,
         "utile": [
@@ -4116,7 +4358,7 @@
         ]
       },
       "audio": {
-        "fichier": "052.m4a",
+        "fichier": "054.m4a",
         "duree": 18.54,
         "phrases": [
           [
@@ -4162,7 +4404,7 @@
       ]
     },
     {
-      "n": 53,
+      "n": 55,
       "narration": "L'Empereur vient lui-même en Espagne avec la Grande Armée. Le 30 novembre 1808, au col de Somosierra, les chevau-légers polonais de sa Garde enlèvent au galop les canons qui barrent la route de Madrid. Les Polonais, qui espèrent la renaissance de leur pays, le servent fidèlement.",
       "date": "1808-11-30",
       "image": {
@@ -4174,7 +4416,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "053.webp",
+        "fichier": "055.webp",
         "largeur": 1600,
         "hauteur": 1296,
         "utile": [
@@ -4195,7 +4437,7 @@
         ]
       },
       "audio": {
-        "fichier": "053.m4a",
+        "fichier": "055.m4a",
         "duree": 15.93,
         "phrases": [
           [
@@ -4224,7 +4466,7 @@
       ]
     },
     {
-      "n": 54,
+      "n": 56,
       "narration": "Le 4 décembre, Madrid capitule. Napoléon abolit l'Inquisition et les droits féodaux, persuadé d'apporter le progrès. Mais pour les Espagnols, soulevés au nom du roi et de Dieu, il reste l'envahisseur. Il repart en janvier, laissant ses maréchaux s'enliser.",
       "date": "1808-12-04",
       "image": {
@@ -4236,7 +4478,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "054.webp",
+        "fichier": "056.webp",
         "largeur": 1600,
         "hauteur": 1165,
         "utile": [
@@ -4257,7 +4499,7 @@
         ]
       },
       "audio": {
-        "fichier": "054.m4a",
+        "fichier": "056.m4a",
         "duree": 17.33,
         "phrases": [
           [
@@ -4280,7 +4522,7 @@
       }
     },
     {
-      "n": 55,
+      "n": 57,
       "narration": "Saragosse, assiégée une seconde fois, se défend rue par rue, couvent par couvent, de décembre 1808 à février 1809. Lejeune, qui y était, peint l'assaut d'un monastère. Des dizaines de milliers de défenseurs et d'habitants périssent, sous les armes ou d'épidémie.",
       "date": "1808-12-20",
       "date_fin": "1809-02-20",
@@ -4293,7 +4535,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "055.webp",
+        "fichier": "057.webp",
         "largeur": 1106,
         "hauteur": 1396,
         "utile": [
@@ -4323,7 +4565,7 @@
         ]
       },
       "audio": {
-        "fichier": "055.m4a",
+        "fichier": "057.m4a",
         "duree": 17.39,
         "phrases": [
           [
@@ -4359,7 +4601,7 @@
       ]
     },
     {
-      "n": 56,
+      "n": 58,
       "narration": "Contre l'occupant naît la guérilla, la petite guerre des bandes armées. Atrocités et représailles se répondent. Goya les grave dans ses Désastres de la guerre, publiés bien après sa mort. Ici, des corps mutilés pendus à un arbre, avec pour légende amère « Belle prouesse ! Avec des morts ! ».",
       "image": {
         "commons": "File:Grande hazaña! Con muertos! - Francisco de Goya.jpg",
@@ -4376,7 +4618,7 @@
           0.875,
           0.885
         ],
-        "fichier": "056.webp",
+        "fichier": "058.webp",
         "largeur": 1510,
         "hauteur": 1271,
         "utile": [
@@ -4397,7 +4639,7 @@
         ]
       },
       "audio": {
-        "fichier": "056.m4a",
+        "fichier": "058.m4a",
         "duree": 18.71,
         "phrases": [
           [
@@ -4431,7 +4673,7 @@
       ]
     },
     {
-      "n": 57,
+      "n": 59,
       "narration": "Au printemps 1809, profitant de la guerre d'Espagne, l'Autriche reprend les armes. Le 23 avril, devant Ratisbonne, Napoléon est atteint d'une balle au pied. Il se fait soigner sous le feu, puis remonte à cheval pour rassurer ses troupes.",
       "date": "1809-04-23",
       "image": {
@@ -4443,7 +4685,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "057.webp",
+        "fichier": "059.webp",
         "largeur": 1600,
         "hauteur": 1151,
         "utile": [
@@ -4473,7 +4715,7 @@
         ]
       },
       "audio": {
-        "fichier": "057.m4a",
+        "fichier": "059.m4a",
         "duree": 14.19,
         "phrases": [
           [
@@ -4508,7 +4750,7 @@
       ]
     },
     {
-      "n": 58,
+      "n": 60,
       "narration": "Le 22 mai, à Essling, près de Vienne, l'Empereur subit son premier échec sur le champ de bataille. Le maréchal Lannes, son vieux compagnon des campagnes d'Italie, a les jambes fracassées par un boulet. Il meurt quelques jours plus tard.",
       "date": "1809-05-22",
       "image": {
@@ -4526,7 +4768,7 @@
           0.965,
           0.94
         ],
-        "fichier": "058.webp",
+        "fichier": "060.webp",
         "largeur": 1600,
         "hauteur": 1012,
         "utile": [
@@ -4547,7 +4789,7 @@
         ]
       },
       "audio": {
-        "fichier": "058.m4a",
+        "fichier": "060.m4a",
         "duree": 13.73,
         "phrases": [
           [
@@ -4582,7 +4824,7 @@
       ]
     },
     {
-      "n": 59,
+      "n": 61,
       "narration": "Le 6 juillet, à Wagram, Napoléon l'emporte enfin, au prix de pertes énormes : plus de trente mille hommes tués ou blessés de chaque côté. L'Autriche signe la paix à Vienne en octobre et perd encore des territoires. Les victoires coûtent de plus en plus cher.",
       "date": "1809-07-06",
       "image": {
@@ -4594,7 +4836,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "059.webp",
+        "fichier": "061.webp",
         "largeur": 1600,
         "hauteur": 1180,
         "utile": [
@@ -4615,7 +4857,7 @@
         ]
       },
       "audio": {
-        "fichier": "059.m4a",
+        "fichier": "061.m4a",
         "duree": 15.22,
         "phrases": [
           [
@@ -4660,7 +4902,7 @@
       ]
     },
     {
-      "n": 60,
+      "n": 62,
       "narration": "La même nuit, à Rome, des soldats français arrêtent le pape Pie VII, qui a excommunié l'Empereur après l'annexion de ses États. Le pape restera prisonnier près de cinq ans, à Savone puis à Fontainebleau. Beaucoup de catholiques se détournent de Napoléon.",
       "image": {
         "commons": "File:Portrait of Pope Pius VII and Cardinal Caprara by Jacques-Louis David.jpg",
@@ -4671,7 +4913,7 @@
         "technique": "huile sur bois",
         "conservation": "Philadelphie, Philadelphia Museum of Art",
         "licence": "Domaine public",
-        "fichier": "060.webp",
+        "fichier": "062.webp",
         "largeur": 1016,
         "hauteur": 1475,
         "utile": [
@@ -4692,7 +4934,7 @@
         ]
       },
       "audio": {
-        "fichier": "060.m4a",
+        "fichier": "062.m4a",
         "duree": 15.61,
         "phrases": [
           [
@@ -4750,7 +4992,7 @@
       ]
     },
     {
-      "n": 61,
+      "n": 63,
       "narration": "Faute d'héritier, l'Empereur se sépare de Joséphine. Le 15 décembre 1809, aux Tuileries, devant la famille réunie, elle lit en pleurant l'acte par lequel elle consent au divorce. Elle garde le titre d'impératrice et se retire à la Malmaison.",
       "date": "1809-12-15",
       "image": {
@@ -4762,7 +5004,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "061.webp",
+        "fichier": "063.webp",
         "largeur": 1400,
         "hauteur": 974,
         "utile": [
@@ -4792,7 +5034,7 @@
         ]
       },
       "audio": {
-        "fichier": "061.m4a",
+        "fichier": "063.m4a",
         "duree": 15.43,
         "phrases": [
           [
@@ -4817,7 +5059,7 @@
       ]
     },
     {
-      "n": 62,
+      "n": 64,
       "narration": "Il épouse ensuite une archiduchesse de dix-huit ans, Marie-Louise, fille de l'empereur d'Autriche et petite-nièce de Marie-Antoinette. Le mariage religieux est célébré au Louvre le 2 avril 1810. Le fils de la Révolution entre dans la famille des Habsbourg.",
       "date": "1810-04-02",
       "image": {
@@ -4829,7 +5071,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "062.webp",
+        "fichier": "064.webp",
         "largeur": 1100,
         "hauteur": 1094,
         "utile": [
@@ -4850,7 +5092,7 @@
         ]
       },
       "audio": {
-        "fichier": "062.m4a",
+        "fichier": "064.m4a",
         "duree": 16.74,
         "phrases": [
           [
@@ -4892,7 +5134,7 @@
       ]
     },
     {
-      "n": 63,
+      "n": 65,
       "narration": "Le cortège nuptial traverse la Grande Galerie du Louvre, devenu musée Napoléon. Ses murs exposent les chefs-d'œuvre saisis dans toute l'Europe conquise. Vivant Denon, son directeur, en fait le plus grand musée du monde ; beaucoup d'œuvres seront rendues en 1815.",
       "image": {
         "commons": "File:Le cortège nuptial de Napoléon et Marie-Louise à travers la grande galerie du Louvre, le 2 avril 1810. G.33214(2).jpg",
@@ -4903,7 +5145,7 @@
         "technique": "gravure",
         "conservation": "Paris, musée Carnavalet - Histoire de Paris",
         "licence": "Domaine public",
-        "fichier": "063.webp",
+        "fichier": "065.webp",
         "largeur": 1600,
         "hauteur": 1100,
         "utile": [
@@ -4933,7 +5175,7 @@
         ]
       },
       "audio": {
-        "fichier": "063.m4a",
+        "fichier": "065.m4a",
         "duree": 14.51,
         "phrases": [
           [
@@ -4959,7 +5201,7 @@
       ]
     },
     {
-      "n": 64,
+      "n": 66,
       "narration": "Le même Denon avait suivi Bonaparte en Égypte en 1798. Savants et dessinateurs de l'expédition publient, à partir de 1809, la Description de l'Égypte : plus de vingt volumes et des centaines de planches. L'ouvrage lance en Europe la passion de l'Égypte ancienne.",
       "image": {
         "commons": "File:Title page, vol. 1 Description de l'Égypte, ... Antiquités. Planches. Tome première (NYPL b14212718-1267828).jpg",
@@ -4976,7 +5218,7 @@
           0.955,
           1.0
         ],
-        "fichier": "064.webp",
+        "fichier": "066.webp",
         "largeur": 1183,
         "hauteur": 1600,
         "utile": [
@@ -5006,7 +5248,7 @@
         ]
       },
       "audio": {
-        "fichier": "064.m4a",
+        "fichier": "066.m4a",
         "duree": 17.65,
         "phrases": [
           [
@@ -5037,7 +5279,84 @@
       ]
     },
     {
-      "n": 65,
+      "narration": "Loin de l'Europe, pourtant, l'empire colonial se défait. Maîtresse des mers depuis Trafalgar, l'Angleterre prend les colonies françaises une à une. En 1809 tombent la Guyane, la Martinique et le Sénégal, puis en 1810 la Guadeloupe et La Réunion. En décembre 1810, les soldats britanniques, ici devant Port-Louis, s'emparent de l'île de France, l'actuelle île Maurice.",
+      "date": "1810-12",
+      "image": {
+        "commons": "File:Part of the British army, forming before Port Louis 2019 NYR 17037 0093 (cropped).jpg",
+        "titre": "Une partie de l'armée britannique se formant devant Port-Louis, île de France, décembre 1810",
+        "titre_court": "L'armée britannique devant Port-Louis",
+        "auteur": "John Heaviside Clark (gravure), d'après Richard Temple",
+        "date": "1813",
+        "technique": "aquatinte coloriée",
+        "conservation": "planche 3 des Eight Views of the Mauritius, Londres, 1813",
+        "fichier": "067.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 928,
+        "utile": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.42,
+              1.0,
+              1.0
+            ]
+          },
+          {
+            "cadre": [
+              0.38,
+              0.65,
+              0.98,
+              1.0
+            ],
+            "quand": "les soldats britanniques, ici devant Port-Louis"
+          }
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.25,
+              0.6,
+              0.665
+            ]
+          ],
+          "duree": 6,
+          "intention": "On recule depuis les falaises et les pitons de l'île, pour embrasser toute la baie où se forment les troupes britanniques."
+        }
+      },
+      "n": 67,
+      "audio": {
+        "fichier": "067.m4a",
+        "duree": 23.73,
+        "phrases": [
+          [
+            0.0,
+            3.21
+          ],
+          [
+            3.98,
+            8.36
+          ],
+          [
+            9.13,
+            15.68
+          ],
+          [
+            16.64,
+            23.73
+          ]
+        ]
+      }
+    },
+    {
+      "n": 68,
       "narration": "En 1811, l'Empire compte cent trente départements, de Hambourg à Rome. Napoléon le gouverne de son cabinet des Tuileries. David le peint debout à l'aube, les bougies presque consumées, l'horloge à quatre heures treize. Le Code est posé sur la table : le souverain veille pour ses sujets.",
       "image": {
         "commons": "File:Jacques-Louis David - The Emperor Napoleon in His Study at the Tuileries - Google Art Project.jpg",
@@ -5048,7 +5367,7 @@
         "technique": "huile sur toile",
         "conservation": "Washington, National Gallery of Art",
         "licence": "Domaine public",
-        "fichier": "065.webp",
+        "fichier": "068.webp",
         "largeur": 959,
         "hauteur": 1600,
         "utile": [
@@ -5087,7 +5406,7 @@
         ]
       },
       "audio": {
-        "fichier": "065.m4a",
+        "fichier": "068.m4a",
         "duree": 16.09,
         "phrases": [
           [
@@ -5151,7 +5470,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 66,
+      "n": 69,
       "narration": "Paris, capitale de l'Empire, se transforme. On perce la rue de Rivoli, on numérote les maisons, on ouvre le cimetière du Père-Lachaise. Au Châtelet, la vieille forteresse est rasée à partir de 1802. À sa place, une fontaine nouvelle, alimentée par le canal de l'Ourcq, dresse une colonne qui célèbre les victoires de Bonaparte.",
       "image": {
         "commons": "File:Démolition du Grand Châtelet - dessin - btv1b103027213 (1 of 2).jpg",
@@ -5162,7 +5481,7 @@
         "technique": "dessin aquarellé",
         "conservation": "Paris, Bibliothèque nationale de France, Estampes",
         "licence": "Domaine public",
-        "fichier": "066.webp",
+        "fichier": "069.webp",
         "camera": [
           {
             "cadre": [
@@ -5190,7 +5509,7 @@
             0.958,
             0.959
           ],
-          "fichier": "066-apres.webp",
+          "fichier": "069-apres.webp",
           "cadre": [
             0.0,
             0.05,
@@ -5221,7 +5540,7 @@
         "utile_manuel": true
       },
       "audio": {
-        "fichier": "066.m4a",
+        "fichier": "069.m4a",
         "duree": 21.04,
         "phrases": [
           [
@@ -5262,7 +5581,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 67,
+      "n": 70,
       "narration": "Pour tenir le pays, l'Empereur s'appuie sur une police redoutée. Joseph Fouché, ancien conventionnel régicide devenu duc d'Otrante, la dirige avec ses indicateurs, et l'on ouvre les lettres à la poste. Trop habile, il est renvoyé en juin 1810 et remplacé par le général Savary.",
       "date": "1810-06",
       "image": {
@@ -5274,7 +5593,7 @@
         "technique": "gravure",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "067.webp",
+        "fichier": "070.webp",
         "largeur": 1264,
         "hauteur": 1600,
         "utile": [
@@ -5295,7 +5614,7 @@
         ]
       },
       "audio": {
-        "fichier": "067.m4a",
+        "fichier": "070.m4a",
         "duree": 17.58,
         "phrases": [
           [
@@ -5327,7 +5646,7 @@
       ]
     },
     {
-      "n": 68,
+      "n": 71,
       "narration": "La presse est muselée : en 1811, Paris ne compte plus que quatre journaux, tous surveillés. Les écrivains qui déplaisent sont exilés, comme Germaine de Staël, peinte ici en Corinne, l'héroïne de son roman. En 1810, son livre De l'Allemagne est saisi et détruit.",
       "date": "1810-10",
       "image": {
@@ -5339,7 +5658,7 @@
         "technique": "huile sur toile",
         "conservation": "Genève, musée d'Art et d'Histoire",
         "licence": "Domaine public",
-        "fichier": "068.webp",
+        "fichier": "071.webp",
         "largeur": 1396,
         "hauteur": 1600,
         "utile": [
@@ -5360,7 +5679,7 @@
         ]
       },
       "audio": {
-        "fichier": "068.m4a",
+        "fichier": "071.m4a",
         "duree": 16.79,
         "phrases": [
           [
@@ -5385,7 +5704,7 @@
       ]
     },
     {
-      "n": 69,
+      "n": 72,
       "narration": "Le théâtre aussi est encadré : en 1807, un décret réduit à huit le nombre des salles parisiennes. Talma, le grand tragédien, triomphe à la Comédie-Française dans Corneille et Racine. Napoléon l'admire et le fait jouer à Erfurt devant un parterre de rois. Cette année-là, Méhul donne aussi à l'Opéra-Comique son Joseph, dont l'air « Champs paternels » deviendra célèbre.",
       "image": {
         "commons": "File:Anonymous - Portrait de François-Joseph Talma (1763-1826), tragédien - P768 - Musée Carnavalet.jpg",
@@ -5402,7 +5721,7 @@
           0.95,
           0.96
         ],
-        "fichier": "069.webp",
+        "fichier": "072.webp",
         "largeur": 1293,
         "hauteur": 1600,
         "utile": [
@@ -5423,7 +5742,7 @@
         ]
       },
       "audio": {
-        "fichier": "069.m4a",
+        "fichier": "072.m4a",
         "duree": 23.92,
         "phrases": [
           [
@@ -5475,7 +5794,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 70,
+      "n": 73,
       "narration": "À l'Opéra, l'impératrice Joséphine a soutenu La Vestale de Spontini, créée en décembre 1807, avec Caroline Branchu dans le rôle de Julia. L'histoire d'une prêtresse romaine déchirée entre l'amour et le devoir y prend des accents grandioses, au goût du régime.",
       "image": {
         "commons": "File:Caroline-Alexandrine Branchu dans le rôle de Julia de \"La Vestale\" de Spontini - btv1b8416017g.jpg",
@@ -5486,7 +5805,7 @@
         "technique": "gravure",
         "conservation": "Paris, Bibliothèque nationale de France, département de la Musique",
         "licence": "Domaine public",
-        "fichier": "070.webp",
+        "fichier": "073.webp",
         "largeur": 972,
         "hauteur": 1600,
         "utile": [
@@ -5507,7 +5826,7 @@
         ]
       },
       "audio": {
-        "fichier": "070.m4a",
+        "fichier": "073.m4a",
         "duree": 17.19,
         "phrases": [
           [
@@ -5541,7 +5860,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 71,
+      "n": 74,
       "narration": "L'Empire repose sur la conscription. Chaque année, les jeunes gens de vingt ans tirent au sort ; les familles aisées paient un remplaçant. Ici, devant la porte Saint-Denis, les conscrits de 1807 partent sous les adieux des familles. Beaucoup ne reviendront pas.",
       "image": {
         "commons": "File:Louis-Léopold Boilly - Departure of the Conscripts in 1807 - WGA02349.jpg",
@@ -5552,7 +5871,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée Carnavalet - Histoire de Paris",
         "licence": "Domaine public",
-        "fichier": "071.webp",
+        "fichier": "074.webp",
         "largeur": 1600,
         "hauteur": 980,
         "utile": [
@@ -5582,7 +5901,7 @@
         ]
       },
       "audio": {
-        "fichier": "071.m4a",
+        "fichier": "074.m4a",
         "duree": 14.66,
         "phrases": [
           [
@@ -5615,7 +5934,7 @@
       ]
     },
     {
-      "n": 72,
+      "n": 75,
       "narration": "Pour la plupart des Français, la vie reste celle des champs : plus de trois sur quatre vivent à la campagne. Le pain fait l'essentiel des repas, et les mauvaises récoltes, comme en 1811, font flamber son prix. Cette cuisine parisienne montre un intérieur de gens modestes.",
       "image": {
         "commons": "File:Martin Drolling - Interior of a Kitchen - WGA6678.jpg",
@@ -5626,7 +5945,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "072.webp",
+        "fichier": "075.webp",
         "largeur": 1375,
         "hauteur": 1100,
         "utile": [
@@ -5656,7 +5975,7 @@
         ]
       },
       "audio": {
-        "fichier": "072.m4a",
+        "fichier": "075.m4a",
         "duree": 15.11,
         "phrases": [
           [
@@ -5675,7 +5994,7 @@
       }
     },
     {
-      "n": 73,
+      "n": 76,
       "narration": "Dans les villes, l'industrie progresse. À Lyon, Joseph-Marie Jacquard met au point un métier à tisser commandé par des cartes perforées. Chaque trou soulève un fil, et le motif se tisse tout seul. Ce portrait n'est pas une gravure : il est tissé en soie, grâce à des milliers de cartes.",
       "image": {
         "commons": "File:Joseph Marie Jacquard MET DP109795.jpg",
@@ -5692,7 +6011,7 @@
           0.82,
           0.83
         ],
-        "fichier": "073.webp",
+        "fichier": "076.webp",
         "largeur": 1262,
         "hauteur": 1600,
         "utile": [
@@ -5731,7 +6050,7 @@
         ]
       },
       "audio": {
-        "fichier": "073.m4a",
+        "fichier": "076.m4a",
         "duree": 17.92,
         "phrases": [
           [
@@ -5779,7 +6098,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 74,
+      "n": 77,
       "narration": "Autre invention appelée à durer : la conserve. Nicolas Appert, confiseur, enferme les aliments dans des bouteilles bouchées, puis les chauffe au bain-marie ; ils se gardent des mois. En 1810, l'État lui accorde un prix de douze mille francs, car la marine et l'armée y ont intérêt.",
       "image": {
         "commons": "File:Nicolas Appert anon.png",
@@ -5796,7 +6115,7 @@
           0.93,
           0.6
         ],
-        "fichier": "074.webp",
+        "fichier": "077.webp",
         "largeur": 1528,
         "hauteur": 1510,
         "utile": [
@@ -5817,7 +6136,7 @@
         ]
       },
       "audio": {
-        "fichier": "074.m4a",
+        "fichier": "077.m4a",
         "duree": 17.89,
         "phrases": [
           [
@@ -5858,7 +6177,92 @@
       ]
     },
     {
-      "n": 75,
+      "narration": "Le Blocus prive aussi la France du sucre de canne des Antilles, devenu rare et hors de prix. On apprend à le tirer de la betterave. En mars 1811, un décret ordonne d'en planter trente-deux mille hectares. Le 2 janvier 1812, à Passy, Napoléon visite la fabrique de Benjamin Delessert et le décore. Sur cette estampe, son ministre lui présente le nouveau sucre.",
+      "date": "1811-03",
+      "personnes": [
+        {
+          "id": "delessert",
+          "quand": "Benjamin Delessert",
+          "instant": 16.91
+        }
+      ],
+      "personnes_vues": [
+        {
+          "id": "napoleon",
+          "quand": "Napoléon"
+        }
+      ],
+      "image": {
+        "commons": "File:Le Ministre de l'Intérieur présente à l'Empereur du sucre de betterave - estampe - btv1b8413502t.jpg",
+        "titre": "Le ministre de l'Intérieur présente à l'Empereur du sucre de betterave",
+        "titre_court": "Le sucre de betterave présenté à l'Empereur",
+        "auteur": "Charles Monnet (dessin), François-Anne David (gravure)",
+        "date": "vers 1811-1813",
+        "technique": "eau-forte et burin",
+        "conservation": "Paris, Bibliothèque nationale de France, collection Hennin",
+        "fichier": "078.webp",
+        "licence": "Domaine public",
+        "largeur": 1184,
+        "hauteur": 1600,
+        "utile": [
+          0.164,
+          0.07,
+          0.83,
+          0.8
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.18,
+              0.36,
+              0.82,
+              0.62
+            ]
+          },
+          {
+            "cadre": [
+              0.27,
+              0.33,
+              0.73,
+              0.55
+            ],
+            "quand": "Sur cette estampe"
+          }
+        ],
+        "utile_manuel": true
+      },
+      "n": 78,
+      "date_fin": "1812-01",
+      "audio": {
+        "fichier": "078.m4a",
+        "duree": 22.53,
+        "phrases": [
+          [
+            0.0,
+            5.19
+          ],
+          [
+            5.98,
+            7.64
+          ],
+          [
+            8.22,
+            12.38
+          ],
+          [
+            13.16,
+            18.63
+          ],
+          [
+            19.26,
+            22.53
+          ]
+        ]
+      },
+      "camera_manuelle": true
+    },
+    {
+      "n": 79,
       "narration": "L'Empereur veut aussi encadrer les juifs, devenus citoyens sous la Révolution. Il réunit à Paris une assemblée de notables, puis en 1807 un Grand Sanhédrin, qui accorde la loi juive avec le Code civil. Mais un décret de 1808, dit infâme par les intéressés, restreint pour dix ans leurs droits.",
       "image": {
         "commons": "File:Le grand Sanhedrin de Paris. G.34177.jpg",
@@ -5869,7 +6273,7 @@
         "technique": "gravure",
         "conservation": "Paris, musée Carnavalet - Histoire de Paris",
         "licence": "Domaine public",
-        "fichier": "075.webp",
+        "fichier": "079.webp",
         "largeur": 1600,
         "hauteur": 1174,
         "utile": [
@@ -5899,7 +6303,7 @@
         ]
       },
       "audio": {
-        "fichier": "075.m4a",
+        "fichier": "079.m4a",
         "duree": 20.24,
         "phrases": [
           [
@@ -5918,7 +6322,7 @@
       }
     },
     {
-      "n": 76,
+      "n": 80,
       "narration": "Paris est alors la capitale des sciences. En 1804, le jeune chimiste Gay-Lussac monte en ballon à plus de sept mille mètres pour étudier l'air. Il découvre ensuite les lois de combinaison des gaz, tandis que Laplace calcule le mouvement des planètes et que Lamarck imagine la transformation des espèces.",
       "image": {
         "commons": "File:Portrait of Joseph-Louise Gay Lussac MET DP874367.jpg",
@@ -5929,7 +6333,7 @@
         "technique": "lithographie",
         "conservation": "New York, Metropolitan Museum of Art",
         "licence": "Domaine public",
-        "fichier": "076.webp",
+        "fichier": "080.webp",
         "largeur": 1217,
         "hauteur": 1600,
         "utile": [
@@ -5951,7 +6355,7 @@
         ]
       },
       "audio": {
-        "fichier": "076.m4a",
+        "fichier": "080.m4a",
         "duree": 17.51,
         "phrases": [
           [
@@ -5988,7 +6392,7 @@
       ]
     },
     {
-      "n": 77,
+      "n": 81,
       "narration": "La médecine progresse aussi. La vaccine, venue d'Angleterre, protège de la variole en inoculant une maladie bénigne de la vache. Dès 1800, un comité la répand en France, et le régime l'encourage. Boilly en fait une scène de famille, entre crainte et curiosité.",
       "image": {
         "commons": "File:Louis-Léopold Boilly, The Vaccine, 1806, NGA 72042.jpg",
@@ -5999,7 +6403,7 @@
         "technique": "dessin",
         "conservation": "Washington, National Gallery of Art",
         "licence": "Domaine public",
-        "fichier": "077.webp",
+        "fichier": "081.webp",
         "largeur": 1600,
         "hauteur": 1195,
         "utile": [
@@ -6020,7 +6424,7 @@
         ]
       },
       "audio": {
-        "fichier": "077.m4a",
+        "fichier": "081.m4a",
         "duree": 16.82,
         "phrases": [
           [
@@ -6050,7 +6454,7 @@
       ]
     },
     {
-      "n": 78,
+      "n": 82,
       "narration": "En peinture, la sensibilité change. Au Salon de 1808, Girodet expose Atala au tombeau, tiré du roman de Chateaubriand. Une jeune Indienne chrétienne y est mise en terre par son amant et un vieux missionnaire. La religion, l'amour et la mort annoncent le romantisme.",
       "image": {
         "commons": "File:Atala au tombeau - Anne-Louis Girodet - Musée du Louvre Peintures INV 4958.jpg",
@@ -6061,7 +6465,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "078.webp",
+        "fichier": "082.webp",
         "largeur": 1600,
         "hauteur": 1235,
         "utile": [
@@ -6082,7 +6486,7 @@
         ]
       },
       "audio": {
-        "fichier": "078.m4a",
+        "fichier": "082.m4a",
         "duree": 17.74,
         "phrases": [
           [
@@ -6117,7 +6521,7 @@
       ]
     },
     {
-      "n": 79,
+      "n": 83,
       "narration": "Le 20 mars 1811, Marie-Louise donne naissance à un fils. Cent un coups de canon l'annoncent aux Parisiens. Titré roi de Rome dès sa naissance, l'enfant semble assurer l'avenir de la dynastie. Gérard le peint à un an, sur un coussin de velours.",
       "date": "1811-03-20",
       "image": {
@@ -6129,7 +6533,7 @@
         "technique": "huile sur toile",
         "conservation": "Fontainebleau, musée national du château",
         "licence": "Domaine public",
-        "fichier": "079.webp",
+        "fichier": "083.webp",
         "largeur": 1241,
         "hauteur": 1600,
         "utile": [
@@ -6150,7 +6554,7 @@
         ]
       },
       "audio": {
-        "fichier": "079.m4a",
+        "fichier": "083.m4a",
         "duree": 15.63,
         "phrases": [
           [
@@ -6186,7 +6590,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 80,
+      "n": 84,
       "narration": "Le style Empire triomphe dans les palais. Les architectes Percier et Fontaine en publient les modèles : meubles d'acajou aux lignes droites, bronzes dorés, cygnes, sphinx, couronnes de laurier. Ce goût mêle Rome, la Grèce et l'Égypte, et l'Europe entière l'imite.",
       "image": {
         "commons": "File:Recueil de Decorations Intérieures MET DP-1415-001.jpg",
@@ -6203,7 +6607,7 @@
           0.9,
           0.8
         ],
-        "fichier": "080.webp",
+        "fichier": "084.webp",
         "largeur": 1600,
         "hauteur": 909,
         "utile": [
@@ -6224,7 +6628,7 @@
         ]
       },
       "audio": {
-        "fichier": "080.m4a",
+        "fichier": "084.m4a",
         "duree": 16.98,
         "phrases": [
           [
@@ -6255,7 +6659,7 @@
       ]
     },
     {
-      "n": 81,
+      "n": 85,
       "narration": "La mode suit : taille haute sous la poitrine, robes droites de mousseline ou de soie, comme ce costume de bal de février 1810. L'Empereur commande soieries et broderies pour relancer les manufactures de Lyon. Le luxe de la cour fait vivre des milliers d'artisans.",
       "image": {
         "commons": "File:Journal des Dames et des Modes, Costume Parisien, 25 février 1810, (1041) Costume de Bal., RP-P-2009-2407.jpg",
@@ -6266,7 +6670,7 @@
         "technique": "gravure coloriée",
         "conservation": "Amsterdam, Rijksmuseum",
         "licence": "Domaine public",
-        "fichier": "081.webp",
+        "fichier": "085.webp",
         "largeur": 965,
         "hauteur": 1600,
         "utile": [
@@ -6296,7 +6700,7 @@
         ]
       },
       "audio": {
-        "fichier": "081.m4a",
+        "fichier": "085.m4a",
         "duree": 14.22,
         "phrases": [
           [
@@ -6315,7 +6719,7 @@
       }
     },
     {
-      "n": 82,
+      "n": 86,
       "narration": "En 1812, le jeune Géricault expose au Salon cet officier de chasseurs à cheval de la Garde, cabré dans la fumée, tourné vers nous. La couleur et le mouvement annoncent le romantisme. Le soldat de la Grande Armée devient une figure héroïque, l'année même où elle marche à sa perte.",
       "date": "1812",
       "image": {
@@ -6327,7 +6731,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "082.webp",
+        "fichier": "086.webp",
         "largeur": 1137,
         "hauteur": 1500,
         "utile": [
@@ -6348,7 +6752,7 @@
         ]
       },
       "audio": {
-        "fichier": "082.m4a",
+        "fichier": "086.m4a",
         "duree": 16.17,
         "phrases": [
           [
@@ -6374,7 +6778,7 @@
       ]
     },
     {
-      "n": 83,
+      "n": 87,
       "narration": "L'alliance russe s'est défaite : le tsar ne respecte plus le blocus. Le 24 juin 1812, la Grande Armée franchit le Niémen. Elle compte plus de quatre cent mille hommes en première ligne, venus de toute l'Europe ; près de la moitié seulement sont français.",
       "date": "1812-06-24",
       "image": {
@@ -6392,7 +6796,7 @@
           0.745,
           0.7
         ],
-        "fichier": "083.webp",
+        "fichier": "087.webp",
         "largeur": 1600,
         "hauteur": 1135,
         "utile": [
@@ -6422,7 +6826,7 @@
         ]
       },
       "audio": {
-        "fichier": "083.m4a",
+        "fichier": "087.m4a",
         "duree": 15.9,
         "phrases": [
           [
@@ -6461,7 +6865,7 @@
       ]
     },
     {
-      "n": 84,
+      "n": 88,
       "narration": "Les Russes reculent et refusent la bataille. Sous la chaleur de l'été, l'armée s'épuise en marches forcées. Les vivres manquent, la dysenterie et la désertion font des ravages, les chevaux meurent par milliers. Un officier wurtembergeois, Faber du Faur, dessine ce qu'il voit sur la route.",
       "date": "1812-08",
       "image": {
@@ -6473,7 +6877,7 @@
         "technique": "lithographie coloriée",
         "conservation": "recueil Blätter aus meinem Portefeuille, Stuttgart, 1831-1843",
         "licence": "Domaine public",
-        "fichier": "084.webp",
+        "fichier": "088.webp",
         "largeur": 1600,
         "hauteur": 1104,
         "utile": [
@@ -6503,7 +6907,7 @@
         ]
       },
       "audio": {
-        "fichier": "084.m4a",
+        "fichier": "088.m4a",
         "duree": 17.33,
         "phrases": [
           [
@@ -6534,7 +6938,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 85,
+      "n": 89,
       "narration": "Le 7 septembre, devant Moscou, les Russes de Koutouzov acceptent enfin le combat, près du village de Borodino. Les Français appellent cette bataille la Moskova. C'est la plus meurtrière de l'époque : en une journée, environ soixante-dix mille hommes sont tués ou blessés.",
       "date": "1812-09-07",
       "image": {
@@ -6546,7 +6950,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "085.webp",
+        "fichier": "089.webp",
         "largeur": 1600,
         "hauteur": 999,
         "utile": [
@@ -6576,7 +6980,7 @@
         ]
       },
       "audio": {
-        "fichier": "085.m4a",
+        "fichier": "089.m4a",
         "duree": 16.55,
         "phrases": [
           [
@@ -6622,7 +7026,7 @@
       ]
     },
     {
-      "n": 86,
+      "n": 90,
       "narration": "Le 14 septembre, la Grande Armée entre dans Moscou, désertée par ses habitants. Dès le lendemain, des incendies éclatent, sans doute allumés sur ordre du gouverneur Rostopchine. Le feu dure plusieurs jours et détruit une grande partie de la ville, bâtie surtout en bois.",
       "date": "1812-09-14",
       "date_fin": "1812-09-18",
@@ -6635,7 +7039,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "086.webp",
+        "fichier": "090.webp",
         "largeur": 1369,
         "hauteur": 976,
         "utile": [
@@ -6656,7 +7060,7 @@
         ]
       },
       "audio": {
-        "fichier": "086.m4a",
+        "fichier": "090.m4a",
         "duree": 15.71,
         "phrases": [
           [
@@ -6692,7 +7096,7 @@
       ]
     },
     {
-      "n": 87,
+      "n": 91,
       "narration": "Napoléon, installé au Kremlin, doit fuir un temps les flammes. Il attend ensuite des semaines une demande de paix du tsar, qui ne vient pas. Le 19 octobre, il se résigne à quitter Moscou, bien tard dans la saison.",
       "date": "1812-10-19",
       "image": {
@@ -6704,7 +7108,7 @@
         "technique": "huile sur toile",
         "conservation": "Moscou, musée historique d’État",
         "licence": "Domaine public",
-        "fichier": "087.webp",
+        "fichier": "091.webp",
         "largeur": 1255,
         "hauteur": 1600,
         "utile": [
@@ -6725,7 +7129,7 @@
         ]
       },
       "audio": {
-        "fichier": "087.m4a",
+        "fichier": "091.m4a",
         "duree": 15.31,
         "phrases": [
           [
@@ -6750,7 +7154,7 @@
       ]
     },
     {
-      "n": 88,
+      "n": 92,
       "narration": "À Paris, le 23 octobre, un général républicain, Malet, s'échappe de la maison de santé où il était détenu et annonce la mort de l'Empereur. Pendant quelques heures, son coup d'État réussit, puis échoue. Il est fusillé avec ses complices : le régime ne tient qu'à la vie d'un homme.",
       "date": "1812-10-23",
       "image": {
@@ -6768,7 +7172,7 @@
           0.89,
           0.82
         ],
-        "fichier": "088.webp",
+        "fichier": "092.webp",
         "largeur": 1600,
         "hauteur": 909,
         "utile": [
@@ -6798,7 +7202,7 @@
         ]
       },
       "audio": {
-        "fichier": "088.m4a",
+        "fichier": "092.m4a",
         "duree": 18.61,
         "phrases": [
           [
@@ -6823,7 +7227,7 @@
       ]
     },
     {
-      "n": 89,
+      "n": 93,
       "narration": "Sur la route du retour, l'hiver tombe tôt. Le froid, la faim et les cosaques déciment les colonnes. Les soldats mangent leurs chevaux, abandonnent canons et butin, et meurent par milliers le long des routes. Ceux qui tombent dans la neige ne se relèvent pas, et les blessés sont abandonnés aux villages en flammes.",
       "date": "1812-11",
       "image": {
@@ -6835,7 +7239,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "089.webp",
+        "fichier": "093.webp",
         "largeur": 1000,
         "hauteur": 762,
         "utile": [
@@ -6856,7 +7260,7 @@
         ]
       },
       "audio": {
-        "fichier": "089.m4a",
+        "fichier": "093.m4a",
         "duree": 18.4,
         "phrases": [
           [
@@ -6883,7 +7287,7 @@
         "vignettes": [
           {
             "commons": "File:Napoleons retreat from Moscow by Adolph Northen.jpg",
-            "fichier": "089.webp",
+            "fichier": "093.webp",
             "titre": "La Retraite de Napoléon en Russie",
             "auteur": "Adolph Northen",
             "date": "1851",
@@ -6907,7 +7311,7 @@
             "date": "1839",
             "technique": "gravure",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "089-m1.webp",
+            "fichier": "093-m1.webp",
             "licence": "Domaine public",
             "largeur": 1000,
             "hauteur": 525,
@@ -6926,7 +7330,7 @@
             "date": "1836",
             "technique": "lithographie",
             "conservation": "Los Angeles County Museum of Art",
-            "fichier": "089-m2.webp",
+            "fichier": "093-m2.webp",
             "licence": "Domaine public",
             "largeur": 1000,
             "hauteur": 786,
@@ -6945,7 +7349,7 @@
             "date": "avant 1845",
             "technique": "lithographie",
             "conservation": "lieu de conservation non identifié",
-            "fichier": "089-m3.webp",
+            "fichier": "093-m3.webp",
             "licence": "Domaine public",
             "largeur": 1000,
             "hauteur": 975,
@@ -6960,7 +7364,7 @@
       }
     },
     {
-      "n": 90,
+      "n": 94,
       "narration": "Le maréchal Ney commande l'arrière-garde et protège la retraite, un fusil à la main, dit la légende. Napoléon l'appelle « le brave des braves ». Il est l'un des derniers à repasser le Niémen, à la mi-décembre. Fusillé en 1815 pour s'être rallié à l'Empereur, il deviendra un héros de la légende napoléonienne.",
       "image": {
         "commons": "File:Adolphe Yvon (1817-1893) - Marshall Ney at retreat in Russia.jpg",
@@ -6971,7 +7375,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "090.webp",
+        "fichier": "094.webp",
         "largeur": 1600,
         "hauteur": 1012,
         "utile": [
@@ -6989,10 +7393,22 @@
               0.81
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.11,
+              0.01,
+              0.85,
+              0.48
+            ]
+          ],
+          "duree": 6,
+          "intention": "On descend du ciel rougi par l'incendie et des arbres givrés vers l'arrière-garde serrée autour de Ney."
+        }
       },
       "audio": {
-        "fichier": "090.m4a",
+        "fichier": "094.m4a",
         "duree": 18.75,
         "phrases": [
           [
@@ -7053,7 +7469,7 @@
       ]
     },
     {
-      "n": 91,
+      "n": 95,
       "narration": "Fin novembre, il faut franchir la Bérézina, rivière à demi gelée, sous la menace de trois armées russes. Les pontonniers du général Éblé construisent deux ponts dans l'eau glacée, et beaucoup y laissent la vie. L'armée passe, mais des milliers de traînards restent sur l'autre rive.",
       "date": "1812-11-26",
       "date_fin": "1812-11-29",
@@ -7066,7 +7482,7 @@
         "technique": "huile sur toile",
         "conservation": "Saint-Pétersbourg, musée de l'Ermitage",
         "licence": "Domaine public",
-        "fichier": "091.webp",
+        "fichier": "095.webp",
         "largeur": 1600,
         "hauteur": 1060,
         "utile": [
@@ -7102,10 +7518,22 @@
             ],
             "quand": "des milliers de traînards restent"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.0,
+              0.12,
+              1.0,
+              0.72
+            ]
+          ],
+          "duree": 5,
+          "intention": "On descend du ciel lourd de fumée vers la rive de la Bérézina, où s'entassent soldats et chariots dans la neige."
+        }
       },
       "audio": {
-        "fichier": "091.m4a",
+        "fichier": "095.m4a",
         "duree": 21.23,
         "phrases": [
           [
@@ -7141,7 +7569,7 @@
       ]
     },
     {
-      "n": 92,
+      "n": 96,
       "narration": "Le bilan est effroyable. Un demi-siècle plus tard, l'ingénieur Charles Minard le dessine : la largeur de la bande figure les hommes. Plus de quatre cent mille à l'aller, en beige ; à peine dix mille au retour, en noir, selon ses chiffres. L'Empereur, rentré en hâte à Paris, lève déjà une nouvelle armée.",
       "image": {
         "commons": "File:Minard.png",
@@ -7152,7 +7580,7 @@
         "technique": "lithographie",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "092.webp",
+        "fichier": "096.webp",
         "largeur": 1600,
         "hauteur": 763,
         "utile": [
@@ -7182,7 +7610,7 @@
         ]
       },
       "audio": {
-        "fichier": "092.m4a",
+        "fichier": "096.m4a",
         "duree": 19.01,
         "phrases": [
           [
@@ -7213,7 +7641,7 @@
       "camera_manuelle": true
     },
     {
-      "n": 93,
+      "n": 97,
       "narration": "En 1813, la Prusse rejoint la Russie contre Napoléon. L'Empereur lève en hâte de jeunes conscrits, qu'on surnomme les Marie-Louise. Le 2 mai, à Lützen, ces recrues sans expérience remportent la victoire. Mais faute de cavalerie, perdue en Russie, il ne peut poursuivre l'ennemi.",
       "date": "1813-05-02",
       "image": {
@@ -7225,7 +7653,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "093.webp",
+        "fichier": "097.webp",
         "largeur": 1600,
         "hauteur": 1142,
         "utile": [
@@ -7255,7 +7683,7 @@
         ]
       },
       "audio": {
-        "fichier": "093.m4a",
+        "fichier": "097.m4a",
         "duree": 16.23,
         "phrases": [
           [
@@ -7294,7 +7722,7 @@
       ]
     },
     {
-      "n": 94,
+      "n": 98,
       "narration": "L'Autriche se joint à son tour à la coalition. Du 16 au 19 octobre 1813, à Leipzig, plus d'un demi-million de soldats s'affrontent : c'est la bataille des Nations. En pleine bataille, les Saxons passent à l'ennemi. Vaincu, Napoléon doit repasser le Rhin.",
       "date": "1813-10-16",
       "date_fin": "1813-10-19",
@@ -7307,7 +7735,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "094.webp",
+        "fichier": "098.webp",
         "largeur": 1600,
         "hauteur": 1000,
         "utile": [
@@ -7325,10 +7753,22 @@
               0.637
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.05,
+              0.42,
+              0.6,
+              0.77
+            ]
+          ],
+          "duree": 5.5,
+          "intention": "On part de la gauche, le long des lignes d'infanterie sous les fumées de Leipzig, puis la vue s'élargit sur tout le champ de bataille."
+        }
       },
       "audio": {
-        "fichier": "094.m4a",
+        "fichier": "098.m4a",
         "duree": 16.23,
         "phrases": [
           [
@@ -7368,7 +7808,7 @@
       ]
     },
     {
-      "n": 95,
+      "n": 99,
       "narration": "À Londres, Rowlandson montre la Mort, assise sur un canon, face à l'Empereur effondré sur un tambour : ce sont les deux rois de la terreur. Toute l'Europe se ligue contre lui. À la fin de l'année, les coalisés franchissent le Rhin et la France est envahie.",
       "date": "1813-11",
       "image": {
@@ -7386,7 +7826,7 @@
           0.98,
           0.36
         ],
-        "fichier": "095.webp",
+        "fichier": "099.webp",
         "largeur": 1600,
         "hauteur": 1047,
         "utile": [
@@ -7416,7 +7856,7 @@
         ]
       },
       "audio": {
-        "fichier": "095.m4a",
+        "fichier": "099.m4a",
         "duree": 17.25,
         "phrases": [
           [
@@ -7442,7 +7882,7 @@
       ]
     },
     {
-      "n": 96,
+      "n": 100,
       "narration": "Pendant la campagne de France, au début de 1814, Napoléon retrouve l'élan de sa jeunesse. À Champaubert, Montmirail, Montereau, il bat tour à tour des armées plus nombreuses. Mais ses troupes fondent, et les coalisés finissent par marcher droit sur Paris.",
       "date": "1814-02-10",
       "date_fin": "1814-02-18",
@@ -7455,7 +7895,7 @@
         "technique": "huile sur bois",
         "conservation": "Paris, musée d'Orsay",
         "licence": "Domaine public",
-        "fichier": "096.webp",
+        "fichier": "100.webp",
         "largeur": 1600,
         "hauteur": 1040,
         "utile": [
@@ -7476,7 +7916,7 @@
         ]
       },
       "audio": {
-        "fichier": "096.m4a",
+        "fichier": "100.m4a",
         "duree": 15.62,
         "phrases": [
           [
@@ -7527,7 +7967,7 @@
       ]
     },
     {
-      "n": 97,
+      "n": 101,
       "narration": "Le 30 mars 1814, Paris se défend. À la barrière de Clichy, le maréchal Moncey mène les gardes nationaux, au milieu des blessés et des habitants réfugiés. Les élèves de l'École polytechnique servent des canons à la barrière du Trône. Mais l'Empereur est loin, et le soir, la ville capitule.",
       "date": "1814-03-30",
       "image": {
@@ -7539,7 +7979,7 @@
         "technique": "huile sur toile",
         "conservation": "Paris, musée du Louvre",
         "licence": "Domaine public",
-        "fichier": "097.webp",
+        "fichier": "101.webp",
         "largeur": 1600,
         "hauteur": 1196,
         "utile": [
@@ -7557,10 +7997,22 @@
               0.882
             ]
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.54,
+              0.67,
+              1.0,
+              0.9
+            ]
+          ],
+          "duree": 5,
+          "intention": "On recule depuis la mère et son enfant, réfugiés sur les pavés, jusqu'à la barrière de Clichy et ses défenseurs."
+        }
       },
       "audio": {
-        "fichier": "097.m4a",
+        "fichier": "101.m4a",
         "duree": 16.88,
         "phrases": [
           [
@@ -7589,7 +8041,7 @@
       ]
     },
     {
-      "n": 98,
+      "n": 102,
       "narration": "Le 31 mars, le tsar Alexandre et le roi de Prusse entrent dans Paris à la tête de leurs troupes. Une partie de la foule les acclame, et des royalistes arborent la cocarde blanche des Bourbons. Talleyrand reçoit le tsar chez lui et prépare le retour du roi.",
       "date": "1814-03-31",
       "image": {
@@ -7607,7 +8059,7 @@
           0.961,
           0.876
         ],
-        "fichier": "098.webp",
+        "fichier": "102.webp",
         "largeur": 1600,
         "hauteur": 974,
         "utile": [
@@ -7637,7 +8089,7 @@
         ]
       },
       "audio": {
-        "fichier": "098.m4a",
+        "fichier": "102.m4a",
         "duree": 15.36,
         "phrases": [
           [
@@ -7668,7 +8120,7 @@
       ]
     },
     {
-      "n": 99,
+      "n": 103,
       "narration": "Pour la première fois depuis des siècles, des armées étrangères occupent la capitale. Les cosaques, venus des steppes russes, bivouaquent sur les Champs-Élysées, sous le regard curieux des Parisiens. Le 2 avril, le Sénat, poussé par Talleyrand, proclame la déchéance de l'Empereur.",
       "image": {
         "commons": "File:Bivouac des Cosaques, aux Champs élysées, à Paris, le 31 mars 1814 - estampe - btv1b69540615.jpg",
@@ -7685,7 +8137,7 @@
           0.905,
           0.745
         ],
-        "fichier": "099.webp",
+        "fichier": "103.webp",
         "largeur": 1600,
         "hauteur": 845,
         "utile": [
@@ -7715,7 +8167,7 @@
         ]
       },
       "audio": {
-        "fichier": "099.m4a",
+        "fichier": "103.m4a",
         "duree": 16.26,
         "phrases": [
           [
@@ -7751,7 +8203,7 @@
       ]
     },
     {
-      "n": 100,
+      "n": 104,
       "narration": "Napoléon s'est arrêté à Fontainebleau. Il veut encore marcher sur Paris, mais ses maréchaux refusent de le suivre. Delaroche le peint seul, affaissé dans un fauteuil, les bottes crottées, le regard fixe. Le maître de l'Europe n'est plus qu'un général sans armée, abandonné par ses proches.",
       "date": "1814-04-04",
       "image": {
@@ -7763,7 +8215,7 @@
         "technique": "huile sur toile",
         "conservation": "Londres, Royal Collection",
         "licence": "Domaine public",
-        "fichier": "100.webp",
+        "fichier": "104.webp",
         "largeur": 1202,
         "hauteur": 1600,
         "utile": [
@@ -7784,7 +8236,7 @@
         ]
       },
       "audio": {
-        "fichier": "100.m4a",
+        "fichier": "104.m4a",
         "duree": 18.65,
         "phrases": [
           [
@@ -7832,7 +8284,7 @@
             "technique": "huile sur toile",
             "conservation": "Paris, musée national de la Légion d'honneur",
             "licence": "Domaine public",
-            "fichier": "100-m0.webp",
+            "fichier": "104-m0.webp",
             "largeur": 654,
             "hauteur": 1000,
             "utile": [
@@ -7858,7 +8310,7 @@
             "technique": "huile sur toile",
             "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
             "licence": "Domaine public",
-            "fichier": "100-m1.webp",
+            "fichier": "104-m1.webp",
             "largeur": 637,
             "hauteur": 1000,
             "utile": [
@@ -7884,7 +8336,7 @@
             "technique": "huile sur toile",
             "conservation": "Paris, musée Carnavalet - Histoire de Paris",
             "licence": "Domaine public",
-            "fichier": "100-m2.webp",
+            "fichier": "104-m2.webp",
             "largeur": 739,
             "hauteur": 1000,
             "utile": [
@@ -7910,7 +8362,7 @@
             "technique": "huile sur toile",
             "conservation": "Washington, National Gallery of Art",
             "licence": "Domaine public",
-            "fichier": "100-m3.webp",
+            "fichier": "104-m3.webp",
             "largeur": 600,
             "hauteur": 1000,
             "utile": [
@@ -7929,7 +8381,7 @@
           },
           {
             "commons": "File:Napoleon at Fontainebleau, 31 March 1814 (by Hippolyte Paul Delaroche).jpg",
-            "fichier": "100.webp",
+            "fichier": "104.webp",
             "titre": "Napoléon à Fontainebleau, 31 mars 1814",
             "auteur": "Paul Delaroche",
             "date": "1846",
@@ -7949,7 +8401,7 @@
       }
     },
     {
-      "n": 101,
+      "n": 105,
       "narration": "Le 6 avril, il renonce au trône pour lui et pour son fils. Les coalisés lui laissent l'île d'Elbe, en Méditerranée, avec le titre d'empereur. Dans la nuit du 12 au 13 avril, il tente, semble-t-il, de s'empoisonner.",
       "date": "1814-04-06",
       "image": {
@@ -7961,7 +8413,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "101.webp",
+        "fichier": "105.webp",
         "largeur": 1600,
         "hauteur": 1355,
         "utile": [
@@ -7982,7 +8434,7 @@
         ]
       },
       "audio": {
-        "fichier": "101.m4a",
+        "fichier": "105.m4a",
         "duree": 13.6,
         "phrases": [
           [
@@ -8011,7 +8463,7 @@
       ]
     },
     {
-      "n": 102,
+      "n": 106,
       "narration": "Le 20 avril, dans la cour du château, il fait ses adieux à la Garde. Il embrasse le drapeau et le général Petit, puis monte en voiture. Les vieux soldats pleurent. Louis XVIII, frère de Louis XVI, va régner sur la France.",
       "date": "1814-04-20",
       "image": {
@@ -8023,7 +8475,7 @@
         "technique": "huile sur toile",
         "conservation": "Versailles, musée national des châteaux de Versailles et de Trianon",
         "licence": "Domaine public",
-        "fichier": "102.webp",
+        "fichier": "106.webp",
         "largeur": 1600,
         "hauteur": 1191,
         "utile": [
@@ -8044,7 +8496,7 @@
         ]
       },
       "audio": {
-        "fichier": "102.m4a",
+        "fichier": "106.m4a",
         "duree": 15.23,
         "phrases": [
           [
@@ -8085,7 +8537,7 @@
       ]
     },
     {
-      "n": 103,
+      "n": 107,
       "narration": "Le 4 mai, Napoléon débarque à l'île d'Elbe. Les caricaturistes anglais se moquent de cet empereur d'un royaume minuscule. Il y règne sur environ douze mille habitants avec une petite garde. Mais de son île, il observe la France, où les maladresses des Bourbons mécontentent soldats et paysans.",
       "date": "1814-05-04",
       "image": {
@@ -8097,7 +8549,7 @@
         "technique": "eau-forte coloriée",
         "conservation": "New York, Metropolitan Museum of Art",
         "licence": "Domaine public",
-        "fichier": "103.webp",
+        "fichier": "107.webp",
         "largeur": 1600,
         "hauteur": 1115,
         "utile": [
@@ -8118,7 +8570,7 @@
         ]
       },
       "audio": {
-        "fichier": "103.m4a",
+        "fichier": "107.m4a",
         "duree": 18.36,
         "phrases": [
           [
@@ -8147,7 +8599,7 @@
       ]
     },
     {
-      "n": 104,
+      "n": 108,
       "narration": "Le 1er mars 1815, Napoléon débarque à Golfe-Juan avec un millier d'hommes. Sa proclamation à l'armée promet que l'aigle volera « de clocher en clocher ». Le 7 mars, près de Grenoble, un bataillon envoyé contre lui barre la route. Il s'avance seul et offre sa poitrine, dit-on, à qui voudrait tuer son empereur. Les soldats se rallient à lui.",
       "date": "1815-03-01",
       "date_fin": "1815-03-07",
@@ -8166,7 +8618,7 @@
           0.932,
           0.869
         ],
-        "fichier": "104.webp",
+        "fichier": "108.webp",
         "largeur": 1600,
         "hauteur": 1209,
         "utile": [
@@ -8187,7 +8639,7 @@
         ]
       },
       "audio": {
-        "fichier": "104.m4a",
+        "fichier": "108.m4a",
         "duree": 22.03,
         "phrases": [
           [
@@ -8245,7 +8697,7 @@
       ]
     },
     {
-      "n": 105,
+      "n": 109,
       "narration": "Le soir même, Grenoble lui ouvre ses portes. Cette image populaire, imprimée à Épinal bien plus tard, a fixé la légende : la foule, les drapeaux, l'Empereur à cheval. Les paysans craignent le retour des droits seigneuriaux et voient en lui le défenseur de la Révolution. Sur la route, on entend de nouveau la Marseillaise, que l'Empire avait délaissée.",
       "date": "1815-03-07",
       "image": {
@@ -8257,7 +8709,7 @@
         "technique": "gravure sur bois coloriée",
         "conservation": "Paris, Bibliothèque nationale de France, département des Estampes et de la photographie",
         "licence": "Domaine public",
-        "fichier": "105.webp",
+        "fichier": "109.webp",
         "largeur": 1600,
         "hauteur": 1076,
         "utile": [
@@ -8278,7 +8730,7 @@
         ]
       },
       "audio": {
-        "fichier": "105.m4a",
+        "fichier": "109.m4a",
         "duree": 21.59,
         "phrases": [
           [
@@ -8301,7 +8753,7 @@
       }
     },
     {
-      "n": 106,
+      "n": 110,
       "narration": "Le 20 mars, Louis XVIII ayant fui vers Gand, Napoléon rentre aux Tuileries. Partout, les hommes en place changent de camp. Un Dictionnaire des girouettes se moque bientôt de ces serviteurs de tous les régimes, qui tournent au moindre vent.",
       "date": "1815-03-20",
       "image": {
@@ -8313,7 +8765,7 @@
         "technique": "gravure coloriée",
         "conservation": "frontispice du Dictionnaire des girouettes, Paris, 1815",
         "licence": "Domaine public",
-        "fichier": "106.webp",
+        "fichier": "110.webp",
         "largeur": 1013,
         "hauteur": 1600,
         "utile": [
@@ -8352,7 +8804,7 @@
         ]
       },
       "audio": {
-        "fichier": "106.m4a",
+        "fichier": "110.m4a",
         "duree": 14.46,
         "phrases": [
           [
@@ -8393,7 +8845,89 @@
       ]
     },
     {
-      "n": 107,
+      "narration": "Entre-temps, la paix a rendu à la France une partie de ses colonies. Au traité de Paris, en mai 1814, l'Angleterre garde Tobago, Sainte-Lucie et l'île de France. Louis XVIII y promet d'abolir la traite des Noirs sous cinq ans. Le 29 mars 1815, Napoléon l'abolit par décret, sans toucher à l'esclavage. Cette estampe parisienne montre des Anglais annonçant à des Africains la fin de la traite.",
+      "date": "1815-03-29",
+      "personnes": [
+        {
+          "id": "louis-xviii",
+          "quand": "Louis XVIII",
+          "instant": 10.82
+        },
+        {
+          "id": "napoleon",
+          "quand": "Napoléon",
+          "instant": 15.77
+        }
+      ],
+      "image": {
+        "commons": "File:Les Anglais faisant part 1815.jpg",
+        "titre": "Les Anglais faisant part aux Africains du traité de paix des puissances alliées sur l'abolition de la traite des nègres",
+        "titre_court": "Les Anglais annoncent aux Africains l'abolition de la traite",
+        "auteur": "anonyme",
+        "date": "1815",
+        "technique": "estampe coloriée",
+        "conservation": "Paris, Bibliothèque nationale de France",
+        "fichier": "111.webp",
+        "licence": "Domaine public",
+        "largeur": 1600,
+        "hauteur": 1299,
+        "utile": [
+          0.0,
+          0.085,
+          0.986,
+          0.861
+        ],
+        "camera": [
+          {
+            "cadre": [
+              0.0,
+              0.085,
+              0.986,
+              0.861
+            ]
+          },
+          {
+            "cadre": [
+              0.0,
+              0.22,
+              0.66,
+              0.861
+            ],
+            "quand": "des Anglais annonçant"
+          }
+        ]
+      },
+      "n": 111,
+      "audio": {
+        "fichier": "111.m4a",
+        "duree": 24.48,
+        "phrases": [
+          [
+            0.0,
+            3.14
+          ],
+          [
+            3.79,
+            10.0
+          ],
+          [
+            10.77,
+            13.39
+          ],
+          [
+            14.36,
+            19.43
+          ],
+          [
+            20.33,
+            24.48
+          ]
+        ]
+      },
+      "camera_manuelle": true
+    },
+    {
+      "n": 112,
       "narration": "L'Empereur promet la liberté. Benjamin Constant, hier opposant, rédige un Acte additionnel qui libéralise les institutions. Le 1er juin, au Champ-de-Mai, Napoléon jure de l'observer et distribue des aigles à l'armée. Mais l'Europe a déjà repris les armes.",
       "date": "1815-06-01",
       "image": {
@@ -8411,7 +8945,7 @@
           0.856,
           0.79
         ],
-        "fichier": "107.webp",
+        "fichier": "112.webp",
         "largeur": 1600,
         "hauteur": 986,
         "utile": [
@@ -8438,10 +8972,22 @@
             ],
             "quand": "distribue des aigles à l'armée"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.475,
+              0.545,
+              0.975,
+              0.86
+            ]
+          ],
+          "duree": 5,
+          "intention": "On recule depuis les bras levés du premier plan, qui prêtent serment, jusqu'à la vue d'ensemble du Champ-de-Mai."
+        }
       },
       "audio": {
-        "fichier": "107.m4a",
+        "fichier": "112.m4a",
         "duree": 15.15,
         "phrases": [
           [
@@ -8483,7 +9029,7 @@
       ]
     },
     {
-      "n": 108,
+      "n": 113,
       "narration": "Napoléon attaque en Belgique avant que les coalisés ne se rassemblent. Le 16 juin, à Ligny, il bat les Prussiens de Blücher. Il charge le maréchal Grouchy de les poursuivre avec plus de trente mille hommes, et se tourne contre l'armée de Wellington.",
       "date": "1815-06-16",
       "image": {
@@ -8501,7 +9047,7 @@
           0.829,
           0.795
         ],
-        "fichier": "108.webp",
+        "fichier": "113.webp",
         "largeur": 1600,
         "hauteur": 1074,
         "utile": [
@@ -8528,10 +9074,22 @@
             ],
             "quand": "Il charge le maréchal Grouchy de les poursuivre"
           }
-        ]
+        ],
+        "entree": {
+          "cadres": [
+            [
+              0.01,
+              0.13,
+              0.99,
+              0.71
+            ]
+          ],
+          "duree": 5,
+          "intention": "On descend des nuées de fumée au-dessus de Ligny vers la colline où Napoléon et ses maréchaux observent la bataille."
+        }
       },
       "audio": {
-        "fichier": "108.m4a",
+        "fichier": "113.m4a",
         "duree": 14.92,
         "phrases": [
           [
@@ -8583,7 +9141,7 @@
       ]
     },
     {
-      "n": 109,
+      "n": 114,
       "narration": "Le 18 juin, au sud de Waterloo, la bataille commence tard, sur un sol détrempé par l'orage. Wellington tient le plateau de Mont-Saint-Jean. Le maréchal Ney lance contre les carrés anglais des charges de cavalerie massives, qui se brisent les unes après les autres.",
       "date": "1815-06-18",
       "image": {
@@ -8601,7 +9159,7 @@
           0.933,
           0.863
         ],
-        "fichier": "109.webp",
+        "fichier": "114.webp",
         "largeur": 1600,
         "hauteur": 1202,
         "utile": [
@@ -8622,7 +9180,7 @@
         ]
       },
       "audio": {
-        "fichier": "109.m4a",
+        "fichier": "114.m4a",
         "duree": 15.29,
         "phrases": [
           [
@@ -8663,7 +9221,7 @@
       ]
     },
     {
-      "n": 110,
+      "n": 115,
       "narration": "Vu du côté anglais, le combat est une longue résistance. Les fantassins de Wellington, formés en carrés hérissés de baïonnettes, encaissent les assauts. En fin d'après-midi, les Prussiens de Blücher, que Grouchy n'a pas retenus, débouchent sur le flanc droit français.",
       "image": {
         "commons": "File:Battle of Waterloo 1815.PNG",
@@ -8674,7 +9232,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "110.webp",
+        "fichier": "115.webp",
         "largeur": 1600,
         "hauteur": 730,
         "utile": [
@@ -8704,7 +9262,7 @@
         ]
       },
       "audio": {
-        "fichier": "110.m4a",
+        "fichier": "115.m4a",
         "duree": 17.15,
         "phrases": [
           [
@@ -8740,7 +9298,7 @@
       ]
     },
     {
-      "n": 111,
+      "n": 116,
       "narration": "Vers sept heures et demie du soir, l'Empereur lance sa Garde. Elle recule sous le feu, et la panique gagne l'armée, qui se débande. Selon la légende, le général Cambronne aurait répondu aux Anglais qui le sommaient de se rendre par un mot resté célèbre.",
       "image": {
         "commons": "File:Bataille de Waterloo, 18 juin 1815 (par Clément-Auguste Andrieux).jpg",
@@ -8751,7 +9309,7 @@
         "technique": "huile sur toile",
         "conservation": "lieu de conservation non identifié",
         "licence": "Domaine public",
-        "fichier": "111.webp",
+        "fichier": "116.webp",
         "largeur": 1600,
         "hauteur": 940,
         "utile": [
@@ -8781,7 +9339,7 @@
         ]
       },
       "audio": {
-        "fichier": "111.m4a",
+        "fichier": "116.m4a",
         "duree": 14.56,
         "phrases": [
           [
@@ -8807,7 +9365,7 @@
       ]
     },
     {
-      "n": 112,
+      "n": 117,
       "narration": "Rentré à Paris, Napoléon abdique une seconde fois le 22 juin. Le 8 juillet, Louis XVIII retrouve les Tuileries, sous les acclamations d'une partie des Parisiens. Ses adversaires disent qu'il revient dans les fourgons de l'étranger. La France, envahie, devra payer une lourde indemnité et subir l'occupation.",
       "date": "1815-07-08",
       "image": {
@@ -8825,7 +9383,7 @@
           0.854,
           0.799
         ],
-        "fichier": "112.webp",
+        "fichier": "117.webp",
         "largeur": 1600,
         "hauteur": 1116,
         "utile": [
@@ -8855,7 +9413,7 @@
         ]
       },
       "audio": {
-        "fichier": "112.m4a",
+        "fichier": "117.m4a",
         "duree": 18.5,
         "phrases": [
           [
@@ -8891,7 +9449,7 @@
       ]
     },
     {
-      "n": 113,
+      "n": 118,
       "narration": "Napoléon a gagné Rochefort, espérant partir pour l'Amérique. Bloqué par la croisière anglaise, il se rend le 15 juillet à bord du Bellerophon, un vaisseau anglais. Il attend l'hospitalité de l'Angleterre ; elle l'exile à Sainte-Hélène, île perdue de l'Atlantique Sud.",
       "date": "1815-07-15",
       "image": {
@@ -8903,7 +9461,7 @@
         "technique": "huile sur toile",
         "conservation": "Londres, Tate Britain",
         "licence": "Domaine public",
-        "fichier": "113.webp",
+        "fichier": "118.webp",
         "largeur": 1502,
         "hauteur": 1000,
         "utile": [
@@ -8933,7 +9491,7 @@
         ]
       },
       "audio": {
-        "fichier": "113.m4a",
+        "fichier": "118.m4a",
         "duree": 16.68,
         "phrases": [
           [
@@ -8968,7 +9526,7 @@
       ]
     },
     {
-      "n": 114,
+      "n": 119,
       "narration": "Il y meurt le 5 mai 1821, à cinquante et un ans. Mais il a dicté ses souvenirs : publié en 1823, le Mémorial de Sainte-Hélène fera de lui le héros de la Révolution et des peuples. La France de la Restauration hérite de ses préfets, de son Code et de sa légende.",
       "image": {
         "commons": "File:Mort de Napoléon (5 Mai 1821) - (estampe) (État avec la lettre) - Gravé par Jazet ; Steuben et Peint par Steuben - btv1b532931753.jpg",
@@ -8985,7 +9543,7 @@
           0.936,
           0.871
         ],
-        "fichier": "114.webp",
+        "fichier": "119.webp",
         "largeur": 1600,
         "hauteur": 1203,
         "utile": [
@@ -9006,7 +9564,7 @@
         ]
       },
       "audio": {
-        "fichier": "114.m4a",
+        "fichier": "119.m4a",
         "duree": 17.18,
         "phrases": [
           [
@@ -9757,7 +10315,7 @@
     },
     {
       "id": "napoleon",
-      "apres": 38,
+      "apres": 40,
       "date": "1805-12-04",
       "auteur": {
         "nom": "Napoléon Bonaparte",
@@ -10116,7 +10674,7 @@
     },
     {
       "id": "stael",
-      "apres": 68,
+      "apres": 71,
       "date": "1810-10",
       "auteur": {
         "nom": "Germaine de Staël",
@@ -10136,7 +10694,7 @@
         "Au moment où cet ouvrage alloit paroitre, et lorsqu’on avoit déjà tiré les dix mille exemplaires de la première édition, le ministre de la police, connu sous le nom du général Savary, envoya ses gendarmes chez le libraire, avec ordre de mettre en pièces toute l’édition, et d’établir des sentinelles aux diverses issues du magasin, dans la crainte qu’un seul exemplaire de ce dangereux écrit ne pût s’échapper."
       ],
       "portrait": {
-        "diapositive": 68,
+        "diapositive": 71,
         "cadre": [
           0.27,
           0.02,
@@ -10431,7 +10989,7 @@
     },
     {
       "id": "bourgogne",
-      "apres": 86,
+      "apres": 90,
       "date": "1812-09-14",
       "auteur": {
         "nom": "Adrien Bourgogne",
@@ -10733,7 +11291,7 @@
     },
     {
       "id": "hugo",
-      "apres": 111,
+      "apres": 116,
       "date": "1815-06-18",
       "auteur": {
         "nom": "Victor Hugo",
@@ -11335,7 +11893,7 @@
     },
     {
       "id": "boulogne-austerlitz",
-      "apres": 35,
+      "apres": 37,
       "titre": "De Boulogne à Austerlitz",
       "date": "1805",
       "narration": "Comment l'armée de Boulogne arrive-t-elle si vite au cœur de l'Europe ? À la fin d'août 1805, sept corps d'armée quittent les côtes de la Manche. Près de deux cent mille hommes marchent vers le Rhin, chaque corps par sa propre route. Fin septembre, ils franchissent le fleuve entre Strasbourg et Mayence. Pour aller plus vite, ils vivent sur le pays, sans attendre les convois. Le général autrichien Mack les attend à Ulm, face à la Forêt-Noire. Mais la Grande Armée passe le Danube plus à l'est, puis se rabat derrière lui. Pris au piège, Mack capitule le 20 octobre. La route de Vienne est ouverte : les Français y entrent le 13 novembre, sans combat. L'Empereur pousse alors vers le nord, en Moravie, au-devant des Russes. Le 2 décembre, près d'Austerlitz, il livre bataille sur un terrain qu'il a choisi.",
@@ -11779,8 +12337,814 @@
       }
     },
     {
+      "id": "empire-1811",
+      "apres": 67,
+      "titre": "De 1802 à 1811 : l'empire fond",
+      "date": "1811",
+      "narration": "Que reste-t-il de l'empire colonial ? En 1802, la paix d'Amiens rend à la France ses îles occupées, et l'Espagne lui a cédé la Louisiane. Tout se défait en quelques années. En 1803, Bonaparte vend la Louisiane, et l'armée évacue Saint-Domingue, bientôt Haïti. La guerre reprise, l'Angleterre saisit aussitôt Sainte-Lucie, Tobago et Saint-Pierre-et-Miquelon. Les comptoirs de l'Inde, occupés depuis 1793, ne sont jamais rendus. Puis vient l'assaut final. En janvier 1809, la Guyane capitule devant les Portugais, alliés des Anglais. La Martinique tombe en février, Saint-Louis du Sénégal en juillet. La Guadeloupe se rend en février 1810. Dans l'océan Indien, La Réunion est prise en juillet 1810, l'île de France en décembre, les Seychelles l'année suivante. En 1811, la France ne tient plus une seule colonie. En huit ans, elle a tout perdu, de la Louisiane aux Seychelles. Le sucre et le café des îles manquent : il faudra les remplacer.",
+      "visuels": [
+        {
+          "type": "carton",
+          "texte": "De 1802 à 1811 : l'empire fond",
+          "sous": "Les colonies perdues une à une"
+        },
+        {
+          "type": "carte",
+          "fond": "empire",
+          "titre": "Les possessions françaises en 1802",
+          "elements": [
+            {
+              "type": "ville",
+              "lieu": [
+                -56.3,
+                46.9
+              ],
+              "libelle": "Saint-Pierre-et-Miquelon",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -89.5,
+                  30.2
+                ],
+                [
+                  -91.2,
+                  31.0
+                ],
+                [
+                  -91.1,
+                  33.0
+                ],
+                [
+                  -90.1,
+                  35.0
+                ],
+                [
+                  -89.2,
+                  37.0
+                ],
+                [
+                  -90.2,
+                  38.8
+                ],
+                [
+                  -91.4,
+                  40.4
+                ],
+                [
+                  -91.1,
+                  42.7
+                ],
+                [
+                  -91.2,
+                  43.8
+                ],
+                [
+                  -93.3,
+                  45.0
+                ],
+                [
+                  -95.2,
+                  47.2
+                ],
+                [
+                  -95.2,
+                  49.0
+                ],
+                [
+                  -114.0,
+                  49.0
+                ],
+                [
+                  -113.5,
+                  47.0
+                ],
+                [
+                  -112.5,
+                  45.0
+                ],
+                [
+                  -110.0,
+                  43.5
+                ],
+                [
+                  -108.5,
+                  42.0
+                ],
+                [
+                  -106.5,
+                  40.5
+                ],
+                [
+                  -106.3,
+                  39.0
+                ],
+                [
+                  -104.5,
+                  38.2
+                ],
+                [
+                  -102.0,
+                  38.0
+                ],
+                [
+                  -100.0,
+                  37.7
+                ],
+                [
+                  -100.0,
+                  34.5
+                ],
+                [
+                  -97.0,
+                  33.8
+                ],
+                [
+                  -94.5,
+                  33.6
+                ],
+                [
+                  -94.05,
+                  32.0
+                ],
+                [
+                  -93.8,
+                  29.7
+                ],
+                [
+                  -92.0,
+                  29.4
+                ],
+                [
+                  -90.5,
+                  29.0
+                ],
+                [
+                  -89.2,
+                  29.0
+                ]
+              ],
+              "libelle": "Louisiane",
+              "style": "hachures",
+              "etiquette": [
+                -101.5,
+                37.0
+              ]
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -75.5,
+                  20.6
+                ],
+                [
+                  -71.72,
+                  20.6
+                ],
+                [
+                  -71.72,
+                  19.7
+                ],
+                [
+                  -71.8,
+                  19.5
+                ],
+                [
+                  -72.4,
+                  19.45
+                ],
+                [
+                  -72.35,
+                  19.1
+                ],
+                [
+                  -72.1,
+                  18.8
+                ],
+                [
+                  -72.0,
+                  18.6
+                ],
+                [
+                  -71.8,
+                  18.3
+                ],
+                [
+                  -71.77,
+                  18.0
+                ],
+                [
+                  -71.77,
+                  17.3
+                ],
+                [
+                  -75.5,
+                  17.3
+                ]
+              ],
+              "style": "plein"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -72.8,
+                19.0
+              ],
+              "libelle": "Saint-Domingue",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -61.0,
+                14.6
+              ],
+              "libelle": "Îles du Vent",
+              "rebelle": true,
+              "position": "bas"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -54.3,
+                  6.5
+                ],
+                [
+                  -51.0,
+                  5.2
+                ],
+                [
+                  -51.65,
+                  4.0
+                ],
+                [
+                  -52.0,
+                  3.2
+                ],
+                [
+                  -52.6,
+                  2.4
+                ],
+                [
+                  -53.8,
+                  2.2
+                ],
+                [
+                  -54.6,
+                  2.3
+                ],
+                [
+                  -54.2,
+                  2.9
+                ],
+                [
+                  -54.0,
+                  3.6
+                ],
+                [
+                  -54.45,
+                  4.4
+                ],
+                [
+                  -54.45,
+                  5.0
+                ],
+                [
+                  -54.0,
+                  5.7
+                ]
+              ],
+              "style": "hachures"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -52.33,
+                4.93
+              ],
+              "libelle": "Guyane",
+              "rebelle": true,
+              "position": "droite"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -16.5,
+                16.03
+              ],
+              "libelle": "Saint-Louis",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                55.45,
+                -4.65
+              ],
+              "libelle": "Seychelles",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                57.55,
+                -20.25
+              ],
+              "libelle": "Île de France",
+              "rebelle": true,
+              "position": "haut"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                55.5,
+                -21.1
+              ],
+              "libelle": "La Réunion",
+              "rebelle": true,
+              "position": "bas"
+            }
+          ],
+          "legende": [
+            [
+              "rebelle",
+              "île ou comptoir français"
+            ],
+            [
+              "plein",
+              "colonie française"
+            ],
+            [
+              "zone",
+              "limites incertaines"
+            ]
+          ],
+          "source": "Fond Natural Earth ; possessions d'après la paix d'Amiens (1802), le traité de vente de la Louisiane (1803) et les capitulations de 1803 à 1811 ; limites de la Louisiane simplifiées",
+          "cadre": [
+            -125,
+            -36,
+            95,
+            60
+          ],
+          "quand": "En 1802, la paix d'Amiens"
+        },
+        {
+          "type": "carte",
+          "fond": "empire",
+          "titre": "De 1802 à 1811 : les colonies perdues",
+          "elements": [
+            {
+              "type": "ville",
+              "lieu": [
+                -56.3,
+                46.9
+              ],
+              "libelle": "Saint-Pierre-et-Miquelon (1803)",
+              "position": "haut",
+              "quand": "Saint-Pierre-et-Miquelon"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -89.5,
+                  30.2
+                ],
+                [
+                  -91.2,
+                  31.0
+                ],
+                [
+                  -91.1,
+                  33.0
+                ],
+                [
+                  -90.1,
+                  35.0
+                ],
+                [
+                  -89.2,
+                  37.0
+                ],
+                [
+                  -90.2,
+                  38.8
+                ],
+                [
+                  -91.4,
+                  40.4
+                ],
+                [
+                  -91.1,
+                  42.7
+                ],
+                [
+                  -91.2,
+                  43.8
+                ],
+                [
+                  -93.3,
+                  45.0
+                ],
+                [
+                  -95.2,
+                  47.2
+                ],
+                [
+                  -95.2,
+                  49.0
+                ],
+                [
+                  -114.0,
+                  49.0
+                ],
+                [
+                  -113.5,
+                  47.0
+                ],
+                [
+                  -112.5,
+                  45.0
+                ],
+                [
+                  -110.0,
+                  43.5
+                ],
+                [
+                  -108.5,
+                  42.0
+                ],
+                [
+                  -106.5,
+                  40.5
+                ],
+                [
+                  -106.3,
+                  39.0
+                ],
+                [
+                  -104.5,
+                  38.2
+                ],
+                [
+                  -102.0,
+                  38.0
+                ],
+                [
+                  -100.0,
+                  37.7
+                ],
+                [
+                  -100.0,
+                  34.5
+                ],
+                [
+                  -97.0,
+                  33.8
+                ],
+                [
+                  -94.5,
+                  33.6
+                ],
+                [
+                  -94.05,
+                  32.0
+                ],
+                [
+                  -93.8,
+                  29.7
+                ],
+                [
+                  -92.0,
+                  29.4
+                ],
+                [
+                  -90.5,
+                  29.0
+                ],
+                [
+                  -89.2,
+                  29.0
+                ]
+              ],
+              "libelle": "Louisiane (1803)",
+              "style": "hachures",
+              "etiquette": [
+                -101.5,
+                37.0
+              ],
+              "quand": "Bonaparte vend la Louisiane"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -75.5,
+                  20.6
+                ],
+                [
+                  -71.72,
+                  20.6
+                ],
+                [
+                  -71.72,
+                  19.7
+                ],
+                [
+                  -71.8,
+                  19.5
+                ],
+                [
+                  -72.4,
+                  19.45
+                ],
+                [
+                  -72.35,
+                  19.1
+                ],
+                [
+                  -72.1,
+                  18.8
+                ],
+                [
+                  -72.0,
+                  18.6
+                ],
+                [
+                  -71.8,
+                  18.3
+                ],
+                [
+                  -71.77,
+                  18.0
+                ],
+                [
+                  -71.77,
+                  17.3
+                ],
+                [
+                  -75.5,
+                  17.3
+                ]
+              ],
+              "style": "hachures",
+              "quand": "l'armée évacue Saint-Domingue"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -72.8,
+                19.0
+              ],
+              "libelle": "Saint-Domingue (1803)",
+              "position": "haut",
+              "quand": "l'armée évacue Saint-Domingue"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -61.0,
+                14.6
+              ],
+              "libelle": "Îles du Vent (1810)",
+              "position": "bas",
+              "quand": "La Guadeloupe se rend"
+            },
+            {
+              "type": "zone",
+              "points": [
+                [
+                  -54.3,
+                  6.5
+                ],
+                [
+                  -51.0,
+                  5.2
+                ],
+                [
+                  -51.65,
+                  4.0
+                ],
+                [
+                  -52.0,
+                  3.2
+                ],
+                [
+                  -52.6,
+                  2.4
+                ],
+                [
+                  -53.8,
+                  2.2
+                ],
+                [
+                  -54.6,
+                  2.3
+                ],
+                [
+                  -54.2,
+                  2.9
+                ],
+                [
+                  -54.0,
+                  3.6
+                ],
+                [
+                  -54.45,
+                  4.4
+                ],
+                [
+                  -54.45,
+                  5.0
+                ],
+                [
+                  -54.0,
+                  5.7
+                ]
+              ],
+              "style": "hachures",
+              "quand": "la Guyane capitule"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -52.33,
+                4.93
+              ],
+              "libelle": "Guyane (1809)",
+              "position": "droite",
+              "quand": "la Guyane capitule"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                -16.5,
+                16.03
+              ],
+              "libelle": "Saint-Louis (1809)",
+              "position": "haut",
+              "quand": "Saint-Louis du Sénégal"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                55.45,
+                -4.65
+              ],
+              "libelle": "Seychelles (1811)",
+              "position": "haut",
+              "quand": "les Seychelles"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                57.55,
+                -20.25
+              ],
+              "libelle": "Île de France (1810)",
+              "position": "haut",
+              "quand": "l'île de France en décembre"
+            },
+            {
+              "type": "ville",
+              "lieu": [
+                55.5,
+                -21.1
+              ],
+              "libelle": "La Réunion (1810)",
+              "position": "bas",
+              "quand": "La Réunion est prise"
+            }
+          ],
+          "legende": [
+            [
+              "zone",
+              "possession perdue, avec l'année"
+            ]
+          ],
+          "source": "Fond Natural Earth ; possessions d'après la paix d'Amiens (1802), le traité de vente de la Louisiane (1803) et les capitulations de 1803 à 1811 ; limites de la Louisiane simplifiées",
+          "cadre": [
+            -125,
+            -36,
+            95,
+            60
+          ],
+          "quand": "Tout se défait"
+        },
+        {
+          "type": "chronologie",
+          "quand": "En 1811, la France ne tient plus",
+          "titre": "Huit ans pour perdre un empire",
+          "debut": "1802",
+          "fin": "1812",
+          "evenements": [
+            {
+              "date": "1803",
+              "libelle": "Louisiane vendue",
+              "precision": "Saint-Domingue évacuée",
+              "quand": "En 1811, la France ne tient plus"
+            },
+            {
+              "date": "1809",
+              "libelle": "Guyane, Martinique, Sénégal",
+              "precision": "prises en sept mois",
+              "quand": "En huit ans"
+            },
+            {
+              "date": "1810",
+              "libelle": "Guadeloupe, La Réunion, île de France",
+              "precision": "capitulations",
+              "quand": "elle a tout perdu"
+            },
+            {
+              "date": "1811",
+              "libelle": "Seychelles",
+              "precision": "plus une seule colonie",
+              "quand": "de la Louisiane aux Seychelles"
+            }
+          ],
+          "source": "Capitulations de 1803 à 1811, d'après la Fondation Napoléon, « Napoléon et les colonies »"
+        }
+      ],
+      "sources": [
+        "Paix d'Amiens (1802) ; traité de vente de la Louisiane (30 avril 1803)",
+        "Fondation Napoléon, « Napoléon et les colonies »",
+        "Traité de Paris du 30 mai 1814, article 8"
+      ],
+      "audio": {
+        "fichier": "episodes/empire-1811.m4a",
+        "duree": 57.11,
+        "phrases": [
+          [
+            0.0,
+            1.9
+          ],
+          [
+            2.4,
+            7.91
+          ],
+          [
+            8.86,
+            10.65
+          ],
+          [
+            11.17,
+            15.96
+          ],
+          [
+            16.74,
+            21.38
+          ],
+          [
+            22.11,
+            26.18
+          ],
+          [
+            26.8,
+            28.18
+          ],
+          [
+            28.68,
+            32.76
+          ],
+          [
+            33.39,
+            36.35
+          ],
+          [
+            36.94,
+            39.04
+          ],
+          [
+            39.69,
+            45.91
+          ],
+          [
+            46.65,
+            49.64
+          ],
+          [
+            50.45,
+            53.6
+          ],
+          [
+            54.2,
+            57.11
+          ]
+        ]
+      }
+    },
+    {
       "id": "grand-empire",
-      "apres": 65,
+      "apres": 68,
       "titre": "Le Grand Empire",
       "date": "1811",
       "narration": "Jusqu'où s'étend cet empire ? En 1811, il compte cent trente départements et plus de quarante millions d'habitants. La Belgique, la rive gauche du Rhin, la Hollande, le littoral allemand jusqu'à Hambourg, le Piémont, la Toscane et Rome sont devenus français. Autour gravitent des États vassaux : le royaume d'Italie, dont Napoléon est le roi, Naples avec Murat, l'Espagne avec Joseph, la Westphalie avec Jérôme. La Confédération du Rhin et le duché de Varsovie suivent ses ordres. L'Europe napoléonienne s'étend ainsi de l'Atlantique au Niémen. Partout où il règne, le Code civil abolit les privilèges et les droits féodaux. Mais partout aussi pèsent les impôts, la conscription et le blocus, et les peuples conquis apprennent à détester l'occupant.",
@@ -13782,7 +15146,7 @@
     },
     {
       "id": "conscription",
-      "apres": 71,
+      "apres": 74,
       "titre": "Le prix du sang",
       "date": "1814",
       "narration": "Combien d'hommes l'Empire a-t-il levés ? De 1800 à 1814, près de deux millions de Français sont appelés sous les drapeaux. Chaque levée est fixée par un décret, publié au Bulletin des lois. Les préfets répartissent ensuite le contingent entre les arrondissements, puis les jeunes gens tirent au sort. Selon les historiens, neuf cent mille à un million de ces hommes meurent ou disparaissent, plus souvent de maladie et d'épuisement qu'au combat. Les réfractaires, cachés dans les bois, se comptent par dizaines de milliers, et des colonnes mobiles les traquent. Certains se font arracher les dents de devant, indispensables pour déchirer les cartouches. Les plus aisés, eux, achètent un remplaçant, pour quelques milliers de francs. Après 1812, l'Empire appelle des classes entières par anticipation, et même des hommes déjà exemptés. En 1813, quatre levées successives réclament plus d'un million d'hommes. Chaque village a ses absents : la conscription devient la mesure la plus haïe du régime.",
@@ -13950,7 +15314,7 @@
     },
     {
       "id": "russie",
-      "apres": 91,
+      "apres": 95,
       "titre": "La campagne de Russie, aller et retour",
       "date": "1812",
       "narration": "Que reste-t-il de la Grande Armée ? Le 24 juin 1812, environ quatre cent vingt mille hommes franchissent le Niémen, selon les estimations courantes. Ils marchent vers l'est par Vilna, Vitebsk et Smolensk, sous la chaleur. Les maladies, la faim et la désertion fondent les rangs plus vite que les combats. Mi-septembre, environ cent mille hommes seulement entrent dans Moscou. Le 19 octobre, l'armée quitte la ville incendiée. Arrêtée à Maloïaroslavets, elle doit reprendre la route ravagée de l'aller. Le froid s'abat début novembre. Fin novembre, quelques dizaines de milliers d'hommes seulement passent la Bérézina. En décembre, à peine dix mille soldats du corps principal repassent le Niémen, selon Minard. Les ailes de l'armée ont mieux résisté, mais la Grande Armée de 1812 n'existe plus.",
@@ -14396,7 +15760,7 @@
     }
   ],
   "musique": {
-    "note": "La musique de fond fait entendre des compositeurs actifs à Paris sous le Consulat et l’Empire : Boieldieu (concerto pour harpe de 1801), Méhul (première symphonie, 1808-1809) et Cherubini (symphonie en ré, écrite pour Londres au printemps 1815). Enregistrements publiés de 1924 à 1960, du domaine public en Europe. Le Chant du départ et la Marseillaise reprennent les enregistrements de Georges Thill entendus dans la Révolution.",
+    "note": "La musique de fond fait entendre des compositeurs actifs à Paris sous le Consulat et l’Empire : Boieldieu (concerto pour harpe de 1801), Méhul (première symphonie, 1808-1809) et Cherubini (ouverture de Médée, de 1797 ; symphonie en ré, écrite pour Londres au printemps 1815). Enregistrements publiés de 1924 à 1960, du domaine public en Europe. Le Chant du départ et la Marseillaise reprennent les enregistrements de Georges Thill entendus dans la Révolution.",
     "fond": [
       {
         "id": "fond-consulat-1",
@@ -14438,12 +15802,12 @@
         "licence": "Domaine public en Europe (disque publié avant 1963)",
         "filtres": "microsillon",
         "debut": 0,
-        "fin": 150,
+        "fin": 182.5,
         "cartouche": {
           "oeuvre": "Concerto pour harpe, andante",
           "compositeur": "François-Adrien Boieldieu, 1801"
         },
-        "duree": 150.0
+        "duree": 182.5
       },
       {
         "id": "fond-vers-empire-1",
@@ -14490,8 +15854,7 @@
           "oeuvre": "Symphonie nº 1, allegro",
           "compositeur": "Étienne Méhul, 1808-1809"
         },
-        "duree": 345.0,
-        "fin": 345
+        "duree": 389.9
       },
       {
         "id": "fond-espagne-autriche-1",
@@ -14510,12 +15873,35 @@
         "licence": "Domaine public en Europe (disque publié avant 1963)",
         "filtres": "microsillon",
         "debut": 0,
-        "fin": 310,
         "cartouche": {
           "oeuvre": "Symphonie nº 1, finale",
           "compositeur": "Étienne Méhul, 1808-1809"
         },
-        "duree": 310.0
+        "duree": 348.4
+      },
+      {
+        "id": "fond-espagne-autriche-2",
+        "acte": "espagne-autriche",
+        "fichier": "musique/fond-espagne-autriche-2.m4a",
+        "titre": "Médée, ouverture",
+        "compositeur": "Luigi Cherubini (compositeur italien établi à Paris)",
+        "date": "1797",
+        "interprete": "Orchestre de la Scala de Milan, direction Tullio Serafin (enregistré en 1957, disque Ricordi-Mercury, 1958)",
+        "source": {
+          "type": "archive",
+          "id": "lp_medea_luigi-cherubini-maria-meneghini-callas-orc",
+          "fichier": "disc1/01.01. Medea.mp3",
+          "publication": "1958"
+        },
+        "licence": "Domaine public en Europe (disque publié avant 1963)",
+        "filtres": "microsillon",
+        "debut": 3.5,
+        "fin": 51,
+        "cartouche": {
+          "oeuvre": "Médée, ouverture",
+          "compositeur": "Luigi Cherubini, 1797"
+        },
+        "duree": 47.5
       },
       {
         "id": "fond-france-imperiale-1",
@@ -14581,12 +15967,12 @@
         "licence": "Domaine public en Europe (disque publié avant 1963)",
         "filtres": "microsillon",
         "debut": 0,
-        "fin": 280,
+        "fin": 299,
         "cartouche": {
           "oeuvre": "Symphonie en ré, largo et allegro",
           "compositeur": "Luigi Cherubini, 1815"
         },
-        "duree": 280.0
+        "duree": 299.0
       },
       {
         "id": "fond-chute-1",
@@ -14640,7 +16026,7 @@
     "intermedes": [
       {
         "id": "chant-du-depart",
-        "apres": 32,
+        "apres": 34,
         "fichier": "musique/chant-du-depart.m4a",
         "titre": "Le Chant du départ",
         "auteur": "Méhul et Marie-Joseph Chénier",
@@ -14801,7 +16187,7 @@
       },
       {
         "id": "chant-champs-paternels",
-        "apres": 69,
+        "apres": 72,
         "fichier": "musique/chant-champs-paternels.m4a",
         "titre": "Champs paternels",
         "auteur": "Méhul, sur un livret d’Alexandre Duval",
@@ -14838,7 +16224,7 @@
       },
       {
         "id": "musique-vestale",
-        "apres": 70,
+        "apres": 73,
         "fichier": "musique/musique-vestale.m4a",
         "titre": "La Vestale",
         "auteur": "Spontini, sur un livret d’Étienne de Jouy",
@@ -14866,7 +16252,7 @@
       },
       {
         "id": "chant-marseillaise",
-        "apres": 105,
+        "apres": 109,
         "fichier": "musique/chant-marseillaise.m4a",
         "titre": "La Marseillaise",
         "auteur": "Rouget de Lisle",

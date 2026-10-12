@@ -19,7 +19,9 @@ au fil de l'eau ; le site doit rester simple à étendre sans toucher aux pages 
   académique (esprit Pléiade / Garnier), **strictement monochrome** : noir, gris et blanc cassé,
   aucune couleur, même pour les liens (soulignés) et même dans la frise et l'arbre (les courants
   y sont distingués par des nuances de gris, des motifs ou des styles de trait, et par leurs
-  libellés). Pas de fonds colorés, pas d'ombres, pas de badges pleins : on utilise des petites
+  libellés). Une seule **couleur d'accent** existe dans le thème (`--c-accent`, rouge de rubrique,
+  décidée le 2026-10-12) : elle ne s'emploie que là où l'utilisateur l'a demandé, pour l'instant
+  la période de l'acte sur la frise des cartons de diaporama. Pas de fonds colorés, pas d'ombres, pas de badges pleins : on utilise des petites
   capitales grises et des filets fins. Typographie serif élégante. Exception : les œuvres d'art
   des chapitres écrivains s'affichent en gris dans la page et en couleur dans la visionneuse
   (spec 11).

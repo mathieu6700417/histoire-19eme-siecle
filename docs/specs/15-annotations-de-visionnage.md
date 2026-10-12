@@ -35,6 +35,10 @@ sur `127.0.0.1` et n'écrit que sous `docs/annotations/`.
   Alt+1…7, ou chiffres tant que le champ est vide) et les afficher.
 - **Entrée** : enregistre, confirmation brève (« Annotation 12 enregistrée »), reprise de la lecture
   à l'instant exact de la pause. **Échap** : annule, reprend. Un texte vide n'enregistre rien.
+  **En plein écran** (révision du 2026-10-12) : le navigateur réserve Échap à la sortie du plein
+  écran ; sous Chrome et Edge, l'outil verrouille la touche (Keyboard Lock) : Échap annule la
+  saisie ou ferme la liste **sans quitter le plein écran**, et le quitte quand rien n'est ouvert.
+  Dans les autres navigateurs, **Ctrl+.** (ou Cmd+.) annule sans toucher au plein écran.
 - Si l'écriture échoue (serveur arrêté), le texte n'est pas perdu : message clair, panneau laissé
   ouvert, copie de secours dans `localStorage`, renvoi à la prochaine tentative.
 - **Repères** : un petit trait sur la barre de progression à chaque annotation (gris moyen : à

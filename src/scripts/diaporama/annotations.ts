@@ -106,7 +106,7 @@ export function installerAnnotations(lec: Lecteur) {
   champ.placeholder = 'Correction à faire…';
   champ.setAttribute('aria-label', 'Texte de l’annotation');
   champ.spellcheck = false;
-  const elAide = el('p', 'annot-aide', 'Entrée : enregistrer et reprendre · Maj+Entrée : saut de ligne · Tab ou Alt+1…7 : catégorie (chiffre seul tant que le champ est vide) · Échap : annuler');
+  const elAide = el('p', 'annot-aide', 'Entrée : enregistrer et reprendre · Maj+Entrée : saut de ligne · Tab ou Alt+1…7 : catégorie (chiffre seul tant que le champ est vide) · Échap ou Ctrl+. : annuler');
   const elErreur = el('p', 'annot-erreur');
   elErreur.hidden = true;
   elErreur.setAttribute('role', 'alert');
@@ -153,7 +153,16 @@ export function installerAnnotations(lec: Lecteur) {
     elMessage.style.right = `${L.right - S.right + 12}px`;
   }
   window.addEventListener('resize', () => { if (ouvert) placer(); });
-  document.addEventListener('fullscreenchange', () => { if (ouvert) placer(); });
+  // Échap en plein écran : le navigateur sort du plein écran avant que la page ne voie la touche.
+  // Chrome et Edge savent la laisser à la page (Keyboard Lock) : Échap annule alors la saisie ou
+  // ferme la liste sans quitter le plein écran, et le quitte quand rien n'est ouvert (ci-dessous).
+  // Ailleurs (Safari, Firefox), Ctrl+. ou Cmd+. annule sans toucher au plein écran.
+  const verrou = (navigator as any).keyboard as { lock?: (t: string[]) => Promise<void>; unlock?: () => void } | undefined;
+  document.addEventListener('fullscreenchange', () => {
+    if (document.fullscreenElement) verrou?.lock?.(['Escape']).catch(() => {});
+    else verrou?.unlock?.();
+    if (ouvert) placer();
+  });
 
   let minuterieMessage = 0;
   function message(texte: string, duree = 2600) {
@@ -482,6 +491,8 @@ export function installerAnnotations(lec: Lecteur) {
   // n'atteint les raccourcis du lecteur (espace, flèches, F, S, M, Entrée).
   window.addEventListener('keydown', (e) => {
     if (!ouvert) {
+      // Échap verrouillée (voir plus haut) : hors saisie, elle quitte le plein écran comme d'habitude.
+      if (e.key === 'Escape' && document.fullscreenElement && !e.repeat) { document.exitFullscreen().catch(() => {}); return; }
       if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
       const cible = e.target instanceof Element ? e.target : document.body;
       if (cible.closest('input:not([type="range"]), textarea, select, [contenteditable]')) return;
@@ -491,7 +502,7 @@ export function installerAnnotations(lec: Lecteur) {
     }
     e.stopPropagation();
     if (ouvert === 'panneau') {
-      if (e.key === 'Escape') { e.preventDefault(); fermerPanneau(); }
+      if (e.key === 'Escape' || ((e.ctrlKey || e.metaKey) && e.key === '.')) { e.preventDefault(); fermerPanneau(); }
       else if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); enregistrer(); }
       else if (e.key === 'Tab') {
         e.preventDefault();

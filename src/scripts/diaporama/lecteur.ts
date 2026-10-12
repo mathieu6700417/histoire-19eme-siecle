@@ -7,6 +7,7 @@ import { installerAvantApres } from './avant-apres';
 import { installerMosaique } from './mosaique';
 import { installerPlans } from './plans';
 import { installerMouvement } from './mouvement';
+import { installerCouleur } from './couleur';
 import { installerRendu } from './rendu';
 import { installerFrise } from './frise';
 import { installerTextes } from './textes';
@@ -38,6 +39,7 @@ function monter(racine: HTMLElement) {
   installerMosaique(lec);
   installerPlans(lec);
   installerMouvement(lec);
+  installerCouleur(lec);
   installerRendu(lec);
   installerFrise(lec);
   installerTextes(lec);

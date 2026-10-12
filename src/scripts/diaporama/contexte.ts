@@ -1,7 +1,7 @@
 // Type du contexte `lec` partagé par les modules : état mutable (`lec.i`, `lec.enCarton`…) et
 // fonctions qu'un module expose aux autres. Généré au découpage ; à tenir à jour à la main
 // quand un module expose un nouveau membre (Object.assign(lec, …) en tête ou en fin de module).
-import type { DateFrise, Diapo, Donnees, EtatSegment, Plan, Rect, SuiteChant, SuiteEpisode, SuiteLecture } from './types';
+import type { Couleur, DateFrise, Diapo, Donnees, EtatSegment, Plan, Rect, SuiteChant, SuiteEpisode, SuiteLecture } from './types';
 import type { Chrono, HorlogeLissee } from './horloge';
 
 /** Contexte d'un lecteur : état partagé et fonctions que les modules s'échangent. */
@@ -97,7 +97,7 @@ export interface Lecteur {
   planDe: (x: Diapo, p: Plan, fin: number) => Diapo;
   preparerPlans: (c: HTMLElement, x: Diapo) => void;
   taillerPlans: (c: HTMLElement, x: Diapo) => void;
-  majPlans: (c: HTMLElement, x: Diapo, t: number, gris?: number) => void;
+  majPlans: (c: HTMLElement, x: Diapo, t: number, gris?: number) => number;
   majGalerie: (c: HTMLElement, x: Diapo, ts?: number) => number;
   poserPlans: (k: number) => void;
   legendeGalerie: (x: Diapo, k: number) => string | null;
@@ -108,6 +108,14 @@ export interface Lecteur {
   poserVideo: (c: HTMLElement, transformation: string) => void;
   arreterVideo: (c: HTMLElement) => void;
   prechargerVideo: (x: Diapo) => void;
+  // couleur
+  preparerCouleur: (c: HTMLElement, x: Diapo) => void;
+  majCouleur: (c: HTMLElement, x: Diapo, transformation: string, t: number, filtre: string) => number;
+  poserCouleur: (c: HTMLElement, x: Diapo, transformation: string) => void;
+  opaciteCouleur: (xv: Diapo, a: number, b: number, t: number) => number;
+  teinter: (el: HTMLImageElement, base: HTMLImageElement, coul: Couleur, transformation: string, o: number, filtre: string) => number;
+  marquerCouleur: (o: number) => void;
+  prechargerCouleur: (x: Diapo) => void;
   // rendu
   legendeVoulue: (x: Diapo, t: number) => string;
   legendeMontree: string;

@@ -1,7 +1,7 @@
 // Frise du temps : curseur et date dans le carton d'acte et au bas de l'image (4 s à chaque
 // changement d'année), surimpressions poussées au-dessus. Lit `x.date`, `lec.derniere`.
 // Spec 12, « Frise du temps », « Frise simplifiée » ; README : « Frise du temps ».
-import { CARTON_ACTE_DUREE, CARTON_ACTE_MAX, CARTON_ACTE_MIN, CARTON_REPERES, CARTON_REPERE_FONDU, CARTON_REPERE_PAS, CARTON_TRACE, CARTON_TRACE_DUREE, DUREE_FRISE, FONDU_FRISE } from './constantes';
+import { CARTON_ACTE_DUREE, CARTON_ACTE_MAX, CARTON_ACTE_MIN, CARTON_ONDE, CARTON_TRACE, CARTON_TRACE_DUREE, DUREE_FRISE, FONDU_FRISE } from './constantes';
 import { adoucir } from './geometrie';
 import { mouvementReduit } from './outils';
 import type { DateFrise } from './types';
@@ -47,44 +47,31 @@ export function installerFrise(lec: Lecteur) {
   // Tout dérive de l'horloge du carton (figée en pause, avancée quand on passe le carton) : le
   // filet se trace de gauche à droite (graduations et actes déjà vus, en gris, au passage du
   // tracé), puis le segment de l'acte avance de sa première à sa dernière date en s'épaississant
-  // pendant que les années défilent sous le titre, puis les dates clés (`reperes`) paraissent.
-  // Mouvement réduit : état final d'emblée.
-  const reperesEl = racine.querySelector<HTMLElement>('.carton-reperes');
-  let carton: { k: number; debut: number; annees: [number, number] | null; passes: { el: HTMLElement; x0: number; x1: number }[];
-    reperes: { tic: HTMLElement; li: HTMLElement }[] } | null = null;
-  /** Carton d'acte : prépare la frise de l'acte `k` (actes passés, segment, dates clés). */
+  // pendant que les années défilent sous le titre. Révision du 2026-10-12 (annotations de
+  // visionnage) : plus de dates clés sous la frise ; la période de l'acte est en couleur
+  // (--c-accent) : segment, zone teintée qui s'étend avec lui, puis onde qui s'en écarte.
+  // Mouvement réduit : état final d'emblée, sans onde.
+  let carton: { k: number; debut: number; annees: [number, number] | null; passes: { el: HTMLElement; x0: number; x1: number }[] } | null = null;
+  /** Carton d'acte : prépare la frise de l'acte `k` (actes passés, période de l'acte). */
   function poserActe(f: HTMLElement, k: number) {
     const piste = f.querySelector<HTMLElement>('.frise-t__piste')!, acte = f.querySelector<HTMLElement>('.frise-t__acte');
     if (!acte) return;
-    for (const el of piste.querySelectorAll('.frise-t__passe, .frise-t__repere')) el.remove();
+    for (const el of piste.querySelectorAll('.frise-t__passe')) el.remove();
     const passes = intervallesActes.slice(0, k).flatMap((iv) => {
       if (!iv) return [];
       const el = document.createElement('span');
       el.className = 'frise-t__passe';
       el.style.left = `${iv.x0.toFixed(3)}%`;
-      acte.before(el);
+      piste.querySelector('.frise-t__zone')!.before(el);
       return [{ el, x0: iv.x0, x1: iv.x1 }];
     });
-    const R = D.actes[k].reperes ?? [];
-    const reperes = R.map((r) => {
-      const tic = document.createElement('span'), li = document.createElement('li');
-      tic.className = 'frise-t__repere';
-      tic.style.left = `${r.x}%`;
-      const d = document.createElement('span'), t = document.createElement('span');
-      d.className = 'r-date'; d.textContent = r.date;
-      t.className = 'r-texte'; t.textContent = r.texte;
-      li.append(d, t);
-      piste.append(tic);
-      return { tic, li };
-    });
-    reperesEl?.replaceChildren(...reperes.map((r) => r.li));
     // Les années défilent si les dates de l'acte sont « AAAA-AAAA » (sinon le texte est fixe).
     const m = /^(\d{4})-(\d{4})$/.exec(D.actes[k].dates);
     const lettres = [...D.actes[k].titre].filter((c) => !/\s/.test(c)).length;
     // Le segment part quand les dates sont là (après le titre, écrit lettre par lettre).
     const debut = Math.min(CARTON_ACTE_MAX, Math.max(CARTON_ACTE_MIN, 1.6 + 0.12 * lettres));
-    carton = { k, debut, annees: m ? [Number(m[1]), Number(m[2])] : null, passes, reperes };
-    acte.hidden = !intervallesActes[k];
+    carton = { k, debut, annees: m ? [Number(m[1]), Number(m[2])] : null, passes };
+    for (const el of piste.querySelectorAll<HTMLElement>('.frise-t__acte, .frise-t__zone, .frise-t__onde')) el.hidden = !intervallesActes[k];
     majFriseCarton(0);
   }
   /** Frise du carton à l'instant `t` de son horloge. */
@@ -92,6 +79,7 @@ export function installerFrise(lec: Lecteur) {
     if (!friseCarton || !carton) return;
     if (mouvementReduit.matches) t = Infinity;
     const filet = friseCarton.querySelector<HTMLElement>('.frise-t__filet')!, acte = friseCarton.querySelector<HTMLElement>('.frise-t__acte')!;
+    const zone = friseCarton.querySelector<HTMLElement>('.frise-t__zone')!, onde = friseCarton.querySelector<HTMLElement>('.frise-t__onde')!;
     const bornes = friseCarton.querySelectorAll<HTMLElement>('.frise-t__borne');
     // 1. Tracé : avancée régulière, départ et arrêt doux.
     const q = adoucir((t - CARTON_TRACE) / CARTON_TRACE_DUREE), X = q * 100;
@@ -107,19 +95,24 @@ export function installerFrise(lec: Lecteur) {
       acte.style.width = `${w.toFixed(3)}%`;
       acte.style.height = `${(2 + 3 * p).toFixed(2)}px`;
       acte.style.opacity = t >= carton.debut ? '1' : '0';
+      // Zone teintée : elle s'étend avec le segment, un peu plus large que lui.
+      zone.style.left = onde.style.left = `${(iv.x0 + w / 2).toFixed(3)}%`;
+      zone.style.width = `calc(${w.toFixed(3)}% + ${(12 * p).toFixed(1)}px)`;
+      zone.style.opacity = (0.16 * p).toFixed(3);
+      // Onde : une fois le segment arrivé, un contour s'écarte de la zone et s'efface, en boucle.
+      const u = t - carton.debut - CARTON_ACTE_DUREE;
+      if (Number.isFinite(u) && u >= 0) {
+        const f = (u / CARTON_ONDE) % 1;
+        onde.style.width = `calc(${w.toFixed(3)}% + ${(12 + 26 * f).toFixed(1)}px)`;
+        onde.style.height = `calc(1.1rem + ${(14 * f).toFixed(1)}px)`;
+        onde.style.opacity = (0.55 * (1 - f) ** 1.5).toFixed(3);
+      } else onde.style.opacity = '0';
     }
     if (carton.annees) {
       const [a0, a1] = carton.annees, a = a0 + Math.round(p * (a1 - a0));
       const texte = p >= 1 ? D.actes[carton.k].dates : a > a0 ? `${a0}-${a}` : String(a0);
       if (elCartonDates.textContent !== texte) elCartonDates.textContent = texte;
     }
-    // 3. Dates clés, l'une après l'autre.
-    const tr = carton.debut + CARTON_ACTE_DUREE + CARTON_REPERES;
-    carton.reperes.forEach((r, j) => {
-      const o = adoucir((t - tr - j * CARTON_REPERE_PAS) / CARTON_REPERE_FONDU);
-      r.tic.style.opacity = r.li.style.opacity = o.toFixed(3);
-      r.li.style.transform = o < 1 ? `translateY(${((1 - o) * 4).toFixed(1)}px)` : '';
-    });
   }
   /** Le curseur glisse de `de` à `a` (CSS, ~1 s, ease-in-out). */
   function glisser(f: HTMLElement, de: DateFrise, a: DateFrise) {

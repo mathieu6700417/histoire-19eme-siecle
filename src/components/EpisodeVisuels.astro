@@ -297,11 +297,12 @@ const statique = mode === 'livre';
                 <svg class={`ev-carte__svg${v.cadre ? ' est-recadree' : ''}`} viewBox={fen.vb} style={`--k:${fen.k}`} role="img" aria-label={t(v.titre)}>
                   <defs>
                     <pattern id={`${uid}-hachures-${k}`} width={r2(14 * fen.k)} height={r2(14 * fen.k)} patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2={r2(14 * fen.k)} /></pattern>
-                    <clipPath id={`${uid}-terres-${k}`}><path d={f.terres} /></clipPath>
+                    <clipPath id={`${uid}-terres-${k}`}><use href={`#fond-${f.nom}-terres`} /></clipPath>
                   </defs>
-                  <path class="ev-carte__terres" d={f.terres} />
-                  <path class="ev-carte__france" d={f.france} />
-                  {f.fleuves.map((d) => <path class="ev-carte__fleuve" d={d} />)}
+                  {/* Tracés du fond écrits une seule fois par page (Diaporama.astro, « fonds partagés ») */}
+                  <use class="ev-carte__terres" href={`#fond-${f.nom}-terres`} />
+                  <use class="ev-carte__france" href={`#fond-${f.nom}-france`} />
+                  {f.fleuves.map((_, i) => <use class="ev-carte__fleuve" href={`#fond-${f.nom}-fleuve-${i}`} />)}
                   {v.elements.map((el, j) => {
                     const tj = quandEl(k, el.quand, j);
                     if (el.type === 'zone') {

@@ -77,7 +77,8 @@ const dates = mots(d.periode);
   .generique__voile {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 70% 60% at center, rgba(0, 0, 0, 0.66), rgba(0, 0, 0, 0.42));
+    /* Annotation du 2026-10-12 : voile allégé hors du centre, pour des images plus éclatantes. */
+    background: radial-gradient(ellipse 62% 52% at center, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.14));
   }
   .generique__milieu {
     position: absolute;
@@ -122,12 +123,20 @@ const dates = mots(d.periode);
     letter-spacing: 0.04em;
     color: rgba(251, 250, 247, 0.85);
   }
-  /* Récapitulatif : « Fin » au-dessus du titre et des dates. */
-  .generique--fin .generique__fin { display: block; }
+  /* Récapitulatif (annotation du 2026-10-12) : « Fin » en grand, au centre exact de l'écran ; le
+     titre et les dates, plus petits, viennent dessous sans le déplacer. */
+  .generique--fin .generique__fin { display: block; font-size: min(12cqw, 24cqh); line-height: 1; color: var(--c-fond); }
+  .generique--fin .generique__titres { position: absolute; left: 6cqw; right: 6cqw; top: calc(50% + min(8.5cqw, 17cqh)); gap: min(1.6cqh, 0.9rem); }
+  .generique--fin .generique__titre { font-size: min(4.2cqw, 8.5cqh); }
+  .generique--fin .generique__dates { font-size: min(2.6cqw, 5.4cqh); }
   /* Écran vertical (téléphone) : titre plus grand, sur deux lignes au besoin. */
   @container (aspect-ratio < 1) {
     .generique__titre { font-size: 11cqw; line-height: 1.1; }
     .generique__dates, .generique__fin { font-size: 6cqw; }
+    .generique--fin .generique__fin { font-size: 20cqw; }
+    .generique--fin .generique__titres { top: calc(50% + 14cqw); }
+    .generique--fin .generique__titre { font-size: 7cqw; }
+    .generique--fin .generique__dates { font-size: 4.4cqw; }
   }
   @media (prefers-reduced-motion: reduce) {
     .generique, .generique.est-visible { transition-duration: 300ms; }

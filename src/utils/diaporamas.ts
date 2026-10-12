@@ -27,6 +27,12 @@ export interface ImageDiapo {
   /** Première diapositive d'un acte : détail [x0, y0, x1, y1] (un visage, un geste, un objet)
    *  sur lequel s'ouvrent les volets du carton, avant le recul vers le premier cadre. */
   ouverture?: [number, number, number, number];
+  /** Entrée en scène d'une grande vue (spec 12, « Entrée en scène des grandes vues ») : un ou deux
+   *  cadres de départ (fractions de l'image servie) parcourus avant d'arriver au premier cadre de
+   *  `camera` (ou à l'image entière si `entier`), en `duree` secondes (4 à 7 ; 5 par défaut), sans
+   *  lien avec la voix. `intention` : une ligne pour le relecteur. Image d'une diapositive ou d'un
+   *  plan ; sans effet avec `ouverture`, un avant / après ou une mosaïque. */
+  entree?: { cadres: [number, number, number, number][]; duree?: number; intention?: string };
   /** Zone utile (spec 12, « Sans bordures ») : [x0, y0, x1, y1] (fractions de l'image servie), la
    *  partie qui est l'œuvre (sans liseré, marge de papier, cadre ni légende gravée). Le lecteur ne
    *  montre jamais rien en dehors. Détectée par scripts/diaporamas/utile.py. */
@@ -52,7 +58,18 @@ export interface ImageDiapo {
    *  signalé dans le cartouche et crédité sur la page. Posé par `generation.py publier` ; sans effet
    *  sur un avant / après (verifier.py le refuse) ; sur une mosaïque, il paraît après la plongée. */
   video?: VideoDiapo;
+  /** Colorisation par IA (spec 16, « la colorisation couleur seule ») : version colorisée de cette
+   *  image (seule la chrominance change, le trait est celui de l'original), aux dimensions exactes
+   *  de la zone utile. Le lecteur montre l'original, puis un fondu lent vers elle ; signalée dans
+   *  le cartouche et créditée sur la page. Posé par `couleur.py publier` ; image d'une diapositive
+   *  ou d'un plan ; refusé par verifier.py avec un clip `video`, un avant / après, une mosaïque,
+   *  et sur une image de galerie ou de lecture. */
+  couleur?: CouleurDiapo;
 }
+/** Version colorisée (spec 16) : fichier dans public/diaporamas/<slug>/ (« 086-couleur.webp »,
+ *  « 034-b-couleur.webp »), `largeur` × `hauteur` = zone utile de l'image en pixels, `modele` nommé
+ *  pour les crédits, `genere_le` : date du calcul. */
+export interface CouleurDiapo { fichier: string; largeur: number; hauteur: number; modele: string; genere_le?: string }
 /** Clip généré (spec 16) : fichier dans public/diaporamas/<slug>/ (« 018-mouvement.mp4 » : 10 s,
  *  5 s générées ralenties de moitié, joués une fois, H.264 sans son, aux proportions de la zone
  *  utile), `type` = usage

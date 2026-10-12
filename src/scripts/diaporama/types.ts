@@ -8,6 +8,9 @@ export interface Diapo {
   audio: string; duree: number; pause: number; camera: { c: Rect; t: number }[];
   /** Détail zoomé sur lequel s'ouvre le carton d'acte (spec 12, « Sortie du carton d'acte »). */
   ouv: Rect | null;
+  /** Entrée en scène (spec 12, « Entrée en scène des grandes vues ») : cadres de départ `c` (un ou
+   *  deux, fractions de la zone utile) parcourus avant d'arriver à la première vue, en `d` s. */
+  ent?: Entree | null;
   /** Avant / après (point 3) : image après (zone utile, dimensions), cartouche, instant du volet,
    *  étapes de la caméra sur l'image après (la première : cadre de raccord, à l'instant du volet). */
   ap: { img: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[] } | null;
@@ -28,6 +31,9 @@ export interface Diapo {
   /** Mise en mouvement par IA (spec 16) : clip muet de 10 s joué une fois (dernière image tenue), aux
    *  proportions de la zone utile, posé sur elle avec la transformation de l'image (mouvement.ts). */
   video?: { src: string; duree: number } | null;
+  /** Colorisation par IA (spec 16) : version colorisée de l'image, posée sur sa zone utile après un
+   *  fondu lent (couleur.ts). */
+  coul?: Couleur | null;
   /** Segment joué après la voix (et sa pause) : intermède chanté, lecture ou épisode. */
   suite: Suite | null;
   /** Carte de lieu : fenêtre [a, b) (s de l'audio), point (%) dans le fond, partie du plan de
@@ -50,8 +56,12 @@ export interface Diapo {
 /** Image d'une série (spec 14 : plan d'une diapositive, image d'une galerie ou d'une lecture) :
  *  zone utile, dimensions, cartouche, instant `t` (s de la voix ou du segment) où elle paraît en
  *  fondu croisé, étapes de la caméra (fractions de la zone utile, instants de la même horloge). */
+/** Version colorisée d'une image : `u` = rectangle qu'elle recouvre (fractions de l'image servie :
+ *  la zone utile arrondie au pixel, comme à la fabrication). */
+export interface Couleur { src: string; u: Rect }
 export interface Entier { v: Rect | null; z: number }
-export interface Plan { img: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[]; en?: Entier | null }
+export interface Entree { c: Rect[]; d: number }
+export interface Plan { img: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[]; en?: Entier | null; ent?: Entree | null; coul?: Couleur | null }
 export interface Objet { a: number; b: number; src: string; ratio: number; nom: string; legende: string; cote: 'gauche' | 'droite' }
 /** Intermède chanté : paroles [instant, vers, début de chaque mot (`motsLus`) ou null : vers
  *  entier à son début]. */
@@ -71,7 +81,7 @@ export interface DateFrise { j0: number; j1: number; x0: number; x1: number; lib
 export interface Donnees {
   slug: string; pause: number; carton: number; volet: number;
   mosaique: { apparition: number; pas: number; fondu: number; tenue: number };
-  actes: { titre: string; dates: string; debut: number; reperes: { x: number; date: string; texte: string }[] }[]; diapos: Diapo[];
+  actes: { titre: string; dates: string; debut: number }[]; diapos: Diapo[];
   /** Musique de fond : les pistes de chaque acte. */
   fond: Piste[][];
   /** Générique d'ouverture et récapitulatif de fin (generique.ts) ; null sans `generique`. */

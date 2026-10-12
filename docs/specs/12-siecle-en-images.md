@@ -12,7 +12,7 @@ Décidé avec l'utilisateur le 2026-10-07. Nouvelle section du site : le XIXe si
 | Périodes | Les **9 périodes de la section écrivains** (`src/data/chapitres-ecrivains.ts`) : prologue (vers 1770-1789), Révolution, Consulat et Empire, Restauration, monarchie de Juillet, 1848 et IIe République, Second Empire, année terrible, IIIe République jusqu'à 1900. Mêmes slugs. |
 | Voix | Fichiers audio **générés à l'avance** par script, **Gemini 3.8 Flash TTS** (`gemini-3.8-flash-tts`), **voix Charon**, par l'API Gemini directe (`GEMINI_API_KEY` dans `.env`, non versionné). |
 | Densité (révisée) | Révisée par la **spec 14** (2026-10-11) : ~220 à 260 images par période, une image toutes les 7 à 12 s, à narration identique (plans, lectures et épisodes illustrés, galeries). Les lignes « Échelle » et « Rythme » valent pour les **diapositives** et leur narration. |
-| Rythme | **2 à 3 phrases par image, ~18 s** en moyenne (14 à 24 s, soit ~40 à 55 mots), soit ~30 à 35 min par période, ~5 h pour le siècle (révisé le 2026-10-07 : le pilote à ~10 s allait trop vite). |
+| Rythme | **2 à 3 phrases par image, ~18 s** en moyenne (14 à 24 s, soit ~40 à 55 mots), soit ~30 à 35 min par période, ~5 h pour le siècle (révisé le 2026-10-07 : le pilote à ~10 s allait trop vite). **Durée révisée le 2026-10-12 : environ une heure par période à partir de la 06**, voir « Durée visée : une heure ». |
 | Couleur | Les images s'affichent **en couleur** (le diaporama est une visionneuse, même exception que la spec 11). Tout le reste reste monochrome : contrôles, légendes, page. |
 | Lecteur | **Complet et sobre** (détail plus bas). Musique ajoutée le 2026-10-07 (voir « Musique »). |
 | Images | **Tout document d'époque**, produit au XIXe siècle (ou pendant le prologue pour le chapitre 0) : tableaux, gravures, lithographies, caricatures, affiches, photographies (dès les années 1840), cartes d'époque, unes de journaux, sculptures et monuments photographiés. **Domaine public** obligatoire, source **Wikimedia Commons**. Pas de reconstitution moderne ni de carte moderne. Une toile du XIXe siècle peinte après les faits (ex. Meissonier sur 1814) est admise et sa légende précise la date de l'œuvre. |
@@ -1243,15 +1243,18 @@ rythme de l'horloge du carton (figée en pause ; état final si l'on passe le ca
    première à sa dernière date en 2,5 s et **s'épaissit** (2 à 5 px) pendant que **les années
    défilent** sous le titre (« 1820 », « 1820-1821 »… « 1820-1824 » ; texte fixe si les dates de
    l'acte ne sont pas deux années) ;
-3. puis **deux ou trois dates clés** de l'acte paraissent l'une après l'autre (0,45 s d'écart) :
-   un petit repère sur la frise, la date en petites capitales grises et un libellé court dessous.
-   Elles viennent du champ facultatif `reperes` de l'acte (`date`, `date_fin`, `libelle`) ; sans
-   lui (périodes 01 et 02 pour l'instant), le carton montre le tracé, les actes passés, le segment
-   et le compteur.
+3. ~~puis deux ou trois dates clés de l'acte paraissent sous la frise~~ **(retiré le 2026-10-12,
+   annotations de visionnage de la Restauration et de la monarchie de Juillet : « pas de légendes
+   avec les événements, mais un peu de couleur et un intervalle qui s'anime »)**. À la place, la
+   **période de l'acte est en couleur** (couleur d'accent du thème, `--c-accent`, rouge de
+   rubrique `#8a2b22`) : le segment, une **zone teintée** (16 % d'opacité, 1,1 rem de haut) qui
+   s'étend avec lui, puis, le segment arrivé, une **onde** (contour fin) qui s'écarte de la zone
+   et s'efface, toutes les 1,5 s, jusqu'à l'ouverture des volets. Le champ `reperes` des actes
+   reste admis dans les données (et contrôlé par `verifier.py`) mais n'est plus affiché.
 
 Durée du carton inchangée (12 s, volets à 8,5 s : la frise est copiée dans les volets à son état
-final). Monochrome, serif. Mouvement réduit : état final d'emblée. La frise du bas de l'image ne
-change pas.
+du moment). Serif ; tout le reste de la frise demeure gris et noir. Mouvement réduit : état final
+d'emblée, sans onde. La frise du bas de l'image ne change pas.
 
 ### Images remplacées
 
@@ -1263,6 +1266,183 @@ change pas.
   photographie Daderot, CC0).
 - 40 : *L'Éteignoir* recadré plus large (le recadrage coupait la tête et le bonnet) ; 39 : zone
   utile de *Louvel* élargie (le profil était rogné).
+
+## Les colonies au fil du récit (révision du 2026-10-12)
+
+Constat de l'utilisateur : les diaporamas ne parlent pas assez des colonies. Hors Algérie, elles
+n'apparaissent qu'aux deux abolitions (2 diapositives par période) ; on ne voit jamais ce qu'est
+l'empire ni ce qu'il devient. Décisions (ne pas rediscuter) :
+
+- **Une carte de l'empire par période** : une carte animée du monde (épisode, sur le modèle
+  d'« Alger » et de « La conquête de l'Algérie ») montre les possessions françaises à la date du
+  diaporama, et ce qui a été gagné ou perdu depuis le précédent. Même fond de carte et même dessin
+  d'une période à l'autre : c'est un fil rouge. Placée là où le récit parle de l'outre-mer.
+- **Cinq diapositives ajoutées par période**, **à leur date, dans les actes existants** : pas
+  d'acte colonial à part (l'acte « La conquête de l'Algérie » de la période 04 reste tel quel et ne
+  compte pas dans les cinq). Groupes de 1 à 3 d'affilée ; les narrations voisines sont retouchées
+  pour que les transitions coulent. Aucun repère visuel propre.
+- **Fourchette** : 110 à **135** diapositives par période (`verifier.py`).
+- **Périodes à venir** (06 et suivantes) : mêmes doses dès l'écriture ; le sujet y devient central
+  (Second Empire : Sénégal de Faidherbe, Cochinchine, Nouvelle-Calédonie, « royaume arabe »,
+  Mexique ; IIIe République : Tunisie, Tonkin, Madagascar, Afrique occidentale, débat
+  Ferry-Clemenceau de 1885, indigénat, expositions coloniales). Au-delà de cinq diapositives si le
+  récit le demande.
+- **Ton** : les faits, sans euphémisme ni réquisitoire ; nommer les personnes colonisées et
+  réduites en esclavage quand les sources le permettent (Delgrès, Louisy Mathieu…), pas seulement
+  les gouverneurs et les généraux. Images d'époque, comme partout (spec 12) ; à défaut d'image
+  du lieu, un document (décret, carte, portrait, médaille).
+
+Sujets retenus pour les périodes déjà produites (indicatifs : dates et chiffres à sourcer par
+l'agent de vérification avant les voix ; un sujet sans image d'époque libre est remplacé par un
+autre de la même liste ou par la variante indiquée) :
+
+| Période | Carte | Cinq diapositives |
+|---|---|---|
+| 01 Révolution | L'empire en 1789 | Saint-Domingue, le sucre et la traite (Nantes, Bordeaux) · la Société des amis des Noirs (1788) face au lobby colonial · les libres de couleur : Ogé (1790-1791), décrets de mai 1791 et d'avril 1792 · l'insurrection des esclaves d'août 1791 · Sonthonax proclame l'abolition à Saint-Domingue (août 1793), avant la diapositive 86 |
+| 02 Consulat et Empire | De 1802 à 1811 : l'empire fond | la Guadeloupe en 1802 : Delgrès, Matouba, l'esclavage rétabli · la vente de la Louisiane (1803) · les colonies prises une à une par l'Angleterre (1809-1810) · le sucre de betterave (Delessert, 1812) · 1814-1815 : colonies rendues ou perdues, la traite abolie pendant les Cent-Jours |
+| 03 Restauration | L'empire en 1815, Alger en 1830 | la reprise des colonies (et la diapositive 22 retouchée : la *Méduse* allait reprendre le Sénégal) · la traite interdite (1817-1818) et poursuivie en fraude · l'esclavage maintenu : l'affaire Bissette (Martinique, 1823-1824) · Haïti reconnu contre 150 millions de francs (ordonnance de 1825) · René Caillié à Tombouctou (1828) |
+| 04 Monarchie de Juillet | L'empire en 1847 | 1831-1833 : répression de la traite, droits des libres de couleur, l'exemple de l'abolition anglaise · les abolitionnistes : Société de 1834, Schœlcher, lois Mackau (1845) · Tahiti et les Marquises (1842) · l'affaire Pritchard (1844) et Guizot · les points d'appui : Mayotte, Nossi-Bé, le Gabon |
+| 05 IIe République | L'empire en 1848-1852 | les anciens esclaves électeurs, Louisy Mathieu à la Constituante · les « colons de 1848 » : les convois de Parisiens vers l'Algérie après Juin · l'Algérie en trois départements (1848) · l'abolition à La Réunion (20 décembre 1848) et l'indemnité aux maîtres (1849) · le bagne de Guyane (1852) ; variante : le siège de Zaatcha (1849) |
+
+Production : par période, un agent (texte, images, vérification des faits avant les voix), puis
+voix, caméra et surimpressions des seules diapositives ajoutées ou retouchées ; journal et budget
+Gemini comme pour une période entière (« Produire une période »).
+
+## Durée visée : une heure (décision du 2026-10-12)
+
+La seule durée écrite (30 à 35 min par période) datait de la première version ; lectures,
+épisodes, arts et techniques puis colonies ont porté les périodes 01 à 05 à 46-55 min sans
+qu'une cible soit redéfinie. Décision de l'utilisateur : **viser environ une heure par période,
+à partir de la période 06** ; les périodes 01 à 05 ne sont pas modifiées.
+
+- **Cible** : 55 à 65 min, générique, cartons, lectures, épisodes et intermèdes compris.
+- **Nombre de diapositives** : 135 à 160 (une période fait environ 24 s par diapositive tout
+  compris : 121 diapositives pour 49 min, 132 pour 55 min). Le rythme ne change pas : ~18 s et
+  40 à 55 mots par diapositive. On allonge en racontant plus, pas en ralentissant.
+- **Doses** : celles des sections « Arts et techniques » (~20), « Les colonies au fil du récit »
+  (5 et une carte, davantage si le récit le demande), lectures (4 à 6) et épisodes (jusqu'à 6)
+  restent des minimums ; le supplément (une vingtaine de diapositives) va à « Ce qui manquait
+  au récit », ci-dessous.
+- **Musique** : prévoir dès la production des pistes de fond assez longues pour chaque acte
+  (aucune boucle), puisque les actes s'allongent.
+- `verifier.py` : 135 à 160 diapositives exigées et avertissement hors de 55 à 65 min pour
+  `numero` ≥ 6 ; 110 à 135 et pas de contrôle de durée pour les périodes 01 à 05.
+
+## Ce qui manquait au récit (décision du 2026-10-12, périodes 06 et suivantes)
+
+Constat fait avec l'utilisateur sur les périodes 01 à 05 (comptage par mots-clés dans les
+narrations, sur ~120 diapositives par période) : le récit suit bien les régimes, les journées et
+les grands hommes, beaucoup moins ceux qui les vivent. Arts et lettres : 15 à 24 diapositives ;
+campagnes et paysans : 2 à 13 ; femmes : 2 à 8 ; vie quotidienne et santé : 3 à 8 ; population :
+0 à 8 ; l'Europe hors des guerres : 6 sur la IIe République, alors que 1848 est européenne.
+Décision : à partir de la période 06, la vingtaine de diapositives gagnée par la durée d'une heure
+va à ces manques, **dans cet ordre de priorité** :
+
+1. **Les campagnes** (trois Français sur quatre jusqu'au Second Empire) : la terre, les récoltes,
+   la conscription, l'exode rural, le vote paysan, ce que chaque régime change au village.
+   **Au moins 8 diapositives par période.**
+2. **Le pourquoi matériel** : prix, salaires, crises, population, commerce. Chaque tournant
+   politique est précédé de ce qui l'explique (récolte, chômage, krach, traité de commerce) ;
+   **au moins un chiffre de population et un prix ou un salaire par période**, et les chiffres
+   clés existants servent d'abord à cela. **Au moins 6 diapositives par période.**
+3. **Les femmes et la vie ordinaire** : travail, logement, santé, nourriture, enfance, école ;
+   des femmes nommées, pas seulement des figures de passage. **Au moins 6 diapositives.**
+4. **L'Europe hors des guerres** : ce qui se passe ailleurs au même moment quand cela éclaire la
+   France (révolutions, unités nationales, modèles et repoussoirs). 2 à 4 diapositives, dans le
+   respect du périmètre « France uniquement » : c'est un éclairage, pas un récit parallèle.
+5. **Le lien entre les périodes** : la première diapositive dit en une phrase d'où l'on vient ;
+   **une ou deux diapositives de bilan ferment la période** (ce qui a changé, ce qui reste en
+   suspens), avant le récapitulatif.
+
+Comme pour les arts, les techniques et les colonies : **mêlé au récit**, à sa date, par groupes
+de 1 à 3, sans acte ni repère visuel à part ; images d'époque. Les lectures d'époque donnent la
+parole à ces voix quand un texte libre existe (un paysan, une ouvrière, un médecin, un préfet).
+Les périodes 01 à 05 ne sont pas reprises.
+
+## Entrée en scène des grandes vues (annotation du 2026-10-12)
+
+Annotation de l'utilisateur sur la Deuxième République (diapositive 34, ouverture de l'Assemblée) :
+pour une image qui montre un bâtiment, une large scène, ou une scène tout court, il faut penser
+**l'entrée en scène de l'image comme un cinéaste** qui filmerait le lieu : par quels mouvements
+la caméra arrive au cadre sur lequel l'image commence aujourd'hui. Précision de l'utilisateur :
+**ce mouvement ne se cale pas sur la narration** ; c'est l'arrivée de l'image, pas son commentaire.
+
+- **Principe** : l'image n'apparaît plus d'emblée sur son premier cadre. La caméra fait d'abord
+  un mouvement d'entrée, choisi pour cette image, qui **se termine exactement sur le premier
+  cadre actuel** ; la caméra habituelle (calée sur la voix) prend ensuite le relais, inchangée.
+- **Répertoire** (un mouvement par image, deux temps au plus) : montée le long d'une façade
+  jusqu'à la scène ; descente du ciel ou de la voûte vers la foule ; travelling latéral le long
+  d'un cortège ou d'une assemblée jusqu'à son centre ; recul depuis un détail qui situe (une
+  tribune, un drapeau, une enseigne) jusqu'au plan d'ensemble ; avancée depuis le plan large
+  quand le premier cadre est serré. On choisit comme on tournerait le plan : ce que le
+  spectateur doit découvrir en dernier est gardé pour la fin du mouvement.
+- **Durée** : 4 à 7 s, départ et arrêt doux, dans les plafonds de vitesse de la « caméra calme » ;
+  la voix commence à l'heure habituelle, par-dessus le mouvement. Aucun mot de la narration
+  ne déclenche ni ne règle ce mouvement.
+- **Champ** : images principales et plans montrant un lieu ou une scène. Pas les portraits, les
+  documents, les objets, les mosaïques, les avant/après ; pas les images montrées entières sur
+  fond noir tant que leur propre mouvement (`entier_vers`) n'a pas été revu. Le détail
+  d'ouverture après un carton d'acte (`ouv`) reste tel quel : c'est déjà une entrée en scène.
+- **Mouvement réduit** : pas de mouvement d'entrée, premier cadre d'emblée.
+- **Pilote** : les grandes vues de la période 05, à faire juger par l'utilisateur avant d'étendre
+  aux autres périodes et d'inscrire le choix du mouvement dans les consignes de caméra
+  (`banc_claude.py`).
+
+**Mise en œuvre (2026-10-12).**
+
+- **Champ** `image.entree` : `cadres` (un ou deux cadres de départ, fractions de l'image servie),
+  `duree` (4 à 7 s, 5 par défaut), `intention` (une ligne). Image d'une diapositive ou d'un plan.
+  Le lecteur parcourt ces cadres puis arrive à la première vue ; il généralise le recul du détail
+  d'ouverture (même profil, rampes de 40 % : `RAMPE_RECUL`). Sans le champ, le lecteur se comporte
+  exactement comme avant (captures identiques au pixel).
+- **Constantes** (`constantes.ts`) : `ENTREE_DUREE` 5 s ; `ENTREE_PART` 0,75 (l'entrée occupe au
+  plus 75 % de la fenêtre de l'image, jusqu'au plan suivant ou la fin de la voix) ;
+  `ENTREE_MELANGE` 0,3-0,7 (part de chaque trajet d'une entrée en deux temps). La durée demandée
+  est allongée si la vitesse au plus fort dépasserait les plafonds (0,22 en log d'échelle et
+  0,3 scène par seconde), jamais raccourcie sauf par la fenêtre. Deux temps : les trajets se
+  chevauchent sur leurs rampes (l'un ralentit pendant que l'autre démarre), sans arrêt au milieu.
+  Pas d'agrandissement d'entrée de 4 % (`RECUL`) sur ces images : le mouvement en tient lieu.
+- **Plans** : l'entrée part de l'instant du plan, pendant son fondu ; la tenue ne commence qu'à
+  la fin de l'entrée (plus d'élan de 1,2 s avant le plan).
+- **Images entières** (`entier`) : l'entrée **précède** le rapprochement, comme le fait déjà le
+  détail d'ouverture. Elle finit sur l'image entière ; `entier_vers` joue ensuite, inchangé.
+  Solution la plus simple : aucune donnée existante n'est modifiée, et le « premier cadre actuel »
+  d'une image entière est bien l'image entière. (Cela lève la réserve du point « Champ » ci-dessus.)
+- **Caméra habituelle** : la première tenue commence à la fin de l'entrée ; une étape suivante
+  garde son instant si elle tient encore, sinon elle est retardée (1 s de tenue puis la
+  transition) ou abandonnée si la voix ou le plan suivant arrive avant. Règle retenue pour le
+  choix des images : pas d'entrée sur une image qui ne reste que 7 à 8 s avec deux étapes.
+- **Contrôle** (`verifier.py`, `controler_entree`) : cadres valides, durée de 4 à 7 s, erreur avec
+  `ouverture`, un avant / après ou une mosaïque ; avertissements : cadre flou, mouvement
+  imperceptible, zoom total au-delà de ×2,4, image qui reste moins de 5 s, intention absente.
+- **Pilote** (période 05, 10 images) : 8 (toits des Tuileries, façade, foule : deux temps),
+  34 b (recul depuis la tribune), 37 b (travelling vers le char), 55 b (de l'horizon de Paris à la
+  place illuminée), 58 (descente le long de la Seine vers Notre-Dame), 70 (montée du dallage aux
+  voûtes), 86 (recul depuis la charge des cavaliers), 98 (recul depuis la colonne de la Bastille),
+  113 (montée de la façade, image entière), 115 (des statues du premier plan aux palais).
+  Écartées : 36 et 46 (fenêtre de 7,7 s et deux étapes : la seconde passait derrière le plan b).
+  Jugé par l'utilisateur le 2026-10-12 (« tout bon »).
+- **Généralisation (2026-10-12)** aux périodes 01, 02, 03 et au reste de la 05 (`entree.py`,
+  README « Entrée en scène d'une grande vue »). Tri mécanique (57, 56, 112 et 84 candidates), tri
+  à l'œil des lieux et des scènes (131 images), mouvement proposé par des sous-agents Sonnet sur la
+  vue réelle (10 lots), relecture sur planche puis sur trois captures du lecteur par image (début,
+  milieu, fin) : 86 entrées posées, 23 retirées après capture (mouvement insignifiant à l'écran,
+  tête coupée au départ, ou étape décalée). **Restent : 16 (période 01), 13 (02), 21 (03),
+  23 (05, pilote compris)**. Période 04 faite ensuite, même passe (110 candidates, 39 tâches, 32 posées, 13 retirées après capture) : **19**.
+- **Règle de fenêtre** (retenue après le pilote) : l'entrée ne décale ni ne supprime aucune étape
+  de caméra existante. L'image reste au moins 9 s si sa caméra a une deuxième étape, 6 s sinon, et
+  l'entrée finit 1 s avant le départ de la transition vers la deuxième étape (étapes relevées sur
+  le lecteur, ordinateur et téléphone : `entree.py plans`, puis `etapes` après build : 0 écart).
+  Écartées aussi : première image d'un acte (les volets du carton sont son entrée), clip `video`.
+  Quatre images du pilote ne la respectent pas et sont gardées telles quelles (validées) : 34 b
+  (fenêtre de 5,5 s), 37 b (8,9 s et deuxième étape retardée de 0,6 à 1,3 s), 86 (deuxième étape
+  retardée de 1,6 s sur téléphone), 98 (retardée de 1,5 s sur ordinateur).
+- **Leçons de la relecture** : les descentes (du ciel, des toits, de la voûte) et les reculs
+  d'une image entière rendent le mieux ; un travelling latéral ou un recul parti d'un cadre bas
+  et serré est souvent imperceptible une fois porté à l'écran (retirés) ; une montée partie du
+  premier plan d'une scène de foule coupe les têtes du rang du dessus (retirées).
+- **Périodes futures** : `banc_claude.py` joint la demande d'entrée (répertoire, règle de
+  fenêtre) à la tâche de caméra des grandes vues et pose le champ avec la caméra.
 
 ## Portail (`/diaporamas/`)
 
