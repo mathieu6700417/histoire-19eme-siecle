@@ -1359,6 +1359,16 @@ de 1 à 3, sans acte ni repère visuel à part ; images d'époque. Les lectures 
 parole à ces voix quand un texte libre existe (un paysan, une ouvrière, un médecin, un préfet).
 Les périodes 01 à 05 ne sont pas reprises.
 
+## Pas d'italique dans le lecteur (décision du 2026-10-12)
+
+L'utilisateur trouve que l'italique de l'EB Garamond « ne fait pas très moderne » dans les
+diaporamas. Après une planche d'essais (actuel, moins d'italique, Source Serif, Inter), décision :
+**même police, sans italique**. Dans le lecteur, tout est en romain : titres d'œuvres des cartouches
+(image et musique), dates des cartons, citations et poèmes, paroles des chants, libellés des cartes
+et des chronologies, crédits des plans de lieu ; « Fin » passe en petites capitales. La hiérarchie
+tient aux tailles, aux petites capitales et au gris, plus à la pente. Hors lecteur (livre d'images,
+chapeau et listes de la page), l'italique des titres d'œuvres est conservé.
+
 ## Entrée en scène des grandes vues (annotation du 2026-10-12)
 
 Annotation de l'utilisateur sur la Deuxième République (diapositive 34, ouverture de l'Assemblée) :

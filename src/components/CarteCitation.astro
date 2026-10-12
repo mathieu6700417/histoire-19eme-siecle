@@ -285,7 +285,7 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
   .citation__defile { position: relative; transition: transform 900ms cubic-bezier(0.4, 0, 0.2, 1); }
   .citation--lecteur .citation__texte p { margin: 0 0 0.45em; }
   .citation--lecteur .citation__texte p:last-child { margin-bottom: 0; }
-  .citation--poeme .citation__texte p { font-style: italic; }
+  .citation--poeme .citation__texte p { font-style: normal; }
   .citation--livre.citation--poeme .citation__texte p { white-space: pre-line; }
   /* Un vers par ligne ; s'il est trop long, la suite passe à la ligne en retrait. */
   .citation__vers { display: block; padding-left: 1.6em; text-indent: -1.6em; }
@@ -322,7 +322,7 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
   .citation__nom { font-variant: small-caps; letter-spacing: 0.08em; font-size: 1.18em; color: var(--c-texte); }
   .citation__vie { margin-left: 0.35em; color: var(--c-texte-doux); font-variant-numeric: oldstyle-nums; }
   .citation__quoi { color: var(--c-texte-doux); }
-  .citation__quoi cite { font-style: italic; color: var(--c-texte); }
+  .citation__quoi cite { font-style: normal; color: var(--c-texte); }
   .citation__nature { font-variant: small-caps; letter-spacing: 0.06em; }
   .citation--lecteur .citation__credit {
     grid-column: 2;
@@ -389,7 +389,7 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
     -webkit-hyphens: none;
     color: var(--c-texte-doux);
   }
-  .citation__source cite { font-style: italic; color: var(--c-texte); }
+  .citation__source cite { font-style: normal; color: var(--c-texte); }
   .citation__source a { margin-left: 0.3em; color: var(--c-texte-doux); }
   @media (max-width: 699px) {
     .citation--livre { grid-template-columns: 4rem minmax(0, 1fr); }

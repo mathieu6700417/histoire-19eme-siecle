@@ -108,7 +108,7 @@ const dates = mots(d.periode);
   .generique__dates {
     margin: 0;
     font-size: min(4.4cqw, 9cqh);
-    font-style: italic;
+    font-style: normal;
     font-variant-numeric: oldstyle-nums;
     letter-spacing: 0.06em;
     line-height: 1.1;
@@ -119,13 +119,13 @@ const dates = mots(d.periode);
     margin: 0;
     font-family: var(--f-titre);
     font-size: min(4cqw, 8.5cqh);
-    font-style: italic;
+    font-style: normal;
     letter-spacing: 0.04em;
     color: rgba(251, 250, 247, 0.85);
   }
   /* Récapitulatif (annotation du 2026-10-12) : « Fin » en grand, au centre exact de l'écran ; le
      titre et les dates, plus petits, viennent dessous sans le déplacer. */
-  .generique--fin .generique__fin { display: block; font-size: min(12cqw, 24cqh); line-height: 1; color: var(--c-fond); }
+  .generique--fin .generique__fin { display: block; font-size: min(12cqw, 24cqh); line-height: 1; color: var(--c-fond); font-variant: small-caps; letter-spacing: 0.1em; }
   .generique--fin .generique__titres { position: absolute; left: 6cqw; right: 6cqw; top: calc(50% + min(8.5cqw, 17cqh)); gap: min(1.6cqh, 0.9rem); }
   .generique--fin .generique__titre { font-size: min(4.2cqw, 8.5cqh); }
   .generique--fin .generique__dates { font-size: min(2.6cqw, 5.4cqh); }

@@ -500,7 +500,7 @@ const statique = mode === 'livre';
     margin: 0 0 0.7rem;
     font-size: clamp(0.95rem, 2.8cqw, 1.5rem);
     text-align: center;
-    font-style: italic;
+    font-style: normal;
   }
   /* L'unité est dite une fois, sous le titre. */
   .ev-titre__unite { display: block; margin-top: 0.15em; font-style: normal; font-variant: small-caps; letter-spacing: 0.05em; color: var(--c-texte-doux); font-size: 0.85em; }
@@ -530,7 +530,7 @@ const statique = mode === 'livre';
     transform: translateY(calc((1 - var(--p)) * 6px));
   }
   .ev-carton__filet { display: block; width: 5rem; margin: 0.9rem auto; border-top: 1px solid var(--c-texte-doux); transform: scaleX(var(--p)); }
-  .ev-carton__sous { margin: 0; font-style: italic; color: var(--c-texte-doux); font-size: clamp(0.95rem, 2.4cqw, 1.3rem); opacity: var(--p); }
+  .ev-carton__sous { margin: 0; font-style: normal; color: var(--c-texte-doux); font-size: clamp(0.95rem, 2.4cqw, 1.3rem); opacity: var(--p); }
 
   /* Gros chiffres. */
   .ev-chiffres { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem clamp(1rem, 5cqw, 3.5rem); max-width: 100%; }
@@ -603,7 +603,7 @@ const statique = mode === 'livre';
   .ev-carte__svg pattern line { stroke: #3d3b37; stroke-width: calc(2.5px * var(--k, 1)); }
   .ev-carte__zone { opacity: var(--p); }
   .ev-carte__zone path { stroke: #3d3b37; stroke-width: calc(2px * var(--k, 1)); stroke-dasharray: 6 5; }
-  .ev-carte__zone text { font-style: italic; }
+  .ev-carte__zone text { font-style: normal; }
   /* Zones pleines (ex. l'Empire) et claires (États vassaux) : aplats sans contour pointillé,
      séparés par un filet de la couleur du papier. */
   .ev-carte__zone.est-plein path { fill: #55524c; stroke: var(--c-fond); stroke-width: calc(1.5px * var(--k, 1)); stroke-dasharray: none; }
@@ -612,7 +612,7 @@ const statique = mode === 'livre';
   .ev-carte__svg.est-recadree .ev-carte__zone text { font-size: calc(34px * var(--k, 1)); letter-spacing: 0.02em; }
   /* Trait (fleuve nommé) : se dessine de la source à l'embouchure. */
   .ev-carte__trace { fill: none; stroke: var(--c-texte); stroke-width: calc(5px * var(--k, 1)); stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
-  .ev-carte__fleuve-nomme text { font-style: italic; opacity: clamp(0, calc(var(--p) * 2 - 0.6), 1); }
+  .ev-carte__fleuve-nomme text { font-style: normal; opacity: clamp(0, calc(var(--p) * 2 - 0.6), 1); }
   .ev-carte__trait { fill: none; stroke: var(--c-texte); stroke-width: calc(6px * var(--k, 1)); stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
   .ev-carte__pointe { fill: var(--c-texte); opacity: clamp(0, calc((var(--p) - 0.85) * 7), 1); }
   .ev-carte__fleche text { opacity: var(--p); font-variant: small-caps; letter-spacing: 0.04em; }
@@ -648,7 +648,7 @@ const statique = mode === 'livre';
     -webkit-mask-size: 100% 100%;
     mask-size: 100% 100%;
   }
-  .ev-doc__lignes { margin: var(--e-2) 0 0; padding-left: var(--e-3); font-style: italic; }
+  .ev-doc__lignes { margin: var(--e-2) 0 0; padding-left: var(--e-3); font-style: normal; }
 
   /* Chronologie : frise fine, bulles à filet fin (ni fond coloré ni ombre), reliées à leur date ;
      la dernière bulle en noir, les précédentes en gris atténué (--p de .ev-chrono__corps). */
@@ -674,7 +674,7 @@ const statique = mode === 'livre';
     opacity: calc(1 - var(--p) * 0.5); border-color: color-mix(in srgb, var(--c-texte) calc(100% - var(--p) * 60%), var(--c-fond));
   }
   .ev-chrono__date { font-variant: small-caps; letter-spacing: 0.06em; color: var(--c-texte-doux); font-size: 0.85em; }
-  .ev-chrono__libelle { font-style: italic; }
+  .ev-chrono__libelle { font-style: normal; }
   .ev-chrono__precision { color: var(--c-texte-doux); font-size: 0.85em; }
   /* Scène étroite (téléphone) : frise verticale à gauche, bulles à droite. */
   @container (max-width: 520px) {
