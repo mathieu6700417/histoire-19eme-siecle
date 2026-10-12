@@ -1,0 +1,67 @@
+{
+ "slug": "deuxieme-republique",
+ "modele": "Wan 2.2 TI2V-5B",
+ "negatif": "text, letters, subtitles, watermark, logo, photorealistic, 3D render, modern clothing, cars, deformed faces, distorted bodies, extra limbs, flickering, fast motion, camera shake, jump cut, morphing, blurry, low quality, oversaturated colours, new characters appearing",
+ "elements": [
+  {
+   "n": 1,
+   "type": "mouvement",
+   "graine": 4801,
+   "prompt": "Pale water of the river flows slowly between the ice floes, which drift gently downstream; thin mist moves over the ice, clouds glide very slowly across the winter sky, a few tiny figures walk on the footbridge. Almost static camera, very slow push-in. Keep exactly the look of this 1848 oil painting: same pale wintry colours, same soft brushwork, same composition; nothing new appears, no text."
+  },
+  {
+   "n": 13,
+   "type": "mouvement",
+   "graine": 5813,
+   "prompt": "The dense crowd in front of the town hall stirs slightly, a few arms are raised and lowered, heads turn towards the speaker, light haze drifts above the crowd. All flags keep exactly their size and place and barely tremble. Almost static camera, very slow push-in. Keep exactly the look of this 1848 oil painting: same warm golden tones, same brushwork, same composition, the architecture stays perfectly still; nothing new appears, no text."
+  },
+  {
+   "n": 25,
+   "type": "mouvement",
+   "graine": 4825,
+   "prompt": "Smoke rises slowly from the burning tripods and drifts across the stormy sky, the flames flicker, the long pennants on the triumphal arch wave gently in the wind, the ranks of troops march slowly below, clouds move. Very slow camera push-in towards the arch. Keep exactly the look of this 1848 oil painting: same dark warm colours, same brushwork, same composition, the arch stays perfectly still; nothing new appears, no text."
+  },
+  {
+   "n": 37,
+   "type": "mouvement",
+   "graine": 4837,
+   "prompt": "Night scene: the distant illuminations and lanterns twinkle and glow, small fireworks sparkle on the horizon, thin smoke drifts, the dark crowd in the foreground moves slightly, stars shimmer faintly in the deep blue sky. Almost static camera, very slow push-in. Keep exactly the look of this 1848 oil painting: same deep blue night, same small warm lights, same brushwork; the two dark obelisks stay perfectly still; nothing new appears, no text."
+  },
+  {
+   "n": 42,
+   "type": "mouvement",
+   "graine": 4842,
+   "prompt": "White cannon smoke billows and drifts slowly across the square in front of the domed church, soldiers in the foreground move and aim behind the barricade, a horseman shifts, clouds glide slowly across the blue sky. Very slow camera push-in along the street. Keep exactly the look of this 1849 oil painting: same clear light, same precise architectural drawing, the buildings and the dome stay perfectly still; nothing new appears, no text."
+  },
+  {
+   "n": 55,
+   "type": "mouvement",
+   "graine": 4855,
+   "prompt": "Heavy winter clouds roll slowly across the sky, light snow falls, the tall tricolour flags and banners wave gently, the distant ranks of troops and the crowd on the square stir slightly. Very slow lateral camera drift to the right. Keep exactly the look of this 1848 oil painting: same dramatic sky, same colours, same brushwork, the obelisk and monuments stay perfectly still; nothing new appears, no text."
+  },
+  {
+   "n": 67,
+   "type": "mouvement",
+   "graine": 5867,
+   "prompt": "Soft clouds drift slowly in the warm sky, the foliage of the tree trembles in the breeze, robes and veils of the pilgrims sway very slightly as they stand, the small banners on the hillside path quiver. Every figure stays in its place, the number of people does not change. Static camera. Keep exactly the look of this hand-coloured watercolour of about 1849: same light flat colours, same fine drawn lines, same composition; nothing new appears, no text."
+  },
+  {
+   "n": 71,
+   "type": "mouvement",
+   "graine": 4871,
+   "prompt": "The teams of oxen walk slowly forward pulling the ploughs, heads nodding, muscles shifting, the ploughmen step beside them and one raises his goad, the dark earth turns behind the ploughshare, grass trembles in a light breeze. Slow lateral camera tracking that follows the oxen. Keep exactly the look of this 1849 oil painting: same clear morning light, same precise brushwork, same composition; nothing new appears, no text."
+  },
+  {
+   "n": 85,
+   "type": "mouvement",
+   "graine": 5885,
+   "prompt": "On the square in front of the railway station, the horse-drawn cabs roll slowly, small pedestrians walk and stroll, the thin smoke of the distant factory chimney on the right drifts sideways, light clouds glide very slowly. The sky above the station stays clear and empty. Static camera. Keep exactly the look of this monochrome sepia lithograph of about 1850: same beige tones, same fine drawn lines, the building stays perfectly still; nothing new appears, no text."
+  },
+  {
+   "n": 110,
+   "type": "mouvement",
+   "graine": 4910,
+   "prompt": "The massed regiments march slowly across the parade ground, the cavalry in the foreground trots, the many small flags on the dome and pavilion wave gently, light dust rises, soft clouds drift across the pale sky. Very slow camera push-in towards the pavilion. Keep exactly the look of this 1852 oil painting: same soft pale colours, same fine brushwork, the pavilion and dome stay perfectly still; nothing new appears, no text."
+  }
+ ]
+}

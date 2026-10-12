@@ -41,6 +41,10 @@ const avantApresMontres = d.diapositives.filter((x) => x.image.apres).map((x) =>
 const mosaiquesMontrees = d.diapositives.filter((x) => x.mosaique).map((x) => ({
   n: x.n, legende: x.mosaique!.legende, vignettes: x.mosaique!.vignettes.map((v, k) => (k === x.mosaique!.principale ? { ...x.image, ...v } : v)),
 }));
+// Crédits des images mises en mouvement par IA (spec 16) : clips dérivés d'images de la période par un
+// modèle à poids ouverts, signalés dans le cartouche ; l'image d'origine reste la seule authentique.
+const videosMontrees = d.diapositives.filter((x) => x.image.video && !x.image.apres).map((x) => ({ n: x.n, i: x.image, v: x.image.video! }));
+const modelesVideo = [...new Set(videosMontrees.map((x) => x.v.modele))];
 const notice = (v: { titre?: string; auteur?: string; date?: string; technique?: string; conservation?: string }) =>
   t([v.auteur, v.titre ? `« ${v.titre} »` : '', v.date, v.technique, v.conservation].filter(Boolean).join(', '));
 /** Licence en milieu de phrase : minuscule initiale, sauf sigle (CC0, CC BY…). */
@@ -164,6 +168,15 @@ const urlLicence = (x: string) => {
             </ul>
           </Fragment>
         )}
+      </section>
+    )}
+    {videosMontrees.length > 0 && (
+      <section class="musiques portraits-credits" aria-labelledby="titre-mouvement">
+        <h2 id="titre-mouvement">Images mises en mouvement</h2>
+        <p>{typographie(`Sur ${videosMontrees.length} diapositives, l'image d'époque s'anime quelques secondes : fumées, drapeaux, foule. Ce court clip muet est calculé par un modèle d'intelligence artificielle à poids ouverts (${modelesVideo.join(', ')}) à partir du document lui-même, qui reste seul authentique ; rien n'y est ajouté qui ne soit dans l'image. Le cartouche le signale ; avec la préférence « réduire les animations », l'image reste fixe.`)}</p>
+        <ul>
+          {videosMontrees.map(({ n, i }) => <li>Diapositive {n} : {notice(i)}. <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a>, domaine public.</li>)}
+        </ul>
       </section>
     )}
     {chapitre && (

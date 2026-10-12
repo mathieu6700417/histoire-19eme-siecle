@@ -46,7 +46,19 @@ export interface ImageDiapo {
    *  cette image-ci (« avant ») ; au passage `apres.quand`, un volet glissant lent découvre
    *  l'image « après » (même lieu ou même sujet), et le cartouche passe de l'une à l'autre. */
   apres?: ImageApres;
+  /** Mise en mouvement par IA (spec 16) : clip muet dérivé de cette image (sa zone utile) par un
+   *  modèle à poids ouverts, joué une fois à la place de l'image fixe une fois l'entrée finie, puis
+   *  tenu sur sa dernière image ;
+   *  signalé dans le cartouche et crédité sur la page. Posé par `generation.py publier` ; sans effet
+   *  sur un avant / après (verifier.py le refuse) ; sur une mosaïque, il paraît après la plongée. */
+  video?: VideoDiapo;
 }
+/** Clip généré (spec 16) : fichier dans public/diaporamas/<slug>/ (« 018-mouvement.mp4 » : 10 s,
+ *  5 s générées ralenties de moitié, joués une fois, H.264 sans son, aux proportions de la zone
+ *  utile), `type` = usage
+ *  (« mouvement »), `modele` nommé pour les crédits, `genere_le` : date du calcul. La consigne et
+ *  la graine sont dans le lot src/data/diaporamas/generation/<slug>.json. */
+export interface VideoDiapo { fichier: string; type: 'mouvement'; duree: number; largeur: number; hauteur: number; modele: string; genere_le?: string }
 /** Image « après » d'un avant / après : notice complète comme une image de diapositive ; `cadre`
  *  = vue de la caméra au volet, qui correspond au dernier cadre de la caméra de l'image « avant »
  *  (même lieu superposé) ; `quand` = passage exact qui déclenche le volet ; `camera` = étapes

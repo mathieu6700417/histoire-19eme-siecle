@@ -2862,5 +2862,176 @@
     "nom": "Teste",
     "dates": "1780-1852",
     "note": "Aucun portrait libre et identifié sur Commons ni image sur Wikidata (recherche du 2026-10-11)."
+  },
+  {
+    "id": "louis-blanc",
+    "nom": "Louis Blanc",
+    "dates": "1811-1882",
+    "commons": "File:Louis Blanc by Carjat 1848.jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "vers 1874-1877",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_Blanc_by_Carjat_1848.jpg",
+    "cadre_visage": [
+      0.379,
+      0.108,
+      0.707,
+      0.446
+    ],
+    "fichier": "portraits/louis-blanc.webp"
+  },
+  {
+    "id": "schoelcher",
+    "nom": "Schœlcher",
+    "dates": "1804-1893",
+    "commons": "File:Victor Schœlcher par Henri Decaisne.jpg",
+    "auteur": "Henri Decaisne",
+    "date": "1832",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Victor_Sch%C5%93lcher_par_Henri_Decaisne.jpg",
+    "cadre_visage": [
+      0.39,
+      0.105,
+      0.535,
+      0.29
+    ],
+    "fichier": "portraits/schoelcher.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "millet",
+    "nom": "Millet",
+    "dates": "1814-1875",
+    "commons": "File:Jean-FrancoisMillet(Nadar).jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "1856-1858",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean-FrancoisMillet(Nadar).jpg",
+    "cadre_visage": [
+      0.36,
+      0.096,
+      0.678,
+      0.374
+    ],
+    "fichier": "portraits/millet.webp"
+  },
+  {
+    "id": "courbet",
+    "nom": "Courbet",
+    "dates": "1819-1877",
+    "commons": "File:Gustave Courbet by Nadar 1860s.png",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "années 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Gustave_Courbet_by_Nadar_1860s.png",
+    "cadre_visage": [
+      0.325,
+      0.12,
+      0.701,
+      0.383
+    ],
+    "fichier": "portraits/courbet.webp"
+  },
+  {
+    "id": "louis-napoleon",
+    "nom": "Louis-Napoléon Bonaparte",
+    "dates": "1808-1873",
+    "commons": "File:Napoleon III, 1851.png",
+    "auteur": "Daguerréotype anonyme (BnF)",
+    "date": "1851",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Napoleon_III,_1851.png",
+    "cadre_visage": [
+      0.394,
+      0.104,
+      0.671,
+      0.364
+    ],
+    "fichier": "portraits/louis-napoleon.webp"
+  },
+  {
+    "id": "affre",
+    "nom": "Mgr Affre",
+    "dates": "1793-1848",
+    "commons": "File:Portret van Denis Auguste Affre, aartsbisschop van Parijs M.gr Denis-Auguste Affre, Archevêqe de Paris, blessé mortellement sur la barricade du Faubourg Saint Antoine le 25 Juin 1848 (titel op object) Genummerde portre, RP-P-1911-843.jpg",
+    "auteur": "Lithographie anonyme (série des « Portraits numérotés », Rijksmuseum)",
+    "date": "1848",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portret_van_Denis_Auguste_Affre,_aartsbisschop_van_Parijs_M.gr_Denis-Auguste_Affre,_Archev%C3%AAqe_de_Paris,_bless%C3%A9_mortellement_sur_la_barricade_du_Faubourg_Saint_Antoine_le_25_Juin_1848_(titel_op_object)_Genummerde_portre,_RP-P-1911-843.jpg",
+    "cadre_visage": [
+      0.441,
+      0.251,
+      0.588,
+      0.363
+    ],
+    "fichier": "portraits/affre.webp"
+  },
+  {
+    "id": "proudhon",
+    "nom": "Proudhon",
+    "dates": "1809-1865",
+    "commons": "File:Proudhon atelier Nadar BNF Gallica.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1860-1864",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Proudhon_atelier_Nadar_BNF_Gallica.jpg",
+    "cadre_visage": [
+      0.37,
+      0.15,
+      0.675,
+      0.378
+    ],
+    "fichier": "portraits/proudhon.webp"
+  },
+  {
+    "id": "changarnier",
+    "nom": "Changarnier",
+    "dates": "1793-1877",
+    "commons": "File:Assemblée nationale, galerie des représentants du peuple - Nicolas Changarnier.jpg",
+    "auteur": "Adolphe Lafosse (lithographie)",
+    "date": "1848",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Assembl%C3%A9e_nationale,_galerie_des_repr%C3%A9sentants_du_peuple_-_Nicolas_Changarnier.jpg",
+    "cadre_visage": [
+      0.314,
+      0.195,
+      0.587,
+      0.421
+    ],
+    "fichier": "portraits/changarnier.webp"
+  },
+  {
+    "id": "rosa-bonheur",
+    "nom": "Rosa Bonheur",
+    "dates": "1822-1899",
+    "commons": "File:Rosa Bonheur MET DT2940.jpg",
+    "auteur": "Anna Klumpke (portrait tardif)",
+    "date": "1898",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Rosa_Bonheur_MET_DT2940.jpg",
+    "cadre_visage": [
+      0.45,
+      0.194,
+      0.64,
+      0.362
+    ],
+    "fichier": "portraits/rosa-bonheur.webp"
+  },
+  {
+    "id": "cavaignac",
+    "nom": "Général Cavaignac",
+    "dates": "1802-1857",
+    "commons": "File:Cavaignac par Guillaume Lépaule 1848.jpg",
+    "auteur": "François-Gabriel Lépaulle",
+    "date": "1848",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Cavaignac_par_Guillaume_L%C3%A9paule_1848.jpg",
+    "cadre_visage": [
+      0.375,
+      0.098,
+      0.612,
+      0.313
+    ],
+    "fichier": "portraits/cavaignac.webp"
   }
 ]

@@ -25,6 +25,9 @@ export interface Diapo {
   date: DateFrise | null;
   /** Plans (spec 14) : images suivantes de la diapositive, chacune à son instant de la voix. */
   plans?: Plan[] | null;
+  /** Mise en mouvement par IA (spec 16) : clip muet de 10 s joué une fois (dernière image tenue), aux
+   *  proportions de la zone utile, posé sur elle avec la transformation de l'image (mouvement.ts). */
+  video?: { src: string; duree: number } | null;
   /** Segment joué après la voix (et sa pause) : intermède chanté, lecture ou épisode. */
   suite: Suite | null;
   /** Carte de lieu : fenêtre [a, b) (s de l'audio), point (%) dans le fond, partie du plan de

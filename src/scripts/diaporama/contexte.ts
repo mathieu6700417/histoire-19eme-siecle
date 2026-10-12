@@ -101,6 +101,13 @@ export interface Lecteur {
   majGalerie: (c: HTMLElement, x: Diapo, ts?: number) => number;
   poserPlans: (k: number) => void;
   legendeGalerie: (x: Diapo, k: number) => string | null;
+  // mouvement
+  preparerVideo: (c: HTMLElement, x: Diapo) => void;
+  taillerVideo: (c: HTMLElement, x: Diapo) => void;
+  majVideo: (c: HTMLElement, x: Diapo, transformation: string, t: number, entree: boolean) => void;
+  poserVideo: (c: HTMLElement, transformation: string) => void;
+  arreterVideo: (c: HTMLElement) => void;
+  prechargerVideo: (x: Diapo) => void;
   // rendu
   legendeVoulue: (x: Diapo, t: number) => string;
   legendeMontree: string;

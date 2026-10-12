@@ -1120,6 +1120,17 @@ suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan
   plus de dépendance aux crédits Gemini pour cette étape. **Gemini reste** pour la voix (synthèse et
   contrôle de fidélité) et, en repli, pour la zone utile. Les périodes 01 à 03 gardent leur caméra
   actuelle tant que l'utilisateur ne demande pas de les refaire.
+- **Images mises en mouvement (spec 16, décidé le 2026-10-12, à partir de la période 05 ; les périodes
+  01 à 04 en reçoivent après coup)** : **un clip par diapositive, une dizaine de diapositives par
+  période** (décision de l'utilisateur du 2026-10-12 ; plafond 15), choisies dès l'étape 1 parmi les scènes animables (fumées, drapeaux, foule, eau, ciel,
+  feu ; jamais un portrait, jamais une inscription lisible, jamais un avant/après ni une image
+  entière ; une mosaïque convient, le clip paraît après la plongée), une ou deux par acte, de
+  préférence sur les diapositives longues. Le lot (`generation/<slug>.json` : consigne anglaise et
+  graine par diapositive) s'écrit après la caméra (étape 5, pour tenir compte de la zone utile) et
+  se calcule sur Colab par la CLI (`generation.py preparer`, `lancer`, planche, `publier`), hors
+  Gemini : environ 2 h de machine et 13 unités par période pour dix clips (mesures de la Révolution :
+  5,3 min pour 121 images, 12,1 min pour 241 images sur A100 ; 6,77 unités/h en mémoire haute). Le
+  clip est dérivé de l'image, signalé dans le cartouche et crédité ; l'original reste seul authentique.
 
 ### Consulat et Empire enrichi (2026-10-09)
 
@@ -1151,6 +1162,30 @@ subsistances). Particularités :
 - cartes d'épisode : une carte de la France entière a de petits libellés (fond presque carré) ; quand trois ou
   quatre villes suffisent, poser un `cadre` serré (carte de la crise) ; des villes voisines demandent des
   `position` choisies une à une (Mascara, Tlemcen, Tagdempt, Taguin).
+
+### 1848 et la IIe République (2026-10-12)
+
+Dosage atteint : 115 diapositives en 8 actes, 207 images (68 plans, 21 images de galerie, 3 d'épisode), 47 min ;
+41 lieux, 15 citations, 23 personnes montrées en portrait (10 portraits nouveaux au registre), 11 objets, 3 manuscrits,
+12 chiffres, 3 avant/après (22, 45, 106), 2 mosaïques (6, 40), 115 images entières sur fond noir. Épisodes :
+« Neuf millions d'électeurs » (après 26), « Quatre jours de juin » (après 42, plan gravé des barricades),
+« Le 10 décembre 1848 » (après 58), « La province se soulève » (après 101, carte des foyers de décembre 1851).
+Particularités :
+- **chant remplacé** : *Le Chant des Girondins* n'a pas d'enregistrement libre d'origine vérifiable ; l'intermède
+  chanté après 33 est *La Marseillaise* (Georges Thill, 1931, couplet « Amour sacré de la patrie »), que la
+  narration 33 amène par Rachel au Théâtre-Français (plan 33b : dessin du musée Carnavalet) ;
+- **images manquantes** : rien de libre et de sûr pour *La République* de Daumier (esquisse du concours de 1848),
+  pour l'insurrection de province de décembre 1851 (l'image de 101 est une médaille de propagande du parti de
+  l'ordre, dite comme telle dans sa notice ; la carte de l'épisode montre les foyers) ni pour le pendule de Foucault
+  au Panthéon ;
+- **caméra** : 172 vues sur 178 par les sous-agents Sonnet, le reste à la main ; les groupes de visages serrés
+  (10, 35, 79, 90) passent en image entière (`entier_manuel`) plutôt qu'en bande qui coupe des têtes ; raccords
+  des avant/après relevés sur grille puis contrôlés par capture (45 : deux daguerréotypes de Thibault à la même
+  échelle ; 106 : les deux têtes superposées) ;
+- **médailles** : dix médailles de Carnavalet gardées sur quinze proposées (même genre d'objet) ; les médailles à
+  bélière se détourent sans `detourage: "convexe"` ;
+- lieux hors du plan de 1838 (barrière de Fontainebleau, cimetière Montmartre) : pas de médaillon ;
+- captures : une diapositive qui ouvre un acte demande `--attente 9000` (carton), sinon l'instant reste au début.
 
 ## Retours du visionnage de la Restauration (2026-10-11)
 

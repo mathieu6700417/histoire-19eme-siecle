@@ -57,12 +57,18 @@ function legendeImage(i: { titre?: string; auteur?: string; date?: string; techn
 }
 
 /** Cartouche du lecteur (spec 12, « Cartouches lisibles ») : trois lignes, *titre court*,
- *  auteur, « date · technique » (HTML échappé). Le titre officiel reste dans le livre et l'`alt`. */
-function cartouche(x: Diaporama['diapositives'][number]) { return cartoucheImage(x.image); }
-function cartoucheImage(i: { titre: string; titre_court?: string; auteur?: string; date?: string; technique?: string }) {
+ *  auteur, « date · technique » (HTML échappé). Le titre officiel reste dans le livre et l'`alt`.
+ *  Image mise en mouvement par IA (spec 16) : une quatrième ligne le signale (masquée par le CSS
+ *  avec la préférence « réduire les animations », où l'image reste fixe). */
+function cartouche(x: Diaporama['diapositives'][number]) { return cartoucheImage(x.image, Boolean(videoDe(x))); }
+function cartoucheImage(i: { titre: string; titre_court?: string; auteur?: string; date?: string; technique?: string }, ia = false) {
   const quand = [i.date && esc(t(i.date)), i.technique && esc(t(i.technique))].filter(Boolean).join(' · ');
-  return `<cite>${esc(t(i.titre_court || i.titre))}</cite>${i.auteur ? `<span>${esc(t(i.auteur))}</span>` : ''}${quand ? `<span>${quand}</span>` : ''}`;
+  return `<cite>${esc(t(i.titre_court || i.titre))}</cite>${i.auteur ? `<span>${esc(t(i.auteur))}</span>` : ''}${quand ? `<span>${quand}</span>` : ''}`
+    + (ia ? '<span class="lecteur__legende-ia">mise en mouvement par IA</span>' : '');
 }
+/** Clip d'une image mise en mouvement (spec 16) ; sans effet sur un avant / après (sur une mosaïque,
+ *  il paraît après la plongée). */
+const videoDe = (x: Diaporama['diapositives'][number]) => (x.image.video && !x.image.apres ? x.image.video : null);
 
 /** Cartouche d'un intermède dans le lecteur : *œuvre* et compositeur rédigés à la main
  *  (`cartouche`), sans troncature ; l'interprète au survol seulement. */
@@ -232,6 +238,8 @@ const donnees = {
     })() : null,
     // Plans (spec 14) : images suivantes de la diapositive, chacune à son instant de la voix.
     plans: x.plans?.length && !x.image.apres && !x.mosaique ? plansDe(x).map((p) => planLecteur(p.image, cartoucheImage(p.image), p.t, p.camera)) : null,
+    // Image mise en mouvement par IA (spec 16) : clip muet en boucle sur la zone utile (mouvement.ts).
+    video: videoDe(x) ? { src: urlMedia(d.slug, videoDe(x)!.fichier), duree: videoDe(x)!.duree } : null,
     // Mosaïque (point 5) : vignettes (la principale est l'image de la diapositive), cartouche d'une ligne.
     mos: x.mosaique ? {
       legende: `<cite>${esc(t(x.mosaique.legende))}</cite>`,
@@ -284,10 +292,12 @@ function friseHtml(classe: string) {
   const a0 = frise.annees[0].a, a1 = frise.annees.at(-1)!.a;
   return `<div class="frise-t ${classe}" aria-hidden="true"><span class="frise-t__borne">${a0}</span><div class="frise-t__piste"><span class="frise-t__date"></span><span class="frise-t__filet"></span>${crans}${classe === 'frise-t--carton' ? '<span class="frise-t__acte"></span>' : ''}<span class="frise-t__curseur"></span></div><span class="frise-t__borne">${a1}</span></div>`;
 }
-// Dans chaque calque, après l'image : les plans et les galeries de la spec 14 (images posées par le
-// script, en fondu croisé), l'image « après » d'un avant / après (sous un volet qui la
+// Dans chaque calque, après l'image : la boîte du clip d'une image mise en mouvement (spec 16,
+// mouvement.ts : même transformation que l'image), les plans et les galeries de la spec 14 (images
+// posées par le script, en fondu croisé), l'image « après » d'un avant / après (sous un volet qui la
 // découvre, et sa ligne), puis la grille d'une mosaïque. Vides et masqués hors de ces diapositives.
-const CALQUE_SUITE = '<div class="lecteur__plans" hidden></div><div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
+const CALQUE_SUITE = '<div class="lecteur__video" hidden><video muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video></div>'
+  + '<div class="lecteur__plans" hidden></div><div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
 const sectionsLivre = d.actes.map((a, i) => ({
   ...a,
   diapos: d.diapositives.filter((x) => x.n >= a.debut && (i === d.actes.length - 1 || x.n < d.actes[i + 1].debut)),
@@ -377,6 +387,12 @@ const sectionsLivre = d.actes.map((a, i) => ({
                 <img src={urlMedia(d.slug, x.image.fichier)} alt={t(x.image.titre)} width={x.image.largeur} height={x.image.hauteur} loading="lazy" decoding="async" />
                 <figcaption set:html={legende(x)} />
               </figure>
+              {videoDe(x) && (
+                <figure class="livre__apres livre__video">
+                  <video src={urlMedia(d.slug, videoDe(x)!.fichier)} poster={urlMedia(d.slug, x.image.fichier)} width={videoDe(x)!.largeur} height={videoDe(x)!.hauteur} controls muted playsinline preload="none"></video>
+                  <figcaption set:html={`<span class="livre__marque">Mise en mouvement par IA :</span> ${esc(t(`clip muet de ${Math.round(videoDe(x)!.duree)} s calculé d'après l'image ci-dessus par le modèle ${videoDe(x)!.modele} (poids ouverts) ; seul le document original fait foi.`))}`} />
+                </figure>
+              )}
               {x.image.apres && (
                 <figure class="livre__apres">
                   <img src={urlMedia(d.slug, x.image.apres.fichier)} alt={t(x.image.apres.titre)} width={x.image.apres.largeur} height={x.image.apres.hauteur} loading="lazy" decoding="async" />
@@ -521,6 +537,13 @@ const sectionsLivre = d.actes.map((a, i) => ({
      posé par le script) dont le bord est une ligne verticale fine (blanc cassé bordé de gris). */
   .lecteur__calque :global(.lecteur__apres) { position: absolute; inset: 0; overflow: hidden; }
   .lecteur__calque :global(.lecteur__plans) { position: absolute; inset: 0; overflow: hidden; }
+  /* Image mise en mouvement par IA (spec 16) : la boîte du clip a la taille de l'image et reçoit sa
+     transformation (mouvement.ts) ; le clip, étiré sur la zone utile, entre en fondu une fois
+     l'entrée de l'image finie (`est-vivante`, FONDU_CLIP) et s'efface de même sous un plan. */
+  .lecteur__calque :global(.lecteur__video) { position: absolute; left: 0; top: 0; transform-origin: 0 0; opacity: 0; will-change: transform, opacity; }
+  .lecteur__calque :global(.lecteur__video.est-vivante) { opacity: 1; }
+  .lecteur__calque :global(.lecteur__video) { transition: opacity 1.2s ease; }
+  .lecteur__calque :global(.lecteur__video video) { display: block; position: absolute; max-width: none; object-fit: fill; background: transparent; }
   .lecteur__calque :global(.lecteur__plans img) { will-change: transform, opacity; }
   .lecteur__calque :global(.lecteur__plans img), .lecteur__calque :global(.lecteur__apres img), .lecteur__calque :global(.mosaique img) {
     display: block;
@@ -991,6 +1014,11 @@ const sectionsLivre = d.actes.map((a, i) => ({
   .lecteur__legende :global(.lecteur__legende-image) { font-variant: normal; letter-spacing: 0; }
   .lecteur__legende :global(.lecteur__legende-voix) { display: none; font-variant: normal; font-style: italic; letter-spacing: 0; font-size: 0.8rem; }
   .lecteur__legende:hover :global(.lecteur__legende-voix) { display: block; }
+  /* Image mise en mouvement par IA (spec 16) : signalée sur une quatrième ligne, plus petite ;
+     avec la préférence « réduire les animations », l'image reste fixe et la ligne disparaît. */
+  .lecteur__legende :global(.lecteur__legende-ia) { font-size: 0.78rem; letter-spacing: 0.04em; }
+  @media (prefers-reduced-motion: reduce) { .lecteur__legende :global(.lecteur__legende-ia) { display: none; } }
+  .livre__video video { display: block; width: 100%; height: auto; background: #000; }
 
   /* Plein écran : fond blanc cassé ; légende et contrôles s'effacent après inactivité. */
   /* L'image occupe tout l'écran ; acte, légende, sous-titre et contrôles se superposent

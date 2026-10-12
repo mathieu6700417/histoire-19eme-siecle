@@ -32,6 +32,7 @@ export function installerCamera(lec: Lecteur) {
     }
     lec.placerTuiles(c, x);
     lec.taillerPlans(c, x);
+    lec.taillerVideo(c, x);
   }
 
   // Hauteurs couvertes en haut (cartouche, acte en plein écran) et en bas (sous-titre,

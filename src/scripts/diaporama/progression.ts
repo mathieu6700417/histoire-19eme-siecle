@@ -4,7 +4,7 @@ import { mmss } from './outils';
 import type { Lecteur } from './contexte';
 
 export function installerProgression(lec: Lecteur) {
-  const { D, bornes, chronoCarton, debuts, elEcoule, elPlan, instant, prelude, sa, segments, suiteEtPause,
+  const { D, bornes, chronoCarton, debuts, elEcoule, elPlan, instant, prechargerVideo, prelude, sa, segments, suiteEtPause,
     total, voixEtPause } = lec;
   Object.assign(lec, { majTemps, precharger, tempsCourant });
   /** Instant courant dans tout le diaporama (cartons, voix, pauses, intermèdes). */
@@ -53,6 +53,8 @@ export function installerProgression(lec: Lecteur) {
       // Plans, galerie d'intermède, images d'une lecture (spec 14).
       for (const p of [...(x.plans ?? []), ...(lec.galerieDe(x) ?? [])]) new Image().src = p.img;
       for (const v of x.mos?.vignettes ?? []) new Image().src = v.img;
+      // Clip d'une image mise en mouvement (spec 16) : la suivante seulement, il est lourd.
+      if (j <= k + 1) prechargerVideo(x);
       if (j > k && x.audio) { const a = new Audio(); a.preload = 'auto'; a.src = x.audio; }
       if (x.suite && j <= k + 1) { const a = new Audio(); a.preload = 'auto'; a.src = x.suite.src; }
     }

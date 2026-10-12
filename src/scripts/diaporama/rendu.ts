@@ -8,9 +8,9 @@ import type { Diapo, Rect, SuiteChant } from './types';
 import type { Lecteur } from './contexte';
 
 export function installerRendu(lec: Lecteur) {
-  const { D, apresDe, audio, cadre, cadreA, cadreIntermede, calques, chronoCarton, chronoEntree, couches,
-    debutPlongee, horloge, horlogeSuite, legendeGalerie, majApres, majGalerie, majMosaique, majPlans, placerTuiles, poserPlans, preparerPlans,
-    principal, sa,
+  const { D, apresDe, arreterVideo, audio, cadre, cadreA, cadreIntermede, calques, chronoCarton, chronoEntree, couches,
+    debutPlongee, horloge, horlogeSuite, legendeGalerie, majApres, majGalerie, majMosaique, majPlans, majVideo, placerTuiles, poserPlans, poserVideo, preparerPlans,
+    preparerVideo, principal, sa,
     tempsOuverture, transformation } = lec;
   Object.assign(lec, { animer, assurerFin, instant, legendeVoulue, montrerImage, poser, rendre });
   /** Cartouche voulu à l'instant `t` : la ligne de la mosaïque pendant la grille, celui de
@@ -47,6 +47,7 @@ export function installerRendu(lec: Lecteur) {
       }
     } else { mo.replaceChildren(); delete mo.dataset.n; }
     preparerPlans(c, x);
+    preparerVideo(c, x);
   }
   lec.legendeMontree = '';
 
@@ -61,7 +62,9 @@ export function installerRendu(lec: Lecteur) {
   function poser(k: number) {
     const x = couches[k].x;
     if (!x) return;
-    calques[k].querySelector('img')!.style.transform = transformation(calques[k], x, couches[k].r);
+    const img = calques[k].querySelector('img')!;
+    img.style.transform = transformation(calques[k], x, couches[k].r);
+    poserVideo(calques[k], img.style.transform);
     const ra = couches[k].ra;
     if (x.ap && ra) {
       const imgA = calques[k].querySelector<HTMLImageElement>('.lecteur__apres img')!;
@@ -98,6 +101,8 @@ export function installerRendu(lec: Lecteur) {
       : cadreA(principal(x), tv);
     couches[lec.visible].r = r;
     img.style.transform = transformation(c, x, r, f);
+    // Clip d'une image mise en mouvement (spec 16) : même transformation, visible une fois l'entrée finie.
+    if (x.video) majVideo(c, x, img.style.transform, tv, !ouv && e >= dureeEntree(x));
     // Avant / après, mosaïque ; puis le cartouche voulu à cet instant (pas pendant un segment).
     if (x.ap) majApres(c, x, tv);
     if (x.mos && !x.ouv) majMosaique(c, x, tv);
@@ -116,6 +121,7 @@ export function installerRendu(lec: Lecteur) {
     if (opacite >= 1 && lec.sortant >= 0) {
       calques[lec.sortant].style.opacity = '0';
       calques[lec.sortant].classList.remove('est-visible');
+      arreterVideo(calques[lec.sortant]);
       lec.sortant = -1;
     }
     if (lec.enEntree && !ouv && e >= dureeEntree(x)) {
@@ -162,6 +168,7 @@ export function installerRendu(lec: Lecteur) {
         a.style.opacity = '0';
         a.classList.remove('est-visible');
         a.querySelector('img')!.alt = '';
+        arreterVideo(a);
       }
       lec.sortant = -1;
     }

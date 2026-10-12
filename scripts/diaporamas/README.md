@@ -53,6 +53,7 @@ les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelle
 | `verifier.py` | Contrôle d'une période avant publication (110 à 130 diapositives depuis la révision « Arts et techniques ») ; générique : 8 à 12 images de la période, deux par acte au plus, indicatif commun (licence, fichiers, durées). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. `--etape A|B|C` (spec 13) : contrôles d’une étape, sortie résumée. |
 | `tester_etapes.py` | Contrôle de `verifier.py --etape` : la réunion des étapes A, B et C égale la vérification complète. |
 | `registre_musique.py` | Registre des enregistrements libres commun aux périodes (`commun/registre-musique.json`) : `chercher`, `ajouter --depuis`, `ecarter`, `possible`, `introuvable`, `--amorcer` (voir « Registre des enregistrements libres »). |
+| `generation.py` | Couche générée (spec 16) : `preparer <slug>` (kit zip pour Colab : manifeste et sources JPEG réduites à la zone utile), `lancer <slug>` (session Colab par la CLI `colab`, calcul par `scripts/colab/mouvement.py`, rapatriement, arrêt), `encoder <slug> [zip|dossier]` (clips aller-retour H.264 sans son, encodés pour le site, dans `.cache/diaporamas/<slug>/generation/clips/`), `planche <slug>` (page HTML de visionnage), `publier <slug> [--seulement n,n]` (clips → `public/diaporamas/<slug>/NNN-mouvement.mp4` et champ `image.video`), `retirer <slug> --seulement n`. Lot : `src/data/diaporamas/generation/<slug>.json` (voir « Couche générée »). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
@@ -194,7 +195,12 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
    et relire ses planches (voir « Paroles des chants » ci-dessous).
 7. Cartes de lieu, citations, portraits, objets, manuscrits, chiffres et dates : remplir `lieux`, `citations`, `personnes`, `personnes_vues`, `objets`, `manuscrits`, `chiffres` et `dates_republicaines` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité, `objets.py` pour le registre des objets), lancer
    `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
-8. `verifier.py <slug>` puis `npm run build`.
+8. Images mises en mouvement (spec 16, à partir de la période 05) : écrire le lot
+   `src/data/diaporamas/generation/<slug>.json` (une dizaine de diapositives choisies dès l'étape 1,
+   une consigne anglaise et une graine chacune), puis `generation.py preparer`, `lancer` (Colab par
+   la CLI, ≈ 2 h 30 de machine par période, session arrêtée à la fin), planche de visionnage, `publier`
+   (voir « Couche générée »). Zéro Gemini.
+9. `verifier.py <slug>` puis `npm run build`.
 
 Chaque agent termine son étape par `verifier.py <slug> --etape A` (ou `B`, `C`), et lance
 `gemini.py --solde` avant une étape payante (voir « Vérification par étape et solde Gemini »).
@@ -956,6 +962,9 @@ l'objet avec la surimpression de son coin ni le manuscrit avec la citation ; obj
 en avertissement.
 
 Révolution : 10 objets, 3 manuscrits (liste avec `objets.py revolution --relever`).
+1848 et la IIe République (2026-10-12) : 11 objets (dix médailles de Carnavalet et le jeton du banquet réformiste) et
+3 manuscrits (laissez-passer de Lamartine, BnF ; brouillon du décret d'abolition annoté par Schœlcher, ANOM ; note de
+Hugo sur sa chambre de Bruxelles, Hauteville House).
 Monarchie de Juillet (2026-10-11) : 10 objets (sept médailles et jetons de Carnavalet, pièce de 25 centimes de 1847,
 chambre à daguerréotype Susse Frères, locomotive Buddicom nº 33) et 4 manuscrits (page de titre de *Notre-Dame de
 Paris*, BnF NAF 13378 ; lettre aux maires de Lyon du 20 novembre 1831 ; dépêche de l'arrestation de la duchesse de
@@ -1056,6 +1065,10 @@ après), volet tenu dans la voix ; 4 à 6 vignettes présentes et sous licence, 
 de la diapositive, zones utiles, pas sur une ouverture d'acte, grille et plongée tenues dans la voix ;
 dosage (3 à 4 avant/après, 2 mosaïques) en avertissement. `renumeroter.py` renomme aussi les
 `NNN-apres.webp` et `NNN-mK.webp`.
+
+1848 et la IIe République (2026-10-12) : avant/après 22 (arbre de la liberté planté → abattu, 1850), 45 (la rue
+Saint-Maur avant et après l'assaut, daguerréotypes de Thibault), 106 (Louis-Napoléon gravé en 1848 → par Le Gray en
+1852) ; mosaïques 6 (barricades de Février) et 40 (journées de Juin).
 
 Monarchie de Juillet (2026-10-11) : avant/après 32 (Louis-Philippe par Gérard → les croquades de Philipon : le roi
 changé en poire), 51 (la place Louis XVI → l'obélisque dressé), 54 (Notre-Dame en daguerréotype → la flèche de
@@ -1164,6 +1177,7 @@ est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir direct
 | `avant-apres.ts` | image avant / après, raccord, rendu du volet |
 | `mosaique.ts` | grille, vignettes, plongée dans l'image principale |
 | `plans.ts` | spec 14 : plans d'une diapositive, galerie d'un intermède, images d'une lecture (fondu croisé, caméra par image) |
+| `mouvement.ts` | spec 16 : clip d'une image mise en mouvement par IA (`x.video`), posé sur la zone utile avec la transformation de l'image, fondu après l'entrée, joue avec la voix, préchargement |
 | `rendu.ts` | préparation des calques, `instant`, `rendre`, boucle d'animation, `montrerImage` |
 | `frise.ts` | frise du carton et du bas de l'image, poussée des surimpressions |
 | `textes.ts` | cartouche (fondu croisé, estompe) et sous-titre |
@@ -1549,3 +1563,91 @@ grande taille et les objets.
 
 **Captures** : `captures.py --fenetre 1512x945` (taille de la fenêtre de l'ordinateur) et
 `--reduit` (prefers-reduced-motion).
+
+## Couche générée : images mises en mouvement (spec 16)
+
+Le calcul se fait sur **Google Colab Pro** (abonnement de l'utilisateur, aucun appel Gemini) avec le
+modèle à poids ouverts Wan 2.2 TI2V-5B, piloté depuis le Mac par la **CLI officielle `colab`**
+(google-colab-cli, `uv tool install google-colab-cli`, déjà installée ; `colab usage` donne le solde
+d'unités). Rien ne tourne ici : le Mac prépare le kit, ouvre une session, suit le journal de bord,
+rapatrie, arrête la session, encode, montre, puis publie.
+
+Procédure d'un lot (une dizaine de diapositives à scène animable, décision du 2026-10-12, plafond
+15 : fumées, drapeaux, foule, eau, ciel ; jamais un portrait, jamais une inscription lisible) :
+
+```sh
+# 1. Le lot : src/data/diaporamas/generation/<slug>.json (n, type « mouvement », prompt anglais, graine ;
+#    « negatif » et « modele » communs). Consigne : les mouvements voulus, « Keep exactly the look of
+#    this … », « nothing new appears, no text » ; « flags flutter » avec parcimonie (Valmy : drapeau démesuré).
+python3 scripts/diaporamas/generation.py preparer revolution     # .cache/diaporamas/revolution/generation/kit-mouvement.zip
+python3 scripts/diaporamas/generation.py lancer revolution        # session A100 (--high-mem : 80 Go), 5 min (121 images) à 12 min (241) par clip
+#   --seulement 18,56  --profil rapide  --sans-essai  --garder (laisse la session ouverte)  --session nom
+open .cache/diaporamas/revolution/generation/planche-mouvement.html   # juger ; retirer du lot ou relancer (--seulement) les ratés
+python3 scripts/diaporamas/generation.py publier revolution       # clips → public/, champ image.video (--seulement n,n)
+python3 scripts/diaporamas/verifier.py revolution && npm run build
+# Un clip qui déplaît après coup : generation.py retirer revolution --seulement 56
+```
+
+Voie manuelle de secours (sans CLI) : `scripts/colab/mouvement.ipynb` dans l'interface Colab
+(Fichier › Importer le notebook, GPU L4 ou A100, Exécution › Tout exécuter, envoyer le kit quand il est
+demandé ; `resultats-mouvement.zip` téléchargé à la fin), puis
+`generation.py encoder revolution ~/Downloads/resultats-mouvement.zip`. Le 2026-10-11, l'import du
+.ipynb par l'extension Chrome est resté bloqué (« Uploading… ») : les cellules ont été collées une à
+une par le presse-papiers ; à ne plus faire, la CLI suffit.
+
+Mesures du 2026-10-11 (A100 40 Go, tout sur la carte) : modèle chargé en ≈ 3 min (22 Go), clip
+« rapide » 704×512 × 81 images en 1,2 min, clip 1280×704 (aire équivalente) × 121 images × 40 pas en
+≈ 5,3 min (≈ 6 s par pas) ; 8 clips ≈ 45 min ≈ 4 unités (5,3 unités/h). Pièges : `pip uninstall torchao`
+avant diffusers (ImportError `FqnToConfig` sinon) ; `torch_dtype` déprécié au profit de `dtype` ; pas
+de secret HF nécessaire (modèle public ; l'interface Colab propose d'accorder `HF_TOKEN`, refuser).
+Premier lot réel par la CLI le 2026-10-12 (Valmy, 241 images, 12,1 min sur A100 80 Go) : une session
+restée longtemps inactive répond parfois en retard au premier `colab exec` (les appels se relancent
+d'eux-mêmes, `essais`), et une session ouverte par un autre travail bloque toute nouvelle allocation
+(« Allocation refused ») : `lancer --session <nom> --reprendre` la réutilise dans `/content/mouvement`
+(dossier propre), `--garder` la laisse ouverte ; finir par `colab sessions` et arrêter ce qui reste.
+
+- Le lot `src/data/diaporamas/generation/<slug>.json` donne, par élément, la diapositive `n`, le
+  `type` (`mouvement`), la consigne `prompt` (anglais : mouvements voulus, « nothing new appears,
+  no text », style de l'œuvre conservé) et la `graine` ; `negatif` et `modele` sont communs au lot.
+- **Longueur par diapositive** (retour de l'utilisateur du 2026-10-12 : le clip ne doit pas s'arrêter
+  avant la fin) : `preparer` écrit dans le manifeste le nombre d'images à générer, `images_clip(s)`
+  = 4k + 1 entre 121 et 289, pour que le clip ralenti ×2 couvre `besoin_clip(s)` = durée de la voix +
+  pause − départ (1,8 s, ou fin de la plongée d'une mosaïque au plus tard). Au-delà des 121 images
+  d'entraînement, le temps de calcul croît plus que linéairement (attention) ; `mouvement.py` réduit
+  l'aire (×0,7, deux fois au plus) si la mémoire manque. `verifier.py` avertit d'un clip plus court
+  que sa diapositive.
+- Les sources sont l'image servie (`public/…/NNN.webp`, recadrage déjà appliqué) réduite à sa zone
+  utile `image.utile` : pas de marge de papier dans le clip.
+- Le carnet produit `<id>.mp4` (5 s, 24 images/s, 1280×704 ou proportion équivalente : le modèle
+  reçoit l'image **étirée** à des dimensions multiples de 32 d'aire constante ; le lecteur l'étire en
+  retour sur la zone utile, qu'il recouvre donc exactement) et un `journal.jsonl` (dimensions, pas,
+  durée de calcul, carte) ; `ESSAI_RAPIDE` fait d'abord un clip en 832×480 de la première image pour
+  valider la chaîne. `encoder` **ralentit le clip de moitié** par interpolation de mouvement (ffmpeg
+  `minterpolate`, images intermédiaires calculées : 10 s à 24 images/s, ≈ 20 s de calcul par clip ;
+  retour de l'utilisateur du 2026-10-12, « deux fois plus lentement ») et l'encode **comme pour le
+  site** (sans son, H.264 yuv420p, crf 27, débit plafonné à 3,2 Mbit/s : sans plafond les gravures
+  très détaillées font 10 à 12 Mo, avec 4,2 Mo sans perte visible à l'échelle 1 ; les tableaux 1,2 à
+  2,5 Mo). Ni boucle ni aller-retour (autre retour du même jour, après une première version en
+  aller-retour bouclé) : le lecteur le joue une fois puis tient sa dernière image. La planche montre
+  ce que verra le lecteur, avec le poids.
+- La planche montre côte à côte la source, les clips et la narration audio de la diapositive.
+- `publier` copie `clips/<id>.mp4` en `public/diaporamas/<slug>/NNN-mouvement.mp4` et écrit
+  `image.video` : `fichier`, `type`, `duree`, `largeur`, `hauteur` (ffprobe), `modele` (du lot),
+  `genere_le` (date du brut). Jamais sur un avant / après (ignoré) ni une image entière
+  (`verifier.py` refuse). Compatible avec les mosaïques (le clip paraît après la plongée) et les
+  plans de la spec 14 (il s'efface sous le premier plan).
+- **Lecteur** (`mouvement.ts`) : la boîte `.lecteur__video` de chaque calque a la taille de l'image
+  et reçoit sa transformation à chaque rendu (`rendu.ts`), le clip étiré sur la zone utile ; la
+  **caméra calée sur la narration continue** de travailler sur l'image qui vit. L'image fixe entre
+  comme d'habitude (fondu, gris → couleur, recul), puis le clip paraît en fondu CSS de 1,2 s à
+  `DEBUT_CLIP` (1,8 s de voix, l'entrée finie) ou `DEBUT_CLIP_MOSAIQUE` après la plongée, **joué une
+  fois** puis tenu sur sa dernière image. Il est calé sur l'horloge de la voix (position = voix −
+  départ, recalé au-delà de `DERIVE_CLIP`) : pause, sauts et reprise restent justes ; il s'arrête
+  avec le calque sortant. `prefers-reduced-motion` : aucun clip chargé, image fixe, ligne du
+  cartouche masquée. Le clip de la diapositive suivante est mis en cache d'avance
+  (`progression.ts`). Cartouche : quatrième ligne « mise en mouvement par IA » ; livre d'images : le
+  clip sous l'image avec sa mention ; page de la période : section « Images mises en mouvement ».
+- `verifier.py`, famille « mouvement (spec 16) » (étape C) : fichier, dimensions, durée et codec par
+  ffprobe, proportions de la zone utile (erreur au-delà de 6 % : source changée), modèle, usage,
+  entrée dans le lot, plafond de 15 clips par période, poids (avertissement au-delà de 4,5 Mo),
+  incompatibilités.

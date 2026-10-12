@@ -48,6 +48,14 @@ export const FONDU_REDUIT = 0.3; // s, prefers-reduced-motion : fondu simple, ni
 export const FONDU_PLAN = 0.8;     // s : entre deux images d'une même diapositive
 export const FONDU_GALERIE = 1.2;  // s : entre deux images d'une galerie ou d'une lecture
 export const ELAN_PLAN = 1.2;      // s (la mise en route du zoom de tenue, RAMPE_SOUFFLE)
+// Image mise en mouvement par IA (spec 16, retours du 2026-10-12 : ni boucle ni aller-retour, deux fois
+// plus lent) : le clip (10 s : 5 s générées, ralenties de moitié à l'encodage) part à cet instant de la
+// voix (l'entrée de l'image est finie : REVELATION), ou juste après la plongée d'une mosaïque ; il est
+// joué une fois, puis sa dernière image reste tenue.
+export const DEBUT_CLIP = 1.8;        // s de la voix
+export const DEBUT_CLIP_MOSAIQUE = 0.3; // s après la fin de la plongée
+export const FONDU_CLIP = 1.2;        // s : fondu CSS du clip (même valeur dans le CSS)
+export const DERIVE_CLIP = 0.3;       // s : au-delà, le clip est recalé sur la voix (pause, saut)
 // Avant / après et mosaïque, prefers-reduced-motion : fondu enchaîné vers l'image après, et
 // fondu de la grille (complète d'emblée) vers l'image principale.
 export const FONDU_APRES_REDUIT = 1;

@@ -1982,6 +1982,94 @@ def controler_plans(d: dict, img_etat: dict, dossier) -> tuple[dict, dict, dict]
 
 
 # Répartition des contrôles par étape de production (spec 13, outil 2) : `--etape A|B|C`.
+PLAFOND_CLIPS = 15               # spec 16 : images mises en mouvement par période, au plus
+POIDS_CLIP_MAX = 4_500_000       # octets : au-delà, avertissement (1,2 à 4,2 Mo attendus pour 10 s, gravures comprises)
+USAGES_GENERES = ('mouvement',)  # spec 16 : usages admis d'une image générée (reconstitution, colorisation : plus tard)
+
+
+def controler_mouvement(d: dict, dossier) -> tuple[list[str], list[str], int, int]:
+    """Images mises en mouvement par IA (spec 16, `image.video`) : fichier présent, dimensions et
+    durée exactes (ffprobe), H.264 yuv420p (lisible partout), proportions de la zone utile (le clip
+    l'étire), modèle nommé (crédits), usage connu, consigne et graine consignées dans le lot
+    src/data/diaporamas/generation/<slug>.json ; plafond par période ; jamais sur un avant / après
+    ni une image entière (sur une mosaïque, le clip paraît après la plongée). Rend (erreurs,
+    avertissements, clips, poids en octets)."""
+    import subprocess
+    erreurs, avert = [], []
+    lot_f = c.DONNEES / 'generation' / f"{d['slug']}.json"
+    lot = json.loads(lot_f.read_text(encoding='utf-8')) if lot_f.exists() else None
+    dans_lot = {(e.get('n'), e.get('type')) for e in (lot or {}).get('elements', [])}
+    n_clips = poids = 0
+    for x in d['diapositives']:
+        v = x['image'].get('video')
+        if v is None:
+            continue
+        p = f"{x['n']:3d}"
+        if not isinstance(v, dict):
+            erreurs.append(f'{p} : « video » doit être un objet (fichier, type, duree, largeur, hauteur, modele)')
+            continue
+        usage = v.get('type')
+        if usage not in USAGES_GENERES:
+            erreurs.append(f"{p} : usage « {usage} » inconnu (admis : {', '.join(USAGES_GENERES)})")
+        if usage == 'mouvement':
+            n_clips += 1
+        manquants = [k for k in ('fichier', 'duree', 'largeur', 'hauteur', 'modele') if not v.get(k)]
+        if manquants:
+            erreurs.append(f"{p} : clip : champs manquants ({', '.join(manquants)})")
+        if not v.get('genere_le'):
+            avert.append(f'{p} : clip sans date de calcul (genere_le)')
+        if x['image'].get('apres'):
+            erreurs.append(f'{p} : clip sans effet sur un avant / après (le retirer)')
+        if x['image'].get('entier'):
+            erreurs.append(f'{p} : clip incompatible avec « entier » (il ne couvre que la zone utile)')
+        if lot is None:
+            erreurs.append(f'{p} : lot {lot_f.relative_to(c.RACINE)} absent (consigne et graine du clip)')
+        elif (x['n'], usage) not in dans_lot:
+            erreurs.append(f'{p} : clip sans entrée {usage} dans le lot (consigne et graine non consignées)')
+        f = dossier / (v.get('fichier') or '')
+        if not v.get('fichier') or not f.is_file():
+            erreurs.append(f"{p} : clip absent ({v.get('fichier')})")
+            continue
+        poids += f.stat().st_size
+        if f.stat().st_size > POIDS_CLIP_MAX:
+            avert.append(f'{p} : clip de {f.stat().st_size / 1e6:.1f} Mo ({POIDS_CLIP_MAX / 1e6:.1f} Mo au plus visés : generation.py encoder)')
+        try:
+            r = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height,codec_name,pix_fmt',
+                                '-show_entries', 'format=duration', '-of', 'json', str(f)], capture_output=True, text=True, check=True)
+            info = json.loads(r.stdout)
+            flux, duree = info['streams'][0], float(info['format']['duration'])
+        except (OSError, subprocess.CalledProcessError, KeyError, IndexError, ValueError):
+            avert.append(f'{p} : ffprobe indisponible, clip non contrôlé')
+            continue
+        if (flux.get('width'), flux.get('height')) != (v.get('largeur'), v.get('hauteur')):
+            erreurs.append(f"{p} : dimensions du clip {flux.get('width')}×{flux.get('height')} ≠ {v.get('largeur')}×{v.get('hauteur')} déclarées")
+        if abs(duree - float(v.get('duree') or 0)) > 0.1:
+            erreurs.append(f"{p} : durée du clip {duree:.2f} s ≠ {v.get('duree')} s déclarée")
+        if flux.get('codec_name') != 'h264' or flux.get('pix_fmt') != 'yuv420p':
+            erreurs.append(f"{p} : clip {flux.get('codec_name')} {flux.get('pix_fmt')} (H.264 yuv420p attendu, lisible dans tous les navigateurs)")
+        # Le clip ralenti doit couvrir la diapositive (retour du 2026-10-12) : du départ (1,8 s de voix,
+        # ou après la plongée d'une mosaïque) à la fin de la voix et de sa pause.
+        from generation import besoin_clip
+        if duree < besoin_clip(x) - 0.5:
+            avert.append(f'{p} : clip de {duree:.1f} s plus court que la diapositive ({besoin_clip(x):.1f} s à couvrir : regénérer avec preparer/lancer)')
+        if duree > 26:
+            avert.append(f'{p} : clip de {duree:.1f} s (24 s au plus attendues)')
+        # Proportions : le modèle a reçu l'image étirée à des dimensions multiples de 32 (2 à 3 % d'écart
+        # d'ordinaire), et le lecteur étire le clip en retour sur la zone utile : exact. Un écart plus
+        # grand trahit une source ou un recadrage qui ne sont pas ceux de l'image servie.
+        i = x['image']
+        u = i.get('utile') or [0, 0, 1, 1]
+        lu, hu = (i.get('largeur') or 1600) * (u[2] - u[0]), (i.get('hauteur') or 1200) * (u[3] - u[1])
+        if flux.get('width') and flux.get('height') and hu > 0 and lu > 0:
+            ecart = (flux['width'] / flux['height']) / (lu / hu) - 1
+            if abs(ecart) > 0.06:
+                erreurs.append(f'{p} : proportions du clip {flux["width"]}×{flux["height"]} éloignées de {abs(ecart) * 100:.1f} % de la zone utile '
+                               f'({lu:.0f}×{hu:.0f}) : source ou zone utile changée depuis le calcul ? (refaire le clip)')
+    if n_clips > PLAFOND_CLIPS:
+        erreurs.append(f'{n_clips} images mises en mouvement ({PLAFOND_CLIPS} au plus par période, spec 16)')
+    return erreurs, avert, n_clips, poids
+
+
 ETAPES = {'A': 'texte, images, enrichissements prévus', 'B': 'voix, zone utile, caméra, musique',
           'C': 'surimpressions et vérification complète'}
 FAMILLES = {
@@ -1989,7 +2077,7 @@ FAMILLES = {
     'B': ('audio', 'ouverture', 'zone utile', 'caméra', 'musique', 'registre musical', 'lectures et épisodes', 'boucles',
           'plans et galeries (zone utile, caméra)'),
     'C': ('surimpressions', 'portraits', 'objets et manuscrits', 'chiffres et dates', 'avant/après et mosaïques',
-          'plans et galeries (instants, durées)'),
+          'plans et galeries (instants, durées)', 'mouvement (spec 16)'),
 }
 MAX_AVERT = 15   # avertissements affichés par `--etape` (tous avec `--tout`)
 # Messages d'un contrôle d'une étape qui relèvent d'une autre (donnée écrite plus tôt) : (motif, étape, famille).
@@ -2173,7 +2261,7 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         R.plus('C', 'surimpressions', e_sur, a_sur)
         e_por, a_por, n_portraits, n_gens = controler_portraits(d)
         R.plus('C', 'portraits', e_por, a_por)
-    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = 0
+    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = n_clips = poids_clips = 0
     if fait('A') or fait('C'):
         e_obj, a_obj, n_objets, n_manuscrits, n_deux = controler_objets(d)
         R.plus('C', 'objets et manuscrits', e_obj, a_obj)
@@ -2181,6 +2269,8 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         R.plus('C', 'chiffres et dates', e_ch, a_ch)
         e_am, a_am, n_ap, n_mos = controler_avant_apres_mosaiques(d, img, dossier)
         R.plus('C', 'avant/après et mosaïques', e_am, a_am, REGLES_MOSAIQUES)
+        e_mv, a_mv, n_clips, poids_clips = controler_mouvement(d, dossier)
+        R.plus('C', 'mouvement (spec 16)', e_mv, a_mv)
     if fait('A'):
         e_gen, a_gen, duree_generique = controler_generique(d)
         R.plus('A', 'générique', e_gen, a_gen)
@@ -2253,6 +2343,10 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
     if (n_ap or n_mos) and not etape:
         print(f"Avant/après et mosaïques : {n_ap} avant/après (diapositives {', '.join(str(x['n']) for x in diapos if x['image'].get('apres'))}), "
               f"{n_mos} mosaïque(s) (diapositives {', '.join(str(x['n']) for x in diapos if x.get('mosaique'))}).")
+    if n_clips and not etape:
+        print(f"Images mises en mouvement (spec 16) : {n_clips} clip(s) (diapositives "
+              f"{', '.join(str(x['n']) for x in diapos if (x['image'].get('video') or {}).get('type') == 'mouvement')}), "
+              f'{poids_clips / 1e6:.1f} Mo ; {PLAFOND_CLIPS} au plus par période.')
     if not etape:
         datees = sum(1 for x in diapos if 'date' in x)
         print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} apparition(s) en bas de l\'image '

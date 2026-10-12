@@ -6,6 +6,7 @@ import { installerCamera } from './camera';
 import { installerAvantApres } from './avant-apres';
 import { installerMosaique } from './mosaique';
 import { installerPlans } from './plans';
+import { installerMouvement } from './mouvement';
 import { installerRendu } from './rendu';
 import { installerFrise } from './frise';
 import { installerTextes } from './textes';
@@ -36,6 +37,7 @@ function monter(racine: HTMLElement) {
   installerAvantApres(lec);
   installerMosaique(lec);
   installerPlans(lec);
+  installerMouvement(lec);
   installerRendu(lec);
   installerFrise(lec);
   installerTextes(lec);

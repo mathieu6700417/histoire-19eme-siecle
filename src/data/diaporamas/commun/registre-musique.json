@@ -418,11 +418,22 @@
           18.8,
           42.7,
           "« Allons enfants de la Patrie, »"
+        ],
+        [
+          103.6,
+          128.6,
+          "« Amour sacré de la Patrie, »"
+        ],
+        [
+          103.6,
+          124.6,
+          "« Amour sacré de la Patrie, »"
         ]
       ],
       "periodes": [
         "01-revolution",
-        "02-consulat-empire"
+        "02-consulat-empire",
+        "05-deuxieme-republique"
       ],
       "statut": "retenu",
       "verifie": "2026-10-08"
@@ -1434,9 +1445,17 @@
       "oeuvre": "Si j'étais roi, ouverture (1852 ; disque London LLP 351, 1951)",
       "compositeur": "Adolphe Adam",
       "interprete": "Orchestre philharmonique de Londres, direction Jean Martinon",
-      "structure": [],
-      "periodes": [],
-      "statut": "possible",
+      "structure": [
+        [
+          0.0,
+          218,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
       "verifie": "2026-10-11"
     },
     {
@@ -1856,6 +1875,533 @@
       ],
       "statut": "retenu",
       "verifie": "2026-10-11"
+    },
+    {
+      "id": "archive:berlioz-le-corsaire-h-101-ouverture-charles-munch-dvg#Berlioz - Le Corsaire, H 101, Ouverture (Charles Munch).mp3",
+      "source": {
+        "type": "archive",
+        "id": "berlioz-le-corsaire-h-101-ouverture-charles-munch-dvg",
+        "fichier": "Berlioz - Le Corsaire, H 101, Ouverture (Charles Munch).mp3",
+        "publication": "1951"
+      },
+      "oeuvre": "Le Corsaire, ouverture",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1844",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Charles Munch (disque Decca, 1951)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1951 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1951, avant 1963) ; https://archive.org/details/berlioz-le-corsaire-h-101-ouverture-charles-munch-dvg",
+      "duree": 488.4,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          262,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "commons:File:Chopin - Polonaise No. 6 in A-flat major, Op. 53 'Héroïque' (Luke Faulkner).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Chopin - Polonaise No. 6 in A-flat major, Op. 53 'Héroïque' (Luke Faulkner).flac"
+      },
+      "oeuvre": "Polonaise en la bémol majeur, opus 53, dite « héroïque »",
+      "compositeur": "Frédéric Chopin (compositeur polonais installé à Paris)",
+      "date_oeuvre": "1842",
+      "interprete": "Luke Faulkner, piano (Musopen, « Set Chopin Free », vers 2014)",
+      "genre": "instrumental",
+      "licence": "Domaine public (Musopen)",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Chopin_-_Polonaise_No._6_in_A-flat_major,_Op._53_%27H%C3%A9ro%C3%AFque%27_(Luke_Faulkner).flac",
+      "duree": 438.7,
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "commons:File:Frédéric Chopin - Barcarolle, op.60 (Marcelle Meyer, 1950s).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Frédéric Chopin - Barcarolle, op.60 (Marcelle Meyer, 1950s).flac"
+      },
+      "oeuvre": "Barcarolle en fa dièse majeur, opus 60",
+      "compositeur": "Frédéric Chopin (compositeur polonais installé à Paris)",
+      "date_oeuvre": "1846",
+      "interprete": "Marcelle Meyer, piano (disque Les Discophiles français, années 1950)",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Fr%C3%A9d%C3%A9ric_Chopin_-_Barcarolle,_op.60_(Marcelle_Meyer,_1950s).flac",
+      "duree": 459.7,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          150,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_te-deum_hector-berlioz-the-royal-philharmonic-orch#disc1/02.03. Te Deum, Op. 22: VI - Judex Crederis (Hymn And Prayer).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_te-deum_hector-berlioz-the-royal-philharmonic-orch",
+        "fichier": "disc1/02.03. Te Deum, Op. 22: VI - Judex Crederis (Hymn And Prayer).mp3",
+        "publication": "1954"
+      },
+      "oeuvre": "Te Deum : Judex crederis",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1849",
+      "interprete": "London Philharmonic Choir, Royal Philharmonic Orchestra, direction Thomas Beecham (disque Columbia Masterworks, 1954)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1954 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1954, avant 1963) ; https://archive.org/details/lp_te-deum_hector-berlioz-the-royal-philharmonic-orch",
+      "duree": 681.8,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          425,
+          "fond, Judex crederis"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0#disc1/02.01. Third Movement: Serenade Of An Abruzzi Mountaineer To His Sweetheart.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0",
+        "fichier": "disc1/02.01. Third Movement: Serenade Of An Abruzzi Mountaineer To His Sweetheart.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Harold en Italie : Sérénade d’un montagnard des Abruzzes à sa maîtresse",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1834",
+      "interprete": "William Primrose, alto, Orchestre symphonique de Boston, direction Charles Munch (disque RCA Victor, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0",
+      "duree": 390.9,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          288,
+          "fond, Sérénade d’un montagnard des Abruzzes à sa maîtresse"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg#1 Meyerbeer - Le prophète (Georges Sebastian)=.mp3",
+      "source": {
+        "type": "archive",
+        "id": "meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg",
+        "fichier": "1 Meyerbeer - Le prophète (Georges Sebastian)=.mp3",
+        "publication": "1956"
+      },
+      "oeuvre": "Le Prophète, ballet des Patineurs",
+      "compositeur": "Giacomo Meyerbeer (compositeur allemand, à l’Opéra de Paris)",
+      "date_oeuvre": "1849",
+      "interprete": "Orchestre du Théâtre national de l’Opéra de Paris, direction Georges Sebastian (disque de 1956)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg",
+      "duree": 1280.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          355,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_berlioz-lenfance-du-christ-the-childhoo_choeur-raymond-saintpaul-orchestre-de-l#disc1/02.04. Ouverture.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_berlioz-lenfance-du-christ-the-childhoo_choeur-raymond-saintpaul-orchestre-de-l",
+        "fichier": "disc1/02.04. Ouverture.mp3",
+        "publication": "1951"
+      },
+      "oeuvre": "La Fuite en Égypte, ouverture (deuxième partie de L’Enfance du Christ)",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1850",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction André Cluytens (disque Vox, 1951)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1951 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1951, avant 1963) ; https://archive.org/details/lp_berlioz-lenfance-du-christ-the-childhoo_choeur-raymond-saintpaul-orchestre-de-l",
+      "duree": 328.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_berlioz-lenfance-du-christ-the-childhoo_choeur-raymond-saintpaul-orchestre-de-l#disc1/02.05. Adieu des Bergers.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_berlioz-lenfance-du-christ-the-childhoo_choeur-raymond-saintpaul-orchestre-de-l",
+        "fichier": "disc1/02.05. Adieu des Bergers.mp3",
+        "publication": "1951"
+      },
+      "oeuvre": "La Fuite en Égypte : L’Adieu des bergers",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1850",
+      "interprete": "Chœurs Raymond Saint-Paul, Orchestre de la Société des concerts du Conservatoire, direction André Cluytens (disque Vox, 1951)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1951 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1951, avant 1963) ; https://archive.org/details/lp_berlioz-lenfance-du-christ-the-childhoo_choeur-raymond-saintpaul-orchestre-de-l",
+      "duree": 223.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          90,
+          "fond, L’Adieu des bergers"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_romeo-and-juliet_hector-berlioz-boston-symphony-orchestra-c#disc2/03.02. Romeo In The Family Vault Of The Capulets.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_romeo-and-juliet_hector-berlioz-boston-symphony-orchestra-c",
+        "fichier": "disc2/03.02. Romeo In The Family Vault Of The Capulets.mp3",
+        "publication": "1953"
+      },
+      "oeuvre": "Roméo et Juliette : Roméo au tombeau des Capulets",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1839",
+      "interprete": "Orchestre symphonique de Boston, direction Charles Munch (disque RCA Victor, 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1953 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1953, avant 1963) ; https://archive.org/details/lp_romeo-and-juliet_hector-berlioz-boston-symphony-orchestra-c",
+      "duree": 1048.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          385,
+          "fond, Roméo au tombeau des Capulets"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0#disc1/01.02. Second Movement: March Of The Pilgrims.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0",
+        "fichier": "disc1/01.02. Second Movement: March Of The Pilgrims.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Harold en Italie : Marche des pèlerins chantant la prière du soir",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1834",
+      "interprete": "William Primrose, alto, Orchestre symphonique de Boston, direction Charles Munch (disque RCA Victor, 1958)",
+      "enregistrement": "RCA Victor, 1958",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_harold-in-italy_hector-berlioz-boston-symphony-orchestra-c_0",
+      "duree": 408.9,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          20.0,
+          48.0,
+          "intermède musical"
+        ],
+        [
+          20.0,
+          45.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "commons:File:Chopin - Waltz No. 6 in D-flat major, Op. 64, No. 1 'Minute' (Olga Gurevich).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Chopin - Waltz No. 6 in D-flat major, Op. 64, No. 1 'Minute' (Olga Gurevich).flac"
+      },
+      "oeuvre": "Valse en ré bémol majeur, opus 64 nº 1, dite « Valse minute »",
+      "compositeur": "Frédéric Chopin",
+      "date_oeuvre": "1847",
+      "interprete": "Olga Gurevich, piano (Musopen, « Set Chopin Free », vers 2014)",
+      "enregistrement": "Musopen, vers 2014",
+      "genre": "instrumental",
+      "licence": "Domaine public (Musopen)",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Chopin_-_Waltz_No._6_in_D-flat_major,_Op._64,_No._1_%27Minute%27_(Olga_Gurevich).flac",
+      "duree": 107.4,
+      "structure": [
+        [
+          0.0,
+          23.5,
+          "intermède musical"
+        ],
+        [
+          0.0,
+          26.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:20210610-marches-francaises-paul-paray##(8) Le prophète, Marche du couronnement (Meyerbeer).mp3",
+      "source": {
+        "type": "archive",
+        "id": "20210610-marches-francaises-paul-paray",
+        "fichier": "#(8) Le prophète, Marche du couronnement (Meyerbeer).mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Le Prophète : Marche du couronnement",
+      "compositeur": "Giacomo Meyerbeer, sur un livret d’Eugène Scribe",
+      "date_oeuvre": "1849",
+      "interprete": "Orchestre symphonique de Détroit, direction Paul Paray (disque Mercury, 1960)",
+      "enregistrement": "Mercury, 1960",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/20210610-marches-francaises-paul-paray",
+      "duree": 259.9,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          24.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "commons:File:Chopin Pitman sonata no 2 in b flat minor funeral march III marche funebre lento.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Chopin Pitman sonata no 2 in b flat minor funeral march III marche funebre lento.ogg"
+      },
+      "oeuvre": "Sonate pour piano nº 2 en si bémol mineur, opus 35 : Marche funèbre",
+      "compositeur": "Frédéric Chopin",
+      "date_oeuvre": "1837",
+      "interprete": "Paul Pitman, piano (Musopen)",
+      "enregistrement": "Musopen",
+      "genre": "instrumental",
+      "licence": "Domaine public (Musopen)",
+      "preuve_date": "licence relevée par musique.py : Public Domain ; https://commons.wikimedia.org/wiki/File:Chopin_Pitman_sonata_no_2_in_b_flat_minor_funeral_march_III_marche_funebre_lento.ogg",
+      "duree": 551.7,
+      "structure": [
+        [
+          1.5,
+          26.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "commons:File:Chopin - 12 Études, Op. 10 - No. 3 in E major 'Tristesse' (Edward Neeman).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Chopin - 12 Études, Op. 10 - No. 3 in E major 'Tristesse' (Edward Neeman).flac"
+      },
+      "oeuvre": "Étude en mi majeur, opus 10 nº 3",
+      "compositeur": "Frédéric Chopin",
+      "date_oeuvre": "1832",
+      "interprete": "Edward Neeman, piano (Musopen, « Set Chopin Free », vers 2014)",
+      "enregistrement": "Musopen, vers 2014",
+      "genre": "instrumental",
+      "licence": "Domaine public (Musopen)",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Chopin_-_12_%C3%89tudes,_Op._10_-_No._3_in_E_major_%27Tristesse%27_(Edward_Neeman).flac",
+      "duree": 275.7,
+      "structure": [
+        [
+          0.3,
+          26.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "05-deuxieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "commons:File:Le Chant des Girondins (The Song of the Girondists) recording.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Le Chant des Girondins (The Song of the Girondists) recording.ogg"
+      },
+      "oeuvre": "Le Chant des Girondins",
+      "compositeur": "",
+      "interprete": "non identifié",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "versé en 2022 depuis YouTube et musicme, interprète et date d'enregistrement inconnus (« XXe siècle »), PD-old-auto sans preuve pour l'enregistrement",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:p_20210305_202103#(item entier)",
+      "source": {
+        "type": "archive",
+        "id": "p_20210305_202103",
+        "fichier": "(item entier)"
+      },
+      "oeuvre": "Le Chant des Girondins (Mourir pour la patrie)",
+      "compositeur": "",
+      "interprete": "Orchestre à vents du Havre",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "enregistrement moderne (Orchestre à vents du Havre, direction Philippe Langlet, arrangement D. Janin), ni disque d'avant 1963 ni licence libre",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho#disc1/01.03. The Corsair, Op.21.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho",
+        "fichier": "disc1/01.03. The Corsair, Op.21.mp3"
+      },
+      "oeuvre": "Le Corsaire, ouverture (1844 ; disque RCA Victor, 1961 ; notice de l'Internet Archive en erreur le 2026-10-12 ; même disque : Béatrice et Bénédict, Chasse royale et orage)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "Orchestre symphonique de Boston, direction Charles Munch",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:20210610-ouvertures-francaises-paul-paray#(4) Le corsaire, Op 21, Ouverture  (Berlioz).mp3",
+      "source": {
+        "type": "archive",
+        "id": "20210610-ouvertures-francaises-paul-paray",
+        "fichier": "(4) Le corsaire, Op 21, Ouverture  (Berlioz).mp3"
+      },
+      "oeuvre": "Le Corsaire, ouverture (1844 ; disque Mercury, 1960 ; téléchargement en erreur 500 le 2026-10-12 ; même série : Marches françaises, avec la Marseillaise orchestrée par Berlioz et la Marche troyenne)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "Orchestre symphonique de Détroit, direction Paul Paray",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_te-deum_hector-berlioz-the-royal-philharmonic-orch#disc1/01.01. Te Deum, Op. 22: I - Te Deum.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_te-deum_hector-berlioz-the-royal-philharmonic-orch",
+        "fichier": "disc1/01.01. Te Deum, Op. 22: I - Te Deum.mp3"
+      },
+      "oeuvre": "Te Deum, autres mouvements (1849 ; disque Columbia Masterworks, 1954 : Te Deum laudamus, Tibi omnes, Dignare, Christe rex gloriae, Te ergo quaesumus)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "London Philharmonic Choir, Royal Philharmonic Orchestra, direction Thomas Beecham",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:blech-66432-prophet#Blech 66432 Prophet.flac",
+      "source": {
+        "type": "archive",
+        "id": "blech-66432-prophet",
+        "fichier": "Blech 66432 Prophet.flac"
+      },
+      "oeuvre": "Le Prophète, Marche du couronnement (Polydor 66432, 1927 ; marque du domaine public)",
+      "compositeur": "Giacomo Meyerbeer",
+      "interprete": "Orchestre de l'Opéra d'État de Berlin, direction Leo Blech",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:2021115-auber-o-overtures-jean-fournet-rem.#01 Auber • Le Domino Noir - Overture.mp3",
+      "source": {
+        "type": "archive",
+        "id": "2021115-auber-o-overtures-jean-fournet-rem.",
+        "fichier": "01 Auber • Le Domino Noir - Overture.mp3"
+      },
+      "oeuvre": "Le Domino noir, ouverture (1837 ; année de publication du disque à établir avant emploi ; même item : Fra Diavolo, Le Cheval de bronze, La Muette de Portici)",
+      "compositeur": "Daniel-François-Esprit Auber",
+      "interprete": "Orchestre Lamoureux, direction Jean Fournet",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-12"
     }
   ],
   "introuvables": [
@@ -1960,6 +2506,12 @@
       "compositeur": "Charles-Valentin Alkan ; George Onslow",
       "cherche": "2026-10-11",
       "ou": "cherché le 2026-10-11 : Internet Archive (lp_ creator alkan, onslow) : rien"
+    },
+    {
+      "oeuvre": "Le Chant des Girondins (Mourir pour la patrie)",
+      "compositeur": "Alphonse Varney (musique), Alexandre Dumas et Auguste Maquet (paroles)",
+      "cherche": "2026-10-12",
+      "ou": "cherché le 2026-10-12 : Commons (Girondins, Mourir pour la patrie) : un seul fichier d'origine invérifiable ; Internet Archive (title:girondins, « mourir pour la patrie », girondins collection:78rpm, varney) : un enregistrement moderne non libre ; remplacé par La Marseillaise (Thill), couplet « Amour sacré de la patrie »"
     }
   ]
 }
