@@ -55,7 +55,9 @@ export function installerProgression(lec: Lecteur) {
       for (const v of x.mos?.vignettes ?? []) new Image().src = v.img;
       // Clip d'une image mise en mouvement (spec 16) : la suivante seulement, il est lourd.
       if (j <= k + 1) prechargerVideo(x);
+      if (j <= k + 1) lec.prechargerAmbiance(x);
       if (j <= k + 1) lec.prechargerCouleur(x);
+      if (j <= k + 2) lec.prechargerFond(x);
       if (j > k && x.audio) { const a = new Audio(); a.preload = 'auto'; a.src = x.audio; }
       if (x.suite && j <= k + 1) { const a = new Audio(); a.preload = 'auto'; a.src = x.suite.src; }
     }

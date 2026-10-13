@@ -68,7 +68,9 @@ premier essai réel de `generation.py lancer` (CLI). Réserve : 7 clips avant le
 2. `generation.py preparer <slug>` puis `generation.py lancer <slug>` (A100, ≈ 5 min et ≈ 0,5 unité
    par clip ; la session est arrêtée par le script).
 3. Ouvrir la planche, juger ; retirer du lot ou relancer avec `--seulement` les ratés.
-4. `generation.py publier <slug>`, `verifier.py <slug>`, `npm run build`, visionnage dans le lecteur ;
+4. Ambiance sonore de chaque clip gardé (spec 17 : champ `ambiance` du lot, `ambiance.py`, page
+   d'écoute jugée par l'utilisateur) : tout clip publié a son ambiance.
+5. `generation.py publier <slug>`, `verifier.py <slug>`, `npm run build`, visionnage dans le lecteur ;
    `generation.py retirer <slug> --seulement n` pour un clip qui déplaît après coup.
 
 ## Transformation en photographie (décidé le 2026-10-12)

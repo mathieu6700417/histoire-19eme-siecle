@@ -1268,6 +1268,7 @@ est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir direct
 | `mosaique.ts` | grille, vignettes, plongée dans l'image principale |
 | `plans.ts` | spec 14 : plans d'une diapositive, galerie d'un intermède, images d'une lecture (fondu croisé, caméra par image) |
 | `mouvement.ts` | spec 16 : clip d'une image mise en mouvement par IA (`x.video`), posé sur la zone utile avec la transformation de l'image, fondu après l'entrée, joue avec la voix, préchargement |
+| `ambiance.ts` | spec 17 : ambiance sonore d'un clip (`x.amb`), un élément audio calé sur l'horloge de la voix avec le clip, niveau `AMBIANCE_DB`, suit le bouton « Musique » et le volume ; `__ambiance()` |
 | `couleur.ts` | spec 16 : version colorisée par IA d'une image (`x.coul`, `p.coul` d'un plan), posée sur la zone utile avec la transformation de l'image, fondu lent calé sur l'horloge de la voix (`opaciteCouleur`), mention du cartouche (`en-couleur`), préchargement |
 | `rendu.ts` | préparation des calques, `instant`, `rendre`, boucle d'animation, `montrerImage` |
 | `frise.ts` | frise du carton et du bas de l'image, poussée des surimpressions |
@@ -1801,3 +1802,202 @@ python3 scripts/diaporamas/verifier.py deuxieme-republique && npm run build
 - `verifier.py`, famille « couleur (spec 16) » (étape C) : champs, nom et présence du fichier,
   WebP, dimensions déclarées et réelles = zone utile, incompatibilités, recette, poids
   (avertissement au-delà de 900 ko), fenêtre trop courte (avertissement).
+
+## Netteté : variantes grand écran (spec 17)
+
+Constat de l'essai du 2026-10-12 : au cadre le plus serré de la caméra, en plein écran 1920 × 1080,
+aucune image servie (1 600 px au plus) n'offre un pixel d'image par pixel d'écran. `nettete.py` ajoute
+à chaque image trop petite une **variante de mêmes proportions**, `NNN-grand.webp` (plan :
+`NNN-b-grand.webp`), tirée de l'original de Commons, ou agrandie par Real-ESRGAN x4plus (BSD-3) quand
+l'original laisse plus de 1,25 px d'écran par px d'image. Grand côté plafonné à 3 200 px, WebP qualité 74.
+
+```sh
+npm run build                                           # la mesure lit le lecteur construit (dist/)
+python3 scripts/diaporamas/nettete.py mesurer revolution    # cadre le plus serré de chaque image → décision
+python3 scripts/diaporamas/nettete.py preparer revolution   # originaux de Commons, variantes sans IA, kit Colab
+python3 scripts/diaporamas/nettete.py lancer revolution     # Real-ESRGAN sur Colab (L4, ≈ 10 s par image), puis accord des couleurs
+python3 scripts/diaporamas/nettete.py publier revolution    # public/ et champ image.grand
+python3 scripts/diaporamas/nettete.py planche revolution    # relecture des images agrandies par IA
+python3 scripts/diaporamas/nettete.py lister revolution ; … retirer revolution 83 49   # ou --tout
+```
+
+- **L'image servie ne change pas** (`fichier`, `largeur`, `hauteur`) : zone utile, cadres de caméra,
+  entrées en scène, clips (`image.video`), versions colorisées (`image.couleur`, au pixel de la zone
+  utile de l'image servie), livre d'images, sources de `generation.py` restent tels quels. Toutes ces
+  valeurs sont des fractions de l'image ou des pixels de l'image servie ; aucune ne dépend de la variante.
+- **Lecteur** : `etat.ts` remplace `x.img` par la variante (`x.g`) quand l'écran fait au moins
+  `GRAND_ECRAN` (1 200 px CSS de grand côté) et que l'économie de données n'est pas demandée ; l'image
+  est posée dans la même boîte (taille en px CSS calculée d'après l'image servie) : rien ne bouge.
+  Téléphone et livre d'images : l'image servie. Le préchargement suit (`x.img`).
+- **Données** : `image.grand` `{ fichier, largeur, hauteur, source: "original" | "ia", modele, facteur,
+  genere_le }` (image d'une diapositive ou d'un plan). Hors champ : vignettes de mosaïque, image
+  « après », galeries, lectures, épisodes, objets, médaillons, cartes.
+- **Signalement** des images agrandies par IA : section « Images agrandies » de la page et mention
+  dans le livre d'images ; rien au cartouche. Les portraits sont admis (spec 17).
+- **Accord des couleurs** (`accorder`, fait par `lancer`) : Real-ESRGAN décale un peu clarté et saturation
+  (jusqu'à 5 niveaux sur 255) ; on rend à l'image agrandie les basses fréquences de l'original (agrandie +
+  flou(original) − flou(agrandie)) : le détail vient du modèle, la couleur du document. Sans cela, un clip
+  posé sur l'image (dérivé de l'image servie) changerait de teinte à son entrée.
+- **Pièges** : une image dont le recadrage ou le fichier Commons change doit repasser par `mesurer`,
+  `preparer`, `publier` (`verifier.py` refuse des proportions différentes) ; `images.py --force` ne
+  touche pas aux variantes ; un kit Colab de 90 Mo d'un bloc a échoué à l'envoi : les sources partent
+  une à une. Captures : à 1280 × 760 le lecteur prend déjà la variante (écran ≥ 1 200 px).
+- `verifier.py`, famille « netteté (spec 17) » : fichier, format, dimensions, proportions, plafond, champs
+  des images agrandies par IA, poids (avertissement au-delà de 2,5 Mo).
+
+## Ambiances sonores des clips (spec 17)
+
+Toute diapositive mise en mouvement (`image.video`) a une ambiance sonore générée, jamais une image
+fixe. Modèle : EzAudio s3_xl (MIT, code et poids), texte → son, 10 s à 24 kHz.
+
+```sh
+# 1. La consigne : champ « ambiance » de l'élément du lot src/data/diaporamas/generation/<slug>.json
+#    (anglais ; rien que la narration ne dise ; ni voix, ni musique, ni son anachronique).
+python3 scripts/diaporamas/ambiance.py preparer deuxieme-republique
+python3 scripts/diaporamas/ambiance.py lancer deuxieme-republique     # Colab L4, ≈ 25 s par tirage, 2 tirages
+python3 scripts/diaporamas/ambiance.py encoder deuxieme-republique    # fondus, -23 LUFS, AAC, mesures.json
+python3 scripts/diaporamas/ambiance.py ecoute deuxieme-republique     # page d'écoute (essais-colab/servir.py)
+python3 scripts/diaporamas/ambiance.py publier deuxieme-republique    # public/ et champ image.ambiance
+python3 scripts/diaporamas/ambiance.py lister <slug> ; … retirer <slug> --seulement 13,42
+```
+
+- **Aucun agent ne peut écouter** : la page d'écoute est obligatoire pour tout nouveau lot, et
+  l'utilisateur juge chaque son avant publication (voix intelligible, musique, anachronisme).
+- **Fabrication** : deux tirages enchaînés en fondu (1, 2, 1), coupés à la durée utile (voix + pause
+  + 0,8 s − 1,8 s de départ du clip), fondu d'entrée 1,2 s et de sortie 1,5 s, niveau fixe à -23 LUFS,
+  limiteur sur les crêtes (canon), AAC 128 kbit/s. Mesures : durée, LUFS, crête, plus long silence.
+- **Lecteur** (`ambiance.ts`) : un seul élément audio, à `AMBIANCE_DB` (-12 dB, ≈ 16 dB sous la voix),
+  calé sur l'horloge de la voix comme le clip (`debutClip`) : part avec lui, figé en pause, recalé
+  après un saut, fondu court (0,4 s) quand un plan couvre le clip, au carton, pendant un segment
+  (chant, lecture, épisode) et au changement de diapositive ; la voix finie, il va seul à son terme.
+  Il suit le bouton « Musique » (coupé avec elle) et le curseur de volume. Mouvement réduit : rien.
+  Test : `__ambiance()` (source, position, volume, gain).
+- **Données** : `image.ambiance` `{ fichier: "018-ambiance.m4a", duree, modele, genere_le }`.
+  `generation.py retirer` retire l'ambiance avec le clip ; `renumeroter.py` suit le fichier.
+- **Signalement** : section « Images mises en mouvement » de la page et livre d'images ; le cartouche
+  ne change pas.
+- `verifier.py`, famille « ambiance (spec 17) » : jamais sans clip, fichier, AAC, durée déclarée et
+  suffisante, consigne dans le lot ; avertit d'un clip sans ambiance.
+
+## Fonds prolongés des images entières (spec 17)
+
+Spec 17, « Fonds prolongés : verdict et intégration ». Une image montrée en entier (`image.entier`)
+laissait du noir autour d'elle ; un modèle à poids ouverts (FLUX.2 klein 4B, Apache 2.0, sur Colab)
+prolonge la scène autour de l'image, et le lecteur montre ce prolongement **flouté et un peu
+assombri derrière l'image**, qui reste le fichier servi, intact.
+
+```jsonc
+"image": { …, "entier": true,
+  "fond": { "fichier": "001-fond.webp", "largeur": 1024, "hauteur": 636,
+            "boite": [0.35632, 0.16667, 0.64296, 0.83333],   // place de la zone utile dans le fond (fractions)
+            "flou": "faible",                                  // ou "fort" : le fond net montre une invention à cacher
+            "modele": "black-forest-labs/FLUX.2-klein-4B", "genere_le": "2026-10-12" } }
+```
+
+```sh
+python3 scripts/diaporamas/fond.py preparer <slug>                    # passe 1 : toiles, consignes, kit
+python3 scripts/diaporamas/fond.py lancer <slug> --graines 1,2 --garder   # session Colab L4 (CLI), ≈ 6,5 s par image
+python3 scripts/diaporamas/fond.py relire <slug> --tirage 1           # choisir le tirage de chaque image → constats.json
+python3 scripts/diaporamas/fond.py lancer <slug> --passe 2 --reprendre --graines 1,2   # haut et bas des décors, ≈ 8 s par image ; arrête la session
+python3 scripts/diaporamas/fond.py relire <slug>                      # relecture finale, à l'échelle de génération
+python3 scripts/diaporamas/fond.py planche <slug>                     # fonds finis, fonds.json, planche.html
+python3 scripts/diaporamas/fond.py publier <slug> [--seulement 86,34b] [--sauf 100] [--essai]
+python3 scripts/diaporamas/fond.py retirer <slug> 86 34b              # ou --tout
+python3 scripts/diaporamas/fond.py lister <slug>
+```
+
+Tout se passe dans `.cache/diaporamas/fonds/<slug>/` ; deux fichiers s'écrivent à la main :
+`lot.json` (par image : `genre` `decor | uni | papier`, et pour un décor trois phrases anglaises,
+`plus` : ce que montrent les côtés, `dessus`, `dessous` : ce qu'il y a au-dessus et au-dessous) et
+`constats.json` (par image : `tirage`, `tirage2`, `flou`, `invente`, `raison`).
+`lot.json` accepte aussi `"teinte": "gauche|droite|coins"` (genres `uni` et `papier`) : la même teinte
+des deux côtés, prise sur ce bord de l'image ou dans ses coins.
+
+- **Une session pour plusieurs périodes** : chaque période a son dossier distant
+  (`/content/fond/<slug>/in`, `out`, `in2`, `out2`) ; avant le 2026-10-14 tout allait dans
+  `/content/fond/in` et deux périodes de la même session mêlaient leurs toiles (mêmes noms).
+  Enchaîner : `lancer <a> --graines 1,2 --garder --session S`, puis
+  `lancer <b> … --garder --session S --reprendre --renvoyer-kit` (sans `--renvoyer-kit`, une période
+  neuve n'a pas son kit sur la session). Fermer la session pendant les relectures : la rouvrir coûte
+  ≈ 2 min (modèle retéléchargé), une heure d'attente coûte ≈ 1,7 unité. `lancer` sans `--garder`
+  arrête la session à la fin, passe 2 comprise.
+- **Retenter quelques images** : corriger `plus` dans `lot.json`, `preparer`, puis
+  `lancer <slug> --graines 3,4 --seulement 038-b,077 --reprendre --renvoyer-kit --garder`. Les tirages
+  3 et plus ne sont lus par `relire` et `planche` que s'ils sont notés dans `constats.json`.
+- **Choisir le genre d'après la zone utile, pas d'après la technique ni le sujet** : une gravure dont
+  le dessin va jusqu'au bord de la zone utile est un `decor` ; une scène entourée d'une marge de
+  papier (vignette, coins arrondis, légende sous l'image) est un `papier`, même si elle montre une
+  rue ou une salle. Classée `decor`, le modèle pose la feuille debout dans une pièce et reflète la
+  signature ou le cachet sous l'image (04 : 12, 15 ; 05 : 2, 52b, 106b, refaites en papier).
+- **Côtés de deux teintes** (fréquent sur `uni` et `papier` : un bord pris dans des hachures, dans
+  l'ombre d'une reliure, dans un cadre doré ou un passe-partout) : `"teinte"` dans le lot, puis
+  `preparer` (aucun calcul à refaire : la teinte s'applique au raccord, sans modèle).
+- **Relecture en deux temps** : après la passe 1, ne relire que les côtés (les bandes de `relire` sont
+  alors provisoires) ; après la passe 2, relire les fonds entiers des décors. Défauts propres à la
+  passe 2 : sujet répété ou signature reflétée sous l'image, « socle réfléchissant », bande restée
+  floue, bande sans rapport. Un rendu de photographie dans une rue se corrige rarement par un autre
+  tirage ; ajouter à la consigne « painted in oil with loose brushwork, not a photograph » ou
+  « drawn sharply in crayon lines », et « no doors, no signs, no lamps » aide.
+
+- **Méthode : deux passes.** Passe 1 : la zone utile au centre d'une toile de 1392 × 576 px, le
+  reste prérempli d'un flou de la même image ; le modèle prolonge **les côtés**. Sortie accordée en
+  couleur sur l'original et raccordée à ses bords (sans IA), original recollé. Passe 2 (décors) :
+  cette image élargie au milieu d'une toile de 1392 × 864 px ; le modèle prolonge **le haut et le
+  bas** (25 % chacun) d'après une consigne qui les nomme ; bandes accordées, jonction fondue sur
+  40 px. Genres `papier` et `uni` : pas de passe 2, des **bandes de papier continues sans modèle**
+  (miroir des lignes des côtés). `"bandes"` dans `lot.json` force un procédé (`modele`, `papier`,
+  `etire`) : un papier dont les côtés portent un sol dessiné serait reflété par le miroir.
+- **Valeurs** (décidées par l'utilisateur le 2026-10-12) : flou faible **0,25 %** de la largeur de
+  la scène, flou fort **2,5 %**, luminosité du fond **80 %** ; fichier de **1 024 px** en flou
+  faible (indiscernable de 1 392 px à ce flou sur une scène de 2 560 px ; 640 px se voit), de
+  **640 px** en flou fort. La génération en 1 392 px suffit.
+- **Relecture obligatoire de chaque fond, net, à l'échelle de génération** (`relire` : 1392 × 864,
+  deux fonds par montage, jamais de montage réduit) : personnage, silhouette, visage, animal ; texte,
+  enseigne, cachet ; cadre, image dans l'image ; objet incongru ; anachronisme (immeubles
+  haussmanniens, réverbères, plaques, prise électrique) ; rendu de photographie → autre tirage ; si
+  l'invention persiste, `"flou": "fort"` et la raison dans `constats.json`. **Un fond n'est jamais
+  rejeté pour cela.** Défauts de continuité à regarder aussi : zone restée floue (le modèle a
+  laissé le préremplissage : refaire ce tirage sur une toile grise, avec une consigne précise),
+  jonction horizontale à la limite des bandes, sujet répété sous l'image.
+- **Faux départs à ne pas refaire** : (1) une consigne générique pour les décors (« sky, ground,
+  walls, drapery, vegetation or water ») fait peindre un paysage sans rapport autour d'un
+  intérieur : une phrase par image ; (2) côtés, haut et bas en une seule passe : le modèle peint une
+  pièce où le tableau est posé debout ; (3) haut et bas étirés sans IA à partir du bord : refusés
+  par l'utilisateur ; (4) une consigne générique en passe 2 laisse les bandes floues : il faut
+  nommer le dessus et le dessous.
+- **Publication** : `publier` lit `fonds.json`, retrouve l'image par son `commons`, refuse une image
+  qui n'est plus entière ou dont la zone utile a changé (la boîte en dépend), copie
+  `NNN-fond.webp` / `NNN-b-fond.webp`, écrit `image.fond` et la recette (consignes, graines et
+  tirages des deux passes, `haut_bas`, zone utile, constat) dans
+  `src/data/diaporamas/generation/<slug>-fond.json`. `renumeroter.py` suit fichiers et champs.
+- **Lecteur** (`fond.ts`) : le fond est un élément du calque, sous l'image (dans le fond noir
+  `.lecteur__noir` pour un plan : même opacité que le plan) ; il reçoit à chaque rendu une
+  translation et une échelle tirées de la transformation de l'image (rapprochement lent, entrée en
+  scène, recul d'ouverture d'un acte) et suit les fondus croisés du calque. Le rayon du flou est
+  divisé par l'échelle : il reste constant à l'écran. **Réglages en un seul endroit**
+  (`constantes.ts`) : `FOND_FLOU_FAIBLE` (0,0025), `FOND_FLOU_FORT` (0,025), `FOND_LUMIERE` (0,8),
+  `FOND_RACCORD` (0,003 : le tout dernier bord de l'image est fondu dans le fond par un masque ;
+  0 : bord net) ; `FLOU` et `LUMIERE` de `fond.py` donnent les mêmes valeurs à la planche. Sans
+  `fond`, l'image entière garde son fond noir ; au-delà du fichier de fond aussi.
+  `prefers-reduced-motion` : le fond reste. `image.grand` : sans effet (le fond se pose d'après la
+  zone utile, pas d'après le fichier).
+- **Signalement** : section « Fonds prolongés » des crédits de la page seulement ; ni cartouche ni
+  livre d'images (qui montre l'image d'époque seule).
+- **`verifier.py`**, famille « fond (spec 17) », étape C : champs, fichier, dimensions, boîte,
+  proportions de la boîte égales à celles de la zone utile, zone utile inchangée depuis la
+  fabrication, niveau de flou, modèle, recette, image entière ; avertit d'un fond de plus de 320 ko
+  (120 ko en flou fort) et d'une image entière sans fond dans une période qui en a.
+- **Restauration** : 101 fonds (57 images de diapositive, 44 plans), 4,5 Mo ; haut et bas par le
+  modèle pour 34 décors, en papier continu pour 66 ; **9 en flou fort** (4b, 28, 100, 105, 105b,
+  106b, 112, 113, 113b). Exception : la Girafe (76) garde son premier fond (640 px, haut et bas
+  étirés), la passe 2 salissant le sol ; `"bandes": "etire"` dans son lot.
+- **Monarchie de Juillet** (2026-10-14) : 106 fonds (56 images de diapositive, 50 plans), 4,9 Mo ;
+  41 décors, 65 en papier continu ; **6 en flou fort** (23, 38b, 70b, 75, 117, 121).
+- **IIe République** (2026-10-14) : 103 fonds (59 images de diapositive, 44 plans), 4,5 Mo ; 26 décors,
+  77 en papier continu ; **10 en flou fort** (5, 9, 10, 49b, 72b, 79, 84, 103, 103b, 116b). 17 images
+  entières y sont colorisées (`image.couleur`) : leur fond est tiré de l'original gris et reste gris
+  quand la couleur monte (essai d'un fond tiré de la version colorisée dans
+  `.cache/diaporamas/fonds/deuxieme-republique-couleur/`, non publié : il faudrait un second fichier
+  de fond et un fondu dans `fond.ts`, à décider).
+- **Limite connue** : sur les décors, la jonction entre l'image élargie et les bandes de la passe 2
+  reste visible net et se devine parfois à 0,25 % (Méduse 23, pompe à feu 58b).

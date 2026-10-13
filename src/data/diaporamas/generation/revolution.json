@@ -7,49 +7,65 @@
       "n": 18,
       "type": "mouvement",
       "graine": 1807,
-      "prompt": "Gunpowder smoke slowly drifts and thickens across the scene, a cannon fires with a brief flash, the crowd of insurgents surges towards the fortress raising pikes and muskets, a few figures stumble and gesture, a flag flutters. Very slow camera push-in towards the gate. Keep exactly the look of this 1789 watercolour: same muted colours, same brush lines, same composition; nothing new appears, no text."
+      "prompt": "Gunpowder smoke slowly drifts and thickens across the scene, a cannon fires with a brief flash, the crowd of insurgents surges towards the fortress raising pikes and muskets, a few figures stumble and gesture, a flag flutters. Very slow camera push-in towards the gate. Keep exactly the look of this 1789 watercolour: same muted colours, same brush lines, same composition; nothing new appears, no text.",
+      "ambiance": "Distant angry crowd shouting outdoors, sporadic musket shots, one cannon blast, 18th century siege ambience"
     },
     {
       "n": 28,
       "type": "mouvement",
       "graine": 1817,
-      "prompt": "The column of women marches forward, skirts swaying, pikes and halberds bobbing, the cannon rolls on its wheels, a drummer beats the drum, dust rises gently. Slow lateral camera tracking that follows the march. Keep exactly the look of this hand-coloured 18th-century etching: same flat colours, same engraved lines; nothing new appears, no text."
+      "prompt": "The column of women marches forward, skirts swaying, pikes and halberds bobbing, the cannon rolls on its wheels, a drummer beats the drum, dust rises gently. Slow lateral camera tracking that follows the march. Keep exactly the look of this hand-coloured 18th-century etching: same flat colours, same engraved lines; nothing new appears, no text.",
+      "ambiance": "A large crowd of women walking on a dirt road, many footsteps, indistinct murmur, heavy wooden cart wheels rolling"
     },
     {
       "n": 37,
       "type": "mouvement",
       "graine": 1824,
-      "prompt": "The immense crowd sways slightly, flags and banners wave in the wind, clouds drift slowly across the sky, a thin wisp of incense smoke rises from the altar, a few figures raise their hats. Very slow camera drift across the amphitheatre. Keep exactly the look of this 1792 oil painting: same colours, same brushwork, same composition; nothing new appears, no text."
+      "prompt": "The immense crowd sways slightly, flags and banners wave in the wind, clouds drift slowly across the sky, a thin wisp of incense smoke rises from the altar, a few figures raise their hats. Very slow camera drift across the amphitheatre. Keep exactly the look of this 1792 oil painting: same colours, same brushwork, same composition; nothing new appears, no text.",
+      "ambiance": "A huge outdoor crowd cheering far away in an open field, flags flapping in the wind"
     },
     {
       "n": 57,
       "type": "mouvement",
       "graine": 1842,
-      "prompt": "Clouds of musket smoke roll across the courtyard, muzzle flashes flicker from the windows of the palace, the crowd of insurgents pushes forward waving pikes and flags, fallen figures lie still. Slow camera push-in towards the palace. Keep exactly the look of this hand-coloured etching: same colours, same engraved lines; nothing new appears, no text."
+      "prompt": "Clouds of musket smoke roll across the courtyard, muzzle flashes flicker from the windows of the palace, the crowd of insurgents pushes forward waving pikes and flags, fallen figures lie still. Slow camera push-in towards the palace. Keep exactly the look of this hand-coloured etching: same colours, same engraved lines; nothing new appears, no text.",
+      "ambiance": "Volleys of musket gunfire in a courtyard, a crowd shouting in the distance, chaotic battle ambience"
     },
     {
       "n": 60,
       "type": "mouvement",
       "graine": 1845,
-      "prompt": "Cannon smoke drifts slowly across the plain, the sails of the windmill turn slowly, horses shift and toss their heads, soldiers raise their hats and muskets, plumes stir faintly. Very slow camera push-in on the general on horseback. Keep exactly the look of this 1826 oil painting: same colours, same brushwork, same composition, the flag keeps its exact size; nothing new appears, no text."
+      "prompt": "Cannon smoke drifts slowly across the plain, the sails of the windmill turn slowly, horses shift and toss their heads, soldiers raise their hats and muskets, plumes stir faintly. Very slow camera push-in on the general on horseback. Keep exactly the look of this 1826 oil painting: same colours, same brushwork, same composition, the flag keeps its exact size; nothing new appears, no text.",
+      "ambiance": "Distant cannon fire booming across an open plain, steady wind, a few horses neighing, 18th century battlefield"
     },
     {
       "n": 89,
       "type": "mouvement",
       "graine": 1874,
-      "prompt": "Flames flicker and grow on the burning ships, thick smoke billows and drifts across the harbour, the sea ripples gently, small boats rock on the water, sparks rise into the night sky. Slow camera drift across the harbour. Keep exactly the look of this hand-coloured 1794 print: same colours, same engraved lines; nothing new appears, no text."
+      "prompt": "Flames flicker and grow on the burning ships, thick smoke billows and drifts across the harbour, the sea ripples gently, small boats rock on the water, sparks rise into the night sky. Slow camera drift across the harbour. Keep exactly the look of this hand-coloured 1794 print: same colours, same engraved lines; nothing new appears, no text.",
+      "ambiance": "A large fire roaring and crackling on wooden ships at night, sea waves lapping, a distant explosion"
     },
     {
       "n": 97,
       "type": "mouvement",
       "graine": 1881,
-      "prompt": "The crowd sways gently, banners and tricolour flags wave, clouds drift across the sky, a faint haze of smoke rises from the artificial mountain, small figures move on the paths. Very slow camera drift upward towards the summit. Keep exactly the look of this 1794 oil painting: same colours, same brushwork, same composition; nothing new appears, no text."
+      "prompt": "The crowd sways gently, banners and tricolour flags wave, clouds drift across the sky, a faint haze of smoke rises from the artificial mountain, small figures move on the paths. Very slow camera drift upward towards the summit. Keep exactly the look of this 1794 oil painting: same colours, same brushwork, same composition; nothing new appears, no text.",
+      "ambiance": "A very large calm crowd murmuring outdoors on a sunny day, gentle wind, distant cheering"
     },
     {
       "n": 115,
       "type": "mouvement",
       "graine": 1899,
-      "prompt": "A cannon fires with a flash, white smoke rolls across the street, the royalist crowd on the church steps recoils and stumbles, soldiers advance, muskets flash. Slow camera push-in towards the church steps. Keep exactly the look of this late 18th-century engraving: same black-and-white engraved lines, same composition; nothing new appears, no colour, no text."
+      "prompt": "A cannon fires with a flash, white smoke rolls across the street, the royalist crowd on the church steps recoils and stumbles, soldiers advance, muskets flash. Slow camera push-in towards the church steps. Keep exactly the look of this late 18th-century engraving: same black-and-white engraved lines, same composition; nothing new appears, no colour, no text.",
+      "ambiance": "Cannon shots echoing in a narrow city street, scattered musket fire, people running away on cobblestones"
     }
-  ]
+  ],
+  "ambiance": {
+    "modele": "EzAudio s3_xl",
+    "graines": [
+      42,
+      43
+    ],
+    "note": "Ambiance sonore de chaque clip (spec 17) : consigne anglaise par diapositive (champ « ambiance » de l'élément), rien que la narration ne dise, ni voix, ni musique, ni son anachronique ; deux tirages de 10 s enchaînés en fondu."
+  }
 }

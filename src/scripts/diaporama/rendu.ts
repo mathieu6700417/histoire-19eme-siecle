@@ -49,6 +49,7 @@ export function installerRendu(lec: Lecteur) {
     preparerPlans(c, x);
     preparerVideo(c, x);
     lec.preparerCouleur(c, x);
+    lec.preparerFond(c, x);
   }
   lec.legendeMontree = '';
 
@@ -67,6 +68,7 @@ export function installerRendu(lec: Lecteur) {
     img.style.transform = transformation(calques[k], x, couches[k].r);
     poserVideo(calques[k], img.style.transform);
     lec.poserCouleur(calques[k], x, img.style.transform);
+    lec.majFond(calques[k], x, img.style.transform);
     const ra = couches[k].ra;
     if (x.ap && ra) {
       const imgA = calques[k].querySelector<HTMLImageElement>('.lecteur__apres img')!;
@@ -84,7 +86,7 @@ export function installerRendu(lec: Lecteur) {
   function rendre(t = instant()) {
     lec.majVolets();
     const c = calques[lec.visible], x = couches[lec.visible].x;
-    if (x !== D.diapos[lec.i]) { lec.marquerCouleur(0); return; } // carton : l'image de la diapositive n'est pas encore entrée
+    if (x !== D.diapos[lec.i]) { lec.marquerCouleur(0); lec.arreterAmbiance(); return; } // carton : l'image de la diapositive n'est pas encore entrée
     const img = c.querySelector('img')!;
     const reduit = mouvementReduit.matches;
     // Pendant l'ouverture du carton, l'entrée et la caméra suivent l'horloge du carton (figée
@@ -105,6 +107,8 @@ export function installerRendu(lec: Lecteur) {
     img.style.transform = transformation(c, x, r, f);
     // Clip d'une image mise en mouvement (spec 16) : même transformation, visible une fois l'entrée finie.
     if (x.video) majVideo(c, x, img.style.transform, tv, !ouv && e >= dureeEntree(x));
+    // Ambiance sonore du clip (spec 17) : même fenêtre que lui, sur l'horloge de la voix.
+    lec.majAmbiance(x, tv, !ouv && e >= dureeEntree(x));
     // Avant / après, mosaïque ; puis le cartouche voulu à cet instant (pas pendant un segment).
     if (x.ap) majApres(c, x, tv);
     if (x.mos && !x.ouv) majMosaique(c, x, tv);
@@ -122,6 +126,8 @@ export function installerRendu(lec: Lecteur) {
     // Image colorisée par IA (spec 16) : même transformation et même filtre que l'image ; le
     // cartouche le signale tant que la couleur de l'image montrée (ou du plan) est à l'écran.
     const oc = x.coul ? lec.majCouleur(c, x, img.style.transform, tv, img.style.filter) : 0;
+    // Fond prolongé d'une image entière (spec 17) : sous l'image, même transformation, même gris.
+    if (x.fond) lec.majFond(c, x, img.style.transform, gris);
     lec.marquerCouleur(lec.lance && !lec.enCarton ? (op >= 0 ? op : oc) : 0);
     c.style.opacity = opacite.toFixed(3);
     if (opacite >= 1 && lec.sortant >= 0) {

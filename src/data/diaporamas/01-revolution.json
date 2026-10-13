@@ -101,7 +101,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "001-grand.webp",
+          "largeur": 2270,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "001.m4a",
@@ -170,7 +176,13 @@
           0.042,
           0.901,
           0.899
-        ]
+        ],
+        "grand": {
+          "fichier": "002-grand.webp",
+          "largeur": 2366,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "002.m4a",
@@ -242,7 +254,13 @@
           0.084,
           0.896,
           0.886
-        ]
+        ],
+        "grand": {
+          "fichier": "003-grand.webp",
+          "largeur": 2626,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "003.m4a",
@@ -304,7 +322,16 @@
           0.848,
           0.823
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "004-grand.webp",
+          "largeur": 2234,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.52,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "004.m4a",
@@ -372,7 +399,16 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "005-grand.webp",
+          "largeur": 2421,
+          "hauteur": 1589,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.32,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "005.m4a",
@@ -441,7 +477,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "006-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2482,
+          "source": "original"
+        }
       },
       "n": 6,
       "audio": {
@@ -602,7 +644,16 @@
           0.84,
           0.64
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "007-grand.webp",
+          "largeur": 2416,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.44,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "007.m4a",
@@ -697,7 +748,13 @@
           0.02,
           0.972,
           0.984
-        ]
+        ],
+        "grand": {
+          "fichier": "008-grand.webp",
+          "largeur": 2212,
+          "hauteur": 2677,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "008.m4a",
@@ -769,7 +826,13 @@
           0.052,
           0.962,
           0.953
-        ]
+        ],
+        "grand": {
+          "fichier": "009-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2236,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "009.m4a",
@@ -856,7 +919,13 @@
           0.089,
           0.902,
           0.796
-        ]
+        ],
+        "grand": {
+          "fichier": "010-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2072,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "010.m4a",
@@ -923,7 +992,13 @@
           0.169,
           0.945,
           0.883
-        ]
+        ],
+        "grand": {
+          "fichier": "011-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2512,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "011.m4a",
@@ -1012,7 +1087,13 @@
           0.126,
           0.928,
           0.781
-        ]
+        ],
+        "grand": {
+          "fichier": "012-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2554,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "012.m4a",
@@ -1073,7 +1154,13 @@
           0.028,
           0.973,
           0.972
-        ]
+        ],
+        "grand": {
+          "fichier": "013-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2448,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "013.m4a",
@@ -1171,7 +1258,16 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "014-grand.webp",
+          "largeur": 3081,
+          "hauteur": 2077,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.2,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "014.m4a",
@@ -1253,7 +1349,13 @@
           0.019,
           0.874,
           0.744
-        ]
+        ],
+        "grand": {
+          "fichier": "015-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2188,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "015.m4a",
@@ -1337,7 +1439,13 @@
           0.124,
           0.896,
           0.796
-        ]
+        ],
+        "grand": {
+          "fichier": "016-grand.webp",
+          "largeur": 3000,
+          "hauteur": 2558,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "016.m4a",
@@ -1436,6 +1544,12 @@
           ],
           "duree": 4.0,
           "intention": "On descend des nuages et des feuillages vers le dôme des Invalides et la troupe qui s'avance."
+        },
+        "grand": {
+          "fichier": "017-grand.webp",
+          "largeur": 3032,
+          "hauteur": 2553,
+          "source": "original"
         }
       },
       "audio": {
@@ -1516,6 +1630,18 @@
           "hauteur": 800,
           "modele": "Wan 2.2 TI2V-5B",
           "genere_le": "2026-10-11"
+        },
+        "grand": {
+          "fichier": "018-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2432,
+          "source": "original"
+        },
+        "ambiance": {
+          "fichier": "018-ambiance.m4a",
+          "duree": 18.0,
+          "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-12"
         }
       },
       "audio": {
@@ -1695,7 +1821,16 @@
           0.094,
           0.896,
           0.906
-        ]
+        ],
+        "grand": {
+          "fichier": "019-grand.webp",
+          "largeur": 2516,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.57,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "019.m4a",
@@ -1814,7 +1949,13 @@
           0.022,
           0.987,
           0.956
-        ]
+        ],
+        "grand": {
+          "fichier": "020-grand.webp",
+          "largeur": 2930,
+          "hauteur": 1811,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "020.m4a",
@@ -1874,7 +2015,13 @@
           1.0,
           1.0
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "021-grand.webp",
+          "largeur": 2389,
+          "hauteur": 2623,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "021.m4a",
@@ -1949,7 +2096,16 @@
           0.05,
           0.964,
           0.916
-        ]
+        ],
+        "grand": {
+          "fichier": "022-grand.webp",
+          "largeur": 2126,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.93,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "022.m4a",
@@ -2028,7 +2184,13 @@
           0.795,
           0.67
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "023-grand.webp",
+          "largeur": 2196,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "023.m4a",
@@ -2123,6 +2285,12 @@
           ],
           "duree": 5,
           "intention": "On suit la route depuis les fuyards de gauche jusqu'à la berline, tandis que la tour en flammes surgit à droite."
+        },
+        "grand": {
+          "fichier": "024-grand.webp",
+          "largeur": 3196,
+          "hauteur": 3200,
+          "source": "original"
         }
       },
       "audio": {
@@ -2191,7 +2359,13 @@
           0.049,
           0.957,
           0.809
-        ]
+        ],
+        "grand": {
+          "fichier": "025-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2410,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "025.m4a",
@@ -2260,7 +2434,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "026-grand.webp",
+          "largeur": 2184,
+          "hauteur": 1649,
+          "source": "original"
+        }
       },
       "n": 26,
       "audio": {
@@ -2329,7 +2509,13 @@
           0.016,
           0.984,
           0.985
-        ]
+        ],
+        "grand": {
+          "fichier": "027-grand.webp",
+          "largeur": 2201,
+          "hauteur": 2790,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "027.m4a",
@@ -2391,6 +2577,18 @@
           "hauteur": 672,
           "modele": "Wan 2.2 TI2V-5B",
           "genere_le": "2026-10-11"
+        },
+        "grand": {
+          "fichier": "028-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2182,
+          "source": "original"
+        },
+        "ambiance": {
+          "fichier": "028-ambiance.m4a",
+          "duree": 18.47,
+          "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-12"
         }
       },
       "audio": {
@@ -2477,7 +2675,13 @@
           0.112,
           0.951,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "029-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2248,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "029.m4a",
@@ -2528,7 +2732,16 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "030-grand.webp",
+          "largeur": 2506,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.29,
+          "genere_le": "2026-10-12"
+        }
       },
       "n": 30,
       "audio": {
@@ -2598,7 +2811,13 @@
           0.043,
           0.929,
           0.951
-        ]
+        ],
+        "grand": {
+          "fichier": "031-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2330,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "031.m4a",
@@ -2668,7 +2887,13 @@
           0.027,
           0.981,
           0.952
-        ]
+        ],
+        "grand": {
+          "fichier": "032-grand.webp",
+          "largeur": 3000,
+          "hauteur": 1967,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "032.m4a",
@@ -2738,7 +2963,13 @@
             ],
             "quand": "montre un navire de Nantes"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "033-grand.webp",
+          "largeur": 2669,
+          "hauteur": 2325,
+          "source": "original"
+        }
       },
       "n": 33,
       "audio": {
@@ -2806,7 +3037,16 @@
             ],
             "quand": "demande l'esclave enchaîné de son emblème"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "034-grand.webp",
+          "largeur": 3200,
+          "hauteur": 3045,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.25,
+          "genere_le": "2026-10-12"
+        }
       },
       "n": 34,
       "audio": {
@@ -2871,7 +3111,13 @@
           0.83,
           0.86
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "035-grand.webp",
+          "largeur": 2644,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "035.m4a",
@@ -2957,7 +3203,13 @@
           0.031,
           0.937,
           0.913
-        ]
+        ],
+        "grand": {
+          "fichier": "036-grand.webp",
+          "largeur": 2665,
+          "hauteur": 2077,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "036.m4a",
@@ -3027,6 +3279,18 @@
           "hauteur": 768,
           "modele": "Wan 2.2 TI2V-5B",
           "genere_le": "2026-10-11"
+        },
+        "grand": {
+          "fichier": "037-grand.webp",
+          "largeur": 2980,
+          "hauteur": 2015,
+          "source": "original"
+        },
+        "ambiance": {
+          "fichier": "037-ambiance.m4a",
+          "duree": 17.02,
+          "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-12"
         }
       },
       "audio": {
@@ -3125,7 +3389,13 @@
           0.084,
           0.936,
           0.886
-        ]
+        ],
+        "grand": {
+          "fichier": "038-grand.webp",
+          "largeur": 2953,
+          "hauteur": 2182,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "038.m4a",
@@ -3215,6 +3485,12 @@
           ],
           "duree": 4.0,
           "intention": "On part de la voûte et de l'abside de l'église, puis on recule pour embrasser la nef, ses colonnes et ses fumées d'encens."
+        },
+        "grand": {
+          "fichier": "039-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2516,
+          "source": "original"
         }
       },
       "audio": {
@@ -3306,7 +3582,16 @@
           0.02,
           0.987,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "040-grand.webp",
+          "largeur": 2438,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.59,
+          "genere_le": "2026-10-12"
+        }
       },
       "n": 40,
       "audio": {
@@ -3406,7 +3691,13 @@
           0.022,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "041-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2280,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "041.m4a",
@@ -3486,6 +3777,12 @@
           ],
           "duree": 5,
           "intention": "On descend des nuées vers le pavillon et la berline royale qui rentre dans Paris."
+        },
+        "grand": {
+          "fichier": "042-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2674,
+          "source": "original"
         }
       },
       "audio": {
@@ -3546,7 +3843,13 @@
           0.061,
           0.954,
           0.821
-        ]
+        ],
+        "grand": {
+          "fichier": "043-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2196,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "043.m4a",
@@ -3625,6 +3928,12 @@
           ],
           "duree": 6,
           "intention": "On longe le cortège depuis sa tête, à gauche, puis la caméra s'élargit jusqu'au grand chemin des processions."
+        },
+        "grand": {
+          "fichier": "044-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2090,
+          "source": "original"
         }
       },
       "audio": {
@@ -3714,6 +4023,12 @@
           ],
           "duree": 5,
           "intention": "On part des fusils et de la fumée de la garde nationale, puis on recule pour découvrir la foule massacrée devant l'autel."
+        },
+        "grand": {
+          "fichier": "045-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2296,
+          "source": "original"
         }
       },
       "audio": {
@@ -3795,7 +4110,16 @@
               0.5
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "046-grand.webp",
+          "largeur": 3090,
+          "hauteur": 3177,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.34,
+          "genere_le": "2026-10-12"
+        }
       },
       "n": 46,
       "audio": {
@@ -3869,7 +4193,13 @@
             ],
             "quand": "incendient en quelques semaines des centaines de plantations"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "047-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2342,
+          "source": "original"
+        }
       },
       "n": 47,
       "audio": {
@@ -3931,7 +4261,13 @@
           0.058,
           0.923,
           0.856
-        ]
+        ],
+        "grand": {
+          "fichier": "048-grand.webp",
+          "largeur": 2360,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "048.m4a",
@@ -4075,7 +4411,16 @@
           0.056,
           0.933,
           0.88
-        ]
+        ],
+        "grand": {
+          "fichier": "049-grand.webp",
+          "largeur": 2297,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.29,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "049.m4a",
@@ -4183,7 +4528,13 @@
           0.164,
           0.976,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "050-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2288,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "050.m4a",
@@ -4277,7 +4628,16 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "051-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2554,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.6,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "051.m4a",
@@ -4353,7 +4713,16 @@
           0.011,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "052-grand.webp",
+          "largeur": 1994,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.83,
+          "genere_le": "2026-10-12"
+        }
       },
       "n": 52,
       "audio": {
@@ -4414,7 +4783,13 @@
           0.021,
           0.981,
           0.88
-        ]
+        ],
+        "grand": {
+          "fichier": "053-grand.webp",
+          "largeur": 2288,
+          "hauteur": 1893,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "053.m4a",
@@ -4490,7 +4865,13 @@
           0.114,
           0.936,
           0.856
-        ]
+        ],
+        "grand": {
+          "fichier": "054-grand.webp",
+          "largeur": 1774,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "054.m4a",
@@ -4573,7 +4954,16 @@
           0.032,
           0.964,
           0.98
-        ]
+        ],
+        "grand": {
+          "fichier": "055-grand.webp",
+          "largeur": 2040,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.55,
+          "genere_le": "2026-10-12"
+        }
       },
       "n": 55,
       "audio": {
@@ -4697,6 +5087,12 @@
           ],
           "duree": 4.5,
           "intention": "On glisse depuis la foule massée à gauche, le long de la place, jusqu'à l'estrade d'enrôlement."
+        },
+        "grand": {
+          "fichier": "056-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2204,
+          "source": "original"
         }
       },
       "audio": {
@@ -4774,6 +5170,18 @@
           "hauteur": 800,
           "modele": "Wan 2.2 TI2V-5B",
           "genere_le": "2026-10-11"
+        },
+        "grand": {
+          "fichier": "057-grand.webp",
+          "largeur": 2074,
+          "hauteur": 1667,
+          "source": "original"
+        },
+        "ambiance": {
+          "fichier": "057-ambiance.m4a",
+          "duree": 16.9,
+          "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-12"
         }
       },
       "audio": {
@@ -4937,6 +5345,12 @@
           ],
           "duree": 5,
           "intention": "On part de la tour du Temple et du toit de la prison, puis on recule jusqu'au cortège de la famille royale."
+        },
+        "grand": {
+          "fichier": "058-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2332,
+          "source": "original"
         }
       },
       "audio": {
@@ -5026,7 +5440,13 @@
           0.856,
           0.726
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "059-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2186,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "059.m4a",
@@ -5194,6 +5614,18 @@
           "hauteur": 736,
           "modele": "Wan 2.2 TI2V-5B",
           "genere_le": "2026-10-12"
+        },
+        "grand": {
+          "fichier": "060-grand.webp",
+          "largeur": 3200,
+          "hauteur": 1952,
+          "source": "original"
+        },
+        "ambiance": {
+          "fichier": "060-ambiance.m4a",
+          "duree": 19.74,
+          "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-12"
         }
       },
       "audio": {
@@ -5297,6 +5729,12 @@
             0.75
           ],
           "quand": "Louis Capet"
+        },
+        "grand": {
+          "fichier": "061-grand.webp",
+          "largeur": 2150,
+          "hauteur": 3031,
+          "source": "original"
         }
       },
       "audio": {
@@ -5357,7 +5795,13 @@
           0.008,
           0.987,
           0.99
-        ]
+        ],
+        "grand": {
+          "fichier": "062-grand.webp",
+          "largeur": 2478,
+          "hauteur": 2983,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "062.m4a",
@@ -5476,7 +5920,13 @@
           1,
           1
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "063-grand.webp",
+          "largeur": 3069,
+          "hauteur": 1644,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "063.m4a",
@@ -5550,7 +6000,16 @@
           0.87,
           0.96
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "064-grand.webp",
+          "largeur": 2829,
+          "hauteur": 2813,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.34,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "064.m4a",
@@ -5610,7 +6069,13 @@
           0.981,
           0.755
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "065-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2156,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "065.m4a",
@@ -5687,7 +6152,16 @@
           0.094,
           0.946,
           0.948
-        ]
+        ],
+        "grand": {
+          "fichier": "066-grand.webp",
+          "largeur": 2613,
+          "hauteur": 2751,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.41,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "066.m4a",
@@ -5819,7 +6293,16 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "067-grand.webp",
+          "largeur": 2462,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.86,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "067.m4a",
@@ -5878,7 +6361,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "068-grand.webp",
+          "largeur": 2194,
+          "hauteur": 2678,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "068.m4a",
@@ -5942,7 +6431,13 @@
           0.02,
           0.964,
           0.982
-        ]
+        ],
+        "grand": {
+          "fichier": "069-grand.webp",
+          "largeur": 2335,
+          "hauteur": 2824,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "069.m4a",
@@ -6000,7 +6495,13 @@
           0.08,
           0.976,
           0.986
-        ]
+        ],
+        "grand": {
+          "fichier": "070-grand.webp",
+          "largeur": 2742,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "070.m4a",
@@ -6073,7 +6574,13 @@
           0.054,
           0.951,
           0.953
-        ]
+        ],
+        "grand": {
+          "fichier": "071-grand.webp",
+          "largeur": 2839,
+          "hauteur": 2257,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "071.m4a",
@@ -6164,6 +6671,12 @@
           ],
           "duree": 5,
           "intention": "On descend des nuages, au-dessus de la serre et des grands arbres, vers les carrés du jardin et les promeneurs."
+        },
+        "grand": {
+          "fichier": "072-grand.webp",
+          "largeur": 2655,
+          "hauteur": 1829,
+          "source": "original"
         }
       },
       "n": 72,
@@ -6235,7 +6748,13 @@
           0.082,
           0.939,
           0.857
-        ]
+        ],
+        "grand": {
+          "fichier": "073-grand.webp",
+          "largeur": 2397,
+          "hauteur": 1753,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "073.m4a",
@@ -6314,7 +6833,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "074-grand.webp",
+          "largeur": 2261,
+          "hauteur": 2910,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "074.m4a",
@@ -6428,7 +6953,16 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "075-grand.webp",
+          "largeur": 2150,
+          "hauteur": 2658,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.85,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "075.m4a",
@@ -6530,7 +7064,13 @@
           0.031,
           0.976,
           0.871
-        ]
+        ],
+        "grand": {
+          "fichier": "076-grand.webp",
+          "largeur": 2687,
+          "hauteur": 1674,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "076.m4a",
@@ -6602,6 +7142,12 @@
           ],
           "duree": 5,
           "intention": "On remonte de la foule aux bras levés vers la Nature assise sur son socle, au milieu des arbres."
+        },
+        "grand": {
+          "fichier": "077-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2034,
+          "source": "original"
         }
       },
       "n": 77,
@@ -6682,6 +7228,12 @@
           ],
           "duree": 5,
           "intention": "On part du copiste devant son chevalet et des visiteurs, puis on recule pour découvrir toute la galerie qui s'enfuit vers le fond."
+        },
+        "grand": {
+          "fichier": "078-grand.webp",
+          "largeur": 3036,
+          "hauteur": 2412,
+          "source": "original"
         }
       },
       "n": 78,
@@ -6743,7 +7295,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "079-grand.webp",
+          "largeur": 2290,
+          "hauteur": 3102,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "079.m4a",
@@ -6803,7 +7361,13 @@
           0.063,
           0.956,
           0.736
-        ]
+        ],
+        "grand": {
+          "fichier": "080-grand.webp",
+          "largeur": 2358,
+          "hauteur": 2143,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "080.m4a",
@@ -6893,7 +7457,13 @@
           0.075,
           0.956,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "081-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2354,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "081.m4a",
@@ -6962,7 +7532,13 @@
           0.025,
           0.96,
           0.956
-        ]
+        ],
+        "grand": {
+          "fichier": "082-grand.webp",
+          "largeur": 2423,
+          "hauteur": 2738,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "082.m4a",
@@ -7027,7 +7603,16 @@
           0.075,
           0.906,
           0.956
-        ]
+        ],
+        "grand": {
+          "fichier": "083-grand.webp",
+          "largeur": 2305,
+          "hauteur": 3199,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.66,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "083.m4a",
@@ -7167,7 +7752,13 @@
           0.145,
           0.916,
           0.916
-        ]
+        ],
+        "grand": {
+          "fichier": "084-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2158,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "084.m4a",
@@ -7258,7 +7849,13 @@
           0.012,
           0.991,
           0.983
-        ]
+        ],
+        "grand": {
+          "fichier": "085-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2700,
+          "source": "original"
+        }
       },
       "n": 85,
       "audio": {
@@ -7328,7 +7925,13 @@
           0.053,
           0.985,
           0.9
-        ]
+        ],
+        "grand": {
+          "fichier": "086-grand.webp",
+          "largeur": 2542,
+          "hauteur": 1867,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "086.m4a",
@@ -7413,7 +8016,13 @@
           0.037,
           0.979,
           0.92
-        ]
+        ],
+        "grand": {
+          "fichier": "087-grand.webp",
+          "largeur": 3075,
+          "hauteur": 2466,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "087.m4a",
@@ -7496,7 +8105,13 @@
           0.034,
           0.976,
           0.836
-        ]
+        ],
+        "grand": {
+          "fichier": "088-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2244,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "088.m4a",
@@ -7588,6 +8203,21 @@
           "hauteur": 768,
           "modele": "Wan 2.2 TI2V-5B",
           "genere_le": "2026-10-11"
+        },
+        "grand": {
+          "fichier": "089-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2340,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.5,
+          "genere_le": "2026-10-12"
+        },
+        "ambiance": {
+          "fichier": "089-ambiance.m4a",
+          "duree": 15.24,
+          "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-12"
         }
       },
       "audio": {
@@ -7676,7 +8306,13 @@
             ],
             "quand": "Voici son affiche, imprimée en créole"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "090-grand.webp",
+          "largeur": 2408,
+          "hauteur": 3150,
+          "source": "original"
+        }
       },
       "n": 90,
       "audio": {
@@ -7729,7 +8365,13 @@
           0.016,
           0.988,
           0.99
-        ]
+        ],
+        "grand": {
+          "fichier": "091-grand.webp",
+          "largeur": 2203,
+          "hauteur": 1740,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "091.m4a",
@@ -7815,7 +8457,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "092-grand.webp",
+          "largeur": 2246,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "092.m4a",
@@ -7893,7 +8541,13 @@
           0.986,
           0.7
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "093-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2170,
+          "source": "original"
+        }
       },
       "n": 93,
       "audio": {
@@ -8001,7 +8655,13 @@
           0.024,
           0.976,
           0.976
-        ]
+        ],
+        "grand": {
+          "fichier": "094-grand.webp",
+          "largeur": 2140,
+          "hauteur": 2709,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "094.m4a",
@@ -8066,7 +8726,13 @@
           0.014,
           0.986,
           0.906
-        ]
+        ],
+        "grand": {
+          "fichier": "095-grand.webp",
+          "largeur": 3089,
+          "hauteur": 2066,
+          "source": "original"
+        }
       },
       "n": 95,
       "audio": {
@@ -8231,7 +8897,13 @@
           0.01,
           0.987,
           0.99
-        ]
+        ],
+        "grand": {
+          "fichier": "096-grand.webp",
+          "largeur": 2424,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "n": 96,
       "audio": {
@@ -8316,6 +8988,18 @@
           "hauteur": 736,
           "modele": "Wan 2.2 TI2V-5B",
           "genere_le": "2026-10-11"
+        },
+        "grand": {
+          "fichier": "097-grand.webp",
+          "largeur": 3200,
+          "hauteur": 1942,
+          "source": "original"
+        },
+        "ambiance": {
+          "fichier": "097-ambiance.m4a",
+          "duree": 19.0,
+          "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-12"
         }
       },
       "audio": {
@@ -8418,7 +9102,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "098-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2298,
+          "source": "original"
+        }
       },
       "n": 98,
       "audio": {
@@ -8488,7 +9178,13 @@
           0.052,
           0.948,
           0.876
-        ]
+        ],
+        "grand": {
+          "fichier": "099-grand.webp",
+          "largeur": 2585,
+          "hauteur": 2031,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "099.m4a",
@@ -8561,7 +9257,13 @@
           0.011,
           1.0,
           0.988
-        ]
+        ],
+        "grand": {
+          "fichier": "100-grand.webp",
+          "largeur": 2317,
+          "hauteur": 1767,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "100.m4a",
@@ -8640,7 +9342,16 @@
           0.9,
           0.845
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "101-grand.webp",
+          "largeur": 2010,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.31,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "101.m4a",
@@ -8720,7 +9431,13 @@
           0.04,
           0.924,
           0.883
-        ]
+        ],
+        "grand": {
+          "fichier": "102-grand.webp",
+          "largeur": 2700,
+          "hauteur": 2066,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "102.m4a",
@@ -8793,7 +9510,13 @@
           0.101,
           0.966,
           0.946
-        ]
+        ],
+        "grand": {
+          "fichier": "103-grand.webp",
+          "largeur": 2307,
+          "hauteur": 1962,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "103.m4a",
@@ -8844,7 +9567,13 @@
           0.082,
           0.925,
           0.906
-        ]
+        ],
+        "grand": {
+          "fichier": "104-grand.webp",
+          "largeur": 2560,
+          "hauteur": 2258,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "104.m4a",
@@ -8913,7 +9642,13 @@
           0.094,
           0.946,
           0.876
-        ]
+        ],
+        "grand": {
+          "fichier": "105-grand.webp",
+          "largeur": 2148,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "105.m4a",
@@ -8992,7 +9727,13 @@
           1.0,
           1.0
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "106-grand.webp",
+          "largeur": 1343,
+          "hauteur": 2730,
+          "source": "original"
+        }
       },
       "n": 106,
       "audio": {
@@ -9073,6 +9814,12 @@
           ],
           "duree": 5.5,
           "intention": "On descend de la charpente et du gisant en prière, au sommet du tombeau, vers les statues et les visiteurs de la salle."
+        },
+        "grand": {
+          "fichier": "107-grand.webp",
+          "largeur": 2150,
+          "hauteur": 1747,
+          "source": "original"
         }
       },
       "n": 107,
@@ -9143,7 +9890,13 @@
           0.024,
           1.0,
           0.896
-        ]
+        ],
+        "grand": {
+          "fichier": "108-grand.webp",
+          "largeur": 2100,
+          "hauteur": 2381,
+          "source": "original"
+        }
       },
       "n": 108,
       "audio": {
@@ -9204,7 +9957,13 @@
           0.042,
           0.973,
           0.959
-        ]
+        ],
+        "grand": {
+          "fichier": "109-grand.webp",
+          "largeur": 2503,
+          "hauteur": 1586,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "109.m4a",
@@ -9273,7 +10032,13 @@
           0.032,
           0.976,
           0.822
-        ]
+        ],
+        "grand": {
+          "fichier": "110-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2418,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "110.m4a",
@@ -9342,7 +10107,13 @@
           0.086,
           0.931,
           0.833
-        ]
+        ],
+        "grand": {
+          "fichier": "111-grand.webp",
+          "largeur": 2472,
+          "hauteur": 2012,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "111.m4a",
@@ -9431,7 +10202,13 @@
           0.039,
           0.952,
           0.908
-        ]
+        ],
+        "grand": {
+          "fichier": "112-grand.webp",
+          "largeur": 2498,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "112.m4a",
@@ -9506,6 +10283,12 @@
           ],
           "duree": 5.5,
           "intention": "On part de la tour fumante et des soldats qui s'acclament, à gauche, puis la caméra glisse vers la droite et s'élargit sur la baie, la ville et l'armée en marche."
+        },
+        "grand": {
+          "fichier": "113-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2664,
+          "source": "original"
         }
       },
       "audio": {
@@ -9585,7 +10368,13 @@
           0.055,
           0.946,
           0.916
-        ]
+        ],
+        "grand": {
+          "fichier": "114-grand.webp",
+          "largeur": 2458,
+          "hauteur": 3009,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "114.m4a",
@@ -9673,6 +10462,18 @@
           "hauteur": 672,
           "modele": "Wan 2.2 TI2V-5B",
           "genere_le": "2026-10-11"
+        },
+        "grand": {
+          "fichier": "115-grand.webp",
+          "largeur": 3200,
+          "hauteur": 1976,
+          "source": "original"
+        },
+        "ambiance": {
+          "fichier": "115-ambiance.m4a",
+          "duree": 20.52,
+          "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-12"
         }
       },
       "audio": {
@@ -9763,7 +10564,13 @@
           0.075,
           0.953,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "116-grand.webp",
+          "largeur": 3168,
+          "hauteur": 2226,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "116.m4a",
@@ -9823,7 +10630,13 @@
           0.024,
           0.926,
           0.806
-        ]
+        ],
+        "grand": {
+          "fichier": "117-grand.webp",
+          "largeur": 2252,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "117.m4a",
@@ -9914,7 +10727,13 @@
           0.0,
           0.976,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "118-grand.webp",
+          "largeur": 2288,
+          "hauteur": 2761,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "118.m4a",
@@ -9971,7 +10790,13 @@
           0.028,
           0.958,
           0.966
-        ]
+        ],
+        "grand": {
+          "fichier": "119-grand.webp",
+          "largeur": 2477,
+          "hauteur": 3021,
+          "source": "original"
+        }
       },
       "n": 119,
       "audio": {
@@ -10078,7 +10903,13 @@
           0.013,
           0.991,
           0.984
-        ]
+        ],
+        "grand": {
+          "fichier": "120-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2192,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "120.m4a",
@@ -10179,7 +11010,13 @@
           0.076,
           0.926,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "121-grand.webp",
+          "largeur": 3200,
+          "hauteur": 2196,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "121.m4a",
@@ -10266,6 +11103,12 @@
           ],
           "duree": 5,
           "intention": "On part du prêtre à genoux au pied du pilier, puis on recule pour découvrir l'assemblée dans la nef pavoisée."
+        },
+        "grand": {
+          "fichier": "122-grand.webp",
+          "largeur": 3060,
+          "hauteur": 2567,
+          "source": "original"
         }
       },
       "audio": {
@@ -10333,7 +11176,16 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "123-grand.webp",
+          "largeur": 2337,
+          "hauteur": 1621,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.67,
+          "genere_le": "2026-10-12"
+        }
       },
       "n": 123,
       "audio": {
@@ -10436,6 +11288,12 @@
           ],
           "duree": 4.5,
           "intention": "On descend des nuages et des colonnades du champ de fête vers le cortège des chars qui défile au premier plan."
+        },
+        "grand": {
+          "fichier": "124-grand.webp",
+          "largeur": 3200,
+          "hauteur": 1894,
+          "source": "original"
         }
       },
       "audio": {
@@ -10511,7 +11369,16 @@
           0.076,
           0.873,
           0.933
-        ]
+        ],
+        "grand": {
+          "fichier": "125-grand.webp",
+          "largeur": 2262,
+          "hauteur": 3200,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.31,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "125.m4a",
@@ -10569,7 +11436,13 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "126-grand.webp",
+          "largeur": 2417,
+          "hauteur": 1550,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "126.m4a",
@@ -10675,6 +11548,12 @@
           ],
           "duree": 6,
           "intention": "On part de la charge des Mamelouks au bord de l'eau, à gauche, puis on glisse vers la droite jusqu'aux carrés français sous les pyramides."
+        },
+        "grand": {
+          "fichier": "127-grand.webp",
+          "largeur": 3100,
+          "hauteur": 1354,
+          "source": "original"
         }
       },
       "audio": {
@@ -10786,7 +11665,13 @@
           0.042,
           0.897,
           0.915
-        ]
+        ],
+        "grand": {
+          "fichier": "128-grand.webp",
+          "largeur": 2400,
+          "hauteur": 3200,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "128.m4a",
@@ -10860,7 +11745,13 @@
           1.0,
           1.0
         ],
-        "utile_manuel": true
+        "utile_manuel": true,
+        "grand": {
+          "fichier": "129-grand.webp",
+          "largeur": 2431,
+          "hauteur": 1209,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "129.m4a",
@@ -10943,7 +11834,16 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "grand": {
+          "fichier": "130-grand.webp",
+          "largeur": 2481,
+          "hauteur": 2643,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.35,
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "130.m4a",
@@ -11026,7 +11926,13 @@
           0.0,
           1.0,
           0.976
-        ]
+        ],
+        "grand": {
+          "fichier": "131-grand.webp",
+          "largeur": 2474,
+          "hauteur": 1860,
+          "source": "original"
+        }
       },
       "n": 131,
       "audio": {
@@ -11151,7 +12057,13 @@
           0.012,
           0.984,
           0.989
-        ]
+        ],
+        "grand": {
+          "fichier": "132-grand.webp",
+          "largeur": 2444,
+          "hauteur": 2916,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "132.m4a",

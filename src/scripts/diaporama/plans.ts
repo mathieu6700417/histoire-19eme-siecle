@@ -45,6 +45,8 @@ export function installerPlans(lec: Lecteur) {
           const fond = document.createElement('i');
           fond.className = 'lecteur__noir';
           fond.style.visibility = 'hidden';
+          // Fond prolongé (spec 17, fond.ts) : dans le fond noir, dont il suit l'opacité.
+          if (p.fond) fond.append(lec.creerFond(p.fond));
           els.unshift(fond);
         }
         // Version colorisée par IA (spec 16, couleur.ts) : au-dessus de l'image, même transformation.
@@ -101,6 +103,7 @@ export function installerPlans(lec: Lecteur) {
       im.style.opacity = o.toFixed(3);
       im.style.transform = transformation(c, xp, cadreA(xp, t), 1, im);
       im.style.filter = gris > 0.002 ? `grayscale(${gris.toFixed(3)})` : '';
+      if (fond?.firstElementChild && p.fond) lec.placerFond(fond.firstElementChild as HTMLElement, im, p.fond, p.u, im.style.transform, gris);
       // Version colorisée (spec 16) : sur la fenêtre du plan, de son instant au plan suivant.
       const co = p.coul ? teinte(im) : null;
       if (co) {

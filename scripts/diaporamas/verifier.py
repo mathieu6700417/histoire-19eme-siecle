@@ -2128,6 +2128,8 @@ def controler_mouvement(d: dict, dossier) -> tuple[list[str], list[str], int, in
 # src/scripts/diaporama/constantes.ts : COULEUR_MIN + COULEUR_FONDU + COULEUR_FIN).
 FENETRE_COULEUR_MIN = 1.5 + 2 + 2   # COULEUR_MIN + COULEUR_FONDU + COULEUR_FIN (constantes.ts)
 POIDS_COULEUR_MAX = 900_000      # octets : au-delà, avertissement (0,2 à 0,8 Mo attendus)
+POIDS_FOND_MAX = 320_000         # octets : fond prolongé (spec 17) de 1 024 px, montré flouté (6 à 250 ko attendus ; médiane ≈ 25 ko)
+POIDS_FOND_FORT_MAX = 120_000    # octets : fond en flou fort, 640 px (au-delà : il n'a pas été réduit)
 
 
 def controler_couleur(d: dict, dossier) -> tuple[list[str], list[str], int, int]:
@@ -2192,6 +2194,214 @@ def controler_couleur(d: dict, dossier) -> tuple[list[str], list[str], int, int]
     return erreurs, avert, n, poids
 
 
+def controler_fond(d: dict, dossier) -> tuple[list[str], list[str], int, int, int]:
+    """Fonds prolongés des images entières (spec 17, `image.fond`, image d'une diapositive ou d'un plan) :
+    champs, fichier WebP présent sous le nom attendu, dimensions déclarées et réelles égales, boîte
+    de l'image dans le fond (fractions croissantes dans [0, 1], image entourée de fond de chaque
+    côté), proportions de la boîte égales à celles de la zone utile (à 2 % près) et zone utile
+    inchangée depuis la fabrication (recette) : sinon le fond ne tombe plus sous l'image ; niveau de
+    flou (« faible » ou « fort »), modèle nommé (crédits), recette consignée ; jamais sur une image
+    qui n'est pas montrée en entier, ni hors des diapositives et des plans. Avertit d'une image
+    entière sans fond dans une période qui en a (fond noir). Rend (erreurs, avertissements, fonds,
+    fonds en flou fort, poids en octets)."""
+    from pathlib import Path
+    from PIL import Image
+    import fond as fo
+    erreurs, avert = [], []
+    recettes = fo.lire_recettes(d['slug'])['images']
+    n = forts = poids = 0
+    sans = []
+    for e in fo.images(d):
+        i, v = e['image'], e['image'].get('fond')
+        p = f"{e['cle']:>4}"
+        if v is None:
+            if i.get('entier') and not e['x']['image'].get('apres') and not e['x'].get('mosaique'):
+                sans.append(e['cle'])
+            continue
+        if not isinstance(v, dict):
+            erreurs.append(f'{p} : « fond » doit être un objet (fichier, largeur, hauteur, boite, flou, modele)')
+            continue
+        n += 1
+        forts += v.get('flou') == 'fort'
+        if 'g' in e['cle']:
+            erreurs.append(f'{p} : « fond » hors champ sur une image de galerie ou de lecture (diapositives et plans seulement)')
+        manquants = [k for k in ('fichier', 'largeur', 'hauteur', 'boite', 'flou', 'modele') if not v.get(k)]
+        if manquants:
+            erreurs.append(f"{p} : fond : champs manquants ({', '.join(manquants)})")
+        if not v.get('genere_le'):
+            avert.append(f'{p} : fond sans date de calcul (genere_le)')
+        if v.get('flou') not in ('faible', 'fort'):
+            erreurs.append(f"{p} : fond : flou « {v.get('flou')} » (attendu : faible ou fort)")
+        if not i.get('entier'):
+            erreurs.append(f'{p} : fond sur une image qui n\'est pas montrée en entier (fond.py retirer)')
+        attendu = Path(i.get('fichier') or '').with_suffix('').as_posix() + fo.SUFFIXE
+        if v.get('fichier') and v['fichier'] != attendu:
+            erreurs.append(f"{p} : fichier de fond « {v['fichier']} » (attendu : {attendu})")
+        b = v.get('boite')
+        if not (isinstance(b, list) and len(b) == 4 and all(isinstance(t, (int, float)) for t in b) and 0 <= b[0] < b[2] <= 1 and 0 <= b[1] < b[3] <= 1):
+            erreurs.append(f'{p} : fond : boîte illisible {b} (attendu : [x0, y0, x1, y1], fractions croissantes du fond)')
+            b = None
+        rec = recettes.get(i.get('commons'))
+        u = i.get('utile') or [0, 0, 1, 1]
+        if rec is None:
+            avert.append(f"{p} : fond sans recette dans {fo.recettes_f(d['slug']).relative_to(c.RACINE)} (consigne, graine, zone utile)")
+        elif rec.get('utile') and max(abs(a - t) for a, t in zip(u, rec['utile'])) > fo.TOLERANCE_UTILE:
+            erreurs.append(f"{p} : zone utile changée depuis la fabrication du fond ({rec['utile']} → {u}) : le fond ne tombe plus sous l'image (refaire, ou fond.py retirer)")
+        f = dossier / (v.get('fichier') or '')
+        if not v.get('fichier') or not f.is_file():
+            erreurs.append(f"{p} : fond absent ({v.get('fichier')})")
+            continue
+        poids += f.stat().st_size
+        plafond = POIDS_FOND_FORT_MAX if v.get('flou') == 'fort' else POIDS_FOND_MAX
+        if f.stat().st_size > plafond:
+            avert.append(f"{p} : fond de {f.stat().st_size / 1e3:.0f} ko ({plafond / 1e3:.0f} ko au plus visés en flou {v.get('flou')} : il est montré flouté)")
+        with Image.open(f) as im:
+            taille, fmt = im.size, im.format
+        if fmt != 'WEBP':
+            erreurs.append(f'{p} : fond au format {fmt} (WebP attendu)')
+        if taille != (v.get('largeur'), v.get('hauteur')):
+            erreurs.append(f"{p} : fond {taille[0]}×{taille[1]} ≠ {v.get('largeur')}×{v.get('hauteur')} déclarées")
+        if b:
+            L, H = i.get('largeur') or 1600, i.get('hauteur') or 1200
+            a_zone = ((u[2] - u[0]) * L) / ((u[3] - u[1]) * H)
+            a_boite = ((b[2] - b[0]) * taille[0]) / ((b[3] - b[1]) * taille[1])
+            if abs(a_boite / a_zone - 1) > 0.02:
+                erreurs.append(f'{p} : fond : la boîte ({a_boite:.3f}) n\'a plus les proportions de la zone utile ({a_zone:.3f}) : image ou zone utile changée (refaire, ou fond.py retirer)')
+            if not (b[0] > 0.02 and b[2] < 0.98):
+                avert.append(f'{p} : fond sans marge sur les côtés (boîte {b}) : il ne prolonge rien')
+    if n and sans:
+        avert.append(f"{len(sans)} image(s) entière(s) sans fond prolongé (fond noir) : {', '.join(sans[:12])}{'…' if len(sans) > 12 else ''}")
+    return erreurs, avert, n, forts, poids
+
+
+def controler_ambiance(d: dict, dossier) -> tuple[list[str], list[str], int, int]:
+    """Ambiances sonores des clips (spec 17, `image.ambiance`) : jamais sans clip `image.video` ; champs,
+    fichier présent sous le nom attendu, durée réelle (ffprobe) égale à la durée déclarée et assez
+    longue pour aller du départ du clip à la fin de la voix, modèle nommé (crédits), consigne
+    consignée dans le lot de génération. Avertit d'un clip sans ambiance (règle : toute image mise
+    en mouvement a la sienne). Rend (erreurs, avertissements, ambiances, poids en octets)."""
+    import subprocess
+    import ambiance as am
+    import generation as gen
+    erreurs, avert = [], []
+    f_lot = c.DONNEES / 'generation' / f"{d['slug']}.json"
+    consignes = {el['n']: el.get('ambiance') for el in json.loads(f_lot.read_text())['elements']} if f_lot.exists() else {}
+    n = poids = 0
+    for x in d['diapositives']:
+        i, a = x['image'], x['image'].get('ambiance')
+        p = f"{x['n']:>4}"
+        if a is None:
+            if i.get('video') and not i.get('apres'):
+                avert.append(f'{p} : image mise en mouvement sans ambiance sonore (ambiance.py preparer, lancer, encoder, ecoute, publier)')
+            continue
+        if not isinstance(a, dict):
+            erreurs.append(f'{p} : « ambiance » doit être un objet (fichier, duree, modele)')
+            continue
+        n += 1
+        if not i.get('video'):
+            erreurs.append(f"{p} : ambiance sans clip (pas d'ambiance sur une image fixe : ambiance.py retirer)")
+        manquants = [k for k in ('fichier', 'duree', 'modele') if not a.get(k)]
+        if manquants:
+            erreurs.append(f"{p} : ambiance : champs manquants ({', '.join(manquants)})")
+            continue
+        if a['fichier'] != f"{x['n']:03d}-ambiance.m4a":
+            erreurs.append(f"{p} : fichier d'ambiance « {a['fichier']} » (attendu : {x['n']:03d}-ambiance.m4a)")
+        if not consignes.get(x['n']):
+            avert.append(f"{p} : ambiance sans consigne dans {f_lot.relative_to(c.RACINE)} (champ « ambiance » de l'élément)")
+        f = dossier / a['fichier']
+        if not f.is_file():
+            erreurs.append(f"{p} : ambiance absente ({a['fichier']})")
+            continue
+        poids += f.stat().st_size
+        r = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'a:0', '-show_entries', 'stream=codec_name:format=duration', '-of', 'json', str(f)],
+                           capture_output=True, text=True)
+        try:
+            info = json.loads(r.stdout)
+            duree, codec = float(info['format']['duration']), info['streams'][0]['codec_name']
+        except (ValueError, KeyError, IndexError):
+            erreurs.append(f"{p} : ambiance illisible ({a['fichier']})")
+            continue
+        if codec != 'aac':
+            erreurs.append(f'{p} : ambiance au format {codec} (AAC attendu)')
+        if abs(duree - a['duree']) > 0.3:
+            erreurs.append(f"{p} : ambiance de {duree:.1f} s ≠ {a['duree']} s déclarées")
+        besoin = ((x.get('audio') or {}).get('duree') or 0) + gen.PAUSE - gen.DEBUT_CLIP
+        if duree < besoin - 0.3 and not x.get('mosaique'):
+            avert.append(f'{p} : ambiance de {duree:.1f} s plus courte que la diapositive ({besoin:.1f} s à couvrir : narration changée ? ambiance.py encoder, publier)')
+        if f.stat().st_size > 600_000:
+            avert.append(f'{p} : ambiance de {f.stat().st_size / 1e3:.0f} ko (350 ko attendus pour 20 s)')
+    return erreurs, avert, n, poids
+
+
+POIDS_GRAND_MAX = 2_500_000      # octets : au-delà, avertissement (0,2 à 2 Mo attendus)
+
+
+def controler_nettete(d: dict, dossier) -> tuple[list[str], list[str], int, int, int]:
+    """Variantes « grand écran » (spec 17, `image.grand`, image d'une diapositive ou d'un plan) : champs,
+    fichier WebP présent sous le nom attendu, dimensions déclarées et réelles égales, mêmes
+    proportions que l'image servie (le lecteur la pose dans la même boîte : zone utile, caméra, clip
+    et couleur restent alignés), plus grande qu'elle, grand côté plafonné ; pour une image agrandie
+    par IA : modèle, facteur et date (crédits) ; jamais sur une image de galerie, de lecture ou
+    d'épisode. Rend (erreurs, avertissements, variantes, dont agrandies par IA, poids en octets)."""
+    from PIL import Image
+    import couleur as co
+    import nettete as nt
+    erreurs, avert = [], []
+    for e in c.images_supplementaires(d):
+        if e['genre'] != 'plan' and e['image'].get('grand'):
+            erreurs.append(f"{e['cle']} : « grand » hors champ sur une image de {e['genre']} (diapositives et plans seulement)")
+    for x in d['diapositives']:
+        for quoi, i in [('image « après »', x['image'].get('apres') or {})] + [('vignette de mosaïque', v) for v in (x.get('mosaique') or {}).get('vignettes', [])]:
+            if i.get('grand'):
+                erreurs.append(f"{x['n']:>4} : « grand » hors champ sur une {quoi}")
+    n = n_ia = poids = 0
+    for e in co.images(d):
+        i, g = e['image'], e['image'].get('grand')
+        if g is None:
+            continue
+        p = f"{e['cle']:>4}"
+        if not isinstance(g, dict):
+            erreurs.append(f'{p} : « grand » doit être un objet (fichier, largeur, hauteur, source)')
+            continue
+        n += 1
+        manquants = [k for k in ('fichier', 'largeur', 'hauteur', 'source') if not g.get(k)]
+        if manquants:
+            erreurs.append(f"{p} : grand : champs manquants ({', '.join(manquants)})")
+            continue
+        if g['source'] not in ('original', 'ia'):
+            erreurs.append(f"{p} : grand : source « {g['source']} » inconnue (original ou ia)")
+        if g['source'] == 'ia':
+            n_ia += 1
+            if not g.get('modele'):
+                erreurs.append(f'{p} : image agrandie par IA sans modèle nommé (crédits)')
+            if not g.get('genere_le') or not g.get('facteur'):
+                avert.append(f'{p} : image agrandie par IA sans date de calcul ou sans facteur')
+        if g['fichier'] != nt.nom_grand(i):
+            erreurs.append(f"{p} : fichier « {g['fichier']} » (attendu : {nt.nom_grand(i)})")
+        f = dossier / g['fichier']
+        if not f.is_file():
+            erreurs.append(f"{p} : variante grand écran absente ({g['fichier']})")
+            continue
+        poids += f.stat().st_size
+        if f.stat().st_size > POIDS_GRAND_MAX:
+            avert.append(f'{p} : variante grand écran de {f.stat().st_size / 1e6:.1f} Mo ({POIDS_GRAND_MAX / 1e6:.1f} Mo au plus visés)')
+        with Image.open(f) as im:
+            taille, fmt = im.size, im.format
+        if fmt != 'WEBP':
+            erreurs.append(f'{p} : variante grand écran au format {fmt} (WebP attendu)')
+        if taille != (g['largeur'], g['hauteur']):
+            erreurs.append(f"{p} : variante {taille[0]}×{taille[1]} ≠ {g['largeur']}×{g['hauteur']} déclarées")
+        r0, r1 = i['largeur'] / i['hauteur'], taille[0] / taille[1]
+        if abs(r1 - r0) > 0.004 * r0:
+            erreurs.append(f"{p} : variante {taille[0]}×{taille[1]} aux proportions différentes de l'image servie {i['largeur']}×{i['hauteur']} "
+                           f'(image ou recadrage changés : nettete.py mesurer, preparer, publier, ou retirer)')
+        if taille[0] < i['largeur'] * 1.1:
+            avert.append(f"{p} : variante de {taille[0]} px à peine plus large que l'image servie ({i['largeur']} px) : sans intérêt")
+        if max(taille) > nt.COTE_MAX + 1:
+            erreurs.append(f'{p} : variante de {max(taille)} px de grand côté ({nt.COTE_MAX} au plus)')
+    return erreurs, avert, n, n_ia, poids
+
+
 ETAPES = {'A': 'texte, images, enrichissements prévus', 'B': 'voix, zone utile, caméra, musique',
           'C': 'surimpressions et vérification complète'}
 FAMILLES = {
@@ -2199,7 +2409,7 @@ FAMILLES = {
     'B': ('audio', 'ouverture', 'zone utile', 'caméra', 'musique', 'registre musical', 'lectures et épisodes', 'boucles',
           'plans et galeries (zone utile, caméra)'),
     'C': ('surimpressions', 'portraits', 'objets et manuscrits', 'chiffres et dates', 'avant/après et mosaïques',
-          'plans et galeries (instants, durées)', 'mouvement (spec 16)', 'couleur (spec 16)'),
+          'plans et galeries (instants, durées)', 'mouvement (spec 16)', 'couleur (spec 16)', 'netteté (spec 17)', 'ambiance (spec 17)', 'fond (spec 17)'),
 }
 MAX_AVERT = 15   # avertissements affichés par `--etape` (tous avec `--tout`)
 # Messages d'un contrôle d'une étape qui relèvent d'une autre (donnée écrite plus tôt) : (motif, étape, famille).
@@ -2389,7 +2599,7 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         R.plus('C', 'surimpressions', e_sur, a_sur)
         e_por, a_por, n_portraits, n_gens = controler_portraits(d)
         R.plus('C', 'portraits', e_por, a_por)
-    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = n_clips = poids_clips = n_couleurs = poids_couleurs = 0
+    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = n_clips = poids_clips = n_couleurs = poids_couleurs = n_grands = n_grands_ia = poids_grands = n_ambiances = poids_ambiances = n_fonds = n_fonds_forts = poids_fonds = 0
     if fait('A') or fait('C'):
         e_obj, a_obj, n_objets, n_manuscrits, n_deux = controler_objets(d)
         R.plus('C', 'objets et manuscrits', e_obj, a_obj)
@@ -2401,6 +2611,12 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         R.plus('C', 'mouvement (spec 16)', e_mv, a_mv)
         e_co, a_co, n_couleurs, poids_couleurs = controler_couleur(d, dossier)
         R.plus('C', 'couleur (spec 16)', e_co, a_co)
+        e_nt, a_nt, n_grands, n_grands_ia, poids_grands = controler_nettete(d, dossier)
+        R.plus('C', 'netteté (spec 17)', e_nt, a_nt)
+        e_amb, a_amb, n_ambiances, poids_ambiances = controler_ambiance(d, dossier)
+        R.plus('C', 'ambiance (spec 17)', e_amb, a_amb)
+        e_fo, a_fo, n_fonds, n_fonds_forts, poids_fonds = controler_fond(d, dossier)
+        R.plus('C', 'fond (spec 17)', e_fo, a_fo)
     if fait('A'):
         e_gen, a_gen, duree_generique = controler_generique(d)
         R.plus('A', 'générique', e_gen, a_gen)
@@ -2481,6 +2697,12 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
               f'{poids_clips / 1e6:.1f} Mo ; {PLAFOND_CLIPS} au plus par période.')
     if n_couleurs and not etape:
         print(f'Images colorisées (spec 16) : {n_couleurs} image(s) de diapositives et de plans, {poids_couleurs / 1e6:.1f} Mo.')
+    if not etape and n_ambiances:
+        print(f'Ambiances sonores (spec 17) : {n_ambiances} ambiance(s) de clip, {poids_ambiances / 1e6:.1f} Mo.')
+    if not etape and n_fonds:
+        print(f'Fonds prolongés (spec 17) : {n_fonds} fond(s) d\'images entières, dont {n_fonds_forts} en flou fort, {poids_fonds / 1e6:.1f} Mo.')
+    if not etape and n_grands:
+        print(f'Netteté (spec 17) : {n_grands} variante(s) grand écran, dont {n_grands_ia} agrandie(s) par IA, {poids_grands / 1e6:.1f} Mo.')
     if not etape:
         datees = sum(1 for x in diapos if 'date' in x)
         print(f'Frise : {datees} diapositives datées sur {len(diapos)} ; {len(surimp)} apparition(s) en bas de l\'image '

@@ -337,6 +337,10 @@ def retirer(slug: str, seulement: set[int]) -> None:
         if fichier.exists():
             fichier.unlink()
         del s['image']['video']
+        # L'ambiance sonore du clip (spec 17) part avec lui : pas d'ambiance sur une image fixe.
+        amb = s['image'].pop('ambiance', None)
+        if amb and (c.PUBLIC / slug / amb['fichier']).exists():
+            (c.PUBLIC / slug / amb['fichier']).unlink()
         retires += 1
         print(f"  {s['n']:3d} : clip retiré ({v['fichier']})")
     c.ecrire(f, d)

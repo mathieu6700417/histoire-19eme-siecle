@@ -4,7 +4,7 @@ export type Rect = [number, number, number, number];
 export interface Diapo {
   /** `u` : zone utile (fractions de l'image) ; `l` × `h` : ses dimensions (px). Les cadres de la
    *  caméra, l'ouverture et le cadre d'un intermède sont en fractions de la zone utile. */
-  n: number; cle: string; img: string; u: Rect; l: number; h: number; alt: string; legende: string; texte: string;
+  n: number; cle: string; img: string; g?: string; u: Rect; l: number; h: number; alt: string; legende: string; texte: string;
   audio: string; duree: number; pause: number; camera: { c: Rect; t: number }[];
   /** Détail zoomé sur lequel s'ouvre le carton d'acte (spec 12, « Sortie du carton d'acte »). */
   ouv: Rect | null;
@@ -31,9 +31,13 @@ export interface Diapo {
   /** Mise en mouvement par IA (spec 16) : clip muet de 10 s joué une fois (dernière image tenue), aux
    *  proportions de la zone utile, posé sur elle avec la transformation de l'image (mouvement.ts). */
   video?: { src: string; duree: number } | null;
+  /** Ambiance sonore du clip (spec 17) : fichier et durée (s). */
+  amb?: { src: string; duree: number } | null;
   /** Colorisation par IA (spec 16) : version colorisée de l'image, posée sur sa zone utile après un
    *  fondu lent (couleur.ts). */
   coul?: Couleur | null;
+  /** Fond prolongé de l'image entière (spec 17) : posé sous elle, flouté, même transformation (fond.ts). */
+  fond?: Fond | null;
   /** Segment joué après la voix (et sa pause) : intermède chanté, lecture ou épisode. */
   suite: Suite | null;
   /** Carte de lieu : fenêtre [a, b) (s de l'audio), point (%) dans le fond, partie du plan de
@@ -59,9 +63,12 @@ export interface Diapo {
 /** Version colorisée d'une image : `u` = rectangle qu'elle recouvre (fractions de l'image servie :
  *  la zone utile arrondie au pixel, comme à la fabrication). */
 export interface Couleur { src: string; u: Rect }
+/** Fond prolongé d'une image entière (spec 17, fond.ts) : `b` = boîte de l'image dans le fichier de
+ *  fond (fractions du fond) ; `fort` : flou fort (le fond net montre une invention à cacher). */
+export interface Fond { src: string; b: Rect; fort: boolean }
 export interface Entier { v: Rect | null; z: number }
 export interface Entree { c: Rect[]; d: number }
-export interface Plan { img: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[]; en?: Entier | null; ent?: Entree | null; coul?: Couleur | null }
+export interface Plan { img: string; g?: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[]; en?: Entier | null; ent?: Entree | null; coul?: Couleur | null; fond?: Fond | null }
 export interface Objet { a: number; b: number; src: string; ratio: number; nom: string; legende: string; cote: 'gauche' | 'droite' }
 /** Intermède chanté : paroles [instant, vers, début de chaque mot (`motsLus`) ou null : vers
  *  entier à son début]. */

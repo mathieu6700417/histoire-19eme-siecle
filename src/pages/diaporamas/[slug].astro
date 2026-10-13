@@ -51,6 +51,20 @@ const couleursMontrees = d.diapositives.flatMap((x) => (x.image.apres || x.mosai
   ...(x.plans ?? []).filter((p) => p.image.couleur).map((p) => ({ n: x.n, i: p.image })),
 ]));
 const modelesCouleur = [...new Set(couleursMontrees.map((x) => x.i.couleur!.modele.split('/').pop()!.replace(/-/g, ' ')))];
+// Fonds prolongés des images entières (spec 17) : crédités ici seulement (ni cartouche ni livre d'images).
+const fondsMontres = d.diapositives.flatMap((x) => (x.image.apres || x.mosaique ? [] : [
+  ...(x.image.fond && x.image.entier ? [{ n: x.n, i: x.image }] : []),
+  ...(x.plans ?? []).filter((p) => p.image.fond && p.image.entier).map((p) => ({ n: x.n, i: p.image })),
+]));
+const modelesFond = [...new Set(fondsMontres.map((x) => x.i.fond!.modele.split('/').pop()!.replace(/-/g, ' ')))];
+const diaposFond = [...new Set(fondsMontres.map((x) => x.n))];
+// Ambiances sonores des clips (spec 17) : sons générés, crédités ici et dans le livre d'images seulement.
+const ambiances = videosMontrees.filter((x) => x.i.ambiance);
+const modelesAmbiance = [...new Set(ambiances.map((x) => x.i.ambiance!.modele))];
+// Netteté (spec 17) : images (diapositives et plans) agrandies par IA pour le grand écran.
+const agrandiesMontrees = d.diapositives.flatMap((x) => [x.image, ...(x.image.apres || x.mosaique ? [] : (x.plans ?? []).map((p) => p.image))]
+  .filter((i) => i.grand?.source === 'ia').map((i) => ({ n: x.n, i })));
+const modelesAgrandies = [...new Set(agrandiesMontrees.map((x) => x.i.grand!.modele ?? 'modèle non précisé'))];
 const notice = (v: { titre?: string; auteur?: string; date?: string; technique?: string; conservation?: string }) =>
   t([v.auteur, v.titre ? `« ${v.titre} »` : '', v.date, v.technique, v.conservation].filter(Boolean).join(', '));
 /** Licence en milieu de phrase : minuscule initiale, sauf sigle (CC0, CC BY…). */
@@ -183,6 +197,9 @@ const urlLicence = (x: string) => {
         <ul>
           {videosMontrees.map(({ n, i }) => <li>Diapositive {n} : {notice(i)}. <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a>, domaine public.</li>)}
         </ul>
+        {ambiances.length > 0 && (
+          <p>{typographie(`Ambiance sonore : sous la voix, un son d'ambiance discret (foule, canon, vent, eau) accompagne ${ambiances.length === videosMontrees.length ? 'chacun de ces clips' : `${ambiances.length} de ces clips`}. Il est généré par un modèle d'intelligence artificielle à poids ouverts (${modelesAmbiance.join(', ')}, licence MIT) à partir d'une courte description de la scène ; ce n'est pas un enregistrement d'époque et il n'illustre que ce que dit la narration. Il se coupe avec la musique ; avec la préférence « réduire les animations », il n'y a ni clip ni ambiance.`)}</p>
+        )}
       </section>
     )}
     {couleursMontrees.length > 0 && (
@@ -191,6 +208,22 @@ const urlLicence = (x: string) => {
         <p>{typographie(`Sur ${couleursMontrees.length} gravures, lithographies et photographies en noir et blanc, le lecteur montre d'abord le document tel qu'il est, puis passe lentement à une version colorisée. Les couleurs sont ajoutées par un modèle d'intelligence artificielle à poids ouverts (${modelesCouleur.join(', ')}) sans retoucher le trait : seule la teinte change, le dessin reste celui de l'original. Elles sont plausibles, non documentées : le document original, visible dans le livre d'images et sur Commons, reste seul authentique. Le cartouche signale la colorisation tant qu'elle est à l'écran ; avec la préférence « réduire les animations », l'image reste en noir et blanc.`)}</p>
         <ul>
           {couleursMontrees.map(({ n, i }) => <li>Diapositive {n} : {notice(i)}. <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a>, {licence(i.licence ?? 'Domaine public')}.</li>)}
+        </ul>
+      </section>
+    )}
+    {fondsMontres.length > 0 && (
+      <section class="musiques portraits-credits" aria-labelledby="titre-fonds">
+        <h2 id="titre-fonds">Fonds prolongés</h2>
+        <p>{typographie(`Une image en hauteur ne remplit pas l'écran : le lecteur la montre en entier. Autour d'elle, à la place d'un fond noir, il pose un fond flou qui prolonge la scène (le ciel, le sol, les murs, ou simplement le papier). Ce prolongement n'appartient pas au document : il est calculé par un modèle d'intelligence artificielle à poids ouverts (${modelesFond.join(', ')}) à partir de l'image, puis flouté et assombri pour ne servir que d'ambiance. L'image d'époque, elle, n'est jamais retouchée : c'est toujours le fichier d'origine, net, au centre. ${fondsMontres.length} images de ${diaposFond.length} diapositives sont dans ce cas ; le livre d'images les montre sans leur fond.`)}</p>
+        <p>{typographie(`Diapositives concernées : ${diaposFond.join(', ')}.`)}</p>
+      </section>
+    )}
+    {agrandiesMontrees.length > 0 && (
+      <section class="musiques portraits-credits" aria-labelledby="titre-agrandies">
+        <h2 id="titre-agrandies">Images agrandies</h2>
+        <p>{typographie(`Sur un grand écran, la caméra s'approche assez des images pour dépasser la finesse des reproductions disponibles. Quand le fichier conservé sur Wikimedia Commons est trop petit, le lecteur montre une version agrandie par un modèle d'intelligence artificielle à poids ouverts (${modelesAgrandies.join(', ')}) : ${agrandiesMontrees.length} images sont dans ce cas. Le modèle redessine les détails les plus fins (trait, grain, contours), qui ne sont donc plus exactement ceux du document ; le cadrage et le contenu de la scène ne changent pas. Sur téléphone et dans le livre d'images, c'est la reproduction d'origine qui est montrée ; elle seule fait foi.`)}</p>
+        <ul>
+          {agrandiesMontrees.map(({ n, i }) => <li>Diapositive {n} : {notice(i)}. <a href={urlCommons(i.commons)} rel="noopener" target="_blank">Commons</a>, {licence(i.licence ?? 'Domaine public')}.</li>)}
         </ul>
       </section>
     )}

@@ -65,7 +65,37 @@ export interface ImageDiapo {
    *  ou d'un plan ; refusé par verifier.py avec un clip `video`, un avant / après, une mosaïque,
    *  et sur une image de galerie ou de lecture. */
   couleur?: CouleurDiapo;
+  /** Netteté (spec 17) : variante « grand écran » de cette image, de mêmes proportions, que le
+   *  lecteur charge à la place de `fichier` sur un grand écran (jamais sur téléphone, ni dans le
+   *  livre d'images) : zone utile, caméra, clip et version colorisée ne changent pas. Tirée de
+   *  l'original de Commons, ou agrandie par IA quand il est trop petit (créditée sur la page et
+   *  dans le livre d'images, pas au cartouche). Posé par `nettete.py publier` ; image d'une
+   *  diapositive ou d'un plan. */
+  grand?: GrandDiapo;
+  /** Ambiance sonore (spec 17) : son d'ambiance généré par un modèle à poids ouverts, joué avec le
+   *  clip `video` (jamais sans lui), bien sous la voix ; crédité sur la page et dans le livre
+   *  d'images, pas au cartouche. Posé par `ambiance.py publier` ; la consigne est dans le lot
+   *  src/data/diaporamas/generation/<slug>.json. */
+  ambiance?: AmbianceDiapo;
+  /** Fond prolongé (spec 17, « Fonds prolongés ») : prolongement de la scène autour d'une image
+   *  entière (`entier`), généré par un modèle à poids ouverts ; le lecteur le montre flouté derrière
+   *  l'image, à la place du fond noir, avec la même transformation. Crédité sur la page seulement
+   *  (ni cartouche ni livre d'images). Posé par `fond.py publier` ; image d'une diapositive ou d'un plan. */
+  fond?: FondDiapo;
 }
+/** Fond prolongé (spec 17) : fichier « 001-fond.webp », « 004-b-fond.webp » ; `boite` : place de
+ *  l'image (sa zone utile) dans le fond, en fractions du fond [x0, y0, x1, y1] ; `flou` : « faible »
+ *  (≈ 0,5 % de la largeur de la scène) ou « fort » (≈ 2,5 % : le fond net montre une invention à
+ *  cacher) ; `modele` nommé pour les crédits. La recette (consigne, graine, tirage, constat de
+ *  relecture) est dans src/data/diaporamas/generation/<slug>-fond.json. */
+export interface FondDiapo { fichier: string; largeur: number; hauteur: number; boite: [number, number, number, number]; flou: 'faible' | 'fort'; modele: string; genere_le?: string }
+/** Ambiance d'un clip (spec 17) : fichier « 018-ambiance.m4a » (AAC, ≈ -23 LUFS), `duree` en
+ *  secondes (du départ du clip à la fin de la diapositive), `modele` nommé pour les crédits. */
+export interface AmbianceDiapo { fichier: string; duree: number; modele: string; genere_le?: string }
+/** Variante « grand écran » (spec 17) : fichier « 083-grand.webp », « 034-b-grand.webp » ; `source` :
+ *  « original » (fichier plus grand tiré de Commons, sans IA) ou « ia » (agrandie par `modele`,
+ *  `facteur` fois l'original, le `genere_le`). */
+export interface GrandDiapo { fichier: string; largeur: number; hauteur: number; source: 'original' | 'ia'; modele?: string; facteur?: number; genere_le?: string }
 /** Version colorisée (spec 16) : fichier dans public/diaporamas/<slug>/ (« 086-couleur.webp »,
  *  « 034-b-couleur.webp »), `largeur` × `hauteur` = zone utile de l'image en pixels, `modele` nommé
  *  pour les crédits, `genere_le` : date du calcul. */

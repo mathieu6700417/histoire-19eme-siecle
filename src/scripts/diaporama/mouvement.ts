@@ -14,7 +14,7 @@ import type { Diapo } from './types';
 import type { Lecteur } from './contexte';
 
 export function installerMouvement(lec: Lecteur) {
-  Object.assign(lec, { arreterVideo, majVideo, poserVideo, prechargerVideo, preparerVideo, taillerVideo });
+  Object.assign(lec, { arreterVideo, debutClip: (x: Diapo) => debutDe(x), majVideo, poserVideo, prechargerVideo, preparerVideo, taillerVideo });
   const boite = (c: HTMLElement) => c.querySelector<HTMLElement>('.lecteur__video')!;
   const videoDe = (c: HTMLElement) => boite(c).querySelector('video')!;
 

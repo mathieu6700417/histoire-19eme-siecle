@@ -1,16 +1,25 @@
 // État de base d'un lecteur : données (JSON), éléments du DOM, durées et débuts de chaque
 // diapositive, bornes des actes, variables d'état partagées (`lec.i`, `lec.joue`, `lec.enCarton`…).
 // Spec 12, « Lecteur (`Diaporama.astro`) ».
-import { OUVERTURE } from './constantes';
+import { GRAND_ECRAN, OUVERTURE } from './constantes';
 import { Chrono, HorlogeLissee } from './horloge';
 import { mmss } from './outils';
 import type { Diapo, Donnees, Rect } from './types';
 import type { Lecteur } from './contexte';
 
+/** Grand écran (spec 17) : au moins GRAND_ECRAN px CSS sur le grand côté de l'écran, sans économie de données. */
+function grandEcran() {
+  return Math.max(screen.width, screen.height) >= GRAND_ECRAN && !(navigator as any).connection?.saveData;
+}
+
 export function installerEtat(lec: Lecteur) {
   const { racine } = lec;
   Object.assign(lec, { quandPrete });
   const D: Donnees = JSON.parse(racine.querySelector('.diaporama__donnees')!.textContent!);
+  // Netteté (spec 17) : sur un grand écran, la variante « grand écran » (`g`, mêmes proportions) remplace
+  // l'image servie, pour toute la séance : même boîte, mêmes cadres, seule la finesse change. Jamais
+  // sur un petit écran (téléphone : poids et mémoire) ni avec l'économie de données.
+  if (grandEcran()) for (const x of D.diapos) { if (x.g) x.img = x.g; for (const p of x.plans ?? []) if (p.g) p.img = p.g; }
   const $ = <T extends HTMLElement = HTMLElement>(s: string) => racine.querySelector(s) as T;
   const lecteur = $('.lecteur');
   const scene = $('.lecteur__scene');

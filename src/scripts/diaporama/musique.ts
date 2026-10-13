@@ -62,6 +62,7 @@ export function installerMusique(lec: Lecteur) {
       el.play().then(() => { if (el !== sa || !lec.enSuite) el.pause(); el.muted = false; }).catch(() => { el.muted = false; });
     };
     amorcer(sa, D.diapos.find((x) => x.suite)?.suite?.src);
+    lec.amorcerAmbiance();   // ambiance des clips (spec 17)
     amorcer(fonds[1].el, D.fond.find((l) => l.length > 1)?.[1]?.src ?? D.fond.find((l) => l.length)?.[0]?.src);
   }
 

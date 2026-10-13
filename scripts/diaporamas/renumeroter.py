@@ -13,7 +13,8 @@ la main) et les anciens numéros `n` servent de clés.
 Tout renvoi par numéro est recalculé : `n`, fichiers `NNN.webp` / `NNN.m4a` (renommés dans
 public/diaporamas/<slug>/, en deux temps pour éviter les collisions), `image.fichier` et
 `audio.fichier` (et `NNN-apres.webp`, `NNN-mK.webp` des avant/après et mosaïques, `NNN-mouvement.mp4` et
-`NNN-couleur.webp`, `NNN-b-couleur.webp` de la couche générée, spec 16 ; les recettes de colorisation,
+`NNN-couleur.webp`, `NNN-b-couleur.webp` de la couche générée, spec 16, `NNN-grand.webp` et `NNN-b-grand.webp`
+de la netteté, `NNN-fond.webp` et `NNN-b-fond.webp` des fonds prolongés, spec 17 ; les recettes de colorisation et de fonds,
 indexées par fichier Commons, ne bougent pas), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
 `portrait.diapositive` des lectures. Les états de .cache/diaporamas/<slug>/ indexés par numéro
 (images.json, voix.json, camera.json) sont réindexés : les voix, licences et cadrages inchangés
@@ -120,8 +121,13 @@ def main() -> int:
             autres = ([x['image'].get('apres') or {}] + list((x.get('mosaique') or {}).get('vignettes', []))
                       + [p.get('image') or {} for p in x.get('plans') or []]   # plans de la spec 14 (NNN-b.webp)
                       + [x['image'].get('video') or {}]   # clip de la couche générée (spec 16, NNN-mouvement.mp4)
+                      + [x['image'].get('ambiance') or {}]   # ambiance sonore du clip (spec 17, NNN-ambiance.m4a)
                       # versions colorisées (spec 16) : NNN-couleur.webp, NNN-b-couleur.webp
-                      + [x['image'].get('couleur') or {}] + [(p.get('image') or {}).get('couleur') or {} for p in x.get('plans') or []])
+                      + [x['image'].get('couleur') or {}] + [(p.get('image') or {}).get('couleur') or {} for p in x.get('plans') or []]
+                      # variantes grand écran (spec 17) : NNN-grand.webp, NNN-b-grand.webp
+                      + [x['image'].get('grand') or {}] + [(p.get('image') or {}).get('grand') or {} for p in x.get('plans') or []]
+                      # fonds prolongés (spec 17) : NNN-fond.webp, NNN-b-fond.webp
+                      + [x['image'].get('fond') or {}] + [(p.get('image') or {}).get('fond') or {} for p in x.get('plans') or []])
             for obj in autres:
                 f_ = obj.get('fichier') or ''
                 if f_.startswith(f'{o:03d}-'):

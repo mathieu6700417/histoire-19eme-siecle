@@ -120,3 +120,19 @@ export type EtatMusique = keyof typeof GAINS;
 export const VOLUME_DEFAUT = 0.8;
 export const FONDU_PISTE = 3;   // s : enchaînement de deux pistes d'un même acte (fondus inclus dans les fichiers)
 export const FONDU_ACTE = 2;
+
+// Netteté (spec 17) : grand côté de l'écran (px CSS) à partir duquel le lecteur charge la variante
+// « grand écran » d'une image (`image.grand`) ; en dessous (téléphones), l'image servie de 1 600 px.
+export const GRAND_ECRAN = 1200;
+// Ambiance sonore d'un clip (spec 17) : niveau sous la voix (fichiers à -23 LUFS, voix vers -19,5 :
+// environ 16 dB dessous ; réglé par l'utilisateur à l'écoute), fondu des coupes (plan, carton, changement).
+export const AMBIANCE_DB = -12;
+export const FONDU_AMBIANCE = 0.4;   // s
+// Fonds prolongés des images entières (spec 17, fond.ts) : seul endroit où se règlent le flou du
+// fond (part de la largeur de la scène : faible par défaut, fort quand le fond net montre une
+// invention), sa luminosité (1 : inchangée) et la largeur du raccord (bord de l'image fondu dans le
+// fond, part de la largeur de la scène ; 0 : bord net).
+export const FOND_FLOU_FAIBLE = 0.0025;
+export const FOND_FLOU_FORT = 0.025;
+export const FOND_LUMIERE = 0.8;
+export const FOND_RACCORD = 0.003;

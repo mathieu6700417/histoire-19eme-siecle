@@ -186,7 +186,21 @@
           0.12,
           0.95,
           0.42
-        ]
+        ],
+        "fond": {
+          "fichier": "001-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.35632,
+            0.16667,
+            0.64296,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "001.m4a",
@@ -261,7 +275,21 @@
               0.08,
               0.85,
               0.35
-            ]
+            ],
+            "fond": {
+              "fichier": "001-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.35776,
+                0.16667,
+                0.64152,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.27
         }
@@ -512,7 +540,21 @@
               0.22,
               0.92,
               0.5
-            ]
+            ],
+            "fond": {
+              "fichier": "003-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.35057,
+                0.16667,
+                0.64943,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 13.28
         }
@@ -556,7 +598,21 @@
           0.185,
           0.876,
           0.445
-        ]
+        ],
+        "fond": {
+          "fichier": "004-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.31681,
+            0.16667,
+            0.68247,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "manuscrits": [
         {
@@ -626,7 +682,21 @@
               0.05,
               1.0,
               0.29
-            ]
+            ],
+            "fond": {
+              "fichier": "004-b-fond.webp",
+              "largeur": 640,
+              "hauteur": 397,
+              "boite": [
+                0.33549,
+                0.16667,
+                0.66379,
+                0.83333
+              ],
+              "flou": "fort",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.31,
           "camera_manuelle": true
@@ -753,7 +823,21 @@
               0.76,
               0.54,
               0.98
-            ]
+            ],
+            "fond": {
+              "fichier": "005-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.39799,
+                0.16667,
+                0.60201,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 6.38
         }
@@ -796,7 +880,21 @@
           0.16,
           0.974,
           0.61
-        ]
+        ],
+        "fond": {
+          "fichier": "006-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.2421,
+            0.16667,
+            0.75718,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "chiffres": [
         {
@@ -930,7 +1028,21 @@
               0.046,
               0.567,
               0.253
-            ]
+            ],
+            "fond": {
+              "fichier": "007-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.36422,
+                0.16667,
+                0.63578,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.11
         }
@@ -974,7 +1086,21 @@
           0.08,
           0.76,
           0.45
-        ]
+        ],
+        "fond": {
+          "fichier": "008-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.32902,
+            0.16667,
+            0.67098,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "008.m4a",
@@ -1037,7 +1163,21 @@
               0.071,
               0.703,
               0.31
-            ]
+            ],
+            "fond": {
+              "fichier": "008-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.37284,
+                0.16667,
+                0.62644,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 6.1,
           "camera_manuelle": true
@@ -1096,7 +1236,21 @@
           0.7
         ],
         "entier_zoom": 1.15,
-        "entier_manuel": true
+        "entier_manuel": true,
+        "fond": {
+          "fichier": "009-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.32902,
+            0.16667,
+            0.67026,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "009.m4a",
@@ -1504,7 +1658,21 @@
               0.15,
               1.0,
               0.41
-            ]
+            ],
+            "fond": {
+              "fichier": "012-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.3283,
+                0.16667,
+                0.67098,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 5.7,
           "camera_manuelle": true
@@ -1673,7 +1841,21 @@
               0.024,
               0.673,
               0.379
-            ]
+            ],
+            "fond": {
+              "fichier": "013-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.34698,
+                0.16667,
+                0.6523,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 7.09
         }
@@ -1913,7 +2095,21 @@
               0.071,
               0.604,
               0.269
-            ]
+            ],
+            "fond": {
+              "fichier": "015-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.36279,
+                0.16667,
+                0.63649,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 6.46
         }
@@ -2222,7 +2418,21 @@
           0.22,
           0.82,
           0.7
-        ]
+        ],
+        "fond": {
+          "fichier": "019-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.24138,
+            0.16667,
+            0.75862,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "019.m4a",
@@ -2339,7 +2549,21 @@
           0.06,
           0.829,
           0.68
-        ]
+        ],
+        "fond": {
+          "fichier": "020-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.32184,
+            0.16667,
+            0.67816,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "020.m4a",
@@ -2414,7 +2638,21 @@
           0.23,
           0.97,
           0.61
-        ]
+        ],
+        "fond": {
+          "fichier": "021-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.32471,
+            0.16667,
+            0.67457,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "021.m4a",
@@ -2594,6 +2832,20 @@
           ],
           "duree": 5,
           "intention": "On part de la proue et des mâts de la frégate échouée, puis on glisse vers la droite et on s éloigne pour découvrir le chantier du radeau."
+        },
+        "fond": {
+          "fichier": "023-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.24425,
+            0.16667,
+            0.75503,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
         }
       },
       "chiffres": [
@@ -2801,7 +3053,21 @@
           0.27,
           0.72,
           0.6
-        ]
+        ],
+        "fond": {
+          "fichier": "025-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.32759,
+            0.16667,
+            0.67241,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "025.m4a",
@@ -2865,7 +3131,21 @@
               0.32,
               1.0,
               0.58
-            ]
+            ],
+            "fond": {
+              "fichier": "025-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.3319,
+                0.16667,
+                0.6681,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.05,
           "camera_manuelle": true
@@ -2910,7 +3190,21 @@
           0.025,
           0.68,
           0.447
-        ]
+        ],
+        "fond": {
+          "fichier": "026-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33764,
+            0.16667,
+            0.66164,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "026.m4a",
@@ -2990,7 +3284,21 @@
               0.32,
               0.97,
               0.7
-            ]
+            ],
+            "fond": {
+              "fichier": "026-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.29167,
+                0.16667,
+                0.70761,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 5.71
         }
@@ -3034,7 +3342,21 @@
           0.07,
           0.688,
           0.438
-        ]
+        ],
+        "fond": {
+          "fichier": "027-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33693,
+            0.16667,
+            0.66307,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "027.m4a",
@@ -3098,7 +3420,21 @@
           0.0,
           0.607,
           0.237
-        ]
+        ],
+        "fond": {
+          "fichier": "028-fond.webp",
+          "largeur": 640,
+          "hauteur": 397,
+          "boite": [
+            0.36351,
+            0.16667,
+            0.63578,
+            0.83333
+          ],
+          "flou": "fort",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "028.m4a",
@@ -3167,7 +3503,21 @@
               0.05,
               0.69,
               0.36
-            ]
+            ],
+            "fond": {
+              "fichier": "028-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.32902,
+                0.16667,
+                0.67026,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 8.85
         }
@@ -3225,7 +3575,21 @@
           0.74,
           0.92,
           0.94
-        ]
+        ],
+        "fond": {
+          "fichier": "029-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33333,
+            0.16667,
+            0.66667,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "lieux": [
         {
@@ -3375,7 +3739,21 @@
               0.43,
               0.85,
               0.75
-            ]
+            ],
+            "fond": {
+              "fichier": "030-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.25144,
+                0.16667,
+                0.74784,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 8.84
         }
@@ -3484,7 +3862,21 @@
           0.015,
           0.76,
           0.618
-        ]
+        ],
+        "fond": {
+          "fichier": "032-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33046,
+            0.16667,
+            0.66882,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "032.m4a",
@@ -3668,7 +4060,21 @@
           0.052,
           0.786,
           0.867
-        ]
+        ],
+        "fond": {
+          "fichier": "034-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.30316,
+            0.16667,
+            0.69612,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "034.m4a",
@@ -3932,7 +4338,21 @@
           0.011,
           0.988,
           0.895
-        ]
+        ],
+        "fond": {
+          "fichier": "037-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.34483,
+            0.16667,
+            0.65517,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "objets": [
         {
@@ -4394,7 +4814,21 @@
         ],
         "utile_manuel": true,
         "entier_manuel": true,
-        "entier_zoom": 1.3
+        "entier_zoom": 1.3,
+        "fond": {
+          "fichier": "041-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.29885,
+            0.16667,
+            0.70115,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "041.m4a",
@@ -4522,7 +4956,21 @@
           0.75,
           0.45
         ],
-        "entier_zoom": 1.3
+        "entier_zoom": 1.3,
+        "fond": {
+          "fichier": "042-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.34124,
+            0.16667,
+            0.65805,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "042.m4a",
@@ -4585,7 +5033,21 @@
               0.38,
               0.85,
               0.79
-            ]
+            ],
+            "fond": {
+              "fichier": "042-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.2852,
+                0.16667,
+                0.71408,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 6.54
         }
@@ -4630,7 +5092,21 @@
           0.18,
           0.92,
           0.46
-        ]
+        ],
+        "fond": {
+          "fichier": "043-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.35345,
+            0.16667,
+            0.64655,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "objets": [
         {
@@ -4757,7 +5233,21 @@
           0.0,
           0.745,
           0.47
-        ]
+        ],
+        "fond": {
+          "fichier": "044-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.3398,
+            0.16667,
+            0.6602,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "044.m4a",
@@ -4823,7 +5313,21 @@
           0.14,
           0.679,
           0.508
-        ]
+        ],
+        "fond": {
+          "fichier": "045-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.28592,
+            0.16667,
+            0.71408,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "045.m4a",
@@ -4929,7 +5433,21 @@
           0.0,
           0.782,
           0.636
-        ]
+        ],
+        "fond": {
+          "fichier": "046-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33693,
+            0.16667,
+            0.66236,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "046.m4a",
@@ -5109,7 +5627,21 @@
               0.98,
               0.45
             ],
-            "entier_zoom": 1.1
+            "entier_zoom": 1.1,
+            "fond": {
+              "fichier": "047-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.31034,
+                0.16667,
+                0.68894,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 8.75
         }
@@ -5152,7 +5684,21 @@
           0.228,
           0.681,
           0.443
-        ]
+        ],
+        "fond": {
+          "fichier": "048-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.3477,
+            0.16667,
+            0.6523,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "048.m4a",
@@ -5233,7 +5779,21 @@
               0.22,
               0.966,
               0.63
-            ]
+            ],
+            "fond": {
+              "fichier": "048-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.27443,
+                0.16667,
+                0.72557,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 8.7
         }
@@ -5381,7 +5941,21 @@
           0.044,
           0.815,
           0.662
-        ]
+        ],
+        "fond": {
+          "fichier": "050-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33118,
+            0.16667,
+            0.6681,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "objets": [
         {
@@ -5467,7 +6041,21 @@
               0.05,
               0.82,
               0.32
-            ]
+            ],
+            "fond": {
+              "fichier": "050-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.33621,
+                0.16667,
+                0.66307,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 6.72
         }
@@ -5510,7 +6098,21 @@
           0.04,
           0.993,
           0.34
-        ]
+        ],
+        "fond": {
+          "fichier": "051-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.3283,
+            0.16667,
+            0.67098,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "051.m4a",
@@ -5917,6 +6519,20 @@
           ],
           "duree": 5,
           "intention": "On part des cases de chaume à gauche, puis on glisse et on s éloigne pour découvrir toute la rue de l habitation."
+        },
+        "fond": {
+          "fichier": "055-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.25647,
+            0.16667,
+            0.74282,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
         }
       },
       "lieux": [
@@ -5999,7 +6615,21 @@
           0.021,
           0.91,
           0.874
-        ]
+        ],
+        "fond": {
+          "fichier": "056-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.31394,
+            0.16667,
+            0.68606,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "056.m4a",
@@ -6066,7 +6696,21 @@
           0.92,
           0.7
         ],
-        "entier_zoom": 1.25
+        "entier_zoom": 1.25,
+        "fond": {
+          "fichier": "057-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.3671,
+            0.16667,
+            0.63218,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "057.m4a",
@@ -6140,7 +6784,21 @@
               0.08,
               0.75,
               0.38
-            ]
+            ],
+            "fond": {
+              "fichier": "057-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.34195,
+                0.16667,
+                0.65733,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.35
         }
@@ -6185,7 +6843,21 @@
           0.018,
           0.946,
           0.876
-        ]
+        ],
+        "fond": {
+          "fichier": "058-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.35632,
+            0.16667,
+            0.64368,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "058.m4a",
@@ -6282,6 +6954,20 @@
               ],
               "duree": 5,
               "intention": "On descend des cheminées et de leur fumée vers la grille et la charrette de la Pompe à feu, en reculant jusqu à l image entière."
+            },
+            "fond": {
+              "fichier": "058-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.32902,
+                0.16667,
+                0.67026,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
             }
           },
           "instant": 6.86
@@ -6335,7 +7021,21 @@
           0.26,
           1.0,
           0.58
-        ]
+        ],
+        "fond": {
+          "fichier": "059-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33908,
+            0.16667,
+            0.66092,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "059.m4a",
@@ -6409,7 +7109,21 @@
               0.0,
               0.911,
               0.601
-            ]
+            ],
+            "fond": {
+              "fichier": "059-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.32471,
+                0.16667,
+                0.67457,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.62
         }
@@ -6461,7 +7175,21 @@
           0.03,
           0.9,
           0.28
-        ]
+        ],
+        "fond": {
+          "fichier": "060-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.37141,
+            0.16667,
+            0.62859,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "060.m4a",
@@ -6528,7 +7256,21 @@
               0.671,
               0.416
             ],
-            "entier_zoom": 1.05
+            "entier_zoom": 1.05,
+            "fond": {
+              "fichier": "060-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.29095,
+                0.16667,
+                0.70833,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 7.33
         }
@@ -6747,7 +7489,21 @@
               0.0,
               0.747,
               0.618
-            ]
+            ],
+            "fond": {
+              "fichier": "062-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.33477,
+                0.16667,
+                0.66451,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.57,
           "camera_manuelle": true
@@ -6855,7 +7611,21 @@
               0.0,
               0.731,
               0.501
-            ]
+            ],
+            "fond": {
+              "fichier": "063-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.33333,
+                0.16667,
+                0.66595,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 5.55
         }
@@ -6905,7 +7675,21 @@
           0.18,
           0.99,
           0.5
-        ]
+        ],
+        "fond": {
+          "fichier": "064-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.32687,
+            0.16667,
+            0.67313,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "chiffres": [
         {
@@ -7029,7 +7813,21 @@
               0.0,
               0.54,
               0.231
-            ]
+            ],
+            "fond": {
+              "fichier": "065-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.29741,
+                0.16667,
+                0.70187,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 7.44
         }
@@ -7073,7 +7871,21 @@
           0.25,
           0.88,
           0.58
-        ]
+        ],
+        "fond": {
+          "fichier": "066-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.32543,
+            0.16667,
+            0.67457,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "plans": [
         {
@@ -7295,6 +8107,20 @@
               ],
               "duree": 5.5,
               "intention": "On part des voûtes et des piliers de la cathédrale de Reims, puis on descend et on s'éloigne jusqu'à découvrir la nef entière et la cérémonie du sacre."
+            },
+            "fond": {
+              "fichier": "067-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.34483,
+                0.16667,
+                0.65445,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
             }
           },
           "instant": 5.87
@@ -7413,7 +8239,21 @@
           0.034,
           0.831,
           0.718
-        ]
+        ],
+        "fond": {
+          "fichier": "069-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33261,
+            0.16667,
+            0.66739,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "069.m4a",
@@ -7710,7 +8550,21 @@
               0.0,
               0.776,
               0.675
-            ]
+            ],
+            "fond": {
+              "fichier": "071-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.32902,
+                0.16667,
+                0.67026,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 11.62
         }
@@ -7754,7 +8608,21 @@
           0.021,
           0.559,
           0.227
-        ]
+        ],
+        "fond": {
+          "fichier": "072-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.36207,
+            0.16667,
+            0.63721,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "072.m4a",
@@ -7842,7 +8710,21 @@
           0.17,
           0.83,
           0.405
-        ]
+        ],
+        "fond": {
+          "fichier": "073-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.36494,
+            0.16667,
+            0.63506,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "073.m4a",
@@ -7983,7 +8865,21 @@
               0.08,
               0.95,
               0.46
-            ]
+            ],
+            "fond": {
+              "fichier": "074-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.26724,
+                0.16667,
+                0.73276,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.07
         }
@@ -8078,7 +8974,21 @@
               0.25,
               0.94,
               0.6
-            ]
+            ],
+            "fond": {
+              "fichier": "075-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.3319,
+                0.16667,
+                0.66739,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.35
         }
@@ -8131,7 +9041,21 @@
           0.405,
           0.926,
           0.663
-        ]
+        ],
+        "fond": {
+          "fichier": "076-fond.webp",
+          "largeur": 640,
+          "hauteur": 397,
+          "boite": [
+            0.31753,
+            0.16667,
+            0.68247,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "076.m4a",
@@ -8249,7 +9173,21 @@
           0.08,
           0.97,
           0.53
-        ]
+        ],
+        "fond": {
+          "fichier": "077-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.25359,
+            0.16667,
+            0.74569,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "077.m4a",
@@ -8427,7 +9365,21 @@
               0.071,
               0.682,
               0.466
-            ]
+            ],
+            "fond": {
+              "fichier": "078-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.34339,
+                0.16667,
+                0.65661,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 8.34
         }
@@ -8786,7 +9738,21 @@
           0.0,
           1.0,
           1.0
-        ]
+        ],
+        "fond": {
+          "fichier": "082-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.35417,
+            0.16667,
+            0.64583,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "082.m4a",
@@ -9151,7 +10117,21 @@
               0.65,
               0.35
             ],
-            "entier_zoom": 1.1
+            "entier_zoom": 1.1,
+            "fond": {
+              "fichier": "085-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.24282,
+                0.16667,
+                0.75718,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.32
         }
@@ -9200,7 +10180,21 @@
           0.0,
           0.782,
           0.583
-        ]
+        ],
+        "fond": {
+          "fichier": "086-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.31537,
+            0.16667,
+            0.68463,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "086.m4a",
@@ -9264,7 +10258,21 @@
           0.037,
           0.618,
           0.244
-        ]
+        ],
+        "fond": {
+          "fichier": "087-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.37859,
+            0.16667,
+            0.62141,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "087.m4a",
@@ -9377,7 +10385,21 @@
           0.0,
           0.811,
           0.562
-        ]
+        ],
+        "fond": {
+          "fichier": "088-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.34483,
+            0.16667,
+            0.65517,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "088.m4a",
@@ -9673,7 +10695,21 @@
               0.31,
               0.72,
               0.62
-            ]
+            ],
+            "fond": {
+              "fichier": "090-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.33549,
+                0.16667,
+                0.66379,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 7.97
         }
@@ -9722,7 +10758,21 @@
           0.097,
           0.728,
           0.284
-        ]
+        ],
+        "fond": {
+          "fichier": "091-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.35704,
+            0.16667,
+            0.64296,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "091.m4a",
@@ -9785,7 +10835,21 @@
               0.03,
               0.788,
               0.248
-            ]
+            ],
+            "fond": {
+              "fichier": "091-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.35704,
+                0.16667,
+                0.64296,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.51
         }
@@ -9829,7 +10893,21 @@
           0.138,
           0.771,
           0.556
-        ]
+        ],
+        "fond": {
+          "fichier": "092-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33836,
+            0.16667,
+            0.66164,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "092.m4a",
@@ -9900,7 +10978,21 @@
           0.039,
           0.805,
           0.625
-        ]
+        ],
+        "fond": {
+          "fichier": "093-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.33621,
+            0.16667,
+            0.66307,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "093.m4a",
@@ -10009,7 +11101,21 @@
           0.052,
           0.792,
           0.304
-        ]
+        ],
+        "fond": {
+          "fichier": "094-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.35129,
+            0.16667,
+            0.64871,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "094.m4a",
@@ -10118,7 +11224,21 @@
           0.43,
           0.923,
           0.67
-        ]
+        ],
+        "fond": {
+          "fichier": "095-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.31394,
+            0.16667,
+            0.68606,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "095.m4a",
@@ -10249,7 +11369,21 @@
           0.036,
           0.906,
           0.846
-        ]
+        ],
+        "fond": {
+          "fichier": "096-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.29526,
+            0.16667,
+            0.70474,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "objets": [
         {
@@ -10368,7 +11502,21 @@
               0.05,
               0.92,
               0.37
-            ]
+            ],
+            "fond": {
+              "fichier": "096-c-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.33046,
+                0.16667,
+                0.66882,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 12.83
         }
@@ -10580,7 +11728,21 @@
               0.42,
               0.976,
               0.67
-            ]
+            ],
+            "fond": {
+              "fichier": "098-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.36135,
+                0.16667,
+                0.63865,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.32
         }
@@ -10691,7 +11853,21 @@
           0.144,
           0.605,
           0.345
-        ]
+        ],
+        "fond": {
+          "fichier": "100-fond.webp",
+          "largeur": 640,
+          "hauteur": 397,
+          "boite": [
+            0.36351,
+            0.16667,
+            0.63649,
+            0.83333
+          ],
+          "flou": "fort",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "100.m4a",
@@ -10770,7 +11946,21 @@
               0.05,
               0.62,
               0.41
-            ]
+            ],
+            "fond": {
+              "fichier": "100-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.31106,
+                0.16667,
+                0.68894,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 6.54
         }
@@ -10960,7 +12150,21 @@
               0.61,
               0.65,
               0.96
-            ]
+            ],
+            "fond": {
+              "fichier": "102-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.31681,
+                0.16667,
+                0.68247,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.69
         }
@@ -11004,7 +12208,21 @@
           0.141,
           0.653,
           0.289
-        ]
+        ],
+        "fond": {
+          "fichier": "103-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.36638,
+            0.16667,
+            0.6329,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "103.m4a",
@@ -11304,7 +12522,21 @@
           0.871,
           0.419
         ],
-        "entier_zoom": 1.0
+        "entier_zoom": 1.0,
+        "fond": {
+          "fichier": "105-fond.webp",
+          "largeur": 640,
+          "hauteur": 397,
+          "boite": [
+            0.27586,
+            0.16667,
+            0.72342,
+            0.83333
+          ],
+          "flou": "fort",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "objets": [
         {
@@ -11381,7 +12613,21 @@
               0.64,
               1.0,
               1.0
-            ]
+            ],
+            "fond": {
+              "fichier": "105-b-fond.webp",
+              "largeur": 640,
+              "hauteur": 397,
+              "boite": [
+                0.3125,
+                0.16667,
+                0.6875,
+                0.83333
+              ],
+              "flou": "fort",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 9.58
         }
@@ -11496,7 +12742,21 @@
               0.35,
               0.44,
               0.68
-            ]
+            ],
+            "fond": {
+              "fichier": "106-b-fond.webp",
+              "largeur": 640,
+              "hauteur": 397,
+              "boite": [
+                0.25,
+                0.16667,
+                0.74928,
+                0.83333
+              ],
+              "flou": "fort",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 7.91
         }
@@ -11958,7 +13218,21 @@
           0.027,
           0.976,
           0.966
-        ]
+        ],
+        "fond": {
+          "fichier": "111-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.34626,
+            0.16667,
+            0.65302,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "manuscrits": [
         {
@@ -12028,7 +13302,21 @@
               0.22,
               0.98,
               0.44
-            ]
+            ],
+            "fond": {
+              "fichier": "111-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.34555,
+                0.16667,
+                0.65374,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.58
         }
@@ -12072,7 +13360,21 @@
           0.18,
           0.75,
           0.42
-        ]
+        ],
+        "fond": {
+          "fichier": "112-fond.webp",
+          "largeur": 640,
+          "hauteur": 397,
+          "boite": [
+            0.34267,
+            0.16667,
+            0.65733,
+            0.83333
+          ],
+          "flou": "fort",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "112.m4a",
@@ -12147,7 +13449,21 @@
               0.53,
               0.76,
               0.74
-            ]
+            ],
+            "fond": {
+              "fichier": "112-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.33764,
+                0.16667,
+                0.66164,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 10.35
         }
@@ -12191,7 +13507,21 @@
           0.486,
           0.491,
           0.774
-        ]
+        ],
+        "fond": {
+          "fichier": "113-fond.webp",
+          "largeur": 640,
+          "hauteur": 397,
+          "boite": [
+            0.25144,
+            0.16667,
+            0.74784,
+            0.83333
+          ],
+          "flou": "fort",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "113.m4a",
@@ -12266,6 +13596,20 @@
               ],
               "duree": 5,
               "intention": "On part de la façade de l’Hôtel de Ville et de son drapeau tricolore, puis on recule et on descend vers le duc d’Orléans et la foule."
+            },
+            "fond": {
+              "fichier": "113-b-fond.webp",
+              "largeur": 640,
+              "hauteur": 397,
+              "boite": [
+                0.24497,
+                0.16667,
+                0.75431,
+                0.83333
+              ],
+              "flou": "fort",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
             }
           },
           "instant": 4.99
@@ -12384,7 +13728,21 @@
               0.067,
               0.725,
               0.285
-            ]
+            ],
+            "fond": {
+              "fichier": "114-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.33261,
+                0.16667,
+                0.66667,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 11.61,
           "camera_manuelle": true
@@ -12654,7 +14012,21 @@
           0.25,
           0.72,
           0.49
-        ]
+        ],
+        "fond": {
+          "fichier": "117-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.35201,
+            0.16667,
+            0.64727,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "117.m4a",
@@ -12819,7 +14191,21 @@
               0.0,
               0.506,
               0.24
-            ]
+            ],
+            "fond": {
+              "fichier": "118-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.36566,
+                0.16667,
+                0.63362,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 6.51,
           "camera_manuelle": true
@@ -12870,7 +14256,21 @@
           0.94,
           0.58
         ],
-        "entier_zoom": 1.05
+        "entier_zoom": 1.05,
+        "fond": {
+          "fichier": "119-fond.webp",
+          "largeur": 1024,
+          "hauteur": 636,
+          "boite": [
+            0.31106,
+            0.16667,
+            0.68894,
+            0.83333
+          ],
+          "flou": "faible",
+          "modele": "black-forest-labs/FLUX.2-klein-4B",
+          "genere_le": "2026-10-12"
+        }
       },
       "audio": {
         "fichier": "119.m4a",
@@ -12928,7 +14328,21 @@
               0.13,
               0.966,
               0.375
-            ]
+            ],
+            "fond": {
+              "fichier": "119-b-fond.webp",
+              "largeur": 1024,
+              "hauteur": 636,
+              "boite": [
+                0.31466,
+                0.16667,
+                0.68534,
+                0.83333
+              ],
+              "flou": "faible",
+              "modele": "black-forest-labs/FLUX.2-klein-4B",
+              "genere_le": "2026-10-12"
+            }
           },
           "instant": 8.03,
           "camera_manuelle": true

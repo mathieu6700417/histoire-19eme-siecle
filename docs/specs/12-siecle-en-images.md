@@ -1477,6 +1477,24 @@ navigation commune, par petites touches.
 4. `verifier.py <slug>` : nombre de diapositives (90 à 110), chaque image et audio présents,
    licences libres, métadonnées complètes, durée totale, narrations de 25 mots au plus par phrase.
 
+### Couche calculée sur Colab (specs 16 et 17, état au 2026-10-12)
+
+Après la chaîne ci-dessus et le travail de caméra, chaque période reçoit une couche calculée sur
+Colab (modèles à poids ouverts, détail des outils dans `scripts/diaporamas/README.md`). Pour les
+périodes 06 et suivantes :
+
+| Étape | Statut | Règle |
+|---|---|---|
+| Clips « mouvement » (spec 16) | **Règle** | Une dizaine de clips par période, plafond 15 (`generation.py`). |
+| Ambiance sonore des clips (spec 17) | **Règle** | **Tout clip a son ambiance** (EzAudio, −12 dB), consigne écrite dans le lot à côté de celle du clip (`ambiance.py`). Page d'écoute jugée par l'utilisateur avant publication. |
+| Colorisation « couleur seule » (spec 16) | Pilote (période 05) | À appliquer aux autres périodes après le visionnage du pilote. |
+| Netteté, variantes grand écran (spec 17) | Pilote (Révolution) | Original de Commons en plus grand, Real-ESRGAN si l'original ne suffit pas (`nettete.py`). À appliquer après le visionnage du pilote ; plafond de taille à régler avant (poids). |
+| Fonds prolongés des images entières (spec 17) | **Règle** (pilote Restauration validé le 2026-10-12 : « c'est nickel avec les fonds ») | Toute image entière a son fond prolongé : FLUX.2 klein 4B en deux passes, flou 0,25 %, luminosité 80 %, flou fort pour les fonds qui inventent (`fond.py`). Relecture de chaque fond avant publication. |
+| Relief / parallaxe | **Refusé deux fois** (2026-10-08, 2026-10-12) | Ne plus le proposer. |
+
+Un pilote validé devient une règle : mettre ce tableau à jour à ce moment-là, et l'appliquer aussi
+aux périodes déjà produites.
+
 ## Critères de fin du pilote
 
 - `/diaporamas/` et `/diaporamas/revolution/` fonctionnent, sur ordinateur et téléphone.
