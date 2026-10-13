@@ -1488,7 +1488,7 @@ périodes 06 et suivantes :
 | Clips « mouvement » (spec 16) | **Règle** | Une dizaine de clips par période, plafond 15 (`generation.py`). |
 | Ambiance sonore des clips (spec 17) | **Règle** | **Tout clip a son ambiance** (EzAudio, −12 dB), consigne écrite dans le lot à côté de celle du clip (`ambiance.py`). Page d'écoute jugée par l'utilisateur avant publication. |
 | Colorisation « couleur seule » (spec 16) | Pilote (période 05) | À appliquer aux autres périodes après le visionnage du pilote. |
-| Netteté, variantes grand écran (spec 17) | Pilote (Révolution) | Original de Commons en plus grand, Real-ESRGAN si l'original ne suffit pas (`nettete.py`). À appliquer après le visionnage du pilote ; plafond de taille à régler avant (poids). |
+| Netteté, variantes grand écran (spec 17) | **Révolution seulement** ; suspendue par l'utilisateur le 2026-10-14 | Ne pas l'appliquer aux autres périodes ni retoucher la Révolution sans sa demande. Réglages décidés pour la suite, pas encore mis en œuvre : variante seulement si l'image servie laisse plus de 1,3 px d'écran par px d'image au cadre le plus serré, grand côté plafonné à 2 560 px (spec 17). |
 | Fonds prolongés des images entières (spec 17) | **Règle** (pilote Restauration validé le 2026-10-12 : « c'est nickel avec les fonds ») | Toute image entière a son fond prolongé : FLUX.2 klein 4B en deux passes, flou 0,25 %, luminosité 80 %, flou fort pour les fonds qui inventent (`fond.py`). Relecture de chaque fond avant publication. |
 | Relief / parallaxe | **Refusé deux fois** (2026-10-08, 2026-10-12) | Ne plus le proposer. |
 

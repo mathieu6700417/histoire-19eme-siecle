@@ -197,8 +197,19 @@ période sur Colab. Les périodes 01 et 02 n'ont pas d'image entière.
 que l'image passe en couleur ; visible sur les décors (69, 16…). Essai non publié de fonds tirés de
 la version colorisée (planche `fonds-deuxieme-republique-couleur`). **À décider par l'utilisateur.**
 
+### Netteté : poids, et généralisation (2026-10-14)
+
+Pilote de la Révolution validé (« c'est tout nickel »), mais lourd : 132 variantes, 117 Mo de plus.
+Décisions de l'utilisateur avant de généraliser :
+
+| Sujet | Décision |
+|---|---|
+| Plafond | Grand côté à **2 560 px** au lieu de 3 200 (l'utilisateur ne voit pas de différence ; −22 % mesuré sur échantillon). Qualité WebP 74 inchangée. |
+| Besoin | **Pas de variante pour toutes les images** : seulement quand l'image servie manque vraiment de finesse au cadre le plus serré, c'est-à-dire plus de **1,3 pixel d'écran par pixel d'image** en plein écran 1920 × 1080 (seuil choisi à la mise en œuvre, à réviser). Real-ESRGAN, comme avant, seulement si l'original de Commons laisse plus de 1,25. |
+| Champ | **Rien n'est appliqué pour l'instant** (décisions de l'utilisateur du 2026-10-14 : « n'étends pas la netteté des autres périodes pour l'instant », puis « qu'il ne touche à rien pour l'instant »). La Révolution reste telle que commitée (132 variantes, plafond 3 200 px) ; les deux réglages ci-dessus sont décidés mais **pas encore mis en œuvre** dans `nettete.py`. Ne rien relancer sans sa demande. |
+
 ## Reste à décider
 
-- Netteté : généralisation aux périodes 02 à 05 après le visionnage du pilote ; seuil et plafond de poids.
 - Ambiances sonores : extension aux périodes sans clip (01 à 04 n'ont de clips que la Révolution), dose.
 - Fonds prolongés : généralisation aux autres périodes après le visionnage du pilote.
+- Netteté : extension aux périodes 02 à 05, quand l'utilisateur la demandera.
