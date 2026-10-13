@@ -58,6 +58,9 @@ garde le numéro d'origine ; l'identifiant et la capture ne changent pas ; `--es
 | `registre_musique.py` | Registre des enregistrements libres commun aux périodes (`commun/registre-musique.json`) : `chercher`, `ajouter --depuis`, `ecarter`, `possible`, `introuvable`, `--amorcer` (voir « Registre des enregistrements libres »). |
 | `generation.py` | Couche générée (spec 16) : `preparer <slug>` (kit zip pour Colab : manifeste et sources JPEG réduites à la zone utile), `lancer <slug>` (session Colab par la CLI `colab`, calcul par `scripts/colab/mouvement.py`, rapatriement, arrêt), `encoder <slug> [zip|dossier]` (clips aller-retour H.264 sans son, encodés pour le site, dans `.cache/diaporamas/<slug>/generation/clips/`), `planche <slug>` (page HTML de visionnage), `publier <slug> [--seulement n,n]` (clips → `public/diaporamas/<slug>/NNN-mouvement.mp4` et champ `image.video`), `retirer <slug> --seulement n`. Lot : `src/data/diaporamas/generation/<slug>.json` (voir « Couche générée »). |
 | `couleur.py` | Images colorisées par IA (spec 16) : `publier <slug> <lot.json> [--seulement 86 34b] [--sauf …] [--jugement bon] [--essai]` (retrouve chaque image par son `commons`, contrôle zone utile et taille, copie `NNN-couleur.webp` / `NNN-b-couleur.webp`, écrit `image.couleur`, consigne la recette dans `src/data/diaporamas/generation/<slug>-couleur.json`), `retirer <slug> 86 34b` (ou `--tout`), `lister <slug>` (voir « Couche générée », « Colorisation »). |
+| `ambiance.py` | Ambiances sonores des clips (spec 17) : consigne dans le lot de génération, calcul EzAudio sur Colab (`scripts/colab/ambiance.py`), normalisation, page d'écoute, `publier | retirer`. Voir « Ambiances sonores des clips ». |
+| `fond.py` | Fonds prolongés des images entières (spec 17) : `preparer | lancer [--passe 2] | rapatrier | relire | planche | publier | retirer | lister`, FLUX.2 klein 4B sur Colab (`scripts/colab/fond.py`), deux passes. Voir « Fonds prolongés des images entières ». |
+| `nettete.py` | Netteté, variantes grand écran (spec 17) : mesure au cadre le plus serré, variante depuis l'original de Commons ou Real-ESRGAN sur Colab (`scripts/colab/nettete.py`), `publier | retirer`. **Révolution seulement, suspendue ailleurs** (spec 17). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
@@ -204,7 +207,16 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
    une consigne anglaise et une graine chacune), puis `generation.py preparer`, `lancer` (Colab par
    la CLI, ≈ 2 h 30 de machine par période, session arrêtée à la fin), planche de visionnage, `publier`
    (voir « Couche générée »). Zéro Gemini.
-9. `verifier.py <slug>` puis `npm run build`.
+   **Ambiance sonore de chaque clip gardé** (spec 17, règle) : champ `ambiance` de l'élément du lot,
+   `ambiance.py`, page d'écoute jugée par l'utilisateur avant publication (voir « Ambiances sonores
+   des clips »).
+9. **Fonds prolongés des images entières** (spec 17, règle) : après la caméra et les images
+   entières (`camera.py --entiers`), `fond.py preparer → lancer → relire → lancer --passe 2 → relire
+   → planche → publier` (Colab par la CLI, ≈ 1 h de L4 et 1,5 à 2 unités par période ; voir « Fonds
+   prolongés des images entières »). Zéro Gemini.
+   La **netteté** (`nettete.py`, spec 17) n'est appliquée qu'à la Révolution : ne pas la lancer sur
+   une autre période sans demande de l'utilisateur.
+10. `verifier.py <slug>` puis `npm run build`.
 
 Chaque agent termine son étape par `verifier.py <slug> --etape A` (ou `B`, `C`), et lance
 `gemini.py --solde` avant une étape payante (voir « Vérification par étape et solde Gemini »).
@@ -1270,6 +1282,7 @@ est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir direct
 | `mouvement.ts` | spec 16 : clip d'une image mise en mouvement par IA (`x.video`), posé sur la zone utile avec la transformation de l'image, fondu après l'entrée, joue avec la voix, préchargement |
 | `ambiance.ts` | spec 17 : ambiance sonore d'un clip (`x.amb`), un élément audio calé sur l'horloge de la voix avec le clip, niveau `AMBIANCE_DB`, suit le bouton « Musique » et le volume ; `__ambiance()` |
 | `couleur.ts` | spec 16 : version colorisée par IA d'une image (`x.coul`, `p.coul` d'un plan), posée sur la zone utile avec la transformation de l'image, fondu lent calé sur l'horloge de la voix (`opaciteCouleur`), mention du cartouche (`en-couleur`), préchargement |
+| `fond.ts` | spec 17 : fond prolongé d'une image entière (`image.fond`), posé sous l'image et sous les plans avec la transformation de l'image ; flou constant à l'écran, réglages `FOND_*` de `constantes.ts`. |
 | `rendu.ts` | préparation des calques, `instant`, `rendre`, boucle d'animation, `montrerImage` |
 | `frise.ts` | frise du carton et du bas de l'image, poussée des surimpressions |
 | `textes.ts` | cartouche (fondu croisé, estompe) et sous-titre |
@@ -1881,7 +1894,7 @@ python3 scripts/diaporamas/ambiance.py lister <slug> ; … retirer <slug> --seul
 
 ## Fonds prolongés des images entières (spec 17)
 
-Spec 17, « Fonds prolongés : verdict et intégration ». Une image montrée en entier (`image.entier`)
+Spec 17, « Fonds prolongés des images entières ». Une image montrée en entier (`image.entier`)
 laissait du noir autour d'elle ; un modèle à poids ouverts (FLUX.2 klein 4B, Apache 2.0, sur Colab)
 prolonge la scène autour de l'image, et le lecteur montre ce prolongement **flouté et un peu
 assombri derrière l'image**, qui reste le fichier servi, intact.

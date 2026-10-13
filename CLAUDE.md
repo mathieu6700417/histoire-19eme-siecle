@@ -62,6 +62,12 @@ Section « Le siècle raconté par ses écrivains » : suivre `docs/specs/00-cha
 (règles et procédure, qui prévalent sur les specs 02 et 03) et les scripts de `scripts/ecrivains/`.
 `npm run verifier:ecrivains` doit confirmer tous les extraits mot pour mot avant de finir un chapitre.
 
+Diaporamas (« Le siècle en images ») : pour produire une période, suivre `docs/specs/12-siecle-en-images.md`
+(« Produire une période », « Chaîne de production » et son tableau « Couche calculée sur Colab »), les specs 14 à 17,
+la procédure de `scripts/diaporamas/README.md` et le bilan de la période précédente dans `docs/journal/`.
+Calculs GPU : abonnement Colab Pro piloté par la CLI officielle `colab`, session arrêtée à la fin.
+Production journalisée (`scripts/journal/noter.py`), budget Gemini explicite (`--budget`).
+
 Diaporamas : avant de retoucher un diaporama, lire `python3 scripts/diaporamas/annotations.py lister <slug> --a-faire`
 (annotations de visionnage de l'utilisateur, spec 15 ; `traiter <id> "<ce qui a été fait>"` une fois corrigé).
 

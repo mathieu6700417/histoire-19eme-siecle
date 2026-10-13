@@ -1131,6 +1131,13 @@ suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan
   Gemini : environ 2 h de machine et 13 unités par période pour dix clips (mesures de la Révolution :
   5,3 min pour 121 images, 12,1 min pour 241 images sur A100 ; 6,77 unités/h en mémoire haute). Le
   clip est dérivé de l'image, signalé dans le cartouche et crédité ; l'original reste seul authentique.
+- **Couche calculée sur Colab (specs 16 et 17, à partir de la période 06)** : en plus des clips,
+  **chaque clip reçoit une ambiance sonore** et **chaque image entière un fond prolongé** ; le tableau
+  « Couche calculée sur Colab » (section « Chaîne de production ») dit ce qui est règle, pilote ou
+  suspendu, et fait foi. Colab se pilote par la CLI officielle `colab`, jamais par Chrome ; toute
+  session est arrêtée à la fin (`colab stop`, puis `colab sessions`). Ces étapes viennent après la
+  caméra ; elles ne coûtent rien à Gemini mais demandent une relecture : page d'écoute pour les
+  ambiances, relecture de chaque fond (un fond qui invente passe en flou fort).
 
 ### Consulat et Empire enrichi (2026-10-09)
 
@@ -1477,7 +1484,7 @@ navigation commune, par petites touches.
 4. `verifier.py <slug>` : nombre de diapositives (90 à 110), chaque image et audio présents,
    licences libres, métadonnées complètes, durée totale, narrations de 25 mots au plus par phrase.
 
-### Couche calculée sur Colab (specs 16 et 17, état au 2026-10-12)
+### Couche calculée sur Colab (specs 16 et 17, état au 2026-10-14)
 
 Après la chaîne ci-dessus et le travail de caméra, chaque période reçoit une couche calculée sur
 Colab (modèles à poids ouverts, détail des outils dans `scripts/diaporamas/README.md`). Pour les

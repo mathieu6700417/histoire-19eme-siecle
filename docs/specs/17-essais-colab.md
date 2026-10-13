@@ -2,8 +2,9 @@
 
 Décidé avec l'utilisateur le 2026-10-12, après la question « en quoi d'autre utiliser mon abonnement
 Colab Pro pour rendre les diaporamas plus sympas ? ». Trois pistes retenues pour un **essai**, dans
-le cadre de la spec 16 (modèles à poids ouverts, rien d'inventé, signalement). **État : essais jugés le
-2026-10-12 ; relief abandonné, netteté et ambiances sonores à intégrer** (voir « Verdict et intégration »).
+le cadre de la spec 16 (modèles à poids ouverts, rien d'inventé, signalement), puis une quatrième
+(fonds prolongés). **État au 2026-10-14 : relief abandonné ; ambiances sonores et fonds prolongés
+devenus des règles ; netteté appliquée à la Révolution seulement, suspendue ailleurs.**
 
 ## Règles communes
 
@@ -82,6 +83,9 @@ après visionnage et écoute :
 
 ### Netteté : règles d'intégration
 
+Plafond de taille et seuil de besoin **révisés le 2026-10-14** (« Netteté : poids, et généralisation »,
+plus bas), qui prévalent ; la netteté n'est appliquée qu'à la Révolution.
+
 | Sujet | Décision |
 |---|---|
 | Ordre | **D'abord un fichier plus grand tiré de l'original de Commons**, sans IA (l'essai a montré que les 132 images, servies à 1 600 px au plus, sont toutes sous la résolution de l'écran au cadre le plus serré, et que l'original suffit pour 82 d'entre elles). **Real-ESRGAN seulement quand l'original ne suffit pas.** |
@@ -105,98 +109,6 @@ après visionnage et écoute :
 | Signalement | **Crédits de la page et livre d'images seulement** (décision de l'utilisateur) ; la ligne du cartouche « mise en mouvement par IA » ne change pas. |
 | Garde-fous | Ni voix intelligible, ni musique, ni son anachronique. Les agents ne peuvent pas écouter : **page d'écoute obligatoire** pour tout nouveau lot, jugée par l'utilisateur avant publication. |
 
-## Essai 4 — Compléter les images entières (demandé le 2026-10-12)
-
-Demande de l'utilisateur : les images montrées **en entier sur fond noir** (spec 12, « Images
-entières sur fond noir » : images en hauteur ou trop petites pour remplir la scène) laissent du noir
-autour d'elles. Essayer de **compléter l'image au-delà de ses bords** par un modèle sur Colab, et
-d'afficher **la partie complétée derrière un filtre un peu flou**, l'image d'époque restant nette et
-intacte au centre. **État : essai jugé le 2026-10-12, retenu** (voir « Fonds prolongés : verdict et
-intégration »).
-
-- **Principe** : le modèle prolonge la scène jusqu'au format de la scène (16:9) ; seul le
-  prolongement est généré, l'image d'origine n'est jamais retouchée. Le flou cache ce que le
-  modèle invente : le prolongement sert d'ambiance, pas de document.
-- **Images** : 8 images entières de la Restauration (la période qui en a le plus), variées :
-  tableaux et gravures, en hauteur et petites, dont un portrait et une image à marge de papier.
-- **Modèles** : un ou deux modèles à poids ouverts et licence libre (règles de licence de cette
-  spec), capables de prolonger une image.
-- **Variantes sur la planche**, à la taille de la scène, pour chaque image :
-  1. aujourd'hui (fond noir) ;
-  2. **témoin sans IA** : la même image agrandie et floutée en fond (procédé classique), pour voir
-     ce que la génération apporte de plus ;
-  3. prolongement généré, **net** (pour juger ce que le modèle invente) ;
-  4. prolongement généré **flouté**, à deux forces de flou, légèrement assombri, avec un raccord
-     doux au bord de l'image.
-- **À surveiller** : personnages, visages ou textes inventés dans le prolongement, raccord visible
-  au bord de l'image, fond qui attire l'œil plus que l'image, marges de papier et cadres prolongés
-  tels quels, lisibilité des surimpressions (cartouche, sous-titres) sur le fond.
-- **Signalement** (si l'essai est retenu) : à décider.
-
-## Fonds prolongés : verdict et intégration (2026-10-12)
-
-Essai fait le 2026-10-12 (planche `.cache/diaporamas/essais-colab/fond/planche.html`, ≈ 0,5 unité
-Colab) : FLUX.2 klein 4B (Apache 2.0, toile préremplie d'un flou, 22 s par image sur L4) donne de
-bons prolongements ; SDXL inpainting rate les 8 images. Verdict de l'utilisateur : « franchement
-c'est top, ça vaut le coup de prolonger, et il ne faut pas beaucoup de flou, encore moins que le flou
-faible de la page ». L'agent d'essai recommandait au contraire le flou fort et les seuls tableaux à
-décor ; les décisions de l'utilisateur prévalent :
-
-| Sujet | Décision |
-|---|---|
-| Modèle | **FLUX.2 klein 4B**, toile préremplie ; sortie accordée en couleur sur l'original avant d'être posée ; l'image d'époque (zone utile) est recollée intacte, au pixel près. |
-| Flou | **Environ 0,5 % de la largeur de la scène** (le « flou faible » de la planche valait 0,9 %, le « fort » 2,6 %), fond légèrement assombri, raccord doux au bord. Valeurs en CSS, réglables d'un seul endroit. |
-| Champ | **Toutes les images entières** (tableaux, gravures, portraits, documents) : plus de fond noir. |
-| Inventions | **Relecture de chaque fond, net.** Un fond qui montre un personnage, un visage, un texte, un cachet ou un anachronisme (essai : immeubles haussmanniens derrière l'Hôtel de Ville de 1830, faux cachet près de Louis XVIII) n'est pas rejeté : **il passe en flou fort (≈ 2,5 %)**, qui cache l'invention. Le niveau de flou est donc une donnée par image. Planche des cas passés en flou fort remise à l'utilisateur. |
-| Taille du fond | Assez grande pour 0,5 % de flou (1 280 px à l'essai pesaient 63 à 430 ko ; à mesurer : la plus petite taille sans perte visible à ce flou) ; les fonds en flou fort peuvent être en 640 px. |
-| Lecteur | Le fond suit la transformation de l'image (rapprochement lent, entrée en scène, fondus entre diapositives, plans et galeries) ; téléphone et scène presque carrée (bandes en haut et en bas) à traiter ; `prefers-reduced-motion` : le fond reste (il est fixe). |
-| Signalement | **Crédits de la page et livre d'images seulement** ; le livre d'images montre l'image d'époque seule. |
-| Pilote | **Restauration d'abord** (57 images entières), visionnée dans le lecteur avant de généraliser. |
-
-### Retours sur la planche des fonds de la Restauration (2026-10-12)
-
-Lot de la Restauration : 101 images entières (57 images de diapositive et 44 plans), 98 en flou
-faible et 3 en flou fort (105, 113, 113b). Retours de l'utilisateur sur la planche :
-
-- **« C'est bien sur les côtés mais pas en haut et en bas »** : le modèle ne prolongeait que les
-  côtés (avec les quatre côtés d'un coup, il peignait une pièce où le tableau est posé debout) ; le
-  haut et le bas étaient faits sans IA, en étirant le bord. **À refaire avec un vrai prolongement**,
-  essai en deux passes (côtés, puis haut et bas à partir de l'image élargie), d'abord sur 8 images.
-- **« Le flou faible est encore fort et trop foncé »** : le flou faible passe de 0,5 % à **0,25 %**
-  de la largeur de la scène, la luminosité du fond de 72 % à **80 %**. Ces valeurs remplacent celles
-  du tableau ci-dessus. Le flou fort (≈ 2,5 %) ne change pas. Conséquences : taille des fonds à
-  remesurer (640 px avait été retenu pour 0,5 %), relecture à refaire à l'échelle réelle.
-
-**Suite du même jour.** Haut et bas refaits en **deux passes** (côtés, puis haut et bas à partir de
-l'image élargie, marge de 25 %, consigne nommant le dessus et le dessous ; bandes de papier continues
-sans modèle pour les fonds « papier » et « uni ») : plus de tableau posé dans une pièce. Fonds en
-**1 024 px** pour le flou faible (640 px en flou fort), 4,4 Mo pour la période. Relecture refaite à
-0,25 % : **9 fonds en flou fort** (4b, 28, 100, 105, 105b, 106b, 112, 113, 113b). Défaut connu : une
-jonction horizontale entre côtés et bandes, qui se devine sur les fonds à décor (23, 58b ; halo sur
-21). Verdict de l'utilisateur sur la comparaison et le lecteur : **« c'est bien, ça donne bien »** ;
-le nouveau jeu est publié dans la Restauration, sauf la Girafe (76), ratée dans ce jeu, qui garde
-son premier fond. Lecteur : module `fond.ts`, réglages dans `constantes.ts` (`FOND_*`).
-
-### Généralisation aux périodes 04 et 05 (2026-10-14)
-
-Pilote validé par l'utilisateur dans le lecteur (« c'est nickel avec les fonds ») : les fonds
-prolongés deviennent une règle (tableau « Couche calculée sur Colab » de la spec 12). Produits et
-publiés dans l'arbre de travail le 2026-10-14, ≈ 2,6 unités Colab estimées pour les deux périodes :
-
-| Période | Images entières | Flou faible | Flou fort |
-|---|---|---|---|
-| 04 monarchie de Juillet | 106 | 100 | 6 (23, 38b, 70b, 75, 117, 121) |
-| 05 IIe République | 103 | 93 | 10 (5, 9, 10, 49b, 72b, 79, 84, 103, 103b, 116b) |
-
-Leçons (détail dans le README des scripts) : choisir le genre « papier » ou « décor » d'après la
-zone utile (une feuille à marge classée « décor » est posée debout dans une pièce) ; champ `teinte`
-du lot quand un bord de l'image est pris dans des hachures ou un cadre ; un dossier distant par
-période sur Colab. Les périodes 01 et 02 n'ont pas d'image entière.
-
-**Images entières colorisées (période 05, 17 images)** : le fond est tiré de l'original gris alors
-que l'image passe en couleur ; visible sur les décors (69, 16…). Essai non publié de fonds tirés de
-la version colorisée (planche `fonds-deuxieme-republique-couleur`). **À décider par l'utilisateur.**
-
 ### Netteté : poids, et généralisation (2026-10-14)
 
 Pilote de la Révolution validé (« c'est tout nickel »), mais lourd : 132 variantes, 117 Mo de plus.
@@ -208,8 +120,81 @@ Décisions de l'utilisateur avant de généraliser :
 | Besoin | **Pas de variante pour toutes les images** : seulement quand l'image servie manque vraiment de finesse au cadre le plus serré, c'est-à-dire plus de **1,3 pixel d'écran par pixel d'image** en plein écran 1920 × 1080 (seuil choisi à la mise en œuvre, à réviser). Real-ESRGAN, comme avant, seulement si l'original de Commons laisse plus de 1,25. |
 | Champ | **Rien n'est appliqué pour l'instant** (décisions de l'utilisateur du 2026-10-14 : « n'étends pas la netteté des autres périodes pour l'instant », puis « qu'il ne touche à rien pour l'instant »). La Révolution reste telle que commitée (132 variantes, plafond 3 200 px) ; les deux réglages ci-dessus sont décidés mais **pas encore mis en œuvre** dans `nettete.py`. Ne rien relancer sans sa demande. |
 
+## Fonds prolongés des images entières (essai 4, règle depuis le 2026-10-12)
+
+Cette section donne **l'état final** ; l'historique des essais et des retours est résumé à la fin.
+Mode d'emploi des outils : `scripts/diaporamas/README.md`, « Fonds prolongés des images entières ».
+
+**Demande de l'utilisateur (2026-10-12)** : les images montrées **en entier** (spec 12, « Images
+entières sur fond noir » : images en hauteur ou trop petites pour remplir la scène) laissaient du
+noir autour d'elles. On **prolonge l'image au-delà de ses bords** par un modèle sur Colab et on
+montre ce prolongement **derrière un léger flou**, l'image d'époque restant nette et intacte.
+Verdicts : « franchement c'est top, ça vaut le coup de prolonger » (essai), « c'est nickel avec
+les fonds » (pilote de la Restauration dans le lecteur).
+
+### Règles
+
+| Sujet | Décision |
+|---|---|
+| Statut | **Règle pour toutes les périodes** : toute image entière a son fond prolongé (image principale et plans). |
+| Principe | Seul le prolongement est généré. L'image d'époque (sa zone utile) n'est jamais retouchée ; elle est posée intacte par-dessus le fond. Le fond est une ambiance, pas un document. |
+| Modèle | **FLUX.2 klein 4B** (Apache 2.0), toile préremplie d'un flou de l'image, sortie accordée en couleur sur l'original. SDXL inpainting : écarté (rate toutes les images). |
+| Méthode | **Deux passes.** Passe 1 : les côtés, à hauteur d'image. Passe 2 : le haut et le bas, à partir de l'image déjà élargie (marge de 25 %), avec une consigne qui nomme ce qu'il y a au-dessus et au-dessous. Pour les images sur papier ou à fond uni : bandes de papier continues, sans modèle. |
+| Flou | **0,25 % de la largeur de la scène** (« flou faible »), constant à l'écran quel que soit le zoom. |
+| Luminosité | **80 %** de celle de l'image. Raccord doux au bord de l'image (0,3 %). |
+| Inventions | **Relecture de chaque fond, net, à l'échelle de génération.** Un fond qui montre un personnage, un visage, un texte, une plaque, une enseigne, un drapeau inventé, un anachronisme (immeubles haussmanniens avant 1853, réverbère moderne, poteaux) ou un reflet du sujet sous l'image : un ou deux tirages de plus ; si le défaut persiste, le fond n'est pas rejeté, **il passe en flou fort (2,5 %)**, qui le cache. Le niveau de flou est une donnée par image (`image.fond.flou`). Un fond simplement raté suit la même règle. |
+| Taille | **1 024 px** de large en flou faible, **640 px** en flou fort ; WebP. De 4 à 5 Mo par période. |
+| Lecteur | Module `fond.ts` : le fond est sous l'image et sous les plans, suit la transformation de l'image (rapprochement, entrée en scène, fondus croisés). Réglages en un seul endroit : `FOND_FLOU_FAIBLE`, `FOND_FLOU_FORT`, `FOND_LUMIERE`, `FOND_RACCORD` dans `constantes.ts`. Une image entière sans `fond` garde le fond noir. `prefers-reduced-motion` : le fond reste (il est fixe). |
+| Signalement | **Crédits de la page seulement** (section « Fonds prolongés ») ; rien au cartouche ; le livre d'images montre l'image d'époque seule. |
+| Coût | ≈ 1 h de L4 et 1,5 à 2 unités Colab par période d'une centaine d'images entières ; 0 $ Gemini. |
+
+### État par période (2026-10-14)
+
+| Période | Images entières | Flou faible | Flou fort |
+|---|---|---|---|
+| 01 Révolution, 02 Consulat et Empire | 0 | | |
+| 03 Restauration | 101 | 92 | 9 (4b, 28, 100, 105, 105b, 106b, 112, 113, 113b) |
+| 04 monarchie de Juillet | 106 | 100 | 6 (23, 38b, 70b, 75, 117, 121) |
+| 05 IIe République | 103 | 93 | 10 (5, 9, 10, 49b, 72b, 79, 84, 103, 103b, 116b) |
+
+Exception : la Girafe (Restauration, 76), ratée en deux passes, garde un fond à bandes étirées.
+
+### Limites connues et points ouverts
+
+- **Jonction horizontale** entre les côtés et les bandes du haut et du bas : elle se devine sur une
+  partie des fonds à décor (Restauration 21, 23, 58b ; une dizaine en 04 et 05). Piste non faite :
+  passe 2 avec recouvrement, ou fondu en domaine de gradient.
+- **Le bord de l'image reste visible** (image nette sur fond flou), et le fond reste gris autour
+  des images très claires.
+- **Images entières colorisées** (période 05, 17 images) : le fond est tiré de l'original gris alors
+  que l'image passe en couleur ; visible sur les décors (69, 16). Essai non publié de fonds tirés de
+  la version colorisée (planche `fonds-deuxieme-republique-couleur`). **À décider par l'utilisateur.**
+- Non vérifié : plein écran d'un téléphone tenu debout, Safari iOS.
+
+### Leçons de fabrication
+
+- Choisir le genre « papier » ou « décor » **d'après la zone utile** : une feuille à marge classée
+  « décor » est peinte debout dans une pièce, avec son cachet reflété.
+- Ne jamais demander les quatre côtés en une passe (même effet de tableau posé dans une pièce) ; ne
+  pas étirer le bord pour faire le haut et le bas (refusé par l'utilisateur) ; pas de consigne
+  générique (paysages de rivière autour des intérieurs, bandes restées floues).
+- Champ `teinte` du lot quand un bord de l'image est pris dans des hachures, une reliure ou un cadre.
+- Un dossier distant par période sur Colab ; fermer la session pendant les relectures.
+
+### Historique (pour mémoire, valeurs remplacées)
+
+- Essai du 2026-10-12 sur 8 images de la Restauration, avec un témoin sans IA (la même image
+  agrandie et floutée) : le généré l'emporte sur les tableaux à décor. L'agent d'essai recommandait
+  le flou fort et les seuls tableaux à décor ; l'utilisateur a voulu peu de flou et toutes les images.
+- Flou faible : d'abord 0,9 % (planche), puis 0,5 %, puis **0,25 %** (« encore fort »). Luminosité :
+  72 %, puis **80 %** (« trop foncé »). Taille : 640 px, puis **1 024 px** pour ce flou.
+- Haut et bas : d'abord étirés sans IA (« c'est bien sur les côtés mais pas en haut et en bas »),
+  puis générés en seconde passe (« c'est bien, ça donne bien »).
+- Flous forts de la Restauration : 3 à la première relecture (flou 0,5 %), 9 à la relecture à 0,25 %.
+
 ## Reste à décider
 
-- Ambiances sonores : extension aux périodes sans clip (01 à 04 n'ont de clips que la Révolution), dose.
-- Fonds prolongés : généralisation aux autres périodes après le visionnage du pilote.
-- Netteté : extension aux périodes 02 à 05, quand l'utilisateur la demandera.
+- Ambiances sonores : extension à des diapositives sans clip, dose.
+- Fonds prolongés : fonds des images entières colorisées (période 05) ; atténuation de la jonction.
+- Netteté : mise en œuvre des deux réglages de poids et extension aux périodes 02 à 05, quand
+  l'utilisateur le demandera.

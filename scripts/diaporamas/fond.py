@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fonds prolongés des images entières (spec 17, « Fonds prolongés : verdict et intégration »).
+"""Fonds prolongés des images entières (spec 17, « Fonds prolongés des images entières »).
 
 Une image montrée en entier (drapeau `image.entier`) laissait du noir autour d'elle. Un modèle à poids
 ouverts (FLUX.2 klein 4B, Apache 2.0, sur Colab) prolonge la scène autour de l'image ; le lecteur

@@ -142,5 +142,8 @@ fabrication : 5 estampes déjà coloriées et 3 ratées. À juger au visionnage.
 
 ## Reste à décider
 
-- Les deux autres usages (reconstitution photo d'après gravure, colorisation des vraies
-  photographies) et leur pilote ; `verifier.py` n'admet pour l'instant que l'usage `mouvement`.
+- Colorisation « couleur seule » : extension aux périodes autres que la 05, après le visionnage du
+  pilote (la transformation en photographie est abandonnée, voir plus haut).
+- Suite de la couche générée (ambiances sonores des clips, fonds prolongés des images entières,
+  netteté) : spec 17. L'état de chaque étape pour les prochaines périodes est tenu dans le tableau
+  « Couche calculée sur Colab » de la spec 12.
