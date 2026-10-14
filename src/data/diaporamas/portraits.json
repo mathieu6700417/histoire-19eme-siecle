@@ -3164,5 +3164,832 @@
       0.429
     ],
     "fichier": "portraits/caillie.webp"
+  },
+  {
+    "id": "worth",
+    "nom": "Worth",
+    "dates": "1825-1895",
+    "commons": "File:Charles Frédéric Worth.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "1892",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_Fr%C3%A9d%C3%A9ric_Worth.jpg",
+    "cadre_visage": [
+      0.404,
+      0.205,
+      0.678,
+      0.501
+    ],
+    "fichier": "portraits/worth.webp"
+  },
+  {
+    "id": "rouher",
+    "nom": "Rouher",
+    "dates": "1814-1884",
+    "commons": "File:Eugène Rouher.jpg",
+    "auteur": "Photographie d'atelier (musée Carnavalet)",
+    "date": "vers 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Eug%C3%A8ne_Rouher.jpg",
+    "cadre_visage": [
+      0.282,
+      0.0,
+      0.786,
+      0.476
+    ],
+    "fichier": "portraits/rouher.webp"
+  },
+  {
+    "id": "fould",
+    "nom": "Achille Fould",
+    "dates": "1800-1867",
+    "commons": "File:Achille Fould BNF.jpg",
+    "auteur": "Photographie anonyme (BnF)",
+    "date": "années 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Achille_Fould_BNF.jpg",
+    "cadre_visage": [
+      0.321,
+      0.122,
+      0.654,
+      0.365
+    ],
+    "fichier": "portraits/fould.webp"
+  },
+  {
+    "id": "saint-arnaud",
+    "nom": "Saint-Arnaud",
+    "dates": "1798-1854",
+    "commons": "File:Leroy de Saint-Arnaud - photo Pierson.jpg",
+    "auteur": "Pierre-Louis Pierson (photographie)",
+    "date": "avant 1854",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Leroy_de_Saint-Arnaud_-_photo_Pierson.jpg",
+    "cadre_visage": [
+      0.322,
+      0.037,
+      0.592,
+      0.268
+    ],
+    "fichier": "portraits/saint-arnaud.webp"
+  },
+  {
+    "id": "mac-mahon",
+    "nom": "Mac Mahon",
+    "dates": "1808-1893",
+    "commons": "File:Le maréchal de Mac Mahon, duc de Magenta – unframed.jpg",
+    "auteur": "Mayer et Pierson (photographie)",
+    "date": "vers 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Le_mar%C3%A9chal_de_Mac_Mahon,_duc_de_Magenta_%E2%80%93_unframed.jpg",
+    "cadre_visage": [
+      0.417,
+      0.131,
+      0.564,
+      0.255
+    ],
+    "fichier": "portraits/mac-mahon.webp"
+  },
+  {
+    "id": "belgrand",
+    "nom": "Belgrand",
+    "dates": "1810-1878",
+    "commons": "File:Marie François Eugène Belgrand - btv1b8453386x (1 of 2).jpg",
+    "auteur": "Photographie anonyme (BnF, Société de géographie)",
+    "date": "avant 1878",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Marie_Fran%C3%A7ois_Eug%C3%A8ne_Belgrand_-_btv1b8453386x_(1_of_2).jpg",
+    "cadre_visage": [
+      0.43,
+      0.291,
+      0.618,
+      0.421
+    ],
+    "fichier": "portraits/belgrand.webp"
+  },
+  {
+    "id": "alphand",
+    "nom": "Alphand",
+    "dates": "1817-1891",
+    "commons": "File:Alfred Philippe Roll - Portrait d'Adolphe Alphand - PPP112 - Musée des Beaux-Arts de la ville de Paris.jpg",
+    "auteur": "Alfred Roll",
+    "date": "1888",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Alfred_Philippe_Roll_-_Portrait_d%27Adolphe_Alphand_-_PPP112_-_Mus%C3%A9e_des_Beaux-Arts_de_la_ville_de_Paris.jpg",
+    "cadre_visage": [
+      0.435,
+      0.224,
+      0.62,
+      0.376
+    ],
+    "fichier": "portraits/alphand.webp"
+  },
+  {
+    "id": "garnier",
+    "nom": "Charles Garnier",
+    "dates": "1825-1898",
+    "commons": "File:Charles Garnier by Nadar - Leniaud 2003 p142.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "vers 1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_Garnier_by_Nadar_-_Leniaud_2003_p142.jpg",
+    "cadre_visage": [
+      0.202,
+      0.049,
+      0.782,
+      0.553
+    ],
+    "fichier": "portraits/garnier.webp"
+  },
+  {
+    "id": "carpeaux",
+    "nom": "Carpeaux",
+    "dates": "1827-1875",
+    "commons": "File:Jean-Baptiste Carpeaux self-portrait - Fontaine 2000 p25.jpg",
+    "auteur": "Jean-Baptiste Carpeaux (autoportrait)",
+    "date": "vers 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean-Baptiste_Carpeaux_self-portrait_-_Fontaine_2000_p25.jpg",
+    "cadre_visage": [
+      0.356,
+      0.06,
+      0.98,
+      0.591
+    ],
+    "fichier": "portraits/carpeaux.webp"
+  },
+  {
+    "id": "nadar",
+    "nom": "Nadar",
+    "dates": "1820-1910",
+    "commons": "File:Autoportrait de Félix Nadar - edit.jpg",
+    "auteur": "Nadar (autoportrait photographique)",
+    "date": "vers 1900",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Autoportrait_de_F%C3%A9lix_Nadar_-_edit.jpg",
+    "cadre_visage": [
+      0.331,
+      0.214,
+      0.663,
+      0.47
+    ],
+    "fichier": "portraits/nadar.webp"
+  },
+  {
+    "id": "ferry",
+    "nom": "Jules Ferry",
+    "dates": "1832-1893",
+    "commons": "File:JulesFerryBonnat.jpg",
+    "auteur": "Léon Bonnat",
+    "date": "1888",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:JulesFerryBonnat.jpg",
+    "cadre_visage": [
+      0.243,
+      0.102,
+      0.733,
+      0.573
+    ],
+    "fichier": "portraits/ferry.webp"
+  },
+  {
+    "id": "disderi",
+    "nom": "Disdéri",
+    "dates": "1819-1889",
+    "commons": "File:André Adolphe-Eugène Disdéri.jpg",
+    "auteur": "Disdéri (autoportrait photographique)",
+    "date": "vers 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Andr%C3%A9_Adolphe-Eug%C3%A8ne_Disd%C3%A9ri.jpg",
+    "cadre_visage": [
+      0.382,
+      0.216,
+      0.545,
+      0.337
+    ],
+    "fichier": "portraits/disderi.webp"
+  },
+  {
+    "id": "randon",
+    "nom": "Maréchal Randon",
+    "dates": "1795-1871",
+    "commons": "File:RANDON2.jpg",
+    "auteur": "Léon Crémière (photographie)",
+    "date": "années 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:RANDON2.jpg",
+    "cadre_visage": [
+      0.379,
+      0.121,
+      0.598,
+      0.311
+    ],
+    "fichier": "portraits/randon.webp"
+  },
+  {
+    "id": "norodom",
+    "nom": "Norodom Ier",
+    "dates": "1834-1904",
+    "commons": "File:King Norodom.jpg",
+    "auteur": "Photographie anonyme",
+    "date": "vers 1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:King_Norodom.jpg",
+    "cadre_visage": [
+      0.465,
+      0.0,
+      0.768,
+      0.21
+    ],
+    "fichier": "portraits/norodom.webp"
+  },
+  {
+    "id": "etienne-lenoir",
+    "nom": "Étienne Lenoir",
+    "dates": "1822-1900",
+    "commons": "File:Etienne Lenoir 2 (151966191).jpg",
+    "auteur": "E. Thomas (gravure)",
+    "date": "1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Etienne_Lenoir_2_(151966191).jpg",
+    "cadre_visage": [
+      0.401,
+      0.183,
+      0.793,
+      0.472
+    ],
+    "fichier": "portraits/etienne-lenoir.webp"
+  },
+  {
+    "id": "boucicaut",
+    "nom": "Aristide Boucicaut",
+    "dates": "1810-1877",
+    "commons": "File:Bouguereau - aristide boucicaut.jpg",
+    "auteur": "William Bouguereau",
+    "date": "1875",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Bouguereau_-_aristide_boucicaut.jpg",
+    "cadre_visage": [
+      0.312,
+      0.012,
+      0.626,
+      0.252
+    ],
+    "fichier": "portraits/boucicaut.webp"
+  },
+  {
+    "id": "verne",
+    "nom": "Jules Verne",
+    "dates": "1828-1905",
+    "commons": "File:Félix Nadar 1820-1910 portraits Jules Verne.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "vers 1878",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:F%C3%A9lix_Nadar_1820-1910_portraits_Jules_Verne.jpg",
+    "cadre_visage": [
+      0.241,
+      0.088,
+      0.737,
+      0.5
+    ],
+    "fichier": "portraits/verne.webp"
+  },
+  {
+    "id": "manet",
+    "nom": "Manet",
+    "dates": "1832-1883",
+    "commons": "File:Édouard Manet, en buste, de face - Nadar.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "avant 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:%C3%89douard_Manet,_en_buste,_de_face_-_Nadar.jpg",
+    "cadre_visage": [
+      0.139,
+      0.141,
+      0.751,
+      0.686
+    ],
+    "fichier": "portraits/manet.webp"
+  },
+  {
+    "id": "cabanel",
+    "nom": "Cabanel",
+    "dates": "1823-1889",
+    "commons": "File:Self Portrait (Alexandre Cabanel).jpg",
+    "auteur": "Alexandre Cabanel (autoportrait)",
+    "date": "1852",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Self_Portrait_(Alexandre_Cabanel).jpg",
+    "cadre_visage": [
+      0.252,
+      0.087,
+      0.764,
+      0.565
+    ],
+    "fichier": "portraits/cabanel.webp"
+  },
+  {
+    "id": "urbain",
+    "nom": "Ismaÿl Urbain",
+    "dates": "1812-1884",
+    "commons": "File:IsmaelUrbain.jpg",
+    "auteur": "Photographie anonyme (reproduite par Gabriel Esquer, 1929)",
+    "date": "1868",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:IsmaelUrbain.jpg",
+    "cadre_visage": [
+      0.273,
+      0.02,
+      0.631,
+      0.34
+    ],
+    "fichier": "portraits/urbain.webp"
+  },
+  {
+    "id": "niel",
+    "nom": "Maréchal Niel",
+    "dates": "1802-1869",
+    "commons": "File:Larivière - Adolphe Niel (détail).jpg",
+    "auteur": "Charles-Philippe Larivière",
+    "date": "1859",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Larivi%C3%A8re_-_Adolphe_Niel_(d%C3%A9tail).jpg",
+    "cadre_visage": [
+      0.325,
+      0.113,
+      0.658,
+      0.428
+    ],
+    "fichier": "portraits/niel.webp"
+  },
+  {
+    "id": "benedetti",
+    "nom": "Benedetti",
+    "dates": "1817-1900",
+    "commons": "File:Vincent Benedetti (1817-1900).jpg",
+    "auteur": "Augustin Le Jeune (photographie)",
+    "date": "vers 1869",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Vincent_Benedetti_(1817-1900).jpg",
+    "cadre_visage": [
+      0.354,
+      0.045,
+      0.64,
+      0.3
+    ],
+    "fichier": "portraits/benedetti.webp"
+  },
+  {
+    "id": "bismarck",
+    "nom": "Bismarck",
+    "dates": "1815-1898",
+    "commons": "File:Bismarck Otto Eduard Leopold von ( 1815-1898). Homme d'Etat prussien, il est ministre-président de la Prusse du 1862 à, PH4142-21.jpg",
+    "auteur": "Photographie anonyme (musée Carnavalet)",
+    "date": "avant 1870",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Bismarck_Otto_Eduard_Leopold_von_(_1815-1898)._Homme_d%27Etat_prussien,_il_est_ministre-pr%C3%A9sident_de_la_Prusse_du_1862_%C3%A0,_PH4142-21.jpg",
+    "cadre_visage": [
+      0.232,
+      0.142,
+      0.663,
+      0.464
+    ],
+    "fichier": "portraits/bismarck.webp"
+  },
+  {
+    "id": "persigny",
+    "nom": "Persigny",
+    "dates": "1808-1872",
+    "commons": "File:Victor duc de Persigny.jpg",
+    "auteur": "Disdéri (photographie)",
+    "date": "années 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Victor_duc_de_Persigny.jpg",
+    "cadre_visage": [
+      0.34,
+      0.09,
+      0.64,
+      0.31
+    ],
+    "fichier": "portraits/persigny.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "baudelaire",
+    "nom": "Baudelaire",
+    "dates": "1821-1867",
+    "commons": "File:Étienne Carjat, Portrait of Charles Baudelaire, circa 1862.jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "vers 1862",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:%C3%89tienne_Carjat,_Portrait_of_Charles_Baudelaire,_circa_1862.jpg",
+    "cadre_visage": [
+      0.234,
+      0.148,
+      0.693,
+      0.553
+    ],
+    "fichier": "portraits/baudelaire.webp"
+  },
+  {
+    "id": "ollivier",
+    "nom": "Émile Ollivier",
+    "dates": "1825-1913",
+    "commons": "File:Émile Ollivier by Pierre-Louis Pierson, 1870.png",
+    "auteur": "Pierre-Louis Pierson (photographie)",
+    "date": "1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:%C3%89mile_Ollivier_by_Pierre-Louis_Pierson,_1870.png",
+    "cadre_visage": [
+      0.281,
+      0.095,
+      0.68,
+      0.414
+    ],
+    "fichier": "portraits/ollivier.webp"
+  },
+  {
+    "id": "cavour",
+    "nom": "Cavour",
+    "dates": "1810-1861",
+    "commons": "File:Cavour engraving.jpg",
+    "auteur": "Luigi Calamatta, d'après A. Masutti (gravure)",
+    "date": "1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Cavour_engraving.jpg",
+    "cadre_visage": [
+      0.352,
+      0.054,
+      0.633,
+      0.29
+    ],
+    "fichier": "portraits/cavour.webp"
+  },
+  {
+    "id": "offenbach",
+    "nom": "Offenbach",
+    "dates": "1819-1880",
+    "commons": "File:Jacques Offenbach by Nadar.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "années 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jacques_Offenbach_by_Nadar.jpg",
+    "cadre_visage": [
+      0.209,
+      0.051,
+      0.8,
+      0.467
+    ],
+    "fichier": "portraits/offenbach.webp"
+  },
+  {
+    "id": "victor-emmanuel",
+    "nom": "Victor-Emmanuel II",
+    "dates": "1820-1878",
+    "commons": "File:VictorEmmanuel2 (3).jpg",
+    "auteur": "Disdéri (photographie)",
+    "date": "vers 1861",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:VictorEmmanuel2_(3).jpg",
+    "cadre_visage": [
+      0.353,
+      0.028,
+      0.627,
+      0.225
+    ],
+    "fichier": "portraits/victor-emmanuel.webp"
+  },
+  {
+    "id": "veuillot",
+    "nom": "Louis Veuillot",
+    "dates": "1813-1883",
+    "commons": "File:Louis Veuillot.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "années 1850",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Louis_Veuillot.jpg",
+    "cadre_visage": [
+      0.301,
+      0.059,
+      0.614,
+      0.338
+    ],
+    "fichier": "portraits/veuillot.webp"
+  },
+  {
+    "id": "cobden",
+    "nom": "Richard Cobden",
+    "dates": "1804-1865",
+    "commons": "File:Richard Cobden by Lowes Cato Dickinson.jpg",
+    "auteur": "Lowes Cato Dickinson",
+    "date": "avant 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Richard_Cobden_by_Lowes_Cato_Dickinson.jpg",
+    "cadre_visage": [
+      0.454,
+      0.155,
+      0.651,
+      0.299
+    ],
+    "fichier": "portraits/cobden.webp"
+  },
+  {
+    "id": "gounod",
+    "nom": "Gounod",
+    "dates": "1818-1893",
+    "commons": "File:Charles Gounod by Nadar in 1870.png",
+    "auteur": "Nadar (photographie)",
+    "date": "1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_Gounod_by_Nadar_in_1870.png",
+    "cadre_visage": [
+      0.298,
+      0.12,
+      0.899,
+      0.644
+    ],
+    "fichier": "portraits/gounod.webp"
+  },
+  {
+    "id": "isaac-pereire",
+    "nom": "Isaac Pereire",
+    "dates": "1806-1880",
+    "commons": "File:Portrait de Isaac Péreire (1806-1880), (banquier), PH55057.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "entre 1860 et 1880",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Isaac_P%C3%A9reire_(1806-1880),_(banquier),_PH55057.jpg",
+    "cadre_visage": [
+      0.352,
+      0.122,
+      0.631,
+      0.327
+    ],
+    "fichier": "portraits/isaac-pereire.webp"
+  },
+  {
+    "id": "eugene-schneider",
+    "nom": "Eugène Schneider",
+    "dates": "1805-1875",
+    "commons": "File:Portrait de Schneider Eugène, (1805-1875), (industriel, homme politique), PH56380.jpg",
+    "auteur": "Mayer frères et Pierson (photographie)",
+    "date": "entre 1860 et 1875",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Schneider_Eug%C3%A8ne,_(1805-1875),_(industriel,_homme_politique),_PH56380.jpg",
+    "cadre_visage": [
+      0.375,
+      0.167,
+      0.608,
+      0.325
+    ],
+    "fichier": "portraits/eugene-schneider.webp"
+  },
+  {
+    "id": "pasteur",
+    "nom": "Pasteur",
+    "dates": "1822-1895",
+    "commons": "File:Portrait de Louis Pasteur (1822-1895), chimiste. PH54901.jpg",
+    "auteur": "Isidore Alphonse Chalot (photographie)",
+    "date": "entre 1860 et 1890",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Louis_Pasteur_(1822-1895),_chimiste._PH54901.jpg",
+    "cadre_visage": [
+      0.279,
+      0.164,
+      0.709,
+      0.488
+    ],
+    "fichier": "portraits/pasteur.webp"
+  },
+  {
+    "id": "berthelot",
+    "nom": "Berthelot",
+    "dates": "1827-1907",
+    "commons": "File:Marcellin Berthelot.jpg",
+    "auteur": "Photographie anonyme",
+    "date": "avant 1907",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Marcellin_Berthelot.jpg",
+    "cadre_visage": [
+      0.389,
+      0.074,
+      0.725,
+      0.368
+    ],
+    "fichier": "portraits/berthelot.webp"
+  },
+  {
+    "id": "duruy",
+    "nom": "Victor Duruy",
+    "dates": "1811-1894",
+    "commons": "File:Victor Duruy 01.png",
+    "auteur": "Eugène Pirou (photographie)",
+    "date": "1883",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Victor_Duruy_01.png",
+    "cadre_visage": [
+      0.254,
+      0.098,
+      0.707,
+      0.447
+    ],
+    "fichier": "portraits/duruy.webp"
+  },
+  {
+    "id": "morny",
+    "nom": "Morny",
+    "dates": "1811-1865",
+    "commons": "File:Duc de Morny atelier Nadar.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Duc_de_Morny_atelier_Nadar.jpg",
+    "cadre_visage": [
+      0.39,
+      0.12,
+      0.65,
+      0.31
+    ],
+    "fichier": "portraits/morny.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "bizet",
+    "nom": "Bizet",
+    "dates": "1838-1875",
+    "commons": "File:Georges bizet.jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "1875",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Georges_bizet.jpg",
+    "cadre_visage": [
+      0.255,
+      0.172,
+      0.614,
+      0.48
+    ],
+    "fichier": "portraits/bizet.webp"
+  },
+  {
+    "id": "juarez",
+    "nom": "Benito Juárez",
+    "dates": "1806-1872",
+    "commons": "File:Benito Juárez - José Escudero y Espronceda.jpg",
+    "auteur": "José Escudero y Espronceda",
+    "date": "1872",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Benito_Ju%C3%A1rez_-_Jos%C3%A9_Escudero_y_Espronceda.jpg",
+    "cadre_visage": [
+      0.374,
+      0.085,
+      0.644,
+      0.332
+    ],
+    "fichier": "portraits/juarez.webp"
+  },
+  {
+    "id": "maximilien",
+    "nom": "Maximilien",
+    "dates": "1832-1867",
+    "commons": "File:Emperador Maximiliano I de Mexico.jpg",
+    "auteur": "Albert Graefle",
+    "date": "1865",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Emperador_Maximiliano_I_de_Mexico.jpg",
+    "cadre_visage": [
+      0.402,
+      0.186,
+      0.525,
+      0.283
+    ],
+    "fichier": "portraits/maximilien.webp"
+  },
+  {
+    "id": "garibaldi",
+    "nom": "Garibaldi",
+    "dates": "1807-1882",
+    "commons": "File:Giuseppe Garibaldi 1861.jpg",
+    "auteur": "Photographie anonyme (carte de visite)",
+    "date": "1861",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Giuseppe_Garibaldi_1861.jpg",
+    "cadre_visage": [
+      0.226,
+      0.057,
+      0.553,
+      0.294
+    ],
+    "fichier": "portraits/garibaldi.webp"
+  },
+  {
+    "id": "rochefort",
+    "nom": "Henri Rochefort",
+    "dates": "1831-1913",
+    "commons": "File:Édouard Manet - Portrait Henri Rochefort2.jpg",
+    "auteur": "Édouard Manet",
+    "date": "1881",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:%C3%89douard_Manet_-_Portrait_Henri_Rochefort2.jpg",
+    "cadre_visage": [
+      0.275,
+      0.11,
+      0.689,
+      0.489
+    ],
+    "fichier": "portraits/rochefort.webp"
+  },
+  {
+    "id": "gambetta",
+    "nom": "Gambetta",
+    "dates": "1838-1882",
+    "commons": "File:Gambetta par Étienne Carjat (photo recadrée).jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "vers 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Gambetta_par_%C3%89tienne_Carjat_(photo_recadr%C3%A9e).jpg",
+    "cadre_visage": [
+      0.302,
+      0.026,
+      0.691,
+      0.401
+    ],
+    "fichier": "portraits/gambetta.webp"
+  },
+  {
+    "id": "eugenie",
+    "nom": "Impératrice Eugénie",
+    "dates": "1826-1920",
+    "commons": "File:Empress Eugénie in Court Dress (after Winterhalter, Compiègne IMP25).jpg",
+    "auteur": "Copie d'après Franz Xaver Winterhalter (original de 1853-1855, perdu)",
+    "date": "entre 1855 et 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Empress_Eug%C3%A9nie_in_Court_Dress_(after_Winterhalter,_Compi%C3%A8gne_IMP25).jpg",
+    "cadre_visage": [
+      0.487,
+      0.082,
+      0.606,
+      0.191
+    ],
+    "fichier": "portraits/eugenie.webp"
+  },
+  {
+    "id": "gramont",
+    "nom": "Duc de Gramont",
+    "dates": "1819-1880",
+    "commons": "File:Antoine Alfred Agénor, 10th duc de Gramont, c. 1855-1865.jpg",
+    "auteur": "Photographie anonyme",
+    "date": "vers 1855-1865",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Antoine_Alfred_Ag%C3%A9nor,_10th_duc_de_Gramont,_c._1855-1865.jpg",
+    "cadre_visage": [
+      0.28,
+      0.2,
+      0.62,
+      0.43
+    ],
+    "fichier": "portraits/gramont.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "baltard",
+    "nom": "Victor Baltard",
+    "dates": "1805-1874",
+    "note": "Seul portrait libre sur Commons : une vignette de 189 × 250 px, trop petite ; rien d'autre d'identifié (2026-10-14)."
+  },
+  {
+    "id": "nadaud",
+    "nom": "Martin Nadaud",
+    "dates": "1815-1898",
+    "note": "Portrait de Commons sous CC BY-SA (refusé pour les portraits) et de 230 px ; rien d'autre de libre (2026-10-14)."
+  },
+  {
+    "id": "larousse",
+    "nom": "Pierre Larousse",
+    "dates": "1817-1875",
+    "note": "Seul portrait libre sur Commons : une vignette de 141 × 200 px, trop petite (2026-10-14)."
+  },
+  {
+    "id": "varlin",
+    "nom": "Eugène Varlin",
+    "dates": "1839-1871",
+    "note": "Photographie de Commons de 171 × 220 px, trop petite ; le dessin de Carnavalet (D.7245, Armand Gautier, 1871) est une silhouette en pied au visage minuscule ; le bois de Vallotton est de 1897 (2026-10-14)."
+  },
+  {
+    "id": "lemel",
+    "nom": "Nathalie Lemel",
+    "dates": "1826-1921",
+    "note": "Seule photographie sur Commons (480 px) : source militante sans notice de musée, date et auteur inconnus ; identité non vérifiable (2026-10-14)."
+  },
+  {
+    "id": "lemonnier",
+    "nom": "Élisa Lemonnier",
+    "dates": "1805-1865",
+    "note": "Seul portrait libre sur Commons : une vignette GIF de 261 × 330 px, trop petite (2026-10-14)."
+  },
+  {
+    "id": "andre-leo",
+    "nom": "André Léo",
+    "dates": "1824-1900",
+    "note": "La photographie de Commons (Andreleo.jpg, image P18 de Wikidata) est signalée par sa propre notice comme ne montrant pas André Léo : écartée ; aucun autre portrait libre (2026-10-14)."
   }
 ]

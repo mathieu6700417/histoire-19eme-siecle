@@ -58,6 +58,14 @@ const fondsMontres = d.diapositives.flatMap((x) => (x.image.apres || x.mosaique 
 ]));
 const modelesFond = [...new Set(fondsMontres.map((x) => x.i.fond!.modele.split('/').pop()!.replace(/-/g, ' ')))];
 const diaposFond = [...new Set(fondsMontres.map((x) => x.n))];
+// Dessins traversants sous les images entières (spec 17, essai 5) : esquisses générées par IA,
+// signalés au cartouche, crédités ici et dans le livre d'images.
+const vignettesMontrees = d.diapositives.flatMap((x) => (x.image.apres || x.mosaique ? [] : [
+  ...(x.image.vignette && x.image.entier ? [{ n: x.n, i: x.image }] : []),
+  ...(x.plans ?? []).filter((p) => p.image.vignette && p.image.entier).map((p) => ({ n: x.n, i: p.image })),
+]));
+const modelesVignette = [...new Set(vignettesMontrees.map((x) => x.i.vignette!.modele.split('/').pop()!.replace(/-/g, ' ')))];
+const diaposVignette = [...new Set(vignettesMontrees.map((x) => x.n))];
 // Ambiances sonores des clips (spec 17) : sons générés, crédités ici et dans le livre d'images seulement.
 const ambiances = videosMontrees.filter((x) => x.i.ambiance);
 const modelesAmbiance = [...new Set(ambiances.map((x) => x.i.ambiance!.modele))];
@@ -216,6 +224,13 @@ const urlLicence = (x: string) => {
         <h2 id="titre-fonds">Fonds prolongés</h2>
         <p>{typographie(`Une image en hauteur ne remplit pas l'écran : le lecteur la montre en entier. Autour d'elle, à la place d'un fond noir, il pose un fond flou qui prolonge la scène (le ciel, le sol, les murs, ou simplement le papier). Ce prolongement n'appartient pas au document : il est calculé par un modèle d'intelligence artificielle à poids ouverts (${modelesFond.join(', ')}) à partir de l'image, puis flouté et assombri pour ne servir que d'ambiance. L'image d'époque, elle, n'est jamais retouchée : c'est toujours le fichier d'origine, net, au centre. ${fondsMontres.length} images de ${diaposFond.length} diapositives sont dans ce cas ; le livre d'images les montre sans leur fond.`)}</p>
         <p>{typographie(`Diapositives concernées : ${diaposFond.join(', ')}.`)}</p>
+      </section>
+    )}
+    {vignettesMontrees.length > 0 && (
+      <section class="musiques portraits-credits" aria-labelledby="titre-vignettes">
+        <h2 id="titre-vignettes">Dessins générés</h2>
+        <p>{typographie(`Sous ${vignettesMontrees.length} images montrées en entier, un dessin à la plume se trace pendant que la voix parle : on n'en voit que les deux bords, de part et d'autre de l'image (un atelier vide, une rue, un quai, une salle, des objets), son centre étant caché par elle. Ces esquisses, sans personnage, ne sont pas des documents d'époque : elles sont inventées par un modèle d'intelligence artificielle à poids ouverts (${modelesVignette.join(', ')}) d'après ce que dit la voix, puis relues une à une (personnage, faux texte, anachronisme, cadre : dessin écarté). Elles évoquent, elles n'attestent rien. Le cartouche le signale (« dessin généré par IA ») tant que le dessin est à l'écran ; le livre d'images les montre en entier sous l'image qu'elles accompagnent ; sur téléphone, faute de marges, il n'y en a pas.`)}</p>
+        <p>{typographie(`Diapositives concernées : ${diaposVignette.join(', ')}.`)}</p>
       </section>
     )}
     {agrandiesMontrees.length > 0 && (

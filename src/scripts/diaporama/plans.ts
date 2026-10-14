@@ -47,6 +47,8 @@ export function installerPlans(lec: Lecteur) {
           fond.style.visibility = 'hidden';
           // Fond prolongé (spec 17, fond.ts) : dans le fond noir, dont il suit l'opacité.
           if (p.fond) fond.append(lec.creerFond(p.fond));
+          // Dessin traversant (spec 17, vignette.ts) : sous l'image du plan, après son fond prolongé.
+          if (p.vig && x.plans?.includes(p)) fond.append(lec.creerVignette(x.plans.indexOf(p)));
           els.unshift(fond);
         }
         // Version colorisée par IA (spec 16, couleur.ts) : au-dessus de l'image, même transformation.

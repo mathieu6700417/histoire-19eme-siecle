@@ -97,7 +97,7 @@ PLANS = {
         'auteur': 'Ambroise Tardieu',
         'date': '1838',
         'credit': 'Plan de Tardieu, 1838',
-        'slugs': ['monarchie-de-juillet', 'deuxieme-republique'],
+        'slugs': ['monarchie-de-juillet', 'deuxieme-republique', 'second-empire'],
         # La ville dans le mur des Fermiers généraux, de Passy à la barrière du Trône (le titre, en
         # haut à droite, et un bout des renvois, en bas à gauche, restent hors les murs).
         'recadrage': [450, 485, 7830, 5350], 'largeur': 2000, 'qualite': 55,

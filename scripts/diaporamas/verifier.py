@@ -2274,6 +2274,119 @@ def controler_fond(d: dict, dossier) -> tuple[list[str], list[str], int, int, in
     return erreurs, avert, n, forts, poids
 
 
+POIDS_VIGNETTE_MAX = 250_000     # octets : encre et tracés d'un dessin traversant (spec 17, essai 5 ; ≈ 100 ko attendus)
+
+
+def controler_vignettes(d: dict, dossier) -> tuple[list[str], list[str], int, int]:
+    """Dessins traversants sous les images entières (spec 17, essai 5, révision du 2026-10-14,
+    `image.vignette`) : seulement sous l'image d'une diapositive ou d'un plan montrée en entier (ni
+    galerie, ni lecture, ni avant / après, ni mosaïque) ; champs, encre (WebP à transparence) et
+    tracés (JSON compact) présents sous les noms attendus, dimensions déclarées et réelles égales,
+    tracés aux proportions de l'encre, `centre` lisible ; **les deux côtés à la fois** : aucune
+    surimpression de coin (portraits, médaillon de lieu, objet, manuscrit) ni citation à l'écran pendant
+    le dessin ; passage `quand` présent dans la narration dite pendant l'image ; plafond de `PLAFOND`
+    dessins par période. Avertit : marge étroite, chiffre clé ou date républicaine pendant le dessin
+    (il s'efface le temps de leur passage), tracé qui finit après l'image, deux dessins dans une
+    diapositive, entrée absente du lot (recette), modèle ou date manquants, poids. Rend (erreurs,
+    avertissements, dessins, poids)."""
+    from pathlib import Path
+    from PIL import Image
+    import fond as fo
+    import vignettes as vg
+    erreurs, avert = [], []
+    try:
+        lot = vg.lire_lot(d['slug'])
+    except SystemExit:
+        lot = {'vignettes': []}
+    au_lot = {vg.cle(v.get('n', '?')) for v in lot.get('vignettes', []) if v.get('jugement') == 'bon'}
+    n = poids = 0
+    par_diapo = Counter()
+    rang = {e['cle']: e['k'] for e in vg.images(d)}   # 0 : image de la diapositive ; 1, 2 : plans
+    for e in fo.images(d):
+        i, v, x = e['image'], e['image'].get('vignette'), e['x']
+        if v is None:
+            continue
+        p = f"{e['cle']:>4}"
+        if not isinstance(v, dict):
+            erreurs.append(f'{p} : « vignette » doit être un objet (fichier, traces, centre, largeur, hauteur, modele)')
+            continue
+        n += 1
+        par_diapo[x['n']] += 1
+        if 'g' in e['cle'] or e['cle'] not in rang:
+            erreurs.append(f'{p} : dessin hors champ sur une image de galerie ou de lecture (diapositives et plans seulement)')
+            continue
+        if x['image'].get('apres') or x.get('mosaique'):
+            erreurs.append(f'{p} : dessin sur un avant / après ou une mosaïque (sans effet dans le lecteur)')
+        if not i.get('entier'):
+            erreurs.append(f"{p} : dessin sous une image qui n'est pas montrée en entier (pas de marges : vignettes.py retirer)")
+        manquants = [k for k in ('fichier', 'traces', 'centre', 'largeur', 'hauteur') if not v.get(k)]
+        if manquants:
+            erreurs.append(f"{p} : dessin : champs manquants ({', '.join(manquants)})")
+        if 'cote' in v:
+            erreurs.append(f'{p} : dessin : champ « cote » du premier pilote (forme abandonnée : refaire en dessin traversant)')
+        if not v.get('modele'):
+            avert.append(f'{p} : dessin sans modèle nommé (crédits)')
+        if not v.get('genere_le'):
+            avert.append(f'{p} : dessin sans date de calcul (genere_le)')
+        base = Path(i.get('fichier') or '').with_suffix('').as_posix() + vg.SUFFIXE
+        for k, ext in (('fichier', 'webp'), ('traces', 'json')):
+            if v.get(k) and v[k] != f'{base}.{ext}':
+                erreurs.append(f"{p} : dessin : {k} « {v[k]} » (attendu : {base}.{ext})")
+        ce = v.get('centre')
+        if not (isinstance(ce, list) and len(ce) == 2 and 0 <= ce[0] < ce[1] <= 1):
+            erreurs.append(f'{p} : dessin : centre illisible {ce} (attendu : [x0, x1], fractions croissantes de la largeur)')
+        if i.get('entier') and vg.marge(i) < vg.MARGE_MIN:
+            avert.append(f"{p} : marge étroite ({vg.marge(i):.2f} hauteur d'image sur la scène la plus étroite) : bords du dessin à peine visibles")
+        k_img = rang[e['cle']]
+        t, pb = vg.depart(x, k_img, v)
+        if pb:
+            erreurs.append(f'{p} : dessin : {pb}')
+        else:
+            inter, eff = vg.surimpressions(x, vg.fenetre_vignette(x, k_img, v))
+            if inter:
+                erreurs.append(f"{p} : à l'écran pendant le dessin : {', '.join(inter)} (elles couvrent une marge ou le bas) : autre diapositive, ou « quand » après elles")
+            if eff:
+                avert.append(f"{p} : {', '.join(eff)} pendant le dessin : il s'efface le temps de leur passage")
+            fin = vg.fenetre(x, k_img)['t'][1]
+            if t + vg.DUREE > fin + 0.5:
+                avert.append(f"{p} : le tracé ({t:.1f} → {t + vg.DUREE:.1f} s) finit après la fenêtre de l'image ({fin:.1f} s) : « quand » plus tôt")
+        if vg.cle(e['cle']) not in au_lot:
+            avert.append(f"{p} : dessin absent du lot {vg.lot_f(d['slug']).relative_to(c.RACINE)} (recette, jugement « bon »)")
+        fe, ft = dossier / (v.get('fichier') or ''), dossier / (v.get('traces') or '')
+        if not v.get('fichier') or not fe.is_file():
+            erreurs.append(f"{p} : encre du dessin absente ({v.get('fichier')})")
+            continue
+        if not v.get('traces') or not ft.is_file():
+            erreurs.append(f"{p} : tracés du dessin absents ({v.get('traces')})")
+            continue
+        o = fe.stat().st_size + ft.stat().st_size
+        poids += o
+        if o > POIDS_VIGNETTE_MAX:
+            avert.append(f'{p} : dessin de {o / 1e3:.0f} ko ({POIDS_VIGNETTE_MAX / 1e3:.0f} ko au plus visés)')
+        with Image.open(fe) as im:
+            taille, fmt, mode = im.size, im.format, im.mode
+        if fmt != 'WEBP' or mode not in ('RGBA', 'LA', 'L'):
+            erreurs.append(f'{p} : encre du dessin au format {fmt} {mode} (WebP à transparence attendu)')
+        if taille != (v.get('largeur'), v.get('hauteur')):
+            erreurs.append(f"{p} : encre {taille[0]}×{taille[1]} ≠ {v.get('largeur')}×{v.get('hauteur')} déclarées")
+        if taille[0] < taille[1]:
+            erreurs.append(f'{p} : encre en hauteur ({taille[0]}×{taille[1]}) : un dessin traversant est au format de l\'écran')
+        try:
+            T = json.loads(ft.read_text())
+            if not (T.get('l') and T.get('h') and isinstance(T.get('t'), list) and T['t']):
+                raise ValueError('champs l, h, t')
+            if abs((T['l'] / T['h']) / (taille[0] / taille[1]) - 1) > 0.02:
+                erreurs.append(f"{p} : tracés {T['l']}×{T['h']} pas aux proportions de l'encre {taille[0]}×{taille[1]} (refaire « tracer »)")
+        except (ValueError, json.JSONDecodeError) as ex:
+            erreurs.append(f'{p} : tracés du dessin illisibles ({ex})')
+    if n > vg.PLAFOND:
+        erreurs.append(f'{n} dessins traversants : {vg.PLAFOND} au plus par période (une trentaine visée)')
+    for nn, k in par_diapo.items():
+        if k > 1:
+            avert.append(f'{nn:>4} : {k} dessins dans la même diapositive (un au plus visé)')
+    return erreurs, avert, n, poids
+
+
 def controler_ambiance(d: dict, dossier) -> tuple[list[str], list[str], int, int]:
     """Ambiances sonores des clips (spec 17, `image.ambiance`) : jamais sans clip `image.video` ; champs,
     fichier présent sous le nom attendu, durée réelle (ffprobe) égale à la durée déclarée et assez
@@ -2409,7 +2522,8 @@ FAMILLES = {
     'B': ('audio', 'ouverture', 'zone utile', 'caméra', 'musique', 'registre musical', 'lectures et épisodes', 'boucles',
           'plans et galeries (zone utile, caméra)'),
     'C': ('surimpressions', 'portraits', 'objets et manuscrits', 'chiffres et dates', 'avant/après et mosaïques',
-          'plans et galeries (instants, durées)', 'mouvement (spec 16)', 'couleur (spec 16)', 'netteté (spec 17)', 'ambiance (spec 17)', 'fond (spec 17)'),
+          'plans et galeries (instants, durées)', 'mouvement (spec 16)', 'couleur (spec 16)', 'netteté (spec 17)', 'ambiance (spec 17)', 'fond (spec 17)',
+          'vignettes (essai 5)'),
 }
 MAX_AVERT = 15   # avertissements affichés par `--etape` (tous avec `--tout`)
 # Messages d'un contrôle d'une étape qui relèvent d'une autre (donnée écrite plus tôt) : (motif, étape, famille).
@@ -2599,7 +2713,7 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         R.plus('C', 'surimpressions', e_sur, a_sur)
         e_por, a_por, n_portraits, n_gens = controler_portraits(d)
         R.plus('C', 'portraits', e_por, a_por)
-    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = n_clips = poids_clips = n_couleurs = poids_couleurs = n_grands = n_grands_ia = poids_grands = n_ambiances = poids_ambiances = n_fonds = n_fonds_forts = poids_fonds = 0
+    n_objets = n_manuscrits = n_deux = n_chiffres = n_dates = n_conf = n_ap = n_mos = n_clips = poids_clips = n_couleurs = poids_couleurs = n_grands = n_grands_ia = poids_grands = n_ambiances = poids_ambiances = n_fonds = n_fonds_forts = poids_fonds = n_vignettes = poids_vignettes = 0
     if fait('A') or fait('C'):
         e_obj, a_obj, n_objets, n_manuscrits, n_deux = controler_objets(d)
         R.plus('C', 'objets et manuscrits', e_obj, a_obj)
@@ -2617,6 +2731,8 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         R.plus('C', 'ambiance (spec 17)', e_amb, a_amb)
         e_fo, a_fo, n_fonds, n_fonds_forts, poids_fonds = controler_fond(d, dossier)
         R.plus('C', 'fond (spec 17)', e_fo, a_fo)
+        e_vg, a_vg, n_vignettes, poids_vignettes = controler_vignettes(d, dossier)
+        R.plus('C', 'vignettes (essai 5)', e_vg, a_vg)
     if fait('A'):
         e_gen, a_gen, duree_generique = controler_generique(d)
         R.plus('A', 'générique', e_gen, a_gen)
@@ -2701,6 +2817,8 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
         print(f'Ambiances sonores (spec 17) : {n_ambiances} ambiance(s) de clip, {poids_ambiances / 1e6:.1f} Mo.')
     if not etape and n_fonds:
         print(f'Fonds prolongés (spec 17) : {n_fonds} fond(s) d\'images entières, dont {n_fonds_forts} en flou fort, {poids_fonds / 1e6:.1f} Mo.')
+    if not etape and n_vignettes:
+        print(f'Dessins traversants (spec 17, essai 5) : {n_vignettes} esquisse(s) générée(s) sous les images entières, {poids_vignettes / 1e6:.2f} Mo.')
     if not etape and n_grands:
         print(f'Netteté (spec 17) : {n_grands} variante(s) grand écran, dont {n_grands_ia} agrandie(s) par IA, {poids_grands / 1e6:.1f} Mo.')
     if not etape:

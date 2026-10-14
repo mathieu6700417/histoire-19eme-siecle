@@ -142,8 +142,10 @@ fabrication : 5 estampes déjà coloriées et 3 ratées. À juger au visionnage.
 
 ## Reste à décider
 
-- Colorisation « couleur seule » : extension aux périodes autres que la 05, après le visionnage du
-  pilote (la transformation en photographie est abandonnée, voir plus haut).
+- ~~Colorisation « couleur seule » : extension aux autres périodes~~ **décidée le 2026-10-14** par
+  l'utilisateur : la colorisation devient une règle pour toutes les périodes, à partir de la 06
+  (faite à la suite de sa production) ; les périodes 01 à 04 sont à rattraper. Méthode, champ et
+  exclusions : ceux du pilote, ci-dessus.
 - Suite de la couche générée (ambiances sonores des clips, fonds prolongés des images entières,
   netteté) : spec 17. L'état de chaque étape pour les prochaines périodes est tenu dans le tableau
   « Couche calculée sur Colab » de la spec 12.

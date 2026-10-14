@@ -1,0 +1,99 @@
+{
+ "slug": "second-empire",
+ "modele": "Wan 2.2 TI2V-5B",
+ "negatif": "text, letters, subtitles, watermark, logo, photorealistic, 3D render, modern clothing, cars, deformed faces, distorted bodies, extra limbs, flickering, fast motion, camera shake, jump cut, morphing, blurry, low quality, oversaturated colours, new characters appearing",
+ "ambiance": {
+  "modele": "EzAudio s3_xl",
+  "graines": [
+   42,
+   43
+  ],
+  "note": "Ambiance sonore de chaque clip (spec 17) : consigne anglaise par diapositive (champ « ambiance » de l'élément), rien que la narration ne dise, ni voix, ni musique, ni son anachronique ; deux tirages de 10 s enchaînés en fondu."
+ },
+ "elements": [
+  {
+   "n": 18,
+   "type": "mouvement",
+   "graine": 6018,
+   "prompt": "The gun smoke already present on the heights drifts slowly to one side, clouds glide very slowly across the sky, the distant lines of soldiers barely move, grass trembles in the wind. Almost static camera, very slow push-in. Keep exactly the look of this 1861 battle painting reproduced in monochrome: same grey tones and soft grain, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Distant cannon fire rolling over an open plateau, low rumble, wind in dry grass"
+  },
+  {
+   "n": 19,
+   "type": "mouvement",
+   "graine": 6019,
+   "prompt": "The smoke hanging over the trenches and the besieged town rolls slowly, clouds drift across the sky, dust lifts lightly from the earthworks. Almost static camera, very slow push-in. Keep exactly the look of this 1859 oil painting: same earthy colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Distant siege cannonade, scattered far-off musket fire, wind over open ground"
+  },
+  {
+   "n": 37,
+   "type": "mouvement",
+   "graine": 6037,
+   "prompt": "The surface of the pond shimmers with small ripples, the foliage of the trees sways gently in a light breeze, reflections tremble on the water. Almost static camera, very slow push-in. Keep exactly the look of this 1858 albumen photograph: same sepia tones and photographic grain, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Water lapping at the edge of a pond, birdsong, leaves rustling in a light breeze"
+  },
+  {
+   "n": 51,
+   "type": "mouvement",
+   "graine": 6051,
+   "prompt": "The waves roll in and break against the stone jetty, the foam rises and falls back, the sea swells slowly, the clouds glide very slowly across the sky. Almost static camera, very slow push-in. Keep exactly the look of this 1857 albumen photograph: same sepia tones and photographic grain, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Surf breaking on a stone jetty, backwash over rocks, steady sea wind"
+  },
+  {
+   "n": 64,
+   "type": "mouvement",
+   "graine": 6064,
+   "prompt": "The battle smoke on the plain drifts slowly, the dark storm clouds advance across the sky, dust floats in the distance; the horsemen in the foreground stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1861 oil painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Distant cannonade over a plain, thunder approaching, gusts of wind"
+  },
+  {
+   "n": 81,
+   "type": "mouvement",
+   "graine": 6081,
+   "prompt": "The water of the river flows slowly under the arches of the viaduct, small ripples and reflections move on its surface, the trees on the bank sway very gently, the sky stays pale. Almost static camera, very slow push-in. Keep exactly the look of this 1861 albumen photograph: same sepia tones and photographic grain, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "A wide river flowing past stone piers, birds, a faint breeze"
+  },
+  {
+   "n": 84,
+   "type": "mouvement",
+   "graine": 6084,
+   "prompt": "The plumes of smoke from the chimneys and blast furnaces rise and drift slowly to one side above the works, the clouds glide slowly; all buildings stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1867 wood engraving: same black engraved lines on white paper, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Distant hum of a large ironworks, muffled steam hammers, wind"
+  },
+  {
+   "n": 115,
+   "type": "mouvement",
+   "graine": 6115,
+   "prompt": "Dust swirls around the galloping horses, the crowd along the rails stirs slightly, the clouds drift across the sky, the grass moves in the wind. Almost static camera, very slow push-in. Keep exactly the look of this 1866 oil painting by Manet: same loose brushwork and colours, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Horses galloping on turf coming closer, the murmur of a large outdoor crowd"
+  },
+  {
+   "n": 119,
+   "type": "mouvement",
+   "graine": 6119,
+   "prompt": "The sea ripples gently in the roadstead, the smoke of the steamships stretches slowly, the clouds pass very slowly; the ships stay in their place and rock almost imperceptibly. Almost static camera, very slow push-in. Keep exactly the look of this 1862 wood engraving: same black engraved lines on white paper, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Calm sea in an anchorage, wind in rigging, seagulls, wood creaking"
+  },
+  {
+   "n": 123,
+   "type": "mouvement",
+   "graine": 6123,
+   "prompt": "The gun smoke over the battlefield drifts slowly, the clouds pass across the sky, the distant masses of troops barely move. Almost static camera, very slow push-in. Keep exactly the look of this 1869 oil painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Distant cannonade, a far-off roll of drums, wind over fields"
+  },
+  {
+   "n": 126,
+   "type": "mouvement",
+   "graine": 6126,
+   "prompt": "The clouds pass slowly over the city, thin smoke rises from a few chimneys, the water of the river shimmers and small boats glide very slowly; the buildings stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1867 hand-coloured lithograph: same soft colours and drawn lines, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "The murmur of a very large outdoor crowd heard from afar, wind, faint river sounds"
+  },
+  {
+   "n": 143,
+   "type": "mouvement",
+   "graine": 6143,
+   "prompt": "The water of the canal shimmers, the smoke of the steamers stretches slowly, the ships advance almost imperceptibly, the sky glows softly. Almost static camera, very slow push-in. Keep exactly the look of this 1869 watercolour: same transparent washes and colours, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Distant steamship whistles, water lapping against a sandy bank, a far-off crowd murmuring"
+  }
+ ]
+}

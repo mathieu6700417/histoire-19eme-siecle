@@ -82,7 +82,21 @@ export interface ImageDiapo {
    *  l'image, à la place du fond noir, avec la même transformation. Crédité sur la page seulement
    *  (ni cartouche ni livre d'images). Posé par `fond.py publier` ; image d'une diapositive ou d'un plan. */
   fond?: FondDiapo;
+  /** Dessin traversant (spec 17, essai 5, révision du 2026-10-14) : esquisse à la plume sans personnage,
+   *  générée par un modèle à poids ouverts d'après la narration, au format de l'écran, posée sous
+   *  l'image entière (`entier`) : on n'en voit que les deux bords, qui se tracent ensemble ; signalée
+   *  au cartouche, créditée sur la page et dans le livre d'images. Posé par `vignettes.py publier` ;
+   *  image d'une diapositive ou d'un plan ; la consigne est dans le lot
+   *  src/data/diaporamas/generation/<slug>-vignettes.json. */
+  vignette?: VignetteDiapo;
 }
+/** Dessin traversant (spec 17, essai 5) : `fichier` = l'encre (« 031-vignette.webp », RVB noir, alpha =
+ *  encre, `largeur` × `hauteur` px, au format de l'écran), `traces` = ses tracés ordonnés
+ *  (« 031-vignette.json », format compact de vignettes_trace.py) ; `centre` : part de la largeur du
+ *  dessin cachée par l'image à son rapprochement final, d'après laquelle il a été composé ; `quand` :
+ *  passage exact de la narration (dans la fenêtre de l'image) où le trait commence (absent : peu après
+ *  l'apparition de l'image) ; `modele` nommé pour les crédits. */
+export interface VignetteDiapo { fichier: string; traces: string; centre: [number, number]; quand?: string; largeur: number; hauteur: number; modele: string; genere_le?: string }
 /** Fond prolongé (spec 17) : fichier « 001-fond.webp », « 004-b-fond.webp » ; `boite` : place de
  *  l'image (sa zone utile) dans le fond, en fractions du fond [x0, y0, x1, y1] ; `flou` : « faible »
  *  (≈ 0,5 % de la largeur de la scène) ou « fort » (≈ 2,5 % : le fond net montre une invention à

@@ -28,6 +28,10 @@ Fait après chaque synthèse de lecture si torch/torchaudio sont là ; `--mots` 
 les audios existants. Sans alignement possible, `audio.mots` reste absent et le lecteur situe
 les mots au prorata des caractères dans leur phrase horodatée.
 
+Voix d'une lecture : champ facultatif `voix` (nom d'une voix Gemini), sinon `voix_genre`
+("femme" : Aoede, DIAPORAMAS_VOIX_LECTURE ; "homme" : Schedar, DIAPORAMAS_VOIX_LECTURE_HOMME),
+sinon la voix de femme par défaut. Changer la voix d'une lecture la fait refaire.
+
 Ne refait que ce qui manque ou dont le texte envoyé a changé (empreinte dans
 .cache/diaporamas/<slug>/voix.json). Clé : GEMINI_API_KEY dans .env.
 
@@ -50,6 +54,13 @@ VOIX = 'Charon'
 # soit l'auteur, nettement distincte du narrateur (décision de l'utilisateur du 2026-10-07).
 # Le champ `auteur.voix` des lectures reste renseigné mais n'est plus utilisé.
 VOIX_LECTURE = os.environ.get('DIAPORAMAS_VOIX_LECTURE') or 'Aoede'
+# Depuis la période 06, une lecture peut choisir sa voix (bilan de la période 05 : Tocqueville et
+# Hugo dits par une voix de femme) : champ `voix` (nom d'une voix Gemini), sinon `voix_genre`
+# ("femme" : VOIX_LECTURE ; "homme" : VOIX_LECTURE_HOMME), sinon VOIX_LECTURE comme avant.
+# Schedar : voix d'homme retenue après les essais du 2026-10-07 (.cache/diaporamas/essais-voix-lecture/ :
+# Algieba, Iapetus, Schedar) et employée par le pilote avant la voix unique ; distincte du narrateur Charon.
+VOIX_LECTURE_HOMME = os.environ.get('DIAPORAMAS_VOIX_LECTURE_HOMME') or 'Schedar'
+GENRES_LECTURE = ('femme', 'homme')
 URL = 'https://generativelanguage.googleapis.com/v1beta/models'
 TAUX = 24_000
 SEUIL_FIDELITE = 0.9
@@ -257,6 +268,16 @@ def empreinte(texte: str, voix: str = VOIX) -> str:
     return hashlib.sha1(f'{MODELE_VOIX}|{voix}|{texte}'.encode()).hexdigest()[:16]
 
 
+def voix_lecture(l: dict) -> str:
+    """Voix d'une lecture : `voix`, puis `voix_genre`, puis la voix de lecture par défaut."""
+    if l.get('voix'):
+        return l['voix']
+    genre = l.get('voix_genre')
+    if genre is not None and genre not in GENRES_LECTURE:
+        raise SystemExit(f"lecture {l.get('id')} : voix_genre « {genre} » inconnu (femme ou homme)")
+    return VOIX_LECTURE_HOMME if genre == 'homme' else VOIX_LECTURE
+
+
 def pistes(d: dict, lexique: dict) -> list[dict]:
     """Tout ce qui se synthétise dans une période : diapositives (clé « 12 »), lectures
     (« lecture:<id> », voix de lecture) et épisodes (« episode:<id> », voix du narrateur).
@@ -267,15 +288,23 @@ def pistes(d: dict, lexique: dict) -> list[dict]:
                        'defaut': c.nom(x['n'], 'm4a'), 'nom': f"{x['n']:3d}"})
     for l in d.get('lectures', []):
         sortie.append({'cle': f"lecture:{l['id']}", 'obj': l, 'texte': c.texte_lu(l),
-                       'voix': VOIX_LECTURE, 'defaut': f"lectures/{l['id']}.m4a",
+                       'voix': voix_lecture(l), 'defaut': f"lectures/{l['id']}.m4a",
                        'nom': f"lecture {l['id']}"})
     for e in d.get('episodes', []):
         sortie.append({'cle': f"episode:{e['id']}", 'obj': e, 'texte': e['narration'], 'voix': VOIX,
                        'defaut': f"episodes/{e['id']}.m4a", 'nom': f"épisode {e['id']}"})
     for q in sortie:
         q['a_lire'] = c.appliquer_lexique(q['texte'], lexique)
-        q['empreinte'] = empreinte(q['a_lire'], q['voix'])
+        # Lectures : l'empreinte reste celle du texte avec la voix par défaut, comme la calcule
+        # verifier.py, et aucune lecture des périodes 01 à 05 n'est à refaire ; la voix qui a dit
+        # le texte est notée dans l'état (`voix`) et comparée à part (`voix_changee`).
+        q['empreinte'] = empreinte(q['a_lire'], VOIX_LECTURE if q['cle'].startswith('lecture:') else q['voix'])
     return sortie
+
+
+def voix_changee(q: dict, etat: dict) -> bool:
+    """Vrai si la lecture a été dite par une autre voix que celle qu'elle demande aujourd'hui."""
+    return q['cle'].startswith('lecture:') and etat.get(q['cle'], {}).get('voix', VOIX_LECTURE) != q['voix']
 
 
 def traiter(q: dict, dossier) -> dict:
@@ -410,10 +439,12 @@ def main() -> int:
         if choisis is not None:
             if q['cle'] in choisis:
                 a_faire.append(q)
-        elif a.force or etat.get(q['cle'], {}).get('empreinte') != q['empreinte'] or not fichier.exists():
+        elif (a.force or etat.get(q['cle'], {}).get('empreinte') != q['empreinte'] or voix_changee(q, etat)
+              or not fichier.exists()):
             a_faire.append(q)
+    lectures = sorted({q['voix'] for q in toutes if q['cle'].startswith('lecture:')} or {VOIX_LECTURE})
     print(f"{len(a_faire)} piste(s) à synthétiser ({MODELE_VOIX} ; narrateur {VOIX}, lecture "
-          f"{VOIX_LECTURE}).")
+          f"{', '.join(lectures)}).")
 
     echecs = []
     debut = time.time()

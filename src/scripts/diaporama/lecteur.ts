@@ -10,6 +10,7 @@ import { installerMouvement } from './mouvement';
 import { installerAmbiance } from './ambiance';
 import { installerCouleur } from './couleur';
 import { installerFond } from './fond';
+import { installerVignette } from './vignette';
 import { installerRendu } from './rendu';
 import { installerFrise } from './frise';
 import { installerTextes } from './textes';
@@ -44,6 +45,7 @@ function monter(racine: HTMLElement) {
   installerAmbiance(lec);
   installerCouleur(lec);
   installerFond(lec);
+  installerVignette(lec);
   installerRendu(lec);
   installerFrise(lec);
   installerTextes(lec);

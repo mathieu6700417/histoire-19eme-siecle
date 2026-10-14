@@ -1121,7 +1121,8 @@ suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan
   contrôle de fidélité) et, en repli, pour la zone utile. Les périodes 01 à 03 gardent leur caméra
   actuelle tant que l'utilisateur ne demande pas de les refaire.
 - **Images mises en mouvement (spec 16, décidé le 2026-10-12, à partir de la période 05 ; les périodes
-  01 à 04 en reçoivent après coup)** : **un clip par diapositive, une dizaine de diapositives par
+  01 à 04 en reçoivent après coup)** : **la diapositive 1 est toujours animée et bruitée** (2026-10-14 : scène
+  animable en largeur choisie dès l'étape 1, ni portrait ni image entière) ; **un clip par diapositive, une dizaine de diapositives par
   période** (décision de l'utilisateur du 2026-10-12 ; plafond 15), choisies dès l'étape 1 parmi les scènes animables (fumées, drapeaux, foule, eau, ciel,
   feu ; jamais un portrait, jamais une inscription lisible, jamais un avant/après ni une image
   entière ; une mosaïque convient, le clip paraît après la plongée), une ou deux par acte, de
@@ -1193,6 +1194,40 @@ Particularités :
   bélière se détourent sans `detourage: "convexe"` ;
 - lieux hors du plan de 1838 (barrière de Fontainebleau, cimetière Montmartre) : pas de médaillon ;
 - captures : une diapositive qui ouvre un acte demande `--attente 9000` (carton), sinon l'instant reste au début.
+
+### Le Second Empire (2026-10-14)
+
+Dosage atteint : 153 diapositives en 10 actes, 257 images (84 plans, 19 images de galerie, 1 d'épisode), 59,7 min ;
+57 lieux, 9 citations, 47 personnes montrées en portrait (46 portraits nouveaux au registre, 7 entrées sans portrait),
+13 objets, 3 manuscrits, 18 chiffres, 3 avant/après (11, 39, 112), 2 mosaïques (10, 21), 141 images entières sur fond
+noir, 15 entrées en scène. Six lectures (*Ultima verba*, le réquisitoire de Pinard, *Le Cygne*, Julie-Victoire Daubié,
+Thiers, *Nana*) et six épisodes : « Si loin, la Crimée » (après 19), « Paris en dix-sept ans » (après 40), « De Magenta
+à Chambéry » (après 67), « L'étoile s'étend » (après 80, le réseau ferré), « Le piège mexicain » (après 122),
+« L'empire en 1870 » (après 143). « Ce qui manquait au récit » (familles, d'après le relevé de la période) :
+campagnes 12 diapositives, vie matérielle 12, arts et lettres 27, femmes 8, sciences et techniques 19, gens
+ordinaires 9, Europe 5 ; **colonies : 11 diapositives** (16, 53, 54, 72 à 76, 113, 114, 134) et l'épisode de l'empire.
+Particularités :
+- **chant introuvable** : *Partant pour la Syrie*, l'air officieux du régime, n'a pas d'enregistrement libre
+  d'origine vérifiable ; la diapositive 15 en montre la partition, et le seul intermède chanté est l'air des bijoux
+  de *Faust* (Nellie Melba, 1910) après 77 ; sept intermèdes instrumentaux, dont quatre galeries nouvelles
+  (Marville, les Refusés, l'Exposition de 1867, les portraits-charges de Gill) ;
+- **images manquantes et substituts**, dits comme tels dans les notices : rien de libre pour le choléra de 1853-1854
+  (22 : une impasse photographiée par Marville), le livret ouvrier (59 : le chantier de l'Opéra), la famine d'Algérie
+  (134 : un village photographié, attribué à Moulin) ; 86 est la photographie récente d'une machine à coudre de
+  musée ; 116 et 146 sont des médailles ; 44 montre la copie de 1963 de *La Danse* en façade ;
+- **lectures** : le réquisitoire de Pinard a été synthétisé par morceaux puis assemblé ; les six lectures sont en
+  voix de femme (`VOIX_LECTURE`), auteurs masculins compris ;
+- **portraits** : dates vérifiées sur Wikidata par `portraits.py --lot --essai` ; l'image P18 de Wikidata n'est pas
+  une garantie (André Léo : la notice Commons dit elle-même que la photographie ne la montre pas ; « M. Sainte-Claire
+  Deville » de l'atelier Nadar, tirage vers 1900, n'est pas le chimiste mort en 1881 : diapositive 24 remplacée) ;
+  sans portrait libre et sûr : Baltard, Nadaud, Larousse, Varlin, Nathalie Lemel, Élisa Lemonnier, André Léo ;
+- **avant/après** : 147 (Napoléon III par Cabanel → photographié vers 1870) est devenue une diapositive à plan, deux
+  images entières : une tête plus haute que la bande visible ne se raccorde pas par un volet ;
+- **cartes d'épisode** : une chronologie posée trop tôt remplace la carte avant que ses derniers éléments
+  n'apparaissent (empire de 1870 : la Cochinchine et le Cambodge n'étaient jamais montrés) ; la carte tient
+  maintenant jusqu'au bilan. L'extension du Sénégal le long du fleuve est dite, non tracée (deux comptoirs). Les six
+  épisodes font 31 à 40 s (45 à 90 visés) ;
+- un chiffre en « et demi » (« deux milliards et demi ») n'est pas lu par `commun.nombre_dit` : retiré (46).
 
 ## Retours du visionnage de la Restauration (2026-10-11)
 
@@ -1492,11 +1527,12 @@ périodes 06 et suivantes :
 
 | Étape | Statut | Règle |
 |---|---|---|
-| Clips « mouvement » (spec 16) | **Règle** | Une dizaine de clips par période, plafond 15 (`generation.py`). |
+| Clips « mouvement » (spec 16) | **Règle** | Une dizaine de clips par période, plafond 15 (`generation.py`). **La diapositive 1** (première image après le carton du premier acte) **est toujours animée et a son ambiance sonore** (décision de l'utilisateur du 2026-10-14, périodes 07 et suivantes) : l'agent A la choisit donc parmi les scènes animables en largeur (jamais un portrait ni une image entière), et elle compte dans la dizaine. |
 | Ambiance sonore des clips (spec 17) | **Règle** | **Tout clip a son ambiance** (EzAudio, −12 dB), consigne écrite dans le lot à côté de celle du clip (`ambiance.py`). Page d'écoute jugée par l'utilisateur avant publication. |
-| Colorisation « couleur seule » (spec 16) | Pilote (période 05) | À appliquer aux autres périodes après le visionnage du pilote. |
+| Colorisation « couleur seule » (spec 16) | **Règle** (décision de l'utilisateur du 2026-10-14, pilote de la période 05) | Toute gravure, lithographie ou photographie monochrome de scène ou de lieu est colorisée (champ et exclusions : spec 16) : FLUX.2 klein 4B, chrominance seule posée sur la luminance de l'original, consigne neutre plus une phrase de couleurs par image, saturation modérée. Relecture de chaque image avant publication (`couleur.py publier`). Jamais sur une image à clip, un avant / après ou une mosaïque. Périodes 01 à 04 et 06 : à rattraper. |
 | Netteté, variantes grand écran (spec 17) | **Révolution seulement** ; suspendue par l'utilisateur le 2026-10-14 | Ne pas l'appliquer aux autres périodes ni retoucher la Révolution sans sa demande. Réglages décidés pour la suite, pas encore mis en œuvre : variante seulement si l'image servie laisse plus de 1,3 px d'écran par px d'image au cadre le plus serré, grand côté plafonné à 2 560 px (spec 17). |
 | Fonds prolongés des images entières (spec 17) | **Règle** (pilote Restauration validé le 2026-10-12 : « c'est nickel avec les fonds ») | Toute image entière a son fond prolongé : FLUX.2 klein 4B en deux passes, flou 0,25 %, luminosité 80 %, flou fort pour les fonds qui inventent (`fond.py`). Relecture de chaque fond avant publication. |
+| Vignettes dessinées sous les images entières (spec 17, essai 5) | **Règle** pour les périodes 06 et suivantes (décision de l'utilisateur du 2026-10-14 : « c'est nickel avec C ») | Une trentaine par période, **dessin traversant** sous l'image entière (on en voit les deux bords), esquisse simple sans personnage, tracé des deux bords en 8 s (révision du 2026-10-14), simple éclaircie du fond, Z-Image-Turbo, signalées « dessin généré par IA » ; relecture de chaque dessin. Détail : spec 17, « Révision après visionnage du pilote ». |
 | Relief / parallaxe | **Refusé deux fois** (2026-10-08, 2026-10-12) | Ne plus le proposer. |
 
 Un pilote validé devient une règle : mettre ce tableau à jour à ce moment-là, et l'appliquer aussi

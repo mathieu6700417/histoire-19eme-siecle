@@ -2402,6 +2402,862 @@
       "periodes": [],
       "statut": "possible",
       "verifie": "2026-10-12"
+    },
+    {
+      "id": "archive:lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest#disc1/02.01. Gounod: Symphony No, 1 In D Major: Allegro Molto.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest",
+        "fichier": "disc1/02.01. Gounod: Symphony No, 1 In D Major: Allegro Molto.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Symphonie nº 1 en ré majeur : Allegro molto",
+      "compositeur": "Charles Gounod",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre du New York City Ballet, direction Robert Irving (disque Kapp, 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest",
+      "duree": 311.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Allegro molto"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest#disc1/02.03. Gounod: Symphony No, 1 In D Major: Scherzo: Non Troppo Presto.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest",
+        "fichier": "disc1/02.03. Gounod: Symphony No, 1 In D Major: Scherzo: Non Troppo Presto.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Symphonie nº 1 en ré majeur : Scherzo",
+      "compositeur": "Charles Gounod",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre du New York City Ballet, direction Robert Irving (disque Kapp, 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest",
+      "duree": 300.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          65.0,
+          "fond, Scherzo"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_verdi-overtures_giuseppe-verdi-the-london-symphony-orch#disc1/02.01. I Vespri Siciliani.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_verdi-overtures_giuseppe-verdi-the-london-symphony-orch",
+        "fichier": "disc1/02.01. I Vespri Siciliani.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Les Vêpres siciliennes, ouverture",
+      "compositeur": "Giuseppe Verdi (compositeur italien, pour l’Opéra de Paris)",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre symphonique de Londres, direction Antal Dorati (disque Mercury, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_verdi-overtures_giuseppe-verdi-the-london-symphony-orch",
+      "duree": 516.9,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          300.0,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit#disc1/01.01. Symphony No. 2 In E Flat: I. Adagio - Allegro agitato.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+        "fichier": "disc1/01.01. Symphony No. 2 In E Flat: I. Adagio - Allegro agitato.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Symphonie nº 2 en mi bémol majeur : Adagio, Allegro agitato",
+      "compositeur": "Charles Gounod",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre des Concerts Lamoureux, direction Igor Markevitch (disque Decca, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+      "duree": 588.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          455.0,
+          "fond, Adagio, Allegro agitato"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation#disc1/01.02. Second Movement: Adagio.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation",
+        "fichier": "disc1/01.02. Second Movement: Adagio.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Symphonie en ut majeur : Adagio",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction Thomas Beecham (enregistrement de 1959, publié en 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation ; première publication vérifiée le 2026-10-14 sur Discogs (master 644563) : Capitol G-7237, États-Unis, 1960 (release 9672864), puis His Master's Voice ALP 1761, Royaume-Uni, 1961 (release 6886238) et Capitol SG 7237, 1961 ; l'item d'Internet Archive est la réédition Seraphim S-60192 (non datée)",
+      "duree": 538.8,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          370.0,
+          "fond, Adagio"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg#4 Meyerbeer - Le pardon de Ploërmel (Georges Sebastian)=.mp3",
+      "source": {
+        "type": "archive",
+        "id": "meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg",
+        "fichier": "4 Meyerbeer - Le pardon de Ploërmel (Georges Sebastian)=.mp3",
+        "publication": "1956"
+      },
+      "oeuvre": "Le Pardon de Ploërmel, ouverture",
+      "compositeur": "Giacomo Meyerbeer (compositeur allemand, à l’Opéra-Comique)",
+      "date_oeuvre": "1859",
+      "interprete": "Orchestre du Théâtre national de l’Opéra de Paris, direction Georges Sebastian (disque de 1956)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg",
+      "duree": 648.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          455.0,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation#disc1/01.01. First Movement: Allegro Vivo.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation",
+        "fichier": "disc1/01.01. First Movement: Allegro Vivo.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Symphonie en ut majeur : Allegro vivo",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction Thomas Beecham (enregistrement de 1959, publié en 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation ; première publication vérifiée le 2026-10-14 sur Discogs (master 644563) : Capitol G-7237, États-Unis, 1960 (release 9672864), puis His Master's Voice ALP 1761, Royaume-Uni, 1961 (release 6886238) et Capitol SG 7237, 1961 ; l'item d'Internet Archive est la réédition Seraphim S-60192 (non datée)",
+      "duree": 464.8,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          312.0,
+          "fond, Allegro vivo"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit#disc1/01.02. Symphony No. 2 In E Flat: II. Larghetto Non Troppo.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+        "fichier": "disc1/01.02. Symphony No. 2 In E Flat: II. Larghetto Non Troppo.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Symphonie nº 2 en mi bémol majeur : Larghetto",
+      "compositeur": "Charles Gounod",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre des Concerts Lamoureux, direction Igor Markevitch (disque Decca, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+      "duree": 579.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          220.0,
+          "fond, Larghetto"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho#disc1/01.02. Beatrice And Benedict.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho",
+        "fichier": "disc1/01.02. Beatrice And Benedict.mp3",
+        "publication": "1961"
+      },
+      "oeuvre": "Béatrice et Bénédict, ouverture",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1862",
+      "interprete": "Orchestre symphonique de Boston, direction Charles Munch (disque RCA Victor, 1961)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1961 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1961, avant 1963) ; https://archive.org/details/lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho",
+      "duree": 434.6,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation#disc1/01.04. Fourth Movement: Allegro Vivace.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation",
+        "fichier": "disc1/01.04. Fourth Movement: Allegro Vivace.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Symphonie en ut majeur : finale, Allegro vivace",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction Thomas Beecham (enregistrement de 1959, publié en 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation ; première publication vérifiée le 2026-10-14 sur Discogs (master 644563) : Capitol G-7237, États-Unis, 1960 (release 9672864), puis His Master's Voice ALP 1761, Royaume-Uni, 1961 (release 6886238) et Capitol SG 7237, 1961 ; l'item d'Internet Archive est la réédition Seraphim S-60192 (non datée)",
+      "duree": 401.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          45.0,
+          "fond, finale, Allegro vivace"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg#2 Meyerbeer - L'africaine (Georges Sebastian)=.mp3",
+      "source": {
+        "type": "archive",
+        "id": "meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg",
+        "fichier": "2 Meyerbeer - L'africaine (Georges Sebastian)=.mp3",
+        "publication": "1956"
+      },
+      "oeuvre": "L’Africaine, pages d’orchestre",
+      "compositeur": "Giacomo Meyerbeer (compositeur allemand, à l’Opéra de Paris)",
+      "date_oeuvre": "1865",
+      "interprete": "Orchestre du Théâtre national de l’Opéra de Paris, direction Georges Sebastian (disque de 1956)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1956 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1956, avant 1963) ; https://archive.org/details/meyerbeer-pages-dorchestre-extraites-dopera-georges-sebastian-dvg",
+      "duree": 809.8,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          390.0,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:roger-desormiere-delibes-coppelia-lm-4501#Roger Desormiere - Delibes Coppelia LM 4501.mp3",
+      "source": {
+        "type": "archive",
+        "id": "roger-desormiere-delibes-coppelia-lm-4501",
+        "fichier": "Roger Desormiere - Delibes Coppelia LM 4501.mp3",
+        "publication": "1950"
+      },
+      "oeuvre": "Coppélia : Prélude et Mazurka",
+      "compositeur": "Léo Delibes",
+      "date_oeuvre": "1870",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Roger Désormière (disque Decca LM 4501, 1950)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1950 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1950, avant 1963) ; https://archive.org/details/roger-desormiere-delibes-coppelia-lm-4501",
+      "duree": 1466.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          285.0,
+          "fond, Prélude et Mazurka"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "commons:File:Saint-Saens - Piano Concerto No. 2 - I. Andante sostenuto - UI.opus",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Saint-Saens - Piano Concerto No. 2 - I. Andante sostenuto - UI.opus"
+      },
+      "oeuvre": "Concerto pour piano nº 2 en sol mineur : Andante sostenuto",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1868",
+      "interprete": "Bogyeong Lee, piano, Orchestre de chambre de l’université de l’Iowa, direction William LaRue Jones (concert de 2019)",
+      "genre": "instrumental",
+      "licence": "CC BY 3.0 (University of Iowa School of Music)",
+      "preuve_date": "licence relevée par musique.py : CC BY 3.0 ; https://commons.wikimedia.org/wiki/File:Saint-Saens_-_Piano_Concerto_No._2_-_I._Andante_sostenuto_-_UI.opus",
+      "duree": 669.0,
+      "structure": [
+        [
+          0.0,
+          200.0,
+          "fond, Andante sostenuto"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest#disc1/02.02. Gounod: Symphony No, 1 In D Major: Allegretto Moderato.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest",
+        "fichier": "disc1/02.02. Gounod: Symphony No, 1 In D Major: Allegretto Moderato.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Symphonie nº 1 en ré majeur : Allegretto moderato",
+      "compositeur": "Charles Gounod",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre du New York City Ballet, direction Robert Irving (disque Kapp, 1960)",
+      "enregistrement": "Kapp, 1960",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest",
+      "duree": 316.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.5,
+          28.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "commons:File:Offenbach - Orpheus in the Underworld - Overture, Can Can section.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Offenbach - Orpheus in the Underworld - Overture, Can Can section.ogg"
+      },
+      "oeuvre": "Orphée aux Enfers",
+      "compositeur": "Jacques Offenbach, ouverture arrangée par Carl Binder (1816-1860)",
+      "date_oeuvre": "1858",
+      "interprete": "Orchestre non précisé (enregistrement Musopen)",
+      "enregistrement": "Musopen",
+      "genre": "instrumental",
+      "licence": "Domaine public (Musopen)",
+      "preuve_date": "licence relevée par musique.py : Public Domain ; https://commons.wikimedia.org/wiki/File:Offenbach_-_Orpheus_in_the_Underworld_-_Overture,_Can_Can_section.ogg",
+      "duree": 106.9,
+      "structure": [
+        [
+          15.2,
+          38.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "commons:File:Gounod - Melba - Ah je ris de me voir si belle (Faust, air des bijoux) - 1910.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Gounod - Melba - Ah je ris de me voir si belle (Faust, air des bijoux) - 1910.ogg"
+      },
+      "oeuvre": "Faust",
+      "compositeur": "Charles Gounod, sur un livret de Jules Barbier et Michel Carré",
+      "date_oeuvre": "1859",
+      "interprete": "Nellie Melba, soprano, avec orchestre",
+      "enregistrement": "Victor, 1910",
+      "genre": "chant",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Gounod_-_Melba_-_Ah_je_ris_de_me_voir_si_belle_(Faust,_air_des_bijoux)_-_1910.ogg",
+      "duree": 174.4,
+      "filtres": "78tours",
+      "structure": [
+        [
+          6.5,
+          31.3,
+          "« Ah ! je ris de me voir si belle en ce miroir, »"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_tannhuser-overture-and-venusberg-music_richard-wagner-philharmonia-orchestra-paul#disc1/01.01. Tannhäuser - Overture And Venusberg Music (Paris Version).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_tannhuser-overture-and-venusberg-music_richard-wagner-philharmonia-orchestra-paul",
+        "fichier": "disc1/01.01. Tannhäuser - Overture And Venusberg Music (Paris Version).mp3",
+        "publication": "1961"
+      },
+      "oeuvre": "Tannhäuser",
+      "compositeur": "Richard Wagner (compositeur allemand ; version de Paris)",
+      "date_oeuvre": "1845, version de Paris en 1861",
+      "interprete": "Orchestre Philharmonia, direction Paul Kletzki (disque Angel, 1961)",
+      "enregistrement": "Angel, 1961",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1961 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1961, avant 1963) ; https://archive.org/details/lp_tannhuser-overture-and-venusberg-music_richard-wagner-philharmonia-orchestra-paul",
+      "duree": 1412.8,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          148.0,
+          172.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation#disc1/01.03. Third Movement: Allegro Vivace.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation",
+        "fichier": "disc1/01.03. Third Movement: Allegro Vivace.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Symphonie en ut majeur : Allegro vivace (scherzo)",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction Thomas Beecham (enregistrement de 1959, publié en 1960)",
+      "enregistrement": "enregistré en 1959, publié en 1960",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_bizet-symphony-in-c-lalo-symphony-in-g-m_georges-bizet-douard-lalo-orchestre-nation ; première publication vérifiée le 2026-10-14 sur Discogs (master 644563) : Capitol G-7237, États-Unis, 1960 (release 9672864), puis His Master's Voice ALP 1761, Royaume-Uni, 1961 (release 6886238) et Capitol SG 7237, 1961 ; l'item d'Internet Archive est la réédition Seraphim S-60192 (non datée)",
+      "duree": 290.9,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          3.5,
+          28.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho#disc1/02.02. Royal Hunt And Storm (From \"The Trojans\").mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho",
+        "fichier": "disc1/02.02. Royal Hunt And Storm (From \"The Trojans\").mp3",
+        "publication": "1961"
+      },
+      "oeuvre": "Troyens",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1863",
+      "interprete": "Orchestre symphonique de Boston, direction Charles Munch (disque RCA Victor, 1961)",
+      "enregistrement": "RCA Victor, 1961",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1961 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1961, avant 1963) ; https://archive.org/details/lp_berlioz-overtures_hector-berlioz-charles-munch-boston-sympho",
+      "duree": 654.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          462.0,
+          486.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_favorite-overtures-by-offenbach-and-aub_jacques-offenbach-daniel-francois-espri#disc1/01.01. La Belle Helene.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_favorite-overtures-by-offenbach-and-aub_jacques-offenbach-daniel-francois-espri",
+        "fichier": "disc1/01.01. La Belle Helene.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "La Belle Hélène, ouverture",
+      "compositeur": "Jacques Offenbach",
+      "date_oeuvre": "1864",
+      "interprete": "Orchestre symphonique de Détroit, direction Paul Paray (disque Mercury, 1960)",
+      "enregistrement": "Mercury, 1960",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_favorite-overtures-by-offenbach-and-aub_jacques-offenbach-daniel-francois-espri",
+      "duree": 460.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          430.0,
+          456.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_overtures-in-hi-fi_albert-wolff-orchestre-de-la-socit-des-con#disc1/01.02. Le Domino Noir.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_overtures-in-hi-fi_albert-wolff-orchestre-de-la-socit-des-con",
+        "fichier": "disc1/01.02. Le Domino Noir.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Le Domino noir, ouverture",
+      "compositeur": "Daniel-François-Esprit Auber",
+      "date_oeuvre": "1837",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff (disque London, 1958)",
+      "enregistrement": "London, 1958",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_overtures-in-hi-fi_albert-wolff-orchestre-de-la-socit-des-con",
+      "duree": 498.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          210.0,
+          234.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "06-second-empire"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "commons:File:Partant pour la Syrie.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Partant pour la Syrie.ogg"
+      },
+      "oeuvre": "Partant pour la Syrie",
+      "compositeur": "",
+      "interprete": "non identifié",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "origine nationalanthems.info : interprètes non identifiés, rendu vraisemblablement synthétique, licence CC BY-SA posée par le téléverseur sans preuve",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "commons:File:Partant pour la Syrie1.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Partant pour la Syrie1.ogg"
+      },
+      "oeuvre": "Partant pour la Syrie",
+      "compositeur": "",
+      "interprete": "MIDI",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "rendu MIDI (description du fichier)",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_tannhuser-overture-and-venusberg-music-ma_richard-wagner-charles-munch-boston-sympho#disc1/01.01. Tannhäuser: Overture And Venusberg Music (Paris Version).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_tannhuser-overture-and-venusberg-music-ma_richard-wagner-charles-munch-boston-sympho",
+        "fichier": "disc1/01.01. Tannhäuser: Overture And Venusberg Music (Paris Version).mp3"
+      },
+      "oeuvre": "Tannhäuser, ouverture et Venusberg (version de Paris)",
+      "compositeur": "",
+      "interprete": "Orchestre symphonique de Boston, direction Charles Munch",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "pressage RCA Victrola de 1964 (première édition de 1957 non vérifiée sur l'item)",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_bizet-suite-for-orchestra-from-carmen_georges-bizet-charles-gounod-vladimir-g#disc1/02.02. Faust Ballet Music: Adagio.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-suite-for-orchestra-from-carmen_georges-bizet-charles-gounod-vladimir-g",
+        "fichier": "disc1/02.02. Faust Ballet Music: Adagio.mp3"
+      },
+      "oeuvre": "Faust, musique de ballet",
+      "compositeur": "",
+      "interprete": "Orchestre symphonique de Saint Louis, direction Vladimir Golschmann",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "disque Capitol daté de 1965 sur l'item",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_heroic-overtures_gioacchino-rossini-jacques-offenbach-georg#disc1/01.02. Overture to \"Orpheus in the Underworld.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_heroic-overtures_gioacchino-rossini-jacques-offenbach-georg",
+        "fichier": "disc1/01.02. Overture to \"Orpheus in the Underworld.mp3"
+      },
+      "oeuvre": "Orphée aux Enfers, ouverture",
+      "compositeur": "",
+      "interprete": "Orchestre symphonique de Détroit, direction Paul Paray",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "disque Mercury daté de 1963 (pas avant 1963)",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_la-grande-duchesse-de-gerolstein_jacques-offenbach-eugenia-zareska-gisel#disc1/01.01. La Grande Duchesse De Gerolstein: Overture; Act I (Beginning).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_la-grande-duchesse-de-gerolstein_jacques-offenbach-eugenia-zareska-gisel",
+        "fichier": "disc1/01.01. La Grande Duchesse De Gerolstein: Overture; Act I (Beginning).mp3"
+      },
+      "oeuvre": "La Grande-Duchesse de Gérolstein",
+      "compositeur": "",
+      "interprete": "Orchestre des Concerts Pasdeloup, direction René Leibowitz",
+      "structure": [],
+      "periodes": [],
+      "statut": "ecarte",
+      "motif": "année de publication absente de l'item (Urania, direction René Leibowitz, vers 1958 : à établir avant emploi)",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_favorite-overtures-by-offenbach-and-aub_jacques-offenbach-daniel-francois-espri#disc1/01.02. Orpheus In The Underworld.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_favorite-overtures-by-offenbach-and-aub_jacques-offenbach-daniel-francois-espri",
+        "fichier": "disc1/01.02. Orpheus In The Underworld.mp3"
+      },
+      "oeuvre": "Orphée aux Enfers, ouverture (1858, arr. Carl Binder 1860 ; disque Mercury, 1960)",
+      "compositeur": "Jacques Offenbach",
+      "interprete": "Orchestre symphonique de Détroit, direction Paul Paray",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_offenbach-overtures_los-angeles-philharmonic-orchestra-alfr#disc1/01.01. Overture To La Belle Helene.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_offenbach-overtures_los-angeles-philharmonic-orchestra-alfr",
+        "fichier": "disc1/01.01. Overture To La Belle Helene.mp3"
+      },
+      "oeuvre": "La Belle Hélène, ouverture (1864 ; disque Decca, 1954 ; même disque : Orphée aux Enfers, ouverture)",
+      "compositeur": "Jacques Offenbach",
+      "interprete": "Orchestre philharmonique de Los Angeles, direction Alfred Wallenstein",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest#disc1/02.04. Gounod: Symphony No, 1 In D Major: Finale: Adagio, Allegro Vivace.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-symphony-in-c-gounod-symphony-no-1-i_robert-irving-new-york-city-ballet-orchest",
+        "fichier": "disc1/02.04. Gounod: Symphony No, 1 In D Major: Finale: Adagio, Allegro Vivace.mp3"
+      },
+      "oeuvre": "Symphonie nº 1, finale (1855 ; disque Kapp, 1960 ; même disque : Symphonie en ut de Bizet, quatre mouvements)",
+      "compositeur": "Charles Gounod",
+      "interprete": "Orchestre du New York City Ballet, direction Robert Irving",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit#disc1/02.01. Symphony No. 2 In E Flat: III. Scherzo - Allegro molto.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+        "fichier": "disc1/02.01. Symphony No. 2 In E Flat: III. Scherzo - Allegro molto.mp3"
+      },
+      "oeuvre": "Symphonie nº 2, scherzo et finale (1855 ; disque Decca, 1958 ; même disque : Jeux d'enfants de Bizet, 1871)",
+      "compositeur": "Charles Gounod",
+      "interprete": "Orchestre des Concerts Lamoureux, direction Igor Markevitch",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:20210610-marches-francaises-paul-paray##(7) Les Troyens à Carthage, Marche troyenne (Berlioz).mp3",
+      "source": {
+        "type": "archive",
+        "id": "20210610-marches-francaises-paul-paray",
+        "fichier": "#(7) Les Troyens à Carthage, Marche troyenne (Berlioz).mp3"
+      },
+      "oeuvre": "Les Troyens, Marche troyenne (1863 ; disque Mercury, 1960)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "Orchestre symphonique de Détroit, direction Paul Paray",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_verdi-overtures_giuseppe-verdi-the-london-symphony-orch#disc1/01.01. La Forza Del Destino.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_verdi-overtures_giuseppe-verdi-the-london-symphony-orch",
+        "fichier": "disc1/01.01. La Forza Del Destino.mp3"
+      },
+      "oeuvre": "La Force du destin, ouverture (1862 ; disque Mercury, 1958)",
+      "compositeur": "Giuseppe Verdi",
+      "interprete": "Orchestre symphonique de Londres, direction Antal Dorati",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "commons:File:Camille Saint-Saens - introduction et rondo capriccioso, op. 28.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Camille Saint-Saens - introduction et rondo capriccioso, op. 28.ogg"
+      },
+      "oeuvre": "Introduction et Rondo capriccioso (1863 ; Musopen, domaine public)",
+      "compositeur": "Camille Saint-Saëns",
+      "interprete": "Skidmore College Orchestra",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "commons:File:Berlioz Beecham Royal Hunt And Storm.flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Berlioz Beecham Royal Hunt And Storm.flac"
+      },
+      "oeuvre": "Les Troyens, Chasse royale et orage, extrait de 30 s (enregistrement de 1947)",
+      "compositeur": "Hector Berlioz",
+      "interprete": "Royal Philharmonic Orchestra, direction Thomas Beecham",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
+    },
+    {
+      "id": "commons:File:Overture to Tannhauser - U.S. Marine Band.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Overture to Tannhauser - U.S. Marine Band.ogg"
+      },
+      "oeuvre": "Tannhäuser, ouverture, transcription pour harmonie (arrangeur non identifié ; domaine public, œuvre du gouvernement américain, 1995)",
+      "compositeur": "Richard Wagner",
+      "interprete": "United States Marine Band",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-14"
     }
   ],
   "introuvables": [
@@ -2512,6 +3368,18 @@
       "compositeur": "Alphonse Varney (musique), Alexandre Dumas et Auguste Maquet (paroles)",
       "cherche": "2026-10-12",
       "ou": "cherché le 2026-10-12 : Commons (Girondins, Mourir pour la patrie) : un seul fichier d'origine invérifiable ; Internet Archive (title:girondins, « mourir pour la patrie », girondins collection:78rpm, varney) : un enregistrement moderne non libre ; remplacé par La Marseillaise (Thill), couplet « Amour sacré de la patrie »"
+    },
+    {
+      "oeuvre": "La Vie parisienne (ouverture ou extraits)",
+      "compositeur": "Jacques Offenbach",
+      "cherche": "2026-10-14",
+      "ou": "cherché le 2026-10-14 : Internet Archive, item lp_la-vie-parisienne-excerpts_marcel-cariven-rene-doria-dario-moreno-cho (Epic, 1957) dont la notice ne répond pas ; rien d'autre avant 1963"
+    },
+    {
+      "oeuvre": "Partant pour la Syrie (enregistrement réel)",
+      "compositeur": "Hortense de Beauharnais",
+      "cherche": "2026-10-14",
+      "ou": "cherché de nouveau le 2026-10-14 : Commons (deux fichiers, l'un MIDI, l'autre d'origine nationalanthems.info, écartés) ; Internet Archive (\"partant pour la syrie\") : partitions, vidéos YouTube, un 78 tours russe NC-ND"
     }
   ]
 }

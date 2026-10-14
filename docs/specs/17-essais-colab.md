@@ -192,6 +192,78 @@ Exception : la Girafe (Restauration, 76), ratée en deux passes, garde un fond �
   puis générés en seconde passe (« c'est bien, ça donne bien »).
 - Flous forts de la Restauration : 3 à la première relecture (flou 0,5 %), 9 à la relecture à 0,25 %.
 
+## Vignettes dessinées dans la marge des images entières (essai 5, 2026-10-14)
+
+Demande de l'utilisateur, après le Second Empire : « de petits dessins qui viennent compléter les
+portraits ou les images pas grandes ». Cinq familles lui ont été présentées (signature autographe,
+attributs gravés, ornements de livre, dessin au trait tiré d'un document, dessin généré) ; il a
+choisi **le dessin généré**, en connaissance de cause (il invente). Décisions, prises une par une :
+
+| Sujet | Décision |
+|---|---|
+| Contenu | **Petites scènes** (vignette narrative : un atelier, un quai, une rue, un chantier) en rapport avec ce que dit la voix pendant l'image ; ni portrait d'une personne réelle reconnaissable, ni texte, ni drapeau ou insigne précis. Préféré aux objets (recommandés) et aux ornements. |
+| Style | Dessin à la plume, une seule encre, dans le goût des vignettes de livres illustrés du XIXe siècle ; monochrome (charte). |
+| Animation | **Le trait se trace** : contours d'abord, puis hachures, en 3 à 5 s, comme une main qui dessine ; calculé à partir de l'image générée (vectorisation), sans second modèle. |
+| Place | **Marge latérale d'une image entière** (portrait ou petite image), sur le fond prolongé assombri ; une vignette par diapositive au plus ; rien sur téléphone (pas de marge). |
+| Essai | **Planche d'essai d'abord** : huit vignettes pour huit images entières du Second Empire, deux modèles à poids ouverts comparés, page de jugement qui joue l'animation du trait dans une maquette de la marge (deux variantes de rendu : encre sombre sur une petite carte de papier, trait clair posé directement sur le fond). Rien dans le lecteur, les données ni `public/`. |
+| Règle des documents | Écart assumé à la règle « documents d'époque » (spec 16 : le généré doit dériver d'un document) : si l'essai est retenu, la vignette sera signalée (« dessin généré par IA ») et plafonnée par période ; à décider après l'essai. |
+| Calcul | Colab par la CLI, une seule session, arrêtée à la fin ; 0 $ Gemini ; journal `docs/journal/essais-colab.jsonl`. |
+
+### Verdict et règles d'intégration (2026-10-14)
+
+Deux tours de planche (le second : format en hauteur au rapport de la marge, un à trois personnages,
+sans cadre ni bordure, une ou deux marges, halo ou éclaircie). Verdict de l'utilisateur : « c'est pas
+mal du tout ». Décisions :
+
+| Sujet | Décision |
+|---|---|
+| Statut | **Règle pour les périodes 06 et suivantes** depuis le 2026-10-14, dans la forme de la révision ci-dessous (dessin traversant) ; tableau « Couche calculée sur Colab » de la spec 12. |
+| Marges | **Une seule marge par image, le côté alternant** d'une vignette à l'autre (« un des deux côtés, qui changent, ça suffit ») ; la version à deux marges est écartée. |
+| Rendu | **Simple éclaircie** du fond prolongé sous le dessin, encre sombre, sans carte ni halo (préférée au halo crème recommandé). |
+| Dose | **Une trentaine par période** (environ une image entière sur cinq), là où la voix décrit une scène dessinable ; plafond 35. |
+| Modèle | Z-Image-Turbo (Apache 2.0) par défaut : se fond naturellement, sans rectangle ; FLUX.2 klein dessine en rectangle. |
+| Format | Au rapport de la marge mesurée (1:2 à 3:5), ~72 % de la hauteur de l'écran ; premier plan en bas, un à trois personnages ; ni personne réelle reconnaissable, ni texte, ni drapeau ou insigne précis. |
+| Animation | Le trait se trace (contours puis hachures, ~4 s), calé sur l'horloge de la voix (figé en pause, recalé après un saut) ; mouvement réduit : dessin complet sans animation ; rien sur téléphone. |
+| Relecture | Chaque dessin relu avant publication : faux texte, anachronisme (immeuble moderne, uniforme d'une autre époque), scène confuse → nouveau tirage ou écart. |
+| Signalement | « dessin généré par IA » au cartouche tant que la vignette est à l'écran, crédits et livre d'images (comme les clips) ; écart assumé à la règle des documents d'époque (spec 16). |
+
+### Révision après visionnage du pilote : dessins traversants, simples, sans personnage (2026-10-14)
+
+Retours de l'utilisateur sur les 29 vignettes du pilote : « des dessins bien plus simples, beaucoup
+moins de traits, qui se dessinent plus lentement », puis « le même dessin en dessous : on voit une
+partie à gauche et une partie à droite », et « pas de personne dans les dessins ». Essai sur quatre
+diapositives (31, 87, 97, 92 ; `.cache/diaporamas/vignettes/second-empire/essai-simple/`) : dessins
+actuels simplifiés (écartés : hachures en vermicelles), esquisse dans une marge (B), dessin
+traversant (C) ; Z-Image-Turbo et Qwen-Image (inexploitable en 4 bits sur A100 40 Go : grain).
+Verdict : **« c'est nickel avec C »**. Ces décisions remplacent celles du tableau précédent sur la
+marge, le contenu, le rendu du trait et la durée :
+
+| Sujet | Décision |
+|---|---|
+| Composition | **Un seul dessin traversant** au format de l'écran, posé sous l'image entière : on n'en voit que les deux bords, dans les marges ; la consigne met un objet ou un décor sur chaque bord et laisse le centre vide (part de marge écrite dans la consigne). |
+| Contenu | **Aucun personnage** (ni silhouette, ni foule, ni main) : lieux, objets, décors seuls ; ni texte, ni cadre, ni drapeau ou insigne précis. |
+| Style | **Esquisse simple** : peu de traits nets, sans hachures ni ombres, beaucoup de blanc. |
+| Tracé | Les deux bords se dessinent **ensemble**, une plume par bord, contours d'abord, vitesse constante, **8 s**. |
+| Rendu | Simple éclaircie du fond prolongé sous chaque bord, encre sombre (inchangé). |
+| Modèle | Z-Image-Turbo (inchangé). |
+| Dose, signalement, relecture, téléphone, mouvement réduit | Inchangés ; relecture : personnage, cadre, faux texte, anachronisme, centre chargé. |
+
+### État (2026-10-14)
+
+**Forme « dessin traversant » intégrée** (règle pour les périodes 06 et suivantes), non commitée, à
+visionner par l'utilisateur. Chaîne `scripts/diaporamas/vignettes.py` (`preparer | lancer | tracer |
+planche | publier | retirer | lister`), calcul `scripts/colab/vignettes.py`, trait
+`vignettes_trace.py --plein` ; lot `src/data/diaporamas/generation/second-empire-vignettes.json` ;
+lecteur `src/scripts/diaporama/vignette.ts` ; famille « vignettes (essai 5) » de `verifier.py` (les deux
+côtés à la fois). Période 06 : **29 dessins publiés** (1, 2, 5, 15b, 16, 24, 30, 31, 40, 47, 49b, 57, 58,
+59, 65, 68, 76, 78b, 82b, 84b, 87, 92, 103, 105, 108, 110, 122b, 145, 146 ; 31, 87, 92 repris de l'essai),
+1,3 Mo ; 3 écartés (50b : poupée lue comme une enfant ; 100 : presse dessinée en machine à écrire ;
+128 : bicyclette à chaîne) ; les 29 vignettes du premier pilote (en marge, avec personnages) retirées.
+Calcul : une session L4 (A100 indisponible), 87 dessins, 1,48 unité ; 0 $ Gemini. Ajouts vus aux
+captures : sur une scène plus étroite que le dessin (grand écran fenêtré, plein écran), le lecteur le
+réduit à la largeur de la scène plutôt que de rogner ses bords ; un chiffre clé, une date républicaine
+ou une surimpression de coin l'efface le temps de leur passage.
+
 ## Reste à décider
 
 - Ambiances sonores : extension à des diapositives sans clip, dose.

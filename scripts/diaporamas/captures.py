@@ -28,7 +28,8 @@ Options : --appareil ordinateur|telephone|les-deux (1280×760 ; 390×844), --dis
 `dist` par défaut), --sortie (dossier des PNG), --planche (assemble planche.png), --comparer DOSSIER
 (compare pixel à pixel aux PNG de même nom, code de sortie 1 en cas d'écart), --attente (ms
 d'horloge factice avant de poser l'instant ; 2500 par défaut : entrée de l'image finie, frise du
-bas encore affichée). Serveur statique intégré sur un port libre (`astro preview` refuse une
+bas encore affichée ; 9000 au moins, d'office, pour une diapositive qui ouvre un acte : ouverture
+du carton et recul de la caméra finis). Serveur statique intégré sur un port libre (`astro preview` refuse une
 seconde instance) ; Chromium de Playwright trouvé automatiquement.
 """
 from __future__ import annotations
@@ -48,6 +49,7 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parents[2]
 REDUIT = False
 APPAREILS = {'ordinateur': (1280, 760, 'o'), 'telephone': (390, 844, 't')}
+ATTENTE_CARTON = 9000   # ms d'horloge factice au moins après le carton d'une diapositive qui ouvre un acte
 
 # Faux moteur audio : play/pause/currentTime/paused/ended, remis à zéro quand la source change.
 # Il lit performance.now, que page.clock rend factice : l'audio avance avec l'horloge factice.
@@ -160,10 +162,13 @@ def capturer(navigateur, url: str, appareil: str, item: str, attente: int, chemi
         pg.clock.run_for(500)
     else:
         pg.evaluate(f"() => {r}.__aller({n})")
-        if pg.evaluate(f"() => {r}.querySelector('.lecteur').classList.contains('en-carton')"):
+        carton = pg.evaluate(f"() => {r}.querySelector('.lecteur').classList.contains('en-carton')")
+        if carton:
             pg.evaluate(f"() => {r}.querySelector('.lecteur__carton').click()")
         pg.wait_for_timeout(400)
-        pg.clock.run_for(attente)
+        # Diapositive qui ouvre un acte : le carton passé joue encore son ouverture (3,5 s), puis la
+        # caméra recule (5 s) ; sans cette attente, la photo restait sur le carton (bilan de la période 05).
+        pg.clock.run_for(max(attente, ATTENTE_CARTON) if carton else attente)
         pg.evaluate(f"() => {{ const a = {r}.querySelector('.lecteur__audio'); a.currentTime = {t}; a.pause(); }}")
         pg.clock.run_for(500)
     pg.wait_for_timeout(300)

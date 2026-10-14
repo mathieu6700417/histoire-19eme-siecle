@@ -49,6 +49,19 @@ Décisions :
   mosaïque, ni clip, ni première image d'un acte) demande en plus le champ `entree` (consigne
   d'entree.consigne_banc, avec la règle de fenêtre) ; `appliquer` le pose avec la caméra s'il passe
   entree.depuis_camera. Contrôle après build : `entree.py plans` puis `entree.py etapes`.
+- Vue réelle (bilan de la période 05) : la tâche dit ce que l'écran montrera pour un cadre de cette
+  image (hauteur maximale utile, bande, coupe par le haut, haut repoussé sous le cartouche, zoom
+  lent de 12 %), avec des exemples calculés par camera.vue_reelle et camera.vue_zoomee.
+- Images entières : avec --toutes ou --statiques, pas de tâche pour une image qui est ou passera en
+  image entière (`image.entier`, ou règle de `camera.py --entiers` : `camera.entier_propose`) ; leur
+  caméra n'est pas jouée, `appliquer` pose à celles qui n'en ont pas une étape sur la zone utile
+  (exigée par verifier.py). --avec-entieres garde ces tâches (leur dernier cadre sert alors de
+  `entier_vers`) ; --n les garde toujours.
+- Réponse « image entière » : pour un groupe de visages serrés qu'aucune vue ne montre sans couper
+  une tête, la tâche admet `{"entier": true, "vers": [x0, y0, x1, y1] ou null, "raison": "…"}` au lieu
+  des étapes ; `appliquer` pose alors `entier`, `entier_manuel`, `entier_vers` et `entier_zoom` comme
+  la correction à la main du README (« Images entières sur fond noir »). Un cadre qui ne montre pas
+  le sujet (détail de col, bande sans visage, marge) est pire qu'un repli.
 - Lots d'environ 15 tâches (--lot) dès qu'il y en a plus, ou avec --statiques / --toutes : un sous-agent par lot.
 - Minutage mot à mot : les narrations n'ont que `audio.phrases` (pas d'alignement par mot) ; la
   tâche donne donc l'instant de chaque mot tel que la chaîne le calcule (prorata des caractères
@@ -104,6 +117,11 @@ FORMAT = """\
 # réponse porte en plus le champ `entree`, posé par `appliquer` s'il passe les contrôles d'entree.py.
 FORMAT_ENTREE = FORMAT[:-1] + """,
  "entree": {"cadres": [[x0, y0, x1, y1]], "duree": 5, "intention": "le mouvement, en une phrase"}}"""
+
+
+# Réponse « image entière » (groupe de visages serrés qu'aucune vue ne montre sans couper une tête).
+FORMAT_ENTIER = '{"entier": true, "vers": [x0, y0, x1, y1], "raison": "pourquoi aucune vue ne convient, en une phrase"}'
+CLES_ENTIER = ('entier', 'entier_vers', 'entier_zoom', 'entier_manuel')
 
 
 # --- Sans effet de bord -----------------------------------------------------------------------
@@ -210,6 +228,126 @@ def statique(v: dict, d: dict, toutes: bool = False) -> bool:
     return toutes or not v['image'].get('camera') or cam.tenue_max(v) > cam.TENUE_MAX
 
 
+def hauteur_max(x: dict, L: int, H: int) -> float:
+    """Hauteur maximale utile d'une vue (fraction de la hauteur de l'image), comme camera.vue_reelle."""
+    u = cam.utile_de(x)
+    return min((u[2] - u[0]) * L / cam.RATIO_VUE, (u[3] - u[1]) * H / (1 + cam.BANDE_HAUT + cam.BANDE_BAS)) / H
+
+
+def passe_entiere(slug: str, x: dict) -> str | None:
+    """Raison pour laquelle la vue est ou passera en image entière (`camera.py --entiers`), sinon None."""
+    im = x['image']
+    if im.get('entier_manuel'):
+        return 'image entière (réglage manuel)' if im.get('entier') else None
+    if im.get('entier'):
+        return 'image entière'
+    r = cam.entier_propose(slug, x) if im.get('largeur') else None
+    return r['raison'] if r else None
+
+
+def _dedans(k: list[float], v: list[float]) -> bool:
+    i = max(0, min(k[2], v[2]) - max(k[0], v[0])) * max(0, min(k[3], v[3]) - max(k[1], v[1]))
+    return i >= cam.FACE_DEDANS * (k[2] - k[0]) * (k[3] - k[1])
+
+
+def groupe_serre(x: dict, L: int, H: int, faces: list) -> tuple[int, int] | None:
+    """Groupe de visages serrés : (visages nets, nombre qu'une vue montre au plus sans en couper aucun,
+    au début de la tenue et au bout du zoom lent) quand aucune vue n'en montre la moitié, ou plus d'un ;
+    sinon None (personne seule, moins de deux visages nets, groupe montrable). Balayage de la zone
+    utile à trois hauteurs de vue."""
+    nets = [k for k in faces if k[3] - k[1] >= cam.FACE_ENTIER and (k[2] - k[0]) <= 3 * (k[3] - k[1])]
+    if len(nets) < 2 or cam.personne_seule(faces, x) is not None:
+        return None
+    u, hmax, k = cam.utile_de(x), hauteur_max(x, L, H), cam.RATIO_VUE * H / L
+    pas, mieux = 24, 0
+    for part in (1.0, 0.8, 0.6):
+        vh = hmax * part
+        vw = vh * k
+        if vw * L < cam.MIN_FRACTION * max(L, H) and part < 1:
+            continue
+        for i in range(pas + 1):
+            for j in range(pas + 1):
+                x0 = u[0] + (u[2] - u[0] - vw) * i / pas
+                y0 = u[1] + (u[3] - u[1] - vh) * j / pas
+                cadre = [x0, y0, x0 + vw, y0 + vh]
+                v = cam.vue_reelle(cadre, L, H, u)
+                z = cam.vue_zoomee(v, cam.dans_utile(cadre, u))
+                if not (cam.visages_coupes(v, faces) or cam.visages_coupes(z, faces)):
+                    mieux = max(mieux, sum(_dedans(n, v) and _dedans(n, z) for n in nets))
+    return (len(nets), mieux) if mieux <= 1 or 2 * mieux < len(nets) else None
+
+
+def _r(v: list[float]) -> str:
+    return f'x {v[0]:.2f}-{v[2]:.2f}, y {v[1]:.2f}-{v[3]:.2f}'
+
+
+def vue_reelle_tache(x: dict, L: int, H: int, faces: list) -> str:
+    """Section « Vue réelle » d'une tâche : la règle du lecteur avec les nombres de cette image, et
+    des exemples calculés par la chaîne (vue au début de la tenue, vue au bout du zoom lent)."""
+    u, hmax, k = cam.utile_de(x), hauteur_max(x, L, H), cam.RATIO_VUE * H / L
+    serre = 1 - 1 / cam.ZOOM_TENUE
+    exemples = [('toute la partie montrable', list(u))]
+    cx = (u[0] + u[2]) / 2
+    exemples.append(('cadre haut et étroit au milieu', [cx - 0.15 * (u[2] - u[0]), u[1], cx + 0.15 * (u[2] - u[0]), u[3]]))
+    grands = sorted((f for f in faces if f[3] - f[1] >= cam.FACE_MIN), key=lambda f: f[1] - f[3])
+    if grands:
+        g = grands[0]       # bande aux proportions de la vue, de taille admise, la tête dans son tiers haut
+        w = min(u[2] - u[0], max(2.2 * (g[2] - g[0]), 0.36 * max(L, H) / L, 2.4 * (g[3] - g[1]) * k))
+        h, gx, gy = min(w / k, hmax), (g[0] + g[2]) / 2, (g[1] + g[3]) / 2
+        exemples.append(('bande serrée sur le plus grand visage', cam.dans_utile([gx - w / 2, gy - 0.4 * h, gx + w / 2, gy + 0.6 * h], u)))
+    lignes = []
+    for titre, cadre in exemples:
+        cadre = [round(v, 2) for v in cadre]
+        v = cam.vue_reelle(cadre, L, H, u)
+        z = cam.vue_zoomee(v, cam.dans_utile(cadre, u))
+        _, ch = cam.couverture(cadre, v, u)
+        coupes = len(cam.visages_coupes(v, faces) or cam.visages_coupes(z, faces))
+        lignes.append(f'- {titre}, cadre {cadre} → vue {_r(v)} ({ch:.0%} de la hauteur du cadre) ; au bout du '
+                      f'zoom lent : {_r(z)} ; ' + (f'{coupes} visage(s) coupé(s) : refusé' if coupes else 'aucun visage coupé'))
+    return (
+        f'## Vue réelle : ce que l\'écran montrera pour un cadre\n\n'
+        f'Tu proposes des CADRES ; l\'écran montre une VUE, une bande panoramique. Pour cette image, un cadre de '
+        f'largeur w et de hauteur h (fractions de l\'image) donne la vue suivante :\n\n'
+        f'1. le cadre est ramené dans la partie montrable ({_r(u)}) ;\n'
+        f'2. hauteur de la vue : vh = min(max(h, w / {k:.2f}), {hmax:.2f}). **Hauteur maximale utile : {hmax:.2f}** '
+        f'de la hauteur de l\'image : ce qu\'un cadre a de plus haut est perdu ;\n'
+        f'3. largeur de la vue : vw = vh × {k:.2f} (au plus {hmax * k:.2f}), centrée sur le cadre sans sortir de la '
+        f'partie montrable : la vue est souvent PLUS LARGE que le cadre ;\n'
+        f'4. si h ≤ vh, la vue est centrée en hauteur sur le cadre ; sinon elle part du BORD SUPÉRIEUR du cadre et '
+        f'LE BAS EST COUPÉ (deux cadres trop hauts de même sommet donnent la même vue : la seconde étape est ignorée) ;\n'
+        f'5. haut repoussé sous le cartouche : la vue ne commence jamais au-dessus de y = {u[1]:.2f} + '
+        f'{cam.BANDE_HAUT} × vh et ne finit jamais au-dessous de y = {u[3]:.2f} − {cam.BANDE_BAS} × vh. Une vue de '
+        f'hauteur maximale couvre donc au plus y {u[1] + cam.BANDE_HAUT * hmax:.2f}-{u[3] - cam.BANDE_BAS * hmax:.2f} ; '
+        f'ce qui est plus haut ou plus bas ne se montre que par une vue moins haute ;\n'
+        f'6. pendant la tenue, zoom lent de {(cam.ZOOM_TENUE - 1) * 100:.0f} % : la vue finit à vw / {cam.ZOOM_TENUE} sur '
+        f'vh / {cam.ZOOM_TENUE} (elle perd jusqu\'à {serre * 50:.1f} % de sa taille sur chaque bord), en glissant vers le '
+        f'centre de ton cadre. Les contrôles portent sur la vue du début ET sur cette vue resserrée.\n\n'
+        f'Exemples calculés par la chaîne pour cette image (ne les recopie pas, sers-t\'en pour vérifier ton calcul) :\n'
+        + '\n'.join(lignes) + '\n\n')
+
+
+def entier_tache(x: dict, L: int, H: int, faces: list) -> str:
+    """Section d'une tâche qui admet la réponse « image entière » (bilan de la période 05 : cadres
+    d'évitement rendus pour satisfaire le contrôle des visages)."""
+    g = groupe_serre(x, L, H, faces)
+    office = (f'**Calcul de la chaîne pour cette image : des {g[0]} visages nets (hauteur d\'au moins {cam.FACE_ENTIER}), '
+              f'aucune vue n\'en montre plus de {g[1]} sans en couper un.** Si le sujet dont parle la voix est ce groupe, '
+              f'la réponse « image entière » est ici la réponse attendue ; propose une caméra seulement si la narration '
+              f'désigne un sujet qu\'un cadre montre vraiment (une figure isolée, un objet, une inscription, un décor).\n\n'
+              if g else '')
+    return (
+        f'## Si aucun cadre ne montre le sujet : réponse « image entière »\n\n'
+        f'Un cadre qui ne montre pas le sujet est pire qu\'un repli. Si le sujet est un groupe de visages serrés '
+        f'(ou une tête plus haute que la vue) qu\'aucune vue ne peut montrer sans couper une tête, ne rends PAS un '
+        f'cadre d\'évitement pour satisfaire le contrôle des visages (détail de col ou de vêtement, bande sans '
+        f'visage, marge, ciel, fond) : réponds que l\'image doit être montrée en entier, sur fond noir, par cet objet '
+        f'à la place de celui des étapes :\n\n```json\n{FORMAT_ENTIER}\n```\n\n'
+        f'- `vers` : le sujet dont l\'image entière s\'approchera lentement (le groupe, la tête principale), en '
+        f'fractions de l\'image, ou null (centre) ; ni `etapes` ni `entree` dans cette réponse ;\n'
+        f'- réservé à ce cas : si un cadre montre vraiment le sujet dont parle la voix, propose la caméra.\n\n'
+        + office)
+
+
 def minutage_mots(x: dict) -> str:
     """Instant de chaque mot, comme `camera.instants` le calcule (prorata dans la phrase horodatée)."""
     texte, lignes = x['narration'], []
@@ -220,8 +358,7 @@ def minutage_mots(x: dict) -> str:
 
 
 def texte_tache(slug: str, x: dict, L: int, H: int, faces: list, img: Path, reponse: Path, entree: bool = False) -> str:
-    u = cam.utile_de(x)
-    hmax = min((u[2] - u[0]) * L / cam.RATIO_VUE, (u[3] - u[1]) * H / (1 + cam.BANDE_HAUT + cam.BANDE_BAS)) / H
+    hmax = hauteur_max(x, L, H)
     k = cam.RATIO_VUE * H / L
     controles = [f for f in faces if f[3] - f[1] >= cam.FACE_MIN]
     plan = ''
@@ -238,23 +375,21 @@ def texte_tache(slug: str, x: dict, L: int, H: int, faces: list, img: Path, repo
         f"Le premier mot d'un `quand` doit avoir un instant d'au moins {cam.ECART_MIN_S:.1f} s, et d'au moins "
         f"{cam.ECART_MIN_S:.0f} s de plus que celui du `quand` précédent ; sinon l'étape est refusée. La caméra "
         f"ne devrait pas tenir un même cadre plus de {cam.TENUE_MAX:.0f} s si la voix désigne autre chose de visible.\n\n"
-        f'## Ce que l\'écran montre vraiment, et le piège des visages\n\n'
-        f'Pour un cadre de largeur w et de hauteur h (fractions), la vue a pour hauteur '
-        f'vh = min(max(h, w / {k:.2f}), {hmax:.2f}) et pour largeur vw = vh × {k:.2f} (jamais plus que la partie '
-        f'montrable), centrée sur le cadre (depuis son bord supérieur si h dépasse {hmax:.2f}) ; pendant une '
-        f'tenue elle se resserre encore lentement de {(cam.ZOOM_TENUE - 1) * 100:.0f} %. La vue est donc souvent '
-        f'PLUS LARGE que le cadre : ce sont ses bords à elle qui ne doivent couper aucun visage.\n\n'
+        + vue_reelle_tache(x, L, H, faces) +
+        f'## Le piège des visages\n\n'
+        f"Ce sont les bords de la VUE, non ceux du cadre, qui ne doivent couper aucun visage. "
         f"Cause la plus fréquente de refus : un petit visage de foule coupé par un bord de la vue. Des "
         f"{len(faces)} rectangle(s) de visages donnés plus haut, {len(controles)} sont contrôlés (hauteur d'au "
         f"moins {cam.FACE_MIN}) : chacun doit être ENTIER dans la vue, ou FRANCHEMENT à l'écart (ni à cheval sur "
         f"un bord, ni au ras). Avant d'écrire, calcule la vue de chaque cadre et compare ses quatre bords aux "
         f"rectangles ; au besoin élargis le cadre pour englober le visage voisin, ou écarte-le nettement.\n\n"
-        + (f'## Entrée en scène (spec 12, « Entrée en scène des grandes vues »)\n\n{ent.consigne_banc(hmax, k)}\n\n' if entree else '') +
+        + entier_tache(x, L, H, faces) + (f'## Entrée en scène (spec 12, « Entrée en scène des grandes vues »)\n\n{ent.consigne_banc(hmax, k)}\n\n' if entree else '') +
         f'## Image à regarder (outil Read)\n\n{img}\n\n'
         f'Elle porte la grille graduée de 0 à 1 ; les cadres et les visages sont en fractions de cette image.\n\n'
         f'## Réponse attendue\n\n'
         f'Un objet JSON, et rien d\'autre, écrit dans `{reponse}` :\n\n'
         f'```json\n{FORMAT_ENTREE if entree else FORMAT}\n```\n\n'
+        f'(ou, dans le seul cas décrit plus haut, l\'objet de la réponse « image entière » à sa place.)\n\n'
         + ('- `entree` : null si l\'image ne se prête pas à une entrée en scène, sinon `cadres` (un ou deux cadres '
            'de départ), `duree` (4 à 7 s) et `intention` (une phrase) ;\n' if entree else '') +
         f'- `etapes` : 1 à {cam.MAX_ETAPES} ; `quand` vaut null pour la première, un passage exact de la '
@@ -292,7 +427,12 @@ Pour chaque fichier `tache-NNN.md` de ce dossier ({', '.join(ids)}) :
   assez tard (voir l'instant de chaque mot), une étape de plus vaut mieux qu'un cadre tenu
   pendant toute la narration. Jamais d'étape sans lien avec ce que dit la voix.
 - Vérifie chaque cadre contre la hauteur maximale d'une vue et contre les rectangles des visages
-  donnés dans la tâche avant d'écrire (la vue est souvent plus large que le cadre).
+  donnés dans la tâche avant d'écrire (la vue est souvent plus large que le cadre) : la section
+  « Vue réelle » de la tâche donne le calcul avec les nombres de l'image et des exemples.
+- Un cadre qui ne montre pas le sujet est pire qu'un repli : jamais de cadre d'évitement (détail de
+  col, bande sans visage, marge, ciel) pour passer le contrôle des visages. Si aucune vue ne peut
+  montrer un groupe de visages serrés sans couper une tête, rends la réponse « image entière »
+  décrite dans la tâche (`{{"entier": true, "vers": …, "raison": "…"}}`), au premier comme au second tour.
 - Si un fichier `retour-NNN{suffixe}.md` existe, c'est un second tour : lis-le, regarde l'image de
   relecture qu'il cite, puis réécris la réponse correspondante.
 
@@ -314,11 +454,20 @@ def preparer(a) -> int:
     else:
         ns = communes + [str(n) for n in AUTRES.get(slug, []) if str(n) not in communes]
         choix = sorted((v for v in vues if str(v['n']) in ns), key=lambda v: ns.index(str(v['n'])))
-    if not choix:
-        raise SystemExit(f'Aucune vue à préparer pour « {slug} » (--n, --statiques, --toutes, ou un banc Gemini caméra).')
     nb = neutraliser(slug, choix)
     if nb:
         print(f'Visages locaux détectés en mémoire pour {nb} image(s) (YuNet, gratuit, cache non écrit).')
+    # Pas de tâche pour une image qui est ou passera en image entière (sa caméra n'est pas jouée).
+    entieres = []
+    if (a.statiques or a.toutes) and not a.avec_entieres:
+        raisons = {str(v['n']): passe_entiere(slug, v) for v in choix}
+        entieres = [{'n': v['n'], 'raison': raisons[str(v['n'])]} for v in choix if raisons[str(v['n'])]]
+        choix = [v for v in choix if not raisons[str(v['n'])]]
+        if entieres:
+            print(f"{len(entieres)} image(s) entière(s) sans tâche (--avec-entieres pour les garder) : "
+                  f"{' '.join(str(e['n']) for e in entieres)}")
+    if not choix:
+        raise SystemExit(f'Aucune vue à préparer pour « {slug} » (--n, --statiques, --toutes, ou un banc Gemini caméra).')
     sortie = DOSSIER / f'{datetime.now():%Y%m%d-%H%M}'
     if sortie.exists():                 # deux préparations dans la même minute : jamais le même dossier
         sortie = DOSSIER / f'{datetime.now():%Y%m%d-%H%M%S}'
@@ -350,7 +499,7 @@ def preparer(a) -> int:
     (sortie / 'taches.json').write_text(json.dumps(
         {'slug': slug, 'tache': 'camera', 'prepare': f'{datetime.now():%Y-%m-%d %H:%M}', 'consignes': cam.VERSION,
          'etiquette': a.etiquette, 'banc_gemini': str(banc_f.relative_to(c.RACINE)) if banc_f and not (a.n or a.statiques or a.toutes) else None,
-         'taches': taches}, ensure_ascii=False, indent=1))
+         'entieres': entieres, 'taches': taches}, ensure_ascii=False, indent=1))
     lots = [f"{lot} ({sum(t['lot'] == lot for t in taches)})" for lot in dict.fromkeys(t['lot'] for t in taches) if lot]
     print(f"{len(taches)} tâche(s) dans {rel(sortie)}" + (f" : {', '.join(lots)}" if lots else
           f" : {' '.join(t['id'] for t in taches)}") + f" ; {sum(len(t['x']['image'].get('camera') or []) for t in taches)} "
@@ -412,8 +561,42 @@ def mesure_banc(slug: str, x: dict, etapes: list[dict], faces: list) -> list[str
             + cam.ignorees(x, etapes, L, H) + cam.tete_hors_champ(x, etapes, L, H, faces))
 
 
+def camera_utile(x: dict) -> list[dict]:
+    """Caméra d'une image entière (exigée par verifier.py, non jouée) : une étape sur la zone utile."""
+    return [{'cadre': [round(v, 3) for v in cam.utile_de(x)]}]
+
+
+def reponse_entiere(slug: str, t: dict, rendu: dict) -> dict:
+    """Réponse « image entière » : réglage calculé comme `camera.py --entiers` (zoom le plus fort qui
+    garde les visages nets entiers), le sujet étant celui que donne l'agent (`vers`)."""
+    x = copy.deepcopy(t['x'])
+    vers, note = rendu.get('vers'), []
+    if vers is not None and not (isinstance(vers, list) and len(vers) == 4 and all(isinstance(v, (int, float)) for v in vers)
+                                 and 0 <= vers[0] < vers[2] <= 1 and 0 <= vers[1] < vers[3] <= 1):
+        vers, note = None, [f"`vers` invalide ({rendu.get('vers')}) : rapprochement vers le centre"]
+    x['image']['camera'] = [{'cadre': vers}] if vers else []
+    sujet = cam.sujet_portrait
+    if vers:
+        cam.sujet_portrait = lambda *a, **k: None       # le sujet est celui de la réponse
+    try:
+        r = cam.entier_propose(slug, x, seuil=2.0)      # seuil jamais atteint : le réglage, pas la règle
+    finally:
+        cam.sujet_portrait = sujet
+    reglage = {'entier': True, 'entier_manuel': True}
+    if r.get('entier_vers'):
+        reglage['entier_vers'] = r['entier_vers']
+    if abs(r['entier_zoom'] - cam.ZOOM_ENTIER) > 1e-6:
+        reglage['entier_zoom'] = r['entier_zoom']
+    final = camera_utile(t['x'])
+    return {'proposees': 0, 'premier_jet': note, 'suite': 'image entière', 'repli': False, 'resultat': final,
+            'erreurs': 0, 'detail': [], 'tenue_max': round(cam.tenue_max(t['x'], final), 1), 'montre': [],
+            'non_identifies': [], 'entier': reglage, 'raison': str(rendu.get('raison') or '')}
+
+
 def traiter(slug: str, t: dict, rendu: dict) -> dict:
     """Une réponse passée par la chaîne de camera.py, sans renvoi au modèle."""
+    if rendu.get('entier') is True:
+        return reponse_entiere(slug, t, rendu)
     x, faces = t['x'], t['visages']
     image = cam.image_de(slug, x)
     L, H = image.size
@@ -598,7 +781,8 @@ def noter(a) -> int:
     for et in mesures:
         ms = list(mesures[et].values())
         print(f"{et:12s} {len(ms):3d} réponse(s) sur {len(taches)} : {sum(x['suite'] == 'acceptée' for x in ms)} acceptée(s), "
-              f"{sum(x['suite'] == 'réparée' for x in ms)} réparée(s), {sum(x['repli'] for x in ms)} repli(s), "
+              f"{sum(x['suite'] == 'réparée' for x in ms)} réparée(s), {sum(x['suite'] == 'image entière' for x in ms)} "
+              f"image(s) entière(s), {sum(x['repli'] for x in ms)} repli(s), "
               f"{sum(x['erreurs'] for x in ms)} erreur(s) finale(s), {sum(len(x['resultat']) for x in ms)} étape(s) "
               f"(JSON : {sum(len(prod[i]['resultat']) for i in mesures[et] if i in prod)}).")
     print('Tableau :', rel(dossier / 'comparatif.md'), f'; {len(ps)} planche(s) :',
@@ -626,6 +810,8 @@ def relire(a) -> int:
             image = cam.image_de(slug, x)
             L, H = image.size
             rendu, _ = lire_reponse(f)
+            if rendu.get('entier') is True:     # réponse « image entière » : rien à relire
+                continue
             etapes, erreurs = cam.controler(x['narration'], rendu, L, H, x, image, faces)
             if a.fautives and not (erreurs or not etapes):
                 continue
@@ -636,6 +822,9 @@ def relire(a) -> int:
             if erreurs or not etapes:
                 fautes += 1
                 texte += 'Corrige ces erreurs et renvoie toutes les étapes :\n- ' + '\n- '.join(erreurs or ['aucune étape'])
+                texte += ('\n\nNe corrige pas par un cadre d\'évitement (détail de col, bande sans visage, marge) : un cadre '
+                          'qui ne montre pas le sujet est pire qu\'un repli. Si aucune vue ne peut montrer le sujet sans '
+                          f'couper une tête, rends la réponse « image entière » de la tâche : `{FORMAT_ENTIER}`.')
             else:
                 relance = cam.relance_tenues(x, etapes, [str(e.get('montre', '')) for e in rendu.get('etapes', [])])
                 petite = cam.reduire(image)
@@ -674,6 +863,22 @@ def _cache_camera(slug: str) -> tuple[Path, dict]:
     return f, (json.loads(f.read_text()) if f.exists() else {})
 
 
+def poser_entiers(slug: str, reglages: dict) -> None:
+    """Réglages d'image entière (clé : n de la vue), comme la correction à la main du README (« Images
+    entières sur fond noir ») : les quatre champs sont remplacés par ceux du réglage."""
+    f2, d2 = c.lire(slug)
+    for y in c.vues_camera(d2):
+        if y['n'] in reglages:
+            for cle in CLES_ENTIER:
+                y['image'].pop(cle, None)
+            y['image'].update(reglages[y['n']])
+    c.ecrire(f2, d2)
+
+
+def _entier_de(v: dict) -> dict:
+    return {k: v['image'][k] for k in CLES_ENTIER if k in v['image']}
+
+
 def appliquer(a) -> int:
     neutraliser()
     c.charger_env()
@@ -685,7 +890,7 @@ def appliquer(a) -> int:
     if et not in rep:
         raise SystemExit(f"Étiquette à appliquer : --etiquette parmi {sorted(rep) or 'aucune réponse'}.")
     vues = {str(v['n']): v for v in vues_narrees(periode(slug))}
-    poser, refus = [], {}
+    poser, refus, entiers = [], {}, []
     for t in taches:
         f = rep[et].get(t['id'])
         if not f:
@@ -700,6 +905,18 @@ def appliquer(a) -> int:
             raison = 'caméra manuelle'
         elif not _meme_vue(v, t['x']):
             raison = 'vue changée depuis la préparation (narration, image, zone utile ou minutage)'
+        elif r.get('entier'):
+            # Réponse « image entière » : réglage posé comme à la main ; la caméra, non jouée, est gardée
+            # (ou réduite à une étape sur la zone utile si la vue n'en a pas).
+            if v['image'].get('entier') or v['image'].get('entier_manuel'):
+                raison = 'image entière déjà réglée'
+            elif v['image'].get('video'):
+                raison = 'image entière incompatible avec un clip'
+            else:
+                entiers.append((t, v, r, avant))
+                print(f"{t['id']:>5} image entière" + (f", vers {r['entier']['entier_vers']}" if r['entier'].get('entier_vers') else ', vers le centre')
+                      + (f", zoom {r['entier']['entier_zoom']:g}" if 'entier_zoom' in r['entier'] else '') + f" : {r['raison'][:90]}")
+                continue
         elif r['repli']:
             raison = 'repli'
         elif r['erreurs']:
@@ -733,23 +950,43 @@ def appliquer(a) -> int:
                 print(f"{t['id']:>5} entrée en scène laissée : {raison}")
     if entrees:
         print(f"{'À poser' if a.essai else 'Posées'} : {len(entrees)} entrée(s) en scène : {' '.join(entrees)}")
-    if a.essai or not poser:
+    if entiers:
+        print(f"{'À poser' if a.essai else 'Posées'} : {len(entiers)} image(s) entière(s) (entier, entier_manuel) : "
+              f"{' '.join(t['id'] for t, *_ in entiers)}")
+    # Caméra d'une étape sur la zone utile (exigée par verifier.py, non jouée) : réponses « image
+    # entière » et images entières laissées sans tâche par `preparer`, quand la vue n'a pas de caméra.
+    sans_camera = [(t, v, r) for t, v, r, avant in entiers if not avant]
+    for e in m.get('entieres') or []:
+        v = vues.get(str(e['n']))
+        if v is not None and not v['image'].get('camera') and not v.get('camera_manuelle'):
+            sans_camera.append(({'n': e['n']}, v, {'resultat': camera_utile(v), 'montre': [], 'non_identifies': [],
+                                                 'tenue_max': round(cam.tenue_max(v, camera_utile(v)), 1)}))
+    if sans_camera:
+        print(f"{'À poser' if a.essai else 'Posées'} : {len(sans_camera)} caméra(s) d'une étape sur la zone utile "
+              f"(images entières, caméra non jouée) : {' '.join(str(t['n']) for t, *_ in sans_camera)}")
+    if a.essai or not (poser or entiers or sans_camera):
         return 0
     fc, cache = _cache_camera(slug)
+    cameras = [(t, v, r, avant, f'claude:{et}') for t, v, r, avant in poser] \
+        + [(t, v, r, [], 'entier') for t, v, r in sans_camera]
     sauvegarde = dossier / f'sauvegarde-{datetime.now():%Y%m%d-%H%M%S}.json'
     sauvegarde.write_text(json.dumps(
         {'slug': slug, 'etiquette': et, 'quand': f'{datetime.now():%Y-%m-%d %H:%M:%S}',
          'vues': [{'n': t['n'], 'avant': avant, 'apres': r['resultat'], 'cache': cache.get(str(t['n']))}
-                  for t, v, r, avant in poser]}, ensure_ascii=False, indent=1))
-    cam.ecrire_cameras(slug, {v['n']: r['resultat'] for t, v, r, avant in poser})
+                  for t, v, r, avant, _ in cameras],
+         'entiers': [{'n': t['n'], 'avant': _entier_de(v), 'apres': r['entier']} for t, v, r, avant in entiers]},
+        ensure_ascii=False, indent=1))
+    cam.ecrire_cameras(slug, {v['n']: r['resultat'] for t, v, r, avant, _ in cameras})
     fc, cache = _cache_camera(slug)
-    for t, v, r, avant in poser:
+    for t, v, r, avant, source in cameras:
         cache[str(t['n'])] = {'empreinte': cam.empreinte(v), 'camera': r['resultat'], 'montre': r['montre'],
                               'non_identifies': r['non_identifies'], 'repli': False, 'erreur': None,
-                              'tenue_max': r['tenue_max'], 'source': f'claude:{et}',
+                              'tenue_max': r['tenue_max'], 'source': source,
                               'dossier': str(rel(dossier))}
     fc.parent.mkdir(parents=True, exist_ok=True)
     fc.write_text(json.dumps(cache, ensure_ascii=False, indent=1))
+    if entiers:
+        poser_entiers(slug, {v['n']: r['entier'] for t, v, r, avant in entiers})
     if entrees:
         ent.poser(slug, entrees)
     print(f'JSON et cache caméra écrits ; sauvegarde : {rel(sauvegarde)}')
@@ -773,11 +1010,17 @@ def restaurer(a) -> int:
             laissees.append(str(e['n']))        # changée depuis (camera.py, réparation, main) : on n'y touche pas
         else:
             remettre[v['n']] = e
+    # Réglages d'image entière posés par `appliquer` (réponses « image entière »), s'ils n'ont pas changé.
+    entiers = {vues[str(e['n'])]['n']: e['avant'] for e in s.get('entiers') or []
+               if str(e['n']) in vues and (_entier_de(vues[str(e['n'])]) == e['apres'] or a.force)}
     print(f"{'À restaurer' if a.essai else 'Restaurées'} ({fs[-1].name}) : {len(remettre)} caméra(s) : "
           f"{' '.join(map(str, remettre))}" + (f" ; laissées (changées depuis, --force pour les remettre) : "
-                                                 f"{' '.join(laissees)}" if laissees else ''))
-    if a.essai or not remettre:
+                                                 f"{' '.join(laissees)}" if laissees else '')
+          + (f" ; {len(entiers)} réglage(s) d'image entière : {' '.join(map(str, entiers))}" if entiers else ''))
+    if a.essai or not (remettre or entiers):
         return 0
+    if entiers:
+        poser_entiers(slug, entiers)
     cam.ecrire_cameras(slug, {n: e['avant'] for n, e in remettre.items()})
     fc, cache = _cache_camera(slug)
     for n, e in remettre.items():
@@ -811,6 +1054,8 @@ def main() -> int:
     q.add_argument('--n', nargs='+', help='vues (« 100 » : la diapositive et ses plans ; « 100b » : ce plan)')
     q.add_argument('--statiques', action='store_true', help=f'vues dont la caméra tient un cadre plus de {cam.TENUE_MAX:.0f} s')
     q.add_argument('--toutes', action='store_true', help='toutes les vues narrées non manuelles (période neuve)')
+    q.add_argument('--avec-entieres', action='store_true',
+                   help='avec --toutes / --statiques : garde les tâches des images entières (image.entier, camera.py --entiers)')
     q.add_argument('--lot', type=int, default=TAILLE_LOT, help=f'tâches par lot (défaut {TAILLE_LOT})')
     q.add_argument('--etiquette', help='étiquette inscrite dans le nom des réponses demandées (ex. sonnet)')
     q.set_defaults(f=preparer)

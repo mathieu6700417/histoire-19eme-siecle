@@ -14,8 +14,9 @@ Tout renvoi par numéro est recalculé : `n`, fichiers `NNN.webp` / `NNN.m4a` (r
 public/diaporamas/<slug>/, en deux temps pour éviter les collisions), `image.fichier` et
 `audio.fichier` (et `NNN-apres.webp`, `NNN-mK.webp` des avant/après et mosaïques, `NNN-mouvement.mp4` et
 `NNN-couleur.webp`, `NNN-b-couleur.webp` de la couche générée, spec 16, `NNN-grand.webp` et `NNN-b-grand.webp`
-de la netteté, `NNN-fond.webp` et `NNN-b-fond.webp` des fonds prolongés, spec 17 ; les recettes de colorisation et de fonds,
-indexées par fichier Commons, ne bougent pas), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
+de la netteté, `NNN-fond.webp` et `NNN-b-fond.webp` des fonds prolongés, spec 17, `NNN-vignette.webp` et `NNN-vignette.json`
+des vignettes dessinées ; les recettes de colorisation et de fonds, indexées par fichier Commons, ne bougent pas ; les numéros
+du lot des vignettes, src/data/diaporamas/generation/<slug>-vignettes.json, sont remplacés sur place), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
 `portrait.diapositive` des lectures. Les états de .cache/diaporamas/<slug>/ indexés par numéro
 (images.json, voix.json, camera.json) sont réindexés : les voix, licences et cadrages inchangés
 restent reconnus, rien n'est resynthétisé (l'empreinte du texte fait foi). L'empreinte de
@@ -128,14 +129,16 @@ def main() -> int:
                       + [x['image'].get('grand') or {}] + [(p.get('image') or {}).get('grand') or {} for p in x.get('plans') or []]
                       # fonds prolongés (spec 17) : NNN-fond.webp, NNN-b-fond.webp
                       + [x['image'].get('fond') or {}] + [(p.get('image') or {}).get('fond') or {} for p in x.get('plans') or []])
-            for obj in autres:
-                f_ = obj.get('fichier') or ''
+            # vignettes dessinées (spec 17, essai 5) : encre et tracés, NNN-vignette.webp et .json, NNN-b-vignette.…
+            vignettes = [x['image'].get('vignette') or {}] + [(p.get('image') or {}).get('vignette') or {} for p in x.get('plans') or []]
+            for obj, cle_f in [(o_, 'fichier') for o_ in autres] + [(v, k) for v in vignettes for k in ('fichier', 'traces')]:
+                f_ = obj.get(cle_f) or ''
                 if f_.startswith(f'{o:03d}-'):
                     neuf = f'{nv:03d}-' + f_[4:]
                     renommages.append((dossier / f_, dossier / neuf))
-                    obj['fichier'] = neuf
+                    obj[cle_f] = neuf
                 elif f_ == c.nom(o, 'webp'):
-                    obj['fichier'] = c.nom(nv, 'webp')
+                    obj[cle_f] = c.nom(nv, 'webp')
     temporaires = []
     for src, dst in renommages:
         if src.exists():
@@ -160,6 +163,15 @@ def main() -> int:
             l['portrait']['diapositive'] = m[l['portrait']['diapositive']]
     for e in d.get('episodes', []):
         e['apres'] = m[e['apres']]
+
+    # Lot des vignettes dessinées (spec 17, essai 5), écrit à la main et indexé par numéro (« 31 »,
+    # « 34b ») : les numéros sont remplacés sur place, la mise en forme du fichier est gardée.
+    lot_v = c.DONNEES / 'generation' / f"{d['slug']}-vignettes.json"
+    if lot_v.exists():
+        texte = lot_v.read_text(encoding='utf-8')
+        neuf = re.sub(r'("n":\s*")(\d+)([a-z]?")', lambda mm: f'{mm[1]}{m.get(int(mm[2]), int(mm[2]))}{mm[3]}', texte)
+        if neuf != texte:
+            lot_v.write_text(neuf, encoding='utf-8')
 
     # 3. États du cache indexés par numéro.
     # utile.json a aussi des clés « 18m2 », « 20a » (mosaïques, avant / après) ; personnes.json et

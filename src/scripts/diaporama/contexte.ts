@@ -78,7 +78,7 @@ export interface Lecteur {
   mesurerMarges: () => void;
   transformation: (c: HTMLElement, x: Diapo, r: Rect, f?: number, img?: HTMLImageElement) => string;
   css: (p: { tx: number; ty: number; s: number; }) => string;
-  parametres: (W: number, H: number, IW: number, IH: number, u: Rect, r: Rect, f?: number) => { tx: number; ty: number; s: number; };
+  parametres: (W: number, H: number, IW: number, IH: number, u: Rect, r: Rect, f?: number, entier?: boolean) => { tx: number; ty: number; s: number; };
   vue: (x: Diapo, r: Rect) => Rect;
   plan: (x: Diapo) => { v: Rect; c: Rect; t: number; de: number; a: number; }[];
   cadreA: (x: Diapo, t: number) => Rect;
@@ -128,6 +128,12 @@ export interface Lecteur {
   placerFond: (el: HTMLElement, base: HTMLImageElement, fond: Fond, u: Rect, transformation: string, gris?: number) => void;
   creerFond: (fond: Fond) => HTMLElement;
   prechargerFond: (x: Diapo) => void;
+  // dessins traversants sous les images entières (spec 17, essai 5)
+  creerVignette: (k?: number) => HTMLElement;
+  preparerVignette: (c: HTMLElement, x: Diapo) => void;
+  majVignette: (c: HTMLElement, x: Diapo, t: number) => number;
+  marquerVignette: (o: number) => void;
+  prechargerVignette: (x: Diapo) => void;
   // rendu
   legendeVoulue: (x: Diapo, t: number) => string;
   legendeMontree: string;

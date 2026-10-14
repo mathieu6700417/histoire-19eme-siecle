@@ -1,0 +1,271 @@
+{
+  "usage": "vignettes",
+  "forme": "dessin traversant (spec 17, révision du 2026-10-14)",
+  "modele": "Tongyi-MAI/Z-Image-Turbo",
+  "style": "Very simple pen line drawing, like a quick sketch by a 19th-century French book illustrator: a few clean continuous black ink strokes, minimal contour sketch, outlines only, no hatching, no cross-hatching, no shading, no tone, lots of white space, plain white background, no people, no human figures, an empty scene with no person at all, no hands, no crowd, no border, no frame, no rectangle, no text, no letters, no numbers, no signature, no flag, no insignia. Objects, buildings and settings of France in the 1850s and 1860s.",
+  "vignettes": [
+    {
+      "n": "1",
+      "graine": 20010,
+      "gauche": "the tall gate of a Paris palace with stone pillars and a gas lamp",
+      "droite": "a few sheaves of wheat leaning together and, behind them, a slim factory chimney with a wisp of smoke",
+      "tirage": 1,
+      "jugement": "bon"
+    },
+    {
+      "n": "2",
+      "graine": 20020,
+      "gauche": "a writing desk with an inkwell, a quill pen and a few loose blank sheets of paper",
+      "droite": "a row of empty wooden assembly benches seen from the side",
+      "tirage": 2,
+      "jugement": "bon"
+    },
+    {
+      "n": "5",
+      "graine": 20050,
+      "gauche": "a small café table with a folded blank newspaper, a coffee cup and a bentwood chair",
+      "droite": "the stone doorway of a prefecture with a tall gas street lamp beside it",
+      "tirage": 1,
+      "jugement": "bon"
+    },
+    {
+      "n": "15b",
+      "graine": 20152,
+      "gauche": "a small round bandstand with a pointed roof on slender iron columns",
+      "droite": "a big bass drum and a cornet resting on a chair beside an empty music stand",
+      "tirage": 3,
+      "jugement": "bon"
+    },
+    {
+      "n": "16",
+      "graine": 20160,
+      "gauche": "a ship's rowing boat pulled up on the sand under a tall narrow columnar pine tree",
+      "droite": "a tall conical thatched hut with a carved wooden post, and a small three-masted sailing ship at anchor beyond it",
+      "tirage": 3,
+      "jugement": "bon",
+      "raison": "Tirages 1 et 2 : poteau et case à la limite du centre caché."
+    },
+    {
+      "n": "24",
+      "graine": 20240,
+      "gauche": "a brick furnace with a tall chimney hood and a crucible held in long iron tongs",
+      "droite": "a wooden shelf with glass retorts, jars and a few small bars of shining metal",
+      "tirage": 1,
+      "jugement": "bon"
+    },
+    {
+      "n": "30",
+      "graine": 20300,
+      "gauche": "tall crooked old houses with overhanging upper floors and shutters, a gutter of water in the cobbled lane",
+      "droite": "a narrow medieval lane between leaning houses, with an old iron water pump",
+      "tirage": 2,
+      "jugement": "bon",
+      "raison": "Tirages 1 et 3 : bandeau comme une enseigne sur le toit de gauche."
+    },
+    {
+      "n": "31",
+      "reprise": "essai-simple:031-C-zimage",
+      "tirage": 2,
+      "jugement": "bon",
+      "raison": "Repris de l'essai des dessins simples (planche validée : « c'est nickel avec C »)."
+    },
+    {
+      "n": "40",
+      "graine": 20400,
+      "gauche": "the hill of Montmartre with two wooden windmills",
+      "droite": "a low stone toll gate of the city wall with a small toll house and a two-wheeled cart loaded with barrels",
+      "tirage": 1,
+      "jugement": "bon",
+      "raison": "Tirage 3 : moulin posé sur la porte d'octroi."
+    },
+    {
+      "n": "47",
+      "graine": 20470,
+      "gauche": "a wooden ballot box on a table in a village town hall",
+      "droite": "the empty speaker's rostrum of a parliament hall with a glass of water",
+      "tirage": 1,
+      "jugement": "bon"
+    },
+    {
+      "n": "49b",
+      "graine": 20492,
+      "gauche": "the empty raised bench of a courtroom with three high-backed chairs and a crucifix on the wall",
+      "droite": "a lawyer's desk with a pile of bound law books and an inkwell",
+      "tirage": 3,
+      "jugement": "bon",
+      "raison": "Tirage 1 : grande fenêtre derrière le bureau de droite."
+    },
+    {
+      "n": "50b",
+      "graine": 20502,
+      "gauche": "a small garden table with a porcelain doll and a toy tea set",
+      "droite": "a wooden garden bench under a tree, a little bucket and a hoop lying on the grass",
+      "jugement": "ecarte",
+      "raison": "La poupée des trois tirages se lit comme une enfant : personnage."
+    },
+    {
+      "n": "57",
+      "graine": 20570,
+      "gauche": "an empty overturned horse carriage on a cobbled street, one wheel in the air",
+      "droite": "the arched entrance of a Paris opera house with tall gas lamps",
+      "tirage": 2,
+      "jugement": "bon",
+      "raison": "Façade d'opéra générique (tirages 1 et 3 : façade du palais Garnier, inauguré en 1875 : anachronisme)."
+    },
+    {
+      "n": "58",
+      "graine": 20580,
+      "gauche": "a sailing transport ship moored at a stone quay with its gangway down",
+      "droite": "an empty closed prison wagon with small barred windows, its shafts resting on the ground",
+      "tirage": 2,
+      "jugement": "bon",
+      "raison": "Tirage 3 : pavillon au mât."
+    },
+    {
+      "n": "59",
+      "graine": 20590,
+      "gauche": "a carpenter's workbench with a plane, a saw and a small closed booklet lying on it",
+      "droite": "a workshop door with a round wall clock above it",
+      "tirage": 2,
+      "jugement": "bon",
+      "raison": "Tirage 3 : écriteau posé contre le mur."
+    },
+    {
+      "n": "65",
+      "graine": 20650,
+      "gauche": "straw bedding on a church floor with a water jug and a folded blanket",
+      "droite": "a wooden stretcher leaning against a stone column, a basket of rolled bandages beside it",
+      "tirage": 2,
+      "jugement": "bon"
+    },
+    {
+      "n": "68",
+      "graine": 20680,
+      "gauche": "two small steamships anchored close to a rocky shore",
+      "droite": "an olive tree and a low Sicilian farmhouse with a flat roof",
+      "tirage": 1,
+      "jugement": "bon",
+      "raison": "Vapeurs mixtes à mâts ; allure un peu tardive."
+    },
+    {
+      "n": "76",
+      "graine": 20760,
+      "gauche": "tall sugar cane plants and an ox cart loaded with cut cane",
+      "droite": "the tall brick chimney of a sugar mill with a wisp of smoke, and a coconut palm",
+      "tirage": 2,
+      "jugement": "bon"
+    },
+    {
+      "n": "78b",
+      "graine": 20782,
+      "gauche": "a row of theatre boxes with empty chairs and draped curtains",
+      "droite": "an orchestra pit with empty music stands, a harp and a double bass",
+      "tirage": 1,
+      "jugement": "bon"
+    },
+    {
+      "n": "82b",
+      "graine": 20822,
+      "gauche": "a side paddle-wheel steamship with a tall funnel moored at a quay",
+      "droite": "a steam locomotive with a tall funnel on a stone railway viaduct, and a round gasholder",
+      "tirage": 1,
+      "jugement": "bon",
+      "raison": "Pas de roue à aubes dans les trois tirages ; locomotive d'allure un peu tardive (années 1870)."
+    },
+    {
+      "n": "84b",
+      "graine": 20842,
+      "gauche": "a huge steam hammer in an ironworks hall",
+      "droite": "the tall chimneys and the round tower of a blast furnace with smoke",
+      "tirage": 2,
+      "jugement": "bon"
+    },
+    {
+      "n": "87",
+      "reprise": "essai-simple:087-C-zimage",
+      "tirage": 3,
+      "jugement": "bon",
+      "raison": "Repris de l'essai des dessins simples (planche validée : « c'est nickel avec C »)."
+    },
+    {
+      "n": "92",
+      "reprise": "essai-simple:092-C-zimage",
+      "tirage": 3,
+      "jugement": "bon",
+      "raison": "Repris de l'essai des dessins simples (planche validée : « c'est nickel avec C »)."
+    },
+    {
+      "n": "100",
+      "graine": 21000,
+      "gauche": "a tall pile of thick books and an oil lamp on a desk",
+      "droite": "a small hand printing press with a stack of blank sheets",
+      "jugement": "ecarte",
+      "raison": "La presse à bras des trois tirages ressemble à une machine à écrire (après 1870) : anachronisme."
+    },
+    {
+      "n": "103",
+      "graine": 21030,
+      "gauche": "the empty speaker's rostrum of a parliament hall with a glass of water on it",
+      "droite": "a semicircle of empty benches rising in tiers",
+      "tirage": 2,
+      "jugement": "bon"
+    },
+    {
+      "n": "105",
+      "graine": 21050,
+      "gauche": "the closed wooden double gate of a workshop under a brick wall",
+      "droite": "an idle workbench with hammers and files laid down, and a factory chimney without smoke",
+      "tirage": 2,
+      "jugement": "bon"
+    },
+    {
+      "n": "108",
+      "graine": 21080,
+      "gauche": "a small village schoolhouse with a bell turret and tall windows",
+      "droite": "two school desks with slates and an inkwell, and a blackboard on an easel, blank",
+      "tirage": 3,
+      "jugement": "bon"
+    },
+    {
+      "n": "110",
+      "graine": 21100,
+      "gauche": "a lectern with a glass of water on a small platform",
+      "droite": "rows of empty chairs facing it",
+      "tirage": 1,
+      "jugement": "bon"
+    },
+    {
+      "n": "122b",
+      "graine": 21222,
+      "gauche": "a three-masted frigate at anchor in a harbour",
+      "droite": "tall palm trees and a low harbour fort with thick walls",
+      "tirage": 3,
+      "jugement": "bon"
+    },
+    {
+      "n": "128",
+      "graine": 21280,
+      "gauche": "an early wooden velocipede of 1868 with pedals fixed on the large front wheel and a small rear wheel, no chain, leaning against a tree",
+      "droite": "a gas street lamp and a bench on a tree-lined avenue",
+      "jugement": "ecarte",
+      "raison": "Les trois tirages dessinent une bicyclette à chaîne et roues égales (années 1880), pas le vélocipède Michaux : anachronisme."
+    },
+    {
+      "n": "145",
+      "graine": 21450,
+      "gauche": "an empty black horse-drawn hearse with plumes, the horses standing still",
+      "droite": "the gates of a small cemetery with a few crosses and cypress trees",
+      "tirage": 3,
+      "jugement": "bon",
+      "raison": "Tirage 2 : petit drapeau griffonné à droite."
+    },
+    {
+      "n": "146",
+      "graine": 21460,
+      "gauche": "a wooden ballot box on a table in a village town hall, a round wall clock above",
+      "droite": "a village church steeple and a small town hall with tall windows",
+      "tirage": 2,
+      "jugement": "bon"
+    }
+  ]
+}

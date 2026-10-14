@@ -39,7 +39,7 @@ import EpisodeVisuels from './EpisodeVisuels.astro';
 import Surimpressions from './Surimpressions.astro';
 import Generique from './Generique.astro';
 import { dureesGenerique, imagesGenerique, indicatif, urlCommun } from '../utils/diaporamas';
-import { CARTON, PAUSE, MOSAIQUE, VOLET, avantApres, debutPlongee, instantsSerie, plansDe, texteLu, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type ImageDiapo, type ImageSerie, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
+import { CARTON, PAUSE, MOSAIQUE, VOLET, avantApres, debutPlongee, instantCaractere, instantsSerie, plansDe, texteLu, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type ImageDiapo, type ImageSerie, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
 
 interface Props { diaporama: Diaporama }
 const { diaporama: d } = Astro.props;
@@ -66,13 +66,15 @@ function legendeImage(i: { titre?: string; auteur?: string; date?: string; techn
  *  auteur, « date · technique » (HTML échappé). Le titre officiel reste dans le livre et l'`alt`.
  *  Image mise en mouvement par IA (spec 16) : une quatrième ligne le signale (masquée par le CSS
  *  avec la préférence « réduire les animations », où l'image reste fixe). */
-function cartouche(x: Diaporama['diapositives'][number]) { return cartoucheImage(x.image, Boolean(videoDe(x)), Boolean(couleurDe(x))); }
-function cartoucheImage(i: { titre: string; titre_court?: string; auteur?: string; date?: string; technique?: string }, ia = false, couleur = false) {
+function cartouche(x: Diaporama['diapositives'][number]) { return cartoucheImage(x.image, Boolean(videoDe(x)), Boolean(couleurDe(x)), Boolean(vignetteDe(x))); }
+function cartoucheImage(i: { titre: string; titre_court?: string; auteur?: string; date?: string; technique?: string }, ia = false, couleur = false, dessin = false) {
   const quand = [i.date && esc(t(i.date)), i.technique && esc(t(i.technique))].filter(Boolean).join(' · ');
   return `<cite>${esc(t(i.titre_court || i.titre))}</cite>${i.auteur ? `<span>${esc(t(i.auteur))}</span>` : ''}${quand ? `<span>${quand}</span>` : ''}`
     + (ia ? '<span class="lecteur__legende-ia">mise en mouvement par IA</span>' : '')
     // Image colorisée par IA (spec 16) : ligne repliée, montrée tant que la couleur est à l'écran.
-    + (couleur ? '<span class="lecteur__legende-ia lecteur__legende-couleur">colorisée par IA</span>' : '');
+    + (couleur ? '<span class="lecteur__legende-ia lecteur__legende-couleur">colorisée par IA</span>' : '')
+    // Vignette dessinée (spec 17, essai 5) : ligne repliée, montrée tant que le dessin est à l'écran.
+    + (dessin ? '<span class="lecteur__legende-dessin">dessin généré par IA</span>' : '');
 }
 /** Clip d'une image mise en mouvement (spec 16) ; sans effet sur un avant / après (sur une mosaïque,
  *  il paraît après la plongée). */
@@ -80,6 +82,30 @@ const videoDe = (x: Diaporama['diapositives'][number]) => (x.image.video && !x.i
 /** Version colorisée par IA de l'image d'une diapositive (spec 16) ; sans effet avec un clip, un
  *  avant / après ou une mosaïque (verifier.py les refuse). */
 const couleurDe = (x: Diaporama['diapositives'][number]) => (x.image.couleur && !x.image.video && !x.image.apres && !x.mosaique ? x.image.couleur : null);
+/** Dessin traversant d'une image (spec 17, essai 5, révision du 2026-10-14) : seulement sous une image
+ *  entière ; jamais avec un avant / après ni une mosaïque (verifier.py les refuse). */
+const vignetteImage = (i: ImageDiapo) => (i.vignette && i.entier ? i.vignette : null);
+const vignetteDe = (x: Diaporama['diapositives'][number]) => (!x.image.apres && !x.mosaique ? vignetteImage(x.image) : null);
+/** Données du lecteur pour un dessin traversant (vignette.ts) : encre, tracés, dimensions de l'encre, et
+ *  instant `t` (s de la voix) du passage `quand`, cherché à partir du passage du plan (`quandPlan`) ;
+ *  null : départ par défaut, peu après l'apparition de l'image. */
+function vignetteLecteur(i: ImageDiapo, x: Diaporama['diapositives'][number], quandPlan?: string) {
+  const v = vignetteImage(i);
+  if (!v) return undefined;
+  let t: number | null = null;
+  if (v.quand) {
+    const depuis = quandPlan ? Math.max(0, x.narration.indexOf(quandPlan)) : 0;
+    const pos = x.narration.indexOf(v.quand, depuis);
+    if (pos >= 0) t = Math.max(0, instantCaractere(x.narration, pos, x.audio?.duree ?? 6, x.audio?.phrases) - 0.2);
+  }
+  return { src: urlMedia(d.slug, v.fichier), tr: urlMedia(d.slug, v.traces), t, l: v.largeur, h: v.hauteur };
+}
+/** Livre d'images (sans JavaScript) : le dessin sous l'image qu'il accompagne, en entier, avec sa mention. */
+function livreVignette(i: ImageDiapo) {
+  const v = vignetteImage(i)!;
+  return `<figure class="livre__apres livre__vignette"><img src="${esc(urlMedia(d.slug, v.fichier))}" alt="${esc(t(`Dessin généré par IA accompagnant : ${i.titre}`))}" width="${v.largeur}" height="${v.hauteur}" loading="lazy" decoding="async" />`
+    + `<figcaption><span class="livre__marque">Dessin généré par IA :</span> ${esc(t(`esquisse à la plume, sans personnage, dessinée par le modèle ${nomModele(v.modele)} (poids ouverts) d'après la narration ; le lecteur en montre les deux bords, de part et d'autre de l'image, son centre étant caché par elle. Elle évoque la scène, elle n'est pas un document d'époque.`))}</figcaption></figure>`;
+}
 /** Version colorisée d'un plan (mêmes conditions que dans le lecteur : ni avant / après ni mosaïque). */
 const couleurPlan = (x: Diaporama['diapositives'][number], k: number) => (!x.image.apres && !x.mosaique ? x.plans?.[k]?.image.couleur ?? null : null);
 /** Livre d'images (sans JavaScript) : la version colorisée sous l'image, avec sa mention et le modèle. */
@@ -139,10 +165,11 @@ function fondLecteur(i: ImageDiapo) {
 }
 /** Image d'une série pour le lecteur (spec 14) : zone utile, dimensions, cartouche, instant et
  *  étapes de caméra (cadres ramenés dans la zone utile). */
-function planLecteur(i: ImageDiapo, legende: string, instant: number, camera: { c: [number, number, number, number]; t: number }[], entier = true, entree = false, couleur = false) {
+function planLecteur(i: ImageDiapo, legende: string, instant: number, camera: { c: [number, number, number, number]; t: number }[], entier = true, entree = false, couleur = false,
+  vig?: ReturnType<typeof vignetteLecteur>) {
   const u = zoneUtileDe(i);
   return { en: entier ? entierDe(i, u) : null, ent: entree ? entreeDe(i, u) : undefined, img: urlMedia(d.slug, i.fichier), g: i.grand ? urlMedia(d.slug, i.grand.fichier) : undefined, u, l: (i.largeur ?? 1600) * (u[2] - u[0]), h: (i.hauteur ?? 1200) * (u[3] - u[1]),
-    alt: t(i.titre), legende, t: instant, camera: camera.map((e) => ({ c: versUtile(e.c, u), t: e.t })), coul: couleur && i.couleur ? couleurLecteur(i) : undefined, fond: entier ? fondLecteur(i) : undefined };
+    alt: t(i.titre), legende, t: instant, camera: camera.map((e) => ({ c: versUtile(e.c, u), t: e.t })), coul: couleur && i.couleur ? couleurLecteur(i) : undefined, fond: entier ? fondLecteur(i) : undefined, vig };
 }
 /** Série sans narration (galerie, lecture) : un cadre par image, tenu de son instant à la suivante. */
 function serieLecteur(images: ImageSerie[], duree: number, legende: (i: ImageDiapo) => string, situes: (number | null)[] = []) {
@@ -281,11 +308,14 @@ const donnees = {
         alt: t(ap.titre), legende: cartoucheImage(ap), t: a.t, camera: a.camera };
     })() : null,
     // Plans (spec 14) : images suivantes de la diapositive, chacune à son instant de la voix.
-    plans: x.plans?.length && !x.image.apres && !x.mosaique ? plansDe(x).map((p) => planLecteur(p.image, cartoucheImage(p.image, false, Boolean(p.image.couleur)), p.t, p.camera, true, true, true)) : null,
+    plans: x.plans?.length && !x.image.apres && !x.mosaique ? plansDe(x).map((p, k) => planLecteur(p.image, cartoucheImage(p.image, false, Boolean(p.image.couleur), Boolean(vignetteImage(p.image))), p.t, p.camera, true, true, true,
+      vignetteLecteur(p.image, x, x.plans![k].quand))) : null,
     // Image colorisée par IA (spec 16) : version posée sur la zone utile après un fondu lent (couleur.ts).
     coul: couleurDe(x) ? couleurLecteur(x.image) : undefined,
     // Fond prolongé d'une image entière (spec 17) : sous l'image, flouté, même transformation (fond.ts).
     fond: x.image.apres || x.mosaique ? undefined : fondLecteur(x.image),
+    // Dessin traversant sous une image entière (spec 17, essai 5 ; vignette.ts).
+    vig: vignetteDe(x) ? vignetteLecteur(x.image, x) : undefined,
     // Image mise en mouvement par IA (spec 16) : clip muet en boucle sur la zone utile (mouvement.ts).
     video: videoDe(x) ? { src: urlMedia(d.slug, videoDe(x)!.fichier), duree: videoDe(x)!.duree } : null,
     // Ambiance sonore du clip (spec 17, ambiance.ts) : jamais sans clip.
@@ -350,6 +380,9 @@ function friseHtml(classe: string) {
 const CALQUE_SUITE = '<img class="lecteur__couleur" alt="" decoding="async" aria-hidden="true" hidden />'
   + '<div class="lecteur__video" hidden><video muted playsinline preload="auto" disablepictureinpicture aria-hidden="true"></video></div>'
   + '<div class="lecteur__plans" hidden></div><div class="lecteur__apres" hidden><img alt="" decoding="async" /></div><span class="lecteur__trait" hidden></span><div class="mosaique" hidden></div>';
+// Avant l'image : son dessin traversant (spec 17, essai 5 ; vignette.ts), entre le fond prolongé et
+// l'image : deux éclaircies (une par bord) et le canevas.
+const CALQUE_DESSIN = '<div class="lecteur__vignette" data-k="-1" hidden aria-hidden="true"><i class="lecteur__eclaircie"></i><i class="lecteur__eclaircie"></i><canvas></canvas></div>';
 const sectionsLivre = d.actes.map((a, i) => ({
   ...a,
   diapos: d.diapositives.filter((x) => x.n >= a.debut && (i === d.actes.length - 1 || x.n < d.actes[i + 1].debut)),
@@ -363,8 +396,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
   <div class="lecteur" role="region" aria-label={typographie(`Diaporama : ${d.titre}`)}>
     <p class="lecteur__acte" aria-hidden="true"><span class="lecteur__acte-titre">{t(acteDe(1).titre)}</span> <span class="lecteur__acte-dates">{t(acteDe(1).dates)}</span></p>
     <div class="lecteur__scene">
-      <div class="lecteur__calque est-visible"><i class="lecteur__fond" hidden></i><img src={urlMedia(d.slug, premiere.image.fichier)} alt={t(premiere.image.titre)} width={premiere.image.largeur} height={premiere.image.hauteur} decoding="async" /><Fragment set:html={CALQUE_SUITE} /></div>
-      <div class="lecteur__calque"><i class="lecteur__fond" hidden></i><img alt="" decoding="async" /><Fragment set:html={CALQUE_SUITE} /></div>
+      <div class="lecteur__calque est-visible"><i class="lecteur__fond" hidden></i><Fragment set:html={CALQUE_DESSIN} /><img src={urlMedia(d.slug, premiere.image.fichier)} alt={t(premiere.image.titre)} width={premiere.image.largeur} height={premiere.image.hauteur} decoding="async" /><Fragment set:html={CALQUE_SUITE} /></div>
+      <div class="lecteur__calque"><i class="lecteur__fond" hidden></i><Fragment set:html={CALQUE_DESSIN} /><img alt="" decoding="async" /><Fragment set:html={CALQUE_SUITE} /></div>
       <div class="lecteur__clip"><div class="clip__voile"></div><div class="clip__texte"></div></div>
       <p class="lecteur__legende est-visible" set:html={cartouche(premiere)} />
       <p class="lecteur__musique" aria-live="off"></p>
@@ -461,6 +494,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
                 </figure>
               )}
               {couleurDe(x) && <Fragment set:html={livreCouleur(x.image)} />}
+              {vignetteDe(x) && <Fragment set:html={livreVignette(x.image)} />}
               {x.image.apres && (
                 <figure class="livre__apres">
                   <img src={urlMedia(d.slug, x.image.apres.fichier)} alt={t(x.image.apres.titre)} width={x.image.apres.largeur} height={x.image.apres.hauteur} loading="lazy" decoding="async" />
@@ -472,7 +506,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
                   <img src={urlMedia(d.slug, p.image.fichier)} alt={t(p.image.titre)} width={p.image.largeur} height={p.image.hauteur} loading="lazy" decoding="async" />
                   <figcaption set:html={`<span class="livre__marque">Puis :</span> ${legendeImage(p.image)}${agrandie(p.image)}`} />
                 </figure>
-              )).flatMap((f, k) => (couleurPlan(x, k) ? [f, <Fragment set:html={livreCouleur(x.plans![k].image)} />] : [f]))}
+              )).flatMap((f, k) => [f, ...(couleurPlan(x, k) ? [<Fragment set:html={livreCouleur(x.plans![k].image)} />] : []),
+                ...(!x.image.apres && !x.mosaique && vignetteImage(x.plans![k].image) ? [<Fragment set:html={livreVignette(x.plans![k].image)} />] : [])])}
               {x.mosaique && (
                 <div class="livre__mosaique">
                   <p class="livre__marque">{t(x.mosaique.legende)}</p>
@@ -640,6 +675,18 @@ const sectionsLivre = d.actes.map((a, i) => ({
     background-size: 100% 100%; background-repeat: no-repeat; will-change: transform, filter; pointer-events: none;
   }
   .lecteur__calque :global(.lecteur__fond[hidden]) { display: none; }
+  /* Dessin traversant (spec 17, essai 5, révision du 2026-10-14) : sous l'image entière, au-dessus de son
+     fond prolongé (dans le calque, ou dans le fond noir d'un plan) ; place, taille et opacités viennent
+     du script (vignette.ts, calé sur l'horloge de la voix, aucune transition CSS). Une éclaircie
+     (dégradé radial clair, sans bord) sous chaque bord. */
+  .lecteur__calque :global(.lecteur__vignette) { position: absolute; inset: 0; overflow: hidden; pointer-events: none; will-change: opacity; }
+  .lecteur__calque :global(.lecteur__vignette[hidden]) { display: none; }
+  .lecteur__calque :global(.lecteur__eclaircie) {
+    position: absolute; display: block;
+    background: radial-gradient(closest-side, rgba(255, 250, 240, 0.42) 0%, rgba(255, 250, 240, 0.3) 55%, rgba(255, 250, 240, 0.12) 80%, rgba(255, 250, 240, 0) 100%);
+  }
+  .lecteur__calque :global(.lecteur__eclaircie[hidden]) { display: none; }
+  .lecteur__calque :global(.lecteur__vignette canvas) { position: absolute; display: block; }
   .lecteur__calque :global(.lecteur__trait) {
     position: absolute;
     top: 0;
@@ -1111,6 +1158,12 @@ const sectionsLivre = d.actes.map((a, i) => ({
      (classe `en-couleur` posée par couleur.ts) ; jamais avec « réduire les animations ». */
   .lecteur__legende :global(.lecteur__legende-couleur) { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.6s ease, opacity 0.9s ease; }
   .lecteur.en-couleur .lecteur__legende :global(.lecteur__legende-couleur) { max-height: 3em; opacity: 1; }
+  /* Vignette dessinée (spec 17, essai 5) : même ligne repliée, dépliée tant que le dessin est à
+     l'écran (classe `en-vignette`, vignette.ts) ; gardée avec « réduire les animations » (le dessin y
+     paraît entier, sans tracé). */
+  .lecteur__legende :global(.lecteur__legende-dessin) { font-size: 0.78rem; letter-spacing: 0.04em; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.6s ease, opacity 0.9s ease; }
+  .lecteur.en-vignette .lecteur__legende :global(.lecteur__legende-dessin) { max-height: 3em; opacity: 1; }
+  .livre :global(.livre__vignette img) { width: 100%; height: auto; }
   .livre__video video { display: block; width: 100%; height: auto; background: #000; }
 
   /* Plein écran : fond blanc cassé ; légende et contrôles s'effacent après inactivité. */

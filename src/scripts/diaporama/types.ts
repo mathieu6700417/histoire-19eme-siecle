@@ -38,6 +38,8 @@ export interface Diapo {
   coul?: Couleur | null;
   /** Fond prolongé de l'image entière (spec 17) : posé sous elle, flouté, même transformation (fond.ts). */
   fond?: Fond | null;
+  /** Dessin traversant sous l'image entière (spec 17, essai 5, vignette.ts). */
+  vig?: Vignette | null;
   /** Segment joué après la voix (et sa pause) : intermède chanté, lecture ou épisode. */
   suite: Suite | null;
   /** Carte de lieu : fenêtre [a, b) (s de l'audio), point (%) dans le fond, partie du plan de
@@ -66,9 +68,13 @@ export interface Couleur { src: string; u: Rect }
 /** Fond prolongé d'une image entière (spec 17, fond.ts) : `b` = boîte de l'image dans le fichier de
  *  fond (fractions du fond) ; `fort` : flou fort (le fond net montre une invention à cacher). */
 export interface Fond { src: string; b: Rect; fort: boolean }
+/** Dessin traversant (spec 17, essai 5, révision du 2026-10-14 ; vignette.ts) : encre (`src`, `l` × `h`
+ *  px, au format de l'écran), tracés (`tr`, JSON compact), instant `t` (s de la voix) du passage qui le
+ *  déclenche (null : départ par défaut). */
+export interface Vignette { src: string; tr: string; t: number | null; l: number; h: number }
 export interface Entier { v: Rect | null; z: number }
 export interface Entree { c: Rect[]; d: number }
-export interface Plan { img: string; g?: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[]; en?: Entier | null; ent?: Entree | null; coul?: Couleur | null; fond?: Fond | null }
+export interface Plan { img: string; g?: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[]; en?: Entier | null; ent?: Entree | null; coul?: Couleur | null; fond?: Fond | null; vig?: Vignette | null }
 export interface Objet { a: number; b: number; src: string; ratio: number; nom: string; legende: string; cote: 'gauche' | 'droite' }
 /** Intermède chanté : paroles [instant, vers, début de chaque mot (`motsLus`) ou null : vers
  *  entier à son début]. */

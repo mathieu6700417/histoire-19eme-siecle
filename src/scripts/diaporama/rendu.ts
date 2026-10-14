@@ -50,6 +50,7 @@ export function installerRendu(lec: Lecteur) {
     preparerVideo(c, x);
     lec.preparerCouleur(c, x);
     lec.preparerFond(c, x);
+    lec.preparerVignette(c, x);
   }
   lec.legendeMontree = '';
 
@@ -86,7 +87,7 @@ export function installerRendu(lec: Lecteur) {
   function rendre(t = instant()) {
     lec.majVolets();
     const c = calques[lec.visible], x = couches[lec.visible].x;
-    if (x !== D.diapos[lec.i]) { lec.marquerCouleur(0); lec.arreterAmbiance(); return; } // carton : l'image de la diapositive n'est pas encore entrée
+    if (x !== D.diapos[lec.i]) { lec.marquerCouleur(0); lec.marquerVignette(0); lec.arreterAmbiance(); return; } // carton : l'image de la diapositive n'est pas encore entrée
     const img = c.querySelector('img')!;
     const reduit = mouvementReduit.matches;
     // Pendant l'ouverture du carton, l'entrée et la caméra suivent l'horloge du carton (figée
@@ -129,6 +130,10 @@ export function installerRendu(lec: Lecteur) {
     // Fond prolongé d'une image entière (spec 17) : sous l'image, même transformation, même gris.
     if (x.fond) lec.majFond(c, x, img.style.transform, gris);
     lec.marquerCouleur(lec.lance && !lec.enCarton ? (op >= 0 ? op : oc) : 0);
+    // Dessin traversant sous une image entière (spec 17, essai 5) : calé sur la voix ; le cartouche le
+    // signale tant qu'il est à l'écran.
+    const ov = x.vig || x.plans?.some((p) => p.vig) ? lec.majVignette(c, x, tv) : 0;
+    lec.marquerVignette(lec.lance && !lec.enCarton ? ov : 0);
     c.style.opacity = opacite.toFixed(3);
     if (opacite >= 1 && lec.sortant >= 0) {
       calques[lec.sortant].style.opacity = '0';

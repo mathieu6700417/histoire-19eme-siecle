@@ -28,7 +28,7 @@ lecture du journal de bord par des `colab exec` courts toutes les 60 s, `colab d
 sortie dans `bruts/`, puis `colab stop` (toujours, même en cas d'erreur : une session oubliée coûte
 des unités). `--garder` laisse la session ouverte pour une reprise. Dépendances : Pillow, ffmpeg, colab.
 """
-import html, io, json, math, shutil, subprocess, sys, time, zipfile
+import html, io, json, math, re, shutil, subprocess, sys, time, zipfile
 from pathlib import Path
 
 from PIL import Image
@@ -232,14 +232,33 @@ def lancer(slug: str, gpu: str, session: str | None, profil: str, seulement: str
               f'import subprocess; subprocess.Popen("nohup env {env} python3 {R}/mouvement.py > {R}/out/log.txt 2>&1 &", shell=True); print("lancé")'))
         lu = 0
         debut = time.time()
+        echecs = 0
+        rapatries: set[str] = set()
         while True:
             time.sleep(60)
             try:
                 texte = colab('exec', '-s', session, '--timeout', '30', silencieux=True, timeout=60, essais=1,
                               code=f'import os; p="{R}/out/log.txt"; print(open(p, encoding="utf-8").read() if os.path.exists(p) else "")')
+                echecs = 0
             except (SystemExit, subprocess.TimeoutExpired) as e:
                 print(f'  (lecture du journal impossible : {e}) ')
+                echecs += 1
+                # Session perdue (2026-10-14 : « Session … not found » pendant une heure) : on cesse d'attendre.
+                if 'not found' in str(e) or echecs >= 10:
+                    print('session injoignable : suivi arrêté (clips déjà rapatriés gardés dans bruts/)')
+                    break
                 continue
+            # Chaque clip annoncé avant le dernier est fini : on le rapatrie aussitôt, pour ne pas tout
+            # perdre si la session disparaît (2026-10-14 : onze clips perdus avec la session).
+            annonces = re.findall(r'(\d{3}-mouvement\.mp4) :', texte)
+            for nom in annonces[:-1]:
+                if nom not in rapatries:
+                    try:
+                        colab('download', '-s', session, f'{R}/out/{nom}', str(bruts / nom), silencieux=True, timeout=600)
+                        rapatries.add(nom)
+                        print(f'  ← {nom}')
+                    except (SystemExit, subprocess.TimeoutExpired) as e:
+                        print(f'  ({nom} non rapatrié pour l\'instant : {e})')
             nouveau = texte[lu:]
             if nouveau.strip():
                 print(nouveau.rstrip())

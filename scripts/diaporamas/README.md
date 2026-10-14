@@ -60,6 +60,7 @@ garde le numéro d'origine ; l'identifiant et la capture ne changent pas ; `--es
 | `couleur.py` | Images colorisées par IA (spec 16) : `publier <slug> <lot.json> [--seulement 86 34b] [--sauf …] [--jugement bon] [--essai]` (retrouve chaque image par son `commons`, contrôle zone utile et taille, copie `NNN-couleur.webp` / `NNN-b-couleur.webp`, écrit `image.couleur`, consigne la recette dans `src/data/diaporamas/generation/<slug>-couleur.json`), `retirer <slug> 86 34b` (ou `--tout`), `lister <slug>` (voir « Couche générée », « Colorisation »). |
 | `ambiance.py` | Ambiances sonores des clips (spec 17) : consigne dans le lot de génération, calcul EzAudio sur Colab (`scripts/colab/ambiance.py`), normalisation, page d'écoute, `publier | retirer`. Voir « Ambiances sonores des clips ». |
 | `fond.py` | Fonds prolongés des images entières (spec 17) : `preparer | lancer [--passe 2] | rapatrier | relire | planche | publier | retirer | lister`, FLUX.2 klein 4B sur Colab (`scripts/colab/fond.py`), deux passes. Voir « Fonds prolongés des images entières ». |
+| `vignettes.py` | Dessins traversants sous les images entières (spec 17, essai 5 ; **règle pour les périodes 06 et suivantes**) : `preparer | lancer | rapatrier | arreter | tracer | planche | publier | retirer | lister`, Z-Image-Turbo sur Colab (`scripts/colab/vignettes.py`), trait extrait par `vignettes_trace.py --plein` (venv `.cache/venv-vignettes`). Lot écrit à la main : `src/data/diaporamas/generation/<slug>-vignettes.json`. Voir « Dessins traversants (spec 17, essai 5) ». |
 | `nettete.py` | Netteté, variantes grand écran (spec 17) : mesure au cadre le plus serré, variante depuis l'original de Commons ou Real-ESRGAN sur Colab (`scripts/colab/nettete.py`), `publier | retirer`. **Révolution seulement, suspendue ailleurs** (spec 17). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
@@ -202,7 +203,8 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
    et relire ses planches (voir « Paroles des chants » ci-dessous).
 7. Cartes de lieu, citations, portraits, objets, manuscrits, chiffres et dates : remplir `lieux`, `citations`, `personnes`, `personnes_vues`, `objets`, `manuscrits`, `chiffres` et `dates_republicaines` (voir ci-dessous ; `portraits.py` pour le registre et la visibilité, `objets.py` pour le registre des objets), lancer
    `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
-8. Images mises en mouvement (spec 16, à partir de la période 05) : écrire le lot
+8. Images mises en mouvement (spec 16, à partir de la période 05 ; **la diapositive 1 en fait toujours partie**,
+   avec son ambiance : règle du 2026-10-14, scène animable en largeur choisie par l'agent A) : écrire le lot
    `src/data/diaporamas/generation/<slug>.json` (une dizaine de diapositives choisies dès l'étape 1,
    une consigne anglaise et une graine chacune), puis `generation.py preparer`, `lancer` (Colab par
    la CLI, ≈ 2 h 30 de machine par période, session arrêtée à la fin), planche de visionnage, `publier`
@@ -216,7 +218,31 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
    prolongés des images entières »). Zéro Gemini.
    La **netteté** (`nettete.py`, spec 17) n'est appliquée qu'à la Révolution : ne pas la lancer sur
    une autre période sans demande de l'utilisateur.
-10. `verifier.py <slug>` puis `npm run build`.
+10. **Colorisation « couleur seule »** (spec 16, règle depuis le 2026-10-14) : gravures, lithographies
+   et photographies monochromes de scènes et de lieux (ni portraits, ni peintures, ni documents, ni
+   caricatures, ni images à clip, avant / après ou mosaïque) ; lot fabriqué sur Colab par la CLI
+   (FLUX.2 klein 4B, chrominance seule), relu image par image, puis `couleur.py publier` (voir
+   « Colorisation »). Une seule session Colab à la fois. Zéro Gemini.
+11. **Dessins traversants sous les images entières** (spec 17, essai 5 ; règle pour les périodes 06 et
+   suivantes, détail dans la spec 17, « Révision après visionnage du pilote ») :
+   1. après la caméra, les images entières et les fonds prolongés (étape 9), choisir **une trentaine**
+      d'images entières (35 au plus, une par diapositive) : `vignettes.py preparer` liste pour chaque
+      entrée du lot sa marge, sa fenêtre et les surimpressions qui la gênent ; écarter celles dont une
+      surimpression de coin (portraits, médaillon de lieu, objet, manuscrit) ou une citation tombe pendant
+      le dessin (ou poser `quand` après elle), celles dont la fenêtre est trop courte pour 8 s ;
+   2. écrire le lot `src/data/diaporamas/generation/<slug>-vignettes.json` : pour chaque image, `gauche`
+      et `droite`, ce que montre chaque bord en anglais, **lieux et objets seulement, aucun personnage**
+      (l'atelier vide avec ses outils, la paillasse et ses ballons, le quai et son vapeur), une `graine`,
+      au besoin `quand` ; le `style` commun est repris de la 06 ;
+   3. `preparer`, `lancer` (une session Colab par la CLI, vérifiée vide avant, arrêtée à la fin ; A100
+      si disponible, sinon L4 : ≈ 50 s par dessin, environ 1 h 15 et 2 unités pour 30 images × 3
+      tirages), `tracer`, `planche` ;
+   4. relire chaque tirage (montages `releve/`, centre caché grisé) : personnage, cadre, faux texte,
+      anachronisme, centre chargé → autre tirage ou `"jugement": "ecarte"` ; noter `tirage`,
+      `jugement`, `raison` dans le lot ;
+   5. `publier`, puis `verifier.py <slug>` (famille « vignettes (essai 5) ») et des captures (mi-tracé et
+      fin). Zéro Gemini.
+12. `verifier.py <slug>` puis `npm run build`.
 
 Chaque agent termine son étape par `verifier.py <slug> --etape A` (ou `B`, `C`), et lance
 `gemini.py --solde` avant une étape payante (voir « Vérification par étape et solde Gemini »).
@@ -691,6 +717,14 @@ contrôle.
   milieu d'une phrase. `verifier.py` télécharge la page publique et cherche chaque paragraphe
   (chaque vers) mot pour mot, comme `npm run verifier:ecrivains`. Reprendre d'abord les extraits
   du chapitre écrivains de la période (`ecrivains` : id de l'extrait, pour mémoire).
+- **Voix d'une lecture** (2026-10-14, bilan de la période 05) : champ facultatif `voix_genre`
+  (`"femme"` | `"homme"`) à la racine de la lecture, ou `voix` (nom d'une voix Gemini, prioritaire).
+  Femme : `VOIX_LECTURE` (Aoede, `DIAPORAMAS_VOIX_LECTURE`) ; homme : `VOIX_LECTURE_HOMME` (Schedar,
+  `DIAPORAMAS_VOIX_LECTURE_HOMME`, distincte du narrateur Charon : la voix d'homme du pilote, retenue
+  après les essais du 2026-10-07, `.cache/diaporamas/essais-voix-lecture/`) ; sans ces champs, la voix de femme comme avant (les
+  lectures des périodes 01 à 05 ne sont pas refaites ; `auteur.voix` reste sans effet). L'empreinte
+  d'une lecture ne porte que sur son texte ; la voix qui l'a dite est notée dans `voix.json` (`voix`)
+  et `voix.py` refait la lecture si elle change. `verifier.py` ne contrôle pas encore cette voix.
 - Texte lu (`texte_lu`, `texteLu`) : paragraphes sans les coupures, joints par une espace, vers
   joints par une espace : les positions de caractères sont celles de l'affichage.
 - **Minutage mot par mot** (`audio.mots` : `[[début, fin], …]` en secondes, un couple par mot
@@ -715,10 +749,10 @@ contrôle.
   portrait). Mouvement réduit : apparition par phrase. Téléphone : portrait en vignette au-dessus.
   Poème (`poeme`, ou texte contenant des `\n`) : un vers par ligne (`.citation__vers`), retrait
   suspendu pour un vers trop long, en italique ; le surlignage mot à mot est inchangé.
-- Voix de lecture (`VOIX_LECTURE` dans `voix.py`, ou `DIAPORAMAS_VOIX_LECTEUR` /
-  `DIAPORAMAS_VOIX_LECTRICE`) : `Schedar` (homme) et `Aoede` (femme), **choix provisoire** ;
-  essais à écouter dans `.cache/diaporamas/essais-voix-lecture/`. Changer de voix change
-  l'empreinte : `voix.py` refait les lectures concernées.
+- Voix de lecture (`VOIX_LECTURE` et `VOIX_LECTURE_HOMME` dans `voix.py`) : `Aoede` (femme, défaut
+  de toutes les lectures depuis le 2026-10-07) et `Schedar` (homme, sur demande d'une lecture : voir
+  « Voix d'une lecture » plus haut) ; essais à écouter dans `.cache/diaporamas/essais-voix-lecture/`.
+  Changer la voix d'une lecture la fait refaire par `voix.py`.
 - `portrait` : `diapositive` (image d'une diapositive, recadrée sur `cadre`, le visage) ou
   `commons` (fichier propre, licence relevée par `images.py`, `lectures/<id>.webp`, 640 px).
   Sans portrait, rien à sa place : le texte occupe toute la largeur (pas d'initiale).
@@ -1025,7 +1059,9 @@ signature ou la phrase, relevé à la main sur l'image quadrillée et vérifié 
   courte, 50 caractères environ), `date`, `musee`, `inventaire`, `commons`, `recadrage`,
   `detourage` (`convexe` pour une assiette ou une médaille), `halo` et `passage` (manuscrit) ;
   `objets.py --registre` écrit `fichier`, `largeur`, `hauteur`, `licence`, `page`, `auteur_photo`
-  (licence CC BY : crédit obligatoire).
+  (licence CC BY : crédit obligatoire). Une entrée déjà faite (fichier et métadonnées là) reste
+  intacte, sans relecture de Commons, sauf `--force` ; un `auteur_photo` saisi à la main quand le
+  champ Artist de Commons est vide (Wellcome) n'est plus vidé, même avec `--force` (2026-10-14).
 - Détourage : rembg (`isnet-general-use`) sur l'image réduite à 2 000 px, masque durci (seuils 40
   et 215), couleurs de l'original ; pour une faïence blanche, le modèle prend le blanc pour le fond :
   `detourage: "convexe"` remplace le masque par son enveloppe convexe. Rogné sur l'objet (marge de
@@ -1064,6 +1100,10 @@ l'objet avec la surimpression de son coin ni le manuscrit avec la citation ; obj
 en avertissement.
 
 Révolution : 10 objets, 3 manuscrits (liste avec `objets.py revolution --relever`).
+Second Empire (2026-10-14) : 13 objets (cinq médailles et une pièce de 5 centimes de Carnavalet, berceau du prince
+impérial, crinoline-cage et robe de Worth du Met, bombe d'Orsini, moteur Lenoir, microscope de Pasteur, fusil
+Chassepot) et 3 manuscrits (copeau des *Châtiments*, maison de Victor Hugo ; plans de *Madame Bovary*, Rouen ; registre
+de laboratoire de Pasteur, juin 1863, BnF).
 1848 et la IIe République (2026-10-12) : 11 objets (dix médailles de Carnavalet et le jeton du banquet réformiste) et
 3 manuscrits (laissez-passer de Lamartine, BnF ; brouillon du décret d'abolition annoté par Schœlcher, ANOM ; note de
 Hugo sur sa chambre de Bruxelles, Hauteville House).
@@ -1167,6 +1207,10 @@ après), volet tenu dans la voix ; 4 à 6 vignettes présentes et sous licence, 
 de la diapositive, zones utiles, pas sur une ouverture d'acte, grille et plongée tenues dans la voix ;
 dosage (3 à 4 avant/après, 2 mosaïques) en avertissement. `renumeroter.py` renomme aussi les
 `NNN-apres.webp` et `NNN-mK.webp`.
+
+Second Empire (2026-10-14) : avant/après 11 (Pierrefonds en ruine → restauré), 39 (la place du Carrousel → le
+chantier du Louvre, Baldus), 112 (*La Naissance de Vénus* de Cabanel → *Olympia* de Manet) ; mosaïques 10 (la
+crinoline) et 21 (Fenton en Crimée) ; 147 changée en diapositive à plan (têtes à des échelles incompatibles).
 
 1848 et la IIe République (2026-10-12) : avant/après 22 (arbre de la liberté planté → abattu, 1850), 45 (la rue
 Saint-Maur avant et après l'assaut, daguerréotypes de Thibault), 106 (Louis-Napoléon gravé en 1848 → par Le Gray en
@@ -1283,6 +1327,7 @@ est découpé en modules TypeScript dans `src/scripts/diaporama/`. Ouvrir direct
 | `ambiance.ts` | spec 17 : ambiance sonore d'un clip (`x.amb`), un élément audio calé sur l'horloge de la voix avec le clip, niveau `AMBIANCE_DB`, suit le bouton « Musique » et le volume ; `__ambiance()` |
 | `couleur.ts` | spec 16 : version colorisée par IA d'une image (`x.coul`, `p.coul` d'un plan), posée sur la zone utile avec la transformation de l'image, fondu lent calé sur l'horloge de la voix (`opaciteCouleur`), mention du cartouche (`en-couleur`), préchargement |
 | `fond.ts` | spec 17 : fond prolongé d'une image entière (`image.fond`), posé sous l'image et sous les plans avec la transformation de l'image ; flou constant à l'écran, réglages `FOND_*` de `constantes.ts`. |
+| `vignette.ts` | spec 17, essai 5 : dessin traversant sous une image entière (`x.vig`, `p.vig` d'un plan) : canevas plein scène entre le fond prolongé et l'image (dans le fond noir pour un plan), posé à la hauteur de l'image au repos, centré ; marges mesurées sur toute la fenêtre de l'image, tracés des marges gardés, une plume par bord en `VIGNETTE_DUREE` s calée sur l'horloge de la voix, éclaircie sous chaque bord, effacement pendant un chiffre ou une surimpression, mention du cartouche (`en-vignette`), préchargement ; `creerVignette` pour les plans ; réglages `VIGNETTE_*` de `constantes.ts` |
 | `rendu.ts` | préparation des calques, `instant`, `rendre`, boucle d'animation, `montrerImage` |
 | `frise.ts` | frise du carton et du bas de l'image, poussée des surimpressions |
 | `textes.ts` | cartouche (fondu croisé, estompe) et sous-titre |
@@ -1497,7 +1542,8 @@ python3 scripts/diaporamas/captures.py revolution 1:c5 2:12.5 20:5.5 7:s20 --dis
   le temps écoulé diffèrent d'un build antérieur (décalés de l'ouverture) : comparer les autres zones.
 - `--appareil ordinateur|telephone|les-deux` (1280 × 760, 390 × 844) ; fichiers `o-<n_t>.png`,
   `t-<n_t>.png` ; `--planche` : `planche.png` (3 colonnes, légendées) ; `--attente` : ms d'horloge
-  factice avant de poser l'instant (2 500 par défaut : entrée finie, frise du bas encore là).
+  factice avant de poser l'instant (2 500 par défaut : entrée finie, frise du bas encore là ; 9 000
+  au moins, d'office, pour une diapositive qui ouvre un acte : ouverture du carton et recul finis).
 - `--comparer DOSSIER` : différence pixel à pixel avec les PNG de même nom, `ecart-<nom>.png` pour
   chaque écart, code de sortie 1 s'il y en a. Ne regarder que les écarts.
 - Serveur statique intégré sur un port libre (`astro preview` refuse une seconde instance) ;
@@ -1532,6 +1578,9 @@ Procédure pour une période (après `utile.py` et `surimpressions.py`, qui fixe
    d'une diapositive à plans a la narration et le minutage de sa fenêtre : `tache-100.md`, `tache-100b.md`),
    en lots `lot-K/` avec chacun son `LISEZMOI.md`. Exclus : `camera_manuelle`, plans sans `instant`,
    avant/après, image principale d'une mosaïque ; lectures et galeries restent à `camera.py`.
+   **Pas de tâche pour une image entière** (2026-10-14) : avec `--toutes` ou `--statiques`, une vue qui
+   est en image entière (`image.entier`) ou y passera (règle de `camera.py --entiers`) est laissée de
+   côté et listée (`entieres` dans `taches.json`) ; `--avec-entieres` garde ces tâches, `--n` aussi.
 2. Un sous-agent par lot : « Lis `<dossier>/lot-K/LISEZMOI.md` et suis-le » ; il écrit `reponse-NNN.sonnet.json`.
 3. Second tour (facultatif) : `… relire <dossier>/lot-K [--fautives]` écrit `retour-NNN.sonnet.md`
    (erreurs à corriger, ou relance des tenues longues et relecture des cadres dessinés) ; l'agent
@@ -1542,6 +1591,27 @@ Procédure pour une période (après `utile.py` et `surimpressions.py`, qui fixe
    erreur ni repli, d'au moins autant d'étapes que l'actuelle (`--strict` : plus d'étapes ou tenue plus
    courte), sur les vues inchangées depuis la préparation. Sauvegarde `sauvegarde-<horodatage>.json` ;
    `… restaurer <dossier>` remet les caméras remplacées (celles changées depuis sont laissées, sauf `--force`).
+   Il pose aussi les réponses « image entière » (ci-dessous) et, aux images entières laissées sans tâche
+   qui n'ont pas de caméra, une étape sur la zone utile (exigée par `verifier.py`, non jouée ; cache
+   `source: "entier"`). Lancer ensuite `camera.py <slug> --entiers` comme d'habitude.
+
+Vue réelle et image entière dans la tâche (2026-10-14, bilan de la période 05) :
+- Section « Vue réelle » : le calcul du lecteur avec les nombres de l'image (hauteur maximale utile,
+  largeur de la bande, coupe par le haut, haut repoussé de 0,2 × la hauteur de vue sous le cartouche,
+  bas de 0,15, resserrement de 12 % du zoom lent) et trois exemples calculés par `camera.vue_reelle` et
+  `camera.vue_zoomee` (zone utile entière, cadre haut et étroit, bande sur le plus grand visage) avec
+  les visages qu'ils coupent.
+- **Réponse « image entière »** : pour un groupe de visages serrés qu'aucune vue ne montre sans couper
+  une tête, l'agent rend `{"entier": true, "vers": [x0, y0, x1, y1] | null, "raison": "…"}` à la place
+  des étapes (un cadre qui ne montre pas le sujet est pire qu'un repli : plus de détail de col, de
+  bande sans visage ni de marge). La tâche le signale d'office quand aucune vue ne montre la moitié
+  des visages nets (6 % de la hauteur au moins), ou plus d'un. `noter` la compte à part ; `relire` n'en
+  fait pas de retour, et rappelle cette réponse dans les retours d'erreurs ; `appliquer` pose `entier`,
+  `entier_manuel`, `entier_vers` (le `vers` de la réponse) et `entier_zoom` (calculé comme
+  `--entiers`), comme la correction à la main de « Images entières sur fond noir ». Refusée sur une
+  image à clip, à `camera_manuelle` ou déjà réglée ; `restaurer` remet l'état d'avant.
+- Une image entière sans tâche n'a pas de cadre nommé par la narration : `--entiers` la rapproche
+  de la tête (portrait) ou du centre. Pour viser un sujet : `entier_vers` à la main, ou `--avec-entieres`.
 
 Entrée en scène (2026-10-12) : la tâche d'une image qui peut en recevoir une (ni portrait, ni document,
 ni `ouverture`, ni avant/après, ni mosaïque, ni clip, ni première image d'un acte) porte une section
@@ -1773,7 +1843,8 @@ d'eux-mêmes, `essais`), et une session ouverte par un autre travail bloque tout
 
 Gravures, lithographies et photographies monochromes de scènes : le lecteur montre l'original, puis
 un fondu lent vers une version colorisée (seule la chrominance change, le trait est celui de
-l'original). Pilote : période 05, 46 images (2026-10-12).
+l'original). Pilote : période 05, 46 images (2026-10-12) ; **règle pour toutes les périodes depuis le
+2026-10-14** (décision de l'utilisateur).
 
 ```bash
 # Lot fabriqué et jugé hors du site (Colab ; .cache/diaporamas/photos-qwen/<slug>/final-couleur.json)
@@ -1784,6 +1855,13 @@ python3 scripts/diaporamas/couleur.py retirer deuxieme-republique 86 34b     # o
 python3 scripts/diaporamas/verifier.py deuxieme-republique && npm run build
 ```
 
+- **Fabrication** (hors chaîne) : sélection et consignes par les scripts de `.cache/diaporamas/photos-qwen/`
+  (`inventaire.py`, `selection.py <NN-slug> --preparer` avec `<slug>/decisions.json` portant la consigne
+  de chaque image ; période 06 : `second-empire/consignes.py`, `second-empire/fusionner.py`) ; calcul par
+  **`scripts/colab/couleur.py`** (FLUX.2 klein 4B, kit `manifeste.json` + `<nom>.jpg`, `GRAINES=1852,7`
+  pour deux graines d'emblée, lancé en `nohup`, état lu par `colab exec -f`, journal de bord fini par
+  « FIN ») ; fusion luminance / chrominance (saturation 0,7) et planches sur le Mac, relecture, puis
+  `final-couleur.json` pour `publier`.
 - **Données** : `image.couleur` `{ fichier, largeur, hauteur, modele, genere_le }` sur l'image d'une
   diapositive ou d'un plan ; fichier `public/diaporamas/<slug>/NNN-couleur.webp` ou
   `NNN-b-couleur.webp`, **exactement aux dimensions de la zone utile en pixels** (arrondi de chaque
@@ -2014,3 +2092,75 @@ des deux côtés, prise sur ce bord de l'image ou dans ses coins.
   de fond et un fondu dans `fond.ts`, à décider).
 - **Limite connue** : sur les décors, la jonction entre l'image élargie et les bandes de la passe 2
   reste visible net et se devine parfois à 0,25 % (Méduse 23, pompe à feu 58b).
+
+## Dessins traversants (spec 17, essai 5)
+
+Spec 17, « Vignettes dessinées dans la marge des images entières (essai 5) », son « Verdict » et la
+« Révision après visionnage du pilote : dessins traversants, simples, sans personnage » (2026-10-14).
+**Règle pour les périodes 06 et suivantes.** Sous une image montrée en entier (`image.entier`), un seul
+dessin à la plume, **généré par IA** (Z-Image-Turbo) d'après ce que dit la voix, au format de l'écran :
+une esquisse simple, **sans personnage**, dont on ne voit que les deux bords, dans les marges ; le
+centre, laissé vide, est caché par l'image. Les deux bords se tracent ensemble en 8 s, une plume par
+bord, contours d'abord, à vitesse constante ; le tracé découvre l'encre du dessin généré lui-même. Écart
+assumé à la règle des documents d'époque (spec 16) : signalé au cartouche (« dessin généré par IA »),
+dans le livre d'images (le dessin entier) et sur la page de la période (« Dessins générés ») ; 35 au plus.
+
+```jsonc
+"image": { …, "entier": true,
+  "vignette": { "fichier": "031-vignette.webp",     // encre : RVB noir, alpha = encre, au format de l'écran
+                "traces": "031-vignette.json",      // tracés ordonnés, compacts (vignettes_trace.py --plein)
+                "centre": [0.29, 0.71],             // part de la largeur cachée par l'image au rapprochement final
+                "quand": "Tout être vivant vient d'un germe",   // facultatif : passage qui déclenche le trait
+                "largeur": 1792, "hauteur": 768,
+                "modele": "Tongyi-MAI/Z-Image-Turbo", "genere_le": "2026-10-14" } }
+```
+
+```sh
+python3 scripts/diaporamas/vignettes.py preparer <slug>        # lot → consignes composées ; marges, fenêtres, surimpressions
+python3 scripts/diaporamas/vignettes.py lancer <slug> --gpu A100   # une session (CLI colab), 3 tirages, arrêtée à la fin (L4 si A100 indisponible)
+python3 scripts/diaporamas/vignettes.py tracer <slug>          # encre et tracés de chaque tirage (venv .cache/venv-vignettes)
+python3 scripts/diaporamas/vignettes.py planche <slug>         # releve/<nom>.jpg (trois tirages, centre caché grisé) et planche.html animée
+#   relecture : « tirage », « jugement » (« bon » | « ecarte ») et « raison » dans le lot, puis :
+python3 scripts/diaporamas/vignettes.py publier <slug> [--seulement 31,34b] [--essai]
+python3 scripts/diaporamas/vignettes.py retirer <slug> 31 34b  # ou --tout
+python3 scripts/diaporamas/vignettes.py lister <slug>
+```
+
+- **Lot** (écrit à la main, il sert de recette) : `style` (commun : esquisse simple, peu de traits, sans
+  hachures ni ombres, **no people, no human figures, empty scene**, ni texte, ni cadre, ni drapeau ou
+  insigne), `modele`, et une entrée par image : `n` (« 31 », « 34b » ; `renumeroter.py` les tient à
+  jour), `gauche`, `droite` (ce que montre chaque bord, en anglais : lieux, objets, décors), `graine`
+  ou `reprise` (« essai-simple:031-C-zimage » : tirages de l'essai repris), `quand` (facultatif), puis
+  `tirage`, `jugement`, `raison`.
+- **Format et place.** Le dessin est demandé au format de la scène la plus large du lecteur (1792 × 768,
+  2,33:1, ordinateur fenêtré). Le lecteur le pose à la hauteur de l'image entière au repos, sur son bas,
+  centré sur elle ; sur une scène plus étroite que lui (plein écran 16:9, 16:10, grand écran fenêtré,
+  jusqu'à 1,45:1), il le réduit à la largeur de la scène : ses deux bords restent visibles, plus petits
+  (capture du 2026-10-14 : rognés, les objets dessinés près des bords disparaissaient). `preparer` compose donc la consigne d'après la place réelle de l'image (zone
+  utile × `entier_zoom`) : la part du centre à laisser vide, la bande de chaque côté où poser l'objet
+  (entre le bord de l'image et celui de la scène la plus étroite, 1,6 hauteur d'image), les bords
+  extérieurs réduits au sol et au ciel. Un dessin d'un autre format (reprises de l'essai, 16:10) se pose
+  de même, à la hauteur de l'image, centré.
+- **Choisir les images.** Plutôt en hauteur (rapport ≤ 0,9 : marge d'au moins 0,16 hauteur d'image sur la
+  scène la plus étroite) ; une seule par diapositive ; **aucune surimpression de coin ni citation
+  pendant le dessin** (elles couvrent une marge ou le bas : `preparer`, `publier` et `verifier.py` le
+  refusent, d'après les fenêtres arbitrées comme dans le lecteur) ; un chiffre clé ou une date
+  républicaine l'efface le temps de leur passage (avertissement) ; une fenêtre d'au moins 8 s depuis
+  le départ, sinon le tracé finit après l'image (avertissement : avancer `quand`).
+- **Relecture** (`planche`, montages `releve/`) : personnage (même de dos, même minuscule), cadre ou
+  bordure, faux texte (écriteau, signature), anachronisme (machine ou bicyclette d'une autre époque),
+  centre chargé (le centre est caché : un sujet posé là est perdu) → autre tirage, sinon écart.
+- **Trait** (`vignettes_trace.py --plein`) : papier aplani, taches retirées, ni recadrage ni fondu des
+  bords ; tracés extraits sur 1 000 px de large (squelette en polylignes « de plume »). Le lecteur ne
+  lit pas le minutage du fichier : il garde les tracés des marges visibles et les minute lui-même.
+- **Lecteur** (`vignette.ts`) : canevas plein scène entre le fond prolongé et l'image (pour un plan :
+  dans son fond noir, après son fond prolongé ; un plan qui couvre l'image couvre son dessin) ; marges
+  mesurées à l'écran sur toute la fenêtre de l'image (rapprochement compris) ; éclaircie sous chaque bord ;
+  départ : `quand`, jamais avant 2 s (image de la diapositive) ou 1,2 s (plan) ni avant la fin de
+  l'entrée en scène ; calé sur la voix (figé en pause, repeint après un saut en arrière) ; s'efface
+  pendant un chiffre, une date ou une surimpression ; mouvement réduit : le dessin paraît entier ; rien
+  sur une scène de moins de 700 px (téléphone).
+- **Historique.** Premier pilote du 2026-10-14 : 29 vignettes d'une marge, dessinées en hauteur avec des
+  personnages, tracées en 4,2 s (cache `.cache/diaporamas/vignettes/second-empire/pilote-1/`), retirées
+  après visionnage (« des dessins bien plus simples, sans personne ») ; essai des dessins simples :
+  `essai-simple/` (Qwen-Image en 4 bits sur A100 40 Go : grain, inexploitable).

@@ -37,13 +37,18 @@
   {"id": "nossi-be", "nom": "Nossi-Bé", "lieu": [48.27, -13.33], "de": 1841, "a": null, "vues": ["afrique", "ocean-indien"], "position": {"afrique": "droite", "ocean-indien": "droite"}, "source": "traité du 14 juillet 1840 avec la reine Tsiomeko ; prise de possession en 1841 (fr.wikipedia « Nosy Be »)"},
   {"id": "mayotte", "nom": "Mayotte", "lieu": [45.15, -12.8], "de": 1843, "a": null, "vues": ["afrique", "ocean-indien"], "position": {"afrique": "gauche", "ocean-indien": "gauche"}, "source": "traité du 25 avril 1841 avec le sultan Andriantsoly, ratifié le 10 février 1843 ; prise de possession le 13 juin 1843 (mjp.univ-perp.fr/france/mayotte1846.htm) : l'année retenue est celle de la prise de possession"},
   {"id": "marquises", "nom": "Îles Marquises", "lieu": [-139.5, -9.4], "de": 1842, "a": null, "vues": ["monde-pacifique", "tout"], "position": {"monde-pacifique": "droite"}, "source": "prise de possession par Dupetit-Thouars à partir du 1er mai 1842 (fr.wikipedia « Îles Marquises »)"},
-  {"id": "tahiti", "nom": "Tahiti", "lieu": [-149.4, -17.65], "de": 1842, "a": null, "vues": ["monde-pacifique", "tout"], "position": {"monde-pacifique": "droite"}, "statut": "protectorat", "source": "protectorat du 9 septembre 1842, signé par la reine Pomaré IV ; annexion de novembre 1843 non maintenue ; protectorat jusqu'en 1880"}
+  {"id": "tahiti", "nom": "Tahiti", "lieu": [-149.4, -17.65], "de": 1842, "a": null, "vues": ["monde-pacifique", "tout"], "position": {"monde-pacifique": "droite"}, "statut": "protectorat", "source": "protectorat du 9 septembre 1842, signé par la reine Pomaré IV ; annexion de novembre 1843 non maintenue ; protectorat jusqu'en 1880"},
+  {"id": "nouvelle-caledonie", "nom": "Nouvelle-Calédonie", "lieu": [165.5, -21.3], "de": 1853, "a": null, "vues": ["tout"], "position": {"tout": "gauche"}, "source": "prise de possession à Balade par le contre-amiral Febvrier-Despointes, 24 septembre 1853 (Wikipédia, « Nouvelle-Calédonie ») ; coordonnées : centre de la Grande Terre"},
+  {"id": "cochinchine", "nom": "Cochinchine", "lieu": [106.7, 10.78], "de": 1862, "a": null, "vues": ["tout"], "position": {"tout": "bas"}, "source": "traité de Saïgon du 5 juin 1862 (trois provinces), trois autres provinces en 1867 (Wikipédia, « Campagne de Cochinchine ») ; point placé sur Saïgon"},
+  {"id": "cambodge", "nom": "Cambodge", "lieu": [104.92, 11.56], "de": 1863, "a": null, "vues": ["tout"], "position": {"tout": "haut"}, "statut": "protectorat", "source": "traité de protectorat du 11 août 1863 avec le roi Norodom (Wikipédia, « Norodom Ier ») ; point placé sur Phnom Penh"},
+  {"id": "obock", "nom": "Obock", "lieu": [43.29, 11.96], "de": 1862, "a": null, "vues": ["monde", "monde-pacifique", "afrique", "tout"], "position": {"monde": "droite", "monde-pacifique": "droite", "afrique": "droite", "tout": "droite"}, "source": "traité du 11 mars 1862 avec des chefs afars (Wikipédia, « Territoire d'Obock ») ; mouillage acheté, non occupé avant 1884"}
  ],
  "sources_par_periode": {
   "1789": "Fond Natural Earth ; possessions d'après les traités de Paris (1763) et de Versailles (1783)",
   "1802-1811": "Fond Natural Earth ; possessions d'après la paix d'Amiens (1802), le traité de vente de la Louisiane (1803) et les capitulations de 1803 à 1811",
   "1814-1815": "traité de Paris du 30 mai 1814, article 8",
   "1830-1847": "Fond Natural Earth ; acquisitions de 1830 à 1847 d'après les traités et prises de possession (voir `source` de chaque possession) ; limites de l'Algérie simplifiées",
-  "1848-1852": "Fond Natural Earth ; aucune acquisition de 1848 à 1852 ; statuts d'après le décret du 27 avril 1848, la Constitution du 4 novembre 1848 (article 109), l'arrêté du 9 décembre 1848 et le décret du 27 mars 1852"
- }
+  "1848-1852": "Fond Natural Earth ; aucune acquisition de 1848 à 1852 ; statuts d'après le décret du 27 avril 1848, la Constitution du 4 novembre 1848 (article 109), l'arrêté du 9 décembre 1848 et le décret du 27 mars 1852",
+    "1853-1870": "Fond Natural Earth ; acquisitions de 1853 à 1870 d'après les prises de possession et traités (voir `source` de chaque possession : Nouvelle-Calédonie 1853, Cochinchine 1862, Obock 1862, Cambodge 1863)"
+  }
 }

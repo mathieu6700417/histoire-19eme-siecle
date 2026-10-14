@@ -140,6 +140,12 @@ def traiter(o: dict, force: bool) -> str:
     dossier = 'objets' if o['type'] == 'objet' else 'manuscrits'
     fichier = f"{dossier}/{o['id']}.webp"
     dest = c.PUBLIC / fichier
+    # Entrée déjà faite (fichier et métadonnées là) : laissée intacte, sans relire Commons. Les
+    # métadonnées étaient auparavant réécrites à chaque passage, avant ce test : un `auteur_photo`
+    # rétabli à la main (champ Artist vide sur Commons, ex. Wellcome) était vidé (périodes 04 et 05).
+    if (dest.exists() and not force and o.get('fichier') == fichier and o.get('licence') and o.get('page')
+            and (not o['licence'].startswith('CC BY') or str(o.get('auteur_photo') or '').strip())):
+        return 'déjà fait'
     info = c.infos_fichiers([o['commons']], 3000)[o['commons']]
     if info.get('manquant'):
         raise SystemExit(f"{o['id']} : fichier Commons introuvable ({o['commons']})")
@@ -150,11 +156,14 @@ def traiter(o: dict, force: bool) -> str:
     o['licence'] = lib
     o['page'] = info['page']
     if lib.startswith('CC BY'):
-        o['auteur_photo'] = re.sub(r'\s+', ' ', c.texte_meta(meta.get('Artist'))).strip()
+        # Un auteur écrit à la main n'est pas remplacé par un champ Artist vide, même avec --force.
+        auteur = re.sub(r'\s+', ' ', c.texte_meta(meta.get('Artist'))).strip()
+        if auteur or not str(o.get('auteur_photo') or '').strip():
+            o['auteur_photo'] = auteur
     else:
         o.pop('auteur_photo', None)
     if dest.exists() and not force and o.get('fichier') == fichier:
-        return 'déjà fait'
+        return 'métadonnées relevées'
     im = original(o, info)
     if o.get('recadrage'):
         x0, y0, x1, y1 = o['recadrage']
@@ -181,8 +190,10 @@ def registre(ids: list[str] | None, force: bool) -> int:
     for o in r:
         if ids and o['id'] not in ids:
             continue
+        avant = json.dumps(o, sort_keys=True)
         print(f"{o['id']:28s} {traiter(o, force)}")
-        ecrire_registre(r)
+        if json.dumps(o, sort_keys=True) != avant:
+            ecrire_registre(r)
     return 0
 
 

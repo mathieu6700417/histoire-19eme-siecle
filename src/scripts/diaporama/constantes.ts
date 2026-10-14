@@ -136,3 +136,19 @@ export const FOND_FLOU_FAIBLE = 0.0025;
 export const FOND_FLOU_FORT = 0.025;
 export const FOND_LUMIERE = 0.8;
 export const FOND_RACCORD = 0.003;
+// Dessins traversants sous les images entières (spec 17, essai 5, révision du 2026-10-14 ; vignette.ts) :
+// les deux bords se tracent ensemble en VIGNETTE_DUREE s à partir du passage `quand`, jamais avant
+// `VIGNETTE_ATTENTE` s après l'apparition de l'image de la diapositive (`VIGNETTE_ATTENTE_PLAN` s après
+// l'instant d'un plan) ni avant `VIGNETTE_APRES_ENTREE` s après la fin de son entrée en scène.
+export const VIGNETTE_DUREE = 8;            // s : tracé des deux bords, une plume par bord, vitesse constante
+export const VIGNETTE_ATTENTE = 2;          // s après l'apparition de l'image de la diapositive
+export const VIGNETTE_ATTENTE_PLAN = 1.2;   // s après l'instant d'un plan (fondu de 0,8 s, et un peu d'air)
+export const VIGNETTE_APRES_ENTREE = 0.5;   // s après la fin de l'entrée en scène (ou du recul d'ouverture)
+export const VIGNETTE_MARGE_MIN = 0.08;     // marge la plus large, au moins (part de la hauteur de l'image) : sinon rien
+export const VIGNETTE_SCENE_MIN = 700;      // px : scène plus étroite (téléphone), pas de dessin
+export const VIGNETTE_ECLAIRCIE = 0.6;      // s : montée de l'éclaircie au début du tracé
+export const VIGNETTE_ECLAIRCIE_L = 0.6;    // largeur d'une éclaircie, au plus, en hauteurs d'image au repos
+export const VIGNETTE_FONDU_CENTRE = 0.6;   // s : fondu du dessin autour d'un chiffre, d'une date ou d'une surimpression de coin
+export const VIGNETTE_FIN = 0.4;            // s : le dessin entier rattrape le tracé à la fin
+export const VIGNETTE_ENCRE = '#1a1714';    // encre sombre (monochrome)
+export const VIGNETTE_SEUIL = 0.04;         // opacité à partir de laquelle le cartouche le signale

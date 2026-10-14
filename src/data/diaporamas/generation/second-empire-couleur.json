@@ -1,0 +1,392 @@
+{
+  "usage": "couleur",
+  "images": {
+    "File:L'Illustration 1862 gravure Première séance du Corps législatif, session de 1862.jpg": {
+      "consigne": "Add colours to this 1862 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Interior of the legislative chamber: pale cream stone walls and columns with muted gilding, dark red drapery behind the tribune, brown wooden benches, deputies in black coats.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "draperie rouge sourd, bancs bruns"
+    },
+    "File:Élections législatives (1869) - Les électeurs de la 7e circonscription de Paris assistent au scellement des urnes, à la clôture du scrutin.jpg": {
+      "consigne": "Add colours to this 1869 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A polling station: men in black and dark grey coats and top hats, one man in a white shirt sleeves, a plain brown wooden table with a pale wooden ballot box, beige walls.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Mariage de Napoléon III et d'Eugénie, à la cathédrale Notre-Dame de Paris, 30 janvier 1852, 4ème arrondissement, Paris. PH973.jpg": {
+      "consigne": "Add sober, natural colours to this old 1853 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Gothic cathedral portals with temporary festive decorations: pale beige stone, hangings and ornaments in muted dark red, cream and dull gold; dark doorways.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "tentures rouge sourd et or"
+    },
+    "File:Military camp LCCN2001697673.jpg": {
+      "consigne": "Add sober, natural colours to this old 1855 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A military camp on dry hills: white canvas tents, brownish-green hills, brown horses, soldiers in dark clothes, pale blue-grey sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Charles Marville, Impasse Briare (de la Cité Coquenard).jpg": {
+      "consigne": "Add sober, natural colours to this old 1860 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A narrow old Paris lane: pale grey and beige plastered walls, grey cobblestones, dark wooden shutters and doors, a pale grey sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Palais de l'industrie 1855.jpg": {
+      "consigne": "Add colours to this 1855 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Interior of a great iron and glass exhibition hall: pale cream ironwork and arches, glass roof with pale daylight, stands and displays in muted colours, small visitors in dark clothes and women in muted dresses.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Charles Marville, Rue des Marmousets-en-la-Cité.jpg": {
+      "consigne": "Add sober, natural colours to this old 1867 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. An old Paris street: pale grey and beige plastered façades, grey cobblestones, dark doorways and shop signs, a pale grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:-Rue de Constantine- MET DP273003.jpg": {
+      "consigne": "Add sober, natural colours to this old 1865 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A Paris street after rain: pale beige stone façades, wet grey paving, dark shop fronts, a few dark carriages, a pale grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Gezicht op de Boulevard Sébastopol in Parijs, RP-F-2012-96-299.jpg": {
+      "consigne": "Add sober, natural colours to this old 1860 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Stereoscopic card with two nearly identical views side by side of a Paris boulevard: pale beige stone buildings, green trees, grey roadway, dark carriages, pale sky; the card itself is beige.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Nadar - Égouts de Paris - NPS 24.jpg": {
+      "consigne": "Add sober, natural colours to this old 1861 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. An underground sewer gallery lit by electric light: grey and beige masonry, dark water, a figure in dark clothes, deep shadows.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Chantier de construction (panorama) montrant sans doute la construction du réservoir de Menilmontant, 20ème arrondisseme, PH15565.jpg": {
+      "consigne": "Add sober, natural colours to this old 1860 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A large earthwork building site: muted grey-brown earth and pale sand, pale stone walls, workers in dark brown, black and grey clothes, pale grey sky. No bright orange, no blue clothes.",
+      "graine": 3,
+      "saturation": 0.55,
+      "jugement": "bon",
+      "remarque": "relance : terre brun-gris, plus d'orange ni d'ouvriers bleus"
+    },
+    "File:Les Halles Centrales, nouvelles Halles de Baltard, 1er arrondissement, Paris. PH10089.jpg": {
+      "consigne": "Add sober, natural colours to this old 1865 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Iron and glass market pavilions: ironwork painted muted grey-green, glass roofs, pale stone, brown earth of the building site, pale sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Chantier de construction du Nouvel Opéra de Paris - photogr. Delmaet & Durandelle - btv1b53270869g.jpg": {
+      "consigne": "Add sober, natural colours to this old 1861 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Building site of an opera house: pale brown wooden scaffolding and timber, grey iron beams, pale stone, beige dust.",
+      "graine": 7,
+      "saturation": 0.6,
+      "jugement": "bon",
+      "remarque": "teinte trop appuyée à 0,7 : saturation ramenée à 0,6"
+    },
+    "File:Chantier de construction du Nouvel Opéra de Paris - photogr. Delmaet & Durandelle - btv1b53270838s.jpg": {
+      "consigne": "Add sober, natural colours to this old 1861 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Building site: pale brown wooden scaffolding, pale stone foundations, grey iron, Paris buildings in pale beige stone behind, pale sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Attentat contre L.L. M.M. Impériales, devant le pérystille de l'Opéra, dans la soirée du 14 janvier 1858..jpg": {
+      "consigne": "Add colours to this 1858 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A street in front of an opera house at night, after an explosion: gas lamps with warm yellow light, dark sky, brown and black horses, people in dark clothes, grey smoke.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Chantier de construction du Nouvel Opéra de Paris - photogr. Delmaet & Durandelle - btv1b53270870v.jpg": {
+      "consigne": "Add sober, natural colours to this old 1861 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Carved ornaments and sculptures in pale cream stone on a building site, brown wooden planks, pale light.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Départ des troupes pour l'armé d'Italie Embarquement de l'infanterie, à Paris, dans la gare de chemin de fer de Lyon,.jpg": {
+      "consigne": "Add colours to this 1859 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A railway station hall: grey ironwork roof; French infantry of the Second Empire in grey-blue greatcoats, madder-red trousers and red kepis; civilians in dark clothes, women in muted dresses.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "capotes gris-bleu, pantalons garance, képis rouges"
+    },
+    "File:Meeting of Emperors Napoleon III and Franz Joseph I in Villafranca, 1859.jpg": {
+      "consigne": "Add colours to this 1865 print, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Officers meeting in a courtyard: dark blue tunics with gold braid; trousers dark blue-grey or muted madder red, never pink; pale stone archway and walls, brown horses, dark green foliage.",
+      "graine": 11,
+      "saturation": 0.55,
+      "jugement": "bon",
+      "remarque": "relance : tuniques bleu foncé, un pantalon garance, plus de rose"
+    },
+    "File:Annexion de la Savoie - Le Monde illustré (23 juin 1860).jpg": {
+      "consigne": "Add colours to this 1860 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A salon: pale walls with muted gilded mouldings, a table covered in dark green cloth, men in black coats, a crystal chandelier, brown wooden chairs.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Corps législatif.- Séance du 14 Mars. M.Baroche répondant à M.Jules Favre.-Page 131, Paris Musées 20230510103442.jpg": {
+      "consigne": "Add colours to this 1861 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Legislative chamber: dark brown walnut wood tribune and desks, men in black coats, pale grey-beige stone and muted gilding behind, a white clock face. No pink.",
+      "graine": 3,
+      "saturation": 0.55,
+      "jugement": "bon",
+      "remarque": "relance : bois brun noyer, plus de rose"
+    },
+    "File:La bataille de Palikiao.jpg": {
+      "consigne": "Add colours to this 1860 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Battle at a stone bridge in China: pale grey stone bridge with carved figures, grey smoke, fallen men and horses, green-brown water and earth, dull grey sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Édouard Baldus, Gare d'Enghien, 1855.jpg": {
+      "consigne": "Add sober, natural colours to this old 1855 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A railway station: steel rails, grey ballast, pale beige station buildings with grey roofs, telegraph poles, a pale sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Vue générale des Magasins du Bon Marché, Paris Musées 20230611164140.jpg": {
+      "consigne": "Add colours to this 1875 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Bird's-eye view of a Paris district: pale cream stone buildings, grey slate roofs, green trees, grey streets with small dark carriages, hazy blue-grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Intérieur des Halles Centrales, nouvelles Halles de Baltard, 1er arrondissement, Paris, PH10088(2).jpg": {
+      "consigne": "Add sober, natural colours to this old 1865 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Inside an iron market hall: iron columns painted muted grey-green, glass roof, grey paving, pale daylight.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Concours agricole, PPG3810.jpg": {
+      "consigne": "Add colours to this 1860 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Prize farm animals: brown, black and white cattle, cream-white sheep, a brown horse, pinkish-grey pigs, poultry; pale background.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:La grève des commis de nouveautés. - Les grévistes quittant les magasins du Louvre. G.32940.jpg": {
+      "consigne": "Add colours to this 1869 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A Paris street by a department store: pale stone building, crowd of men in black coats and top hats, women in muted dresses, grey pavement.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Recueil. Colonisation française de l'Algérie et voyage de Napoléon III en 1865 - btv1b8438906z (18 of 50).jpg": {
+      "consigne": "Add sober, natural colours to this old 1860 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A temporary triumphal arch decorated with dark green foliage and dull gold initials, a black railway locomotive, white tents, horses, grey-green hills, pale sky. The small flags and pennants are faded and washed out: keep them almost white, very pale.",
+      "graine": 11,
+      "saturation": 0.55,
+      "jugement": "bon",
+      "remarque": "relance : petits fanions laissés pâles (plus de fanions rouges isolés)"
+    },
+    "File:Napoleon III a mostaganem departement d'oran le 20 mai 1865.png": {
+      "consigne": "Add colours to this 1865 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A decorated street in Algeria: whitewashed buildings, green palm branches, crowd of men in white burnouses. Every flag and pennant is a French tricolour with three bands, blue, white and red; no plain red flag, no green flag, no stars and stripes.",
+      "graine": 11,
+      "saturation": 0.55,
+      "jugement": "bon",
+      "remarque": "relance : drapeaux tricolores ; une bannière brodée bleue et rouge"
+    },
+    "File:Prise de Puebla, Paris Musées 20230602161249.jpg": {
+      "consigne": "Add colours to this 1863 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A cavalry charge on a plain: brown horses, French soldiers in dark blue and madder red, dry ochre plain, blue-grey mountains with snow-capped peaks, pale sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "cavaliers bleu et garance"
+    },
+    "File:Luxembourg fortress before demolition.jpg": {
+      "consigne": "Add sober, natural colours to this old 1867 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A fortified town on rocks: grey stone walls and towers, grey slate roofs, green trees, a pale sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Recueil. Colonisation française de l'Algérie et voyage de Napoléon III en 1865 - btv1b8438906z (19 of 50).jpg": {
+      "consigne": "Add sober, natural colours to this old 1856 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A hillside village in Algeria: dry ochre earth, sparse green scrub, white canvas and cloths, a pale sky.",
+      "graine": 7,
+      "saturation": 0.55,
+      "jugement": "bon",
+      "remarque": "teinte trop appuyée à 0,7 : saturation ramenée à 0,55"
+    },
+    "File:Ducasse speaking at Folies Belleville.jpg": {
+      "consigne": "Add colours to this 1869 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A crowded popular hall: dark wooden balconies and pillars, warm gaslight, men in black coats and grey workers' clothes, some faded blue workers' smocks.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Civils et mineurs de fonds tués par l'infanterie lors de la fusillade du Brûlé à La Ricamarie, le 16 juin 1869.jpg": {
+      "consigne": "Add colours to this 1883 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Soldiers firing at miners: French infantry of the Second Empire in grey-blue greatcoats, madder-red trousers and red kepis, grey smoke, miners in dark clothes, a brick chimney and mine buildings in grey-brown, a pale grey sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "capotes gris-bleu, pantalons garance"
+    },
+    "File:Le Tour du monde - 15 (page 181 2 crop).jpg": {
+      "consigne": "Add colours to this 1867 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. An industrial town in a valley: dark grey smoke, pale stone and brick factory buildings with red-brown roofs, green hills, grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Drame à Auteuil le prince Bonaparte tire sur Victor Noir.jpg": {
+      "consigne": "Add colours to this 1870 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A drawing room: pale walls, a gilded mirror and candelabra, men in black coats, a cream and grey tiled floor, grey gun smoke.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Première séance du corps législatif. - Constitution des bureaux, le 23 janvier. Paris Musées 20230611151832.jpg": {
+      "consigne": "Add colours to this 1860 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Legislative chamber: pale cream coffered ceiling and columns with muted gilding, dark red benches, deputies in black coats.",
+      "graine": 1852,
+      "saturation": 0.6,
+      "jugement": "bon",
+      "remarque": "teinte trop appuyée à 0,7 : saturation ramenée à 0,6"
+    },
+    "File:Édouard Baldus, Paris - Panorama, between 1851 and 1870.jpg": {
+      "consigne": "Add sober, natural colours to this old 1860 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Panorama of Paris: the Seine in greenish grey, pale beige stone buildings, grey slate roofs, the cathedral in pale stone, dark barges, pale blue-grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Les bagnards sur un chantier de la ville de Noumea, arasement de la butte Conneau.jpg": {
+      "consigne": "Add sober, natural colours to this old 1900 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Convicts at work on a building site: off-white work clothes and pale straw hats, a brown wooden cart, reddish-brown earth, dry green-brown grass and brushwood, pale grey-blue sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:French Zouaves storming and capturing Telegraph Hill battle alma.jpg": {
+      "consigne": "Add colours to this 1854 print, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Rocky hillside in Crimea: grey and ochre rocks, dry brownish grass; French zouaves in dark blue short jackets, baggy madder-red trousers and red fez caps; pale grey powder smoke; distant grey-blue sea and sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "zouaves en veste bleue et sarouel garance ; drapeau resté neutre"
+    },
+    "File:Jean-Charles Langlois - The Careenage Ravine.jpg": {
+      "consigne": "Add sober, natural colours to this old 1855 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A barren ravine: grey-brown and ochre rocky slopes, dry yellowish grass, a pale grey-blue sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:One of the Wards of the Hospital at Scutari. (15416701588).jpg": {
+      "consigne": "Add colours to this 1856 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A hospital ward: whitewashed walls, pale wooden floor and wooden beds with white sheets and grey blankets, a woman in a dark dress, men in dark coats.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Expo 1855 Disdéri galerie française f23.jpg": {
+      "consigne": "Add sober, natural colours to this old 1855 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A painting gallery of an exhibition: gilded picture frames, paintings in dark, muted earthy tones, walls hung with muted dark red fabric, pale light from above.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "murs rouge sourd, cadres dorés"
+    },
+    "File:Baptême du Prince-Impérial à Notre Dame, 14 juin 1856..jpg": {
+      "consigne": "Add colours to this 1856 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Interior of a Gothic cathedral decorated for a ceremony: pale stone arches, hangings in muted dark red and dull gold, crowd in dark clothes, clergy in white and gold vestments.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Inondations du Rhône à Lyon et Avignon - E. D. Baldus, photogr. - btv1b1200108s (7 of 7).jpg": {
+      "consigne": "Add sober, natural colours to this old 1856 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Houses ruined by a flood: pale beige and grey stone rubble, broken brown wooden beams, red-brown roof tiles, muddy brown ground, grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Démolitions de la cité - aspect actuel des travaux.jpg": {
+      "consigne": "Add colours to this 1862 print, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. View across the Seine: pale stone buildings being demolished, grey slate roofs, the cathedral in pale stone, greenish-grey river, carriages on the quay, pale blue-grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Charles Marville, Kiosque de marchand de journaux. Compagnie Delastre, ca. 1865.jpg": {
+      "consigne": "Add sober, natural colours to this old 1865 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A Paris newspaper kiosk: the kiosk painted dark green, pale posters on it, green trees, grey pavement, pale stone buildings behind.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Nadar - Égouts de Paris - NPS 72.jpg": {
+      "consigne": "Add sober, natural colours to this old 1861 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. An underground sewer tunnel lit by electric light: grey-beige masonry vault, dark water, a small boat in dark brown wood, deep shadows.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Intérieur des Halles Centrales, nouvelles Halles de Baltard, 1er arrondissement, Paris, PH10088(1).jpg": {
+      "consigne": "Add sober, natural colours to this old 1865 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Inside an iron and glass market hall: iron columns and arches painted muted grey-green, glass roof, grey paving, pale daylight.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Vue générale de Paris, prise du belvédère de la maison de Monsieur Fournel, rue des Boulangers, Fossés Saint-Victor, 5èm, PH18630.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Panorama of Paris from a hill: pale beige and grey stone houses, grey slate and red-brown tile roofs, green trees, hazy pale blue-grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Palais Garnier 15 August 1867 facade - Delmaet and Durandelle - Mead 1991 p185.jpg": {
+      "consigne": "Add sober, natural colours to this old 1867 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Façade of the Paris Opera: pale cream stone, columns of coloured marble in muted tones, gilded statues on the roof, pale grey sky, grey pavement, a few people in dark clothes.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "groupes dorés du faîte"
+    },
+    "File:MedineMage1857.jpeg": {
+      "consigne": "Add colours to this 1868 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A river in West Africa: brown-green river water, ochre and reddish rock cliffs, green trees, a small steamboat, men in boats, pale blue sky with grey smoke.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:La grotte miraculeuse à Lourdes (vers 1860).jpg": {
+      "consigne": "Add colours to this 1860 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A rocky grotto by a river: grey limestone rock, green trees, shrubs and grass, blue-grey river water, pale sky, small figures in dark clothes.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Entrée à Milan de LL. MM. le roi Victor-Emmanuel II et l'empereur Napoléon III - estampe - btv1b53023403q.jpg": {
+      "consigne": "Add colours to this 1859 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A crowd in a Milan street greeting soldiers: pale stone buildings, people in dark and muted clothes, women in pale dresses. The flags at the windows are pale and faded; any flag is a tricolour with three vertical bands (French: blue, white, red; Italian: green, white, red); no plain red or pink flag.",
+      "graine": 11,
+      "saturation": 0.55,
+      "jugement": "bon",
+      "remarque": "relance : drapeaux des fenêtres restés pâles, tons mêlés, aucun rouge franc"
+    },
+    "File:Felice Beato (British, born Italy) - (Imperial Summer Palace before the of Burning Yuan Ming Yuan, October 18, 1860) - Google Art Project.jpg": {
+      "consigne": "Add sober, natural colours to this old 1860 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A Chinese pavilion with tiered roofs: dark grey tile roofs, muted dark red woodwork, grey brick and stone base, dark green trees, pale sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "boiseries rouge sourd, toits gris"
+    },
+    "File:Belvedere of the God of Literature, Summer Palace, Beijing, 6–18 October, 1860.jpg": {
+      "consigne": "Add sober, natural colours to this old 1860 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A Chinese pavilion with tiered roofs: dark grey tile roofs, muted dark red woodwork, grey brick and stone base, dark green trees, pale sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "boiseries rouge sourd, toits gris"
+    },
+    "File:Chemin de fer du Nord. Ligne de Paris à Boulogne. Album de vues photographiques - btv1b52507139d (37 of 63).jpg": {
+      "consigne": "Add sober, natural colours to this old 1860 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A railway depot: pale stone arches, grey rails and ballast, brownish ground, a pale sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Interieur van het Palace of Art and Industry tijdens de wereldtentoonstelling van 1862 Exposition Londres 1862. Salon del Palacio de Cristal Londres (titel op object) The International Exhibition of 1862 (serietitel op, RP-F-F10834.jpg": {
+      "consigne": "Add sober, natural colours to this old 1862 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. An exhibition hall: pale cream walls and arches, white marble and bronze sculptures, displays in muted colours, pale daylight.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Funérailles de S. Exc. M. le duc de Morny passage du cortège sur la place de la Concorde. QB.85.jpg": {
+      "consigne": "Add colours to this 1865 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A large square in Paris seen from above: pale stone, a pinkish granite obelisk, fountains, a funeral procession in black, green trees, grey-blue sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Ferat jules descartes paris. - les reunions electorales. - seances aux folies-belleville. - m. rochefort.jpg": {
+      "consigne": "Add colours to this 1869 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A crowded popular hall: dark wooden balconies and pillars, warm gaslight, men in black coats and grey workers' clothes, some faded blue workers' smocks.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Inauguration du canal de Suez. Dragues a long couloir, a Suez (instantanee), RP-F-F08483.jpg": {
+      "consigne": "Add sober, natural colours to this old 1869 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Stereoscopic card with two views side by side: iron dredgers in dark grey and rust brown, ochre sand banks, still pale blue-grey water, pale sky.",
+      "graine": 7,
+      "saturation": 0.5,
+      "jugement": "bon",
+      "remarque": "teinte trop appuyée à 0,7 : saturation ramenée à 0,5"
+    },
+    "File:Funérailles de Victor Noir Desroches Valnay.jpg": {
+      "consigne": "Add colours to this 1870 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A funeral crowd in a street: a black hearse, crowd in dark clothes, bare brown trees, pale stone houses, grey sky.",
+      "graine": 1852,
+      "saturation": 0.7,
+      "jugement": "bon"
+    }
+  },
+  "methode": "FLUX.2 klein 4B (4 pas), consigne de pure colorisation ; luminance de l'original + chrominance du modèle (YCbCr, chrominance floutée, saturation indiquée par image)"
+}
