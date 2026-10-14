@@ -72,7 +72,7 @@ devient **une image toutes les 7 à 12 s** en moyenne. Tout le reste de la spec 
   `segments.ts`, `lectures.ts`, `episodes.ts`, `progression.ts` (préchargement), nouveau module
   si utile. Poids : ~250 Ko par image, soit +30 à 40 Mo par période.
 - Gemini : zone utile et caméra seulement (~0,007 $ par image), `--budget` obligatoire.
-- Journal : `docs/journal/plus-d-images.jsonl`.
+- Journal : `docs/journal/xixe/plus-d-images.jsonl`.
 
 ## Précisions d'implémentation (2026-10-11, mécanisme et jeu d'essai)
 

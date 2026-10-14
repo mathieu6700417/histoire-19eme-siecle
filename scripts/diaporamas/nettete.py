@@ -35,7 +35,7 @@ et épisodes : hors champ. Résultat : .cache/diaporamas/<slug>/nettete/mesure.j
 (kit-nettete.zip : sources PNG et manifeste). `lancer` pilote Colab par la CLI officielle (script
 scripts/colab/nettete.py, session arrêtée à la fin, même en cas d'erreur), puis accorde les couleurs
 des images agrandies à celles de l'original (`accorder` : le modèle les décale un peu). `publier` copie les variantes
-dans public/diaporamas/<slug>/ et écrit `image.grand` { fichier, largeur, hauteur, source (« original »
+dans public/<siecle>/diaporamas/<slug>/ et écrit `image.grand` { fichier, largeur, hauteur, source (« original »
 ou « ia »), et pour l'IA : modele, facteur, genere_le } ; idempotent. Une image colorisée (`image.couleur`, spec 16) reçoit aussi sa version colorisée à la même finesse,
 `NNN-couleur-grand.webp` (`grand.couleur` { fichier, largeur, hauteur } : couleur + (variante − image
 servie), sans modèle ; voir `couleur_grande`). `renumeroter.py` suit fichiers et
@@ -145,7 +145,7 @@ RELEVE = """() => {
 def relever(slug: str, dist: Path) -> dict:
     """Cadre le plus serré de chaque image (fractions de sa zone utile), relevé dans le lecteur construit."""
     from playwright.sync_api import sync_playwright
-    if not (dist / 'diaporamas' / slug / 'index.html').is_file():
+    if not (c.dist_diaporama(dist, slug) / 'index.html').is_file():
         raise SystemExit(f'Page absente de {dist} : lancer « npm run build » d\'abord')
 
     class Silencieux(http.server.SimpleHTTPRequestHandler):
@@ -156,7 +156,7 @@ def relever(slug: str, dist: Path) -> dict:
     with sync_playwright() as p:
         b = p.chromium.launch(channel='chrome', headless=True)
         pg = b.new_page(viewport={'width': ECRAN, 'height': 1080})
-        pg.goto(f'http://127.0.0.1:{srv.server_address[1]}/diaporamas/{slug}/', wait_until='load')
+        pg.goto(f'http://127.0.0.1:{srv.server_address[1]}{c.url_diaporama(slug)}', wait_until='load')
         pg.wait_for_timeout(800)
         pg.click('[data-action="lancer"]')
         pg.wait_for_timeout(400)

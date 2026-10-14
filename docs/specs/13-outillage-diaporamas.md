@@ -1,7 +1,7 @@
 # Spec 13 — Outillage des diaporamas avant la période 03
 
 Rédigée le 2026-10-10, à partir du bilan de la période 02
-(`docs/journal/diaporama-02-consulat-empire-bilan.md`, « Pistes » 4 et 6, et l'idée « YuNet » du
+(`docs/journal/xixe/diaporama-02-consulat-empire-bilan.md`, « Pistes » 4 et 6, et l'idée « YuNet » du
 journal `outillage-python.jsonl`). Trois outils à construire **avant** de produire la Restauration.
 Ils servent la chaîne de la spec 12 (`scripts/diaporamas/`) ; aucune page du site ne change.
 
@@ -37,7 +37,7 @@ Produire la période 03 plus vite et pour moins cher :
 
 ### Données
 
-Fichier `src/data/diaporamas/commun/registre-musique.json` (commun aux 9 périodes, à côté
+Fichier `src/data/diaporamas/xixe/commun/registre-musique.json` (commun aux 9 périodes, à côté
 d'`indicatif.json`). Une entrée par **enregistrement** vérifié, qu'il ait été retenu ou non :
 
 ```json
@@ -65,7 +65,7 @@ d'`indicatif.json`). Une entrée par **enregistrement** vérifié, qu'il ait ét
   libre trouvé vont dans une liste à part, `introuvables` : `[{ "oeuvre", "compositeur",
   "cherche": "2026-10-08", "ou": "Commons, IA (requêtes…)" }]` (période 02 : Cherubini, *Les Deux
   Journées* et *Anacréon* ; Méhul, *Joseph*, ouverture ; etc. — relevé dans
-  `docs/journal/diaporama-02-consulat-empire.jsonl`, entrée 35).
+  `docs/journal/xixe/diaporama-02-consulat-empire.jsonl`, entrée 35).
 
 ### Script `scripts/diaporamas/registre_musique.py`
 
@@ -168,7 +168,7 @@ l'original) par Gemini. Il passe au **détecteur local** :
 ### Acceptation
 
 - Étalonnage sur les portraits déjà cadrés par Gemini des périodes 01 et 02 (registre
-  `src/data/diaporamas/portraits.json`), **sans rien écrire** (`--essai`) : rapport du nombre de
+  `src/data/diaporamas/xixe/portraits.json`), **sans rien écrire** (`--essai`) : rapport du nombre de
   visages trouvés, de l'IoU médiane avec le cadre Gemini et des 10 plus gros écarts (planche).
   Objectif : visage trouvé pour ≥ 90 % des portraits, IoU médiane ≥ 0,7 ; sinon ajuster la
   marge, puis montrer la planche des écarts à l'utilisateur avant de basculer.

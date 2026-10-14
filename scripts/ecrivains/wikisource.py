@@ -3,10 +3,15 @@
 Fonctions partagées par extraire.py, generer.py et verifier.py. Les pages
 téléchargées sont mises en cache dans .cache/wikisource/ (ignoré par git).
 """
-import hashlib, html, json, re, time, urllib.error, urllib.parse, urllib.request
+import hashlib, html, json, re, sys, time, urllib.error, urllib.parse, urllib.request
 from pathlib import Path
 
 RACINE = Path(__file__).resolve().parents[2]
+# Siècle (spec 18) : `--siecle <id>` (défaut xixe), lu une seule fois par scripts/diaporamas/commun.py.
+sys.path.insert(1, str(RACINE / 'scripts' / 'diaporamas'))
+from commun import SIECLE  # noqa: E402
+CHAPITRES = Path(__file__).resolve().parent / 'chapitres' / SIECLE   # spécifications et gabarits
+MDX = RACINE / 'src' / 'content' / 'ecrivains' / SIECLE              # chapitres publiés
 CACHE = RACINE / '.cache' / 'wikisource'
 API = 'https://fr.wikisource.org/w/api.php'
 WIKI = 'https://fr.wikisource.org/wiki/'

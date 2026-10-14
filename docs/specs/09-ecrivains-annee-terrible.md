@@ -34,7 +34,7 @@ déchirés (Hugo), versaillais et conservateurs effrayés (Goncourt, Flaubert, S
   juillet 1870) est au chapitre 6.
 - **Hugo, *L'Année terrible*** (1872) est réservée à ce chapitre.
 - Ne pas réutiliser une page Wikisource déjà citée dans les chapitres 0 à 5 (voir les JSON de
-  `scripts/ecrivains/chapitres/`), ni une page qui porte sur le Second Empire avant août 1870
+  `scripts/ecrivains/chapitres/xixe/`), ni une page qui porte sur le Second Empire avant août 1870
   (chapitre 6, écrit en parallèle) ou sur la IIIe République après mai 1871 (chapitre 8, écrit en
   parallèle).
 

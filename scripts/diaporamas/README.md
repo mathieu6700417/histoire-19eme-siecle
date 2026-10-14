@@ -25,11 +25,22 @@ fichier ne décrit que les outils.
 
 Les commandes se lancent depuis la racine du projet.
 
+**Siècle (spec 18).** Le site couvre plusieurs siècles ; données et médias sont rangés par siècle.
+Tous les scripts acceptent `--siecle <id>` (identifiant du registre `src/data/siecles.ts`,
+défaut `xixe` ; variable d'environnement `SIECLE` équivalente). Les chemins sont calculés en un
+seul endroit, `commun.py` : `DONNEES` = `src/data/diaporamas/<siecle>/`, `PUBLIC` =
+`public/<siecle>/diaporamas/` (médias servis à côté de la page `/<siecle>/diaporamas/<slug>/`),
+`ANNOTATIONS` = `docs/annotations/<siecle>/`, `JOURNAL` = `docs/journal/<siecle>/` ; les caches
+`.cache/diaporamas/<slug>/` ne sont pas rangés par siècle (slugs uniques sur tout le site).
+`url_diaporama(slug)` et `dist_diaporama(dist, slug)` donnent l'adresse d'une page dans un build
+(captures, netteté, entrée en scène). `annotations.py` et `annoter.py` déduisent le siècle du slug.
+Dans ce fichier, `<siecle>` vaut `xixe` pour toutes les périodes produites à ce jour.
+
 **Renumérotation.** Les états de `.cache/diaporamas/<slug>/` (images, voix, caméra) sont indexés
 par numéro de diapositive ; après une insertion, `renumeroter.py` les réindexe en même temps que
 les fichiers, si bien que `voix.py` ne resynthétise que les narrations nouvelles ou retouchées
 (l'empreinte du texte fait foi). Ne jamais renommer `NNN.webp` / `NNN.m4a` à la main.
-Depuis le 2026-10-12, il met aussi à jour les annotations de visionnage `docs/annotations/<slug>.jsonl` :
+Depuis le 2026-10-12, il met aussi à jour les annotations de visionnage `docs/annotations/<siecle>/<slug>.jsonl` :
 `lieu.n` et `ecran.image.fichier` passent au nouveau numéro, un champ `renumerote` (« diapositive 22 devenue 23 … »)
 garde le numéro d'origine ; l'identifiant et la capture ne changent pas ; `--essai` liste les annotations concernées.
 
@@ -47,7 +58,7 @@ garde le numéro d'origine ; l'identifiant et la capture ne changent pas ; `--es
 | `banc_gemini.py` | Banc d'essai des modèles et budgets de réflexion pour une tâche (`camera`, `visages`, `utile`, `transcription`) sur 5 diapositives : jetons réels, coût, qualité, planche. `--essai` : plan sans appel. |
 | `utile.py` | Zone utile `image.utile` de chaque image (sans liseré, marge de papier, cadre ni légende gravée) : analyse des bords (numpy) et contrôle par Gemini Flash, planche de contrôle. Options Gemini : `--budget`, `--reflexion`, `--modele`. |
 | `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. `--indicatif` : les deux extraits de l'indicatif commun du générique. Rappelle en fin de passe les pistes absentes du registre des enregistrements. |
-| `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/plans/<nom>.json`). `monde` descend à -20° (Sainte-Hélène) ; `--fond NOM` ne refait que ce fond. |
+| `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/<siecle>/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/<siecle>/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/<siecle>/plans/<nom>.json`). `monde` descend à -20° (Sainte-Hélène) ; `--fond NOM` ne refait que ce fond. |
 | `surimpressions.py` | Cartes de lieu, citations, portraits, objets de musée, manuscrits, chiffres clés et dates républicaines en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
 | `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle, bilan des mentions. |
 | `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage par le détecteur local YuNet depuis le 2026-10-10, Gemini en repli demandé seulement, webp ovale), contrôle de visibilité des personnes sur les images (consignes au titre de la période du JSON), planche de contrôle. `--lot FICHIER` : lignes `id|nom`, Wikidata en une ligne par personne et pré-remplissage du registre (`--essai` : sans écrire). Options Gemini : `--budget`, `--reflexion`, `--modele`. |
@@ -56,20 +67,20 @@ garde le numéro d'origine ; l'identifiant et la capture ne changent pas ; `--es
 | `verifier.py` | Contrôle d'une période avant publication (110 à 135 diapositives pour les périodes 01 à 05 ; 135 à 160 et environ une heure à partir de la 06, avertissement hors de 55 à 65 min) ; générique : 8 à 12 images de la période, deux par acte au plus, indicatif commun (licence, fichiers, durées). Avertit d'un **dosage insuffisant** des enrichissements (avant/après < 3, mosaïques < 2, objets < 6, manuscrits < 3, chiffres et dates < 6, zéro compris), d'un épisode à visuel unique, d'un carton qui n'ouvre pas l'épisode et d'un panneau `chiffres` qui contient des années. `--etape A|B|C` (spec 13) : contrôles d’une étape, sortie résumée. |
 | `tester_etapes.py` | Contrôle de `verifier.py --etape` : la réunion des étapes A, B et C égale la vérification complète. |
 | `registre_musique.py` | Registre des enregistrements libres commun aux périodes (`commun/registre-musique.json`) : `chercher`, `ajouter --depuis`, `ecarter`, `possible`, `introuvable`, `--amorcer` (voir « Registre des enregistrements libres »). |
-| `generation.py` | Couche générée (spec 16) : `preparer <slug>` (kit zip pour Colab : manifeste et sources JPEG réduites à la zone utile), `lancer <slug>` (session Colab par la CLI `colab`, calcul par `scripts/colab/mouvement.py`, rapatriement, arrêt), `encoder <slug> [zip|dossier]` (clips aller-retour H.264 sans son, encodés pour le site, dans `.cache/diaporamas/<slug>/generation/clips/`), `planche <slug>` (page HTML de visionnage), `publier <slug> [--seulement n,n]` (clips → `public/diaporamas/<slug>/NNN-mouvement.mp4` et champ `image.video`), `retirer <slug> --seulement n`. Lot : `src/data/diaporamas/generation/<slug>.json` (voir « Couche générée »). |
-| `couleur.py` | Images colorisées par IA (spec 16) : `publier <slug> <lot.json> [--seulement 86 34b] [--sauf …] [--jugement bon] [--essai]` (retrouve chaque image par son `commons`, contrôle zone utile et taille, copie `NNN-couleur.webp` / `NNN-b-couleur.webp`, écrit `image.couleur`, consigne la recette dans `src/data/diaporamas/generation/<slug>-couleur.json`), `retirer <slug> 86 34b` (ou `--tout`), `lister <slug>` (voir « Couche générée », « Colorisation »). |
+| `generation.py` | Couche générée (spec 16) : `preparer <slug>` (kit zip pour Colab : manifeste et sources JPEG réduites à la zone utile), `lancer <slug>` (session Colab par la CLI `colab`, calcul par `scripts/colab/mouvement.py`, rapatriement, arrêt), `encoder <slug> [zip|dossier]` (clips aller-retour H.264 sans son, encodés pour le site, dans `.cache/diaporamas/<slug>/generation/clips/`), `planche <slug>` (page HTML de visionnage), `publier <slug> [--seulement n,n]` (clips → `public/<siecle>/diaporamas/<slug>/NNN-mouvement.mp4` et champ `image.video`), `retirer <slug> --seulement n`. Lot : `src/data/diaporamas/<siecle>/generation/<slug>.json` (voir « Couche générée »). |
+| `couleur.py` | Images colorisées par IA (spec 16) : `publier <slug> <lot.json> [--seulement 86 34b] [--sauf …] [--jugement bon] [--essai]` (retrouve chaque image par son `commons`, contrôle zone utile et taille, copie `NNN-couleur.webp` / `NNN-b-couleur.webp`, écrit `image.couleur`, consigne la recette dans `src/data/diaporamas/<siecle>/generation/<slug>-couleur.json`), `retirer <slug> 86 34b` (ou `--tout`), `lister <slug>` (voir « Couche générée », « Colorisation »). |
 | `ambiance.py` | Ambiances sonores des clips (spec 17) : consigne dans le lot de génération, calcul EzAudio sur Colab (`scripts/colab/ambiance.py`), normalisation, page d'écoute, `publier | retirer`. Voir « Ambiances sonores des clips ». |
 | `fond.py` | Fonds prolongés des images entières (spec 17) : `preparer | lancer [--passe 2] | rapatrier | relire | planche | publier | retirer | lister`, FLUX.2 klein 4B sur Colab (`scripts/colab/fond.py`), deux passes. Voir « Fonds prolongés des images entières ». |
-| `vignettes.py` | Dessins traversants sous les images entières (spec 17, essai 5 ; **règle pour les périodes 06 et suivantes**) : `preparer | lancer | rapatrier | arreter | tracer | planche | publier | encres | retirer | lister`, Z-Image-Turbo sur Colab (`scripts/colab/vignettes.py`), trait extrait par `vignettes_trace.py --plein` (venv `.cache/venv-vignettes`). Lot écrit à la main : `src/data/diaporamas/generation/<slug>-vignettes.json`. Voir « Dessins traversants (spec 17, essai 5) ». |
+| `vignettes.py` | Dessins traversants sous les images entières (spec 17, essai 5 ; **règle pour les périodes 06 et suivantes**) : `preparer | lancer | rapatrier | arreter | tracer | planche | publier | encres | retirer | lister`, Z-Image-Turbo sur Colab (`scripts/colab/vignettes.py`), trait extrait par `vignettes_trace.py --plein` (venv `.cache/venv-vignettes`). Lot écrit à la main : `src/data/diaporamas/<siecle>/generation/<slug>-vignettes.json`. Voir « Dessins traversants (spec 17, essai 5) ». |
 | `nettete.py` | Netteté, variantes grand écran (spec 17) : mesure au cadre le plus serré, variante depuis l'original de Commons ou Real-ESRGAN sur Colab (`scripts/colab/nettete.py`), `publier | retirer | planche`. **Règle pour les périodes 06 et suivantes** (2 560 px, seuil 1,3) ; Révolution faite avec les réglages du pilote ; 02 à 05 hors champ (spec 17). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
 
-- `src/data/diaporamas/NN-<slug>.json` : le script d'une période (source de vérité) ;
-- `public/diaporamas/<slug>/NNN.webp`, `NNN.m4a`, `vignette.webp` : fichiers servis ;
+- `src/data/diaporamas/<siecle>/NN-<slug>.json` : le script d'une période (source de vérité) ;
+- `public/<siecle>/diaporamas/<slug>/NNN.webp`, `NNN.m4a`, `vignette.webp` : fichiers servis ;
   `musique/fond-<acte>-<k>.m4a` et `musique/chant-<nom>.m4a` : musique ;
-- `src/data/diaporamas/commun/indicatif.json` et `public/diaporamas/commun/indicatif-ouverture.m4a`,
+- `src/data/diaporamas/<siecle>/commun/indicatif.json` et `public/<siecle>/diaporamas/commun/indicatif-ouverture.m4a`,
   `indicatif-fin.m4a` : indicatif du générique (composé avec Lyria), **commun à toute la série**
   (section « Générique ») ;
 - `.cache/diaporamas/` (ignoré par git) : originaux téléchargés (`originaux/`), licences et
@@ -177,7 +188,7 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
 
 0. Lire la spec 12, « Produire une période : leçons de Consulat et Empire » : enrichissements,
    épisodes, cartes animées et générique se prévoient dès l'étape 1.
-1. Écrire `src/data/diaporamas/NN-<slug>.json` (format dans la spec 12) : actes, narrations,
+1. Écrire `src/data/diaporamas/<siecle>/NN-<slug>.json` (format dans la spec 12) : actes, narrations,
    fichiers Commons (vérifiés avec `--infos`), métadonnées de notice.
    Chaque acte porte `dates` (« 1787-1789 », « juillet-octobre 1789 » : trait d'union sans
    espaces, dates prudentes), montrées par le carton de changement d'acte du lecteur et dans le
@@ -205,7 +216,7 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
    `surimpressions.py <slug>` (à relancer après toute nouvelle voix).
 8. Images mises en mouvement (spec 16, à partir de la période 05 ; **la diapositive 1 en fait toujours partie**,
    avec son ambiance : règle du 2026-10-14, scène animable en largeur choisie par l'agent A) : écrire le lot
-   `src/data/diaporamas/generation/<slug>.json` (une dizaine de diapositives choisies dès l'étape 1,
+   `src/data/diaporamas/<siecle>/generation/<slug>.json` (une dizaine de diapositives choisies dès l'étape 1,
    une consigne anglaise et une graine chacune), puis `generation.py preparer`, `lancer` (Colab par
    la CLI, ≈ 2 h 30 de machine par période, session arrêtée à la fin), planche de visionnage, `publier`
    (voir « Couche générée »). Zéro Gemini.
@@ -231,7 +242,7 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
       entrée du lot sa marge, sa fenêtre et les surimpressions qui la gênent ; écarter celles dont une
       surimpression de coin (portraits, médaillon de lieu, objet, manuscrit) ou une citation tombe pendant
       le dessin (ou poser `quand` après elle), celles dont la fenêtre est trop courte pour 8 s ;
-   2. écrire le lot `src/data/diaporamas/generation/<slug>-vignettes.json` : pour chaque image, `gauche`
+   2. écrire le lot `src/data/diaporamas/<siecle>/generation/<slug>-vignettes.json` : pour chaque image, `gauche`
       et `droite`, ce que montre chaque bord en anglais, **lieux et objets seulement, aucun personnage**
       (l'atelier vide avec ses outils, la paillasse et ses ballons, le quai et son vapeur), une `graine`,
       au besoin `quand` ; le `style` commun est repris de la 06 ;
@@ -554,7 +565,7 @@ rendu MIDI ni partition jouée par ordinateur ; `verifier.py` refuse une source 
 
 ### Registre des enregistrements libres (`registre_musique.py`, spec 13)
 
-`src/data/diaporamas/commun/registre-musique.json` garde, pour toutes les périodes, chaque
+`src/data/diaporamas/<siecle>/commun/registre-musique.json` garde, pour toutes les périodes, chaque
 enregistrement déjà vérifié (`retenu` par une période, `possible`, ou `ecarte` avec son motif) et les
 œuvres cherchées en vain (`introuvables`). **Avant toute recherche sur Commons ou l'Internet
 Archive**, l'agent B interroge le registre ; il n'y cherche pas de nouveau ce qui est écarté ou
@@ -803,7 +814,7 @@ contrôle.
 période, même fond et même dessin (fil rouge). Pour la carte d'une autre date :
 1. Fond commun `empire` (`carte.py --fond empire` ; monde de Tahiti à la Nouvelle-Calédonie, 2 015 unités de
    large, coordonnées au dixième, métropole seule en « france ») : ne pas le refaire ni le recadrer.
-2. Possessions en données : `src/data/diaporamas/commun/empire.json` (`de`/`a` : années d'entrée et de
+2. Possessions en données : `src/data/diaporamas/<siecle>/commun/empire.json` (`de`/`a` : années d'entrée et de
    sortie ; `zone` ou point ; `vues` et `position` du libellé par vue). Renseigné pour 1789 : mettre `a` à
    ce qui est perdu, ajouter les acquisitions (avec `source`), une vue (`vues`) si la région manque.
    Depuis la période 02 : `periodes` ([[de, a], …]) remplace `de`/`a` pour une possession perdue puis rendue
@@ -944,7 +955,7 @@ Hersilie) et les titres de chants (« Ô Richard ») ne comptent pas.
 - `citations[].personne` : l'identifiant de la personne citée ; si elle n'est pas visible, elle doit
   être dans `personnes` (son portrait accompagne la citation).
 
-**Registre** `src/data/diaporamas/portraits.json` (commun à toutes les périodes ; seules les
+**Registre** `src/data/diaporamas/<siecle>/portraits.json` (commun à toutes les périodes ; seules les
 personnes montrées au moins une fois y sont) : `{ id, nom, dates, commons, page, fichier, auteur,
 date, licence, cadre_visage }`. `nom` est le nom affiché (court : « Danton », « Madame Roland »,
 « Comte d'Artois »), `dates` « 1759-1794 ».
@@ -1056,7 +1067,7 @@ signature ou la phrase, relevé à la main sur l'image quadrillée et vérifié 
 - `quand` : passage exact (première occurrence) ; `instant` écrit par `surimpressions.py` ;
   `cote` : `droite` (défaut) ou `gauche`, choisi là où l'objet gêne le moins (pas le coin d'un
   médaillon ou d'une rangée de portraits qui se montrerait en même temps).
-- Registre `src/data/diaporamas/objets.json` (commun à toutes les périodes) : `nom` (légende
+- Registre `src/data/diaporamas/<siecle>/objets.json` (commun à toutes les périodes) : `nom` (légende
   courte, 50 caractères environ), `date`, `musee`, `inventaire`, `commons`, `recadrage`,
   `detourage` (`convexe` pour une assiette ou une médaille), `halo` et `passage` (manuscrit) ;
   `objets.py --registre` écrit `fichier`, `largeur`, `hauteur`, `licence`, `page`, `auteur_photo`
@@ -1361,15 +1372,15 @@ changer sans raison. `grep -n "nomDeFonction" src/scripts/diaporama/*.ts` suffit
 Spec 12, révision du 2026-10-09. Données : `"generique": ["File:…", …]` dans le JSON de la période,
 8 à 12 fichiers Commons (pas des numéros : ils survivent aux renumérotations), une ou deux images
 par acte au plus, dans l'ordre de la mosaïque (première moitié en haut, seconde en bas). Choix
-éditorial justifié dans le journal (`docs/journal/generique.jsonl`). L'indicatif est commun :
-`src/data/diaporamas/commun/indicatif.json` (source, licence, extraits `ouverture` et `fin` :
+éditorial justifié dans le journal (`docs/journal/<siecle>/generique.jsonl`). L'indicatif est commun :
+`src/data/diaporamas/<siecle>/commun/indicatif.json` (source, licence, extraits `ouverture` et `fin` :
 `debut`, `fin`, fondus ; `duree` et `empreinte` écrites par `musique.py --indicatif`, -16 LUFS,
 128 kb/s, `mono: true` pour un pressage « stéréo » électronique), fichiers dans
-`public/diaporamas/commun/`. Crédité en bas de chaque page de période et sur le portail.
+`public/<siecle>/diaporamas/commun/`. Crédité en bas de chaque page de période et sur le portail.
 
 - Valeurs retenues : thème original composé avec Lyria (`lyria-3.5`, candidat 08 « marche, plus de
   cordes », généré le 2026-10-09 ; morceau brut, consigne et découpe : `.cache/diaporamas/
-  indicatif-original/`, `docs/journal/indicatif-original.jsonl`). `indicatif.json` porte `credit`
+  indicatif-original/`, `docs/journal/<siecle>/indicatif-original.jsonl`). `indicatif.json` porte `credit`
   (« Indicatif composé avec Lyria (Google DeepMind) », exigé par Google, affiché tel quel) et
   `licence` (« Création originale générée par IA pour le site »), la consigne et, par extrait,
   `accord` (instant de l'accord final). Ouverture : 16,8 s, comptée jusqu'à l'accord (14,55 s) :
@@ -1656,7 +1667,7 @@ python3 scripts/diaporamas/annotations.py bilan restauration
   (ignoré par git) : `dist/` et `astro preview` ne sont pas touchés.
 - **Serveur** (`annoter.py`, bibliothèque standard) : `127.0.0.1` seulement, fichiers statiques avec
   requêtes Range, point d'écriture `/__annotations/<slug>[/<id>]` (GET, POST, PUT, DELETE ; même
-  origine exigée) qui n'écrit que sous `docs/annotations/` ; écritures atomiques (`annotations.py`).
+  origine exigée) qui n'écrit que sous `docs/annotations/<siecle>/` ; écritures atomiques (`annotations.py`).
 - **Raccourcis** (mode annotation) : **A** pause + panneau ; catégorie par **1…7 tant que le champ
   est vide**, **Alt+1…7**, **Tab / Maj+Tab** ou clic (1 image, 2 cadrage, 3 texte, 4 voix, 5 musique,
   6 surimpression, 7 autre ; défaut : autre) ; **Entrée** enregistre et reprend, **Maj+Entrée** saut
@@ -1664,7 +1675,7 @@ python3 scripts/diaporamas/annotations.py bilan restauration
   liste ; ↑ ↓, **Entrée** ou clic saute à l'instant annoté en pause, **E** modifie, **Suppr** supprime
   après confirmation (Entrée ou O), **Échap** ferme. Tant que le panneau ou la liste est ouvert, les
   raccourcis du lecteur sont suspendus (écouteur en phase de capture sur `window`).
-- **Format** : `docs/annotations/<slug>.jsonl`, une ligne par annotation (spec 15) ; `id` =
+- **Format** : `docs/annotations/<siecle>/<slug>.jsonl`, une ligne par annotation (spec 15) ; `id` =
   `AAAAMMJJ-HHMMSS-NNN` (heure du navigateur, NNN = diapositive ; `annotations.py` accepte la fin de
   l'identifiant s'il est unique). Le lecteur relève `lieu` et `ecran` à l'instant de la pause ; le
   serveur complète l'identifiant de l'acte, `image.commons` / `titre_court` et la `phrase` exacte de
@@ -1676,7 +1687,7 @@ python3 scripts/diaporamas/annotations.py bilan restauration
   diapositive), `null` si les sous-titres sont coupés.
 - **Capture** : faite **par le serveur**, en tâche de fond (quelques secondes), en rejouant le lecteur sans tête au
   même instant avec `captures.capturer` (horloge factice, fenêtre de l'utilisateur, sous-titres comme
-  chez lui, lecteur sans l'outil), puis JPEG de 1 280 px au plus dans `docs/annotations/<slug>/<id>.jpg`
+  chez lui, lecteur sans l'outil), puis JPEG de 1 280 px au plus dans `docs/annotations/<siecle>/<slug>/<id>.jpg`
   et champ `capture` complété (`null` en attendant, ou si Playwright manque). Pas de capture dans le
   navigateur : redessiner le DOM (transformations, calques, flous) demanderait une bibliothèque lourde
   et infidèle, et la capture d'onglet une autorisation à chaque page. Limites : c'est une reconstitution
@@ -1764,7 +1775,7 @@ Procédure d'un lot (une dizaine de diapositives à scène animable, décision d
 15 : fumées, drapeaux, foule, eau, ciel ; jamais un portrait, jamais une inscription lisible) :
 
 ```sh
-# 1. Le lot : src/data/diaporamas/generation/<slug>.json (n, type « mouvement », prompt anglais, graine ;
+# 1. Le lot : src/data/diaporamas/<siecle>/generation/<slug>.json (n, type « mouvement », prompt anglais, graine ;
 #    « negatif » et « modele » communs). Consigne : les mouvements voulus, « Keep exactly the look of
 #    this … », « nothing new appears, no text » ; « flags flutter » avec parcimonie (Valmy : drapeau démesuré).
 python3 scripts/diaporamas/generation.py preparer revolution     # .cache/diaporamas/revolution/generation/kit-mouvement.zip
@@ -1794,7 +1805,7 @@ d'eux-mêmes, `essais`), et une session ouverte par un autre travail bloque tout
 (« Allocation refused ») : `lancer --session <nom> --reprendre` la réutilise dans `/content/mouvement`
 (dossier propre), `--garder` la laisse ouverte ; finir par `colab sessions` et arrêter ce qui reste.
 
-- Le lot `src/data/diaporamas/generation/<slug>.json` donne, par élément, la diapositive `n`, le
+- Le lot `src/data/diaporamas/<siecle>/generation/<slug>.json` donne, par élément, la diapositive `n`, le
   `type` (`mouvement`), la consigne `prompt` (anglais : mouvements voulus, « nothing new appears,
   no text », style de l'œuvre conservé) et la `graine` ; `negatif` et `modele` sont communs au lot.
 - **Longueur par diapositive** (retour de l'utilisateur du 2026-10-12 : le clip ne doit pas s'arrêter
@@ -1819,7 +1830,7 @@ d'eux-mêmes, `essais`), et une session ouverte par un autre travail bloque tout
   aller-retour bouclé) : le lecteur le joue une fois puis tient sa dernière image. La planche montre
   ce que verra le lecteur, avec le poids.
 - La planche montre côte à côte la source, les clips et la narration audio de la diapositive.
-- `publier` copie `clips/<id>.mp4` en `public/diaporamas/<slug>/NNN-mouvement.mp4` et écrit
+- `publier` copie `clips/<id>.mp4` en `public/<siecle>/diaporamas/<slug>/NNN-mouvement.mp4` et écrit
   `image.video` : `fichier`, `type`, `duree`, `largeur`, `hauteur` (ffprobe), `modele` (du lot),
   `genere_le` (date du brut). Jamais sur un avant / après (ignoré) ni une image entière
   (`verifier.py` refuse). Compatible avec les mosaïques (le clip paraît après la plongée) et les
@@ -1864,10 +1875,10 @@ python3 scripts/diaporamas/verifier.py deuxieme-republique && npm run build
   « FIN ») ; fusion luminance / chrominance (saturation 0,7) et planches sur le Mac, relecture, puis
   `final-couleur.json` pour `publier`.
 - **Données** : `image.couleur` `{ fichier, largeur, hauteur, modele, genere_le }` sur l'image d'une
-  diapositive ou d'un plan ; fichier `public/diaporamas/<slug>/NNN-couleur.webp` ou
+  diapositive ou d'un plan ; fichier `public/<siecle>/diaporamas/<slug>/NNN-couleur.webp` ou
   `NNN-b-couleur.webp`, **exactement aux dimensions de la zone utile en pixels** (arrondi de chaque
   bord, `couleur.zone_px`). Recette (consigne, graine, saturation, méthode) dans
-  `src/data/diaporamas/generation/<slug>-couleur.json`, par fichier Commons.
+  `src/data/diaporamas/<siecle>/generation/<slug>-couleur.json`, par fichier Commons.
 - **Publication** : la clé est `commons` (elle survit aux renumérotations) ; `publier` refuse une
   image dont la zone utile a changé depuis la fabrication ou dont le WebP n'a pas la bonne taille,
   et les incompatibilités. Les cibles de `--seulement`, `--sauf` et `retirer` sont des numéros
@@ -1955,7 +1966,7 @@ Toute diapositive mise en mouvement (`image.video`) a une ambiance sonore géné
 fixe. Modèle : EzAudio s3_xl (MIT, code et poids), texte → son, 10 s à 24 kHz.
 
 ```sh
-# 1. La consigne : champ « ambiance » de l'élément du lot src/data/diaporamas/generation/<slug>.json
+# 1. La consigne : champ « ambiance » de l'élément du lot src/data/diaporamas/<siecle>/generation/<slug>.json
 #    (anglais ; rien que la narration ne dise ; ni voix, ni musique, ni son anachronique).
 python3 scripts/diaporamas/ambiance.py preparer deuxieme-republique
 python3 scripts/diaporamas/ambiance.py lancer deuxieme-republique     # Colab L4, ≈ 25 s par tirage, 2 tirages
@@ -2073,7 +2084,7 @@ des deux côtés, prise sur ce bord de l'image ou dans ses coins.
   qui n'est plus entière ou dont la zone utile a changé (la boîte en dépend), copie
   `NNN-fond.webp` / `NNN-b-fond.webp`, écrit `image.fond` et la recette (consignes, graines et
   tirages des deux passes, `haut_bas`, zone utile, constat) dans
-  `src/data/diaporamas/generation/<slug>-fond.json`. `renumeroter.py` suit fichiers et champs.
+  `src/data/diaporamas/<siecle>/generation/<slug>-fond.json`. `renumeroter.py` suit fichiers et champs.
 - **Lecteur** (`fond.ts`) : le fond est un élément du calque, sous l'image (dans le fond noir
   `.lecteur__noir` pour un plan : même opacité que le plan) ; il reçoit à chaque rendu une
   translation et une échelle tirées de la transformation de l'image (rapprochement lent, entrée en

@@ -73,12 +73,12 @@ numérotation des textes, ni dans le sommaire, ni dans la durée de lecture.
   (import), `artiste`, `titre`, `date`, `technique`, `lieu`, `faits`, `regard`, `commons`
   (URL), `musee` (URL facultative), `alt` ; slot « lire » (Markdown) pour « Lire l'image ».
 - **Artistes** : leurs dates de naissance doivent être connues au build pour le classement.
-  Soit un fichier `src/data/artistes.ts` (id, nom, naissance, mort), soit des props
+  Soit un fichier `src/data/xixe/artistes.ts` (id, nom, naissance, mort), soit des props
   `naissance` ; préférer le fichier de données si l'artiste revient dans plusieurs chapitres.
   Ne pas mélanger avec `auteurs.ts` (l'index des auteurs ne doit pas lister les peintres),
   sauf pour un écrivain qui serait aussi l'auteur d'une image (ex. dessin de Hugo).
 - **Fichiers** : téléchargés depuis **Wikimedia Commons** (domaine public), stockés dans
-  `src/assets/oeuvres/<chapitre>/<id>.<ext>` et passés par `astro:assets` (`<Image>` /
+  `src/assets/oeuvres/xixe/<chapitre>/<id>.<ext>` et passés par `astro:assets` (`<Image>` /
   `getImage`) : WebP, tailles adaptées (vignette de colonne + grande version pour la
   visionneuse, environ 2000 px max sur le grand côté). Télécharger une résolution raisonnable
   (≤ 2500 px de large) pour ne pas alourdir le dépôt. Pas de lien direct vers

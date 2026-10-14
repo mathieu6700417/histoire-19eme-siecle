@@ -1,9 +1,11 @@
 ---
-// Bloc de l'accueil du site présentant la section « Le siècle raconté par ses écrivains ».
+// Bloc de l'accueil d'un siècle présentant sa section « Le siècle raconté par ses écrivains ».
 import { planComplet, urlSection } from '../utils/ecrivains';
 import { typographie } from '../utils/typographie.mjs';
 
-const plan = await planComplet();
+interface Props { siecle: string }
+const { siecle } = Astro.props;
+const plan = await planComplet(siecle);
 // Le prologue (numéro 0) est compté à part des huit chapitres.
 const chapitres = plan.filter((p) => p.numero > 0);
 const ecrits = chapitres.filter((p) => p.chapitre).length;
@@ -16,7 +18,7 @@ const prologue = plan.some((p) => p.numero === 0 && p.chapitre);
     {typographie("Une autre façon de traverser le siècle : par les textes de ceux qui l'ont vécu. Chateaubriand, Michelet, Hugo, Mme de Staël, Balzac et bien d'autres racontent, chacun depuis son camp, la Révolution, les empires, les républiques. Chaque extrait est remis dans son contexte et lu d'un œil critique.")}
   </p>
   <p class="bloc-ecrivains__etat">{typographie(`${prologue ? 'Prologue et ' : ''}${ecrits} chapitre${ecrits > 1 ? 's' : ''} sur ${chapitres.length} disponible${ecrits > 1 || prologue ? 's' : ''}`)}</p>
-  <p><a class="bloc-ecrivains__lien" href={urlSection}>Ouvrir le parcours →</a></p>
+  <p><a class="bloc-ecrivains__lien" href={urlSection(siecle)}>Ouvrir le parcours →</a></p>
 </section>
 
 <style>

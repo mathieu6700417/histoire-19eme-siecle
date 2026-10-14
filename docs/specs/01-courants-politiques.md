@@ -81,7 +81,7 @@ transforment ou disparaissent. Lecture complète en 30 à 45 minutes.
   formulation prudente plutôt qu'affirmation fausse.
 - Niveau lycée : chaque terme technique (ultra, doctrinaire, opportuniste, possibiliste…)
   est défini à sa première apparition.
-- Le contenu de la leçon vit dans `src/content/lecons/courants-politiques.mdx`.
+- Le contenu de la leçon vit dans `src/content/lecons/xixe/courants-politiques.mdx`.
   Les données de la frise et de l'arbre peuvent vivre dans un fichier de données séparé
   (JSON/TS) importé par les composants.
 - Les composants Frise, Fiche, Arbre doivent être réutilisables pour de futures leçons.

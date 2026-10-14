@@ -1,0 +1,8 @@
+# Anciennes adresses du site (avant la spec 18, quand il ne couvrait que le XIXe siècle) :
+# redirections permanentes vers leur équivalent sous /xixe/. Format Cloudflare (assets statiques
+# des Workers) ; les anciennes adresses de médias (/diaporamas/<slug>/<fichier>) suivent aussi.
+/lecons/* /xixe/lecons/:splat 301
+/ecrivains /xixe/ecrivains/ 301
+/ecrivains/* /xixe/ecrivains/:splat 301
+/diaporamas /xixe/diaporamas/ 301
+/diaporamas/* /xixe/diaporamas/:splat 301

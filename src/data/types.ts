@@ -53,3 +53,10 @@ export interface AreteArbre {
   vers: string;
   type: 'filiation' | 'scission';
 }
+
+/** Chapitre prévu de la section « écrivains » d'un siècle (son plan sert aussi aux diaporamas). */
+export interface ChapitrePrevu {
+  numero: number;
+  titre: string;
+  periode: string;
+}

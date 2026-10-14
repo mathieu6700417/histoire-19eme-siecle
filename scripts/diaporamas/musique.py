@@ -9,11 +9,11 @@ Usage :
     python3 scripts/diaporamas/musique.py --indicatif             # indicatif commun du générique
 
 Indicatif (spec 12, « Générique d'ouverture et récapitulatif de fin ») : décrit dans
-src/data/diaporamas/commun/indicatif.json. Depuis le 2026-10-09, thème original composé avec Lyria
+src/data/diaporamas/<siecle>/commun/indicatif.json. Depuis le 2026-10-09, thème original composé avec Lyria
 (extraits préparés à part, rien à faire ici) ; pour un enregistrement (Commons, Internet Archive),
-deux extraits préparés comme un chant (-16 LUFS, 128 kb/s) dans public/diaporamas/commun/.
+deux extraits préparés comme un chant (-16 LUFS, 128 kb/s) dans public/<siecle>/diaporamas/commun/.
 
-Données : `musique` dans src/data/diaporamas/NN-<slug>.json (format dans le README) :
+Données : `musique` dans src/data/diaporamas/<siecle>/NN-<slug>.json (format dans le README) :
 `fond` (pistes de fond, par acte, enchaînées en fondu par le lecteur) et `intermedes`
 (chants réels joués au premier plan après une diapositive).
 
@@ -31,7 +31,7 @@ Pour chaque piste :
    doux, craquements ôtés, souffle à peine réduit), **normalisation** de sonie
    (ffmpeg loudnorm : -20 LUFS pour le fond, que le lecteur baisse encore sous la voix ;
    -16 LUFS pour les chants), encodage AAC stéréo (96 kb/s fond, 128 kb/s chants) dans
-   public/diaporamas/<slug>/musique/. La durée est écrite dans le JSON.
+   public/<siecle>/diaporamas/<slug>/musique/. La durée est écrite dans le JSON.
 
 État (empreintes, licences relevées) : .cache/diaporamas/<slug>/musique.json.
 Ne lance rien qui provienne des téléchargements : ils ne sont que lus (audio, métadonnées).
@@ -246,14 +246,14 @@ def traiter(slug: str, force: bool, seulement: list[str] | None, sources_seules:
     return 1 if erreurs else 0
 
 
-INDICATIF = c.RACINE / 'src' / 'data' / 'diaporamas' / 'commun' / 'indicatif.json'
+INDICATIF = c.DONNEES / 'commun' / 'indicatif.json'
 
 
 def traiter_indicatif(force: bool) -> int:
     """Indicatif commun du générique : extraits d'ouverture et de fin, -16 LUFS, durées écrites."""
     d = json.loads(INDICATIF.read_text())
     if d['source'].get('type') == 'lyria':
-        print('Indicatif composé avec Lyria : extraits déjà préparés (voir docs/journal/indicatif-original.jsonl).')
+        print('Indicatif composé avec Lyria : extraits déjà préparés (voir docs/journal/<siecle>/indicatif-original.jsonl).')
         return 0
     audio, info = obtenir_source(d['source'])
     if not info['libre']:

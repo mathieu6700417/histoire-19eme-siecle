@@ -2,7 +2,7 @@
 
 Usage : python3 scripts/ecrivains/generer.py <slug> [--sortie fichier.mdx]
 
-Entrées (dans scripts/ecrivains/chapitres/) :
+Entrées (dans scripts/ecrivains/chapitres/<siecle>/) :
   <slug>.json          page Wikisource, segments, passage clé et ancres de chaque extrait ;
   <slug>.gabarit.mdx   le chapitre rédigé, où @@T:id@@ marque le texte de l'extrait
                        et @@L:id@@ son lien Wikisource.

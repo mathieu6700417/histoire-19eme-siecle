@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Annotations de visionnage (spec 15) : lecture et écriture de docs/annotations/<slug>.jsonl.
+"""Annotations de visionnage (spec 15) : lecture et écriture de docs/annotations/<siecle>/<slug>.jsonl.
 
 Les annotations sont saisies dans le lecteur lancé par `npm run annoter` (touche A) ; ce script
 les relit et les marque « traité ». Avant de retoucher un diaporama :
@@ -10,6 +10,8 @@ les relit et les marque « traité ». Avant de retoucher un diaporama :
     python3 scripts/diaporamas/annotations.py traiter 142512-037 "tête recadrée (camera_manuelle)"
     python3 scripts/diaporamas/annotations.py bilan restauration
 
+Le siècle d'une période se déduit de son slug (src/data/diaporamas/<siecle>/) ; `--siecle` est
+accepté comme partout (commun.py) mais n'est pas nécessaire.
 Un identifiant peut être abrégé par sa fin (« 142512-037 », « 037 ») tant qu'il reste unique.
 Ce module sert aussi de bibliothèque au serveur local (`annoter.py`) : créer, modifier, supprimer,
 toutes écritures atomiques (fichier temporaire puis remplacement) et sous verrou.
@@ -26,8 +28,11 @@ import threading
 from datetime import datetime, timedelta
 from pathlib import Path
 
-RACINE = Path(__file__).resolve().parents[2]
-DOSSIER = RACINE / 'docs' / 'annotations'
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import commun as c  # noqa: E402  (chemins par siècle, spec 18)
+
+RACINE = c.RACINE
+DOSSIER = c.ANNOTATIONS          # annotations du siècle courant (--siecle, défaut xixe)
 CATEGORIES = ['image', 'cadrage', 'texte', 'voix', 'musique', 'surimpression', 'autre']
 TYPES = ['diapositive', 'plan', 'chant', 'galerie', 'lecture', 'episode', 'carton', 'generique', 'recapitulatif']
 SLUG = re.compile(r'[a-z0-9]+(?:-[a-z0-9]+)*')
@@ -39,10 +44,15 @@ class Refus(ValueError):
     """Demande invalide (slug, identifiant, contenu)."""
 
 
+def dossier(slug: str) -> Path:
+    """docs/annotations/<siecle>/ de la période (siècle déduit du slug)."""
+    return RACINE / 'docs' / 'annotations' / c.siecle_du_slug(slug)
+
+
 def fichier(slug: str) -> Path:
     if not SLUG.fullmatch(slug or ''):
         raise Refus(f'slug invalide : {slug!r}')
-    return DOSSIER / f'{slug}.jsonl'
+    return dossier(slug) / f'{slug}.jsonl'
 
 
 def lire(slug: str) -> list[dict]:
@@ -87,7 +97,7 @@ def _categorie(v) -> str:
 # --- Contexte complété d'après le JSON de la période -------------------------------------------
 
 def _periode(slug: str) -> dict | None:
-    for f in sorted((RACINE / 'src' / 'data' / 'diaporamas').glob('*.json')):
+    for f in sorted((RACINE / 'src' / 'data' / 'diaporamas' / c.siecle_du_slug(slug)).glob('*.json')):
         if re.sub(r'^\d+-', '', f.stem) == slug:
             return json.loads(f.read_text(encoding='utf-8'))
     return None
@@ -224,9 +234,9 @@ def supprimer(slug: str, ident: str) -> None:
         liste = lire(slug)
         a = _trouver(liste, ident)
         ecrire(slug, [x for x in liste if x is not a])
-        (DOSSIER / slug / f'{ident}.jpg').unlink(missing_ok=True)
+        (dossier(slug) / slug / f'{ident}.jpg').unlink(missing_ok=True)
         try:
-            (DOSSIER / slug).rmdir()   # dossier des captures vide
+            (dossier(slug) / slug).rmdir()   # dossier des captures vide
         except OSError:
             pass
 
@@ -254,7 +264,7 @@ def traiter(slug: str, ident: str, traitement: str) -> dict:
 # --- Ligne de commande ---------------------------------------------------------------------------
 
 def slugs() -> list[str]:
-    return sorted(f.stem for f in DOSSIER.glob('*.jsonl'))
+    return sorted(f.stem for f in (RACINE / 'docs' / 'annotations').glob('*/*.jsonl'))
 
 
 def court(ident: str) -> str:
@@ -303,8 +313,8 @@ def main() -> None:
         if a.commande == 'lister' and a.detail:
             _, x = resoudre(a.detail, [a.slug])
             print(json.dumps(x, ensure_ascii=False, indent=2))
-            c = DOSSIER / x['capture'] if x.get('capture') else None
-            print(f"capture : {c if c and c.exists() else 'aucune'}")
+            cap = dossier(x['slug']) / x['capture'] if x.get('capture') else None
+            print(f"capture : {cap if cap and cap.exists() else 'aucune'}")
         elif a.commande == 'lister':
             liste = sorted(lire(a.slug), key=lambda x: (x['lieu'].get('temps_global') or 0, x['id']))
             liste = [x for x in liste if (not a.a_faire or x['etat'] == 'a-faire') and (not a.categorie or x['categorie'] == a.categorie)]

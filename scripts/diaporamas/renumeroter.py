@@ -11,17 +11,17 @@ Sans `--inserer`, l'ordre de la liste `diapositives` du JSON fait foi (diapositi
 la main) et les anciens numéros `n` servent de clés.
 
 Tout renvoi par numéro est recalculé : `n`, fichiers `NNN.webp` / `NNN.m4a` (renommés dans
-public/diaporamas/<slug>/, en deux temps pour éviter les collisions), `image.fichier` et
+public/<siecle>/diaporamas/<slug>/, en deux temps pour éviter les collisions), `image.fichier` et
 `audio.fichier` (et `NNN-apres.webp`, `NNN-mK.webp` des avant/après et mosaïques, `NNN-mouvement.mp4` et
 `NNN-couleur.webp`, `NNN-b-couleur.webp` de la couche générée, spec 16, `NNN-grand.webp` et `NNN-b-grand.webp`
 de la netteté, `NNN-fond.webp` et `NNN-b-fond.webp` des fonds prolongés, spec 17, `NNN-vignette.webp` et `NNN-vignette.json`
 des vignettes dessinées ; les recettes de colorisation et de fonds, indexées par fichier Commons, ne bougent pas ; les numéros
-du lot des vignettes, src/data/diaporamas/generation/<slug>-vignettes.json, sont remplacés sur place), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
+du lot des vignettes, src/data/diaporamas/<siecle>/generation/<slug>-vignettes.json, sont remplacés sur place), débuts d'actes, `apres` des intermèdes, lectures et épisodes,
 `portrait.diapositive` des lectures. Les états de .cache/diaporamas/<slug>/ indexés par numéro
 (images.json, voix.json, camera.json) sont réindexés : les voix, licences et cadrages inchangés
 restent reconnus, rien n'est resynthétisé (l'empreinte du texte fait foi). L'empreinte de
 caméra, qui contient le nom du fichier image, est recalculée pour les entrées encore valables.
-Les annotations de visionnage (docs/annotations/<slug>.jsonl, spec 15) suivent : `lieu.n` et
+Les annotations de visionnage (docs/annotations/<siecle>/<slug>.jsonl, spec 15) suivent : `lieu.n` et
 `ecran.image.fichier` (NNN.webp, NNN-b.webp) passent au nouveau numéro, un champ `renumerote` garde
 le numéro d'origine ; identifiant (qui finit par l'ancien numéro) et capture ne changent pas.
 `--essai` affiche la correspondance sans rien écrire.
@@ -198,7 +198,7 @@ def main() -> int:
                 if v and ancien in cam_valide:
                     v['empreinte'] = camera.empreinte(x)
         ef.write_text(json.dumps(nouvel, ensure_ascii=False, indent=1))
-    # 4. Couche générée (spec 16) : lot src/data/diaporamas/generation/<slug>.json, manifeste et fichiers
+    # 4. Couche générée (spec 16) : lot src/data/diaporamas/<siecle>/generation/<slug>.json, manifeste et fichiers
     # du cache (.cache/diaporamas/<slug>/generation/{sources,clips,bruts,planches}/NNN…). Le kit zip, lui,
     # garde les anciens numéros : le refaire par `generation.py preparer` avant un nouveau `lancer`.
     lot = c.DONNEES / 'generation' / f"{d['slug']}.json"

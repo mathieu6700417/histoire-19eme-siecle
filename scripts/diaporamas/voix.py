@@ -12,7 +12,7 @@ Pour chaque diapositive : applique le lexique (prononciation.yaml) au texte envo
 voix, synthétise avec Gemini TTS (voix Charon), retranscrit l'audio et compare la
 transcription mot à mot au texte envoyé ; sous 0,9, on recommence (trois essais), puis on
 signale l'échec. L'audio est encodé en AAC mono 64 kb/s (ffmpeg) dans
-public/diaporamas/<slug>/NNN.m4a, et sa durée écrite dans `audio.duree`.
+public/<siecle>/diaporamas/<slug>/NNN.m4a, et sa durée écrite dans `audio.duree`.
 
 Chaque phrase de l'audio est horodatée (`audio.phrases` : [[début, fin], …], en secondes) :
 ffmpeg `silencedetect` repère les pauses, et l'on retient une pause par fin de phrase, dans

@@ -11,7 +11,7 @@
 
 Règle : toute diapositive mise en mouvement (`image.video`, spec 16) a son ambiance, jamais une image
 fixe. La consigne (anglais ; rien que la narration ne dise ; ni voix, ni musique, ni son anachronique)
-est le champ `ambiance` de l'élément du lot src/data/diaporamas/generation/<slug>.json, à côté de la
+est le champ `ambiance` de l'élément du lot src/data/diaporamas/<siecle>/generation/<slug>.json, à côté de la
 consigne du clip ; modèle et graines dans `ambiance` du lot (EzAudio s3_xl, licence MIT).
 
 `preparer` écrit le kit (.cache/diaporamas/<slug>/ambiance/kit-ambiance.zip) ; `lancer` pilote Colab par
@@ -23,7 +23,7 @@ niveau, crête et silences (mesures.json). `--bruts` : tirages déjà calculés 
 de l'essai, .cache/diaporamas/essais-colab/colab/out/sons). `ecoute` fabrique la page d'écoute
 (.cache/diaporamas/essais-colab/sons/ecoute-<slug>.html, servie par essais-colab/servir.py) : **aucun
 agent ne peut écouter, l'utilisateur juge chaque lot avant publication.** `publier` copie
-NNN-ambiance.m4a dans public/diaporamas/<slug>/ et écrit `image.ambiance` { fichier, duree, modele,
+NNN-ambiance.m4a dans public/<siecle>/diaporamas/<slug>/ et écrit `image.ambiance` { fichier, duree, modele,
 genere_le }. Le lecteur (src/scripts/diaporama/ambiance.ts) la joue avec le clip, à -12 dB, calée sur
 l'horloge de la voix ; signalement : crédits de la page et livre d'images, rien au cartouche.
 `generation.py retirer` retire l'ambiance avec le clip ; `verifier.py` : famille « ambiance (spec 17) ».

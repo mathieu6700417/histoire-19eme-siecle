@@ -339,7 +339,7 @@ _REGISTRE: dict | None = None
 def _registre() -> dict:
     global _REGISTRE
     if _REGISTRE is None:
-        f = c.RACINE / 'src' / 'data' / 'diaporamas' / 'portraits.json'
+        f = c.DONNEES / 'portraits.json'
         _REGISTRE = {p['id']: p for p in json.loads(f.read_text())} if f.exists() else {}
     return _REGISTRE
 

@@ -14,12 +14,12 @@ sur une planche, puis publiées dans le diaporama (`image.video`, lu par mouveme
                                                                           # clips → public/, champ image.video
     python3 scripts/diaporamas/generation.py retirer <slug> --seulement 56  # retire un clip du diaporama
 
-Le lot (diapositives, consignes, graines, modèle) est `src/data/diaporamas/generation/<slug>.json`.
+Le lot (diapositives, consignes, graines, modèle) est `src/data/diaporamas/<siecle>/generation/<slug>.json`.
 Tout le reste vit dans `.cache/diaporamas/<slug>/generation/` : `kit-mouvement.zip` (manifeste +
 sources JPEG), `bruts/` (sorties de Colab, 5 s), `clips/` (ralentis de moitié par interpolation de
 mouvement, 10 s, encodés comme pour le site : joués une fois par le lecteur, dernière image tenue),
 `planche-mouvement.html` (original, clip, narration, à ouvrir dans un navigateur).
-`publier` copie `clips/<id>.mp4` en `public/diaporamas/<slug>/NNN-mouvement.mp4` et écrit
+`publier` copie `clips/<id>.mp4` en `public/<siecle>/diaporamas/<slug>/NNN-mouvement.mp4` et écrit
 `image.video` (fichier, type, durée, dimensions, modèle, date) ; `verifier.py` contrôle le tout.
 
 `lancer` pilote Colab par la CLI officielle `colab` (google-colab-cli, `uv tool install`) : `colab new`
@@ -28,7 +28,7 @@ lecture du journal de bord par des `colab exec` courts toutes les 60 s, `colab d
 sortie dans `bruts/`, puis `colab stop` (toujours, même en cas d'erreur : une session oubliée coûte
 des unités). `--garder` laisse la session ouverte pour une reprise. Dépendances : Pillow, ffmpeg, colab.
 """
-import html, io, json, math, re, shutil, subprocess, sys, time, zipfile
+import html, io, json, math, os, re, shutil, subprocess, sys, time, zipfile
 from pathlib import Path
 
 from PIL import Image
@@ -307,7 +307,7 @@ def selection(args: list[str]) -> set[int]:
 
 
 def publier(slug: str, seulement: set[int]) -> None:
-    """Clips jugés bons → public/diaporamas/<slug>/NNN-<type>.mp4 et champ `image.video` de la
+    """Clips jugés bons → public/<siecle>/diaporamas/<slug>/NNN-<type>.mp4 et champ `image.video` de la
     diapositive (fichier, type, durée, dimensions, modèle, date du calcul). Idempotent. Un avant / après
     est ignoré (autre calque) ; une mosaïque est admise (le clip paraît après la plongée)."""
     import datetime
@@ -376,7 +376,7 @@ def planche(slug: str) -> None:
             if ligne.strip():
                 j = json.loads(ligne)
                 journal[Path(j['fichier']).stem] = j
-    public = Path('../../../../public/diaporamas') / slug
+    public = Path(os.path.relpath(c.PUBLIC / slug, dest))   # relatif à la planche (dans .cache/)
     blocs = []
     for el in manifeste['elements']:
         videos = []

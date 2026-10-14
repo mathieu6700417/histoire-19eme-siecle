@@ -99,12 +99,12 @@ et y conduit.
 
 ## Pages à créer
 
-- **Accueil de la section** (ex. `/ecrivains/`) : titre, courte présentation de la démarche
+- **Accueil de la section** (ex. `/xixe/ecrivains/`) : titre, courte présentation de la démarche
   (les textes comme sources, avec leurs biais), liste des 8 chapitres.
-- **Page chapitre** (ex. `/ecrivains/<slug>/`) rendue depuis une nouvelle collection
-  de contenu MDX (ex. `src/content/ecrivains/01-revolution.mdx`), schéma : titre, numéro,
+- **Page chapitre** (ex. `/xixe/ecrivains/<slug>/`) rendue depuis une nouvelle collection
+  de contenu MDX (ex. `src/content/ecrivains/xixe/01-revolution.mdx`), schéma : titre, numéro,
   période, résumé, dureeLecture.
-- **Index des auteurs** (ex. `/ecrivains/auteurs/`) : chaque auteur, ses dates, sa fiche,
+- **Index des auteurs** (ex. `/xixe/ecrivains/auteurs/`) : chaque auteur, ses dates, sa fiche,
   et la liste des chapitres où il est cité (généré automatiquement).
 - Lien vers la section dans la **navigation commune** et un bloc dédié sur l'accueil du site.
   Ne pas casser les leçons existantes.

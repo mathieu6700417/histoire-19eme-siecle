@@ -5,7 +5,7 @@ Usage :
     python3 scripts/diaporamas/empire.py 1811 --depuis 1802 --vue antilles
 
 Affiche le visuel `carte` (JSON) à coller dans `visuels` d'un épisode : fond commun `empire`
-(carte.py), cadre de la vue, et un élément par possession de src/data/diaporamas/commun/empire.json
+(carte.py), cadre de la vue, et un élément par possession de src/data/diaporamas/<siecle>/commun/empire.json
 tenue à la date (`de` <= année, `a` absent ou > année ; ou `periodes` : [[de, a], …] pour une
 possession perdue puis rendue ; `noms` : [[année, nom], …] pour un nom d'époque). Dessin constant d'une période à l'autre :
 territoire = zone pleine (hachures si limites incertaines), île ou comptoir = point plein.

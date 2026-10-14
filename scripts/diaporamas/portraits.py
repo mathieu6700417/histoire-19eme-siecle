@@ -21,7 +21,7 @@ Usage :
     python3 scripts/diaporamas/portraits.py revolution --relever    # bilan des mentions
 
 Données :
-- `src/data/diaporamas/portraits.json` (commun à toutes les périodes) : liste de personnes
+- `src/data/diaporamas/<siecle>/portraits.json` (commun à toutes les périodes) : liste de personnes
   `{ id, nom, dates, commons, page, fichier, auteur, date, licence, cadre_visage, note? }` ;
   une personne sans portrait fiable garde `id`, `nom`, `dates` et une `note`, sans `commons` ni
   `fichier` (le lecteur ne montre rien pour elle). `cadre_visage` : [x0, y0, x1, y1] en fractions
@@ -30,7 +30,7 @@ Données :
   l'image, `{ id, quand }` (`quand` : le nom tel qu'il est dit, cherché après le précédent ;
   `instant` écrit par surimpressions.py) ; `personnes_vues` = mentions d'une personne visible sur
   l'image (pas de portrait), gardées pour mémoire et pour verifier.py.
-- Images : `public/diaporamas/portraits/<id>.webp` (rectangle 4:5 recadré sur le visage, que le
+- Images : `public/<siecle>/diaporamas/portraits/<id>.webp` (rectangle 4:5 recadré sur le visage, que le
   lecteur montre en ovale), ~450 px de haut.
 
 Visibilité : « visible » veut dire représentée de façon reconnaissable (sujet de l'œuvre, ou figure

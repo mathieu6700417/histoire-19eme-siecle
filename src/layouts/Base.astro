@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { NOM_SITE, siecle as trouverSiecle } from '../data/siecles';
+import { siecleDeChemin, urlDiaporamas, urlEcrivains, urlLecons, urlSiecle, urlSommaire } from '../utils/adresses';
 
 interface Props {
   title: string;
@@ -7,10 +9,19 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const nomSite = 'Le XIXe siècle français';
-const titreComplet = title === nomSite ? title : `${title} · ${nomSite}`;
-const base = import.meta.env.BASE_URL;
 const chemin = Astro.url.pathname;
+// Siècle courant, déduit de l'adresse (/<siecle>/…) ; aucun sur le sommaire et la page 404.
+const idSiecle = siecleDeChemin(chemin);
+const s = idSiecle ? trouverSiecle(idSiecle) : undefined;
+// Titre d'onglet : « <page> · <siècle> · Histoire de France » (sans répétition).
+const titreComplet = [title, s?.libelle, NOM_SITE].filter((x, i, t) => x && t.indexOf(x) === i).join(' · ');
+// Navigation du siècle : seulement les sections qu'il possède.
+const nav = s ? [
+  { libelle: 'Accueil', href: urlSiecle(s.id), courant: chemin === urlSiecle(s.id) },
+  { libelle: 'Leçons', href: urlLecons(s.id), courant: false },
+  ...(s.sections.includes('ecrivains') ? [{ libelle: 'Écrivains', href: urlEcrivains(s.id), courant: chemin.startsWith(urlEcrivains(s.id)) }] : []),
+  ...(s.sections.includes('images') ? [{ libelle: 'Images', href: urlDiaporamas(s.id), courant: chemin.startsWith(urlDiaporamas(s.id)) }] : []),
+] : [];
 ---
 
 <!doctype html>
@@ -31,18 +42,24 @@ const chemin = Astro.url.pathname;
     <a class="evitement" href="#contenu">Aller au contenu</a>
     <header class="entete">
       <div class="conteneur entete__interieur">
-        <a class="logo" href={base}>
-          <span class="logo__fleuron" aria-hidden="true">❦</span>
-          <span>Le <span class="sc">xix</span><sup>e</sup> siècle français</span>
-        </a>
-        <nav aria-label="Navigation principale">
-          <ul class="nav">
-            <li><a href={base} aria-current={chemin === base ? 'page' : undefined}>Accueil</a></li>
-            <li><a href={`${base}#lecons`}>Leçons</a></li>
-            <li><a href={`${base}ecrivains/`} aria-current={chemin.startsWith(`${base}ecrivains/`) ? 'page' : undefined}>Écrivains</a></li>
-            <li><a href={`${base}diaporamas/`} aria-current={chemin.startsWith(`${base}diaporamas/`) ? 'page' : undefined}>Images</a></li>
-          </ul>
-        </nav>
+        <p class="logo">
+          <a class="logo__site" href={urlSommaire} aria-current={chemin === urlSommaire ? 'page' : undefined}>
+            <span class="logo__fleuron" aria-hidden="true">❦</span>{NOM_SITE}
+          </a>
+          {s && (
+            <>
+              <span class="logo__sep" aria-hidden="true"> · </span>
+              <a class="logo__siecle" href={urlSiecle(s.id)}><span class="sc">{s.romain}</span><sup>e</sup> siècle</a>
+            </>
+          )}
+        </p>
+        {nav.length > 0 && (
+          <nav aria-label={`Navigation du ${s!.libelle}`}>
+            <ul class="nav">
+              {nav.map((n) => <li><a href={n.href} aria-current={n.courant ? 'page' : undefined}>{n.libelle}</a></li>)}
+            </ul>
+          </nav>
+        )}
       </div>
     </header>
 
@@ -53,7 +70,7 @@ const chemin = Astro.url.pathname;
     <footer class="pied">
       <div class="conteneur">
         <p>
-          Le <span class="sc">xix</span><sup>e</sup> siècle français, de 1789 à 1900&nbsp;: un site d’apprentissage
+          {NOM_SITE}{s && <> · le <span class="sc">{s.romain}</span><sup>e</sup> siècle, de {s.debut} à {s.fin}</>}&nbsp;: un site d’apprentissage
           construit leçon par leçon.
         </p>
       </div>
@@ -86,13 +103,15 @@ const chemin = Astro.url.pathname;
     padding-block: var(--e-3);
   }
   .logo {
+    margin: 0;
     font-family: var(--f-titre);
     font-size: 1.25rem;
     font-weight: 500;
     letter-spacing: 0.02em;
     color: var(--c-texte);
-    text-decoration: none;
   }
+  .logo a { color: var(--c-texte); text-decoration: none; }
+  .logo__sep { color: var(--c-texte-doux); }
   .logo__fleuron { color: var(--c-texte-doux); margin-right: 0.3em; }
   .logo sup, .pied sup { font-size: 0.6em; }
   .nav {

@@ -16,7 +16,7 @@ comme avant. `tester_etapes.py <slug>` contrôle que la réunion des étapes ég
 
 Vérifie : nombre de diapositives (110 à 135 pour les périodes 01 à 05, 135 à 160 ensuite : « Durée visée : une heure ») et d'actes (6 à 10), numérotation continue,
 actes cohérents (débuts croissants, titre et dates du carton d'acte : « 1787-1789 »,
-« juillet-octobre 1789 »), chaque image et chaque audio présents dans public/diaporamas/<slug>/,
+« juillet-octobre 1789 »), chaque image et chaque audio présents dans public/<siecle>/diaporamas/<slug>/,
 licences libres (relevées par images.py depuis l'API Commons), métadonnées complètes
 (titre, auteur, date, technique, conservation), une même œuvre deux fois au plus,
 durées (14 à 24 s par diapositive en principe, ~18 s en moyenne), phrases horodatées
@@ -428,7 +428,7 @@ FONDS_LIEU = ('paris', 'france', 'voisins', 'europe', 'monde')
 
 
 def plan_paris(slug: str) -> dict | None:
-    """Plan de Paris d'époque de la période (src/data/diaporamas/plans/*.json, carte.py)."""
+    """Plan de Paris d'époque de la période (src/data/diaporamas/<siecle>/plans/*.json, carte.py)."""
     for f in sorted((c.DONNEES / 'plans').glob('*.json')):
         p = json.loads(f.read_text())
         if slug in p.get('slugs', []):
@@ -1793,7 +1793,7 @@ def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[l
     return erreurs, avert, n_ap, n_mos
 
 
-INDICATIF = c.RACINE / 'src' / 'data' / 'diaporamas' / 'commun' / 'indicatif.json'
+INDICATIF = c.DONNEES / 'commun' / 'indicatif.json'
 
 
 def controler_generique(d: dict) -> tuple[list[str], list[str], float]:
@@ -1856,7 +1856,7 @@ def controler_generique(d: dict) -> tuple[list[str], list[str], float]:
         if not x:
             erreurs.append(f'indicatif : extrait « {nom} » manquant'); continue
         if not (c.PUBLIC / x['fichier']).exists():
-            erreurs.append(f"indicatif : {x['fichier']} absent de public/diaporamas/")
+            erreurs.append(f"indicatif : {x['fichier']} absent de public/<siecle>/diaporamas/")
         if not x.get('duree'):
             erreurs.append(f'indicatif : durée de « {nom} » inconnue')
             continue
@@ -2045,7 +2045,7 @@ def controler_mouvement(d: dict, dossier) -> tuple[list[str], list[str], int, in
     """Images mises en mouvement par IA (spec 16, `image.video`) : fichier présent, dimensions et
     durée exactes (ffprobe), H.264 yuv420p (lisible partout), proportions de la zone utile (le clip
     l'étire), modèle nommé (crédits), usage connu, consigne et graine consignées dans le lot
-    src/data/diaporamas/generation/<slug>.json ; plafond par période ; jamais sur un avant / après
+    src/data/diaporamas/<siecle>/generation/<slug>.json ; plafond par période ; jamais sur un avant / après
     ni une image entière (sur une mosaïque, le clip paraît après la plongée). Rend (erreurs,
     avertissements, clips, poids en octets)."""
     import subprocess

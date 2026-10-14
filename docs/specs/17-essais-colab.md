@@ -15,7 +15,7 @@ devenus des règles ; netteté appliquée à la Révolution et au Second Empire,
 | Calcul | Colab Pro, piloté par la **CLI officielle `colab`** (script Python autonome, `/content/in` → `/content/out`, suivi par `colab exec` courts, `colab stop` à la fin, puis `colab sessions` pour vérifier qu'il ne reste rien). **Une seule session**, réutilisée pour les trois essais. **Plafond : 10 unités** pour l'ensemble. |
 | Licences | Avant tout calcul, relever la licence de chaque modèle sur sa fiche (poids et code) et la noter dans le journal et sur la planche. Précédent de la spec 16 : les licences **non commerciales** et celles qui excluent l'Union européenne sont écartées pour une publication. Un modèle à licence douteuse peut figurer dans l'essai (privé) s'il est **marqué « licence à valider »** ; il ne sera pas publié sans accord. |
 | Gemini | 0 $ : aucun appel. |
-| Journal | `docs/journal/essais-colab.jsonl` (`scripts/journal/noter.py`). |
+| Journal | `docs/journal/xixe/essais-colab.jsonl` (`scripts/journal/noter.py`). |
 
 ## Essai 1 — Relief par carte de profondeur (nouvel essai de parallaxe)
 
@@ -71,7 +71,7 @@ Agrandir les images trop petites pour que la caméra plonge sans flou.
 
 ## Verdict et intégration (2026-10-12)
 
-Essais faits le 2026-10-12 (0,61 unité Colab, journal `docs/journal/essais-colab.jsonl`, pages dans
+Essais faits le 2026-10-12 (0,61 unité Colab, journal `docs/journal/xixe/essais-colab.jsonl`, pages dans
 `.cache/diaporamas/essais-colab/`, servies par `servir.py` sur le port 8017). Verdict de l'utilisateur
 après visionnage et écoute :
 
@@ -124,7 +124,7 @@ Décisions de l'utilisateur avant de généraliser :
 | Images colorisées | Une image qui porte une variante et une version colorisée (`image.couleur`, spec 16) reçoit aussi **sa version colorisée à la même finesse** (`grand.couleur`, `NNN-couleur-grand.webp`) : sinon le calque couleur, posé après un fondu lent et gardé jusqu'à la fin, masquerait la variante pendant la plus grande part de la diapositive. Aucun modèle : couleur relue + (variante − image servie) ; les couleurs restent celles qui ont été relues, seul le détail vient de la variante. Le lecteur la prend sur grand écran, comme la variante (`etat.ts`). |
 | Clips | Une image à clip (`image.video`) reçoit sa variante comme les autres : elle sert avant l'entrée du clip (ouverture, plongée) ; **le clip garde sa résolution** (≈ 1 600 px de large, Wan 2.2) et n'est pas refait. |
 
-Second Empire (2026-10-14, journal `docs/journal/nettete-06-second-empire.jsonl`) : 237 images mesurées (84 plans), **106 variantes** : 83 tirées de l'original de Commons, 23 agrandies par Real-ESRGAN (≈ 9 min de session L4, ≈ 0,3 unité Colab, 0 $ Gemini) ; 131 images sans variante. 43 versions colorisées grand écran. **97,7 Mo ajoutés** (≈ 65 Mo de variantes, ≈ 32 Mo de couleur). Diapositive 84 (Le Creusot, image à clip) : variante de 2 560 × 867 px tirée de l'original (2 836 px), qui laisse encore ≈ 2,3 px d'écran par px au cadre le plus serré (plafond)  ; mais le clip (1 632 × 544 px) entre en fondu à 1,8 s et reste jusqu'à la fin : la variante ne sert que les premières secondes, et l'annotation (prise à 4,5 s, sur le clip) reste à faire : agrandir le clip lui-même est à décider. Planche : `.cache/diaporamas/essais-colab/nettete/relecture-second-empire.html`.
+Second Empire (2026-10-14, journal `docs/journal/xixe/nettete-06-second-empire.jsonl`) : 237 images mesurées (84 plans), **106 variantes** : 83 tirées de l'original de Commons, 23 agrandies par Real-ESRGAN (≈ 9 min de session L4, ≈ 0,3 unité Colab, 0 $ Gemini) ; 131 images sans variante. 43 versions colorisées grand écran. **97,7 Mo ajoutés** (≈ 65 Mo de variantes, ≈ 32 Mo de couleur). Diapositive 84 (Le Creusot, image à clip) : variante de 2 560 × 867 px tirée de l'original (2 836 px), qui laisse encore ≈ 2,3 px d'écran par px au cadre le plus serré (plafond)  ; mais le clip (1 632 × 544 px) entre en fondu à 1,8 s et reste jusqu'à la fin : la variante ne sert que les premières secondes, et l'annotation (prise à 4,5 s, sur le clip) reste à faire : agrandir le clip lui-même est à décider. Planche : `.cache/diaporamas/essais-colab/nettete/relecture-second-empire.html`.
 
 ## Fonds prolongés des images entières (essai 4, règle depuis le 2026-10-12)
 
@@ -213,7 +213,7 @@ choisi **le dessin généré**, en connaissance de cause (il invente). Décision
 | Place | **Marge latérale d'une image entière** (portrait ou petite image), sur le fond prolongé assombri ; une vignette par diapositive au plus ; rien sur téléphone (pas de marge). |
 | Essai | **Planche d'essai d'abord** : huit vignettes pour huit images entières du Second Empire, deux modèles à poids ouverts comparés, page de jugement qui joue l'animation du trait dans une maquette de la marge (deux variantes de rendu : encre sombre sur une petite carte de papier, trait clair posé directement sur le fond). Rien dans le lecteur, les données ni `public/`. |
 | Règle des documents | Écart assumé à la règle « documents d'époque » (spec 16 : le généré doit dériver d'un document) : si l'essai est retenu, la vignette sera signalée (« dessin généré par IA ») et plafonnée par période ; à décider après l'essai. |
-| Calcul | Colab par la CLI, une seule session, arrêtée à la fin ; 0 $ Gemini ; journal `docs/journal/essais-colab.jsonl`. |
+| Calcul | Colab par la CLI, une seule session, arrêtée à la fin ; 0 $ Gemini ; journal `docs/journal/xixe/essais-colab.jsonl`. |
 
 ### Verdict et règles d'intégration (2026-10-14)
 
@@ -259,7 +259,7 @@ marge, le contenu, le rendu du trait et la durée :
 **Forme « dessin traversant » intégrée** (règle pour les périodes 06 et suivantes), non commitée, à
 visionner par l'utilisateur. Chaîne `scripts/diaporamas/vignettes.py` (`preparer | lancer | tracer |
 planche | publier | retirer | lister`), calcul `scripts/colab/vignettes.py`, trait
-`vignettes_trace.py --plein` ; lot `src/data/diaporamas/generation/second-empire-vignettes.json` ;
+`vignettes_trace.py --plein` ; lot `src/data/diaporamas/xixe/generation/second-empire-vignettes.json` ;
 lecteur `src/scripts/diaporama/vignette.ts` ; famille « vignettes (essai 5) » de `verifier.py` (les deux
 côtés à la fois). Période 06 : **29 dessins publiés** (1, 2, 5, 15b, 16, 24, 30, 31, 40, 47, 49b, 57, 58,
 59, 65, 68, 76, 78b, 82b, 84b, 87, 92, 103, 105, 108, 110, 122b, 145, 146 ; 31, 87, 92 repris de l'essai),

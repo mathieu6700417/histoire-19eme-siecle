@@ -38,7 +38,7 @@ que Zola choisira pour ses *Rougon-Macquart*.
   *Au Bonheur des Dames*, *L'Assommoir*, *Nana*, *L'Argent*, *Germinal*…). *La Débâcle* (1892) est
   **réservée au chapitre 7**. *La Fortune des Rougon* (décembre 1851) relève du chapitre 5.
 - Ne pas réutiliser une page Wikisource déjà citée dans les chapitres 0 à 5 (voir les JSON de
-  `scripts/ecrivains/chapitres/`), ni une page qui porte sur 1870-1871 (chapitre 7, écrit en
+  `scripts/ecrivains/chapitres/xixe/`), ni une page qui porte sur 1870-1871 (chapitre 7, écrit en
   parallèle) ou sur la IIIe République (chapitre 8, écrit en parallèle).
 
 ## Parties prévues (par défaut ; 4 parties, 4 à 9 extraits chacune)

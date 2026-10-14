@@ -279,7 +279,7 @@ def releve(a) -> int:
             nav = p.chromium.launch(executable_path=captures.chromium())
             for app, (w, h, _) in captures.APPAREILS.items():
                 pg = nav.new_context(viewport={'width': w, 'height': h}, device_scale_factor=1).new_page()
-                pg.goto(f'http://127.0.0.1:{port}/diaporamas/{slug}/', wait_until='load')
+                pg.goto(f'http://127.0.0.1:{port}{c.url_diaporama(slug)}', wait_until='load')
                 pg.wait_for_timeout(600)
                 pg.click('[data-action="lancer"]')
                 pg.evaluate("() => { const r = document.querySelector('.diaporama'); r.__generique && r.__generique('passer'); }")

@@ -3,7 +3,7 @@
 une diapositive »).
 
 Usage :
-    python3 scripts/diaporamas/ajouter_lieux.py                      # src/data/diaporamas/01-revolution.json
+    python3 scripts/diaporamas/ajouter_lieux.py                      # src/data/diaporamas/<siecle>/01-revolution.json
     python3 scripts/diaporamas/ajouter_lieux.py --fichier copie.json # une copie (essai)
     python3 scripts/diaporamas/ajouter_lieux.py --essai              # montre sans écrire
 

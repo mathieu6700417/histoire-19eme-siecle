@@ -8,14 +8,14 @@ Usage :
     python3 scripts/diaporamas/objets.py --planche                  # planche de contrôle (à relire)
     python3 scripts/diaporamas/objets.py revolution --relever       # bilan des mentions d'une période
 
-Registre `src/data/diaporamas/objets.json` (commun à toutes les périodes) :
+Registre `src/data/diaporamas/<siecle>/objets.json` (commun à toutes les périodes) :
 - objet : `{ id, type: "objet", nom, date, musee, inventaire?, commons, recadrage?, detourage? }` ;
   `nom` est la légende courte (« Assiette à la cocarde tricolore, faïence de Nevers »), `date` celle de
   l'objet, `musee` l'institution qui le conserve. L'objet est d'époque ; la photo peut être récente.
 - manuscrit : `{ id, type: "manuscrit", nom, date, musee, inventaire?, commons, recadrage?, halo,
   passage }` ; `halo` : [x0, y0, x1, y1] (fractions de l'image servie, après `recadrage`) de la
   signature ou de la phrase éclairée, `passage` : sa transcription exacte.
-- écrits par le script : `fichier` (chemin dans public/diaporamas/), `largeur`, `hauteur`, `auteur_photo`,
+- écrits par le script : `fichier` (chemin dans public/<siecle>/diaporamas/), `largeur`, `hauteur`, `auteur_photo`,
   `licence`, `page` (notice Commons).
 
 Licence relevée par l'API Commons : domaine public, CC0, CC BY et CC BY-SA (crédit et lien affichés sur
@@ -25,10 +25,10 @@ Détourage (objets) : `rembg` (modèle `isnet-general-use`, libre, local) dans l
 `.cache/venv-rembg` (`python3 -m venv .cache/venv-rembg && .cache/venv-rembg/bin/pip install
 "rembg[cpu]" pillow` ; le modèle, ~180 Mo, est téléchargé au premier usage dans ~/.rembg/models). Le masque
 est durci (seuils), l'image rognée sur l'objet avec une petite marge, réduite à 720 px au plus et
-écrite en webp à fond transparent (`public/diaporamas/objets/<id>.webp`). `detourage: "convexe"` pour un
+écrite en webp à fond transparent (`public/<siecle>/diaporamas/objets/<id>.webp`). `detourage: "convexe"` pour un
 objet convexe (assiette, médaille) : enveloppe convexe du masque, qui rend le blanc de la faïence que
 le modèle prend pour le fond ; `detourage: "aucun"` pour un objet plat montré tel quel. Manuscrits : webp 1400 px au plus, sans détourage
-(`public/diaporamas/manuscrits/<id>.webp`). Originaux en cache : `.cache/diaporamas/objets/`.
+(`public/<siecle>/diaporamas/manuscrits/<id>.webp`). Originaux en cache : `.cache/diaporamas/objets/`.
 
 Dans une diapositive : `objets: [{ id, quand, cote? }]` et `manuscrits: [{ id, quand, cote? }]` (un de
 chaque au plus) ; `quand` : passage exact de la narration ; `instant` écrit par surimpressions.py ;

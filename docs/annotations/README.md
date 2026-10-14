@@ -1,8 +1,8 @@
 # Annotations de visionnage (spec 15)
 
 Corrections notées par l'utilisateur pendant le visionnage d'un diaporama en local
-(`npm run annoter`, touche A). Un fichier `<slug>.jsonl` par période (une annotation par ligne),
-captures d'écran dans `<slug>/<id>.jpg`. Fichiers écrits par `scripts/diaporamas/annoter.py` ;
+(`npm run annoter`, touche A). Rangées par siècle (spec 18) : un fichier `<siecle>/<slug>.jsonl`
+par période (une annotation par ligne), captures d'écran dans `<siecle>/<slug>/<id>.jpg`. Fichiers écrits par `scripts/diaporamas/annoter.py` ;
 ne pas les modifier à la main.
 
 Avant de retoucher un diaporama :

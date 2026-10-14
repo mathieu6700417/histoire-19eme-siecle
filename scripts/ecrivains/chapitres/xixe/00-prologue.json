@@ -1,0 +1,343 @@
+{
+ "slug": "00-prologue",
+ "gabarit": "00-prologue.gabarit.mdx",
+ "sortie": "src/content/ecrivains/xixe/00-prologue.mdx",
+ "ancres": {},
+ "extraits": {
+  "paysan": {
+   "page": "L’Ancien_Régime_et_la_Révolution/Livre_2",
+   "segments": [
+    {
+     "debut": "Pourquoi donc les mêmes droits féodaux ont-ils excité dans l",
+     "fin": ", on avait rendu cent fois plus odieux ce qu’on en laissait."
+    }
+   ],
+   "cle": [
+    4,
+    5
+   ]
+  },
+  "combourg": {
+   "page": "Mémoires_d’outre-tombe/Première_partie/Livre_III",
+   "segments": [
+    {
+     "debut": "Dans tout le cours de l’année aucun étranger ne se présentai",
+     "fin": "re de l’étang : c’étaient nos hôtes chevauchant vers Rennes."
+    },
+    "CUT",
+    {
+     "debut": "Le calme morne du château de Combourg était augmenté par l’h",
+     "fin": "a cuisinière tenait garnison dans la grosse tour de l’ouest."
+    },
+    "CUT",
+    {
+     "debut": "Les soirées d’automne et d’hiver étaient d’une autre nature.",
+     "fin": "a tour, dont nous entendions les portes se refermer sur lui."
+    }
+   ],
+   "cle": [
+    5,
+    5
+   ]
+  },
+  "saint-marcel": {
+   "page": "Tableau_de_Paris/085",
+   "segments": [
+    {
+     "debut": "C’est le quartier où habite la populace de Paris, la plus pa",
+     "fin": "arce qu’elle est capable de se porter aux plus grands excès."
+    }
+   ],
+   "cle": [
+    6,
+    8
+   ]
+  },
+  "centralisation": {
+   "page": "L’Ancien_Régime_et_la_Révolution/Livre_2",
+   "segments": [
+    {
+     "debut": "Ce sont là les débris des anciens pouvoirs ; mais il s’est é",
+     "fin": "onheur de ces provinces, leur abondance ou leur stérilité. »"
+    }
+   ],
+   "cle": [
+    7,
+    10
+   ]
+  },
+  "lumieres": {
+   "page": "L’Ancien_Régime_et_la_Révolution/Livre_3",
+   "segments": [
+    {
+     "debut": "Je perds maintenant de vue les faits anciens et généraux qui",
+     "fin": " lourd traité jusqu’à la chanson, qui n’en contienne un peu."
+    },
+    "CUT",
+    {
+     "debut": "Néanmoins, quand on écarte les détails pour arriver aux idée",
+     "fin": "littérature, ont eue sur la Révolution et jusqu’à nos jours."
+    },
+    "CUT",
+    {
+     "debut": "Au-dessus de la société réelle, dont la constitution était e",
+     "fin": " dans cette cité idéale qu’avaient construite les écrivains."
+    }
+   ],
+   "cle": [
+    5,
+    7
+   ]
+  },
+  "cafes": {
+   "page": "Tableau_de_Paris/071",
+   "segments": [
+    {
+     "debut": "On compte six à sept cents cafés ; c’est le refuge ordinaire",
+     "fin": "coquetterie semble un attribut indispensable de leur métier."
+    }
+   ],
+   "cle": [
+    0,
+    2
+   ]
+  },
+  "rivarol": {
+   "page": "De_l’Universalité_de_la_langue_française",
+   "segments": [
+    {
+     "debut": "Une telle queſtion propoſée sur la Langue Latine, auroit fla",
+     "fin": "qu’un, expriment assez bien la physionomie des deux Langues."
+    }
+   ],
+   "cle": [
+    0,
+    2
+   ]
+  },
+  "figaro": {
+   "page": "La_Folle_Journée,_ou_le_Mariage_de_Figaro",
+   "segments": [
+    {
+     "debut": "Ô femme ! femme ! femme ! créature faible et décevante !… nu",
+     "fin": "nt le sot métier de mari quoique je ne le sois qu’à moitié !"
+    },
+    {
+     "debut": "(Il s’assied sur un banc.) Est-il rien de plus bizarre que m",
+     "fin": "ort, à l’entrée duquel je laissai l’espérance et la liberté."
+    },
+    {
+     "debut": "(Il se lève.) Que je voudrais bien tenir un de ces puissants",
+     "fin": "n’y a que les petits hommes qui redoutent les petits écrits."
+    },
+    {
+     "debut": "(Il se rassied.) Las de nourrir un obscur pensionnaire, on m",
+     "fin": "r maison, en retenant pour elles les trois quarts du profit."
+    }
+   ],
+   "cle": [
+    0,
+    0
+   ]
+  },
+  "cacouacs": {
+   "page": "Nouveau_mémoire_pour_servir_à_l’histoire_des_Cacouacs/Nouveau_mémoire",
+   "segments": [
+    {
+     "debut": "Les Cacouacs habitent sous des tentes pour marquer leur indé",
+     "fin": "lhonnête homme, car il n’aura tenu qu’à lui d’être vertueux."
+    }
+   ],
+   "cle": [
+    1,
+    1
+   ]
+  },
+  "montesquieu": {
+   "page": "Esprit_des_lois_(1777)/L2/C4",
+   "segments": [
+    {
+     "debut": "Les pouvoirs intermédiaires subordonnés & dépendans constitu",
+     "fin": "igion, ce sont les coutumes qu’on y vénere au lieu des lois."
+    }
+   ],
+   "cle": [
+    0,
+    3
+   ]
+  },
+  "turgot": {
+   "page": "Œuvres_de_Turgot_(Daire,_1844)/Actes_du_Ministère_de_Turgot",
+   "segments": [
+    {
+     "debut": "Sire, en sortant du cabinet de Votre Majesté, encore tout pl",
+     "fin": "nnes qui ont le plus de titres pour obtenir vos libéralités."
+    },
+    "CUT",
+    {
+     "debut": "Votre Majesté se souviendra que c’est sur la foi de ses prom",
+     "fin": "C’est avec ces sentiments que je suis, Sire, etc."
+    }
+   ],
+   "cle": [
+    0,
+    8
+   ]
+  },
+  "diderot": {
+   "page": "L’Encyclopédie/1re_édition/AUTORITÉ",
+   "segments": [
+    {
+     "debut": "Autorité politique. Aucun homme n’a reçû de la nature le dro",
+     "fin": "e l’étoit arrogée devenant alors prince, cesse d’être tyran."
+    },
+    "CUT",
+    {
+     "debut": "Le prince tient de ses sujets mêmes l’autorité qu’il a sur e",
+     "fin": " s’il l’avoit eu en toute propriété & sans aucune condition."
+    }
+   ],
+   "cle": [
+    0,
+    2
+   ]
+  },
+  "rousseau": {
+   "page": "Du_contrat_social/Édition_1762/Livre_I/Chapitre_6",
+   "segments": [
+    {
+     "debut": "Je suppose les hommes parvenus à ce point où les obstacles q",
+     "fin": "istinguer quand ils sont employés dans toute leur précision."
+    }
+   ],
+   "cle": [
+    3,
+    7
+   ]
+  },
+  "voltaire": {
+   "page": "Dictionnaire_philosophique/La_Raison_par_alphabet_-_6e_ed._-_Cramer_(1769)/Fanatisme",
+   "segments": [
+    {
+     "debut": "Le Fanatisme est à la superstition, ce que le transport est ",
+     "fin": "Bertaud, Évêque de Sées."
+    }
+   ],
+   "cle": [
+    5,
+    8
+   ]
+  },
+  "avenement": {
+   "page": "Mémoires_sur_la_vie_privée_de_Marie-Antoinette/Tome_1/6",
+   "segments": [
+    {
+     "debut": "Vers les premiers jours de mai 1774, Louis XV, annonçant par",
+     "fin": "prescrivirent de verser de l’esprit-de-vin dans le cercueil."
+    }
+   ],
+   "cle": [
+    3,
+    5
+   ]
+  },
+  "chamfort": {
+   "page": "Maximes_Pensées_Caractères_et_Anecdotes/Chapitre_3",
+   "segments": [
+    {
+     "debut": "La société est composée de deux grandes classes : ceux qui o",
+     "fin": "e d’un air riant. On n’aime pas à voir plus heureux que soi."
+    }
+   ],
+   "cle": [
+    6,
+    11
+   ]
+  },
+  "laclos": {
+   "page": "Les_Liaisons_dangereuses/Lettre_81",
+   "segments": [
+    {
+     "debut": "Ah ! gardez vos conseils & vos craintes pour ces femmes à dé",
+     "fin": "aux premiers éléments de la science que je voulais acquérir."
+    }
+   ],
+   "cle": [
+    3,
+    5
+   ]
+  },
+  "collier": {
+   "page": "Le_Collier_de_la_reine/Prologue/02",
+   "segments": [
+    {
+     "debut": "— Monsieur, dit alors le marquis de Favras en s’allongeant s",
+     "fin": "Il y eut un instant d’hésitation dans l’assemblée."
+    },
+    "CUT",
+    {
+     "debut": "Un cri d’effroi retentit dans la salle. Messieurs de Richeli",
+     "fin": " mort sur les assistans, et les glaça jusqu’au fond du cœur."
+    }
+   ],
+   "cle": [
+    29,
+    49
+   ]
+  },
+  "prosperite": {
+   "page": "L’Ancien_Régime_et_la_Révolution/Livre_3",
+   "segments": [
+    {
+     "debut": "Environ trente ou quarante ans avant que la Révolution éclat",
+     "fin": ": on ne change pas les lois, mais on les pratique autrement."
+    },
+    "CUT",
+    {
+     "debut": "À mesure que se développe en France la prospérité que je vie",
+     "fin": "x biens qu’on a déjà et précipite vers les choses nouvelles."
+    }
+   ],
+   "cle": [
+    7,
+    9
+   ]
+  },
+  "calonne": {
+   "page": "Considérations_sur_…_la_Révolution_Française/Première_partie/IX",
+   "segments": [
+    {
+     "debut": "M. Turgot et M. Necker avoient été renversés, en grande part",
+     "fin": "aisoient partie, de n’admettre aucun progrès en aucun genre."
+    },
+    "CUT",
+    {
+     "debut": "M. de Calonne savoit que le parlement ne consentiroit pas à ",
+     "fin": "tisfait, mais lui fit dire néanmoins de ne point l’imprimer."
+    },
+    "CUT",
+    {
+     "debut": "Un soir, dans l’hiver de 1787, deux jours après que la répon",
+     "fin": "onnel du roi adoucissoit l’abus autant qu’il étoit possible."
+    }
+   ],
+   "cle": [
+    3,
+    4
+   ]
+  },
+  "privileges": {
+   "page": "Essai_sur_les_privilèges",
+   "segments": [
+    {
+     "debut": "Au moment où le Prince imprime à un citoyen le caractere de ",
+     "fin": "eilleux attribut de ces mêmes Priviléges que nous déteſtons."
+    }
+   ],
+   "cle": [
+    1,
+    1
+   ]
+  }
+ }
+}

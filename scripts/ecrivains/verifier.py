@@ -1,7 +1,7 @@
 """Vérifie les extraits publiés de la section « écrivains » contre Wikisource.
 
 Usage : python3 scripts/ecrivains/verifier.py <slug> [<slug>…]
-        python3 scripts/ecrivains/verifier.py --tous      (tous les src/content/ecrivains/*.mdx)
+        python3 scripts/ecrivains/verifier.py --tous      (tous les src/content/ecrivains/<siecle>/*.mdx)
         (npm run verifier:ecrivains)
 
 Pour chaque <Extrait> du MDX :
@@ -14,9 +14,9 @@ Pour chaque <Extrait> du MDX :
 Code de sortie 1 si un contrôle échoue.
 """
 import html, re, sys, time, urllib.error
-from wikisource import RACINE, _get
+from wikisource import MDX, _get
 
-DOSSIER_MDX = RACINE / 'src' / 'content' / 'ecrivains'
+DOSSIER_MDX = MDX   # src/content/ecrivains/<siecle>/ (--siecle, défaut xixe)
 TEXTE = (400, 900)
 CLE = (150, 350)
 EXTRAIT = re.compile(r'(<Extrait auteur="[^"]+"[^>]*?id="([^"]+)"[\s\S]*?lien="([^"]+)"[\s\S]*?)<div slot="texte">([\s\S]*?)</div>\s*<div slot="critique">')

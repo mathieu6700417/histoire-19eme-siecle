@@ -10,19 +10,24 @@ Python 3.10 ou plus récent, **bibliothèque standard seulement** (aucun `pip in
 Un accès réseau à `fr.wikisource.org` est nécessaire. Les commandes se lancent depuis la
 racine du projet.
 
+**Siècle (spec 18).** Spécifications et chapitres sont rangés par siècle :
+`scripts/ecrivains/chapitres/<siecle>/` et `src/content/ecrivains/<siecle>/`. Chaque script
+accepte `--siecle <id>` (défaut `xixe`, lu par `scripts/diaporamas/commun.py`) ; les chemins sont
+calculés dans `wikisource.py` (`CHAPITRES`, `MDX`). Le chapitre paraît à `/<siecle>/ecrivains/<slug>/`.
+
 ## Fichiers
 
 | Fichier | Rôle |
 | --- | --- |
-| `wikisource.py` | Bibliothèque commune : API `parse` de Wikisource, mise en texte, cache, URL publiques. |
+| `wikisource.py` | Bibliothèque commune : chemins du siècle, API `parse` de Wikisource, mise en texte, cache, URL publiques. |
 | `chercher.py` | Recherche plein texte sur Wikisource, ou liste des sous-pages d'une œuvre. |
 | `voir.py` | Affiche les paragraphes numérotés d'une page (pour choisir un extrait et ses marqueurs). |
 | `extraits.py` | Extrait le texte de chaque extrait d'après la spécification JSON ; affiche les nombres de mots. |
 | `generer.py` | Assemble le MDX du chapitre : gabarit + textes exacts + passage clé + appels de note + liens. |
 | `gabarit.py` | Recrée le gabarit à partir du MDX publié (après des retouches faites directement dans le MDX). |
 | `verifier.py` | Vérifie les MDX publiés contre les pages Wikisource (sans cache). |
-| `chapitres/<slug>.json` | Spécification des extraits d'un chapitre (pages, segments, passage clé, ancres). |
-| `chapitres/<slug>.gabarit.mdx` | Le chapitre rédigé, avec `@@T:id@@` (texte) et `@@L:id@@` (lien) à la place des textes. |
+| `chapitres/<siecle>/<slug>.json` | Spécification des extraits d'un chapitre (pages, segments, passage clé, ancres). |
+| `chapitres/<siecle>/<slug>.gabarit.mdx` | Le chapitre rédigé, avec `@@T:id@@` (texte) et `@@L:id@@` (lien) à la place des textes. |
 
 ## Commandes
 
@@ -39,7 +44,7 @@ python3 scripts/ecrivains/voir.py "Les_Châtiments/À_l’obéissance_passive" 0
 python3 scripts/ecrivains/extraits.py 01-revolution
 python3 scripts/ecrivains/extraits.py 01-revolution bastille
 
-# Générer le MDX (par défaut vers src/content/ecrivains/<slug>.mdx)
+# Générer le MDX (par défaut vers src/content/ecrivains/<siecle>/<slug>.mdx)
 python3 scripts/ecrivains/generer.py 01-revolution
 python3 scripts/ecrivains/generer.py 01-revolution --sortie /tmp/essai.mdx
 
@@ -57,7 +62,7 @@ npm run verifier:ecrivains
 {
   "slug": "02-empire",
   "gabarit": "02-empire.gabarit.mdx",
-  "sortie": "src/content/ecrivains/02-empire.mdx",
+  "sortie": "src/content/ecrivains/xixe/02-empire.mdx",
   "ancres": { "id-extrait": { "mot de la note": "autre ancre dans le texte" } },
   "extraits": {
     "austerlitz": {
@@ -101,7 +106,7 @@ Il remplace aussi « 1o » en début de ligne par `1<sup>o</sup>`.
 ## Workflow
 
 1. Chercher les sources (`chercher.py`), lire les pages (`voir.py`), choisir les extraits.
-2. Écrire `chapitres/<slug>.json` et `chapitres/<slug>.gabarit.mdx` (modèle d'extrait dans la
+2. Écrire `chapitres/<siecle>/<slug>.json` et `chapitres/<siecle>/<slug>.gabarit.mdx` (modèle d'extrait dans la
    charte ; `texte` et `lien` remplacés par `@@T:id@@` et `@@L:id@@`).
 3. `extraits.py <slug>` : contrôler les longueurs (texte 400 à 900 mots, passage clé 150 à 350).
 4. `generer.py <slug>` puis `verifier.py <slug>` (tout doit être « ok »), puis `npm run build`.

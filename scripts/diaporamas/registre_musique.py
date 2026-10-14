@@ -14,7 +14,7 @@ Usage :
     python3 scripts/diaporamas/registre_musique.py introuvable "<œuvre>" "<compositeur>" "<où>"
     python3 scripts/diaporamas/registre_musique.py --amorcer                # périodes existantes + journal 02
 
-Données : src/data/diaporamas/commun/registre-musique.json
+Données : src/data/diaporamas/<siecle>/commun/registre-musique.json
     { "enregistrements": [ … ], "introuvables": [ … ] }
 
 Une entrée par ENREGISTREMENT (un fichier d'une source), pas par piste d'une période :
@@ -43,7 +43,7 @@ Décisions :
 - Deux pistes tirées du même fichier (deux mouvements, ou le même chant dans deux périodes) font
   UNE entrée, avec plusieurs passages et plusieurs périodes.
 - Les introuvables de la période 02 sont saisis ici à la main (INTROUVABLES_02), d'après l'entrée 35
-  de docs/journal/diaporama-02-consulat-empire.jsonl ; les requêtes d'alors n'ont pas été consignées.
+  de docs/journal/<siecle>/diaporama-02-consulat-empire.jsonl ; les requêtes d'alors n'ont pas été consignées.
 - Écriture par commun.ecrire (atomique, sous verrou). Aucun appel réseau, aucun appel Gemini.
 """
 import argparse, datetime, json, re, sys, unicodedata

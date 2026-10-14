@@ -33,7 +33,7 @@ directement la France ; textes écrits en français, pas de traductions).
 | 7 | `07-annee-terrible` | L'année terrible : guerre et Commune | 1870-1871 | écrit |
 | 8 | `08-troisieme-republique` | La IIIe République jusqu'à 1900 | 1871-1900 | écrit |
 
-Un chapitre est « écrit » dès qu'un fichier de `src/content/ecrivains/` porte son `numero` ;
+Un chapitre est « écrit » dès qu'un fichier de `src/content/ecrivains/xixe/` porte son `numero` ;
 les autres apparaissent grisés (« à venir ») sur l'accueil de la section. La navigation
 précédent / suivant, l'accueil de la section et l'index des auteurs se mettent à jour seuls.
 Le slug est libre, mais il commence par le numéro sur deux chiffres.
@@ -193,8 +193,8 @@ référence et lien. Tout le reste est replié dans des `<details>`.
 
 ## 6. Convention MDX
 
-Fichier `src/content/ecrivains/<slug>.mdx`, généré par `scripts/ecrivains/generer.py` à partir de
-`scripts/ecrivains/chapitres/<slug>.gabarit.mdx` et `<slug>.json` (voir le README des scripts).
+Fichier `src/content/ecrivains/xixe/<slug>.mdx`, généré par `scripts/ecrivains/generer.py` à partir de
+`scripts/ecrivains/chapitres/xixe/<slug>.gabarit.mdx` et `<slug>.json` (voir le README des scripts).
 On rédige le **gabarit**, où le texte et le lien de chaque extrait sont les marques `@@T:id@@`
 et `@@L:id@@` ; le script y insère les textes exacts, le passage clé et les appels de note.
 
@@ -208,9 +208,9 @@ periode: "1799-1815"
 resume: "Une ou deux phrases : ce que racontent les textes, et les principaux auteurs."
 dureeLecture: 120
 ---
-import Extrait from '../../components/Extrait.astro';
-import Appel from '../../components/Appel.astro';
-import Partie from '../../components/Partie.astro';
+import Extrait from '../../../components/Extrait.astro';
+import Appel from '../../../components/Appel.astro';
+import Partie from '../../../components/Partie.astro';
 
 <div class="introduction">
 
@@ -310,7 +310,7 @@ Paragraphe après le passage clé.
 
 ## 7. Données
 
-### Ajouter un auteur (`src/data/auteurs.ts`)
+### Ajouter un auteur (`src/data/xixe/auteurs.ts`)
 
 Une entrée par auteur dans `liste`, à la fin ou près des auteurs du même chapitre :
 
@@ -331,7 +331,7 @@ Une entrée par auteur dans `liste`, à la fin ou près des auteurs du même cha
 ```
 
 - `couleur` : `c.<courant>.couleur`, où `<courant>` est l'une des clés de
-  `src/data/courants-politiques.ts` (`legitimistes`, `orleanistes`, `bonapartistes`,
+  `src/data/xixe/courants-politiques.ts` (`legitimistes`, `orleanistes`, `bonapartistes`,
   `republicains`, `radicaux`, `socialistes`, `anarchistes`, `catholiques`, `nationalistes`).
   Ce sont des niveaux de gris : ne pas y mettre de couleur.
 - `naissance.annee` est indispensable : elle décide du statut témoin.
@@ -344,7 +344,7 @@ Seulement si aucun des sept ne convient, et avec l'accord de l'utilisateur :
 `nouveau: { id: 'nouveau', libelle: 'Libellé' }`. Pas de couleur. Le type `IdGenre` suit
 automatiquement ; un genre inconnu fait échouer le build.
 
-### Le chapitre dans `src/data/chapitres-ecrivains.ts`
+### Le chapitre dans `src/data/xixe/chapitres-ecrivains.ts`
 
 Les neuf chapitres (0 à 8) y sont déjà déclarés (`numero`, `titre`, `periode`). Il n'y a rien
 à ajouter pour un nouveau chapitre ; ne modifier titre ou période qu'avec l'accord de
@@ -370,8 +370,8 @@ Wikisource l'ont déjà). Dans la prose de l'appareil, on peut taper les espaces
 Chaque chapitre est illustré d'œuvres d'art de l'époque selon `docs/specs/11-ecrivains-illustrations.md`
 (qui fait foi) : 6 à 10 œuvres, une en tête de chaque `<Partie>` (prop `frontispice`), les autres
 juste après l'extrait qu'elles éclairent ; composant `Oeuvre` (`src/components/Oeuvre.astro`,
-documenté en tête), artistes dans `src/data/artistes.ts`, images Wikimedia Commons (domaine
-public ou CC0) dans `src/assets/oeuvres/<NN>/<id>.jpg` (≤ 2000 px, JPEG). Seule exception à la
+documenté en tête), artistes dans `src/data/xixe/artistes.ts`, images Wikimedia Commons (domaine
+public ou CC0) dans `src/assets/oeuvres/xixe/<NN>/<id>.jpg` (≤ 2000 px, JPEG). Seule exception à la
 règle monochrome : gris dans la page, couleur dans la visionneuse.
 - Placer une `<Oeuvre>` **entre deux blocs** : après un `</Extrait>` ou juste après une
   `<Partie … />`, jamais entre une transition et l'extrait qu'elle introduit, ni dans un extrait.
@@ -387,17 +387,20 @@ règle monochrome : gris dans la page, couleur dans la visionneuse.
 
 ## 9. Procédure pour un nouveau chapitre
 
+Les chapitres du XIXe sont rangés sous `xixe/` (spec 18) et paraissent à `/xixe/ecrivains/<slug>/` ;
+pour un autre siècle, remplacer `xixe` par son identifiant et passer `--siecle <id>` aux scripts.
+
 1. **Spec** : écrire `docs/specs/NN-ecrivains-<slug>.md` (numéro suivant), qui renvoie à cette
    charte et ne fixe que ce qui est propre au chapitre : bornes, parties prévues, épisodes à
    couvrir, pistes d'extraits, sensibilités à représenter, exceptions accordées.
 2. **Repérage** : `chercher.py` et `voir.py` pour trouver les pages Wikisource ; choisir au moins
    20 extraits, environ deux tiers contemporains, en équilibrant camps et genres. Écarter tout
    texte absent de Wikisource.
-3. **Spécification JSON** : `scripts/ecrivains/chapitres/<slug>.json` (page, segments, passage
+3. **Spécification JSON** : `scripts/ecrivains/chapitres/xixe/<slug>.json` (page, segments, passage
    clé). Contrôler avec `python3 scripts/ecrivains/extraits.py <slug>` : textes de 400 à 900
    mots, passages clés de 150 à 350. Lire chaque extrait (`extraits.py <slug> <id>`).
 4. **Auteurs** : ajouter les nouveaux dans `auteurs.ts`, compléter `oeuvres` des autres.
-5. **Gabarit** : `scripts/ecrivains/chapitres/<slug>.gabarit.mdx` (frontmatter, introduction,
+5. **Gabarit** : `scripts/ecrivains/chapitres/xixe/<slug>.gabarit.mdx` (frontmatter, introduction,
    parties, extraits sur le modèle du § 6, transitions, conclusion). Mettre `fiche` à la
    première apparition de chaque auteur, `faits` et `regard` partout.
 6. **Génération** : `python3 scripts/ecrivains/generer.py <slug>` (corriger marqueurs, ancres ou

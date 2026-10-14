@@ -32,7 +32,7 @@ gouvernement provisoire, Hugo, Tocqueville, Lamennais, Louis Blanc, Proudhon, Qu
   (décembre 1851) ; le reste du recueil est réservé au chapitre 6. *L'Expiation* est déjà citée au
   chapitre 2 : ne pas la reprendre.
 - Ne pas réutiliser une page Wikisource déjà citée dans les chapitres 0 à 3 (voir les JSON de
-  `scripts/ecrivains/chapitres/`) ni, dans la mesure du possible, une page retenue par le
+  `scripts/ecrivains/chapitres/xixe/`) ni, dans la mesure du possible, une page retenue par le
   chapitre 4 (écrit en parallèle).
 
 ## Parties prévues (par défaut ; 4 parties, 4 à 9 extraits chacune)

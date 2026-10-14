@@ -19,7 +19,7 @@ abonnement **Google Colab Pro** avec des modèles à poids ouverts. **État : mo
 
 ## Essai (2026-10-11)
 
-- **Lot** : `src/data/diaporamas/generation/revolution.json`, 8 diapositives de la Révolution à
+- **Lot** : `src/data/diaporamas/xixe/generation/revolution.json`, 8 diapositives de la Révolution à
   scènes animables (Bastille 18, marche sur Versailles 28, fête de la Fédération 35, 10 août 53,
   Valmy 56, incendie de Toulon 85, fête de l'Être suprême 92, Vendémiaire 110), une consigne de
   mouvement en anglais par image (fumée, drapeaux, foule, lent travelling ; style de l'œuvre conservé),
@@ -34,7 +34,7 @@ abonnement **Google Colab Pro** avec des modèles à poids ouverts. **État : mo
   par clip, ≈ 4 unités ; la CLI a été rappelée par l'utilisateur en cours de route (« il y a une CLI »,
   déjà employée sur un autre projet) et devient la voie normale.
 - **Coût attendu** : ≈ 45 min d'A100 par lot de 8, soit ≈ 4 unités ; 0 $ Gemini.
-- **Journal** : `docs/journal/generation-mouvement.jsonl`.
+- **Journal** : `docs/journal/xixe/generation-mouvement.jsonl`.
 
 ## Visionnage et intégration (2026-10-12)
 
@@ -43,7 +43,7 @@ pour l'intégration (les points laissés ouverts le 2026-10-11 sont tranchés ic
 
 | Sujet | Décision |
 |---|---|
-| Données | `image.video` `{ fichier, type, duree, largeur, hauteur, modele, genere_le }`, écrit par `generation.py publier` ; la consigne et la graine restent dans le lot `src/data/diaporamas/generation/<slug>.json`. Fichier `public/diaporamas/<slug>/NNN-mouvement.mp4` (aller-retour de 10 s, H.264 yuv420p, sans son). |
+| Données | `image.video` `{ fichier, type, duree, largeur, hauteur, modele, genere_le }`, écrit par `generation.py publier` ; la consigne et la graine restent dans le lot `src/data/diaporamas/xixe/generation/<slug>.json`. Fichier `public/xixe/diaporamas/<slug>/NNN-mouvement.mp4` (aller-retour de 10 s, H.264 yuv420p, sans son). |
 | Rendu | Le clip est posé dans une boîte de la taille de l'image, **étiré sur la zone utile** (le modèle a reçu l'image étirée à des dimensions multiples de 32 ; l'étirement inverse la recouvre exactement) et reçoit la **même transformation que l'image : la caméra calée sur la narration continue** de travailler. Plutôt que de figer la caméra : le mouvement généré est discret et la caméra lente ; figer aurait perdu les cadres liés à la narration. **Image fixe d'abord** (entrée ordinaire : fondu, gris → couleur, recul), puis le clip paraît en fondu de 1,2 s à 1,8 s de voix (ou 0,3 s après la plongée d'une mosaïque), **joué une seule fois, puis sa dernière image reste tenue** jusqu'à la fin de la diapositive (retour de l'utilisateur du 2026-10-12 : « ça va pas que ça fasse des allers-retours et que ça boucle » ; la première version bouclait un aller-retour de 10 s). Calé sur l'horloge de la voix : figé en pause, recalé après un saut ; s'efface sous un plan (spec 14), s'arrête avec le calque. |
 | Mouvement réduit | `prefers-reduced-motion` : aucun clip chargé, image fixe, ligne du cartouche masquée. |
 | Signalement | Cartouche : quatrième ligne « mise en mouvement par IA ». Livre d'images (sans JavaScript) : le clip sous l'image, avec sa mention et le modèle. Page de la période : section « Images mises en mouvement » (principe, modèle, liste des diapositives, originaux sur Commons). |
@@ -78,7 +78,7 @@ premier essai réel de `generation.py lancer` (CLI). Réserve : 7 clips avant le
 Annotations de visionnage de la période 05 (diapositives 82 et 86) : coloriser les photographies,
 transformer les gravures en « photo moderne », et montrer la transition dans le diaporama. Essai de
 quatre images sur Colab le 2026-10-12 (planche `.cache/diaporamas/essais-colorisation/planche.html`,
-journal `docs/journal/generation-colorisation.jsonl`) : DDColor, FLUX.2 klein 4B (dont une variante
+journal `docs/journal/xixe/generation-colorisation.jsonl`) : DDColor, FLUX.2 klein 4B (dont une variante
 « couleur seule », fidèle au trait) et Qwen-Image-Edit-2509. L'agent d'essai recommandait la
 colorisation « couleur seule » et déconseillait la transformation des gravures (coiffures,
 drapeaux, gestes et visages inventés). **Décisions de l'utilisateur, après avoir vu la planche :**
@@ -95,7 +95,7 @@ drapeaux, gestes et visages inventés). **Décisions de l'utilisateur, après av
 ### Révision du même jour : la colorisation « couleur seule » remplace la transformation
 
 Le lot de la période 05 (56 gravures, lithographies et photographies de scènes ; journal
-`docs/journal/generation-colorisation.jsonl`, planches dans
+`docs/journal/xixe/generation-colorisation.jsonl`, planches dans
 `.cache/diaporamas/photos-qwen/deuxieme-republique/`) a été jugé par l'utilisateur :
 
 - **Transformation en photo : abandonnée.** FLUX.2 klein 4B (2,9 s par image) : 7 bonnes, 36 avec
@@ -125,7 +125,7 @@ Le lot de la période 05 (56 gravures, lithographies et photographies de scènes
 **Mise en œuvre (2026-10-12).** Champ `image.couleur` `{ fichier, largeur, hauteur, modele, genere_le }`
 (image d'une diapositive ou d'un plan), fichier `NNN-couleur.webp` / `NNN-b-couleur.webp` aux
 dimensions exactes de la zone utile ; `couleur.py publier | retirer | lister` (clé : `commons`),
-recettes dans `src/data/diaporamas/generation/<slug>-couleur.json`, suivi par `renumeroter.py`,
+recettes dans `src/data/diaporamas/xixe/generation/<slug>-couleur.json`, suivi par `renumeroter.py`,
 famille « couleur (spec 16) » de `verifier.py`.
 
 | Sujet | Décision |

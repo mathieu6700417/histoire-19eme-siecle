@@ -2,8 +2,8 @@
 // Lecteur d'un diaporama narré de la section « Le siècle en images » (spec 12).
 //
 // Usage : <Diaporama diaporama={d} />, où `d` est le contenu d'un fichier
-// src/data/diaporamas/NN-<slug>.json (voir src/utils/diaporamas.ts pour le format).
-// Images et voix sont servies depuis public/diaporamas/<slug>/ (préparées par
+// src/data/diaporamas/<siecle>/NN-<slug>.json (voir src/utils/diaporamas.ts pour le format).
+// Images et voix sont servies depuis public/<siecle>/diaporamas/<slug>/ (préparées par
 // scripts/diaporamas/).
 //
 // - Image en couleur (exception de la spec 11 : c'est une visionneuse), fondu enchaîné ;
@@ -38,7 +38,7 @@ import CarteCitation from './CarteCitation.astro';
 import EpisodeVisuels from './EpisodeVisuels.astro';
 import Surimpressions from './Surimpressions.astro';
 import Generique from './Generique.astro';
-import { dureesGenerique, imagesGenerique, indicatif, urlCommun } from '../utils/diaporamas';
+import { dureesGenerique, fondsCarte, imagesGenerique, indicatifDe, urlCommun } from '../utils/diaporamas';
 import { CARTON, PAUSE, MOSAIQUE, VOLET, avantApres, debutPlongee, instantCaractere, instantsSerie, plansDe, texteLu, zoneUtileDe, etapesCamera, versUtile, zoneUtile, pauseApres, friseDe, minutageLecture, motsLus, phrasesDe, planParis, surimpressionsDe, urlCommons, urlMedia, type Diaporama, type Episode, type FondCarte, type ImageDiapo, type ImageSerie, type Intermede, type Lecture, type PisteFond } from '../utils/diaporamas';
 
 interface Props { diaporama: Diaporama }
@@ -201,8 +201,7 @@ const intermedeApres = new Map((d.musique?.intermedes ?? []).filter((c) => c.dur
 // diapositive, comme les intermèdes chantés (un seul segment après une diapositive donnée).
 const lectureApres = new Map((d.lectures ?? []).filter((l) => l.audio?.duree).map((l) => [l.apres, l]));
 const episodeApres = new Map((d.episodes ?? []).filter((e) => e.audio?.duree).map((e) => [e.apres, e]));
-const fonds: Record<string, FondCarte> = Object.fromEntries(
-  Object.values(import.meta.glob<{ default: FondCarte }>('../data/diaporamas/fonds/*.json', { eager: true })).map((m) => [m.default.nom, m.default]));
+const fonds: Record<string, FondCarte> = fondsCarte(d.siecle);
 /** Fonds employés par les cartes d'épisode : écrits une fois dans la page, repris par `<use>`. */
 const fondsEpisodes: FondCarte[] = [...new Set((d.episodes ?? []).flatMap((e) => e.visuels.filter((v) => v.type === 'carte').map((v) => (v as { fond: string }).fond)))]
   .map((n) => fonds[n]).filter(Boolean);
@@ -243,7 +242,7 @@ const frise = friseDe(d);
 // ponctuation détachée suit le mot précédent).
 const plan = planParis(d.slug);
 function surimpressions(x: Diaporama['diapositives'][number]) {
-  const s = surimpressionsDe(x, fonds, plan);
+  const s = surimpressionsDe(x, fonds, plan, d.siecle);
   // Portraits des personnes nommées (spec 12, 2026-10-08) : rangée en bas à gauche.
   const portraits = s.portraits ? { ...s.portraits, gens: s.portraits.gens.map((g) => ({ ...g, nom: t(g.nom) })) } : null;
   // Objet de musée et manuscrit (spec 12, « Enrichissements visuels ») : fenêtres déjà arbitrées.
@@ -357,8 +356,8 @@ const donnees = {
   // Générique d'ouverture et récapitulatif de fin (spec 12, révision du 2026-10-09) : indicatif commun.
   generique: dureesGenerique(d).ouverture && imagesGenerique(d).length ? {
     images: imagesGenerique(d).length,
-    ouverture: { src: urlCommun(indicatif.extraits.ouverture.fichier), duree: dureesGenerique(d).ouverture },
-    fin: { src: urlCommun(indicatif.extraits.fin.fichier), duree: dureesGenerique(d).fin, accord: dureesGenerique(d).accordFin },
+    ouverture: { src: urlCommun(d.siecle, indicatifDe(d.siecle).extraits.ouverture.fichier), duree: dureesGenerique(d).ouverture },
+    fin: { src: urlCommun(d.siecle, indicatifDe(d.siecle).extraits.fin.fichier), duree: dureesGenerique(d).fin, accord: dureesGenerique(d).accordFin },
   } : null,
 };
 const premiere = d.diapositives[0];

@@ -1,0 +1,123 @@
+---
+// Accueil d'un siècle (/<siecle>/) : présentation, leçons groupées par thème, puis les blocs
+// des sections facultatives que le siècle possède (spec 18).
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { themes } from '../../data/themes';
+import { siecles, aSection, type Siecle } from '../../data/siecles';
+import { typographie } from '../../utils/typographie.mjs';
+import { enfantsDe, leconsDuSiecle, lienLecon, premierNiveau } from '../../utils/lecons';
+import BlocEcrivains from '../../components/BlocEcrivains.astro';
+import BlocDiaporamas from '../../components/BlocDiaporamas.astro';
+
+export function getStaticPaths() {
+  return siecles.map((s) => ({ params: { siecle: s.id }, props: { s } }));
+}
+
+const { s } = Astro.props as { s: Siecle };
+// Toutes les entrées du siècle (sous-pages comprises) ; seules celles de premier niveau ont une carte.
+const toutes = leconsDuSiecle(await getCollection('lecons'), s.id);
+const lecons = premierNiveau(toutes);
+
+// Seuls les thèmes qui ont au moins une leçon sont affichés.
+const groupes = themes
+  .map((t) => ({ ...t, lecons: lecons.filter((l) => l.data.theme === t.id) }))
+  .filter((g) => g.lecons.length > 0);
+---
+
+<Base
+  title={s.libelle}
+  description={`Apprendre l'histoire de la France au ${s.libelle}, de ${s.debut} à ${s.fin}, leçon par leçon.`}
+>
+  <div class="conteneur accueil">
+    <section class="presentation">
+      <h1>Le <span class="sc">{s.romain}</span><sup>e</sup> siècle français</h1>
+      <p class="chapeau">{typographie(s.chapeau)}</p>
+      {s.presentation && <p>{typographie(s.presentation)}</p>}
+    </section>
+
+    <section id="lecons" aria-labelledby="titre-lecons">
+      <h2 id="titre-lecons">Les leçons</h2>
+      {groupes.map((g) => (
+        <section class="theme" aria-labelledby={`theme-${g.id}`}>
+          <h3 id={`theme-${g.id}`}>{g.libelle}</h3>
+          <ul class="cartes">
+            {g.lecons.map((l) => (
+              <li class="carte">
+                <a class="carte__lien" href={lienLecon(l.id)}>
+                  <span class="carte__periode">{l.data.periode}</span>
+                  <span class="carte__titre">{l.data.titre}</span>
+                  <span class="carte__resume">{typographie(l.data.resume)}</span>
+                  {l.data.dureeLecture && (
+                    <span class="carte__duree">{typographie(`Lecture : environ ${l.data.dureeLecture} min`)}</span>
+                  )}
+                </a>
+                {enfantsDe(toutes, l.id).length > 0 && (
+                  <ul class="carte__sous" aria-label={typographie(`Pages de la leçon « ${l.data.titre} »`)}>
+                    {enfantsDe(toutes, l.id).map((e) => (
+                      <li><a href={lienLecon(e.id)}>{typographie(e.data.titre)}</a></li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </section>
+
+    {aSection(s, 'ecrivains') && <BlocEcrivains siecle={s.id} />}
+    {aSection(s, 'images') && <BlocDiaporamas siecle={s.id} />}
+  </div>
+</Base>
+
+<style>
+  .accueil { max-width: calc(900px + 2 * var(--gouttiere)); }
+  .presentation { padding-top: var(--e-5); }
+  .presentation sup { font-size: 0.55em; }
+  .chapeau { font-size: 1.3rem; font-style: italic; color: var(--c-texte-doux); }
+
+  .theme h3 {
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--c-texte-doux);
+    border-bottom: 1px solid var(--c-filet);
+    padding-bottom: var(--e-1);
+  }
+  .cartes {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--e-3);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+  }
+  .carte { margin: 0; display: flex; flex-direction: column; }
+  .carte__lien {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-1);
+    flex: 1;
+    padding: var(--e-2) 0 var(--e-3);
+    border-top: 1px solid var(--c-texte-doux);
+    color: var(--c-texte);
+    text-decoration: none;
+  }
+  .carte__lien:hover .carte__titre { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .carte__sous {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--e-1);
+    list-style: none;
+    margin: var(--e-2) 0 0;
+    padding: 0 0 0 var(--e-2);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .carte__sous li { margin: 0; }
+  .carte__sous li + li::before { content: '·'; margin-right: var(--e-1); color: var(--c-ocre); }
+  .carte__periode { font-variant: small-caps; color: var(--c-texte-doux); letter-spacing: 0.08em; }
+  .carte__titre { font-family: var(--f-titre); font-size: 1.3rem; color: var(--c-bleu-nuit); line-height: 1.25; }
+  .carte__resume { font-size: 1.02rem; }
+  .carte__duree { font-size: var(--t-petit); color: var(--c-texte-doux); margin-top: auto; }
+</style>

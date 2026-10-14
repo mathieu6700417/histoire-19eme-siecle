@@ -2,7 +2,7 @@
 """Images colorisées par IA (spec 16, « la colorisation couleur seule ») : publication dans une période.
 
 Les versions colorisées sont fabriquées hors du site (Colab : FLUX.2 klein 4B, dont on ne garde que la
-chrominance, posée sur la luminance de l'original ; journal docs/journal/generation-colorisation.jsonl)
+chrominance, posée sur la luminance de l'original ; journal docs/journal/<siecle>/generation-colorisation.jsonl)
 et jugées sur planche. Ce script les intègre au diaporama, où le lecteur montre l'original puis un
 fondu lent vers la couleur (src/scripts/diaporama/couleur.ts).
 
@@ -20,10 +20,10 @@ et au besoin `jugement`, `modele`, `consigne`, `graine`, `saturation`. Le premie
 `publier` retrouve chaque image par son `commons` parmi les images des diapositives et des plans,
 refuse celle dont la zone utile a changé ou dont le WebP n'a pas exactement la taille de la zone
 utile (le calque couleur se superpose au pixel), refuse un clip `video`, un avant / après, une
-mosaïque ; copie le WebP dans public/diaporamas/<slug>/ sous le nom de l'image suivi de « -couleur »
+mosaïque ; copie le WebP dans public/<siecle>/diaporamas/<slug>/ sous le nom de l'image suivi de « -couleur »
 (086-couleur.webp, 034-b-couleur.webp) ; écrit `image.couleur` { fichier, largeur, hauteur, modele,
 genere_le } ; consigne la recette (consigne, graine, saturation, méthode) dans
-src/data/diaporamas/generation/<slug>-couleur.json, par `commons`. Idempotent.
+src/data/diaporamas/<siecle>/generation/<slug>-couleur.json, par `commons`. Idempotent.
 Les cibles de `--seulement`, `--sauf` et `retirer` sont des numéros ACTUELS : `86` (image de la
 diapositive), `34b` ou `34-b` (plan). `renumeroter.py` suit fichiers et champs ; `verifier.py`
 contrôle la famille « couleur (spec 16) ».

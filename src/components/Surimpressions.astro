@@ -33,19 +33,19 @@
 // défile jusqu'à sa valeur (Diaporama.astro). La date républicaine : un bandeau discret en petites
 // capitales au bas de l'image, au centre (« 9 thermidor an II · 27 juillet 1794 »).
 import type { Diaporama, FondCarte, PlanParis } from '../utils/diaporamas';
-import { surimpressionsDe, urlMedia } from '../utils/diaporamas';
+import { surimpressionsDe, urlCommun, urlMedia } from '../utils/diaporamas';
 import { typographie } from '../utils/typographie.mjs';
 
 interface Props { diaporama: Diaporama; fonds: Record<string, FondCarte>; plan?: PlanParis }
 const { diaporama: d, fonds, plan } = Astro.props;
 const employes = [...new Set(d.diapositives.flatMap((x) => (x.lieux ?? []).map((l) => l.fond)))];
 const svgs = employes.filter((f) => f !== 'paris' && fonds[f]).map((f) => fonds[f]);
-const urlPlan = plan ? urlMedia('fonds', plan.fichier.replace(/^fonds\//, '')) : '';
+const urlPlan = plan ? urlCommun(d.siecle, plan.fichier) : '';
 // Médaillons à plusieurs lieux, repérés par l'audio de la diapositive (ce que joue le lecteur).
 const multiples: Record<string, { points: { nom: string; x: number; y: number; t: number }[]; vb?: string }> = {};
 for (const x of d.diapositives) {
   if ((x.lieux?.length ?? 0) < 2 || !x.audio) continue;
-  const L = surimpressionsDe(x, fonds, plan).lieu;
+  const L = surimpressionsDe(x, fonds, plan, d.siecle).lieu;
   if (L?.points?.length) multiples[urlMedia(d.slug, x.audio.fichier)] = { points: L.points.map((p) => ({ ...p, nom: typographie(p.nom) })), vb: L.vb };
 }
 ---

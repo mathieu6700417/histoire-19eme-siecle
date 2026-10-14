@@ -1,13 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-const base = import.meta.env.BASE_URL;
+import { urlSommaire } from '../utils/adresses';
 ---
 
 <Base title="Page introuvable" description="Cette page n'existe pas.">
   <main class="introuvable">
     <h1>Page introuvable</h1>
     <p>Cette page n'existe pas ou a changé d'adresse.</p>
-    <p><a href={base}>Retour à l'accueil</a></p>
+    <p><a href={urlSommaire}>Retour au sommaire</a></p>
   </main>
 </Base>
 

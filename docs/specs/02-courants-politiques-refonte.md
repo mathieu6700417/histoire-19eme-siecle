@@ -22,12 +22,12 @@ ainsi que toutes les contraintes d'exactitude et de niveau.
 
 ## Architecture
 
-- Sous-pages d'une leçon : `src/content/lecons/courants-politiques/<courant>.mdx`.
+- Sous-pages d'une leçon : `src/content/lecons/xixe/courants-politiques/<courant>.mdx`.
   L'id de collection devient `courants-politiques/<courant>`. Le parent est le segment
-  avant le `/`. Route : `src/pages/lecons/[...slug].astro` (remplace `[slug].astro`).
+  avant le `/`. Route : `src/pages/[siecle]/lecons/[...slug].astro` (remplace `[slug].astro`).
 - Frontmatter d'une sous-page : mêmes champs que les leçons (`titre`, `theme`, `resume`,
   `ordre` = ordre parmi les frères, `periode`, `dureeLecture`), plus `courant` (optionnel,
-  id du courant dans `src/data/courants-politiques.ts`, sert à la couleur du bandeau et
+  id du courant dans `src/data/xixe/courants-politiques.ts`, sert à la couleur du bandeau et
   à la mini-frise).
 - Layout `Lecon.astro` : fil d'Ariane « Vie politique › Les courants politiques › Légitimistes »
   pour une sous-page. Navigation précédent/suivant : entre frères pour une sous-page, avec
@@ -43,9 +43,9 @@ ainsi que toutes les contraintes d'exactitude et de niveau.
   niveau de titre paramétrable).
 - Les slugs des neuf pages : `legitimistes`, `orleanistes`, `bonapartistes`, `republicains`,
   `radicaux`, `socialistes`, `anarchistes`, `catholiques`, `nationalistes`.
-  Adresses : `/lecons/courants-politiques/<slug>/`.
+  Adresses : `/xixe/lecons/courants-politiques/<slug>/`.
 
-## Portail : `src/content/lecons/courants-politiques.mdx` (dans cet ordre)
+## Portail : `src/content/lecons/xixe/courants-politiques.mdx` (dans cet ordre)
 
 1. **Introduction** : réécrite pour annoncer la démarche (« on va traverser le siècle neuf
    fois, une fois par courant »). Garde les encadrés « Droite et gauche » et « Régime »,

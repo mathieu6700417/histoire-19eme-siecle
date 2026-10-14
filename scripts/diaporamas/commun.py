@@ -4,14 +4,65 @@ Chemins, lecture et écriture du script d'une période, accès à l'API Wikimedi
 lexique de prononciation. Les scripts images.py, voix.py et verifier.py l'importent.
 Bibliothèque standard seulement, sauf Pillow (dans images.py) pour le WebP.
 """
-import html, json, os, re, time, urllib.error, urllib.parse, urllib.request
+import html, json, os, re, sys, time, urllib.error, urllib.parse, urllib.request
 from pathlib import Path
 
 RACINE = Path(__file__).resolve().parents[2]
-DONNEES = RACINE / 'src' / 'data' / 'diaporamas'
-PUBLIC = RACINE / 'public' / 'diaporamas'
+
+# --- Siècle (spec 18) : tous les chemins de la chaîne sont calculés ici ----------------------
+# Chaque script accepte `--siecle <id>` (défaut : xixe), lu et retiré de la ligne de commande dès
+# l'import de ce module (avant l'argparse du script) ; la variable d'environnement SIECLE fait de
+# même. Les identifiants sont ceux du registre src/data/siecles.ts.
+SIECLE_DEFAUT = 'xixe'
+
+
+def _lire_siecle(argv: list[str]) -> str:
+    siecle = os.environ.get('SIECLE') or SIECLE_DEFAUT
+    for i, a in enumerate(list(argv)):
+        if a == '--siecle' and i + 1 < len(argv):
+            siecle = argv[i + 1]
+            del argv[i:i + 2]
+            break
+        if a.startswith('--siecle='):
+            siecle = a.split('=', 1)[1]
+            del argv[i]
+            break
+    if not re.fullmatch(r'[a-z0-9-]+', siecle):
+        raise SystemExit(f'--siecle invalide : {siecle!r}')
+    return siecle
+
+
+SIECLE = _lire_siecle(sys.argv)
+DONNEES = RACINE / 'src' / 'data' / 'diaporamas' / SIECLE      # scripts des périodes, registres, lots
+PUBLIC = RACINE / 'public' / SIECLE / 'diaporamas'             # médias servis (/<siecle>/diaporamas/…)
+ANNOTATIONS = RACINE / 'docs' / 'annotations' / SIECLE        # annotations de visionnage (spec 15)
+JOURNAL = RACINE / 'docs' / 'journal' / SIECLE                # journaux de production
+# Caches par slug, non rangés par siècle (les slugs sont uniques sur tout le site).
 CACHE = RACINE / '.cache' / 'diaporamas'
 LEXIQUE = Path(__file__).resolve().parent / 'prononciation.yaml'
+
+
+def url_section(siecle: str = SIECLE) -> str:
+    """Chemin de la section « images » d'un siècle sur le site (« /xixe/diaporamas/ »)."""
+    return f'/{siecle}/diaporamas/'
+
+
+def url_diaporama(slug: str, siecle: str = SIECLE) -> str:
+    """Chemin de la page d'une période sur le site (« /xixe/diaporamas/revolution/ »)."""
+    return f'{url_section(siecle)}{slug}/'
+
+
+def dist_diaporama(dist: Path, slug: str, siecle: str = SIECLE) -> Path:
+    """Dossier de la page d'une période dans un build (dist/xixe/diaporamas/<slug>/)."""
+    return dist / siecle / 'diaporamas' / slug
+
+
+def siecle_du_slug(slug: str) -> str:
+    """Siècle auquel appartient une période (cherché dans src/data/diaporamas/*/), sinon SIECLE."""
+    for d in sorted((RACINE / 'src' / 'data' / 'diaporamas').iterdir()):
+        if d.is_dir() and any(re.sub(r'^\d+-', '', f.stem) == slug for f in d.glob('[0-9]*.json')):
+            return d.name
+    return SIECLE
 
 API_COMMONS = 'https://commons.wikimedia.org/w/api.php'
 # User-Agent explicite et en ASCII (Wikimedia refuse les agents génériques).
@@ -21,12 +72,14 @@ UA = 'xixe-siecle-diaporamas/1.0 (site d apprentissage, usage personnel; mathieu
 # --- Script d'une période -------------------------------------------------------------
 
 def fichier_periode(slug: str) -> Path:
-    """src/data/diaporamas/NN-<slug>.json (on accepte aussi « NN-slug » ou le nom complet)."""
+    """src/data/diaporamas/<siecle>/NN-<slug>.json (on accepte aussi « NN-slug » ou le nom complet)."""
     slug = slug.removesuffix('.json')
     for f in sorted(DONNEES.glob('*.json')):
         if f.stem == slug or re.sub(r'^\d+-', '', f.stem) == slug:
             return f
-    raise SystemExit(f'Script introuvable pour « {slug} » dans {DONNEES.relative_to(RACINE)}/')
+    autre = siecle_du_slug(re.sub(r'^\d+-', '', slug))
+    conseil = f' (elle est rangée dans le siècle « {autre} » : ajouter --siecle {autre})' if autre != SIECLE else ''
+    raise SystemExit(f'Script introuvable pour « {slug} » dans {DONNEES.relative_to(RACINE)}/{conseil}')
 
 
 # Écriture sûre : plusieurs scripts (voix.py, utile.py, camera.py, musique.py…) peuvent

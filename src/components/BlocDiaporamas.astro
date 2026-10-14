@@ -1,9 +1,12 @@
 ---
-// Bloc de l'accueil présentant la section « Le siècle en images » (spec 12).
-import { diaporamas, dureeTotale, formaterDuree, planDiaporamas, urlSectionDiaporamas } from '../utils/diaporamas';
+// Bloc de l'accueil d'un siècle présentant sa section « Le siècle en images » (spec 12).
+import { diaporamasDe, dureeTotale, formaterDuree, planDiaporamas, urlSectionDiaporamas } from '../utils/diaporamas';
 import { typographie } from '../utils/typographie.mjs';
 
-const nb = planDiaporamas().length;
+interface Props { siecle: string }
+const { siecle } = Astro.props;
+const diaporamas = diaporamasDe(siecle);
+const nb = planDiaporamas(siecle).length;
 const total = diaporamas.reduce((s, d) => s + dureeTotale(d), 0);
 ---
 
@@ -13,7 +16,7 @@ const total = diaporamas.reduce((s, d) => s + dureeTotale(d), 0);
     {typographie("Le siècle raconté par ses images : tableaux, gravures, caricatures, affiches et photographies d'époque, une centaine par période, commentées par une voix off. Des diaporamas à regarder et à écouter.")}
   </p>
   <p class="bloc-images__etat">{typographie(`${diaporamas.length} période${diaporamas.length > 1 ? 's' : ''} sur ${nb} disponible${diaporamas.length > 1 ? 's' : ''} · ${formaterDuree(total)}`)}</p>
-  <p><a class="bloc-images__lien" href={urlSectionDiaporamas}>Voir les diaporamas →</a></p>
+  <p><a class="bloc-images__lien" href={urlSectionDiaporamas(siecle)}>Voir les diaporamas →</a></p>
 </section>
 
 <style>

@@ -7,7 +7,7 @@
    dist-annotations`) : seul ce build embarque l'outil (src/scripts/diaporama/annotations.ts).
    `dist/` n'est ni lu ni modifié.
 2. Sert `dist-annotations/` sur 127.0.0.1 (port libre, affiché), requêtes Range comprises (audio).
-3. Point d'écriture, limité à `docs/annotations/` (bibliothèque : annotations.py) :
+3. Point d'écriture, limité à `docs/annotations/<siecle>/` (bibliothèque : annotations.py) :
      GET    /__annotations/<slug>          liste
      POST   /__annotations/<slug>          création (JSON)
      PUT    /__annotations/<slug>/<id>     texte, catégorie
@@ -15,7 +15,7 @@
      GET    /__annotations/<slug>/<id>.jpg capture
 4. Capture : après chaque création, en tâche de fond, le lecteur est rejoué sans tête au même
    instant (`captures.py`, horloge factice, fenêtre de l'utilisateur) ; le JPEG (1 280 px au plus)
-   est écrit dans `docs/annotations/<slug>/<id>.jpg` et le champ `capture` complété. En cas
+   est écrit dans `docs/annotations/<siecle>/<slug>/<id>.jpg` et le champ `capture` complété. En cas
    d'échec (Playwright absent…), `capture` reste `null`. Au lancement, les captures manquantes
    sont retentées une fois.
 """
@@ -97,11 +97,11 @@ class Captures(threading.Thread):
         init = "window.__sansAnnotations = true; try { localStorage.setItem('diaporamas-sous-titres', '%s'); } catch {}" % ('oui' if ecran.get('sous_titre') is not None or a['lieu']['type'] not in ('diapositive', 'plan') else 'non')
         # Première diapositive d'un acte : l'ouverture en volets suit le temps réel (README, « Captures »).
         attente = 9000 if self.ouvre_acte(slug, a['lieu']) else 2500
-        dossier = ann.DOSSIER / slug
+        dossier = ann.fichier(slug).with_suffix('')
         dossier.mkdir(parents=True, exist_ok=True)
         png = dossier / f'.{ident}.png'
         try:
-            erreurs = captures.capturer(self.nav, f'http://127.0.0.1:{self.port}/diaporamas/{slug}/', 'ordinateur', item, attente, png, taille=taille, init=init)
+            erreurs = captures.capturer(self.nav, f'http://127.0.0.1:{self.port}{ann.c.url_diaporama(slug, ann.c.siecle_du_slug(slug))}', 'ordinateur', item, attente, png, taille=taille, init=init)
             for e in erreurs:
                 journal(f'  capture {ident} : erreur de page : {e}')
             im = Image.open(png).convert('RGB')
@@ -132,7 +132,7 @@ class Captures(threading.Thread):
                 self.nav = None
                 continue
             if chemin and not ann.poser_capture(a['slug'], a['id'], chemin):
-                (ann.DOSSIER / chemin).unlink(missing_ok=True)   # annotation supprimée entre-temps
+                (ann.dossier(a['slug']) / chemin).unlink(missing_ok=True)   # annotation supprimée entre-temps
             elif chemin:
                 journal(f'  capture {chemin}')
 
@@ -234,7 +234,7 @@ class Requete(http.server.BaseHTTPRequestHandler):
             if len(parties) == 1 and methode == 'GET':
                 return self.json(200, {'annotations': ann.lire(slug)})
             if len(parties) == 2 and methode == 'GET' and parties[1].endswith('.jpg') and ann.ID.fullmatch(parties[1][:-4]):
-                f = ann.DOSSIER / slug / parties[1]
+                f = ann.dossier(slug) / slug / parties[1]
                 if not f.is_file():
                     return self.erreur(404, 'pas de capture')
                 corps = f.read_bytes()
@@ -327,10 +327,10 @@ def main() -> None:
         for x in ann.lire(slug):
             if not x.get('capture'):
                 Requete.captures.demander(x)
-    journal(f'Annotations de visionnage : http://127.0.0.1:{port}/diaporamas/')
-    for f in sorted((DIST / 'diaporamas').glob('*/index.html')):
-        journal(f'  http://127.0.0.1:{port}/diaporamas/{f.parent.name}/')
-    journal('A : annoter · L : liste · Ctrl+C : arrêter. Écritures dans docs/annotations/.')
+    journal(f'Annotations de visionnage : http://127.0.0.1:{port}{ann.c.url_section()}')
+    for f in sorted(DIST.glob('*/diaporamas/*/index.html')):   # toutes les périodes, tous siècles
+        journal(f'  http://127.0.0.1:{port}/{f.relative_to(DIST).parent}/')
+    journal('A : annoter · L : liste · Ctrl+C : arrêter. Écritures dans docs/annotations/<siecle>/.')
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

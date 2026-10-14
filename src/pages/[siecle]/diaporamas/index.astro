@@ -1,0 +1,122 @@
+---
+// Portail de la section « Le siècle en images » : les neuf périodes (spec 12).
+import Base from '../../../layouts/Base.astro';
+import { typographie } from '../../../utils/typographie.mjs';
+import { siecle as trouverSiecle, sieclesAvec } from '../../../data/siecles';
+import { libelleChapitre } from '../../../utils/ecrivains';
+import { diaporamasDe, dureeTotale, formaterDuree, indicatifDe, nombreImages, planDiaporamas, urlDiaporama, urlMedia } from '../../../utils/diaporamas';
+
+export function getStaticPaths() {
+  return sieclesAvec('images').map((s) => ({ params: { siecle: s.id } }));
+}
+
+const { siecle } = Astro.params as { siecle: string };
+const s = trouverSiecle(siecle);
+const diaporamas = diaporamasDe(siecle);
+const indicatif = indicatifDe(siecle);
+const plan = planDiaporamas(siecle);
+const total = diaporamas.reduce((n, d) => n + dureeTotale(d), 0);
+const images = diaporamas.reduce((n, d) => n + nombreImages(d), 0);
+---
+
+<Base
+  title="Le siècle en images"
+  description={`Le ${s.libelle} français raconté en diaporamas narrés : une centaine d'images d'époque par période, avec une voix off.`}
+>
+  <div class="conteneur section-images">
+    <header class="presentation">
+      <p class="surtitre-savant">Parcours</p>
+      <h1>Le siècle en images</h1>
+      <p class="chapeau">
+        {typographie("Le siècle raconté par ceux qui l'ont dessiné, gravé, peint et photographié : neuf diaporamas narrés, un par période, d'une centaine d'images chacun.")}
+      </p>
+      <p>
+        {typographie("Toutes les images sont des documents d'époque (tableaux, gravures, caricatures, affiches, photographies, cartes), du domaine public, venues de Wikimedia Commons ; chaque légende dit qui les a faites et quand. Beaucoup sont des œuvres de propagande ou de parti : la voix off le signale. La voix est une voix de synthèse, dont chaque lecture a été vérifiée mot à mot.")}
+      </p>
+      <p>
+        {typographie("La musique est de l'époque, discrète sous la voix, avec quelques chants entendus au premier plan : uniquement de vrais enregistrements libres (anciens 78 tours, Musopen, orchestres qui publient sous licence libre), de compositeurs français quand il en existe, sinon de leurs contemporains européens. Chaque période les crédite en bas de page.")}
+      </p>
+      <p>
+        {typographie(`Chaque diaporama s'ouvre et se referme sur un même indicatif. ${indicatif.credit} : ${indicatif.licence.charAt(0).toLowerCase()}${indicatif.licence.slice(1)}.`)}
+      </p>
+      <p class="etat">{typographie(`${diaporamas.length} période${diaporamas.length > 1 ? 's' : ''} sur ${plan.length} disponible${diaporamas.length > 1 ? 's' : ''} · ${images} images · ${formaterDuree(total)} d'écoute`)}</p>
+    </header>
+
+    <section aria-labelledby="titre-periodes">
+      <h2 id="titre-periodes">Les neuf périodes</h2>
+      <ol class="periodes">
+        {plan.map((p) => (
+          <li class:list={['periode', { 'periode--avenir': !p.diaporama }]}>
+            {p.diaporama ? (
+              <a href={urlDiaporama(p.diaporama.slug)}>
+                <img class="periode__vignette" src={urlMedia(p.diaporama.slug, 'vignette.webp')} alt="" loading="lazy" decoding="async" />
+                <span class="periode__texte">
+                  <span class="periode__numero">{libelleChapitre(p.numero)} · {p.periode}</span>
+                  <span class="periode__titre">{typographie(p.diaporama.titre)}</span>
+                  <span class="periode__resume">{typographie(p.diaporama.resume)}</span>
+                  <span class="periode__duree">{typographie(`${nombreImages(p.diaporama)} images · ${formaterDuree(dureeTotale(p.diaporama))}`)}</span>
+                </span>
+              </a>
+            ) : (
+              <div aria-disabled="true">
+                <span class="periode__vignette periode__vignette--vide" aria-hidden="true"></span>
+                <span class="periode__texte">
+                  <span class="periode__numero">{libelleChapitre(p.numero)} · {p.periode}</span>
+                  <span class="periode__titre">{typographie(p.titre)}</span>
+                  <span class="periode__avenir">À venir</span>
+                </span>
+              </div>
+            )}
+          </li>
+        ))}
+      </ol>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .section-images { max-width: calc(900px + 2 * var(--gouttiere)); }
+  .presentation { padding-top: var(--e-5); max-width: var(--l-lecture); }
+  .chapeau { font-size: 1.3rem; font-style: italic; color: var(--c-texte-doux); }
+  .etat { font-variant: small-caps; letter-spacing: 0.08em; color: var(--c-texte-doux); }
+  h2 {
+    font-size: 1.1rem;
+    font-variant: small-caps;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    color: var(--c-texte-doux);
+    border-bottom: 1px solid var(--c-filet);
+    padding-bottom: var(--e-1);
+  }
+  .periodes { list-style: none; padding: 0; }
+  .periode { margin: 0; }
+  .periode > a, .periode > div {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    gap: var(--e-3);
+    padding: var(--e-3) 0;
+    border-top: 1px solid var(--c-filet);
+    color: var(--c-texte);
+    text-decoration: none;
+  }
+  .periode > a:hover .periode__titre { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  /* Vignette en gris (charte monochrome) ; la couleur n'apparaît que dans le lecteur. */
+  .periode__vignette {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    filter: grayscale(1);
+    border: 1px solid var(--c-filet);
+  }
+  .periode__vignette--vide { background: #f1efea; }
+  .periode__texte { display: flex; flex-direction: column; gap: var(--e-1); }
+  .periode__numero { font-variant: small-caps; color: var(--c-texte-doux); letter-spacing: 0.08em; }
+  .periode__titre { font-family: var(--f-titre); font-size: 1.3rem; line-height: 1.25; }
+  .periode__resume { font-size: 1.02rem; }
+  .periode__duree, .periode__avenir { font-size: var(--t-petit); color: var(--c-texte-doux); font-variant: small-caps; letter-spacing: 0.06em; }
+  .periode--avenir .periode__titre, .periode--avenir > div { color: var(--c-texte-doux); }
+  @media (max-width: 520px) {
+    .periode > a, .periode > div { grid-template-columns: 6rem minmax(0, 1fr); gap: var(--e-2); }
+  }
+</style>

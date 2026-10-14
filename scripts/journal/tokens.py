@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bilan des tokens d'une session Claude Code (et de ses sous-agents), par phase et par outil.
 
-    python3 scripts/journal/tokens.py <session-id> [--journal docs/journal/<nom>.jsonl] [--top 25]
+    python3 scripts/journal/tokens.py <session-id> [--journal docs/journal/<siecle>/<nom>.jsonl] [--top 25]
 
 Lit ~/.claude/projects/<projet>/<session>.jsonl et <session>/subagents/*.jsonl.
 - Tokens réels (champ usage de chaque requête, dédoublonné par requestId) : entrée,

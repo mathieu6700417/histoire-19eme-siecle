@@ -1,7 +1,7 @@
 """Fonds de carte des épisodes (spec 12, « Lectures d'époque et épisodes »).
 
 Usage :
-    python3 scripts/diaporamas/carte.py            # (re)fait src/data/diaporamas/fonds/*.json
+    python3 scripts/diaporamas/carte.py            # (re)fait src/data/diaporamas/<siecle>/fonds/*.json
     python3 scripts/diaporamas/carte.py --fond monde   # ce fond seulement (ni plans ni autres fonds)
 
 Les cartes animées des épisodes sont dessinées en SVG par le lecteur, sur un fond simplifié
@@ -26,8 +26,8 @@ Plans de Paris d'époque (`--plans`, ou sans argument : tout) : pour un lieu de 
 (`fond: paris`), le médaillon montre un plan du domaine public de la période (`PLANS`), en
 gris, zoomé sur le lieu. Le plan est téléchargé depuis Commons (licence contrôlée), recadré
 sur la ville, réduit (2 000 px de large), désaturé, papier blanchi (niveaux), puis écrit en
-WebP dans public/diaporamas/fonds/<nom>.webp ; ses métadonnées et son calage vont dans
-src/data/diaporamas/plans/<nom>.json.
+WebP dans public/<siecle>/diaporamas/fonds/<nom>.webp ; ses métadonnées et son calage vont dans
+src/data/diaporamas/<siecle>/plans/<nom>.json.
 
 Calage (géoréférencement) : quelques monuments sont repérés à la main sur l'original (pixels,
 mesurés sur des agrandissements quadrillés) et associés à leurs coordonnées (Wikidata, P625 ;

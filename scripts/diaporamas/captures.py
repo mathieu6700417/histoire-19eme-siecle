@@ -46,7 +46,10 @@ import threading
 from datetime import datetime
 from pathlib import Path
 
-RACINE = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import commun as c  # noqa: E402  (chemins et siècle : --siecle, défaut xixe)
+
+RACINE = c.RACINE
 REDUIT = False
 APPAREILS = {'ordinateur': (1280, 760, 'o'), 'telephone': (390, 844, 't')}
 ATTENTE_CARTON = 9000   # ms d'horloge factice au moins après le carton d'une diapositive qui ouvre un acte
@@ -256,14 +259,14 @@ def main() -> None:
         l, h = (int(v) for v in a.fenetre.lower().split('x'))
         APPAREILS['ordinateur'] = (l, h, 'o')
     dist = (RACINE / a.dist) if not Path(a.dist).is_absolute() else Path(a.dist)
-    if not (dist / 'diaporamas' / a.slug / 'index.html').exists():
-        sys.exit(f'{dist}/diaporamas/{a.slug}/index.html introuvable : construire le site d\'abord')
+    if not (c.dist_diaporama(dist, a.slug) / 'index.html').exists():
+        sys.exit(f'{c.dist_diaporama(dist, a.slug)}/index.html introuvable : construire le site d\'abord')
     sortie = Path(a.sortie) if a.sortie else Path(tempfile.gettempdir()) / f'captures-{a.slug}'
     sortie.mkdir(parents=True, exist_ok=True)
     appareils = ['ordinateur', 'telephone'] if a.appareil == 'les-deux' else [a.appareil]
     from playwright.sync_api import sync_playwright
     srv, port = serveur(dist)
-    url = f'http://127.0.0.1:{port}/diaporamas/{a.slug}/'
+    url = f'http://127.0.0.1:{port}{c.url_diaporama(a.slug)}'
     images: list[Path] = []
     try:
         with sync_playwright() as p:

@@ -9,9 +9,9 @@ les vers sont pris ligne à ligne et regroupés en strophes de la taille indiqu�
 """
 import json, sys
 from pathlib import Path
-from wikisource import paragraphes
+from wikisource import CHAPITRES, paragraphes
 
-DOSSIER = Path(__file__).resolve().parent / 'chapitres'
+DOSSIER = CHAPITRES   # scripts/ecrivains/chapitres/<siecle>/
 
 
 def charger(slug: str) -> dict:

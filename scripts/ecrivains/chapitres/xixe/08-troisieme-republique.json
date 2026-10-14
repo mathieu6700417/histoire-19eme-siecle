@@ -1,0 +1,390 @@
+{
+ "slug": "08-troisieme-republique",
+ "gabarit": "08-troisieme-republique.gabarit.mdx",
+ "sortie": "src/content/ecrivains/xixe/08-troisieme-republique.mdx",
+ "ancres": {},
+ "extraits": {
+  "chambord": {
+   "page": "Souvenirs_d’un_demi-siècle/Tome_2/14",
+   "segments": [
+    {
+     "debut": "Pendant que l’empereur d’Allemagne émettait quelques doutes ",
+     "fin": "le du prétendant, a une histoire qu’il convient de raconter."
+    },
+    "CUT",
+    {
+     "debut": "Ce fut le 30 octobre 1873 que les royalistes de diverses nua",
+     "fin": " la France et non point la France qui a manqué à la royauté."
+    }
+   ],
+   "cle": [
+    2,
+    3
+   ]
+  },
+  "henri-v": {
+   "page": "Correspondance_de_Gustave_Flaubert/Tome_7/1413",
+   "segments": [
+    {
+     "debut": "Eh bien, moi, j’en suis enchanté parce que, en ma qualité de",
+     "fin": "ue temps des épîtres bien courtes ! Je l’embrasse très fort."
+    }
+   ],
+   "cle": [
+    0,
+    2
+   ]
+  },
+  "seize-mai": {
+   "page": "Histoire_de_France_(Jacques_Bainville)/Chapitre_XXI",
+   "segments": [
+    {
+     "debut": "Les conservateurs se trouvaient en tout cas dans de mauvaise",
+     "fin": "c l’Allemagne et de là d’importantes conséquences sortiront."
+    }
+   ],
+   "cle": [
+    2,
+    2
+   ]
+  },
+  "lille": {
+   "page": "Documents_sur_la_crise_du_16_mai_1877",
+   "segments": [
+    {
+     "debut": "La République sortira triomphante de cette dernière épreuve,",
+     "fin": "z-le bien, Messieurs, il faudra se soumettre ou se démettre."
+    }
+   ],
+   "cle": [
+    3,
+    4
+   ]
+  },
+  "afrique": {
+   "page": "Actes_et_paroles/Depuis_l’exil/1879",
+   "segments": [
+    {
+     "debut": "Le moment est venu de donner au vieux monde cet avertissemen",
+     "fin": "cet univers, qui effrayait les romains, attire les français."
+    },
+    "CUT",
+    {
+     "debut": "Aux faits populaires viennent s’ajouter les faits humains ; ",
+     "fin": "in s’affirme par la paix et l’Esprit humain par la liberté !"
+    }
+   ],
+   "cle": [
+    9,
+    12
+   ]
+  },
+  "amnistie": {
+   "page": "Mémoires_de_Louise_Michel/Chapitre_2X",
+   "segments": [
+    {
+     "debut": "Laissez faire, ils rêveront sur tout cela ! Si, au lieu de c",
+     "fin": "arem au clair de lune, auraient enterré la pierre de guerre."
+    },
+    "CUT",
+    {
+     "debut": "De temps à autre, le dimanche, pendant mes cours canaques, j",
+     "fin": "ois ils se passèrent de café tandis que j’en avais toujours."
+    }
+   ],
+   "cle": [
+    4,
+    8
+   ]
+  },
+  "paresse": {
+   "page": "Le_Droit_à_la_paresse",
+   "segments": [
+    {
+     "debut": "Une étrange folie possède les classes ouvrières des nations ",
+     "fin": "duelles et sociales sont nées de sa passion pour le travail."
+    }
+   ],
+   "cle": [
+    0,
+    1
+   ]
+  },
+  "tonkin": {
+   "page": "Histoire_de_France_(Jacques_Bainville)/Chapitre_XXI",
+   "segments": [
+    {
+     "debut": "Dès ces premiers pas de la République parlementaire, au mili",
+     "fin": "avait été rétabli, deux cents députés de droite furent élus."
+    }
+   ],
+   "cle": [
+    2,
+    2
+   ]
+  },
+  "ecole": {
+   "page": "Chronique_de_la_quinzaine_-_31_mars_1882",
+   "segments": [
+    {
+     "debut": "On l’a bien vu tout récemment dans cette longue et vive disc",
+     "fin": "ue jamais avec le caractère indélébile d’une œuvre de secte."
+    }
+   ],
+   "cle": [
+    1,
+    1
+   ]
+  },
+  "belami": {
+   "page": "Bel-Ami/Édition_Ollendorff,_1901/Deuxième_Partie/IV",
+   "segments": [
+    {
+     "debut": "Le journaliste, se trouvant libre, descendit à la Vie França",
+     "fin": "l’échec de la Trinité, car il sentait bien la partie gagnée."
+    }
+   ],
+   "cle": [
+    5,
+    7
+   ]
+  },
+  "instituteurs": {
+   "page": "Jules_Ferry_-_Lettre_aux_instituteurs,_1883",
+   "segments": [
+    {
+     "debut": "La loi du 28 mars se caractérise par deux dispositions qui s",
+     "fin": "’effleurer un sentiment religieux dont vous n’êtes pas juge."
+    }
+   ],
+   "cle": [
+    3,
+    3
+   ]
+  },
+  "funerailles": {
+   "page": "Les_Déracinés/XVIII",
+   "segments": [
+    {
+     "debut": "De grand matin, ce dimanche même, 31 mai, la famille et les ",
+     "fin": ", élégiaque et dramaturge, que ces grandes foules assistent."
+    }
+   ],
+   "cle": [
+    3,
+    3
+   ]
+  },
+  "tour": {
+   "page": "Sur_la_Tour_Eiffel",
+   "poeme": {
+    "debut": "J’ai visité la Tour énorme,",
+    "fin": "Vers quels écueils nous mènes-tu ?",
+    "strophe": 4
+   },
+   "cle": [
+    20,
+    32
+   ]
+  },
+  "boulanger": {
+   "page": "L’Appel_au_Soldat/VIII",
+   "segments": [
+    {
+     "debut": "Au premier étage du restaurant Durand s’achevait dans le plu",
+     "fin": "attements de son cœur n’avaient pas un instant mis en doute."
+    },
+    "CUT",
+    {
+     "debut": "Sur l’invitation de Déroulède, de Thiébaud et de Lenglé, le ",
+     "fin": "entaires, comme des chiens qu’on veut épucer sans les noyer,"
+    },
+    "CUT",
+    {
+     "debut": "Malgré ces acquiescements de son intelligence à la légitimit",
+     "fin": "dans sa conscience à l’évangile dont vit le parlementarisme."
+    }
+   ],
+   "cle": [
+    9,
+    12
+   ]
+  },
+  "quartier-latin": {
+   "page": "Souvenirs_des_milieux_littéraires,_politiques,_artistiques_et_médicaux/Devant_la_douleur/Chapitre_V",
+   "segments": [
+    {
+     "debut": "« — Entre nous, Lockroy, que pensez-vous de ce phénomène ? D",
+     "fin": "C’est-il pas malheureux tout de même. Ah ! les crapules !… »"
+    }
+   ],
+   "cle": [
+    3,
+    4
+   ]
+  },
+  "fourmies": {
+   "page": "Souvenirs_du_bagne/Partie_1/09",
+   "segments": [
+    {
+     "debut": "L’aube commençait à poindre quand j’arrivai aux premières ma",
+     "fin": " dynamite répondrait. À la nuit j’irais déterrer mes engins."
+    }
+   ],
+   "cle": [
+    8,
+    16
+   ]
+  },
+  "panama": {
+   "page": "Leurs_figures/VIII",
+   "segments": [
+    {
+     "debut": "Le baron Jacques de Reinach rappelle ces gros rats qui, ayan",
+     "fin": "igeait que Reinach sortît de sa fosse et de ses cartonniers."
+    },
+    "CUT",
+    {
+     "debut": "C’était l’anarchie, avec la dictature de la terreur. La Comm",
+     "fin": "s. On crut à certains jours qu’elle descendrait dans la rue."
+    }
+   ],
+   "cle": [
+    4,
+    5
+   ]
+  },
+  "bombe": {
+   "page": "Paris_(Zola)/Livre_I/Chapitre_V",
+   "segments": [
+    {
+     "debut": "Alors, que se passa-t-il ? Plus tard, Pierre se souvint qu’u",
+     "fin": " avaient entendu venir, de toutes les ténèbres de l’horizon."
+    }
+   ],
+   "cle": [
+    1,
+    2
+   ]
+  },
+  "vatican": {
+   "page": "Après_une_visite_au_Vatican",
+   "segments": [
+    {
+     "debut": "Si ce ne sont pas là des « banqueroutes » totales, ce sont d",
+     "fin": "on prestige ; et la Religion a reconquis une partie du sien."
+    }
+   ],
+   "cle": [
+    1,
+    1
+   ]
+  },
+  "degradation": {
+   "page": "Histoire_de_l’Affaire_Dreyfus/T1/11",
+   "segments": [
+    {
+     "debut": "Alors, vers l’angle droit de la place, d’une petite porte, s",
+     "fin": "i glace les autres de toute l’horreur de la vérité entrevue."
+    },
+    "CUT",
+    {
+     "debut": "Les soldats, en armes, se taisent ; mais la foule, d’une fur",
+     "fin": "plus de nom. Il n’a plus de teint. Il est couleur traître. »"
+    }
+   ],
+   "cle": [
+    6,
+    13
+   ]
+  },
+  "jaccuse": {
+   "page": "J’accuse…!",
+   "segments": [
+    {
+     "debut": "Telle est donc la simple vérité, monsieur le Président, et e",
+     "fin": "réparer, pour plus tard, le plus retentissant des désastres."
+    },
+    "CUT",
+    {
+     "debut": "Mais cette lettre est longue, monsieur le Président, et il e",
+     "fin": ", monsieur le Président, l’assurance de mon profond respect."
+    }
+   ],
+   "cle": [
+    3,
+    10
+   ]
+  },
+  "intellectuels": {
+   "page": "Après_le_procès",
+   "segments": [
+    {
+     "debut": "Qu’est-ce donc qu’un « intellectuel » ; à quel signe se reco",
+     "fin": " scientifiques », c’est justement ici qu’augmente le danger."
+    }
+   ],
+   "cle": [
+    1,
+    1
+   ]
+  },
+  "preuves": {
+   "page": "Les_Preuves/L’Intérêt_socialiste",
+   "segments": [
+    {
+     "debut": "Ce jour-là, nous aurons le droit de nous dresser, nous socia",
+     "fin": "mais ce crime militaire dans l’impénétrabilité du huis clos."
+    }
+   ],
+   "cle": [
+    6,
+    9
+   ]
+  },
+  "grands": {
+   "page": "Notre_Jeunesse",
+   "segments": [
+    {
+     "debut": "Nous avons été grands. Nous avons été très grands. Aujourd’h",
+     "fin": "les intérêts durables de la race et du peuple, de la patrie."
+    }
+   ],
+   "cle": [
+    1,
+    2
+   ]
+  },
+  "expo": {
+   "page": "La_Chronique_de_France,_1900/Chapitre_IV",
+   "segments": [
+    {
+     "debut": "Les premières Expositions universelles furent des manifestat",
+     "fin": "pectif que devait revêtir la cinquième Exposition Française."
+    },
+    "CUT",
+    {
+     "debut": "Le premier des bénéfices moraux, c’est le prestige acquis. L",
+     "fin": "cole ; ce n’en était, ce n’en pouvait être que le vestibule."
+    }
+   ],
+   "cle": [
+    2,
+    2
+   ]
+  },
+  "trocadero": {
+   "page": "Monsieur_Bergeret_à_Paris/XX",
+   "segments": [
+    {
+     "debut": "— Contemplez ce spectacle, dit, sur les marches du Trocadéro",
+     "fin": "une assez grande foule de menus bourgeois et de limonadiers."
+    }
+   ],
+   "cle": [
+    2,
+    8
+   ]
+  }
+ }
+}

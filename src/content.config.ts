@@ -4,6 +4,9 @@ import { z } from 'astro/zod';
 
 export const THEMES = ['politique', 'societe', 'economie', 'culture', 'international', 'sciences'] as const;
 
+// Contenus rangés par siècle (spec 18) : src/content/lecons/<siecle>/<slug>.mdx, sous-pages dans
+// <siecle>/<slug>/<sous>.mdx. L'id commence par le siècle (« xixe/courants-politiques ») ; les
+// adresses se calculent dans src/utils/adresses.ts.
 const lecons = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/lecons' }),
   schema: z.object({
@@ -13,13 +16,13 @@ const lecons = defineCollection({
     ordre: z.number(),
     periode: z.string(),
     dureeLecture: z.number().int().positive().optional(),
-    // id d'un courant de src/data/courants-politiques.ts (couleur d'accent, sous-pages).
+    // id d'un courant de src/data/xixe/courants-politiques.ts (couleur d'accent, sous-pages).
     courant: z.string().optional(),
   }),
 });
 
 // Section « Le siècle raconté par ses écrivains » : un fichier par chapitre,
-// nommé NN-<slug>.mdx (ex. 01-revolution.mdx).
+// nommé <siecle>/NN-<slug>.mdx (ex. xixe/01-revolution.mdx).
 const ecrivains = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/ecrivains' }),
   schema: z.object({

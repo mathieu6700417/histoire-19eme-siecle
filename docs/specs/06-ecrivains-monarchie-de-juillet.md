@@ -29,7 +29,7 @@ peuple (Hugo, Lamartine, Lamennais, Michelet).
   l'abdication de Louis-Philippe et la proclamation de la République appartiennent au chapitre 5 :
   ne pas les raconter ici (la conclusion peut les annoncer).
 - Ne pas réutiliser une page Wikisource déjà citée dans les chapitres 0 à 3 (voir les JSON de
-  `scripts/ecrivains/chapitres/`) ; une autre page de la même œuvre est admise (autre chapitre des
+  `scripts/ecrivains/chapitres/xixe/`) ; une autre page de la même œuvre est admise (autre chapitre des
   *Misérables*, autre tome de l'*Histoire de dix ans*, etc.).
 
 ## Parties prévues (par défaut ; 4 parties, 4 à 9 extraits chacune)

@@ -2,9 +2,10 @@
 // Mise en page d'un chapitre de la section « Le siècle raconté par ses écrivains ».
 import Base from './Base.astro';
 import { typographie } from '../utils/typographie.mjs';
-import { urlSection, urlAuteurs } from '../utils/ecrivains';
-import { auteurs } from '../data/auteurs';
-import { libelleChapitre } from '../data/chapitres-ecrivains';
+import { libelleChapitre, urlSection, urlAuteurs } from '../utils/ecrivains';
+// Registre des auteurs : données du XIXe (seul siècle à avoir une section « écrivains »).
+import { auteurs } from '../data/xixe/auteurs';
+import { aSection } from '../data/siecles';
 import { diaporamaDe, dureeTotale, formaterDuree, urlDiaporama } from '../utils/diaporamas';
 
 interface Sommaire {
@@ -14,6 +15,8 @@ interface Sommaire {
 interface Voisin { numero: number; titre: string; href?: string }
 
 interface Props {
+  /** Siècle du chapitre (premier segment de son id). */
+  siecle: string;
   titre: string;
   numero: number;
   periode: string;
@@ -24,9 +27,9 @@ interface Props {
   suivant?: Voisin;
 }
 
-const { titre, numero, periode, resume, dureeLecture, sommaire, precedent, suivant } = Astro.props;
+const { siecle, titre, numero, periode, resume, dureeLecture, sommaire, precedent, suivant } = Astro.props;
 // Diaporama narré de la même période (spec 12), s'il existe.
-const diaporama = diaporamaDe(numero);
+const diaporama = aSection(siecle, 'images') ? diaporamaDe(siecle, numero) : undefined;
 const nbExtraits = sommaire.parties.reduce((n, p) => n + p.extraits.length, 0);
 // Numérotation continue d'une partie à l'autre.
 const debuts = sommaire.parties.map((_, i) => 1 + sommaire.parties.slice(0, i).reduce((n, p) => n + p.extraits.length, 0));
@@ -201,7 +204,7 @@ const duree = dureeLecture < 60
     <div class="chapitre__corps">
     <header class="chapitre__entete conteneur">
       <p class="chapitre__surtitre">
-        <a href={urlSection}>Le siècle raconté par ses écrivains</a>
+        <a href={urlSection(siecle)}>Le siècle raconté par ses écrivains</a>
         <span aria-hidden="true"> · </span>
         <span>{libelleChapitre(numero)}</span>
         <span aria-hidden="true"> · </span>
@@ -260,8 +263,8 @@ const duree = dureeLecture < 60
           <span class="voisin__sens">← {libelleChapitre(precedent.numero)}</span>
           <span class="voisin__titre">{typographie(precedent.titre)}</span>
         </a>
-      ) : <a class="voisin" href={urlSection}><span class="voisin__sens">← Tous les chapitres</span><span class="voisin__titre">Le siècle raconté par ses écrivains</span></a>}
-      {!suivant && <a class="voisin voisin--suiv" href={urlSection}><span class="voisin__sens">Tous les chapitres →</span><span class="voisin__titre">Le siècle raconté par ses écrivains</span></a>}
+      ) : <a class="voisin" href={urlSection(siecle)}><span class="voisin__sens">← Tous les chapitres</span><span class="voisin__titre">Le siècle raconté par ses écrivains</span></a>}
+      {!suivant && <a class="voisin voisin--suiv" href={urlSection(siecle)}><span class="voisin__sens">Tous les chapitres →</span><span class="voisin__titre">Le siècle raconté par ses écrivains</span></a>}
       {suivant && (suivant.href ? (
         <a class="voisin voisin--suiv" href={suivant.href}>
           <span class="voisin__sens">{libelleChapitre(suivant.numero)} →</span>
@@ -274,7 +277,7 @@ const duree = dureeLecture < 60
         </p>
       ))}
     </nav>
-    <p class="conteneur chapitre__index"><a href={urlAuteurs}>Index des auteurs</a></p>
+    <p class="conteneur chapitre__index"><a href={urlAuteurs(siecle)}>Index des auteurs</a></p>
     </div>
   </article>
 </Base>

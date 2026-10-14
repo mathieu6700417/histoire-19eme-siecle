@@ -72,9 +72,9 @@ haut et le bas : le modèle peint une pièce où le tableau est posé debout ; d
 
 `publier` lit fonds.json, retrouve chaque image par son `commons` (la clé survit aux
 renumérotations), refuse celle qui n'est plus montrée en entier ou dont la zone utile a changé depuis
-la fabrication (la boîte en dépend) ; copie le WebP dans public/diaporamas/<slug>/ (001-fond.webp,
+la fabrication (la boîte en dépend) ; copie le WebP dans public/<siecle>/diaporamas/<slug>/ (001-fond.webp,
 004-b-fond.webp) ; écrit `image.fond` { fichier, largeur, hauteur, boite, flou, modele, genere_le } ;
-consigne la recette dans src/data/diaporamas/generation/<slug>-fond.json. Idempotent. Les cibles
+consigne la recette dans src/data/diaporamas/<siecle>/generation/<slug>-fond.json. Idempotent. Les cibles
 sont des numéros ACTUELS : `86`, `34b`. `renumeroter.py` suit fichiers et champs ; `verifier.py`
 contrôle la famille « fond (spec 17) ».
 """

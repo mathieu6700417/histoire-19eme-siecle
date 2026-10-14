@@ -1,10 +1,10 @@
 ---
 // Mini-portrait d'un auteur (section « Le siècle raconté par ses écrivains »).
 // Reprend le modèle visuel de Fiche.astro : bandeau coloré selon la famille
-// politique, puis rubriques. Les données viennent de src/data/auteurs.ts.
+// politique, puis rubriques. Les données viennent de src/data/xixe/auteurs.ts.
 // Usage : <FicheAuteur id="chateaubriand" />  (niveau="h2" dans l'index des auteurs)
 // Dans un chapitre, la fiche est affichée par <Extrait … fiche>.
-import { auteur } from '../data/auteurs';
+import { auteur } from '../data/xixe/auteurs';   // registre du XIXe (seul siècle à avoir une section « écrivains »)
 import { typographie } from '../utils/typographie.mjs';
 
 interface Props {

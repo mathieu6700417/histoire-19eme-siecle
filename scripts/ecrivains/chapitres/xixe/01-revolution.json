@@ -1,0 +1,499 @@
+{
+ "slug": "01-revolution",
+ "gabarit": "01-revolution.gabarit.mdx",
+ "sortie": "src/content/ecrivains/xixe/01-revolution.mdx",
+ "ancres": {
+  "an-deux": {
+   "les Tyrs et les Sodomes": "toutes les Sodomes"
+  }
+ },
+ "extraits": {
+  "tiers-etat": {
+   "page": "Qu’est-ce_que_le_tiers_état_?_(Champion,_1888)/Qu’est-ce_que_le_tiers_état_?",
+   "segments": [
+    {
+     "debut": "Le plan de cet écrit est assez simple. Nous avons trois ques",
+     "fin": "este à faire au tiers pour prendre la place qui lui est due."
+    },
+    "CUT",
+    {
+     "debut": "Les fonctions publiques peuvent également, dans l’état actue",
+     "fin": " la libre concurrence sera fait plus chèrement et plus mal ?"
+    },
+    "CUT",
+    {
+     "debut": "Qui donc oserait dire que le tiers état n’a pas en lui tout ",
+     "fin": "der comme étant de la nation. Qu’est-ce que le tiers ? Tout."
+    }
+   ],
+   "cle": [
+    12,
+    13
+   ]
+  },
+  "bastille": {
+   "page": "Mémoires_d’outre-tombe/Première_partie/Livre_V",
+   "segments": [
+    {
+     "debut": "Le 14 juillet, prise de la Bastille. J’assistai, comme spect",
+     "fin": "e registre des vainqueurs, j’aurais une pension aujourd’hui."
+    },
+    "CUT",
+    {
+     "debut": "Tout événement, si misérable ou si odieux qu’il soit en lui-",
+     "fin": "it : on sait quels prodiges enfanta le peuple devenu soldat."
+    },
+    "CUT",
+    {
+     "debut": "Peu de jours après ce raccommodement, j’étais aux fenêtres d",
+     "fin": " la France pour quelque pays lointain germa dans mon esprit."
+    },
+    "CUT",
+    {
+     "debut": "La monarchie fut démolie à l’instar de la Bastille, dans la ",
+     "fin": "rance lui doit sa liberté, si liberté il y a pour la France."
+    }
+   ],
+   "cle": [
+    6,
+    6
+   ]
+  },
+  "octobre": {
+   "page": "Considérations_sur_…_la_Révolution_Française/Seconde_partie/XI",
+   "segments": [
+    {
+     "debut": "Le 6 octobre, de grand matin, une femme très-âgée, la mère d",
+     "fin": " hommes, ne se renouvelle-t-il pas dans le cours de la vie !"
+    }
+   ],
+   "cle": [
+    2,
+    4
+   ]
+  },
+  "federation": {
+   "page": "Histoire_de_la_Révolution_française_(Michelet)/Livre_III/Chapitre_12",
+   "segments": [
+    {
+     "debut": "Pour le voyageur qui, des Pyrénées ou du fond de la Bretagne",
+     "fin": " venaient, pour délassement, travailler encore aux lumières."
+    },
+    "CUT",
+    {
+     "debut": "Voilà enfin le 14 juillet, le beau jour tant désiré, pour le",
+     "fin": "elle s’achève au Champ de Mars, elle expire… Voilà l’unité !"
+    },
+    "CUT",
+    {
+     "debut": "Mais silence ! Le roi arrive, il est assis, et l’Assemblée, ",
+     "fin": "e, de grâce, levez haut la main, que tout le monde la voie !"
+    }
+   ],
+   "cle": [
+    0,
+    1
+   ]
+  },
+  "varennes": {
+   "page": "Histoire_des_Girondins/2",
+   "segments": [
+    {
+     "debut": "La petite ville de Varennes est formée de deux quartiers dis",
+     "fin": "ur celui qui fut votre maître, je vous ordonne comme roi ! »"
+    }
+   ],
+   "cle": [
+    1,
+    1
+   ]
+  },
+  "gouges": {
+   "page": "Déclaration_des_droits_de_la_femme_et_de_la_citoyenne",
+   "segments": [
+    {
+     "debut": "Les mères, les filles, les sœurs, représentantes de la natio",
+     "fin": "dus qui composent la Nation, n’a pas coopéré à sa rédaction."
+    }
+   ],
+   "cle": [
+    12,
+    23
+   ]
+  },
+  "dix-aout": {
+   "page": "Histoire_des_Girondins/22",
+   "segments": [
+    {
+     "debut": "Le roi traversa les jardins sans obstacle entre deux haies d",
+     "fin": "trée du passage qui conduisait de la terrasse à l’Assemblée."
+    },
+    "CUT",
+    {
+     "debut": "Quatre-vingts cadavres jonchaient l’escalier. De ce moment l",
+     "fin": " égorge aux cris de : « Vive la nation ! » Pas un n’échappe."
+    }
+   ],
+   "cle": [
+    0,
+    0
+   ]
+  },
+  "septembre": {
+   "page": "Considérations_sur_…_la_Révolution_Française/Troisième_partie/X",
+   "segments": [
+    {
+     "debut": "La nouvelle de la prise de Longwy et de Verdun étoit arrivée",
+     "fin": "bout ; mais, quand la victime est déjà frappée, il l’achève."
+    }
+   ],
+   "cle": [
+    3,
+    4
+   ]
+  },
+  "emigration": {
+   "page": "Mémoires_d’outre-tombe/Première_partie/Livre_VII",
+   "segments": [
+    {
+     "debut": "L’armée des princes était composée de gentilshommes, classés",
+     "fin": "endait encore l’honneur, mais d’où était tombée la victoire."
+    },
+    "CUT",
+    {
+     "debut": "Une armée est ordinairement composée de soldats à peu près d",
+     "fin": "est, entre les deux Frances, qu’une transformation de vertu."
+    }
+   ],
+   "cle": [
+    4,
+    4
+   ]
+  },
+  "valmy": {
+   "page": "Histoire_des_Girondins/27",
+   "segments": [
+    {
+     "debut": "À ce feu, l’artillerie de Kellermann s’ébranle et s’établit ",
+     "fin": "et reprend lentement, et sans être poursuivi, ses positions."
+    }
+   ],
+   "cle": [
+    2,
+    2
+   ]
+  },
+  "convention": {
+   "page": "Quatrevingt-treize/II,_3",
+   "segments": [
+    {
+     "debut": "Nous approchons de la grande cime.",
+     "fin": "in et tragique, l’immense profil de la révolution française."
+    },
+    "CUT",
+    {
+     "debut": "Le 14 juillet avait délivré.",
+     "fin": "Le 21 septembre fonda."
+    },
+    "CUT",
+    {
+     "debut": "Voir la Convention, à quelque époque de son règne que ce fût",
+     "fin": "au un jour. Court et terrible souffle des bouches humaines !"
+    },
+    "CUT",
+    {
+     "debut": "En même temps qu’elle dégageait de la révolution, cette asse",
+     "fin": "e, la Vendée, et sur les épaules ce tas de tigres, les rois."
+    }
+   ],
+   "cle": [
+    0,
+    7
+   ]
+  },
+  "saint-just": {
+   "page": "Œuvres_complètes_de_Saint-Just/3/III",
+   "segments": [
+    {
+     "debut": "J’entreprends, Citoyens, de prouver que le roi peut être jug",
+     "fin": "lus souvent, la vérité n’est que la séduction de notre goût."
+    },
+    "CUT",
+    {
+     "debut": "Pour moi, je ne vois point de milieu : cet homme doit régner",
+     "fin": "amuse à les combattre, au lieu de marcher droit à la vérité."
+    },
+    "CUT",
+    {
+     "debut": "Il est telle âme généreuse qui dirait, dans un autre temps, ",
+     "fin": "t républicain ne doit pas oublier dans le jugement d’un roi."
+    }
+   ],
+   "cle": [
+    10,
+    12
+   ]
+  },
+  "vingt-et-un-janvier": {
+   "page": "Le_nouveau_Paris/23",
+   "segments": [
+    {
+     "debut": "Est-ce bien le même individu, couronné et sacré à Reims, mon",
+     "fin": "uis XVI menaçait tous ceux qui avaient voulu l’en préserver."
+    }
+   ],
+   "cle": [
+    0,
+    1
+   ]
+  },
+  "vendee": {
+   "page": "Mémoires_de_Madame_la_marquise_de_La_Rochejaquelein,_1889/Chapitre_VI",
+   "segments": [
+    {
+     "debut": "L’insurrection a commencé à la fois sur plusieurs points, pa",
+     "fin": "i plus loin, pour ne pas trop interrompre ce qui me regarde."
+    },
+    "CUT",
+    {
+     "debut": "Il fut dit qu’on allait faire tirer à la milice le dimanche ",
+     "fin": "merai ainsi dorénavant, comme on le faisait dans la Vendée)."
+    },
+    "CUT",
+    {
+     "debut": "À onze heures, quand tous les domestiques furent couchés, He",
+     "fin": "ronnerie ; sa peur me donnait autant d’ennui que de pitié. »"
+    }
+   ],
+   "cle": [
+    4,
+    4
+   ]
+  },
+  "marat": {
+   "page": "Histoire_de_la_Révolution_française_(Michelet)/Livre_XII/Chapitre_3",
+   "segments": [
+    {
+     "debut": "Le soir du 13 juillet, à sept heures, elle sortit de chez el",
+     "fin": "a chère amie ! » C’est tout ce qu’il put dire, et il expira."
+    }
+   ],
+   "cle": [
+    5,
+    8
+   ]
+  },
+  "an-deux": {
+   "page": "Les_Châtiments/À_l’obéissance_passive",
+   "poeme": {
+    "debut": "Ô soldats de l’an deux ! ô guerres ! épopées !",
+    "fin": "Montrant du doigt les cieux !",
+    "strophe": 6
+   },
+   "cle": [
+    0,
+    4
+   ]
+  },
+  "nantes": {
+   "page": "Histoire_de_la_Révolution_française_(Michelet)/Livre_XVI/Chapitre_1",
+   "segments": [
+    {
+     "debut": "On prit le moyen opposé à celui des Girondins : tuer tout. L",
+     "fin": "oute fut épouvantable. La Vendée ne s’en est jamais relevée."
+    }
+   ],
+   "cle": [
+    4,
+    8
+   ]
+  },
+  "desmoulins": {
+   "page": "Œuvres_de_Camille_Desmoulins/Tome_III/Le_Vieux_Cordelier,_n°_III",
+   "segments": [
+    {
+     "debut": "Une différence entre la monarchie et la république, qui suff",
+     "fin": "s concitoyens, et à répandre les semences du bonheur public."
+    },
+    "CUT",
+    {
+     "debut": "« Il fallait montrer de la joie de la mort de son ami, de so",
+     "fin": " leur plairait le plus. Missus centurio qui maturaret eum. »"
+    }
+   ],
+   "cle": [
+    3,
+    10
+   ]
+  },
+  "robespierre": {
+   "page": "Œuvres_de_Robespierre/Sur_les_principes_de_morale_politique",
+   "segments": [
+    {
+     "debut": "Quel est le but où nous tendons ? La jouissance paisible de ",
+     "fin": "ue à tous les vices et à tous les ridicules de la monarchie."
+    },
+    "CUT",
+    {
+     "debut": "Ici se bornerait tout le développement de notre théorie, si ",
+     "fin": "l ; quiconque ne hait point le crime ne peut aimer la vertu."
+    }
+   ],
+   "cle": [
+    5,
+    7
+   ]
+  },
+  "condorcet": {
+   "page": "Esquisse_d’un_tableau_historique_des_progrès_de_l’esprit_humain/10",
+   "segments": [
+    {
+     "debut": "Mais les facultés physiques, la force, l’adresse, la finesse",
+     "fin": "n amour pour l’humanité embellit des plus pures jouissances."
+    }
+   ],
+   "cle": [
+    2,
+    2
+   ]
+  },
+  "captive": {
+   "page": "Œuvres_poétiques_de_Chénier_(Moland,_1889)/La_jeune_captive",
+   "poeme": {
+    "debut": "L’épi naissant mûrit de la faux respecté ;",
+    "fin": "Ceux qui les passeront près d’elle.",
+    "strophe": 6
+   },
+   "cle": [
+    0,
+    4
+   ]
+  },
+  "chenier": {
+   "page": "Stello/XXXV",
+   "segments": [
+    {
+     "debut": "Cette soirée était pesante. Plus le soleil se cachait derriè",
+     "fin": "rais pas. J’avais toute l’ame et toute la vie dans les yeux."
+    },
+    "CUT",
+    {
+     "debut": "En ce moment plus aucune voix, plus aucun mouvement sur tout",
+     "fin": "La tête roula, et ce qu’il avait là s’enfuit avec le sang."
+    }
+   ],
+   "cle": [
+    2,
+    5
+   ]
+  },
+  "maistre": {
+   "page": "Considérations_sur_la_France/Chapitre_premier",
+   "segments": [
+    {
+     "debut": "Mais dans les temps de révolutions, la chaîne qui lie l’homm",
+     "fin": "par des septembriseurs, afin que la justice même fût infâme."
+    },
+    "CUT",
+    {
+     "debut": "Enfin, plus on examine les personnages en apparence les plus",
+     "fin": "nstrumens les plus vils, c’est qu’elle punit pour régénérer."
+    }
+   ],
+   "cle": [
+    4,
+    8
+   ]
+  },
+  "thermidor": {
+   "page": "Histoire_de_la_Révolution_française_(Michelet)/Livre_XXI/Chapitre_10",
+   "segments": [
+    {
+     "debut": "De cinq à six eut lieu, dans la lugubre et lente promenade d",
+     "fin": "t… Puis il y eut un coup sourd… Ce grand homme n’était plus."
+    }
+   ],
+   "cle": [
+    6,
+    8
+   ]
+  },
+  "bals": {
+   "page": "Le_nouveau_Paris/69",
+   "segments": [
+    {
+     "debut": "Vingt-trois théâtres, dix-huit cents bals ouverts tous les j",
+     "fin": "une cérémonie bizarre, est fait pour s’évanouir promptement."
+    }
+   ],
+   "cle": [
+    5,
+    6
+   ]
+  },
+  "milan": {
+   "page": "La_Chartreuse_de_Parme_(édition_Dupouy,_1910)/Livre_Premier/Chapitre_premier",
+   "segments": [
+    {
+     "debut": "Le 15 mai 1796 le général Bonaparte fit son entrée dans Mila",
+     "fin": " petit journal grand comme la main, imprimé sur papier sale."
+    },
+    "CUT",
+    {
+     "debut": "En mai 1796, trois jours après l’entrée des Français, un jeu",
+     "fin": "nçais la Monférine, la Sauteuse et autres danses italiennes."
+    }
+   ],
+   "cle": [
+    5,
+    6
+   ]
+  },
+  "chouans": {
+   "page": "Les_Chouans_ou_la_Bretagne_en_1799/1",
+   "segments": [
+    {
+     "debut": "Dans les premiers jours de l’an VIII, au commencement de ven",
+     "fin": "tains critiques, elles nuisent à la peinture des sentiments."
+    },
+    "CUT",
+    {
+     "debut": "En considérant ces hommes étonnés de se voir ensemble, et ra",
+     "fin": "uniformité d’allure qui leur manquait alors si complètement."
+    },
+    "CUT",
+    {
+     "debut": "À l’instant où Hulot reconnut les perfidies secrètes que tra",
+     "fin": "arée, car lui seul fut d’abord dans le secret de son danger."
+    }
+   ],
+   "cle": [
+    5,
+    5
+   ]
+  },
+  "brumaire": {
+   "page": "Considérations_sur_…_la_Révolution_Française/Quatième_partie/II",
+   "segments": [
+    {
+     "debut": "Le 18 brumaire précisément, j’arrivai de Suisse à Paris ; et",
+     "fin": "lle s’est trop souillée pour accomplir une œuvre aussi pure."
+    },
+    "CUT",
+    {
+     "debut": "Le conseil des anciens ordonna, le 18 brumaire, que le corps",
+     "fin": "adie de tous ceux qui ont vécu sous l’autorité de Bonaparte."
+    },
+    "CUT",
+    {
+     "debut": "Le 19 brumaire, il arriva dans le conseil des cinq-cens, les",
+     "fin": "enadiers, il les détermina bientôt à ce qu’il vouloit d’eux."
+    }
+   ],
+   "cle": [
+    3,
+    4
+   ]
+  }
+ }
+}

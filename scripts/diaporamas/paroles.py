@@ -9,7 +9,7 @@ Usage :
 Pour chaque intermède chanté (`musique.intermedes`, sans `instrumental`) :
 1. **Voix isolée** : séparation de sources (Hybrid Demucs de torchaudio,
    `HDEMUCS_HIGH_MUSDB_PLUS`, ~320 Mo téléchargés une fois ; rien à installer) appliquée au
-   fichier joué par le lecteur (public/diaporamas/<slug>/musique/…m4a) : les instants sont donc
+   fichier joué par le lecteur (public/<siecle>/diaporamas/<slug>/musique/…m4a) : les instants sont donc
    ceux de l'extrait. Piste de voix en cache (.cache/diaporamas/<slug>/paroles/).
 2. **Alignement forcé** (alignement.py, wav2vec2 français) :
    le texte entier est aligné sur tout l'extrait, sur la voix isolée et, pour contrôle, sur le

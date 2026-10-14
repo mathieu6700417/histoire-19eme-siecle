@@ -21,9 +21,9 @@
 //   </div>
 //   </Oeuvre>
 //
-// - `image` : chemin du fichier dans src/assets/oeuvres/, sans extension (« 01/marat »),
+// - `image` : chemin du fichier dans src/assets/oeuvres/<siecle>/, sans extension (« 01/marat »),
 //   ou une image importée (`import marat from '…/marat.jpg'` puis image={marat}).
-// - `artiste` : identifiant de src/data/artistes.ts. Pour une œuvre anonyme ou
+// - `artiste` : identifiant de src/data/xixe/artistes.ts. Pour une œuvre anonyme ou
 //   collective, l'omettre et donner `createur` (« Anonyme », « Graveur non identifié »).
 // - `mention` : complément après le nom (« gravé par Louis Darcis », « et atelier »).
 //   `attribue` : affiche « attribué à » devant le nom.
@@ -31,7 +31,7 @@
 //   représentés. Statut « témoin », calculé au build comme pour les extraits : artiste
 //   né au moins 10 ans avant les faits. Œuvre sans artiste : témoin si l'année de
 //   réalisation (première année de `date`) tombe dans la période du chapitre (lue dans
-//   src/data/chapitres-ecrivains.ts d'après l'URL ; prop `periode` pour la forcer).
+//   src/data/xixe/chapitres-ecrivains.ts d'après l'URL ; prop `periode` pour la forcer).
 // - `regard` : « contemporain » (réalisée pendant les faits ou juste après) ou
 //   « retrospectif ». On peut l'omettre pour un portrait d'auteur placé près de son texte.
 // - `frontispice` : œuvre d'ouverture d'une partie (un peu plus large sur grand écran).
@@ -40,8 +40,10 @@
 //   numérotation, ni dans la durée de lecture.
 import type { ImageMetadata } from 'astro';
 import { Image, getImage } from 'astro:assets';
-import { artiste as trouverArtiste, datesArtiste } from '../data/artistes';
-import { chapitresPrevus } from '../data/chapitres-ecrivains';
+// Registre des artistes : données du XIXe (seul siècle à avoir une section « écrivains »).
+import { artiste as trouverArtiste, datesArtiste } from '../data/xixe/artistes';
+import { chapitresPrevus } from '../utils/ecrivains';
+import { siecleDeChemin } from '../utils/adresses';
 import { typographie } from '../utils/typographie.mjs';
 
 interface Props {
@@ -70,13 +72,15 @@ const {
   date, technique, lieu, faits, regard, commons, musee, frontispice = false, periode,
 } = Astro.props;
 
-// Fichier image : chemin relatif à src/assets/oeuvres/, ou image importée.
+// Fichier image : chemin relatif à src/assets/oeuvres/<siecle>/ (siècle de la page), ou image importée.
+const siecle = siecleDeChemin(Astro.url.pathname);
+if (!siecle) throw new Error(`[Oeuvre ${id}] page hors d'un siècle : ${Astro.url.pathname}`);
 const fichiers = import.meta.glob<{ default: ImageMetadata }>('../assets/oeuvres/**/*.{jpg,jpeg,png,webp}', { eager: true });
 function resoudre(img: ImageMetadata | string): ImageMetadata {
   if (typeof img !== 'string') return img;
-  const base = `../assets/oeuvres/${img.replace(/^\/+/, '')}`;
+  const base = `../assets/oeuvres/${siecle}/${img.replace(/^\/+/, '')}`;
   const cle = Object.keys(fichiers).find((k) => k === base || k.replace(/\.[a-z]+$/, '') === base);
-  if (!cle) throw new Error(`[Oeuvre ${id}] image introuvable : src/assets/oeuvres/${img}`);
+  if (!cle) throw new Error(`[Oeuvre ${id}] image introuvable : src/assets/oeuvres/${siecle}/${img}`);
   return fichiers[cle].default;
 }
 const img = resoudre(image);
@@ -92,7 +96,7 @@ if (a) {
   else temoin = a.naissance.annee + 10 <= anneeFaits;
 } else {
   const numero = Number(Astro.url.pathname.match(/\/ecrivains\/(\d{2})-/)?.[1]);
-  const per = periode ?? chapitresPrevus.find((c) => c.numero === numero)?.periode;
+  const per = periode ?? chapitresPrevus(siecle).find((c) => c.numero === numero)?.periode;
   const [debut, fin] = (per ?? '').match(/\d{4}/g)?.map(Number) ?? [];
   const realise = premiereAnnee(date);
   if (!debut || !realise) console.warn(`[Oeuvre ${id}] période du chapitre ou date de réalisation introuvable`);

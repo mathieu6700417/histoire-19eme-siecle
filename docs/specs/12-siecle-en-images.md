@@ -9,7 +9,7 @@ Décidé avec l'utilisateur le 2026-10-07. Nouvelle section du site : le XIXe si
 | Sujet | Décision |
 |---|---|
 | Échelle | **~100 images par période** (90 à 110), soit ~900 images au total. |
-| Périodes | Les **9 périodes de la section écrivains** (`src/data/chapitres-ecrivains.ts`) : prologue (vers 1770-1789), Révolution, Consulat et Empire, Restauration, monarchie de Juillet, 1848 et IIe République, Second Empire, année terrible, IIIe République jusqu'à 1900. Mêmes slugs. |
+| Périodes | Les **9 périodes de la section écrivains** (`src/data/xixe/chapitres-ecrivains.ts`) : prologue (vers 1770-1789), Révolution, Consulat et Empire, Restauration, monarchie de Juillet, 1848 et IIe République, Second Empire, année terrible, IIIe République jusqu'à 1900. Mêmes slugs. |
 | Voix | Fichiers audio **générés à l'avance** par script, **Gemini 3.8 Flash TTS** (`gemini-3.8-flash-tts`), **voix Charon**, par l'API Gemini directe (`GEMINI_API_KEY` dans `.env`, non versionné). |
 | Densité (révisée) | Révisée par la **spec 14** (2026-10-11) : ~220 à 260 images par période, une image toutes les 7 à 12 s, à narration identique (plans, lectures et épisodes illustrés, galeries). Les lignes « Échelle » et « Rythme » valent pour les **diapositives** et leur narration. |
 | Rythme | **2 à 3 phrases par image, ~18 s** en moyenne (14 à 24 s, soit ~40 à 55 mots), soit ~30 à 35 min par période, ~5 h pour le siècle (révisé le 2026-10-07 : le pilote à ~10 s allait trop vite). **Durée révisée le 2026-10-12 : environ une heure par période à partir de la 06**, voir « Durée visée : une heure ». |
@@ -36,11 +36,11 @@ XIXe siècle. On **copie** (on ne l'importe pas, les projets restent indépendan
 
 ```
 docs/specs/12-siecle-en-images.md
-src/data/diaporamas/<NN>-<slug>.json        # le script d'une période (source de vérité)
-public/diaporamas/<slug>/<NNN>.webp         # images redimensionnées (1600 px max, webp ~q80)
-public/diaporamas/<slug>/<NNN>.m4a          # voix d'une diapositive (AAC mono ~64 kb/s)
-src/pages/diaporamas/index.astro            # portail : les 9 périodes
-src/pages/diaporamas/[slug].astro           # le lecteur d'une période
+src/data/diaporamas/xixe/<NN>-<slug>.json        # le script d'une période (source de vérité)
+public/xixe/diaporamas/<slug>/<NNN>.webp         # images redimensionnées (1600 px max, webp ~q80)
+public/xixe/diaporamas/<slug>/<NNN>.m4a          # voix d'une diapositive (AAC mono ~64 kb/s)
+src/pages/[siecle]/diaporamas/index.astro            # portail : les 9 périodes
+src/pages/[siecle]/diaporamas/[slug].astro           # le lecteur d'une période
 src/components/Diaporama.astro              # le lecteur (HTML + CSS + script vanilla)
 scripts/diaporamas/                         # chaîne de production (Python, comme scripts/ecrivains)
   README.md
@@ -55,7 +55,7 @@ build ralentiraient tout, et on les prépare une fois pour toutes par script. Po
 ~250 Ko par image et ~100 Ko par audio, soit ~35 Mo par période. Limites Cloudflare Workers
 (20 000 fichiers, 25 Mio par fichier) : on reste très en dessous.
 
-### Format du script d'une période (`src/data/diaporamas/01-revolution.json`)
+### Format du script d'une période (`src/data/diaporamas/xixe/01-revolution.json`)
 
 ```json
 {
@@ -136,7 +136,7 @@ Les durées et les phrases horodatées sont remplies par `voix.py`.
 
 ## Lecteur (`Diaporama.astro`)
 
-Page `/diaporamas/<slug>/`, dans la mise en page commune (`Base.astro`), style édition savante.
+Page `/xixe/diaporamas/<slug>/`, dans la mise en page commune (`Base.astro`), style édition savante.
 
 - **Image** : en couleur, elle **couvre toute la scène** (recadrée, jamais de bandes vides ;
   décision de l'utilisateur du 2026-10-07). Mouvement de caméra lent en CSS (transform), calé
@@ -326,7 +326,7 @@ Demande de l'utilisateur : de la musique, avec des œuvres pertinentes. Décisio
 - **Données** : `musique` dans le JSON de la période : pistes de fond par acte (fichier, titre,
   compositeur, date, interprète, source, licence, début/fin d'extrait, volume relatif) et
   `intermedes` (`apres` = n° de diapositive, fichier, extrait, paroles, cartouche). Fichiers
-  dans `public/diaporamas/<slug>/musique/` (m4a AAC ~96-128 kb/s stéréo, normalisés en
+  dans `public/xixe/diaporamas/<slug>/musique/` (m4a AAC ~96-128 kb/s stéréo, normalisés en
   sonie, ~-16 LUFS pour les chants, le fond se règle dans le lecteur).
 - **Chaîne** : `scripts/diaporamas/musique.py` : téléchargement (cache), contrôle de licence,
   découpe, fondus, normalisation (ffmpeg loudnorm) ; `verifier.py`
@@ -356,7 +356,7 @@ avec pause, reprise et sauts justes. La musique de fond est baissée comme sous 
 
 ### Lectures
 - **Textes** : d'abord les extraits **déjà vérifiés** du chapitre écrivains de la période
-  (`src/content/ecrivains/NN-<slug>.mdx`, `src/data/auteurs.ts`, outils de `scripts/ecrivains/`) ;
+  (`src/content/ecrivains/xixe/NN-<slug>.mdx`, `src/data/xixe/auteurs.ts`, outils de `scripts/ecrivains/`) ;
   sinon d'autres textes de l'époque (discours, lois, journaux, lettres, mémoires) pris sur
   Wikisource et **vérifiés mot pour mot** de la même façon. Jamais de texte rédigé ou retouché :
   coupes signalées par « […] ». Variété des voix et des camps (comme la charte 00).
@@ -807,9 +807,9 @@ montre pas, montrer son portrait. Décisions :
   brusquement (voir la correction de la régression de caméra). Téléphone : ovales plus petits,
   en rangée.
 - **Données** : `personnes` dans la diapositive : `{ id, quand }` (passage exact) ; un registre
-  par période ou commun, `src/data/diaporamas/portraits.json` : `{ id, nom, dates, fichier,
+  par période ou commun, `src/data/diaporamas/xixe/portraits.json` : `{ id, nom, dates, fichier,
   commons, auteur, date, cadre_visage }` ; images recadrées en webp dans
-  `public/diaporamas/portraits/`. Crédits des portraits sur la page. `verifier.py` : `quand`
+  `public/xixe/diaporamas/portraits/`. Crédits des portraits sur la page. `verifier.py` : `quand`
   exacts, licences, 4 au plus, instants croissants, personne absente de l'image.
 - **Valeurs retenues** (mise en œuvre du 2026-10-08 ; détail dans `scripts/diaporamas/README.md`,
   « Portraits ») :
@@ -918,7 +918,7 @@ l'image reste le sujet. Les zones couvertes ne font jamais bouger la caméra bru
 **Valeurs retenues, points 1 et 2** (mise en œuvre du 2026-10-08 ; détail dans
 `scripts/diaporamas/README.md`, « Objets de musée et manuscrits ») :
 - données : `objets` et `manuscrits` dans la diapositive, `{ id, quand, instant, cote }` (un de chaque
-  au plus) ; registre commun `src/data/diaporamas/objets.json` ; `scripts/diaporamas/objets.py`
+  au plus) ; registre commun `src/data/diaporamas/xixe/objets.json` ; `scripts/diaporamas/objets.py`
   (licence par l'API : domaine public, CC0, CC BY, CC BY-SA ; détourage local par rembg
   `isnet-general-use`, enveloppe convexe pour les faïences et médailles ; webp transparent de 720 px
   au plus) ; crédits « Objets et documents » sur la page ;
@@ -1074,7 +1074,7 @@ Demande de l'utilisateur : une animation au début et une à la fin de chaque di
 ## Produire une période : leçons de Consulat et Empire (2026-10-09)
 
 Règles tirées des retours de l'utilisateur sur la deuxième période ; elles valent pour toutes les
-suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan.md`).
+suivantes (détail des coûts : `docs/journal/xixe/diaporama-02-consulat-empire-bilan.md`).
 
 - **Prévoir les enrichissements dès l'écriture** (étape 1, en même temps que le choix des
   images) : avant/après (3 à 4), mosaïques (2), objets de musée (~10), manuscrits (3 à 4), chiffres
@@ -1510,7 +1510,7 @@ la caméra arrive au cadre sur lequel l'image commence aujourd'hui. Précision d
 - **Périodes futures** : `banc_claude.py` joint la demande d'entrée (répertoire, règle de
   fenêtre) à la tâche de caméra des grandes vues et pose le champ avec la caméra.
 
-## Portail (`/diaporamas/`)
+## Portail (`/xixe/diaporamas/`)
 
 Titre « Le siècle en images ». Une courte présentation (voix de synthèse, images du domaine
 public de Wikimedia Commons, durée totale), puis les 9 périodes : numéro, titre, dates,
@@ -1519,6 +1519,11 @@ listée en gris sans lien (« à venir »). Ajouter la section à la page d'accu
 navigation commune, par petites touches.
 
 ## Chaîne de production (`scripts/diaporamas/`)
+
+Rangement par siècle (spec 18) : les périodes du XIXe ont leur JSON dans `src/data/diaporamas/xixe/`,
+leurs médias dans `public/xixe/diaporamas/<slug>/` (servis à côté de la page `/xixe/diaporamas/<slug>/`),
+leurs annotations dans `docs/annotations/xixe/` et leurs journaux dans `docs/journal/xixe/`. Les scripts
+prennent `--siecle <id>` (défaut `xixe`) ; les chemins sont calculés dans `commun.py` (README des scripts).
 
 1. **Écriture** (agent) : le JSON de la période (actes, narrations, choix des fichiers Commons et
    cadrages). C'est le travail de fond, fait avec recherche sur Commons.
@@ -1554,7 +1559,7 @@ aux périodes déjà produites.
 
 ## Critères de fin du pilote
 
-- `/diaporamas/` et `/diaporamas/revolution/` fonctionnent, sur ordinateur et téléphone.
+- `/xixe/diaporamas/` et `/xixe/diaporamas/revolution/` fonctionnent, sur ordinateur et téléphone.
 - Diaporama Révolution complet : ~100 diapositives, toutes avec image, légende et audio vérifiés.
 - `python3 scripts/diaporamas/verifier.py revolution` passe ; `npm run build` passe.
 - Un compte rendu à l'utilisateur : durée, coût approximatif de synthèse, images douteuses ou

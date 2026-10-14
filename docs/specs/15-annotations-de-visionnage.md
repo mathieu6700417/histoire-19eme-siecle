@@ -9,7 +9,7 @@ faire, et reprend ; Claude lit ensuite ces notes dans le dépôt, avec tout le c
 | Sujet | Décision |
 |---|---|
 | Portée | **Local uniquement.** Rien de cet outil ne doit exister dans le site déployé (ni script, ni style, ni point d'écriture) : `npm run build` et `npm run deploy` produisent un site identique à aujourd'hui. |
-| Stockage | **Fichier dans le dépôt**, écrit par un petit serveur local : `docs/annotations/<slug>.jsonl` (une ligne JSON par annotation), captures dans `docs/annotations/<slug>/<id>.jpg`. |
+| Stockage | **Fichier dans le dépôt**, écrit par un petit serveur local : `docs/annotations/xixe/<slug>.jsonl` (une ligne JSON par annotation), captures dans `docs/annotations/xixe/<slug>/<id>.jpg`. |
 | Contexte | **Complet, avec capture d'écran** (détail plus bas). |
 | Saisie | **Texte + catégorie au clavier.** |
 | Raccourci | **Touche A** : pause et ouverture du panneau ; **Entrée** enregistre et **reprend la lecture** où elle était ; **Échap** annule et reprend. |
@@ -20,7 +20,7 @@ faire, et reprend ; Claude lit ensuite ces notes dans le dépôt, avec tout le c
 `npm run annoter` : construit le site en **mode annotation** et le sert sur un port local libre
 (affiché), avec le point d'écriture. Les requêtes Range des audios doivent marcher (comme
 `astro preview`). Sans ce mode, le lecteur n'embarque rien de l'outil. Le serveur n'écoute que
-sur `127.0.0.1` et n'écrit que sous `docs/annotations/`.
+sur `127.0.0.1` et n'écrit que sous `docs/annotations/xixe/`.
 
 ## Dans le lecteur (mode annotation seulement)
 

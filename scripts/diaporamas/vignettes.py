@@ -21,7 +21,7 @@ cartouche le signale. Mode d'emploi complet : README, « Dessins traversants (sp
     python3 scripts/diaporamas/vignettes.py encres <slug> [--essai]   # encre claire sur fond sombre
     python3 scripts/diaporamas/vignettes.py lister <slug>
 
-**Lot** (écrit à la main) : src/data/diaporamas/generation/<slug>-vignettes.json, qui sert aussi de
+**Lot** (écrit à la main) : src/data/diaporamas/<siecle>/generation/<slug>-vignettes.json, qui sert aussi de
 recette : `style` (consigne commune, anglaise : esquisse simple, aucun personnage), `modele`, et
 `vignettes`, une entrée par image :
     { "n": "31" ou "34b" (numéro ACTUEL ; `renumeroter.py` le tient à jour), "commons" (facultatif,
@@ -46,7 +46,7 @@ scikit-image numpy pillow`), releve/ (montages des trois tirages) et planche.htm
 Le premier pilote (vignettes d'une marge) est dans l'historique de ce fichier et dans pilote-1/.
 
 `publier` copie l'encre et les tracés du tirage retenu des entrées jugées « bon » dans
-public/diaporamas/<slug>/ (031-vignette.webp, 031-vignette.json ; 034-b-vignette.…) et écrit
+public/<siecle>/diaporamas/<slug>/ (031-vignette.webp, 031-vignette.json ; 034-b-vignette.…) et écrit
 `image.vignette` { fichier, traces, centre: [x0, x1] (part de la largeur du dessin cachée par l'image
 à son rapprochement final, d'après laquelle il a été composé), quand?, largeur, hauteur, modele,
 genere_le } ; refuse une image qui n'est pas montrée en entier, une surimpression de coin (portraits,
@@ -56,7 +56,7 @@ dessin, et plus de `PLAFOND` dessins. Idempotent. `renumeroter.py` suit les deux
 """
 from __future__ import annotations
 
-import argparse, datetime, html, json, re, shutil, subprocess, sys, time, zipfile
+import argparse, datetime, html, json, os, re, shutil, subprocess, sys, time, zipfile
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -427,6 +427,7 @@ def planche(slug: str) -> None:
     lot = lire_lot(slug)
     dest = dossier(slug)
     (dest / 'releve').mkdir(exist_ok=True)
+    vers_public = os.path.relpath(c.PUBLIC / slug, dest)   # médias, relatifs à la planche (dans .cache/)
     items, scripts = [], []
     for r in resoudre(d, lot):
         v, e = r['v'], r['e']
@@ -463,9 +464,9 @@ def planche(slug: str) -> None:
         items.append(dict(cle=e['cle'], nom=e['nom'], tirage=int(v.get('tirage') or ks[0]), tirages=tr,
                           jugement=v.get('jugement', ''), raison=v.get('raison', ''), gauche=v.get('gauche', ''), droite=v.get('droite', ''),
                           quand=v.get('quand', ''), texte=x['narration'][f['car'][0]:f['car'][1]], titre=im.get('titre_court') or im.get('titre'),
-                          image=f"../../../../public/diaporamas/{slug}/{im['fichier']}", utile=im.get('utile') or [0, 0, 1, 1],
+                          image=f"{vers_public}/{im['fichier']}", utile=im.get('utile') or [0, 0, 1, 1],
                           largeur=im['largeur'], hauteur=im['hauteur'], zoom=im.get('entier_zoom') or 1.3,
-                          fond=f"../../../../public/diaporamas/{slug}/{im['fond']['fichier']}" if im.get('fond') else None,
+                          fond=f"{vers_public}/{im['fond']['fichier']}" if im.get('fond') else None,
                           boite=(im.get('fond') or {}).get('boite')))
     page = PLANCHE.replace('__TITRE__', html.escape(slug)).replace('__TRACES__', ''.join(scripts)).replace(
         '__DONNEES__', json.dumps(dict(items=items, style=lot.get('style', ''), duree=DUREE), ensure_ascii=False).replace('</', '<\\/'))

@@ -1,10 +1,10 @@
 // Outils partagés par la section « Le siècle en images » (spec 12) : chargement des scripts
-// de src/data/diaporamas/*.json, plan des neuf périodes (celles de la section écrivains),
-// durées et adresses.
-import { chapitresPrevus } from '../data/chapitres-ecrivains';
-import registrePortraits from '../data/diaporamas/portraits.json';
-import registreObjets from '../data/diaporamas/objets.json';
-import indicatifCommun from '../data/diaporamas/commun/indicatif.json';
+// de src/data/diaporamas/<siecle>/*.json, plan des périodes (celles de la section écrivains),
+// durées et adresses. Données et médias sont rangés par siècle (spec 18) : registres des
+// portraits, des objets, indicatif, fonds de carte et plans de Paris sont ceux du siècle du
+// diaporama ; les médias sont servis depuis public/<siecle>/diaporamas/.
+import { siecle as trouverSiecle } from '../data/siecles';
+import { urlDiaporama as adresseDiaporama, urlDiaporamas, urlMediaDiaporamas } from './adresses';
 
 export interface ImageDiapo {
   fichier: string;
@@ -75,7 +75,7 @@ export interface ImageDiapo {
   /** Ambiance sonore (spec 17) : son d'ambiance généré par un modèle à poids ouverts, joué avec le
    *  clip `video` (jamais sans lui), bien sous la voix ; crédité sur la page et dans le livre
    *  d'images, pas au cartouche. Posé par `ambiance.py publier` ; la consigne est dans le lot
-   *  src/data/diaporamas/generation/<slug>.json. */
+   *  src/data/diaporamas/<siecle>/generation/<slug>.json. */
   ambiance?: AmbianceDiapo;
   /** Fond prolongé (spec 17, « Fonds prolongés ») : prolongement de la scène autour d'une image
    *  entière (`entier`), généré par un modèle à poids ouverts ; le lecteur le montre flouté derrière
@@ -87,7 +87,7 @@ export interface ImageDiapo {
    *  l'image entière (`entier`) : on n'en voit que les deux bords, qui se tracent ensemble ; signalée
    *  au cartouche, créditée sur la page et dans le livre d'images. Posé par `vignettes.py publier` ;
    *  image d'une diapositive ou d'un plan ; la consigne est dans le lot
-   *  src/data/diaporamas/generation/<slug>-vignettes.json. */
+   *  src/data/diaporamas/<siecle>/generation/<slug>-vignettes.json. */
   vignette?: VignetteDiapo;
 }
 /** Dessin traversant (spec 17, essai 5) : `fichier` = l'encre (« 031-vignette.webp », RVB noir, alpha =
@@ -102,7 +102,7 @@ export interface VignetteDiapo { fichier: string; traces: string; centre: [numbe
  *  l'image (sa zone utile) dans le fond, en fractions du fond [x0, y0, x1, y1] ; `flou` : « faible »
  *  (≈ 0,5 % de la largeur de la scène) ou « fort » (≈ 2,5 % : le fond net montre une invention à
  *  cacher) ; `modele` nommé pour les crédits. La recette (consigne, graine, tirage, constat de
- *  relecture) est dans src/data/diaporamas/generation/<slug>-fond.json. */
+ *  relecture) est dans src/data/diaporamas/<siecle>/generation/<slug>-fond.json. */
 export interface FondDiapo { fichier: string; largeur: number; hauteur: number; boite: [number, number, number, number]; flou: 'faible' | 'fort'; modele: string; genere_le?: string }
 /** Ambiance d'un clip (spec 17) : fichier « 018-ambiance.m4a » (AAC, ≈ -23 LUFS), `duree` en
  *  secondes (du départ du clip à la fin de la diapositive), `modele` nommé pour les crédits. */
@@ -113,15 +113,15 @@ export interface AmbianceDiapo { fichier: string; duree: number; modele: string;
 export interface GrandDiapo { fichier: string; largeur: number; hauteur: number; source: 'original' | 'ia'; modele?: string; facteur?: number; genere_le?: string;
   /** Version colorisée (spec 16) à la même finesse (« 086-couleur-grand.webp »), mêmes proportions que `couleur`. */
   couleur?: { fichier: string; largeur: number; hauteur: number } }
-/** Version colorisée (spec 16) : fichier dans public/diaporamas/<slug>/ (« 086-couleur.webp »,
+/** Version colorisée (spec 16) : fichier dans public/<siecle>/diaporamas/<slug>/ (« 086-couleur.webp »,
  *  « 034-b-couleur.webp »), `largeur` × `hauteur` = zone utile de l'image en pixels, `modele` nommé
  *  pour les crédits, `genere_le` : date du calcul. */
 export interface CouleurDiapo { fichier: string; largeur: number; hauteur: number; modele: string; genere_le?: string }
-/** Clip généré (spec 16) : fichier dans public/diaporamas/<slug>/ (« 018-mouvement.mp4 » : 10 s,
+/** Clip généré (spec 16) : fichier dans public/<siecle>/diaporamas/<slug>/ (« 018-mouvement.mp4 » : 10 s,
  *  5 s générées ralenties de moitié, joués une fois, H.264 sans son, aux proportions de la zone
  *  utile), `type` = usage
  *  (« mouvement »), `modele` nommé pour les crédits, `genere_le` : date du calcul. La consigne et
- *  la graine sont dans le lot src/data/diaporamas/generation/<slug>.json. */
+ *  la graine sont dans le lot src/data/diaporamas/<siecle>/generation/<slug>.json. */
 export interface VideoDiapo { fichier: string; type: 'mouvement'; duree: number; largeur: number; hauteur: number; modele: string; genere_le?: string }
 /** Image « après » d'un avant / après : notice complète comme une image de diapositive ; `cadre`
  *  = vue de la caméra au volet, qui correspond au dernier cadre de la caméra de l'image « avant »
@@ -214,7 +214,7 @@ export interface DateRepublicaine { quand: string; republicain: string; gregorie
  *  (manuscrit) où il se pose, à droite par défaut. */
 export interface MentionObjet { id: string; quand: string; instant?: number; cote?: 'gauche' | 'droite' }
 /** Registre des objets et manuscrits (scripts/diaporamas/objets.py), commun à toutes les périodes.
- *  `fichier` : chemin dans public/diaporamas/ ; `halo` (manuscrit) : [x0, y0, x1, y1] en fractions
+ *  `fichier` : chemin dans public/<siecle>/diaporamas/ ; `halo` (manuscrit) : [x0, y0, x1, y1] en fractions
  *  de l'image servie ; `passage` : transcription du passage éclairé. */
 export interface ObjetMusee {
   id: string; type: 'objet' | 'manuscrit'; nom: string; date: string; musee: string; inventaire?: string;
@@ -224,8 +224,8 @@ export interface ObjetMusee {
 /** `id` : entrée du registre `portraits.json` ; `quand` : le nom tel qu'il est dit (cherché après
  *  le précédent) ; `instant` (s) : début du nom dans l'audio (surimpressions.py). */
 export interface PersonneDiapo { id: string; quand: string; instant?: number }
-/** Registre des portraits (commun à toutes les périodes, scripts/diaporamas/portraits.py) :
- *  sans `fichier`, pas de portrait fiable (`note`). `fichier` : chemin dans public/diaporamas/. */
+/** Registre des portraits (commun à toutes les périodes d'un siècle, scripts/diaporamas/portraits.py) :
+ *  sans `fichier`, pas de portrait fiable (`note`). `fichier` : chemin dans public/<siecle>/diaporamas/. */
 export interface Portrait {
   id: string; nom: string; dates: string; fichier?: string; commons?: string; page?: string;
   auteur?: string; date?: string; licence?: string; cadre_visage?: [number, number, number, number]; note?: string;
@@ -255,7 +255,7 @@ export interface SourceMusique {
 }
 interface PisteCommune {
   id: string;
-  /** Chemin dans public/diaporamas/<slug>/ (« musique/fond-crise-1.m4a »). */
+  /** Chemin dans public/<siecle>/diaporamas/<slug>/ (« musique/fond-crise-1.m4a »). */
   fichier: string;
   /** Durée du fichier préparé, en secondes (musique.py). */
   duree?: number;
@@ -312,7 +312,7 @@ export interface Musique { note?: string; fond: PisteFond[]; intermedes: Interme
 export interface AudioSegment { fichier: string; duree: number; phrases?: [number, number][]; mots?: [number, number][] }
 
 /** Portrait de l'auteur d'une lecture : l'image d'une diapositive (`diapositive`, recadrée sur
- *  `cadre`) ou un fichier Commons propre (`commons`, `fichier` dans public/diaporamas/<slug>/). */
+ *  `cadre`) ou un fichier Commons propre (`commons`, `fichier` dans public/<siecle>/diaporamas/<slug>/). */
 export interface PortraitLecture {
   diapositive?: number;
   commons?: string;
@@ -399,18 +399,40 @@ export interface FondCarte {
   largeur: number; hauteur: number; terres: string; france: string; fleuves: string[];
 }
 
-/** Plan de Paris d'époque (carte.py, src/data/diaporamas/plans/) : image servie, crédit et
+/** Plan de Paris d'époque (carte.py, src/data/diaporamas/<siecle>/plans/) : image servie, crédit et
  *  calage (lon, lat) → fractions (u, v) de l'image. */
 export interface PlanParis {
   nom: string; fichier: string; largeur: number; hauteur: number; titre: string; auteur: string; date: string;
   credit: string; commons: string; licence: string; slugs: string[];
   calage: { u: [number, number, number]; v: [number, number, number]; metres_par_pixel: number; ecart_moyen_m: number };
 }
-const plans = Object.values(import.meta.glob<{ default: PlanParis }>('../data/diaporamas/plans/*.json', { eager: true })).map((m) => m.default);
-/** Plan de Paris de la période (celui dont `slugs` la contient). */
-export const planParis = (slug: string) => plans.find((p) => p.slugs.includes(slug));
+/** Siècle d'un fichier de données (clé d'import.meta.glob : « ../data/diaporamas/<siecle>/… »). */
+const siecleDuFichier = (cle: string) => {
+  const m = cle.match(/\/data\/diaporamas\/([^/]+)\//);
+  if (!m) throw new Error(`Fichier de diaporama hors d'un dossier de siècle : ${cle}`);
+  return m[1];
+};
+/** Un module par siècle (registres) : { <siecle>: contenu }. */
+const parSiecle = <T>(modules: Record<string, { default: unknown }>) =>
+  Object.fromEntries(Object.entries(modules).map(([k, m]) => [siecleDuFichier(k), m.default as T])) as Record<string, T>;
+/** Plusieurs modules par siècle (fonds, plans) : { <siecle>: [contenus] }. */
+const listesParSiecle = <T>(modules: Record<string, { default: unknown }>) => {
+  const r: Record<string, T[]> = {};
+  for (const [k, m] of Object.entries(modules)) (r[siecleDuFichier(k)] ??= []).push(m.default as T);
+  return r;
+};
+
+const plans = listesParSiecle<PlanParis>(import.meta.glob('../data/diaporamas/*/plans/*.json', { eager: true }));
+/** Plan de Paris de la période (celui de son siècle dont `slugs` la contient). */
+export const planParis = (slug: string) => (plans[siecleDuDiaporama(slug)] ?? []).find((p) => p.slugs.includes(slug));
+const fondsParSiecle = listesParSiecle<FondCarte>(import.meta.glob('../data/diaporamas/*/fonds/*.json', { eager: true }));
+/** Fonds de carte d'un siècle (carte.py), par nom. */
+export const fondsCarte = (siecle: string): Record<string, FondCarte> =>
+  Object.fromEntries((fondsParSiecle[siecle] ?? []).map((f) => [f.nom, f]));
 
 export interface Diaporama {
+  /** Siècle du diaporama (dossier de son fichier, ajouté au chargement). */
+  siecle: string;
   slug: string;
   numero: number;
   titre: string;
@@ -426,10 +448,14 @@ export interface Diaporama {
   generique?: string[];
 }
 
-const base = import.meta.env.BASE_URL;
-export const urlSectionDiaporamas = `${base}diaporamas/`;
-export const urlDiaporama = (slug: string) => `${base}diaporamas/${slug}/`;
-export const urlMedia = (slug: string, fichier: string) => `${base}diaporamas/${slug}/${fichier}`;
+export const urlSectionDiaporamas = (siecle: string) => urlDiaporamas(siecle);
+/** Page d'une période (les slugs sont uniques sur tout le site). */
+export const urlDiaporama = (slug: string) => adresseDiaporama(siecleDuDiaporama(slug), slug);
+/** Média d'une période : public/<siecle>/diaporamas/<slug>/<fichier>. */
+export const urlMedia = (slug: string, fichier: string) => urlMediaDiaporamas(siecleDuDiaporama(slug), `${slug}/${fichier}`);
+/** Média commun aux périodes d'un siècle : public/<siecle>/diaporamas/<chemin> (« commun/… »,
+ *  « portraits/… », « fonds/… »). */
+export const urlCommun = (siecle: string, chemin: string) => urlMediaDiaporamas(siecle, chemin);
 export const urlCommons = (fichier: string) =>
   `https://commons.wikimedia.org/wiki/${encodeURIComponent(fichier.replace(/ /g, '_')).replace(/%3A/g, ':')}`;
 
@@ -439,23 +465,39 @@ export const PAUSE = 0.6;
  *  la durée totale ; même valeur dans scripts/diaporamas/verifier.py). */
 export const CARTON = 12;
 
-const fichiers = import.meta.glob<{ default: Diaporama }>(['../data/diaporamas/*.json', '!../data/diaporamas/portraits.json', '!../data/diaporamas/objets.json'], { eager: true });
-/** Registre des portraits des personnes nommées, commun à toutes les périodes. */
-export const portraits: Portrait[] = registrePortraits as Portrait[];
-/** Registre des objets de musée et des manuscrits, commun à toutes les périodes. */
-export const objetsMusee: ObjetMusee[] = registreObjets as ObjetMusee[];
+const fichiers = import.meta.glob<{ default: Omit<Diaporama, 'siecle'> }>(['../data/diaporamas/*/*.json', '!../data/diaporamas/*/portraits.json', '!../data/diaporamas/*/objets.json'], { eager: true });
+const portraitsParSiecle = parSiecle<Portrait[]>(import.meta.glob('../data/diaporamas/*/portraits.json', { eager: true }));
+const objetsParSiecle = parSiecle<ObjetMusee[]>(import.meta.glob('../data/diaporamas/*/objets.json', { eager: true }));
+/** Registre des portraits des personnes nommées, commun à toutes les périodes d'un siècle. */
+export const portraitsDuSiecle = (siecle: string): Portrait[] => portraitsParSiecle[siecle] ?? [];
+/** Registre des objets de musée et des manuscrits, commun à toutes les périodes d'un siècle. */
+export const objetsDuSiecle = (siecle: string): ObjetMusee[] => objetsParSiecle[siecle] ?? [];
 
-/** Les diaporamas écrits, par numéro de période. */
-export const diaporamas: Diaporama[] = Object.values(fichiers)
-  .map((m) => m.default)
-  .sort((a, b) => a.numero - b.numero);
+/** Les diaporamas écrits, tous siècles confondus (siècle, puis numéro de période). */
+export const diaporamas: Diaporama[] = Object.entries(fichiers)
+  .map(([cle, m]) => ({ ...m.default, siecle: siecleDuFichier(cle) }))
+  .sort((a, b) => trouverSiecle(a.siecle).debut - trouverSiecle(b.siecle).debut || a.numero - b.numero);
 
-export const diaporamaDe = (numero: number) => diaporamas.find((d) => d.numero === numero);
+const siecleParSlug = new Map<string, string>();
+for (const d of diaporamas) {
+  if (siecleParSlug.has(d.slug)) throw new Error(`Slug de diaporama en double : ${d.slug} (les slugs sont uniques sur tout le site)`);
+  siecleParSlug.set(d.slug, d.siecle);
+}
+/** Siècle d'une période, d'après son slug. */
+export function siecleDuDiaporama(slug: string) {
+  const s = siecleParSlug.get(slug);
+  if (!s) throw new Error(`Diaporama inconnu : ${slug}`);
+  return s;
+}
+
+/** Les diaporamas écrits d'un siècle, par numéro de période. */
+export const diaporamasDe = (siecle: string) => diaporamas.filter((d) => d.siecle === siecle);
+export const diaporamaDe = (siecle: string, numero: number) => diaporamas.find((d) => d.siecle === siecle && d.numero === numero);
 
 // --- Générique d'ouverture et récapitulatif de fin (spec 12, révision du 2026-10-09) -----------
 
-/** Indicatif commun à toute la série (src/data/diaporamas/commun/indicatif.json) : thème original
- *  composé avec Lyria (Google DeepMind), deux extraits dans public/diaporamas/commun/. `credit` :
+/** Indicatif commun à toute la série d'un siècle (src/data/diaporamas/<siecle>/commun/indicatif.json) :
+ *  thème original composé avec Lyria (Google DeepMind), deux extraits dans public/<siecle>/diaporamas/commun/. `credit` :
  *  mention exigée par les conditions d'utilisation de Google, affichée telle quelle. `accord` :
  *  instant de l'accord final de l'extrait (passage au premier carton ; « Fin »). */
 export interface Indicatif {
@@ -463,13 +505,18 @@ export interface Indicatif {
   source: { type: 'lyria'; modele: string; genere_le: string; candidat: string };
   extraits: Record<'ouverture' | 'fin', { fichier: string; debut: number; fin: number; duree?: number; accord?: number }>;
 }
-export const indicatif = indicatifCommun as Indicatif;
-export const urlCommun = (fichier: string) => `${base}diaporamas/${fichier}`;
+const indicatifs = parSiecle<Indicatif>(import.meta.glob('../data/diaporamas/*/commun/indicatif.json', { eager: true }));
+export function indicatifDe(siecle: string): Indicatif {
+  const i = indicatifs[siecle];
+  if (!i) throw new Error(`Pas d'indicatif pour le siècle ${siecle} (src/data/diaporamas/${siecle}/commun/indicatif.json)`);
+  return i;
+}
 /** Durées de l'ouverture et du récapitulatif d'une période (0 sans `generique`). */
 /** Durées comptées : l'ouverture s'arrête sur son accord final (le premier carton monte pendant
  *  que l'accord résonne), le récapitulatif va au bout de son extrait. `accordFin` : « Fin ». */
 export const dureesGenerique = (d: Diaporama) => {
-  const o = indicatif.extraits.ouverture, f = indicatif.extraits.fin;
+  if (!d.generique?.length) return { ouverture: 0, fin: 0, accordFin: 0 };
+  const { ouverture: o, fin: f } = indicatifDe(d.siecle).extraits;
   return d.generique?.length && o.duree && f.duree
     ? { ouverture: o.accord ?? o.duree, fin: f.duree, accordFin: f.accord ?? f.duree - 4 } : { ouverture: 0, fin: 0, accordFin: 0 };
 };
@@ -514,9 +561,10 @@ export function formaterDuree(secondes: number) {
   return min < 60 ? `${min} min` : `${Math.floor(min / 60)} h ${String(min % 60).padStart(2, '0')}`;
 }
 
-/** Les neuf périodes prévues, avec le diaporama correspondant s'il existe. */
-export const planDiaporamas = () =>
-  chapitresPrevus.map((p) => ({ ...p, diaporama: diaporamaDe(p.numero) }));
+/** Les périodes prévues d'un siècle (plan de sa section écrivains), avec le diaporama
+ *  correspondant s'il existe. */
+export const planDiaporamas = (siecle: string) =>
+  (trouverSiecle(siecle).chapitres ?? []).map((p) => ({ ...p, diaporama: diaporamaDe(siecle, p.numero) }));
 
 /** Débuts (en caractères) des phrases d'une narration ; même découpage que
  *  scripts/diaporamas/commun.py (`phrases`). */
@@ -988,7 +1036,7 @@ export function pauseApres(x: Diapositive) {
  * pour Paris la partie du plan montrée (fond CSS). Les instants viennent de surimpressions.py
  * (alignement des mots), sinon du prorata des caractères dans les phrases horodatées.
  */
-export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte>, plan: PlanParis | undefined) {
+export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte>, plan: PlanParis | undefined, siecle: string) {
   const duree = x.audio?.duree ?? 6;
   const phrases = x.audio?.phrases;
   const fin = duree + pauseApres(x);
@@ -1002,11 +1050,11 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
     const dernier = aligne ? ci.mots!.at(-1)![1] : instantCaractere(x.narration, pos + ci.texte.length, duree, phrases);
     citation = { a: Math.max(0, debuts[0] - 0.15), b: dernier + APRES_CITATION, mots: debuts, fin: dernier, texte: ci.texte, auteur: ci.auteur, prudence: !!ci.prudence, personne: ci.personne };
   }
-  const gens = portraitsDe(x, citation, fin);
+  const gens = portraitsDe(x, citation, fin, siecle);
   let lieu: null | LieuMedaillon = null;
   if ((x.lieux?.length ?? 0) > 1) {
     lieu = medaillonMultiple(x, fonds, plan, fin, citation);
-    return completer(x, fin, citation, lieu, gens);
+    return completer(x, fin, citation, lieu, gens, siecle);
   }
   const li = x.lieux?.[0];
   const t = li ? li.instant ?? instantPassage(x.narration, li.quand, duree, phrases) : null;
@@ -1037,12 +1085,12 @@ export function surimpressionsDe(x: Diapositive, fonds: Record<string, FondCarte
       if (lieu) { lieu.x = Math.round(lieu.x * 10) / 10; lieu.y = Math.round(lieu.y * 10) / 10; lieu.ratio = Math.round(lieu.ratio * 1000) / 1000; }
     }
   }
-  return completer(x, fin, citation, lieu, gens);
+  return completer(x, fin, citation, lieu, gens, siecle);
 }
 /** Ajoute aux fenêtres déjà arbitrées l'objet et le manuscrit, puis le chiffre clé et la date
  *  républicaine (chacun après ceux de rang supérieur). */
-function completer<L extends Fenetre | null, C extends Fenetre | null, G extends Fenetre | null>(x: Diapositive, fin: number, citation: C, lieu: L, gens: G) {
-  const o = objetsDe(x, fin, citation, lieu, gens);
+function completer<L extends Fenetre | null, C extends Fenetre | null, G extends Fenetre | null>(x: Diapositive, fin: number, citation: C, lieu: L, gens: G, siecle: string) {
+  const o = objetsDe(x, fin, citation, lieu, gens, siecle);
   return { lieu, citation, portraits: gens, ...o, ...chiffresDe(x, fin, citation, lieu, gens, o.objet, o.manuscrit) };
 }
 
@@ -1078,8 +1126,8 @@ export function instantsPersonnes(x: Diapositive) {
  * pas : la rangée coexiste avec le médaillon de lieu (coin opposé) et avec la citation (qui monte
  * au-dessus d'elle si elles se touchent, voir Diaporama.astro).
  */
-export function portraitsDe(x: Diapositive, citation: null | { b: number; personne?: string }, fin: number) {
-  const parId = new Map(portraits.map((p) => [p.id, p]));
+export function portraitsDe(x: Diapositive, citation: null | { b: number; personne?: string }, fin: number, siecle: string) {
+  const parId = new Map(portraitsDuSiecle(siecle).map((p) => [p.id, p]));
   const instants = instantsPersonnes(x);
   const gens: PortraitMontre[] = [];
   let dernier = -1;
@@ -1088,7 +1136,7 @@ export function portraitsDe(x: Diapositive, citation: null | { b: number; person
     if (!p?.fichier || t === null) return;
     if (gens.some((g) => g.id === m.id)) { dernier = Math.max(dernier, t); return; }
     if (gens.length >= MAX_PORTRAITS) return;
-    gens.push({ id: p.id, nom: p.nom, dates: p.dates, src: `${base}diaporamas/${p.fichier}`, t: Math.round(t * 100) / 100 });
+    gens.push({ id: p.id, nom: p.nom, dates: p.dates, src: urlCommun(siecle, p.fichier), t: Math.round(t * 100) / 100 });
     dernier = Math.max(dernier, t);
   });
   if (!gens.length) return null;
@@ -1152,12 +1200,12 @@ export interface ManuscritMontre extends ObjetMontre { halo: [number, number, nu
  *   raccourci, reporté ou omis.
  * Les fenêtres des autres surimpressions ne changent pas.
  */
-export function objetsDe(x: Diapositive, fin: number, citation: Fenetre | null, lieu: Fenetre | null, gens: Fenetre | null) {
-  const parId = new Map(objetsMusee.map((o) => [o.id, o]));
+export function objetsDe(x: Diapositive, fin: number, citation: Fenetre | null, lieu: Fenetre | null, gens: Fenetre | null, siecle: string) {
+  const parId = new Map(objetsDuSiecle(siecle).map((o) => [o.id, o]));
   const duree = x.audio?.duree ?? 6;
   const instantDe = (m: MentionObjet) => m.instant ?? instantPassage(x.narration, m.quand, duree, x.audio?.phrases);
   const montre = (m: MentionObjet, o: ObjetMusee, f: Fenetre) => ({
-    ...f, src: `${base}diaporamas/${o.fichier}`, ratio: Math.round(((o.largeur ?? 1) / (o.hauteur ?? 1)) * 1000) / 1000,
+    ...f, src: urlCommun(siecle, o.fichier!), ratio: Math.round(((o.largeur ?? 1) / (o.hauteur ?? 1)) * 1000) / 1000,
     nom: o.nom, legende: `${o.date} · ${o.musee}`, cote: m.cote ?? 'droite' as const,
   });
   let manuscrit: ManuscritMontre | null = null;

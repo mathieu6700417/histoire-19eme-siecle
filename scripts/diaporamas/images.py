@@ -17,7 +17,7 @@ dans .cache/diaporamas/lots/<nom>.json et planche-contact <nom>.jpg (vignettes n
 Pour chaque diapositive : interroge l'API Commons (imageinfo, extmetadata), refuse toute
 licence autre que le domaine public (ou CC0), télécharge une version de 2400 px de large
 au plus (cache dans .cache/diaporamas/originaux/), retire les marges de papier si le JSON
-donne `image.recadrage` ([x0, y0, x1, y1] en fractions), écrit public/diaporamas/<slug>/NNN.webp
+donne `image.recadrage` ([x0, y0, x1, y1] en fractions), écrit public/<siecle>/diaporamas/<slug>/NNN.webp
 (1600 px au plus sur le grand côté, qualité 74) et complète dans le JSON les métadonnées
 laissées vides (titre, auteur, date) ainsi que licence, largeur et hauteur. Les champs
 déjà remplis à la main ne sont jamais écrasés. Écrit aussi vignette.webp (diapositive 1,

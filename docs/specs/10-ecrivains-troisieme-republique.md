@@ -33,7 +33,7 @@ siècle ouvert en 1789.
   après 1800 (toujours vrai ici). Rien sur des faits postérieurs à 1900 : la conclusion peut
   seulement les évoquer d'une phrase (séparation des Églises et de l'État, 1905).
 - Ne pas réutiliser une page Wikisource déjà citée dans les chapitres 0 à 5 (voir les JSON de
-  `scripts/ecrivains/chapitres/`), ni une page qui porte sur le Second Empire (chapitre 6) ou sur
+  `scripts/ecrivains/chapitres/xixe/`), ni une page qui porte sur le Second Empire (chapitre 6) ou sur
   1870-1871 (chapitre 7), écrits en parallèle. *La Débâcle* et *L'Année terrible* sont réservées
   au chapitre 7.
 
