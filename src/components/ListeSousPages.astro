@@ -1,0 +1,76 @@
+---
+// Liste des sous-pages d'une leçon-portail, générée depuis la collection des leçons
+// (spec 19, « Figures du siècle ») : une ligne par sous-page, dans l'ordre de `ordre`,
+// avec titre, période et résumé ; toute la ligne est un lien. Une nouvelle sous-page
+// (src/content/lecons/<siecle>/<portail>/<sous>.mdx) y paraît sans toucher au portail.
+// Usage MDX : <ListeSousPages parent="xixe/figures" suite="Lire le portrait" />
+//   - `parent` : id complet du portail (« <siecle>/<slug> ») ;
+//   - `suite` : invitation affichée sous chaque résumé (par défaut « Lire la page »).
+import { getCollection } from 'astro:content';
+import { enfantsDe, lienLecon } from '../utils/lecons';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  parent: string;
+  suite?: string;
+}
+
+const { parent, suite = 'Lire la page' } = Astro.props;
+const enfants = enfantsDe(await getCollection('lecons'), parent);
+if (!enfants.length) console.warn(`[ListeSousPages] aucune sous-page pour ${parent}`);
+---
+
+<ul class="sous-pages">
+  {enfants.map((e) => (
+    <li>
+      <a class="sous-page" href={lienLecon(e.id)}>
+        <span class="sous-page__entete">
+          <span class="sous-page__titre">{typographie(e.data.titre)}</span>
+          <span class="sous-page__periode">{e.data.periode}</span>
+        </span>
+        <span class="sous-page__resume">{typographie(e.data.resume)}</span>
+        <span class="sous-page__suite" aria-hidden="true">{typographie(suite)} →</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .sous-pages {
+    list-style: none;
+    padding: 0;
+    margin: var(--e-4) auto var(--e-5);
+    border-top: 1px solid var(--c-filet);
+  }
+  .sous-pages > li { margin: 0; border-bottom: 1px solid var(--c-filet); }
+  .sous-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e-1);
+    padding: var(--e-3) 0;
+    color: var(--c-texte);
+    text-decoration: none;
+  }
+  .sous-page__entete {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0 var(--e-3);
+  }
+  .sous-page__titre { font-family: var(--f-titre); font-size: 1.3rem; }
+  .sous-page__periode {
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    color: var(--c-texte-doux);
+    font-variant-numeric: oldstyle-nums;
+  }
+  .sous-page__resume { color: var(--c-texte-doux); }
+  .sous-page__suite {
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    color: var(--c-texte-doux);
+  }
+  .sous-page:hover .sous-page__titre,
+  .sous-page:focus-visible .sous-page__titre { text-decoration: underline; }
+</style>

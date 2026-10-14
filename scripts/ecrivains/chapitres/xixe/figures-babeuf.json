@@ -1,0 +1,64 @@
+{
+  "slug": "figures-babeuf",
+  "gabarit": "figures-babeuf.gabarit.mdx",
+  "sortie": "src/content/lecons/xixe/figures/babeuf.mdx",
+  "texte_mots": [80, 250],
+  "cle_mots": [40, 250],
+  "extraits": {
+    "prospectus": {
+      "page": "Le_Tribun_du_peuple/Prospectus",
+      "segments": [
+        { "debut": "LE but de la société est le bonheur commun. Telle étoit", "fin": "le droit sacré de la presse." },
+        "CUT",
+        { "debut": "Le but de la révolution française est aussi le bonheur commun.", "fin": "au but de la société, au bonheur commun." }
+      ],
+      "cle": [2, 3]
+    },
+    "plebeiens": {
+      "page": "La_Philosophie_sociale_du_XVIIIe_siècle_et_la_Révolution/5",
+      "segments": [
+        { "debut": "Il faut parvenir à enchaîner le sort", "fin": "le bonheur commun, but de la société." }
+      ],
+      "cle": [0, 0]
+    },
+    "analyse": {
+      "page": "Histoire_socialiste/Thermidor_et_Directoire/13",
+      "segments": [
+        { "debut": "« 1. La nature a donné à chaque homme", "fin": "languissent dans la misère et ne sont rien dans l’État." }
+      ],
+      "cle": [4, 10]
+    },
+    "dictature": {
+      "page": "La_Philosophie_sociale_du_XVIIIe_siècle_et_la_Révolution/5",
+      "segments": [
+        { "debut": "qu’un peuple dont les opinions se sont formées", "fin": "en des mains sagement et fortement révolutionnaires" }
+      ],
+      "cle": [0, 0]
+    },
+    "egaux": {
+      "page": "Le_Manifeste_des_Égaux",
+      "segments": [
+        { "debut": "La révolution française n'est que l'avant-courrière", "fin": "pourvu qu'il nous reste l'égalité réelle !" },
+        "CUT",
+        { "debut": "La loi agraire ou le partage des campagnes", "fin": "les fruits sont à tout le monde." }
+      ],
+      "cle": [0, 3]
+    },
+    "defense": {
+      "page": "La_Philosophie_sociale_du_XVIIIe_siècle_et_la_Révolution/5",
+      "segments": [
+        { "debut": "Ah ! citoyens propriétaires ! ne craignez rien.", "fin": "pour s’en faire même une idée juste." }
+      ],
+      "cle": [0, 0]
+    },
+    "lepeletier": {
+      "page": "Histoire_socialiste/Thermidor_et_Directoire/13",
+      "segments": [
+        { "debut": "« Mon ami ! Je crois être resté digne", "fin": "perfidie des ennemis du peuple…" },
+        "CUT",
+        { "debut": "« Mon corps rendu à la terre", "fin": "ce que les corrompus d’aujourd’hui appellent mes rêves. »" }
+      ],
+      "cle": [2, 2]
+    }
+  }
+}

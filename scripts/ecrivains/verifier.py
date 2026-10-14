@@ -1,20 +1,26 @@
 """Vérifie les extraits publiés de la section « écrivains » contre Wikisource.
 
 Usage : python3 scripts/ecrivains/verifier.py <slug> [<slug>…]
-        python3 scripts/ecrivains/verifier.py --tous      (tous les src/content/ecrivains/<siecle>/*.mdx)
+        python3 scripts/ecrivains/verifier.py --tous      (tous les src/content/ecrivains/<siecle>/*.mdx,
+                                                           et les leçons qui citent des extraits)
         (npm run verifier:ecrivains)
+
+Un <slug> est un chapitre de la section, ou une spécification de scripts/ecrivains/chapitres/<siecle>/
+dont la "sortie" est une page hors de la section (leçon à extraits, ex. figures-babeuf) : on vérifie
+alors cette page, avec les bornes de mots de la spécification ("texte_mots", "cle_mots").
 
 Pour chaque <Extrait> du MDX :
   1. la page à l'URL du lien répond (HTTP 200), téléchargée à neuf, sans cache ;
   2. chaque paragraphe (ou vers) du texte figure mot pour mot dans cette page
      (appels de note retirés des deux côtés, espaces normalisées) ;
-  3. le texte complet fait 400 à 900 mots (pour un poème, prop `poeme`, pas de minimum) ;
-  4. il y a exactement un passage clé <div class="cle">, de 150 à 350 mots,
-     contenu tel quel dans le texte complet.
+  3. le texte complet fait 400 à 900 mots (pour un poème, prop `poeme`, pas de minimum ;
+     pour une leçon, les bornes "texte_mots" de sa spécification) ;
+  4. il y a exactement un passage clé <div class="cle">, de 150 à 350 mots (leçon :
+     "cle_mots"), contenu tel quel dans le texte complet.
 Code de sortie 1 si un contrôle échoue.
 """
-import html, re, sys, time, urllib.error
-from wikisource import MDX, _get
+import html, json, re, sys, time, urllib.error
+from wikisource import CHAPITRES, MDX, RACINE, _get
 
 DOSSIER_MDX = MDX   # src/content/ecrivains/<siecle>/ (--siecle, défaut xixe)
 TEXTE = (400, 900)
@@ -34,7 +40,7 @@ def page(url: str):
         h = _get(url).decode()
     except urllib.error.HTTPError as e:
         return e.code, '', ''
-    h = re.sub(r'<sup[^>]*class="reference"[^>]*>.*?</sup>', '', h, flags=re.S)
+    h = re.sub(r'<sup[^>]*class="(?:[^"]*\s)?reference(?:\s[^"]*)?"[^>]*>.*?</sup>', '', h, flags=re.S)
     h = re.sub(r'<span[^>]*pagenum[^>]*>\s*</span>', '', h)
     return 200, norm(re.sub(r'<[^>]+>', ' ', h)), norm(re.sub(r'<[^>]+>', '', h))
 
@@ -43,10 +49,29 @@ def mots(s: str) -> int:
     return len(norm(re.sub(r'<[^>]+>', '', s.replace('[…]', ''))).split())
 
 
+def pages_hors_section() -> dict[str, dict]:
+    """Spécifications dont la sortie est une page hors de la section (leçons à extraits)."""
+    out = {}
+    for f in sorted(CHAPITRES.glob('*.json')):
+        d = json.loads(f.read_text())
+        sortie = RACINE / d.get('sortie', '')
+        if d.get('sortie') and sortie.parent != DOSSIER_MDX:
+            out[f.stem] = d
+    return out
+
+
 def verifier(slug: str) -> tuple[int, int]:
-    mdx = (DOSSIER_MDX / f'{slug}.mdx').read_text()
+    autres = pages_hors_section()
+    if slug in autres:
+        d = autres[slug]
+        return verifier_fichier(RACINE / d['sortie'], slug, tuple(d.get('texte_mots', TEXTE)), tuple(d.get('cle_mots', CLE)))
+    return verifier_fichier(DOSSIER_MDX / f'{slug}.mdx', slug)
+
+
+def verifier_fichier(fichier, slug: str, TEXTE=TEXTE, CLE=CLE) -> tuple[int, int]:
+    mdx = fichier.read_text()
     bons = total = 0
-    print(f'\n== {slug}')
+    print(f'\n== {slug} ({fichier.relative_to(RACINE)})')
     for m in EXTRAIT.finditer(mdx):
         entete, ex, lien, t = m.groups()
         poeme = bool(POEME.search(entete.split('<div slot=')[0]))
@@ -89,7 +114,7 @@ if __name__ == '__main__':
     args = sys.argv[1:]
     if not args:
         sys.exit(__doc__)
-    slugs = sorted(f.stem for f in DOSSIER_MDX.glob('*.mdx')) if args == ['--tous'] else args
+    slugs = (sorted(f.stem for f in DOSSIER_MDX.glob('*.mdx')) + list(pages_hors_section())) if args == ['--tous'] else args
     bons = total = 0
     for s in slugs:
         b, t = verifier(s)

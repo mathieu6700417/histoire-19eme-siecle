@@ -18,6 +18,8 @@
 //
 // - `fiche` : propose la fiche de l'auteur (première apparition dans le chapitre).
 // - `poeme` : conserve les retours à la ligne du texte (vers).
+// - `libelleLien` : libellé du lien vers la source (par défaut « Lire le chapitre complet ») ;
+//   utile hors de la section, par exemple dans une leçon (« Lire le texte en ligne »).
 //
 // Version courte / version longue : dans le slot « texte », le passage clé
 // (~200-300 mots, suite continue de paragraphes ou de strophes prise telle quelle)
@@ -62,6 +64,8 @@ interface Props {
   lien: string;
   /** Nom de la bibliothèque numérique du lien. */
   source?: string;
+  /** Libellé du lien vers la source. */
+  libelleLien?: string;
   fiche?: boolean;
   poeme?: boolean;
   notes?: Note[];
@@ -80,6 +84,7 @@ const {
   date,
   lien,
   source = 'Wikisource',
+  libelleLien = 'Lire le chapitre complet',
   fiche = false,
   poeme = false,
   notes = [],
@@ -126,7 +131,7 @@ for (const s of ['chapeau', 'texte', 'critique']) {
     <figcaption class="extrait__reference">
       {typographie(reference)} ({typographie(date)}).
       <a class="extrait__lien" href={lien} target="_blank" rel="noopener">
-        Lire le chapitre complet<span class="sr-only"> sur {source} (nouvel onglet)</span><span aria-hidden="true"> ↗</span>
+        {libelleLien}<span class="sr-only"> sur {source} (nouvel onglet)</span><span aria-hidden="true"> ↗</span>
       </a>
     </figcaption>
   </figure>

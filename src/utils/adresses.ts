@@ -2,7 +2,7 @@
 // siècle. Aucune page ni composant n'écrit d'adresse à la main.
 //   /                                   sommaire des siècles
 //   /<siecle>/                          accueil du siècle (#lecons : liste des leçons)
-//   /<siecle>/lecons/<slug>/[<sous>/]   leçon, sous-page
+//   /<siecle>/lecons/<slug>/[<sous>/]   leçon, sous-page (figures du siècle : lecons/figures/<slug>/)
 //   /<siecle>/ecrivains/[<chapitre>/]   section « écrivains », /auteurs/ : index des auteurs
 //   /<siecle>/diaporamas/[<slug>/]      section « images » ; médias dans le même dossier
 //                                       (public/<siecle>/diaporamas/<slug>/…)
@@ -16,6 +16,8 @@ export const urlLecons = (siecle: string) => `${urlSiecle(siecle)}#lecons`;
 export const urlTheme = (siecle: string, theme: string) => `${urlSiecle(siecle)}#theme-${theme}`;
 /** `chemin` : chemin de la leçon dans son siècle (« courants-politiques/legitimistes »). */
 export const urlLecon = (siecle: string, chemin: string) => `${urlSiecle(siecle)}lecons/${chemin}/`;
+/** Portrait de la leçon « Figures du siècle » (sous-page `figures/<slug>`, spec 19). */
+export const urlFigure = (siecle: string, slug: string) => urlLecon(siecle, `figures/${slug}`);
 export const urlEcrivains = (siecle: string) => `${urlSiecle(siecle)}ecrivains/`;
 export const urlAuteurs = (siecle: string) => `${urlEcrivains(siecle)}auteurs/`;
 export const urlChapitreEcrivains = (siecle: string, slug: string) => `${urlEcrivains(siecle)}${slug}/`;

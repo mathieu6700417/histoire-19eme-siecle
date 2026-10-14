@@ -11,6 +11,7 @@ import Fiche from '../../../../components/Fiche.astro';
 import Frise from '../../../../components/Frise.astro';
 import Encadre from '../../../../components/Encadre.astro';
 import { courants, lignesDe, reperesFrise, periodesFrise } from '../../../../data/xixe/courants-politiques';
+import { urlFigure } from '../../../../utils/adresses';
 
 <Fiche entete courant={courants.socialistes}>
 <div slot="idees">
@@ -61,7 +62,7 @@ Divisés en plusieurs tendances à la fin du siècle, ils s'unifient en 1905 dan
 
 ## Rêver une autre société (1796-1830)
 
-L'histoire des socialistes commence par un complot raté. En 1796, sous le Directoire, **Gracchus Babeuf** et ses amis préparent un soulèvement pour instaurer une égalité réelle, pas seulement devant la loi : la terre et les biens seraient mis en commun. C'est la **conjuration des Égaux**. Elle est dénoncée, Babeuf est arrêté en mai 1796 et guillotiné en 1797. Mais l'un des conjurés, Philippe Buonarroti, en publie le récit en 1828 : il transmet aux révolutionnaires du XIXe siècle l'idée qu'une minorité décidée peut prendre le pouvoir au nom du peuple.
+L'histoire des socialistes commence par un complot raté. En 1796, sous le Directoire, **<a href={urlFigure('xixe', 'babeuf')}>Gracchus Babeuf</a>** et ses amis préparent un soulèvement pour instaurer une égalité réelle, pas seulement devant la loi : la terre et les biens seraient mis en commun. C'est la **conjuration des Égaux**. Elle est dénoncée, Babeuf est arrêté en mai 1796 et guillotiné en 1797. Mais l'un des conjurés, Philippe Buonarroti, en publie le récit en 1828 : il transmet aux révolutionnaires du XIXe siècle l'idée qu'une minorité décidée peut prendre le pouvoir au nom du peuple.
 
 D'autres rêvent sans fusil. Le comte de **Saint-Simon** (mort en 1825) veut confier la société aux « industriels », c'est-à-dire à tous ceux qui produisent, savants, ingénieurs, banquiers et ouvriers, plutôt qu'aux oisifs. Ses disciples, les saint-simoniens, forment un temps une petite église, puis beaucoup deviennent ingénieurs ou banquiers et construiront les chemins de fer du Second Empire. **Charles Fourier** imagine le **phalanstère**, une communauté d'environ 1 600 personnes où chacun changerait de travail selon ses goûts, si bien que le travail deviendrait plaisir. Ce sont eux qu'on appellera plus tard, avec un brin de condescendance, les socialistes « utopiques » : ils croient qu'il suffit de démontrer la supériorité de leur modèle pour convaincre.
 

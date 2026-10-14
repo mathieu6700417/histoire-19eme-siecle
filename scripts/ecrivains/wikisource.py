@@ -55,7 +55,8 @@ def html_parse(titre: str, cache: bool = True) -> str:
 def html_vers_texte(h: str) -> str:
     """Texte brut : un bloc (paragraphe, ligne, titre) par ligne ; numéros de page et appels de note retirés."""
     h = re.sub(r'<span[^>]*class="[^"]*(pagenum|ws-pagenum)[^"]*"[^>]*>.*?</span>', '', h, flags=re.S)
-    h = re.sub(r'<sup[^>]*class="reference"[^>]*>.*?</sup>', '', h, flags=re.S)
+    # Appels de note : class="reference" (ancien rendu) ou class="mw-ref reference" (Parsoid).
+    h = re.sub(r'<sup[^>]*class="(?:[^"]*\s)?reference(?:\s[^"]*)?"[^>]*>.*?</sup>', '', h, flags=re.S)
     h = re.sub(r'<(style|script)[^>]*>.*?</\1>', '', h, flags=re.S)
     h = re.sub(r'<br\s*/?>', '\n', h)
     h = re.sub(r'</?(p|div|h\d|li|tr|dd|dt)[^>]*>', '\n', h)

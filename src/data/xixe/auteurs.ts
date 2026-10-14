@@ -1243,6 +1243,47 @@ const liste: Auteur[] = [
     portrait:
       "Fils d'un libraire du quai Malaquais, bibliothécaire au Sénat, il devient célèbre avec Le Crime de Sylvestre Bonnard (1881) et entre à l'Académie française en 1896. Sceptique et ironique, il s'engage aux côtés de Zola pendant l'affaire Dreyfus. Les quatre volumes de l'Histoire contemporaine (1897-1901) font de M. Bergeret, professeur de latin, le témoin moqueur de l'Affaire. Il reçoit le prix Nobel de littérature en 1921.",
   },
+  // Leçon « Figures du siècle » : Gracchus Babeuf (spec 19). Ces auteurs ne sont cités dans
+  // aucun chapitre de la section : l'index des auteurs ne les affiche donc pas.
+  {
+    id: 'babeuf',
+    nom: 'Gracchus Babeuf',
+    court: 'Babeuf',
+    tri: 'Babeuf',
+    naissance: { annee: 1760, lieu: 'Saint-Quentin' },
+    mort: { annee: 1797, lieu: 'Vendôme' },
+    position: "Révolutionnaire égalitaire, partisan de la communauté des biens",
+    couleur: c.socialistes.couleur,
+    oeuvres: ['Cadastre perpétuel (1789)', 'Le Tribun du peuple (1794-1796)'],
+    portrait:
+      "Feudiste en Picardie avant 1789, journaliste pendant la Révolution, il prend le prénom de Gracchus en 1794. Sous le Directoire, il anime la conjuration des Égaux ; arrêté en mai 1796, il est condamné à mort par la Haute Cour de Vendôme et exécuté en mai 1797.",
+  },
+  {
+    id: 'marechal',
+    nom: 'Sylvain Maréchal',
+    court: 'Maréchal',
+    tri: 'Maréchal',
+    naissance: { annee: 1750, lieu: 'Paris' },
+    mort: { annee: 1803, lieu: 'Montrouge' },
+    position: 'Républicain égalitaire, athée déclaré',
+    couleur: c.socialistes.couleur,
+    oeuvres: ['Le Manifeste des Égaux (1796, publié en 1828)'],
+    portrait:
+      "Poète et pamphlétaire, emprisonné en 1788 pour son irréligion, il écrit pendant la Révolution dans le journal Les Révolutions de Paris. Membre du directoire secret de la conjuration des Égaux, il en rédige le manifeste. Il échappe aux poursuites de 1796 et meurt en 1803.",
+  },
+  {
+    id: 'buonarroti',
+    nom: 'Philippe Buonarroti',
+    court: 'Buonarroti',
+    tri: 'Buonarroti',
+    naissance: { annee: 1761, lieu: 'Pise' },
+    mort: { annee: 1837, lieu: 'Paris' },
+    position: 'Révolutionnaire égalitaire, conspirateur toute sa vie',
+    couleur: c.socialistes.couleur,
+    oeuvres: ["Conspiration pour l'Égalité dite de Babeuf (1828)"],
+    portrait:
+      "Né en Toscane dans une famille apparentée à Michel-Ange, gagné aux idées de la Révolution, il est fait citoyen français par la Convention en 1793. Membre du directoire secret des Égaux, condamné à la déportation en 1797, il passe le reste de sa vie en prison, en exil et dans les sociétés secrètes. Son récit de la conjuration, publié à Bruxelles en 1828, fait connaître Babeuf au XIXe siècle.",
+  },
 ];
 
 export const auteurs: Record<string, Auteur> = Object.fromEntries(liste.map((a) => [a.id, a]));

@@ -99,6 +99,13 @@ npm run verifier:ecrivains
   note n (apostrophe droite changée en ’), cherchée après l'appel précédent. Si le mot de la note
   n'apparaît pas tel quel dans le texte, donner ici l'ancre à utiliser.
 
+**Leçon à extraits (hors de la section).** Une leçon peut citer des extraits avec le même
+outillage (ex. `figures-babeuf`, spec 19) : sa spécification donne en `"sortie"` le MDX de la
+leçon (`src/content/lecons/<siecle>/…`) et ses propres bornes, `"texte_mots"` (texte complet)
+et `"cle_mots"` (passage clé). `verifier.py --tous` (donc `npm run verifier:ecrivains`) la
+vérifie avec les chapitres. Les sources citées de seconde main (un texte reproduit dans une
+édition Wikisource plus récente) sont vérifiées sur la page de cette édition.
+
 `generer.py` s'arrête avec un message clair si un marqueur, une ancre (« introuvable » ou
 « hors d'ordre » : réordonner alors les notes dans le gabarit) ou le passage clé pose problème.
 Il remplace aussi « 1o » en début de ligne par `1<sup>o</sup>`.

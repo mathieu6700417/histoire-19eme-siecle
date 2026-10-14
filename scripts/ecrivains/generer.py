@@ -9,6 +9,8 @@ Entrées (dans scripts/ecrivains/chapitres/<siecle>/) :
 Pour chaque extrait : texte exact extrait de Wikisource, passage clé encadré par
 <div class="cle">, appels de note insérés après le « mot » de chaque note (dans l'ordre
 du texte ; une ancre différente peut être donnée dans "ancres"), lien vers la page.
+La spécification peut aussi servir à une page hors de la section (leçon) : "sortie" donne alors
+le fichier produit et "cle_mots" les bornes du passage clé (par défaut 150-350 mots).
 """
 import argparse, re, sys
 from pathlib import Path
@@ -25,14 +27,15 @@ def mots_des_notes(gabarit: str, k: str) -> list[str]:
     return re.findall(r'\{ mot: "([^"]+)"', bloc.split(']}>')[0])
 
 
-def texte_extrait(k: str, paras: list[str], cle: list[int], mots: list[str], ancres: dict) -> str:
+def texte_extrait(k: str, paras: list[str], cle: list[int], mots: list[str], ancres: dict,
+                  bornes: tuple[int, int] = (CLE_MIN, CLE_MAX)) -> str:
     i, j = cle
     paras = list(paras)
     if '[…]' in paras[i:j + 1]:
         sys.exit(f'{k} : le passage clé contient une coupure')
     n = sum(len(p.split()) for p in paras[i:j + 1])
-    if not CLE_MIN <= n <= CLE_MAX:
-        sys.exit(f'{k} : passage clé de {n} mots (attendu {CLE_MIN}-{CLE_MAX})')
+    if not bornes[0] <= n <= bornes[1]:
+        sys.exit(f'{k} : passage clé de {n} mots (attendu {bornes[0]}-{bornes[1]})')
     paras[i] = '<div class="cle">\n\n' + paras[i]
     paras[j] += '\n\n</div>'
     t, pos = '\n\n'.join(paras), 0
@@ -51,8 +54,9 @@ def texte_extrait(k: str, paras: list[str], cle: list[int], mots: list[str], anc
 def generer(slug: str) -> str:
     data = charger(slug)
     s = (DOSSIER / data['gabarit']).read_text()
+    bornes = tuple(data.get('cle_mots', (CLE_MIN, CLE_MAX)))
     for k, spec in data['extraits'].items():
-        t = texte_extrait(k, extraire(spec), spec['cle'], mots_des_notes(s, k), data.get('ancres', {}).get(k, {}))
+        t = texte_extrait(k, extraire(spec), spec['cle'], mots_des_notes(s, k), data.get('ancres', {}).get(k, {}), bornes)
         s = s.replace(f'@@T:{k}@@', t).replace(f'@@L:{k}@@', url_page(spec['page']))
     reste = re.findall(r'@@[^@]+@@', s)
     if reste:
