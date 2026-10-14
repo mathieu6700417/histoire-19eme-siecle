@@ -1,0 +1,43 @@
+---
+// Fiches courtes des acteurs d'une leçon (spec 20) : nom, dates de vie, rôle en trois ou quatre
+// lignes. Ancre de chaque fiche : #personnage-<id>. `*titre*` : italique.
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props { personnages: { id: string; nom: string; dates: string; role: string }[] }
+const { personnages } = Astro.props;
+const echapper = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const html = (s: string) => echapper(typographie(s)).replace(/\*([^*]+)\*/g, '<em>$1</em>');
+---
+
+<ul class="personnages">
+  {personnages.map((p) => (
+    <li class="personnage" id={`personnage-${p.id}`}>
+      <p class="personnage__entete">
+        <span class="personnage__nom">{typographie(p.nom)}</span>
+        <span class="personnage__dates">{p.dates}</span>
+      </p>
+      <p class="personnage__role" set:html={html(p.role)} />
+    </li>
+  ))}
+</ul>
+
+<style>
+  .personnages {
+    list-style: none;
+    padding: 0;
+    margin: var(--e-3) auto var(--e-5);
+    border-top: 1px solid var(--c-filet);
+  }
+  .personnage { margin: 0; padding: var(--e-2) 0; border-bottom: 1px solid var(--c-filet); scroll-margin-top: var(--e-4); }
+  .personnage__entete {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0 var(--e-3);
+    margin: 0 0 var(--e-1);
+  }
+  .personnage__nom { font-family: var(--f-titre); font-size: 1.15rem; }
+  .personnage__dates { font-variant: small-caps; letter-spacing: 0.06em; color: var(--c-texte-doux); font-variant-numeric: oldstyle-nums; }
+  .personnage__role { margin: 0; }
+</style>

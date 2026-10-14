@@ -1,0 +1,65 @@
+---
+// Citation courte d'un texte d'époque dans une leçon (spec 20) : le texte, cité mot pour mot
+// d'après une édition consultable en ligne, puis une ligne de source (auteur, texte, date,
+// édition) et un lien vers l'édition. `prudence` : formule dont la forme exacte n'est pas
+// attestée (version légendaire, propos rapporté) ; elle est signalée comme telle.
+// Usage MDX :
+//   <Citation auteur="Sieyès" oeuvre="Qu'est-ce que le tiers état ?" date="janvier 1789"
+//     edition="éd. Champion, 1888, p. 27" lien="https://fr.wikisource.org/wiki/…">
+//   Qu'est-ce que le tiers état ? Tout.
+//   </Citation>
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  auteur: string;
+  oeuvre?: string;
+  date?: string;
+  /** Édition ou source consultée (« éd. Vellay, 1908, t. I, p. 371 »). */
+  edition?: string;
+  lien: string;
+  libelleLien?: string;
+  /** Mention de prudence affichée avant la source (« version légendaire »). */
+  prudence?: string;
+}
+
+const { auteur, oeuvre, date, edition, lien, libelleLien = 'Lire le texte en ligne', prudence } = Astro.props;
+const t = (s?: string) => (s ? typographie(s) : '');
+---
+
+<figure class="citation-epoque">
+  <blockquote class="citation-epoque__texte"><slot /></blockquote>
+  <figcaption class="citation-epoque__source">
+    {prudence && <span class="citation-epoque__prudence">{t(prudence)}</span>}
+    <span class="citation-epoque__auteur">{t(auteur)}</span>{oeuvre && <>, <cite>{t(oeuvre)}</cite></>}{date && <>, {t(date)}</>}.
+    {edition && <> {t(edition)}.</>}
+    {' '}<a href={lien} target="_blank" rel="noopener">{t(libelleLien)}<span class="sr-only"> (nouvel onglet)</span><span aria-hidden="true"> ↗</span></a>
+  </figcaption>
+</figure>
+
+<style>
+  .citation-epoque { margin: var(--e-4) auto; }
+  .citation-epoque__texte {
+    margin: 0;
+    padding-left: var(--e-3);
+    border-left: 1px solid var(--c-texte-doux);
+    font-style: normal;
+    font-size: 1.12rem;
+  }
+  .citation-epoque__texte :global(p) { margin-bottom: var(--e-2); }
+  .citation-epoque__texte :global(p:last-child) { margin-bottom: 0; }
+  .citation-epoque__source {
+    margin-top: var(--e-1);
+    padding-left: var(--e-3);
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--c-texte-doux);
+  }
+  .citation-epoque__auteur { font-variant: small-caps; letter-spacing: 0.06em; color: var(--c-texte); }
+  .citation-epoque__prudence {
+    display: block;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+  }
+  .citation-epoque__source cite { font-style: italic; }
+  .citation-epoque__source a { color: var(--c-texte-doux); white-space: nowrap; }
+</style>

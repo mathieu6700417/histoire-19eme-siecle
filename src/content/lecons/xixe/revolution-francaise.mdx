@@ -1,0 +1,592 @@
+---
+titre: "La Révolution française"
+theme: politique
+resume: "De la faillite de la monarchie au coup d'État de Bonaparte, dix années qui font basculer la France : ce qui se passe, et surtout pourquoi chaque étape mène à la suivante."
+ordre: 3
+periode: "1787-1799"
+dureeLecture: 35
+---
+import FriseJournees from '../../../components/FriseJournees.astro';
+import Encadre from '../../../components/Encadre.astro';
+import Citation from '../../../components/Citation.astro';
+import Question from '../../../components/Question.astro';
+import Oeuvre from '../../../components/Oeuvre.astro';
+import Glossaire from '../../../components/Glossaire.astro';
+import Personnages from '../../../components/Personnages.astro';
+import ListeSousPages from '../../../components/ListeSousPages.astro';
+import BlocDiaporamas from '../../../components/BlocDiaporamas.astro';
+import BlocEcrivains from '../../../components/BlocEcrivains.astro';
+import { regimes, parties, journees, glossaire, personnages } from '../../../data/xixe/revolution-francaise';
+import { urlChapitreEcrivains, urlDiaporama, urlFigure, urlLecon } from '../../../utils/adresses';
+
+En dix ans, de 1789 à 1799, la France passe d'une monarchie de droit divin à une monarchie constitutionnelle, puis à une République qui juge et exécute son roi, gouverne par la Terreur, se cherche un régime stable et finit par confier le pouvoir à un général. Cette page raconte ces années dans l'ordre, en partant d'un peu plus tôt, de la crise de 1787. Chaque partie s'ouvre sur une question (pourquoi cela bascule-t-il à ce moment-là ?) et se termine par l'essentiel à retenir.
+
+La frise ci-dessous sert de carte : les bandes du haut donnent les régimes, celles du milieu les parties du récit, et les repères du bas les grandes journées. Chaque élément mène au passage correspondant.
+
+<FriseJournees debut={1787} fin={1800} rangees={[{ nom: 'Régimes', bandes: regimes }, { nom: 'Récit', bandes: parties }]} journees={journees} legende="Échelle exacte : chaque année a la même largeur. Entre la chute du roi (10 août 1792) et la réunion de la Convention (21 septembre), le pouvoir est provisoire. Les dates de l'an II et des années suivantes sont données dans le texte selon le calendrier républicain, puis selon le nôtre." />
+
+<span id="la-france-de-1787" class="ancre"></span>
+
+## La France de 1787
+
+En 1787, le royaume compte environ 28 millions d'habitants : c'est le pays le plus peuplé d'Europe après la Russie. Huit Français sur dix vivent à la campagne et travaillent la terre. Le roi, **Louis XVI**, règne depuis 1774. Il est roi « de droit divin » : sacré à Reims, il tient son pouvoir de Dieu et n'en rend compte à personne. Il fait la loi, lève l'impôt, rend la justice en dernier ressort, décide de la paix et de la guerre. On appelle ce système la **monarchie absolue** : absolue ne veut pas dire tyrannique, mais « déliée » de tout contrôle par une assemblée.
+
+La société est une **société d'[ordres](#glossaire-ordres)**. Le clergé, premier ordre, prie pour tous ; la noblesse, deuxième ordre, est censée combattre ; le **[tiers état](#glossaire-tiers-etat)**, tous les autres, travaille. Chaque ordre a ses droits propres, ses **[privilèges](#glossaire-privileges)** : le clergé ne paie pas d'impôt direct et vote seulement un « don gratuit » au roi ; les nobles échappent à la taille, l'impôt direct principal, et perçoivent sur les paysans des droits seigneuriaux (redevances, corvées, droit de chasse, banalités du moulin ou du four). Mais le tiers état est très divers : il va du riche banquier, qui achète des terres et parfois un titre, au journalier qui loue ses bras à la journée. Ce qui unit ses membres, c'est de ne pas être privilégiés.
+
+Le siècle des **Lumières** a bousculé les esprits. Montesquieu a fait l'éloge de la séparation des pouvoirs, Voltaire a combattu l'intolérance religieuse, Rousseau a fondé la légitimité politique sur la volonté générale du peuple. Ces idées circulent dans les salons, les académies, les loges maçonniques, les cafés, et chez une élite qui lit les journaux. La victoire des insurgés américains contre l'Angleterre (1783), que la France a aidés, montre qu'un peuple peut se donner une constitution écrite. Personne pourtant, en 1787, n'imagine une révolution : on attend des réformes, du roi lui-même.
+
+<span id="la-crise-de-la-monarchie" class="ancre"></span>
+
+## La crise de la monarchie (1787-1789)
+
+<Question>Pourquoi le roi, maître absolu, finit-il par convoquer les états généraux, une assemblée oubliée depuis 1614 ?</Question>
+
+### Un État en faillite
+
+Tout commence par l'argent. La monarchie a financé la guerre d'Amérique (1778-1783) non par l'impôt, mais par l'emprunt. Les intérêts de la dette absorbent désormais, selon les estimations, près de la moitié des dépenses de l'État. Les recettes, elles, ne peuvent pas augmenter beaucoup : les plus riches, nobles et clergé, sont en grande partie exemptés, et les paysans sont déjà lourdement taxés. Il n'y a qu'une issue : faire payer les privilégiés.
+
+<span id="assemblee-des-notables" class="ancre"></span>
+
+En août 1786, le contrôleur général des Finances, **Calonne**, propose au roi une réforme profonde : un impôt nouveau, la « subvention territoriale », payé par tous les propriétaires sans distinction d'ordre, et des assemblées provinciales pour le répartir. Sachant que le parlement de Paris refusera d'enregistrer ce plan, il le fait d'abord approuver par une **assemblée des notables**, des grands personnages choisis par le roi, qui s'ouvre à Versailles le **22 février 1787**. C'est un échec : les notables, presque tous privilégiés, refusent de se dessaisir de leurs exemptions et répondent qu'un tel impôt ne peut être consenti que par la nation. Calonne est renvoyé en avril.
+
+Son successeur, **Loménie de Brienne**, archevêque de Toulouse, reprend une partie du plan. Le <a href={urlLecon('xixe', 'revolution-francaise/parlements')}>parlement</a> de Paris, une cour de justice qui doit enregistrer les lois et se pose en défenseur des sujets contre le « despotisme », refuse à son tour et réclame la convocation des **[états généraux](#glossaire-etats-generaux)**. Le conflit dure tout l'hiver ; en mai 1788, le garde des Sceaux Lamoignon tente de briser les parlements par une réforme judiciaire qui leur retire l'essentiel de leurs pouvoirs.
+
+### La révolte des privilégiés
+
+<span id="journee-des-tuiles" class="ancre"></span>
+
+Les <a href={urlLecon('xixe', 'revolution-francaise/parlements') + '#contre-les-reformes'}>parlements de province</a> se soulèvent, soutenus par une partie de la population, qui voit en eux un rempart contre l'arbitraire. À Grenoble, le **7 juin 1788**, quand les troupes viennent exiler les magistrats, les habitants montent sur les toits et bombardent les soldats de tuiles : c'est la **journée des Tuiles**. Le 21 juillet, au château de Vizille, près de Grenoble, les trois ordres du Dauphiné se réunissent sans autorisation et réclament les états généraux, avec un tiers état aussi nombreux que les deux autres ordres réunis et un vote par tête. L'historien parle volontiers de « révolte nobiliaire » ou de « pré-révolution » : ce sont des privilégiés qui ouvrent la brèche, au nom de la liberté contre le despotisme ministériel.
+
+<span id="convocation-des-etats-generaux" class="ancre"></span>
+
+Le Trésor est vide ; les prêteurs ne prêtent plus. Le **8 août 1788**, Brienne cède et annonce les états généraux pour le 1er mai 1789. Quelques jours plus tard, l'État suspend une partie de ses paiements : c'est une banqueroute partielle. Brienne démissionne ; le roi rappelle le Genevois **Necker**, banquier très populaire, qui avait déjà dirigé les finances de 1776 à 1781.
+
+### Le tiers état entre en scène
+
+Une question décide de tout : comment les états généraux seront-ils composés et comment voteront-ils ? En septembre 1788, le parlement de Paris demande qu'ils se tiennent « suivant la forme observée en 1614 », c'est-à-dire avec autant de députés par ordre et un vote par ordre : le clergé et la noblesse l'emporteraient toujours, à deux voix contre une. Le parlement perd d'un coup sa popularité ; on comprend que les privilégiés réclamaient la liberté pour eux-mêmes. Un « parti patriote » se forme, où se côtoient des nobles libéraux comme **La Fayette**, des avocats, des hommes de lettres. Le 27 décembre 1788, le Conseil du roi accorde le **doublement du tiers** : le tiers aura autant de députés que les deux autres ordres réunis. Mais il ne dit rien du mode de vote.
+
+C'est dans ce débat que paraît, en janvier 1789, la brochure la plus célèbre de la Révolution, écrite par un abbé de quarante ans, **Sieyès**. Sa première page tient en trois questions :
+
+<Citation auteur="Emmanuel-Joseph Sieyès" oeuvre="Qu'est-ce que le tiers état ?" date="brochure publiée en janvier 1789" edition="Éd. Edme Champion, Société de l'histoire de la Révolution française, 1888, p. 27, début du texte" lien="https://fr.wikisource.org/wiki/Qu%E2%80%99est-ce_que_le_tiers_%C3%A9tat_%3F_(Champion,_1888)/Qu%E2%80%99est-ce_que_le_tiers_%C3%A9tat_%3F">
+
+1° Qu'est-ce que le tiers état ? Tout.
+
+2° Qu'a-t-il été jusqu'à présent dans l'ordre politique ? Rien.
+
+3° Que demande-t-il ? À y devenir quelque chose.
+
+</Citation>
+
+L'idée est neuve et radicale : le tiers état, qui travaille et fait vivre le pays, est à lui seul la **nation** ; les privilégiés, qui vivent à part sous leurs propres lois, sont presque des étrangers. La souveraineté n'appartient plus au roi par la grâce de Dieu, mais à la nation.
+
+Au printemps 1789, tout le royaume vote. Dans chaque paroisse, les hommes de vingt-cinq ans inscrits au rôle des impôts se réunissent, élisent des délégués et rédigent des **[cahiers de doléances](#glossaire-cahiers-de-doleances)** : des dizaines de milliers de textes où l'on demande, souvent, un impôt égal pour tous, la réunion régulière des états généraux, l'allègement des droits seigneuriaux, et où l'on exprime presque toujours un grand attachement au roi. Environ 1 200 députés sont élus, dont près de 600 pour le tiers état : surtout des avocats, des officiers de justice, des propriétaires, aucun paysan ni artisan.
+
+Or l'élection a lieu en pleine **crise économique**. La récolte de 1788 a été mauvaise, ravagée en juillet par un violent orage de grêle, et l'hiver suivant est terrible. Le prix du pain monte jusqu'à l'été 1789, où il atteint son niveau le plus haut du siècle ; le pain représente alors l'essentiel du budget d'une famille populaire. Des émeutes de subsistance éclatent un peu partout. À Paris, fin avril, la foule saccage la manufacture de papiers peints Réveillon, au faubourg Saint-Antoine, sur la rumeur que son patron veut baisser les salaires : la troupe tire, il y a plusieurs dizaines de morts selon les estimations. La politique et la faim se rejoignent.
+
+<Encadre type="historiens" titre="Pourquoi la Révolution ?">
+
+Les causes de la Révolution sont l'un des plus vieux débats de l'histoire de France. Au XIXe siècle, **Michelet** voit dans 1789 le réveil d'un peuple, poussé par la misère et par une immense espérance de justice ; **Tocqueville**, au contraire, souligne que la Révolution prolonge l'œuvre de la monarchie, qui avait déjà centralisé le pays et affaibli la noblesse. Au début du XXe siècle, **Jaurès**, dans son *Histoire socialiste*, en fait une révolution de la bourgeoisie, enrichie par le commerce, qui conquiert le pouvoir politique. **Georges Lefebvre** (1939) distingue quatre révolutions en une : aristocratique (1787-1788), bourgeoise, populaire urbaine et paysanne ; **Albert Soboul** prolonge cette lecture sociale.
+
+À partir des années 1950-1960, des historiens dits « révisionnistes », l'Anglais **Alfred Cobban** puis **François Furet** et **Denis Richet**, contestent cette explication : la bourgeoisie révolutionnaire est faite d'avocats et de propriétaires plus que de capitalistes, et nobles et bourgeois aisés partagent souvent la même culture. Ils insistent plutôt sur la crise de l'État, sur les idées et sur la dynamique propre de la politique. Beaucoup d'historiens d'aujourd'hui combinent ces facteurs : faillite de l'État, blocage des réformes par les privilégiés, crise économique, diffusion d'une nouvelle culture politique. Aucun ne suffit seul.
+
+</Encadre>
+
+<Encadre type="retenir">
+
+- La Révolution naît d'une **faillite financière** : pour la résoudre, il faut faire payer les privilégiés, qui refusent.
+- Ce sont d'abord des **privilégiés** (notables, parlements) qui défient le roi, en réclamant les états généraux.
+- Le **doublement du tiers** et la brochure de **Sieyès** font du tiers état le porte-parole de la nation.
+- La **crise frumentaire** de 1788-1789 (pain cher, disette) met le peuple des villes et des campagnes en mouvement.
+
+</Encadre>
+
+<span id="annee-1789" class="ancre"></span>
+
+## 1789, l'année où tout bascule
+
+<Question>Pourquoi une réunion convoquée pour voter des impôts se transforme-t-elle, en quelques semaines, en révolution ?</Question>
+
+<span id="5-mai-1789" class="ancre"></span>
+
+### Des états généraux à l'Assemblée nationale
+
+Le **5 mai 1789**, à Versailles, le roi ouvre les états généraux dans la salle des Menus-Plaisirs. Les députés du tiers, en habit noir, ont dû défiler derrière ceux du clergé et de la noblesse, chamarrés d'or ; ils attendent qu'on parle de constitution. Necker, lui, parle trois heures de finances. Surtout, rien n'est dit du vote : les députés du tiers refusent de se réunir à part et invitent les deux autres ordres à vérifier en commun les pouvoirs de tous les élus. Pendant six semaines, tout est bloqué.
+
+<span id="17-juin-1789" class="ancre"></span>
+
+Le 12 juin, le tiers commence seul l'appel des députés ; quelques curés le rejoignent. Le **17 juin**, sur une motion de Sieyès, il se proclame **Assemblée nationale** : il représente, dit-il, l'immense majorité de la nation et n'a pas besoin des autres ordres pour agir. C'est le premier acte révolutionnaire : une assemblée s'attribue une souveraineté qui appartenait au roi. Elle décide aussitôt que les impôts existants ne seront perçus que tant qu'elle siégera.
+
+<span id="20-juin-1789" class="ancre"></span>
+
+Le **20 juin**, les députés trouvent leur salle fermée et gardée par des soldats, sous prétexte de travaux pour une séance royale. Ils se réunissent dans une salle voisine, celle du jeu de paume, où l'on jouait à l'ancêtre du tennis. Debout sur une table, leur président, l'astronome **Bailly**, lit la formule d'un serment : ne jamais se séparer avant d'avoir donné au royaume une constitution. Tous jurent, sauf un.
+
+<Oeuvre id="jeu-de-paume" image="revolution-francaise/jeu-de-paume" createur="Pierre-Gabriel Berthault" mention="d'après un dessin de Jean-Louis Prieur" titre="Serment du Jeu de paume, à Versailles, le 20 juin 1789" date="entre 1791 et 1804" technique="eau-forte, planche n° 1 des Tableaux historiques de la Révolution française" lieu="Paris, musée Carnavalet - Histoire de Paris" faits="1789" regard="contemporain" periode="1787-1799" commons="https://commons.wikimedia.org/wiki/File:R%C3%A9volution_fran%C3%A7aise_Planche_n%C2%BA_1_des_Tableaux_historiques_de_la_R%C3%A9volution_fran%C3%A7aise_1791-1804,_le_Serment_du_jeu_de_Pa,_G.27649.jpg" alt="Gravure : une grande salle nue aux hautes fenêtres ; au centre, debout sur une table, le président lit le serment ; autour de lui, des centaines de députés lèvent le bras droit.">
+<div slot="lire">
+
+C'est la première planche des *Tableaux historiques de la Révolution française*, grand recueil de gravures publié par livraisons à partir de 1791 pour raconter les « journées » une à une. Le dessinateur Jean-Louis Prieur, qui travaille d'après ce qu'il a vu ou entendu raconter, compose la scène avec sobriété : une salle vide de tout décor, une foule de députés tendus vers un seul homme, Bailly, debout sur sa table. Le geste collectif du bras levé dit l'essentiel : la souveraineté a changé de mains. Le célèbre dessin de David sur le même sujet, plus théâtral, est à peu près contemporain.
+
+</div>
+</Oeuvre>
+
+Le **23 juin**, Louis XVI tient sa séance royale. Il annonce des réformes (consentement de la nation à l'impôt, égalité fiscale si les privilégiés l'acceptent), mais casse les décisions du 17 juin et ordonne aux ordres de siéger séparément. Après son départ, la noblesse et une partie du clergé quittent la salle ; le tiers reste. Le grand maître des cérémonies, le marquis de Dreux-Brézé, vient rappeler l'ordre du roi. **Mirabeau**, un noble élu par le tiers état de Provence, lui répond. Sa phrase est restée célèbre, mais sous deux formes :
+
+<Citation auteur="Mirabeau" date="23 juin 1789" prudence="Version du Moniteur, que Mirabeau donne aussi dans ses Lettres à ses commettants" edition="Cité d'après Pierre Larousse, Grand dictionnaire universel du XIXe siècle, t. XI (1874), article « Mirabeau », qui précise ces deux sources" lien="https://fr.wikisource.org/wiki/Grand_dictionnaire_universel_du_XIXe_si%C3%A8cle/MIRABEAU_(Gabriel-Honor%C3%A9_RIQUETTI,_comte_DE,_orateur_illustre,_fils_du_pr%C3%A9c%C3%A9dent">
+
+[…] je déclare que, si l'on vous a chargé de nous faire sortir d'ici, vous devez demander des ordres pour employer la force ; car nous ne quitterons nos places que par la puissance des baïonnettes.
+
+</Citation>
+
+<Citation auteur="Mirabeau, selon la tradition" prudence="Version légendaire, reprise par Michelet" oeuvre="Histoire de la Révolution française" date="t. I (1847), livre I, chap. 4" lien="https://fr.wikisource.org/wiki/Histoire_de_la_R%C3%A9volution_fran%C3%A7aise_(Michelet)/Livre_I/Chapitre_4">
+
+Allez dire à ceux qui vous envoient que nous sommes ici par la volonté du peuple, et qu'on ne nous en arrachera que par la puissance des baïonnettes.
+
+</Citation>
+
+La seconde version, plus frappante, est celle que retiendront les manuels ; aucun témoignage sûr ne prouve que Mirabeau l'ait prononcée ainsi. Mais le fond est le même : l'Assemblée refuse d'obéir au roi. Louis XVI, qui ne veut pas employer la force contre les députés, cède : le 27 juin, il invite le clergé et la noblesse à rejoindre le tiers. Le 9 juillet, l'Assemblée se déclare **Assemblée nationale constituante** : sa mission est d'écrire une constitution.
+
+<span id="14-juillet-1789" class="ancre"></span>
+
+### Le 14 juillet
+
+Dans le même temps, le roi fait venir autour de Paris et de Versailles près de 20 000 soldats, en grande partie des régiments étrangers. Pour les députés comme pour les Parisiens, c'est la préparation d'un coup de force. Le **11 juillet**, Louis XVI renvoie Necker. La nouvelle arrive à Paris le 12 : au Palais-Royal, le jeune journaliste Camille Desmoulins appelle aux armes. Pendant la nuit, la foule incendie les barrières de l'octroi, où l'on taxe les marchandises qui entrent dans la ville, ce qui renchérit le pain. Les électeurs parisiens forment un comité permanent et une **milice bourgeoise**, à la fois pour résister aux troupes et pour contenir les pillages.
+
+Le **14 juillet** au matin, les insurgés s'emparent de dizaines de milliers de fusils aux Invalides. Il leur faut de la poudre : ils marchent vers la **Bastille**, forteresse royale et prison d'État, symbole de l'arbitraire (le roi pouvait y enfermer sans jugement, par lettre de cachet). Après des heures de négociation et de combat, rejoints par des gardes-françaises avec leurs canons, ils obtiennent la reddition de la garnison. Une centaine d'assaillants ont été tués. Le gouverneur, de Launay, est massacré, sa tête promenée au bout d'une pique, comme celle du prévôt des marchands, Flesselles. La forteresse ne contenait que sept prisonniers.
+
+<Oeuvre id="prise-bastille" image="01/prise-bastille" artiste="houel" titre="Prise de la Bastille" date="1789" technique="aquarelle" lieu="Paris, Bibliothèque nationale de France, département des Estampes" faits="1789" regard="contemporain" commons="https://commons.wikimedia.org/wiki/File:Prise_de_la_Bastille.jpg" musee="https://gallica.bnf.fr/ark:/12148/btv1b103025148" alt="La forteresse de la Bastille dans la fumée ; au pied des tours, une foule armée franchit l'entrée et arrête le gouverneur.">
+<div slot="lire">
+
+Houël peint la prise de la Bastille presque sur-le-champ. Les tours massives écrasent la scène, la fumée monte des bâtiments d'entrée, et au centre, parmi des silhouettes minuscules, on arrête le gouverneur. L'image fixe dès 1789 la version héroïque de l'événement : un peuple qui force une citadelle du despotisme. Elle ne montre ni le massacre qui suit, ni le petit nombre de prisonniers trouvés dans la forteresse.
+
+</div>
+</Oeuvre>
+
+Pourquoi cette journée compte-t-elle tant ? Parce qu'elle sauve l'Assemblée. Le roi renonce à employer l'armée, rappelle Necker et, le 17 juillet, vient à Paris accepter la **cocarde** tricolore, qui associe le blanc de la monarchie au bleu et au rouge de la ville. Bailly devient maire de Paris, La Fayette commandant de la **garde nationale**. Les premiers nobles partent à l'étranger, autour du comte d'Artois, frère du roi : ce sont les premiers **[émigrés](#glossaire-emigres)**. Partout en France, les villes imitent Paris : elles chassent les anciennes autorités et forment des municipalités et des gardes nationales.
+
+<span id="4-aout-1789" class="ancre"></span>
+
+### La Grande Peur et la nuit du 4 août
+
+Dans les campagnes, depuis le printemps, des paysans refusent de payer les droits seigneuriaux. Fin juillet, une étrange panique se propage de village en village : on annonce l'arrivée de « brigands » payés par les aristocrates pour détruire les récoltes. C'est la **Grande Peur** (20 juillet-6 août environ). Les brigands n'existent pas, mais les paysans s'arment, et, le danger dissipé, beaucoup se retournent contre les châteaux : ils brûlent les terriers, les registres où sont inscrits les droits seigneuriaux.
+
+L'Assemblée doit réagir. Réprimer ? Elle n'en a pas les moyens et ne veut pas rendre à l'armée du roi son rôle. Dans la **nuit du 4 août**, à l'initiative de nobles libéraux, le vicomte de Noailles et le duc d'Aiguillon, les députés, dans un climat d'enthousiasme, renoncent les uns après les autres aux privilèges : ceux des ordres, mais aussi ceux des provinces, des villes, des corporations. Les décrets votés dans les jours suivants proclament que l'Assemblée « détruit entièrement le régime féodal ». En réalité, seuls les droits pesant sur les personnes (servage, corvées) sont supprimés sans indemnité ; les autres, attachés à la terre, doivent être rachetés, ce que les paysans ne pourront ou ne voudront pas faire. Ils seront abolis sans indemnité en 1793. Mais l'essentiel est fait : il n'y a plus d'ordres, plus de privilèges ; les emplois sont ouverts à tous, l'impôt sera le même pour tous.
+
+<span id="26-aout-1789" class="ancre"></span>
+
+### La Déclaration des droits de l'homme et du citoyen
+
+Avant d'écrire la constitution, l'Assemblée veut en poser les principes. Le **26 août 1789**, elle adopte la **Déclaration des droits de l'homme et du citoyen**, dix-sept articles écrits pour tous les hommes et tous les temps. Les premiers disent tout :
+
+<Citation auteur="Assemblée nationale constituante" oeuvre="Déclaration des droits de l'homme et du citoyen" date="26 août 1789, articles premier, II et III" edition="Texte promulgué en novembre 1789" lien="https://fr.wikisource.org/wiki/D%C3%A9claration_des_Droits_de_l%E2%80%99Homme_et_du_Citoyen_de_1789">
+
+Article premier. Les hommes naissent et demeurent libres et égaux en droits. Les distinctions sociales ne peuvent être fondées que sur l'utilité commune.
+
+II. Le but de toute association politique est la conservation des droits naturels et imprescriptibles de l'Homme. Ces droits sont la liberté, la propriété, la sûreté et la résistance à l'oppression.
+
+III. Le principe de toute Souveraineté réside essentiellement dans la Nation. Nul corps, nul individu ne peut exercer d'autorité qui n'en émane expressément.
+
+</Citation>
+
+La Déclaration condamne l'Ancien Régime tout entier : les privilèges (article 1), l'arrestation arbitraire (article 7), l'intolérance religieuse (article 10), la censure (article 11). Elle affirme que la loi est « l'expression de la volonté générale » et que tous les citoyens ont le droit de concourir à sa formation. Elle laisse pourtant des questions ouvertes : les femmes, les esclaves des colonies, les pauvres seront-ils des citoyens comme les autres ? La Révolution va buter sur ces limites.
+
+En septembre, l'Assemblée décide que le futur corps législatif sera formé d'une seule chambre et que le roi n'aura qu'un **[veto](#glossaire-veto) suspensif** : il pourra retarder une loi, non l'empêcher pour toujours. Ces débats font naître les mots de **droite** et de **gauche** : les partisans d'un roi fort se placent à droite du président de séance, leurs adversaires à gauche.
+
+<span id="journees-d-octobre" class="ancre"></span>
+
+### Les journées d'octobre
+
+Louis XVI tarde à accepter les décrets d'août et la Déclaration. Début octobre, on apprend qu'au cours d'un banquet à Versailles des officiers ont foulé aux pieds la cocarde tricolore. Le pain manque toujours. Le **5 octobre**, plusieurs milliers de femmes des Halles et des faubourgs marchent sur Versailles pour réclamer du pain ; la garde nationale de La Fayette les suit. Le lendemain matin, des émeutiers envahissent le château et tuent des gardes du corps. Le roi cède : il accepte les décrets et, le **6 octobre**, la famille royale est ramenée à Paris, au palais des Tuileries, entourée par la foule. L'Assemblée la suit quelques jours plus tard. Désormais, le roi et les députés travaillent sous la surveillance du peuple parisien.
+
+<Encadre type="retenir">
+
+- Le **17 juin 1789**, le tiers état se proclame Assemblée nationale : la souveraineté passe du roi à la nation.
+- La prise de la **Bastille** (14 juillet) empêche le coup de force royal et sauve l'Assemblée.
+- La **nuit du 4 août** abolit les privilèges et la société d'ordres ; la **Déclaration du 26 août** pose les principes d'un monde nouveau : liberté, égalité en droits, souveraineté nationale.
+- Les **journées d'octobre** ramènent le roi à Paris, sous la pression populaire.
+
+</Encadre>
+
+<span id="monarchie-constitutionnelle" class="ancre"></span>
+
+## Construire une monarchie constitutionnelle (1789-1791)
+
+<Question>Pourquoi la monarchie constitutionnelle, voulue par presque tous en 1789, échoue-t-elle en moins de trois ans ?</Question>
+
+### Refaire la France
+
+L'Assemblée constituante, qui siège jusqu'en septembre 1791, accomplit un travail immense. Elle remplace les provinces, chacune avec ses coutumes et ses privilèges, par **83 départements** (1790) de taille comparable, découpés pour qu'on puisse rejoindre le chef-lieu en une journée de cheval ; ils sont divisés en districts, cantons et communes, toutes administrées par des élus. Elle abolit la noblesse héréditaire et les titres (juin 1790), supprime les douanes intérieures, unifie les poids et mesures (le système métrique sera adopté en 1795), libère le commerce et le travail : les corporations disparaissent et la loi Le Chapelier (juin 1791) interdit les associations ouvrières comme patronales.
+
+Mais la constitution ne fait pas de tous les citoyens des électeurs. L'Assemblée distingue les **citoyens actifs**, hommes de vingt-cinq ans au moins qui paient un impôt égal à trois journées de travail, et les **citoyens passifs**, qui ont des droits mais ne votent pas. Il y a environ 4,3 millions de citoyens actifs, soit, selon les estimations, six hommes adultes sur dix ; et pour être élu, il faut payer davantage. Robespierre, alors député d'Arras, dénonce ce suffrage censitaire au nom de la Déclaration.
+
+### L'argent de l'Église et la question religieuse
+
+Le problème qui avait tout déclenché reste entier : la dette. Le 2 novembre 1789, sur la proposition de **Talleyrand**, évêque d'Autun, l'Assemblée met les biens du clergé « à la disposition de la nation » : en échange, l'État paiera les prêtres et prendra en charge le culte, les hôpitaux, l'assistance. Ces **[biens nationaux](#glossaire-biens-nationaux)** sont vendus aux enchères. En attendant les ventes, l'État émet des **[assignats](#glossaire-assignat)**, des titres gagés sur ces biens, qui deviennent en 1790 une monnaie de papier. Les acheteurs de biens nationaux, bourgeois et paysans aisés, auront désormais tout intérêt à ce que la Révolution ne soit pas défaite. Mais l'assignat, imprimé de plus en plus, perdra peu à peu sa valeur.
+
+<span id="constitution-civile-du-clerge" class="ancre"></span>
+
+Puisque l'État paie le clergé, l'Assemblée le réorganise. La **[Constitution civile du clergé](#glossaire-constitution-civile)** (12 juillet 1790) prévoit un évêque par département, des curés et des évêques élus par les citoyens, comme les autres fonctionnaires. Le pape n'est pas consulté. En novembre 1790, l'Assemblée exige des prêtres un serment de fidélité à la constitution. Environ la moitié des curés refusent, selon les estimations, beaucoup plus dans l'Ouest, le Nord, l'Alsace ou le Massif central, beaucoup moins dans le Bassin parisien ou le Sud-Est. Au printemps 1791, le pape Pie VI condamne la Constitution civile et les principes mêmes de la Révolution.
+
+C'est l'une des fractures les plus graves de la période. Dans chaque village, il faut choisir entre le **prêtre jureur** (ou constitutionnel) et le **[prêtre réfractaire](#glossaire-pretres-refractaires)**. Être catholique fidèle au pape et être patriote deviennent, pour beaucoup, deux choses incompatibles. Une large part de l'opposition à la Révolution, dans l'Ouest surtout, naît de là ; et le conflit entre l'Église et la République traversera tout le XIXe siècle, comme le raconte la leçon sur les <a href={urlLecon('xixe', 'courants-politiques/catholiques')}>catholiques</a>.
+
+<span id="fete-de-la-federation" class="ancre"></span>
+
+### La fête de la Fédération
+
+Le **14 juillet 1790**, pour l'anniversaire de la Bastille, des délégués des gardes nationales de tout le royaume se réunissent au Champ-de-Mars, à Paris, devant des centaines de milliers de spectateurs. Talleyrand célèbre la messe sur l'autel de la patrie ; La Fayette prête serment au nom des fédérés ; le roi jure de maintenir la constitution. La **fête de la Fédération** célèbre une France unie, réconciliée autour du roi et de la loi. C'est le sommet de la Révolution consensuelle.
+
+<Oeuvre id="federation" image="revolution-francaise/federation" createur="Charles Thévenin" titre="La Fête de la Fédération, le 14 juillet 1790, au Champ-de-Mars" date="1792" technique="huile sur toile" lieu="Paris, musée Carnavalet - Histoire de Paris" faits="1790" regard="contemporain" periode="1787-1799" commons="https://commons.wikimedia.org/wiki/File:Charles_Th%C3%A9venin_-_La_f%C3%AAte_de_la_F%C3%A9d%C3%A9ration,_le_14_juillet_1790,_au_Champ-de-Mars,_actuel_7%C3%A8me_arrondissement_-_La_F%C3%AAte_de_la_F%C3%A9d%C3%A9ration,_le_14_juillet_1790,_au_Champ-de-Mars_-_Mus%C3%A9e_Carnavalet_-_2.jpg" alt="Vue panoramique du Champ-de-Mars : d'immenses talus couverts de spectateurs entourent une vaste esplanade où défilent les gardes nationaux ; au centre, l'autel de la patrie ; au fond, un arc de triomphe.">
+<div slot="lire">
+
+Thévenin peint la fête deux ans après, en 1792, au moment où l'unité qu'elle célébrait vient de se briser. Le peintre choisit la vue d'ensemble : les talus de terre élevés par des milliers de volontaires parisiens de toutes conditions, l'esplanade où s'alignent les bataillons, l'autel de la patrie au centre, l'arc de triomphe à l'entrée. Les individus disparaissent dans la masse : le sujet est la nation elle-même, rassemblée. Le roi, la messe et la pluie qui tomba ce jour-là ne se distinguent guère.
+
+</div>
+</Oeuvre>
+
+Mais sous l'unité affichée, la Révolution se divise. À Paris, les clubs se multiplient. Le plus influent est la Société des amis de la Constitution, dite **[club des Jacobins](#glossaire-jacobins)**, qui se réunit dans l'ancien couvent des Jacobins et compte bientôt des centaines de sociétés affiliées en province. Le **[club des Cordeliers](#glossaire-cordeliers)**, plus populaire, rassemble Danton, Marat, Desmoulins. Les journaux, libres depuis 1789, se comptent par centaines : *L'Ami du peuple* de Marat dénonce chaque jour les complots. À droite, les « aristocrates » combattent l'œuvre de l'Assemblée. Mirabeau, devenu en secret le conseiller rémunéré de la cour, meurt en avril 1791 : avec lui disparaît l'homme qui aurait pu réconcilier le roi et la Révolution.
+
+<span id="fuite-a-varennes" class="ancre"></span>
+
+### La fuite à Varennes
+
+Louis XVI, profondément catholique, n'a accepté la Constitution civile du clergé qu'à contrecœur ; il se sent prisonnier aux Tuileries. Dans la nuit du **20 au 21 juin 1791**, la famille royale s'enfuit, déguisée, en direction de la frontière de l'Est, où l'attendent des troupes fidèles. Le roi laisse une déclaration qui désavoue tout ce qu'il a signé depuis 1789. Reconnu à Sainte-Menehould par le maître de poste Drouet, il est arrêté à **Varennes**, en Argonne, et ramené à Paris le 25 juin, au milieu d'une foule silencieuse.
+
+La fuite change tout. Le roi a montré qu'il rejetait la Révolution ; beaucoup de Français cessent de croire en lui. Pour la première fois, une partie des patriotes réclame la **République**. Mais la majorité de l'Assemblée veut achever la constitution avec le roi : elle invente la fiction d'un « enlèvement » et se contente de suspendre Louis XVI.
+
+<span id="champ-de-mars" class="ancre"></span>
+
+Le **17 juillet 1791**, au Champ-de-Mars, les Cordeliers font signer une pétition qui demande la déchéance du roi. L'Assemblée fait proclamer la loi martiale ; la garde nationale, commandée par La Fayette, tire sur la foule. Il y a plusieurs dizaines de morts selon les estimations. C'est la première fois que des révolutionnaires tirent sur d'autres révolutionnaires. Le club des Jacobins se coupe en deux : les modérés, hostiles à la République, le quittent pour fonder le club des **[Feuillants](#glossaire-feuillants)**.
+
+<span id="constitution-de-1791" class="ancre"></span>
+
+Le **3 septembre 1791**, l'Assemblée vote la **Constitution**, que le roi accepte le 14. La France est une monarchie constitutionnelle : le roi, « roi des Français », nomme les ministres et dispose du veto suspensif ; une Assemblée législative élue au suffrage censitaire vote les lois et l'impôt. Le texte, fruit de deux ans de travail, repose sur un roi en qui plus personne n'a confiance. Le 30 septembre, l'Assemblée constituante se sépare ; ses membres ont décidé de ne pas être rééligibles.
+
+La Constitution ne dit rien des femmes : elles ne votent pas et ne peuvent être élues. Au même moment, une femme de lettres, **Olympe de Gouges**, publie une *Déclaration des droits de la femme et de la citoyenne*, dédiée à la reine, qui reprend article par article celle de 1789 :
+
+<Citation auteur="Olympe de Gouges" oeuvre="Déclaration des droits de la femme et de la citoyenne" date="septembre 1791, articles premier et X" edition="Les Droits de la femme. À la reine, brochure imprimée à Paris, 1791" lien="https://fr.wikisource.org/wiki/D%C3%A9claration_des_droits_de_la_femme_et_de_la_citoyenne">
+
+Article premier. La Femme naît libre et demeure égale à l'homme en droits. Les distinctions sociales ne peuvent être fondées que sur l'utilité commune.
+
+[…]
+
+X. […] la femme a le droit de monter sur l'échafaud ; elle doit avoir également celui de monter à la Tribune […].
+
+</Citation>
+
+Le texte n'a presque aucun écho sur le moment ; il deviendra au XXe siècle un symbole. Les femmes ont pourtant pris une part active à la Révolution, dans les journées d'octobre 1789, les clubs et les tribunes des assemblées ; mais les clubs féminins seront interdits en octobre 1793.
+
+<Encadre type="retenir">
+
+- La Constituante **refait la France** : départements, élus partout, fin de la noblesse et des corporations, liberté du travail.
+- La vente des **biens du clergé** et l'**assignat** doivent résoudre la crise financière ; ils créent une classe d'acquéreurs attachés à la Révolution.
+- La **Constitution civile du clergé** coupe l'Église et les catholiques en deux : c'est une fracture durable.
+- La **fuite à Varennes** (juin 1791) ruine la confiance dans le roi ; la fusillade du **Champ-de-Mars** divise les révolutionnaires.
+
+</Encadre>
+
+<span id="la-guerre-et-la-chute-du-roi" class="ancre"></span>
+
+## La guerre et la chute du roi (1791-1792)
+
+<Question>Pourquoi la France entre-t-elle en guerre contre l'Europe, et pourquoi cette guerre emporte-t-elle la monarchie ?</Question>
+
+### Une assemblée nouvelle, des tensions anciennes
+
+L'**Assemblée législative** se réunit le 1er octobre 1791. Ses 745 députés sont des hommes nouveaux. À droite siègent les Feuillants, partisans de la Constitution et du roi ; à gauche, les députés proches des Jacobins, dont les plus brillants, autour du journaliste **Brissot** et des orateurs venus de la Gironde comme **Vergniaud**, seront appelés plus tard les **[Girondins](#glossaire-girondins)** ; au centre, une masse d'indécis. À l'extérieur, les émigrés se rassemblent à Coblence, sur le Rhin, autour des frères du roi ; dans l'Ouest et le Midi, les prêtres réfractaires sont au cœur de troubles. En novembre 1791, l'Assemblée vote deux décrets, l'un contre les émigrés, l'autre contre les réfractaires ; le roi oppose son veto aux deux.
+
+Depuis la déclaration de Pillnitz (août 1791), où l'empereur d'Autriche et le roi de Prusse ont évoqué une action commune en faveur de Louis XVI, la guerre est dans tous les esprits. Elle arrange presque tout le monde, pour des raisons opposées. Brissot et ses amis veulent la guerre pour démasquer les traîtres, forcer le roi à choisir son camp et porter la liberté aux peuples voisins. La cour la souhaite aussi, en espérant que les armées révolutionnaires, désorganisées par l'émigration des officiers nobles, seront battues et que les vainqueurs rétabliront le pouvoir du roi. La Fayette espère y gagner un rôle. Seul ou presque, Robespierre, aux Jacobins, s'y oppose. « Personne n'aime les missionnaires armés », lance-t-il aux Jacobins le 2 janvier 1792 : on ne libère pas un peuple en l'envahissant, et l'ennemi est d'abord à l'intérieur.
+
+<span id="20-avril-1792" class="ancre"></span>
+
+Le **20 avril 1792**, la France déclare la guerre au « roi de Bohême et de Hongrie », le jeune François II, neveu de Marie-Antoinette ; la Prusse se joint à l'Autriche. Les premiers combats sont des déroutes : des soldats massacrent un de leurs généraux, des régiments passent à l'ennemi. Pour beaucoup, la trahison est partout, à commencer par la cour, où la reine transmet en effet des informations à Vienne.
+
+### « La patrie en danger »
+
+En juin, le roi met son veto à deux nouveaux décrets, l'un qui ordonne la déportation des prêtres réfractaires, l'autre qui crée un camp de fédérés près de Paris, et il renvoie les ministres girondins. Le **20 juin 1792**, les sans-culottes envahissent les Tuileries ; le roi, coiffé du bonnet rouge, boit à la santé de la nation, mais ne cède pas. Les **[sans-culottes](#glossaire-sans-culottes)**, artisans, boutiquiers et compagnons des faubourgs, qui portent le pantalon et non la culotte des gens aisés, deviennent une force politique : ils se réunissent dans les **[sections](#glossaire-sections)** de Paris et réclament la déchéance du roi.
+
+Le **11 juillet**, l'Assemblée proclame **« la patrie en danger »** : les volontaires affluent. Les fédérés venus de province pour la fête du 14 juillet restent à Paris ; ceux de Marseille arrivent fin juillet en chantant le *Chant de guerre pour l'armée du Rhin*, composé à Strasbourg en avril par Rouget de Lisle, que l'on appelle désormais **la Marseillaise**. Le 1er août, on connaît à Paris le manifeste du duc de Brunswick, chef des armées prussiennes : il menace Paris d'une « exécution militaire » s'il est fait le moindre outrage au roi. Ce texte, destiné à protéger Louis XVI, achève de le perdre : il le montre complice de l'ennemi.
+
+<span id="10-aout-1792" class="ancre"></span>
+
+### Le 10 août 1792
+
+Dans la nuit du 9 au 10 août, les sections parisiennes remplacent la municipalité par une **Commune insurrectionnelle**. Au matin du **10 août**, sans-culottes et fédérés marchent sur les Tuileries. La famille royale se réfugie dans la salle de l'Assemblée. Au palais, les gardes suisses ouvrent le feu, puis reçoivent l'ordre du roi de cesser le combat ; plusieurs centaines d'entre eux sont massacrés, et les assaillants comptent aussi plusieurs centaines de morts et de blessés, selon les estimations.
+
+<Oeuvre id="tuileries" image="01/tuileries" artiste="bertaux" titre="Prise du palais des Tuileries, le 10 août 1792" date="1793" technique="huile sur toile" lieu="Versailles, musée national des châteaux de Versailles et de Trianon" faits="1792" regard="contemporain" commons="https://commons.wikimedia.org/wiki/File:Jacques_Bertaux_-_La_Journ%C3%A9e_du_10_ao%C3%BBt_(1792).jpg" alt="Combat dans la cour du palais des Tuileries : fumée, cadavres de gardes suisses en habit rouge, insurgés à l'assaut sous un ciel embrasé.">
+<div slot="lire">
+
+Bertaux peint la scène dès 1793, en pleine République jacobine. Au premier plan, les habits rouges des Suisses jonchent le pavé ; au centre, les insurgés avancent dans la fumée, sous un ciel d'incendie. Le point de vue est celui des vainqueurs : le combat est une victoire du peuple, les morts suisses un décor. Le roi n'apparaît pas : il a déjà quitté le palais. En couleur, dans la visionneuse, le rouge des uniformes et des flammes donne toute sa violence à la toile.
+
+</div>
+</Oeuvre>
+
+L'Assemblée suspend le roi, qui est enfermé avec sa famille dans la tour du Temple, et décide d'élire au **suffrage universel masculin** une nouvelle assemblée, la **Convention nationale**, chargée de donner à la France une nouvelle constitution. La distinction entre citoyens actifs et passifs disparaît. C'est une seconde révolution, faite contre le roi et contre la constitution de 1791 ; La Fayette, qui a tenté de faire marcher son armée sur Paris, passe à l'ennemi. Danton devient ministre de la Justice.
+
+<span id="massacres-de-septembre" class="ancre"></span>
+
+### Les massacres de Septembre
+
+Les Prussiens avancent : Longwy tombe le 23 août, Verdun est assiégée. Le **2 septembre**, Danton, devant l'Assemblée, appelle à la levée générale :
+
+<Citation auteur="Danton" oeuvre="Discours à l'Assemblée législative" date="séance du 2 septembre 1792" edition="Danton, Discours, La Patrie en danger, éd. L. Boulanger, 1893, p. 8-9" lien="https://fr.wikisource.org/wiki/La_Patrie_en_danger_(Danton)/Mesures_r%C3%A9volutionnaires_(II)">
+
+Le tocsin qu'on va sonner n'est point un signal d'alarme, c'est la charge sur les ennemis de la patrie. (On applaudit.) Pour les vaincre, il nous faut de l'audace, encore de l'audace, toujours de l'audace, et la France est sauvée.
+
+</Citation>
+
+Le même jour, dans Paris, la peur des « traîtres de l'intérieur » tourne au massacre. On croit que les prisonniers, prêtres réfractaires, nobles, suspects, mais aussi droits communs, vont se soulever quand les volontaires seront partis. Du 2 au 6 septembre, des bandes envahissent les prisons, improvisent des « tribunaux » et tuent, selon les estimations, entre 1 100 et 1 400 détenus, dont environ la moitié des prisonniers de Paris. Ni l'Assemblée ni la Commune ne les arrêtent. Ces **massacres de Septembre** horrifient l'Europe et pèseront longtemps sur l'image de la Révolution ; les Girondins en feront grief à leurs adversaires parisiens.
+
+<span id="21-septembre-1792" class="ancre"></span>
+
+### Valmy et la République
+
+Le **20 septembre 1792**, à **Valmy**, en Argonne, l'armée française de Dumouriez et Kellermann tient tête aux Prussiens sous la canonnade ; le soir, Brunswick renonce à l'assaut, puis se retire. C'est moins une grande bataille qu'un coup d'arrêt, mais l'invasion est repoussée. Le même jour se réunit la **Convention**. Le lendemain, **21 septembre**, elle abolit la royauté ; le 22, elle décide de dater désormais les actes publics de l'an I de la République. La République n'a pas été proclamée solennellement : elle naît de la disparition du roi. Elle est déclarée « une et indivisible » quelques jours plus tard.
+
+<Encadre type="retenir">
+
+- La **guerre**, déclarée le 20 avril 1792, est voulue par les Girondins comme par la cour, pour des raisons opposées.
+- Les défaites et les vetos du roi le font apparaître comme un traître : le **10 août 1792**, l'insurrection parisienne renverse la monarchie.
+- La peur de l'invasion provoque les **massacres de Septembre** (plus d'un millier de prisonniers tués).
+- **Valmy** (20 septembre) arrête l'invasion ; le 21 septembre, la Convention abolit la royauté : c'est la naissance de la **Première République**.
+
+</Encadre>
+
+<span id="la-convention" class="ancre"></span>
+
+## La Convention, la République en guerre (1792-1794)
+
+<Question>Pourquoi une République née au nom des droits de l'homme en vient-elle à gouverner par la Terreur ?</Question>
+
+### Girondins et Montagnards
+
+La Convention compte 749 députés, tous républicains, mais divisés. Les **Girondins**, nombreux et éloquents, se méfient de Paris, de sa Commune et de ses sans-culottes, et veulent que les départements pèsent autant que la capitale. Les **[Montagnards](#glossaire-montagnards)**, qui siègent sur les gradins les plus élevés, la « Montagne », s'appuient au contraire sur les Jacobins et le peuple parisien : Robespierre, Danton, Marat, le jeune Saint-Just. Entre les deux, la **[Plaine](#glossaire-plaine)**, ou le Marais, majoritaire, fait pencher la balance. La victoire de Jemmapes (6 novembre 1792) ouvre la Belgique aux armées françaises ; la Convention promet « fraternité et secours » aux peuples qui voudront recouvrer leur liberté.
+
+<span id="21-janvier-1793" class="ancre"></span>
+
+### Le procès du roi
+
+Que faire de Louis XVI, devenu « Louis Capet » ? Les Girondins voudraient l'épargner ou retarder la décision ; les Montagnards exigent sa mort. Le 13 novembre 1792, Saint-Just, vingt-cinq ans, prononce son premier discours :
+
+<Citation auteur="Saint-Just" oeuvre="Discours concernant le jugement de Louis XVI" date="Convention nationale, 13 novembre 1792" edition="Œuvres complètes, éd. Charles Vellay, Fasquelle, 1908, t. I" lien="https://fr.wikisource.org/wiki/%C5%92uvres_compl%C3%A8tes_de_Saint-Just/3/III">
+
+On ne peut point régner innocemment : la folie en est trop évidente. Tout roi est un rebelle et un usurpateur.
+
+</Citation>
+
+Pour Saint-Just, le roi n'est pas un accusé ordinaire à juger selon les lois, mais un ennemi à combattre : être roi est en soi un crime. La découverte aux Tuileries, le 20 novembre, d'une armoire secrète, l'« armoire de fer », contenant la correspondance du roi avec ses agents, accable Louis XVI. La Convention le juge elle-même. En janvier 1793, à l'issue de votes par appel nominal où chaque député doit s'exprimer à la tribune, il est déclaré coupable presque à l'unanimité, puis condamné à mort par une courte majorité (387 voix contre 334, selon le décompte officiel) ; le sursis est refusé. Louis XVI est guillotiné le **21 janvier 1793**, place de la Révolution, l'actuelle place de la Concorde.
+
+<Oeuvre id="supplice" image="01/supplice" artiste="swebach" mention="gravé par Pierre-Gabriel Berthault" titre="Supplice de Louis XVI, place de la Révolution, le 21 janvier 1793" date="entre 1793 et 1804" technique="gravure, planche des Tableaux historiques de la Révolution française" lieu="Paris, musée Carnavalet - Histoire de Paris" faits="1793" regard="contemporain" commons="https://commons.wikimedia.org/wiki/File:N%C2%B078_Supplice_de_Louis_XVI,_place_de_la_r%C3%A9volution._Le_21_Janvier_1793_ou_Ier_Pluvi%C3%B4se_An_Ier_de_la_R%C3%A9publique._G.28718.jpg" musee="https://www.parismuseescollections.paris.fr/fr/musee-carnavalet/oeuvres/ndeg78-supplice-de-louis-xvi-place-de-la-revolution-le-21-janvier-1793-ou" alt="Gravure : la place de la Révolution couverte de troupes à cheval ; au fond, devant la colonnade de l'hôtel du Garde-Meuble, un petit échafaud.">
+<div slot="lire">
+
+La place est noire de soldats ; l'échafaud, minuscule, se perd au fond, devant la colonnade du Garde-Meuble. La planche appartient aux mêmes *Tableaux historiques de la Révolution française* que le serment du Jeu de paume : vue large, foule ordonnée, légende sèche, datée aussi selon le calendrier républicain. Cette neutralité est un choix : elle tient à distance l'horreur comme la ferveur. Le régicide, qui bouleverse l'Europe, apparaît ici comme une opération d'ordre public parfaitement encadrée.
+
+</div>
+</Oeuvre>
+
+L'exécution du roi est une rupture sans retour. Pour les royalistes, elle fait des conventionnels « régicides » des criminels ; pour l'Europe des rois, elle est une déclaration de guerre. Au début de 1793, la France est en guerre contre l'Angleterre, les Provinces-Unies, l'Espagne, l'Autriche, la Prusse et la plupart des États italiens : c'est la **première coalition**.
+
+<span id="guerre-de-vendee" class="ancre"></span>
+
+### La Vendée et le temps des périls
+
+Pour faire face, la Convention décrète en février 1793 la levée de 300 000 hommes, désignés dans chaque commune. Dans l'Ouest, c'est l'étincelle. Les paysans des Mauges, du Bocage et du Marais breton, déjà blessés par la persécution de leurs prêtres réfractaires et déçus par une Révolution qui a surtout profité aux bourgeois des villes, refusent de partir. En mars 1793, l'insurrection gagne une région qu'on appellera la « Vendée militaire » (aux confins de la Vendée, du Maine-et-Loire, de la Loire-Inférieure et des Deux-Sèvres). Les insurgés se donnent des chefs, des nobles comme d'Elbée, Charette, La Rochejaquelein, mais aussi un voiturier, Cathelineau, et un garde-chasse, Stofflet : c'est l'**armée catholique et royale**, qui prend Saumur et Angers en juin 1793. Au nord de la Loire, une guérilla, la **[chouannerie](#glossaire-chouans)**, se développe aussi.
+
+Au même moment, tout s'effondre aux frontières : battu à Neerwinden (18 mars), le général Dumouriez tente d'entraîner son armée contre Paris, puis passe aux Autrichiens (avril). La Convention crée des institutions d'exception : un **Tribunal révolutionnaire** (mars), des représentants « en mission » dans les départements et aux armées, un **[Comité de salut public](#glossaire-comite-de-salut-public)** (avril). Dans Paris, où le prix des denrées flambe, les sans-culottes et les **[Enragés](#glossaire-enrages)** du prêtre Jacques Roux réclament la taxation des prix et la punition des accapareurs.
+
+<span id="2-juin-1793" class="ancre"></span>
+
+### La chute des Girondins
+
+Les Girondins attaquent les meneurs parisiens ; ils font arrêter Hébert, journaliste du *Père Duchesne*, et traduire Marat devant le Tribunal révolutionnaire, qui l'acquitte triomphalement. Vergniaud avait mis en garde la Convention, en mars, contre une Révolution qui, à la manière de Saturne dans la mythologie, finirait par dévorer ses propres enfants : la formule, rapportée sous plusieurs formes, est restée célèbre. Les 31 mai et **2 juin 1793**, les sections parisiennes, appuyées par la garde nationale qui encercle la Convention de ses canons, obtiennent l'arrestation de vingt-neuf députés girondins et de deux ministres. La Montagne domine désormais l'Assemblée, mais elle doit son pouvoir à la pression de la rue.
+
+Plusieurs grandes villes, Lyon, Marseille, Bordeaux, Caen, refusent ce coup de force contre la représentation nationale et se soulèvent : ce sont les insurrections **[fédéralistes](#glossaire-federalistes)**. Toulon se livre aux Anglais en août. Le 13 juillet, une jeune Normande proche des Girondins, **Charlotte Corday**, poignarde Marat dans sa baignoire ; la Montagne en fait un martyr.
+
+<Oeuvre id="mort-de-marat" image="01/mort-de-marat" artiste="david" titre="Marat assassiné" date="1793" technique="huile sur toile" lieu="Bruxelles, Musées royaux des Beaux-Arts de Belgique" faits="1793" regard="contemporain" commons="https://commons.wikimedia.org/wiki/File:Jacques-Louis_David_-_Marat_assassinated_-_Google_Art_Project_2.jpg" alt="Marat mort dans sa baignoire, la tête enturbannée renversée, une lettre dans une main, la plume tombée de l'autre, sur un fond sombre et nu.">
+<div slot="lire">
+
+Député à la Convention et ami de Marat, David est chargé de peindre le « martyr » au lendemain du meurtre ; le tableau est offert à la Convention en novembre 1793. Tout y est dépouillé : un mur vide, une caisse de bois portant la dédicace « À Marat, David », la baignoire où le journaliste, malade de la peau, travaillait. Le corps rappelle le Christ descendu de la croix ; la lettre de Charlotte Corday et la plume disent la victime trahie en plein travail. La meurtrière est absente, et l'homme qui réclamait des têtes apparaît comme un saint laïque : c'est un chef-d'œuvre de propagande.
+
+</div>
+</Oeuvre>
+
+La Convention vote en juin une nouvelle constitution, très démocratique : suffrage universel masculin, référendum sur les lois, droit à l'instruction et à l'assistance. Cette **Constitution de l'an I** (24 juin 1793) est approuvée par référendum, puis mise à l'abri dans une arche de cèdre : on décide de ne l'appliquer qu'à la paix. Elle ne le sera jamais. Le 10 octobre, la Convention déclare que le gouvernement sera « révolutionnaire jusqu'à la paix ».
+
+<span id="la-terreur" class="ancre"></span>
+
+### La Terreur
+
+À l'été 1793, la République semble perdue : les ennemis aux frontières, la Vendée victorieuse, les deux tiers des départements en rébellion plus ou moins ouverte, Paris affamé. C'est dans ce contexte que se met en place ce qu'on appellera **la Terreur**. Le 27 juillet, **Robespierre** entre au Comité de salut public. Le 23 août, la Convention décrète la **levée en masse** : tous les Français sont « en réquisition permanente » pour la guerre. Le 5 septembre, les sans-culottes envahissent la Convention ; elle cède à une partie de leurs exigences et crée une armée révolutionnaire chargée de faire appliquer les lois sur les subsistances.
+
+Les lois se succèdent. La **[loi des suspects](#glossaire-loi-des-suspects)** (17 septembre 1793) permet d'arrêter tous ceux qui, par leur conduite, leurs relations ou leurs propos, paraissent ennemis de la liberté. Le **[maximum](#glossaire-maximum)** général (29 septembre) fixe un prix maximal pour les denrées de première nécessité et pour les salaires. La reine Marie-Antoinette est guillotinée le 16 octobre, les députés girondins le 31 octobre, Olympe de Gouges le 3 novembre.
+
+<span id="calendrier-republicain" class="ancre"></span>
+
+En octobre 1793, la Convention adopte aussi un **[calendrier républicain](#glossaire-calendrier-republicain)**, pour effacer le calendrier chrétien et rendre sensible l'entrée dans une ère nouvelle. L'an I a commencé le 22 septembre 1792, au lendemain de l'abolition de la royauté. L'année compte douze mois de trente jours, aux noms tirés des saisons (vendémiaire, le mois des vendanges, brumaire, frimaire en automne ; nivôse, pluviôse, ventôse en hiver ; germinal, floréal, prairial au printemps ; messidor, thermidor, fructidor en été), plus cinq ou six jours complémentaires. Chaque mois se divise en trois **décades** de dix jours, et le dimanche disparaît au profit du décadi. Désormais, ce récit donne les dates selon ce calendrier, suivies de leur équivalent : le 9 thermidor an II correspond au 27 juillet 1794.
+
+À l'automne de l'an II, une vague de **déchristianisation** déferle, menée par des représentants en mission et par les hébertistes : des églises sont fermées ou transformées en « temples de la Raison », des prêtres contraints d'abdiquer, des cloches fondues pour les canons. Le 20 brumaire an II (10 novembre 1793), une fête de la Liberté et de la Raison est célébrée dans la cathédrale Notre-Dame. Robespierre, qui y voit une provocation dangereuse pour les campagnes catholiques, fait réaffirmer la liberté des cultes.
+
+La répression frappe surtout les régions insurgées. Lyon, reprise en octobre 1793, doit être en partie détruite selon un décret de la Convention et perdre son nom pour celui de Ville-Affranchie ; des centaines de condamnés y sont fusillés en masse. À Nantes, le représentant Carrier fait noyer dans la Loire, au cours de l'hiver, plusieurs milliers de prisonniers. En Vendée, l'armée catholique et royale, battue à Cholet (octobre 1793), franchit la Loire avec des dizaines de milliers de civils, échoue devant Granville et est anéantie à Savenay le 3 nivôse an II (23 décembre 1793). Puis, de janvier à mai 1794, les « colonnes infernales » du général Turreau ravagent le pays insurgé, tuant combattants et civils, femmes et enfants compris. Au total, la guerre de Vendée a fait, selon les estimations, de l'ordre de 150 000 à 200 000 morts dans les deux camps et dans la population, en comptant les victimes des combats, des massacres, des épidémies et de la faim.
+
+Pour la France entière, on estime qu'environ 500 000 personnes ont été arrêtées comme suspectes, qu'environ 17 000 ont été condamnées à mort par les tribunaux, et que plusieurs dizaines de milliers d'autres sont mortes exécutées sans jugement ou en prison. Contrairement à une image répandue, la majorité des victimes ne sont ni des nobles ni des prêtres, mais des paysans et des artisans, surtout dans les régions en guerre civile.
+
+<Encadre type="historiens" titre="La Vendée, une guerre civile ou un « génocide » ?">
+
+La répression de la Vendée est l'un des sujets les plus disputés de l'histoire de la Révolution. Dès l'hiver 1794-1795, <a href={urlFigure('xixe', 'babeuf')}>Babeuf</a>, dans un pamphlet contre Carrier, *Du système de dépopulation*, dénonce un « populicide ». En 1986, **Reynald Secher**, dans *La Vendée-Vengé*, parle de « génocide franco-français », thèse soutenue par l'historien **Pierre Chaunu**. La plupart des historiens de la période, comme **Jean-Clément Martin**, contestent le terme : selon eux, il n'y a pas eu de projet d'exterminer un peuple défini par sa naissance, mais une guerre civile d'une violence extrême, où les républicains ont commis des massacres de masse et des crimes de guerre, et où les insurgés ont aussi massacré. Tous s'accordent sur l'ampleur des tueries et sur la responsabilité des autorités qui les ont ordonnées ou couvertes ; le désaccord porte sur la qualification juridique et sur l'intention. Le débat a longtemps eu aussi un enjeu politique, en particulier autour du bicentenaire de 1989.
+
+</Encadre>
+
+### Le gouvernement révolutionnaire
+
+Pourquoi tant de violence ? Les hommes du Comité de salut public, Robespierre, Saint-Just, Couthon, Billaud-Varenne, Collot d'Herbois, Barère, et Carnot pour la guerre, se pensent en état de siège. La République doit vaincre ou mourir : contre une coalition européenne et une guerre civile, il faut un pouvoir fort, centralisé, capable d'imposer ses décisions en quelques jours, de nourrir les villes et les armées par la contrainte, et de briser toute opposition. La Terreur est aussi un moyen, pour la Convention, de garder le contrôle de la violence populaire, qui s'était exprimée en septembre 1792, en l'encadrant par des lois et des tribunaux. Robespierre lui donne une justification morale dans un discours resté fameux :
+
+<Citation auteur="Robespierre" oeuvre="Sur les principes de morale politique qui doivent guider la Convention nationale dans l'administration intérieure de la République" date="Convention nationale, 17 pluviôse an II (5 février 1794)" edition="Œuvres de Robespierre, éd. A. Vermorel, F. Cournol, 1866" lien="https://fr.wikisource.org/wiki/%C5%92uvres_de_Robespierre/Sur_les_principes_de_morale_politique">
+
+Si le ressort du gouvernement populaire dans la paix est la vertu, le ressort du gouvernement populaire en révolution est à la fois la vertu et la terreur : la vertu, sans laquelle la terreur est funeste ; la terreur, sans laquelle la vertu est impuissante. La terreur n'est autre chose que la justice prompte, sévère, inflexible ; elle est donc une émanation de la vertu […].
+
+</Citation>
+
+La même année, la Convention prend aussi de grandes mesures sociales et égalitaires : l'abolition de l'**esclavage** dans les colonies (16 pluviôse an II, 4 février 1794), après la révolte des esclaves de Saint-Domingue ; des projets d'instruction publique et d'assistance aux indigents ; les décrets de ventôse, qui prévoient de distribuer aux patriotes pauvres les biens des suspects, mais ne seront guère appliqués.
+
+<Oeuvre id="gouvernement-robespierre" image="01/gouvernement-robespierre" createur="Anonyme" titre="Le Gouvernement de Robespierre" date="1794" technique="gravure" lieu="Paris, Bibliothèque nationale de France, collection De Vinck" faits="1794" regard="contemporain" periode="1787-1799" commons="https://commons.wikimedia.org/wiki/File:Le_Gouvernement_de_Robespierre_-_la_sc%C3%A8ne_se_passe_sur_la_place_de_la_R%C3%A9volution_-_estampe_-_non_identifi%C3%A9_-_btv1b53009787d.jpg" musee="https://gallica.bnf.fr/ark:/12148/btv1b53009787d" alt="Gravure : sur un échafaud, le bourreau couché sous le couperet de sa propre guillotine ; au pied, des tas de têtes étiquetées Clergé, Parlement, Noblesse, Constituante, Législature, Convention, Peuple ; à gauche, une statue de la Liberté.">
+<div slot="lire">
+
+Cette caricature est publiée après la chute de Robespierre, en 1794. Faute de victimes, le bourreau se guillotine lui-même. Au pied de l'échafaud, des monceaux de têtes portent leurs étiquettes : le clergé, les parlements, la noblesse, puis les assemblées révolutionnaires elles-mêmes, et enfin le peuple. Le message est celui des vainqueurs de Thermidor : la Terreur a tout dévoré, et elle est l'œuvre d'un seul homme. C'est ainsi que naît l'image d'un « système » de Robespierre, que les historiens discutent aujourd'hui.
+
+</div>
+</Oeuvre>
+
+<span id="hebertistes-et-indulgents" class="ancre"></span>
+
+### Les factions abattues
+
+Au printemps de l'an II, le Comité frappe des deux côtés. À gauche, les **hébertistes**, qui animent le club des Cordeliers et réclament plus de terreur et plus de déchristianisation, sont accusés de préparer une insurrection : Hébert et ses amis sont guillotinés le 4 germinal an II (24 mars 1794). À droite, les **indulgents**, Danton et Camille Desmoulins, qui réclament la fin de la Terreur et l'ouverture de négociations de paix, sont arrêtés à leur tour, jugés pour corruption et complot, et exécutés le 16 germinal an II (5 avril 1794). Le Comité a éliminé ceux qui le débordaient sur sa gauche et sur sa droite ; mais il a aussi brisé le mouvement sans-culotte, qui l'avait porté au pouvoir.
+
+<span id="grande-terreur" class="ancre"></span>
+
+Le 20 prairial an II (8 juin 1794), Robespierre préside à Paris la **fête de l'Être suprême** : il veut fonder une religion civique, qui reconnaisse l'existence de Dieu et l'immortalité de l'âme, contre l'athéisme des déchristianisateurs. Deux jours plus tard, la **loi du 22 prairial** (10 juin 1794) simplifie la procédure du Tribunal révolutionnaire : plus d'interrogatoire préalable, plus d'avocat, plus de témoins obligatoires, une seule peine, la mort. C'est la **Grande Terreur** : à Paris, en sept semaines, le Tribunal prononce plus de condamnations à mort qu'au cours des quatorze mois précédents, de l'ordre de 1 300 à 1 400. Or, au même moment, la situation militaire se redresse : la victoire de **Fleurus** (8 messidor an II, 26 juin 1794) ouvre de nouveau la Belgique. Les raisons d'invoquer le danger s'effacent ; la Terreur continue.
+
+<span id="9-thermidor" class="ancre"></span>
+
+### Le 9 Thermidor
+
+Beaucoup de députés se sentent menacés : d'anciens représentants en mission rappelés pour leurs excès (Fouché, Tallien, Barras, Fréron), des membres du Comité de sûreté générale, et même des collègues de Robespierre au Comité de salut public, hostiles à son influence. Le 8 thermidor an II, Robespierre annonce à la Convention qu'il faut épurer les comités, sans nommer personne : chacun se croit visé. Le lendemain, **9 thermidor an II (27 juillet 1794)**, il est empêché de parler, accusé de tyrannie, et décrété d'arrestation avec Saint-Just, Couthon et quelques autres. La Commune de Paris tente de le sauver, mais les sections la suivent peu. Mis hors la loi, Robespierre et ses amis sont guillotinés sans jugement le lendemain, avec, dans les jours suivants, plus de quatre-vingts membres de la Commune.
+
+<Encadre type="historiens" titre="La Terreur, « bloc » ou « dérapage » ?">
+
+Dès 1794, les thermidoriens ont fait de la Terreur un « système » inventé par Robespierre, ce qui les dédouanait de leur propre rôle. Au XIXe siècle, les républicains se divisent sur cet héritage ; en 1891, Clemenceau soutient à la Chambre que la Révolution forme un « bloc » qu'on ne peut découper : on ne peut garder 1789 et rejeter 1793. Au XXe siècle, **Albert Mathiez**, admirateur de Robespierre, puis **Georges Lefebvre** et **Albert Soboul** expliquent la Terreur surtout par les **circonstances** : la guerre étrangère, la guerre civile, la pression des sans-culottes. **François Furet** et **Denis Richet** (*La Révolution française*, 1965) parlent au contraire d'un **dérapage** de la Révolution libérale de 1789 ; plus tard, Furet voit dans la Terreur une conséquence de la logique même de la politique révolutionnaire, qui fait de toute opposition une trahison. Aujourd'hui, des historiens comme **Jean-Clément Martin** soulignent que la Terreur n'a jamais été un régime officiellement proclamé ni un système cohérent, mais un ensemble de mesures d'exception et de violences, voulues par des acteurs multiples, que le mot de « Terreur » a unifiées après coup.
+
+</Encadre>
+
+<Encadre type="retenir">
+
+- La **mort du roi** (21 janvier 1793) rend la rupture irréversible et étend la guerre à toute l'Europe.
+- L'**insurrection vendéenne** et les révoltes **fédéralistes** après l'élimination des Girondins (2 juin 1793) font de 1793 une année de guerre civile.
+- Pour sauver la République, la Convention organise un **gouvernement révolutionnaire** : Comité de salut public, loi des suspects, maximum, levée en masse ; c'est **la Terreur**, avec des dizaines de milliers de morts.
+- Le **9 thermidor an II** (27 juillet 1794), Robespierre est renversé par une coalition de députés qui se sentent menacés.
+
+</Encadre>
+
+<span id="thermidor-et-directoire" class="ancre"></span>
+
+## La République thermidorienne et le Directoire (1794-1799)
+
+<Question>Pourquoi la République, une fois la Terreur finie, ne parvient-elle pas à se stabiliser, et pourquoi finit-elle par se donner à un général ?</Question>
+
+### La réaction thermidorienne
+
+Les **[thermidoriens](#glossaire-thermidoriens)** n'avaient pas renversé Robespierre pour finir la Terreur ; mais l'opinion, soulagée, les y pousse. Les prisons s'ouvrent, la loi de prairial est abrogée, le Tribunal révolutionnaire perd ses pouvoirs puis disparaît. Le club des Jacobins est fermé le 22 brumaire an III (12 novembre 1794) ; les Girondins survivants reviennent siéger. Carrier, le noyeur de Nantes, est jugé et guillotiné. Dans les rues de Paris, la « jeunesse dorée », les **[muscadins](#glossaire-muscadins)**, fait la chasse aux jacobins à coups de gourdin. Dans le Midi, une **Terreur blanche** se déchaîne en 1795 : des bandes royalistes massacrent d'anciens terroristes et des prisonniers jacobins.
+
+Le maximum est aboli le 4 nivôse an III (24 décembre 1794). La liberté des prix, au cœur de l'hiver le plus froid du siècle, provoque une flambée vertigineuse ; l'assignat s'effondre ; dans les faubourgs, on meurt de faim, tandis que les spéculateurs et les fournisseurs des armées affichent un luxe insolent.
+
+<span id="journees-de-prairial" class="ancre"></span>
+
+Les sans-culottes tentent un dernier soulèvement : le 12 germinal an III (1er avril 1795), puis surtout le **1er prairial an III (20 mai 1795)**, ils envahissent la Convention en réclamant du pain et l'application de la Constitution de 1793. Un député, Féraud, est tué et sa tête présentée au président de séance. Mais la Convention fait appel à l'armée, qui désarme le faubourg Saint-Antoine. Des députés montagnards solidaires des insurgés sont condamnés à mort. C'est la fin du mouvement populaire parisien : l'armée devient l'arbitre des conflits politiques, et le peuple de Paris ne se soulèvera plus avant 1830.
+
+Les royalistes, eux, croient leur heure venue. Le fils de Louis XVI, que les royalistes appelaient Louis XVII, meurt au Temple en juin 1795 ; son oncle, le comte de Provence, réfugié à Vérone, se proclame Louis XVIII et promet de rétablir l'Ancien Régime et de punir les régicides. En juillet, un débarquement d'émigrés soutenu par les Anglais est écrasé à Quiberon, en Bretagne, par le général Hoche.
+
+<span id="13-vendemiaire" class="ancre"></span>
+
+### La Constitution de l'an III
+
+Pour éviter à la fois le retour de la dictature jacobine et le pouvoir de la rue, la Convention vote la **Constitution de l'an III** (5 fructidor an III, 22 août 1795). Elle rétablit le suffrage censitaire, à deux degrés ; elle divise le pouvoir législatif entre deux conseils, celui des **Cinq-Cents**, qui propose les lois, et celui des **Anciens**, qui les vote ; elle confie le pouvoir exécutif à un **Directoire** de cinq membres, renouvelé par cinquième chaque année. Une déclaration des droits, mais aussi des devoirs, l'accompagne : l'égalité y est celle des droits, non des biens. Par crainte d'une majorité royaliste, la Convention décide que les deux tiers des futurs députés seront choisis parmi ses membres. Les royalistes de Paris s'insurgent : le **13 vendémiaire an IV (5 octobre 1795)**, leurs colonnes sont dispersées à coups de canon, devant l'église Saint-Roch, par les troupes de Barras, qui a pris pour adjoint un jeune général corse, **Napoléon Bonaparte**. Le 4 brumaire an IV (26 octobre 1795), la Convention se sépare.
+
+<span id="le-directoire" class="ancre"></span>
+
+### Un régime fragile
+
+Le **Directoire** (1795-1799) veut être le gouvernement des propriétaires et des modérés, entre royalistes et jacobins. Il doit pourtant faire face à une situation économique désastreuse : l'assignat, remplacé en 1796 par des « mandats territoriaux » qui s'effondrent à leur tour, laisse place au retour de la monnaie métallique en 1797, et l'État fait de nouveau en partie banqueroute (la « banqueroute des deux tiers », 1797). Le régime, où l'on se souvient surtout des fortunes rapides et des fêtes de la société parisienne, n'a jamais été très populaire.
+
+<span id="conjuration-des-egaux" class="ancre"></span>
+
+Sur sa gauche, il est menacé par la **conjuration des Égaux**. Le journaliste <a href={urlFigure('xixe', 'babeuf')}>Gracchus Babeuf</a> y réclame, au nom de la Révolution elle-même, l'égalité réelle et la communauté des biens ; avec quelques anciens jacobins, il prépare une insurrection, mais il est dénoncé et arrêté le 21 floréal an IV (10 mai 1796), puis guillotiné un an plus tard, le 8 prairial an V (27 mai 1797). Son compagnon Buonarroti transmettra son projet aux révolutionnaires du XIXe siècle.
+
+<span id="18-fructidor" class="ancre"></span>
+
+Sur sa droite, les royalistes progressent : aux élections du printemps 1797 (an V), ils emportent la majorité des sièges à renouveler. Pour les empêcher de prendre le pouvoir légalement, trois des cinq directeurs, appuyés par les troupes du général Augereau, envoyé par Bonaparte, font un coup d'État le **18 fructidor an V (4 septembre 1797)** : les élections sont annulées dans 49 départements, des députés et des journalistes sont déportés en Guyane. L'année suivante, ce sont des élus jacobins que le Directoire écarte par la loi du 22 floréal an VI (11 mai 1798). Puis, le 30 prairial an VII (18 juin 1799), ce sont les Conseils qui obligent plusieurs directeurs à démissionner. Le régime ne survit qu'en violant sa propre constitution, et chaque coup de force rend l'armée plus indispensable.
+
+### L'ascension de Bonaparte
+
+Aux frontières, au contraire, la République victorieuse a annexé la Belgique et la rive gauche du Rhin et s'entoure de « républiques sœurs ». En 1796-1797, la **campagne d'Italie** fait la gloire de Bonaparte : à vingt-sept ans, il bat les Piémontais et les Autrichiens, négocie lui-même la paix de **Campo-Formio** (octobre 1797), fait parler de lui par ses propres journaux, et envoie au Directoire l'argent et les œuvres d'art des pays conquis. En 1798, pour frapper l'Angleterre sur la route des Indes, il part pour l'**Égypte** avec une armée et une commission de savants. Mais une deuxième coalition se forme en Europe ; en 1799, la France perd l'Italie, la conscription (loi Jourdan, 1798) provoque des révoltes, et les chouans reprennent les armes. Bonaparte quitte l'Égypte et débarque à Fréjus le 9 octobre 1799, accueilli en sauveur.
+
+<span id="18-brumaire" class="ancre"></span>
+
+### Le 18 Brumaire
+
+Sieyès, devenu directeur en mai 1799, veut réviser la constitution pour renforcer l'exécutif ; il cherche pour cela un général. Ce sera Bonaparte. Le **18 brumaire an VIII (9 novembre 1799)**, sous prétexte d'un complot jacobin, les Conseils sont transférés au château de Saint-Cloud, hors de Paris, et Bonaparte reçoit le commandement des troupes. Le 19 (10 novembre), les choses tournent mal : quand Bonaparte entre au Conseil des Cinq-Cents, les députés l'entourent et le bousculent ; selon les récits, certains crient qu'il faut le mettre hors la loi. Son frère **Lucien**, qui préside l'assemblée, sauve la situation : il fait entrer les grenadiers, qui dispersent les députés. Le soir, une poignée d'entre eux confie le pouvoir à trois **consuls** provisoires : Bonaparte, Sieyès et Roger Ducos.
+
+<Oeuvre id="bouchot-cinq-cents" image="revolution-francaise/bouchot-cinq-cents" createur="François Bouchot" titre="Le Général Bonaparte au Conseil des Cinq-Cents, à Saint-Cloud, 10 novembre 1799" date="1840" technique="huile sur toile" lieu="Versailles, musée national des châteaux de Versailles et de Trianon" faits="1799" regard="retrospectif" periode="1787-1799" commons="https://commons.wikimedia.org/wiki/File:Bouchot_-_Le_general_Bonaparte_au_Conseil_des_Cinq-Cents.jpg" alt="Dans la salle de l'Orangerie de Saint-Cloud, le général Bonaparte, en uniforme, entouré de grenadiers, fait face à des députés en toge rouge qui le menacent et le bousculent.">
+<div slot="lire">
+
+Bouchot peint la scène en 1840, pour le musée de l'Histoire de France voulu par Louis-Philippe à Versailles, l'année même où les cendres de Napoléon reviennent à Paris. Bonaparte, au centre, garde son calme au milieu des députés en toge qui l'apostrophent ; les grenadiers le protègent. La toile transforme un coup d'État militaire, mal engagé et sauvé par Lucien, en scène d'histoire digne et presque héroïque : la légende napoléonienne a déjà réécrit l'événement. Le tableau est daté de quarante ans après les faits ; c'est un regard rétrospectif.
+
+</div>
+</Oeuvre>
+
+Une nouvelle constitution, la **Constitution de l'an VIII**, rédigée en quelques semaines, donne l'essentiel du pouvoir au **Premier consul**, Bonaparte. En la présentant aux Français, les consuls proclament :
+
+<Citation auteur="Les consuls de la République" oeuvre="Proclamation aux Français" date="24 frimaire an VIII (15 décembre 1799)" edition="Cité par Albert Vandal, « La Conquête de Paris par Bonaparte (1799-1800), II », Revue des Deux Mondes, 1901 ; l'original est au Bulletin des lois" lien="https://fr.wikisource.org/wiki/La_Conqu%C3%AAte_de_Paris_par_Bonaparte_(1799-1800)/02">
+
+Citoyens, la Révolution est fixée aux principes qui l'ont commencée ; elle est finie.
+
+</Citation>
+
+La Révolution est-elle vraiment finie ? Pour Bonaparte, cela signifie qu'il en garde les acquis (l'égalité civile, la fin des privilèges, la vente des biens nationaux) tout en refermant le temps des assemblées et des insurrections. La suite appartient à l'histoire du Consulat et de l'Empire.
+
+<Encadre type="retenir">
+
+- Après Thermidor, la République se replie sur les **propriétaires** : fin de la Terreur, fin du maximum, écrasement des sans-culottes (**prairial an III**).
+- La **Constitution de l'an III** crée le **Directoire**, menacé à gauche (conjuration des **Égaux** de Babeuf) comme à droite (royalistes).
+- Le régime ne survit que par des **coups d'État** (Fructidor, Floréal, Prairial), qui donnent un rôle croissant à l'armée.
+- Le **18 brumaire an VIII** (9 novembre 1799), Bonaparte, général victorieux, prend le pouvoir avec l'appui de Sieyès.
+
+</Encadre>
+
+<span id="ce-que-laisse-la-revolution" class="ancre"></span>
+
+## Ce que la Révolution laisse au XIXe siècle
+
+En dix ans, la France a changé de fond en comble, et une grande partie de ces changements ne sera plus remise en cause. La **société d'ordres** a disparu : les Français sont égaux devant la loi et l'impôt, les emplois sont ouverts à tous, les droits seigneuriaux sont abolis. Les paysans qui ont acheté des biens nationaux et les bourgeois enrichis par la Révolution défendront ces acquis contre tout retour en arrière : même la Restauration, en 1814, ne rendra pas les biens vendus. La France a pris le visage administratif qu'elle garde encore : départements, communes, poids et mesures, état civil laïque tenu par les mairies (1792). L'idée de **souveraineté nationale** et celle de **droits de l'homme** s'imposent, même à ceux qui les combattent.
+
+Mais la Révolution laisse aussi des divisions profondes, qui structurent tout le XIXe siècle. Qui doit gouverner : un roi, un empereur ou la République ? Faut-il s'arrêter à 1789, la liberté et l'égalité des droits, ou aller jusqu'à 1793, la démocratie et l'égalité sociale ? Quelle place donner à l'Église catholique, blessée par la Constitution civile et par la déchristianisation ? Peut-on accepter la violence au nom de la liberté ? Chaque famille politique du siècle se définit par sa réponse et par sa mémoire de la Révolution : les <a href={urlLecon('xixe', 'courants-politiques/legitimistes')}>légitimistes</a> rejettent l'œuvre entière, les <a href={urlLecon('xixe', 'courants-politiques/orleanistes')}>orléanistes</a> se réclament de 1789, les <a href={urlLecon('xixe', 'courants-politiques/bonapartistes')}>bonapartistes</a> de Brumaire, les <a href={urlLecon('xixe', 'courants-politiques/republicains')}>républicains</a> de 1792, les <a href={urlLecon('xixe', 'courants-politiques/socialistes')}>socialistes</a> de Babeuf et de l'an II. Les révolutions de 1830, de 1848 et de 1871 rejoueront, souvent consciemment, les scènes et les mots de 1789-1794. Pour la suite de cette histoire, voir la leçon sur <a href={urlLecon('xixe', 'courants-politiques')}>les courants politiques</a>.
+
+*Voir aussi* : le prologue de la section « écrivains », <a href={urlChapitreEcrivains('xixe', '00-prologue')}>la fin de l'Ancien Régime</a> ; son premier chapitre, <a href={urlChapitreEcrivains('xixe', '01-revolution')}>la Révolution racontée par ses témoins</a> ; le diaporama <a href={urlDiaporama('xixe', 'revolution')}>la Révolution en images</a> ; le portrait de <a href={urlFigure('xixe', 'babeuf')}>Gracchus Babeuf</a>.
+
+<ListeSousPages parent="xixe/revolution-francaise" titre="Pour approfondir" suite="Lire la page" facultative />
+
+<span id="personnages" class="ancre"></span>
+
+## Personnages
+
+Quelques-uns des acteurs de ce récit, dans l'ordre de leur entrée en scène.
+
+<Personnages personnages={personnages} />
+
+<span id="glossaire" class="ancre"></span>
+
+## Glossaire
+
+<Glossaire termes={glossaire} />
+
+## Pour aller plus loin sur le site
+
+<BlocEcrivains siecle="xixe" />
+
+<BlocDiaporamas siecle="xixe" />

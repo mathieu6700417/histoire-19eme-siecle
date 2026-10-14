@@ -1,0 +1,596 @@
+---
+titre: "L’antisémitisme en France au XIXe siècle"
+theme: societe
+resume: "De l'émancipation des Juifs en 1791 à la réhabilitation de Dreyfus en 1906 : comment quatre familles d'hostilité aux Juifs, religieuse, anticapitaliste, « raciale » et nationaliste, se forment, puis se rejoignent à la fin du siècle, et comment d'autres les ont combattues."
+ordre: 1
+periode: "1789-1906"
+dureeLecture: 40
+---
+import FriseJournees from '../../../components/FriseJournees.astro';
+import Encadre from '../../../components/Encadre.astro';
+import Citation from '../../../components/Citation.astro';
+import Question from '../../../components/Question.astro';
+import Oeuvre from '../../../components/Oeuvre.astro';
+import Glossaire from '../../../components/Glossaire.astro';
+import Personnages from '../../../components/Personnages.astro';
+import ListeSousPages from '../../../components/ListeSousPages.astro';
+import BlocDiaporamas from '../../../components/BlocDiaporamas.astro';
+import BlocEcrivains from '../../../components/BlocEcrivains.astro';
+import { tranches, regimes, parties, journees, glossaire, personnages } from '../../../data/xixe/antisemitisme';
+import { urlChapitreEcrivains, urlLecon } from '../../../utils/adresses';
+
+En 1791, la France est le premier grand pays d'Europe à faire des Juifs des citoyens égaux aux autres. Un siècle plus tard, en 1898, des foules crient « Mort aux Juifs ! » dans les rues de Paris, de Nantes ou d'Alger, et un officier juif innocent, le capitaine Dreyfus, est au bagne. Comment le pays de l'émancipation est-il devenu celui où l'**antisémitisme** moderne a connu l'un de ses plus grands succès de librairie et de presse ? C'est la question de cette page.
+
+On ne la raconte pas d'abord dans l'ordre chronologique, mais par **familles**. L'hostilité aux Juifs n'a pas une seule source : elle vient de la religion (l'antijudaïsme chrétien), de la critique du capitalisme, d'une prétendue science des races et du nationalisme. Ces quatre familles se forment chacune à leur rythme, avec leurs auteurs et leurs arguments ; elles se rejoignent dans les années 1880, avec Édouard Drumont, puis s'affrontent à leurs adversaires pendant l'affaire Dreyfus. Les textes antisémites cités ici sont courts, présentés comme des sources et aussitôt analysés : il s'agit de comprendre comment ils fonctionnent et pourquoi ils sont faux, jamais de les reprendre. En regard, on lira ceux qui les ont combattus.
+
+La frise sert de carte : les bandes du haut donnent les régimes, celles du milieu les grandes étapes du récit, et les repères du bas les dates essentielles. Chaque élément mène au passage correspondant.
+
+<FriseJournees debut={1789} fin={1907} echelle={tranches} idFrise="frise-antisemitisme" rangees={[{ nom: 'Régimes', bandes: regimes }, { nom: 'Récit', bandes: parties }]} journees={journees} legende="Échelle par segments : de 1789 à 1879, une décennie entre deux graduations ; de 1879 à 1906, une année. Les quatre familles d'antisémitisme (parties 2 à 5) traversent tout le siècle : elles n'ont pas de bande propre." />
+
+<span id="emancipation" class="ancre"></span>
+
+## Les Juifs de France et l'émancipation (1789-1880)
+
+<Question>Pourquoi la France fait-elle des Juifs des citoyens dès 1791, et pourquoi cette égalité, acquise en droit, ne fait-elle pas disparaître l'hostilité ?</Question>
+
+<span id="juifs-en-1789" class="ancre"></span>
+
+### Trois communautés en 1789
+
+À la veille de la Révolution, la France compte, selon les estimations, environ **40 000 Juifs**, sur quelque 28 millions d'habitants : moins d'un habitant sur six cents. Ils ne forment pas un groupe uni, mais trois communautés très différentes, que la monarchie traite chacune à part.
+
+Dans le Sud-Ouest, à Bordeaux et à Bayonne, vivent quelques milliers de Juifs dits « portugais », des **[séfarades](#glossaire-sefarade)**, descendants des familles chassées d'Espagne et du Portugal à la fin du XVe siècle. Longtemps présentés comme des « nouveaux chrétiens », ils ont obtenu des lettres patentes du roi ; beaucoup sont négociants, armateurs, banquiers, et vivent à la française. Dans le Comtat Venaissin et à Avignon, terres du pape jusqu'en 1791, de petites communautés, les « Juifs du pape », vivent depuis le Moyen Âge dans des quartiers fermés, les « carrières ». La plus grande communauté, de loin, est celle d'**Alsace et de Lorraine** : plus de 25 000 personnes, des **[ashkénazes](#glossaire-ashkenaze)** de langue yiddish, souvent pauvres, colporteurs, marchands de bestiaux, prêteurs d'argent aux paysans. Ils paient des taxes spéciales, ne peuvent ni posséder la terre ni exercer la plupart des métiers, et doivent obtenir le droit d'habiter tel ou tel village. Paris n'en compte que quelques centaines, tolérés.
+
+Partout, les Juifs sont des étrangers de l'intérieur : sujets du roi, mais régis par des statuts particuliers, à l'écart des chrétiens, dans une société où l'appartenance à l'Église catholique fait partie de l'identité du royaume. Depuis 1394, d'ailleurs, ils sont en principe expulsés du royaume ; ceux qui y vivent le doivent à des exceptions accordées à une province ou à une communauté.
+
+### Les Lumières et la question juive
+
+Au XVIIIe siècle, les esprits éclairés se demandent si cette exclusion est juste. Les réponses sont mêlées. Voltaire combat l'intolérance religieuse, mais écrit sur les Juifs des pages méprisantes. En 1785, l'Académie de Metz met au concours une question : « Est-il des moyens de rendre les Juifs plus utiles et plus heureux en France ? » Parmi les lauréats, en 1788, un curé lorrain, l'**abbé Grégoire**, dont l'*Essai* paraît l'année suivante. Il y décrit les Juifs comme abaissés par des siècles de persécution, et propose de les « régénérer » en leur donnant les droits de tous. Le livre se termine sur un appel aux nations chrétiennes :
+
+<Citation auteur="Henri Grégoire" oeuvre="Essai sur la régénération physique, morale et politique des Juifs" date="1789, chapitre XXVII et dernier" edition="Metz, Devilly, 1789, p. 194" lien="https://fr.wikisource.org/wiki/Essai_sur_la_r%C3%A9g%C3%A9n%C3%A9ration_physique,_morale_et_politique_des_Juifs/27">
+
+Ne jugez plus cette nation que sur l'avenir ; mais si vous envisagez de nouveau les crimes passés des Juifs & leur corruption actuelle, que ce soit pour déplorer votre ouvrage ; auteurs de leurs vices, soyez-le de leurs vertus ; acquittez votre dette & celle de vos aïeux. […] Les Juifs sont membres de cette famille universelle qui doit établir la fraternité entre tous les peuples.
+
+</Citation>
+
+Le texte est généreux et ambigu à la fois. Généreux, parce qu'il renverse l'accusation : si les Juifs ont des « vices », ce sont les chrétiens qui les ont produits en les persécutant. Ambigu, parce qu'il accepte l'idée que les Juifs sont « corrompus » et qu'il espère, plus loin, les voir un jour réunis dans « le même bercail », c'est-à-dire convertis. L'émancipation, chez beaucoup de ses partisans, est aussi un projet de transformation des Juifs.
+
+<span id="decret-1790" class="ancre"></span>
+
+### Deux décrets : 1790 et 1791
+
+La Déclaration des droits de l'homme du 26 août 1789 proclame que les hommes « naissent et demeurent libres et égaux en droits » et que nul ne doit être inquiété pour ses opinions, « même religieuses ». Faut-il en conclure que les Juifs sont citoyens ? L'Assemblée hésite deux ans. Le débat s'ouvre en décembre 1789, sur l'éligibilité des non-catholiques. Le **23 décembre**, le comte de **Clermont-Tonnerre**, député de la noblesse de Paris, plaide pour les protestants, les comédiens, les bourreaux et les Juifs, tous exclus pour des raisons de « préjugé » ; il répond aux objections faites contre les Juifs (l'usure, l'insociabilité, leurs juges et leurs lois particulières) :
+
+<Citation auteur="Stanislas de Clermont-Tonnerre" oeuvre="Discours à l'Assemblée nationale" date="séance du 23 décembre 1789" edition="Archives parlementaires, 1re série, t. X, Paris, Dupont, 1878, p. 756" lien="https://www.persee.fr/doc/arcpa_0000-0000_1878_num_10_1_4107_t1_0754_0000_7" libelleLien="Lire la séance sur Persée">
+
+Mais, me dira-t-on, les juifs ont des juges et des lois particulières ? Mais, répondrai-je, c'est votre faute, et vous ne devez pas le souffrir. Il faut refuser tout aux juifs comme nation, et accorder tout aux juifs comme individus ; […]
+
+</Citation>
+
+La formule, souvent citée seule, est un programme : les Juifs seront des citoyens comme les autres, à titre individuel, mais leurs communautés perdront leurs juges, leurs lois civiles, leur autonomie. Dans la même séance, l'**abbé Maury**, porte-parole de la droite cléricale, lui oppose l'argument inverse :
+
+<Citation auteur="L'abbé Maury" oeuvre="Discours à l'Assemblée nationale" date="séance du 23 décembre 1789" edition="Archives parlementaires, 1re série, t. X, Paris, Dupont, 1878, p. 756-757" lien="https://www.persee.fr/doc/arcpa_0000-0000_1878_num_10_1_4107_t1_0754_0000_7" libelleLien="Lire la séance sur Persée">
+
+J'observe d'abord que le mot juif n'est pas le nom d'une secte, mais d'une nation qui a des lois, qui les a toujours suivies et qui veut encore les suivre. Appeler les juifs des citoyens, ce serait comme si l'on disait que, sans lettres de naturalisation et sans cesser d'être Anglais et Danois, les Anglais et les Danois pourraient devenir Français.
+
+</Citation>
+
+Le procédé de Maury mérite d'être regardé de près, car il traversera tout le siècle. Il ne reproche pas aux Juifs leur foi, ce qui serait difficile à soutenir devant une assemblée qui vient de proclamer la liberté religieuse : il en fait une **nation étrangère**, comparable aux Anglais. Or les Juifs d'Alsace ou de Bordeaux sont nés en France, n'ont pas d'autre patrie et ne demandent pas d'autres lois que celles de tous. L'argument transforme une religion en appartenance nationale pour mieux exclure ; on le retrouvera, cent ans plus tard, chez les nationalistes.
+
+L'Assemblée avance par étapes. Le **28 janvier 1790**, elle reconnaît comme citoyens actifs les Juifs « portugais, espagnols et avignonnais », les mieux intégrés. Pour les Juifs d'Alsace, les plus nombreux, l'opposition des députés alsaciens et de la droite retarde la décision : dans les campagnes alsaciennes, des émeutes contre les Juifs ont éclaté à l'été 1789, et de nombreux paysans sont endettés auprès de prêteurs juifs.
+
+<span id="emancipation-1791" class="ancre"></span>
+
+Le **27 septembre 1791**, à la veille de se séparer, l'Assemblée constituante décrète enfin que tous les Juifs qui prêteront le serment civique seront citoyens ; le décret est promulgué le 13 novembre. C'est une première en Europe : les Pays-Bas suivront en 1796, la Prusse partiellement en 1812, le Royaume-Uni en 1858, l'Allemagne unifiée en 1871, la Russie seulement en 1917. Le principe est désormais posé : en France, la religion d'un homme ne détermine plus ses droits. C'est ce qu'on appelle l'**[émancipation](#glossaire-emancipation)**. La leçon sur <a href={urlLecon('xixe', 'revolution-francaise')}>la Révolution française</a> raconte le cadre de ces années.
+
+<span id="sanhedrin" class="ancre"></span>
+
+### Napoléon : le Sanhédrin, les consistoires et le « décret infâme »
+
+L'émancipation n'efface pas l'hostilité, surtout en Alsace, où les créances des prêteurs juifs sur les paysans restent un sujet de plaintes. En 1806, Napoléon, saisi de ces plaintes, convoque à Paris une **Assemblée des notables** juifs, à qui il pose douze questions : les Juifs peuvent-ils épouser des chrétiennes ? Regardent-ils la France comme leur patrie ? L'usure leur est-elle permise envers les non-juifs ? Les notables répondent ce que l'empereur attend : la loi de l'État prime en matière civile, la France est leur patrie. Pour donner à ces réponses une autorité religieuse, Napoléon réunit en février-mars 1807 un **[Grand Sanhédrin](#glossaire-grand-sanhedrin)**, du nom de l'ancien tribunal suprême d'Israël, qui les confirme solennellement.
+
+<span id="consistoires" class="ancre"></span>
+
+Le **17 mars 1808**, trois décrets en tirent les conséquences. Deux organisent le culte en **[consistoires](#glossaire-consistoire)**, sur le modèle des Églises protestantes : un consistoire central à Paris, des consistoires départementaux dirigés par des rabbins et des laïcs notables, chargés aussi de surveiller les fidèles et de les pousser vers les métiers « utiles ». Le troisième, que les Juifs appellent le **[« décret infâme »](#glossaire-decret-infame)**, suspend ou réduit pour dix ans les créances des prêteurs juifs, impose aux commerçants juifs une patente spéciale et interdit aux Juifs étrangers de s'installer en Alsace. C'est une loi d'exception, contraire à l'égalité de 1791. Elle n'est pas renouvelée en 1818, sous la Restauration.
+
+<span id="israelites" class="ancre"></span>
+
+### Devenir « israélites » français
+
+Au cours du siècle, l'égalité devient réalité. La monarchie de Juillet, en 1831, fait payer les rabbins par l'État, comme les prêtres et les pasteurs : le judaïsme devient l'un des cultes reconnus. Des Juifs entrent dans les grandes écoles, l'armée, l'université, la magistrature, la politique. Les familles quittent les villages d'Alsace pour Strasbourg, Nancy, puis Paris ; le yiddish recule devant le français. Les Juifs français se disent volontiers **[israélites](#glossaire-israelite)**, un mot qui désigne une religion et non une nation. Les historiens parlent de **[franco-judaïsme](#glossaire-franco-judaisme)** : un attachement à la fois à la foi des ancêtres et à la France de 1789, qui les a faits citoyens.
+
+<span id="more-judaico" class="ancre"></span>
+
+Les dernières discriminations tombent une à une. Devant les tribunaux, les Juifs devaient encore prêter un serment particulier, dit **[*more judaico*](#glossaire-more-judaico)** (« à la manière juive »), dans une synagogue et avec des formules humiliantes. Un avocat de Nîmes, **Adolphe Crémieux**, le combat pendant des années ; la Cour de cassation le déclare contraire à l'égalité le **3 mars 1846**. Crémieux sera ministre de la Justice en 1848, puis en 1870.
+
+D'autres noms deviennent célèbres. La tragédienne **Rachel** triomphe à la Comédie-Française ; les compositeurs Halévy et Meyerbeer dominent l'Opéra ; les frères Pereire, venus du saint-simonisme, fondent le Crédit mobilier ; Achille Fould est ministre des Finances de Napoléon III. Et surtout la banque **Rothschild** : arrivé de Francfort en 1812, **James de Rothschild** prête aux gouvernements successifs et finance les chemins de fer. En 1860, des israélites français fondent l'**Alliance israélite universelle**, qui ouvre des écoles en Afrique du Nord et au Proche-Orient.
+
+Cette réussite est celle d'une minorité de la minorité. La plupart des Juifs de France restent des gens modestes : petits commerçants, artisans, colporteurs, employés. Après la perte de l'Alsace-Lorraine en 1871, où vivaient beaucoup d'entre eux, ils sont, selon les estimations, **environ 70 000 à 80 000** en métropole vers 1880, dont une bonne moitié à Paris, auxquels s'ajoutent, depuis 1870, environ 35 000 Juifs d'Algérie devenus citoyens. Moins d'un Français sur quatre cents. C'est sur ce petit groupe, intégré et souvent très patriote, que va se fixer une hostilité grandissante.
+
+<Encadre type="retenir">
+
+- Vers 1789, environ **40 000 Juifs** vivent en France, en trois communautés : séfarades du Sud-Ouest, « Juifs du pape » du Comtat, ashkénazes d'Alsace-Lorraine, les plus nombreux.
+- Les décrets du **28 janvier 1790** et du **27 septembre 1791** en font des citoyens : la France est le premier grand pays d'Europe à émanciper les Juifs.
+- Le principe est individuel : « tout aux juifs comme individus », rien « comme nation ». Les adversaires de l'émancipation font au contraire des Juifs une **nation étrangère**.
+- Napoléon organise le culte (**Sanhédrin** 1807, **consistoires** 1808), mais impose aussi une loi d'exception (le « décret infâme », 1808-1818).
+- Au XIXe siècle, les « israélites » s'intègrent : c'est le **franco-judaïsme**. Mais l'émancipation en droit ne fait pas disparaître l'hostilité.
+
+</Encadre>
+
+<span id="antijudaisme-catholique" class="ancre"></span>
+
+## L'antijudaïsme catholique
+
+<Question>Pourquoi une partie des catholiques, au XIXe siècle, fait-elle des Juifs les responsables des malheurs de l'Église et de la France ?</Question>
+
+<span id="deicide" class="ancre"></span>
+
+### Un vieux fond chrétien
+
+La plus ancienne hostilité aux Juifs est religieuse. Pendant des siècles, l'Église a enseigné que les Juifs, en refusant de reconnaître Jésus comme le Messie, s'étaient aveuglés, et que leur peuple tout entier portait la responsabilité de sa mort : c'est l'accusation de **[« peuple déicide »](#glossaire-deicide)**. Leur dispersion et leur abaissement étaient présentés comme le châtiment de cette faute, et leur conversion comme l'issue espérée à la fin des temps. On appelle **[antijudaïsme](#glossaire-antijudaisme)** cette hostilité fondée sur la religion : elle vise la foi juive, et elle cesse en principe avec la conversion.
+
+Autour de cet enseignement se sont formées des légendes. La plus meurtrière est celle du **[meurtre rituel](#glossaire-meurtre-rituel)** : les Juifs tueraient des enfants chrétiens pour utiliser leur sang dans leurs rites, en particulier à la Pâque. Née en Angleterre au XIIe siècle, l'accusation a provoqué des massacres dans toute l'Europe ; plusieurs papes l'ont pourtant déclarée fausse dès le XIIIe siècle. Elle n'a aucun fondement : la loi juive interdit le meurtre et interdit même de consommer le sang des animaux. Au XIXe siècle, elle n'a pas disparu.
+
+<span id="affaire-de-damas" class="ancre"></span>
+
+### L'affaire de Damas (1840)
+
+En février 1840, à Damas, alors gouvernée par l'Égypte de Méhémet-Ali, un moine capucin, le père Thomas, disparaît avec son domestique. Des chrétiens de la ville accusent les Juifs de les avoir tués pour leur sang. Le consul de France, le comte de Ratti-Menton, chargé de protéger les catholiques de la région, appuie l'accusation ; plusieurs notables juifs sont arrêtés et torturés, deux meurent, d'autres « avouent » sous la torture. Une partie de la presse catholique française reprend l'accusation, et le gouvernement de Thiers soutient son consul.
+
+L'affaire a un retentissement international. **Adolphe Crémieux** et le Britannique Moses Montefiore partent pour l'Égypte et obtiennent, en août 1840, la libération des survivants. Pour les Juifs d'Europe, c'est un choc : en plein XIXe siècle, la vieille accusation peut encore être reprise par un représentant de la France. C'est aussi l'une des premières mobilisations internationales de Juifs pour défendre d'autres Juifs ; elle prépare la fondation de l'Alliance israélite universelle vingt ans plus tard.
+
+### La Révolution, les Juifs et les francs-maçons
+
+À cet antijudaïsme ancien s'ajoute, après 1789, un ressentiment politique. Pour beaucoup de catholiques, la Révolution a été une catastrophe : elle a confisqué les biens de l'Église, persécuté les prêtres, puis fondé l'État sur la souveraineté du peuple et non plus sur Dieu. Les Juifs, eux, lui doivent leur liberté. Un raisonnement se forme peu à peu : si les Juifs ont gagné à la Révolution, ce sont eux qui l'ont voulue, avec les protestants et les francs-maçons. La guerre que mènent les républicains contre l'influence de l'Église, à partir des années 1870 (laïcisation de l'école, expulsion des congrégations), semble confirmer ce soupçon : on cherche derrière la République anticléricale une main cachée. Les **[théories du complot](#glossaire-theorie-du-complot)** naissent de ce besoin d'expliquer une défaite par un ennemi invisible. Sur l'histoire du catholicisme politique au XIXe siècle, voir la leçon sur <a href={urlLecon('xixe', 'courants-politiques/catholiques')}>les catholiques</a>.
+
+<span id="gougenot" class="ancre"></span>
+
+En 1869, un écrivain catholique, **Henri Gougenot des Mousseaux**, connu jusque-là pour ses livres sur la magie et le démon, publie chez Plon un gros volume : *Le Juif, le judaïsme et la judaïsation des peuples chrétiens*. Il s'adresse à un public catholique cultivé et place en tête du livre la lettre élogieuse d'un ecclésiastique. Dès les premières pages, il annonce sa thèse :
+
+<Citation auteur="Henri Gougenot des Mousseaux" oeuvre="Le Juif, le judaïsme et la judaïsation des peuples chrétiens" date="1869, « Causerie » d'ouverture" edition="Paris, Plon, 1869, première page de la « Causerie » (non paginée)" lien="https://archive.org/details/bub_gb_lhUlToGjgl4C/page/n14" libelleLien="Voir la page numérisée">
+
+Ces lignes auront donc à signifier tout simplement que le Juif est, ou plutôt qu'il sera bientôt notre maître ! […] une chose entre toutes distingue le Juif et plus que jamais le caractérise : c'est un besoin de domination qui remplit son cœur, et prend sa source dans l'orgueil de ses instincts nationaux, que nourrit sa foi religieuse.
+
+</Citation>
+
+Trois procédés sont à l'œuvre en quelques lignes. D'abord le **singulier collectif** : « le Juif », comme s'il n'existait qu'un seul Juif, doté d'un seul « cœur » et d'une seule volonté, et non des dizaines de milliers de personnes aux vies, aux opinions et aux fortunes très diverses. Ensuite la **prophétie invérifiable** : le Juif « sera bientôt » notre maître ; aucune preuve n'est nécessaire, puisque la domination annoncée est à venir. Enfin le **mélange du religieux et du national** : la foi juive nourrirait des « instincts nationaux » de domination. Or le judaïsme du XIXe siècle n'est pas une entreprise de conquête : c'est une religion qui ne cherche guère à convertir, pratiquée par une petite minorité qui, en France, a renoncé à toute autonomie politique en 1791 et dont les représentants ont proclamé en 1807 que la France était leur patrie. Le livre de Gougenot des Mousseaux, peu lu en France à sa sortie, sera abondamment utilisé par Drumont.
+
+<span id="la-croix" class="ancre"></span>
+
+### Une presse catholique antijuive (1880-1900)
+
+À la fin du siècle, l'antijudaïsme catholique change d'échelle grâce à la presse populaire. Les **assomptionnistes**, une congrégation fondée à Nîmes en 1845, lancent *Le Pèlerin* (1873) puis *La Croix*, quotidien à partir de 1883, vendu un sou et diffusé dans toutes les paroisses par un réseau de comités et d'éditions locales. À partir de 1889, *La Croix* fait de l'hostilité aux Juifs l'un de ses thèmes principaux ; en 1890, selon la formule que rapportent les historiens du journal (Pierre Sorlin, *« La Croix » et les Juifs*, 1967), elle se présente même comme « le journal le plus antijuif de France ». Elle mêle les vieux thèmes religieux (le déicide, parfois le meurtre rituel) aux thèmes nouveaux : la finance juive, la franc-maçonnerie, la République « enjuivée ». Les **abbés** qui écrivent sur le sujet se multiplient ; l'un d'eux, l'abbé Emmanuel Chabauty, publie en 1882 *Les Juifs, nos maîtres !* Pendant l'affaire Dreyfus, *La Croix* sera l'un des journaux antidreyfusards les plus violents.
+
+Mais tous les catholiques ne suivent pas. Des voix s'élèvent dans l'Église même, au nom de la charité et de l'Évangile. Le plus connu est l'historien catholique libéral **Anatole Leroy-Beaulieu**, dont on lira plus loin la réponse. En 1899, en pleine Affaire, le juriste catholique Paul Viollet fonde un « Comité catholique pour la défense du droit ». Ces catholiques sont minoritaires, mais ils montrent qu'être catholique n'impliquait pas d'être antisémite.
+
+<Encadre type="retenir">
+
+- L'**antijudaïsme** chrétien est ancien : accusation de « peuple **déicide** », légende du **meurtre rituel**, attente de la conversion.
+- Au XIXe siècle, la légende du meurtre rituel ressurgit (affaire de **Damas**, 1840), avec l'appui d'un consul de France.
+- Après 1789, une partie des catholiques associe les Juifs à la **Révolution** et à la République anticléricale, et y voit un **complot**.
+- À partir de **1889**, la presse catholique populaire (*La Croix*) diffuse massivement ces thèmes. Une minorité de catholiques les combat.
+
+</Encadre>
+
+<span id="antisemitisme-anticapitaliste" class="ancre"></span>
+
+## L'antisémitisme socialiste et anticapitaliste
+
+<Question>Pourquoi des penseurs qui se disent du côté des pauvres et des travailleurs s'en prennent-ils aux Juifs ?</Question>
+
+### Le Juif confondu avec l'argent
+
+La deuxième famille ne vient pas de l'Église, mais de la critique du capitalisme. Dans la première moitié du XIXe siècle, la France s'industrialise ; la banque, la Bourse, les chemins de fer font des fortunes rapides, pendant que les ouvriers des villes vivent dans la misère. Les premiers socialistes, qu'on appellera plus tard « utopiques », dénoncent ce nouveau pouvoir de l'argent. Certains lui donnent un visage : celui du Juif.
+
+Ce raccourci a une histoire. Au Moyen Âge, l'Église interdisait aux chrétiens le prêt à intérêt, et les Juifs, exclus de la plupart des métiers et de la propriété de la terre, ont souvent été cantonnés au commerce de l'argent : le mot « juif » est devenu, dans la langue populaire, synonyme d'usurier. Au XIXe siècle, la réussite de quelques grandes familles de banquiers juifs, les Rothschild surtout, semble donner raison au cliché. Le philosophe **Charles Fourier**, mort en 1837, avait déjà dénoncé dans ses livres le « commerce » et l'émancipation des Juifs. Son disciple **Alphonse Toussenel** va plus loin.
+
+<span id="toussenel" class="ancre"></span>
+
+### Toussenel, *Les Juifs, rois de l'époque* (1845)
+
+Journaliste à *La Démocratie pacifique*, le journal des fouriéristes, Toussenel publie en 1845, à la Librairie de l'École sociétaire, un livre au titre provocant : *Les Juifs, rois de l'époque. Histoire de la féodalité financière*. Il l'écrit au moment où le gouvernement de Louis-Philippe accorde à la banque Rothschild la concession du chemin de fer du Nord, l'une des affaires les plus rentables du temps. Le livre dénonce l'alliance des ministres et des banquiers ; dès l'avant-propos, Toussenel désigne le vainqueur :
+
+<Citation auteur="Alphonse Toussenel" oeuvre="Les Juifs, rois de l'époque. Histoire de la féodalité financière" date="1845, avant-propos et note de l'auteur" edition="Paris, Librairie de l'École sociétaire, 1845, p. 4" lien="https://archive.org/details/lesjuifsroisdel00tousgoog/page/n17" libelleLien="Voir la page numérisée">
+
+[…] elle tient déjà le producteur et le consommateur à sa merci. Le juif règne et gouverne en France.
+
+(Note de l'auteur :) Je préviens le lecteur que ce mot est généralement pris ici dans son acception populaire : juif, banquier, marchand d'espèces.
+
+</Citation>
+
+La note est l'aveu du procédé. Toussenel sait qu'il parle d'abord des banquiers, juifs ou non (il s'en prend aussi beaucoup aux protestants de Genève, d'Angleterre ou de Hollande) ; mais il choisit d'appeler « juif » tout financier. Le mot désigne à la fois un métier et un peuple, et ce glissement permet de faire porter à tous les Juifs, y compris les colporteurs pauvres d'Alsace, la responsabilité de la puissance de quelques banques. C'est un **amalgame** : une catégorie sociale (les financiers) est confondue avec un groupe religieux, et la faute supposée de quelques-uns est attribuée à tous. En réalité, la haute banque parisienne compte au moins autant de familles protestantes et catholiques que de familles juives, et la grande masse des Juifs de France n'a rien à voir avec elle.
+
+<span id="rothschild" class="ancre"></span>
+
+### Le mythe des Rothschild
+
+Le nom de **Rothschild** devient, dans ce discours, une sorte de symbole. James de Rothschild est riche et puissant, prête aux États, finance les chemins de fer : rien de cela n'est imaginaire. Ce qui l'est, c'est l'idée qu'il gouvernerait la France dans l'intérêt d'un peuple juif uni et caché. Les Rothschild sont des banquiers parmi d'autres, en concurrence avec d'autres banques, et soumis aux décisions des gouvernements, qui leur préfèrent parfois leurs rivaux (sous le Second Empire, le Crédit mobilier des Pereire, juifs eux aussi, les combat âprement). Le mythe transforme une puissance réelle mais limitée en pouvoir occulte et sans limite.
+
+<span id="proudhon" class="ancre"></span>
+
+D'autres socialistes reprennent ces thèmes. **Pierre-Joseph Proudhon**, l'un des penseurs les plus influents du mouvement ouvrier français, écrit sur les Juifs des pages hostiles ; dans ses carnets personnels, publiés seulement au XXe siècle, il va jusqu'à envisager leur expulsion de France. Chez les **blanquistes**, révolutionnaires disciples d'Auguste Blanqui, Gustave Tridon, mort en 1871, laisse un ouvrage publié en 1884, *Du molochisme juif*, qui mêle hostilité antireligieuse et hostilité aux Juifs. Dans les années 1880-1890, une partie de la gauche radicale et socialiste voit encore dans l'antisémitisme une forme, maladroite peut-être, de lutte contre les « gros ».
+
+Une formule célèbre résume la critique que d'autres socialistes opposent à cette dérive : l'antisémitisme serait « le socialisme des imbéciles ». On l'attribue souvent au social-démocrate allemand August Bebel, mais son origine exacte est incertaine ; on la prête aussi au député autrichien Ferdinand Kronawetter. Elle dit bien, en tout cas, le reproche : l'antisémite croit attaquer le capitalisme, alors qu'il désigne un bouc émissaire et laisse intact le système qu'il prétend combattre.
+
+<span id="socialistes-dreyfusards" class="ancre"></span>
+
+### Le reflux
+
+En France, c'est l'affaire Dreyfus qui oblige les socialistes à choisir. Au début, beaucoup hésitent : pourquoi défendre un officier, un bourgeois, quand l'armée fusille des ouvriers en grève ? En janvier 1898, un manifeste des députés socialistes invite encore les ouvriers à ne pas prendre parti dans cette querelle entre bourgeois. Mais le procès de Zola, les émeutes antisémites et la découverte des faux changent la donne. **Jean Allemane** et ses amis s'engagent tôt ; **Jean Jaurès**, d'abord réticent, devient en 1898 l'un des plus ardents dreyfusards et publie dans *La Petite République* une série d'articles, *Les Preuves*. Il y répond aux camarades qui jugent l'Affaire étrangère à la classe ouvrière :
+
+<Citation auteur="Jean Jaurès" oeuvre="Les Preuves" date="août 1898, chapitre « L'Intérêt socialiste »" edition="Paris, La Petite République, 1898, p. 12" lien="https://fr.wikisource.org/wiki/Les_Preuves/L%E2%80%99Int%C3%A9r%C3%AAt_socialiste">
+
+Je pourrais répondre que si Dreyfus a été illégalement condamné et si, en effet, comme je le démontrerai bientôt, il est innocent, il n'est plus ni un officier ni un bourgeois : Il est dépouillé, par l'excès même du malheur, de tout caractère de classe ; il n'est plus que l'humanité elle même, au plus haut degré de misère et de désespoir qui se puisse imaginer.
+
+</Citation>
+
+Jaurès ne parle pas ici de l'antisémitisme, mais il défait le raisonnement qui permettait de s'en accommoder : un homme injustement condamné n'est plus « un Juif » ou « un bourgeois », il est un homme. Jules Guesde et son parti restent plus réservés jusqu'au bout. Mais, à partir de 1898, le socialisme français, dans sa majorité, se range parmi les adversaires de l'antisémitisme.
+
+Avant Jaurès, Zola avait déjà, en 1896, dénoncé ce « socialisme » dévoyé, dans un article du *Figaro* intitulé « Pour les Juifs » :
+
+<Citation auteur="Émile Zola" oeuvre="Pour les Juifs" date="Le Figaro, 16 mai 1896" edition="Recueilli dans Nouvelle campagne (1896), Paris, Charpentier et Fasquelle, 1897, p. 213" lien="https://archive.org/details/nouvellecampagne00zolauoft/page/n224" libelleLien="Voir la page numérisée">
+
+Qu'il y ait, entre les mains de quelques Juifs, un accaparement douloureux de la richesse, c'est là un fait certain. Mais le même accaparement existe chez des catholiques et chez des protestants. Exploiter les révoltes populaires en les mettant au service d'une passion religieuse, jeter surtout le juif en pâture aux revendications des déshérités, sous le prétexte d'y jeter l'homme d'argent, il y a là un socialisme hypocrite et menteur, qu'il faut dénoncer, qu'il faut flétrir.
+
+</Citation>
+
+Zola concède ce qui est vrai (des fortunes juives existent) pour mieux dénoncer l'amalgame : les fortunes catholiques et protestantes existent aussi, et désigner « le juif » à la colère des pauvres, c'est détourner cette colère.
+
+<Encadre type="historiens" titre="Un « antisémitisme de gauche » ?">
+
+Pendant longtemps, l'antisémitisme a été présenté comme une affaire de droite, catholique et nationaliste. Dans les années 1950, l'historien **Edmund Silberner** montre la place qu'il tient chez plusieurs penseurs socialistes du XIXe siècle, de Fourier à Proudhon et aux blanquistes ; en 1978, **Zeev Sternhell**, dans *La Droite révolutionnaire*, souligne qu'à la fin du siècle des militants venus de la gauche se retrouvent dans les ligues nationalistes et antisémites, au nom de la lutte contre le capitalisme. D'autres historiens insistent plutôt sur ce qui sépare ces courants : l'antisémitisme socialiste reste surtout un langage, un cliché associant le Juif à l'argent, sans doctrine raciale ni projet politique d'exclusion, et il recule nettement pendant l'affaire Dreyfus. **Michel Dreyfus**, dans *L'Antisémitisme à gauche* (2009), parle d'un « paradoxe » durable, présent à gauche bien au-delà du XIXe siècle, mais toujours minoritaire et toujours combattu de l'intérieur. Le débat porte donc moins sur l'existence de cet antisémitisme, que tous reconnaissent, que sur son poids et sur sa continuité.
+
+</Encadre>
+
+<Encadre type="retenir">
+
+- Une partie des premiers socialistes **confond le Juif et le financier** : c'est l'amalgame de Toussenel (*Les Juifs, rois de l'époque*, **1845**), qui l'avoue lui-même dans une note.
+- Le nom de **Rothschild** devient le symbole d'un pouvoir occulte imaginaire.
+- Proudhon et certains **blanquistes** reprennent ces thèmes ; la formule du « socialisme des imbéciles » (d'attribution incertaine) les dénonce.
+- Pendant l'affaire Dreyfus, la majorité des socialistes, derrière **Jaurès**, rejoint le camp dreyfusard.
+
+</Encadre>
+
+<span id="antisemitisme-racial" class="ancre"></span>
+
+## L'antisémitisme « racial » et pseudo-scientifique
+
+<Question>Pourquoi, au XIXe siècle, se met-on à parler des Juifs comme d'une « race », et pourquoi cette idée est-elle fausse ?</Question>
+
+### Des langues aux « races »
+
+La troisième famille se réclame de la science. Au début du XIXe siècle, les linguistes découvrent les parentés entre les langues : le français, l'allemand, le latin, le grec, le persan et le sanscrit de l'Inde descendent d'une langue commune, qu'on appelle « indo-européenne », ou « aryenne » d'après un mot sanscrit. L'hébreu, l'araméen et l'arabe forment une autre famille, les langues **sémitiques**, du nom de Sem, l'un des fils de Noé dans la Bible. Jusque-là, il s'agit de grammaire. Mais le siècle aime classer les hommes, et l'on glisse bientôt des familles de langues aux familles de peuples, puis aux « races » : il y aurait des **[« Aryens » et des « Sémites »](#glossaire-aryen-semite)**, dotés chacun d'un caractère, de talents et de défauts héréditaires.
+
+<span id="renan" class="ancre"></span>
+
+### Renan : le savant et ses contradictions
+
+Le plus prestigieux de ces savants est **Ernest Renan**, spécialiste des langues sémitiques, professeur au Collège de France et futur auteur de la *Vie de Jésus*. En 1855, il publie à l'Imprimerie impériale une *Histoire générale et système comparé des langues sémitiques*, ouvrage d'érudition destiné aux spécialistes. Dès le premier chapitre, il compare les deux « races » :
+
+<Citation auteur="Ernest Renan" oeuvre="Histoire générale et système comparé des langues sémitiques" date="1855, livre I, chapitre I" edition="Paris, Imprimerie impériale, 1855, p. 4" lien="https://archive.org/details/histoiregnraleet00rena_0/page/n19" libelleLien="Voir la page numérisée">
+
+Ce serait pousser outre mesure le panthéisme en histoire que de mettre toutes les races sur un pied d'égalité, et, sous prétexte que la nature humaine est toujours belle, de chercher dans ses diverses combinaisons, la même plénitude et la même richesse. Je suis donc le premier à reconnaître que la race sémitique, comparée à la race indo-européenne, représente réellement une combinaison inférieure de la nature humaine.
+
+</Citation>
+
+Renan n'écrit pas un pamphlet contre les Juifs : il attribue aux « Sémites » (Hébreux et Arabes confondus) une gloire, celle d'avoir inventé le monothéisme, et il prendra plus tard ses distances avec ceux qui parlent de « race juive ». Mais il donne l'autorité de la science à une hiérarchie des « races » qui n'a rien de scientifique. Son raisonnement va d'une **langue** à un **caractère** supposé héréditaire : parce que l'hébreu et l'arabe ont des points communs, ceux qui les parlent auraient une même nature, et cette nature serait « inférieure ». Or une langue s'apprend, se perd et se transmet sans rapport avec la naissance : les Juifs de France parlent français, ceux d'Alsace parlaient yiddish, une langue germanique. Drumont, trente ans plus tard, s'emparera de ces pages.
+
+Renan lui-même revient sur ses idées. Le 27 janvier 1883, devant le Cercle Saint-Simon, il donne une conférence intitulée *Le Judaïsme comme race et comme religion*. Il y montre que le judaïsme antique a converti de très nombreux non-Juifs, que les Juifs d'Europe ne descendent donc pas d'un peuple unique, et que leurs traits particuliers viennent de leur histoire, non de leur sang. Il conclut :
+
+<Citation auteur="Ernest Renan" oeuvre="Le Judaïsme comme race et comme religion" date="conférence du 27 janvier 1883" edition="Paris, Calmann Lévy, 1883, p. 28" lien="https://fr.wikisource.org/wiki/Le_Judaisme_comme_race_et_comme_religion">
+
+Quand l'Assemblée nationale, en 1791, décréta l'émancipation des juifs, elle s'occupa extrêmement peu de la race. Elle estima que les hommes devaient être jugés non par le sang qui coule dans leurs veines, mais par leur valeur morale et intellectuelle. C'est la gloire de la France de prendre ces questions par le côté humain.
+
+</Citation>
+
+La même autorité savante sert ainsi deux causes opposées : les antisémites citent le Renan de 1855, ses défenseurs celui de 1883. Drumont lui consacre tout un passage de *La France juive*, sous le titre « Les variations de Renan ».
+
+<span id="gobineau" class="ancre"></span>
+
+### Gobineau, Vacher de Lapouge
+
+L'autre grand nom de la pensée raciale française est **Arthur de Gobineau**, diplomate, auteur d'un *Essai sur l'inégalité des races humaines* (1853-1855). Pour lui, les civilisations déclinent parce que les races « supérieures » se mélangent aux autres ; la race « blanche », et en son sein les « Aryens », serait la source de toute grandeur. Il faut le dire clairement : Gobineau **n'est pas d'abord antisémite**. Il parle des Juifs avec une certaine estime, comme d'un peuple qui a su durer ; son pessimisme vise le mélange universel, pas les Juifs. Mais son vocabulaire et sa hiérarchie des races seront repris, surtout en Allemagne, par des antisémites qui en tireront des conclusions qu'il n'avait pas formulées.
+
+À la fin du siècle, l'anthropologue **Georges Vacher de Lapouge**, qui donne des cours libres à Montpellier à la fin des années 1880, pousse plus loin cette « anthroposociologie » : il mesure les crânes, oppose l'« Aryen » dolichocéphale (au crâne allongé) aux autres types, et publie en 1899 *L'Aryen, son rôle social*. Il est alors marginal dans l'université française, qui le tient pour un esprit aventureux ; ses idées trouvent plus d'écho à l'étranger.
+
+<span id="mot-antisemitisme" class="ancre"></span>
+
+### Un mot nouveau : « antisémitisme »
+
+En 1879, un journaliste de Hambourg, **Wilhelm Marr**, publie une brochure à succès, *La Victoire du judaïsme sur le germanisme*, et fonde une « Ligue antisémite ». Le mot **« antisémitisme »** se répand alors en Allemagne, puis dans toute l'Europe ; on le trouve en France dès le début des années 1880. Il n'est pas choisi au hasard. Il veut dire qu'on ne combat plus les Juifs pour leur religion, comme le faisait l'ancien antijudaïsme, mais pour leur prétendue race : un Juif converti, ou un Juif incroyant, reste un « Sémite ». Le mot donne à une vieille haine l'allure moderne d'une doctrine savante.
+
+<span id="race-notion-fausse" class="ancre"></span>
+
+### Pourquoi la notion de « race juive » est fausse
+
+Le mot lui-même est absurde : les « Sémites » sont, au sens des linguistes, des locuteurs de langues sémitiques, Arabes compris, et l'antisémitisme ne vise que les Juifs. Mais l'erreur est plus profonde. Les Juifs ne sont pas une population définie par une origine biologique commune : ils forment une communauté religieuse et historique, à laquelle on a pu se joindre par conversion (Renan le montrait en 1883), et dont les membres ont, au fil des siècles, partagé la vie, les langues et souvent les traits physiques des populations parmi lesquelles ils vivaient. Un Juif de Bordeaux ressemble davantage à un Bordelais qu'à un Juif de Lituanie. La génétique a confirmé, au XXe siècle, que l'espèce humaine ne se divise pas en races séparées et hiérarchisées : les différences entre individus d'un même groupe sont bien plus grandes que les différences moyennes entre groupes. Le « type juif » décrit par les antisémites, avec son nez et ses mains, est une **caricature**, au sens propre : un dessin qui fabrique ce qu'il prétend observer.
+
+<Encadre type="historiens" titre="Antijudaïsme et antisémitisme : continuité ou rupture ?">
+
+Faut-il voir dans l'antisémitisme moderne un simple prolongement de l'antijudaïsme chrétien, ou une réalité nouvelle ? Pour **Léon Poliakov**, dont l'*Histoire de l'antisémitisme* paraît à partir de 1955, et pour **Jules Isaac**, qui dénonce en 1962 « l'enseignement du mépris » des Églises, la continuité est forte : sans des siècles d'enseignement chrétien hostile, la haine raciale n'aurait pas trouvé un terrain si bien préparé. D'autres, à la suite de **Hannah Arendt** (*Les Origines du totalitarisme*, 1951), insistent sur la rupture : l'antisémitisme de la fin du XIXe siècle est un phénomène politique moderne, lié à la démocratie de masse, à la presse populaire, au nationalisme et à la crise de l'État-nation ; il ne vise plus une religion, mais une prétendue race, que le baptême n'efface pas. Beaucoup d'historiens combinent aujourd'hui les deux lectures : le vocabulaire et les ressorts sont nouveaux, mais ils s'appuient sur des images anciennes, et les catholiques antisémites des années 1890 passent sans peine du déicide à la race. Le débat porte sur le poids relatif de l'héritage et de la nouveauté, non sur l'existence de l'un ou de l'autre.
+
+</Encadre>
+
+<Encadre type="retenir">
+
+- Au XIXe siècle, on glisse des **familles de langues** (indo-européennes, sémitiques) à des « **races** » prétendument héréditaires : « Aryens » et « Sémites ».
+- **Renan** donne une caution savante à cette hiérarchie en **1855**, puis la récuse en partie en **1883** ; **Gobineau** n'est pas d'abord antisémite, mais son vocabulaire sera repris.
+- Le mot « **antisémitisme** » naît en Allemagne vers **1879** (Wilhelm Marr) : il vise les Juifs comme « race », et non plus comme religion.
+- La notion de « race juive » est **fausse** : les Juifs forment une communauté religieuse et historique, non une population biologique distincte.
+
+</Encadre>
+
+<span id="antisemitisme-nationaliste" class="ancre"></span>
+
+## L'antisémitisme nationaliste
+
+<Question>Pourquoi, après la défaite de 1870, le Juif devient-il pour certains nationalistes l'« ennemi de l'intérieur » ?</Question>
+
+<span id="ennemi-interieur" class="ancre"></span>
+
+### La défaite et la recherche d'un coupable
+
+En 1870-1871, la France est vaincue par l'Allemagne en quelques semaines ; elle perd l'Alsace et une partie de la Lorraine. Le choc est immense, et il dure. Comment la « Grande Nation » a-t-elle pu s'effondrer ainsi ? Pour la plupart des Français, la réponse est militaire et politique : l'armée était mal préparée, l'Empire mal gouverné. Mais certains cherchent une explication plus profonde, et plus rassurante : si la France a été vaincue, c'est qu'elle a été **trahie de l'intérieur**, minée par des forces étrangères à la nation.
+
+Le **[nationalisme](#glossaire-nationalisme)** change alors de sens. Au début du siècle, il était plutôt de gauche, héritier des patriotes de 1792 qui défendaient la Révolution contre les rois. À la fin du siècle, il devient une doctrine de droite, qui place la nation au-dessus de tout et la définit par la terre, les ancêtres, l'hérédité. Dans cette nation « organique », il y a des étrangers de l'intérieur : les protestants, les francs-maçons, les « métèques » et surtout les Juifs. Peu importe que ceux-ci soient français depuis 1791 et que beaucoup d'entre eux soient des Alsaciens qui ont, en 1871, quitté leur province pour rester Français : on les présente comme des **« Allemands »**, à cause de leurs noms, de leur langue d'origine ou de leurs liens familiaux de l'autre côté du Rhin. Le même soupçon frappera un officier juif alsacien, le capitaine Dreyfus.
+
+<Oeuvre id="leur-patrie" image="antisemitisme/libre-parole-leur-patrie" createur="Albert Esnault" mention="dessinateur" titre="Leur Patrie, une de La Libre Parole illustrée, n° 16" date="28 octobre 1893" technique="dessin en couleurs, une de journal illustré" lieu="Exemplaire non précisé ; reproduction d'après Wikimedia Commons" regard="contemporain" periode="1789-1906" commons="https://commons.wikimedia.org/wiki/File:Leur_Patrie_(Libre_Parole_illustr%C3%A9e,_1893-10-28).jpg" alt="Une de journal en couleurs : sous le titre La Libre Parole illustrée et la devise La France aux Français, un homme au nez énorme et aux mains crochues étreint un globe terrestre ; ses poches débordent de billets et de pièces d'or qui tombent sur le sol. Légende : Leur patrie.">
+<div slot="lire">
+
+Ce document antisémite est présenté ici comme une source. Le supplément illustré de *La Libre Parole*, le journal de Drumont, se vend dix centimes ; sa une en couleurs s'affiche dans les kiosques, sous la devise « La France aux Français ! ». Le dessin d'Albert Esnault condense l'argument nationaliste en une image : le Juif n'a pas de patrie, ou plutôt sa patrie est le monde entier, qu'il serre contre lui comme on serre son bien, et l'argent en est le seul lien. Tous les procédés de la caricature antisémite y sont : le **corps déformé** (le nez, les mains crochues, les doigts griffus) qui prétend montrer une « race » ; l'**argent** qui déborde des poches ; le **singulier** qui fait d'un homme imaginaire le portrait de tous. L'image ne prouve rien : elle fabrique un type, et l'impose par la répétition, semaine après semaine.
+
+</div>
+</Oeuvre>
+
+<span id="decret-cremieux" class="ancre"></span>
+
+### L'Algérie : le décret Crémieux et l'antisémitisme colonial
+
+Le nationalisme antisémite trouve en Algérie un terrain particulier. Le **24 octobre 1870**, Adolphe Crémieux, ministre de la Justice du gouvernement de la Défense nationale, signe le **[décret](#glossaire-decret-cremieux)** qui fait citoyens français, collectivement, les Juifs d'Algérie, environ 35 000 personnes selon les estimations, présents dans le pays bien avant la conquête française de 1830. Les musulmans, eux, restent des « sujets » privés des droits politiques. Le décret crée une situation explosive : les Juifs votent, et pèsent dans les élections municipales, au milieu de colons européens (Français, Espagnols, Italiens, Maltais, souvent naturalisés depuis peu) qui leur reprochent à la fois leur commerce et leur citoyenneté.
+
+<span id="algerie" class="ancre"></span>
+
+Dans les années 1890, l'antisémitisme devient en Algérie un mouvement de masse chez les Européens : on réclame l'abrogation du décret Crémieux, on boycotte les commerces juifs. En janvier 1898, au moment du procès de Zola, **Alger** connaît plusieurs jours d'émeutes : le quartier juif est pillé, il y a des morts. Le meneur en est un jeune étudiant, **Max Régis**, qui devient maire d'Alger la même année. Aux élections législatives de mai 1898, quatre députés antisémites sont élus en Algérie, dont **Édouard Drumont**, élu à Alger. L'antisémitisme colonial montre jusqu'où peut aller la logique nationaliste : l'égalité civique accordée à une minorité y est vécue comme une menace par une autre minorité, elle-même dominante.
+
+<span id="barres" class="ancre"></span>
+
+### Barrès : la « race » au service de la nation
+
+L'écrivain **Maurice Barrès** est la grande voix de ce nationalisme. Député boulangiste de Nancy en 1889, il fait du culte de « la terre et les morts » le fondement de la nation : on est français par les ancêtres enterrés dans le sol, non par un choix ou un contrat. Pendant l'affaire Dreyfus, il est l'un des chefs intellectuels des antidreyfusards. En 1899, il assiste au second procès de Dreyfus à Rennes ; il en tire des articles, réunis en 1902 dans *Scènes et doctrines du nationalisme*, où il explique sans détour pourquoi il croit Dreyfus coupable :
+
+<Citation auteur="Maurice Barrès" oeuvre="Scènes et doctrines du nationalisme" date="texte écrit à propos du procès de Rennes (1899), recueilli en 1902" edition="Paris, Félix Juven, 1902, p. 152" lien="https://archive.org/details/bnf-bpt6k56013884/page/n162" libelleLien="Voir la page numérisée">
+
+Je n'ai pas besoin qu'on me dise pourquoi Dreyfus a trahi. En psychologie, il me suffit de savoir qu'il est capable de trahir et il me suffit de savoir qu'il a trahi. L'intervalle est rempli. Que Dreyfus est capable de trahir, je le conclus de sa race.
+
+</Citation>
+
+La phrase est un aveu de méthode. Barrès renonce à la preuve (« je n'ai pas besoin qu'on me dise pourquoi ») et la remplace par une **déduction à partir de l'origine** : la culpabilité d'un homme découle de sa naissance. C'est l'inverse exact du principe de 1789 et de toute justice : on ne juge plus un acte, mais une appartenance. Or la « race » dont parle Barrès n'existe pas, et la trahison non plus : le vrai coupable, le commandant Esterhazy, n'était pas juif. Barrès écrit ces lignes alors que la fausseté des preuves contre Dreyfus a déjà été démontrée ; c'est précisément pour cela qu'il a besoin de la « race » : elle tient lieu de preuve quand les preuves manquent. Pour l'histoire du courant, voir la leçon sur <a href={urlLecon('xixe', 'courants-politiques/nationalistes')}>les nationalistes</a>.
+
+<Encadre type="retenir">
+
+- Après la défaite de **1870**, des nationalistes cherchent un « **ennemi de l'intérieur** » et désignent les Juifs, présentés comme étrangers ou « allemands ».
+- Le nationalisme passe de la gauche à la droite et définit la nation par **la terre, les morts et l'hérédité**.
+- En **Algérie**, le **décret Crémieux** (1870) nourrit un antisémitisme colonial de masse : émeutes d'**Alger** en 1898, Max Régis maire, Drumont député.
+- **Barrès** fait de la « race » une preuve : il « conclut » la trahison de Dreyfus de son origine.
+
+</Encadre>
+
+<span id="convergence" class="ancre"></span>
+
+## La convergence (1880-1894)
+
+<Question>Pourquoi ces quatre familles, nées séparément, se rejoignent-elles dans les années 1880 au point de produire l'un des plus grands succès de librairie du siècle ?</Question>
+
+<span id="union-generale" class="ancre"></span>
+
+### Le krach de l'Union générale (1882)
+
+Au début des années 1880, la République des républicains s'installe : elle laïcise l'école, éloigne les catholiques monarchistes du pouvoir. En 1878, un ancien ingénieur, **Paul Eugène Bontoux**, fonde l'**Union générale**, une banque qui se veut catholique et proche des milieux royalistes, destinée à faire pièce à la « banque juive et protestante ». Elle attire l'épargne de nombreux petits porteurs catholiques, et ses actions montent de façon vertigineuse grâce à la spéculation. En **janvier 1882**, la bulle éclate : les cours s'effondrent, la banque suspend ses paiements, des milliers d'épargnants sont ruinés. Bontoux, condamné, accuse aussitôt la « finance juive » et les Rothschild d'avoir organisé sa chute. Les enquêtes montrent surtout une gestion imprudente et une spéculation effrénée. Mais pour beaucoup de catholiques ruinés, l'explication par le complot est plus supportable que celle par l'imprudence. Le krach fait se rencontrer deux familles : l'antijudaïsme catholique et la dénonciation de la finance.
+
+<span id="la-france-juive" class="ancre"></span>
+
+### Édouard Drumont et *La France juive* (1886)
+
+Le **14 avril 1886** paraît chez Marpon et Flammarion un livre en deux volumes de près de mille deux cents pages : *La France juive, essai d'histoire contemporaine*. Son auteur, **Édouard Drumont**, est un journaliste catholique de quarante-deux ans, jusque-là peu connu. L'éditeur doute du succès ; l'appui d'Alphonse Daudet et un compte rendu du *Figaro* lancent le livre. C'est un triomphe : les tirages se succèdent, et le livre se vend, selon les estimations, à plus de cent mille exemplaires en quelques années, puis en édition populaire illustrée, par livraisons à dix centimes.
+
+<Oeuvre id="affiche-france-juive" image="antisemitisme/cheret-france-juive" createur="Jules Chéret" mention="imprimerie Chaix" titre="Édition populaire illustrée. La France juive, par Éd. Drumont. La livraison 10 c" date="vers 1886-1887" technique="affiche lithographiée en couleurs" lieu="Paris, Bibliothèque nationale de France, département des Estampes et de la photographie" regard="contemporain" periode="1789-1906" commons="https://commons.wikimedia.org/wiki/File:Edition_populaire_illustr%C3%A9e,_La_France_juive_par_Ed._Drumont,_la_livraison_10c_-_affiche_-_Jules_Ch%C3%A9ret_-_btv1b90154631.jpg" musee="https://gallica.bnf.fr/ark:/12148/btv1b90154631" alt="Affiche publicitaire : sous le titre La France juive en grandes lettres, un chevalier en cotte de mailles, portant un bouclier à croix, brandit une masse d'armes au-dessus d'un homme nu terrassé, qui serre dans sa main un sac d'où s'échappent des pièces d'or. En bas : La livraison 10 c, en vente chez tous les libraires et marchands de journaux.">
+<div slot="lire">
+
+Ce document antisémite est présenté ici comme une source. L'affiche annonce l'édition populaire illustrée du livre de Drumont, vendue par livraisons à dix centimes chez les libraires et les marchands de journaux : le succès de 1886 est exploité auprès d'un public qui n'achète pas de livres chers. Jules Chéret, le grand affichiste de la Belle Époque, met en scène un **combat médiéval** : un chevalier chrétien, bouclier frappé d'une croix, terrasse un homme à terre qui retient dans son poing un sac d'or. Le procédé est celui de la croisade : la lutte contre les Juifs est présentée comme une guerre sainte et une libération ; l'ennemi est réduit à son argent. L'image montre aussi comment l'antisémitisme devient, dans ces années, un produit de consommation de masse, vendu avec les moyens de la publicité moderne.
+
+</div>
+</Oeuvre>
+
+Le livre est un énorme assemblage d'anecdotes, de ragots mondains, de portraits haineux et de citations sorties de leur contexte, souvent empruntées à Gougenot des Mousseaux ou à Toussenel. Mais il a une thèse, résumée dès l'introduction :
+
+<Citation auteur="Édouard Drumont" oeuvre="La France juive" date="1886, introduction" edition="Paris, Marpon et Flammarion, t. I, introduction, p. VI (texte de Wikisource)" lien="https://fr.wikisource.org/wiki/La_France_juive/Introduction">
+
+Le seul auquel la Révolution ait profité est le Juif. Tout vient du Juif ; tout revient au Juif. Il y a là une véritable conquête, une mise à la glèbe de toute une nation par une minorité infime mais cohésive, comparable à la mise à la glèbe des Saxons par les soixante mille Normands de Guillaume le Conquérant.
+
+</Citation>
+
+Tout l'art de Drumont est de faire tenir ensemble les quatre familles. Le livre premier, intitulé « Le Juif », commence par la science des races :
+
+<Citation auteur="Édouard Drumont" oeuvre="La France juive" date="1886, livre premier, « Le Juif »" edition="Paris, Marpon et Flammarion, t. I, p. 5 (texte de Wikisource)" lien="https://fr.wikisource.org/wiki/La_France_juive/Livre_Premier">
+
+Demandons à un examen plus attentif et plus sérieux les traits essentiels qui différencient le Juif des autres hommes et commençons notre travail par la comparaison ethnographique, physiologique et psychologique du Sémite et de l'Aryen, ces deux personnifications de races distinctes irrémédiablement hostiles l'une à l'autre dont l'antagonisme a rempli le monde dans le passé et le troublera encore davantage dans l'avenir.
+
+</Citation>
+
+Ces deux passages montrent la mécanique de la **synthèse**. La part **catholique** : la Révolution, faite contre l'Église, n'aurait profité qu'aux Juifs. La part **anticapitaliste** : la « mise à la glèbe », c'est-à-dire le servage, d'un peuple qui travaille pour une minorité qui l'exploite, l'image même de Toussenel. La part **raciale** : « Sémite » et « Aryen », deux races « irrémédiablement hostiles », dans la langue de Renan détournée. La part **nationaliste** : une « conquête », comme celle des Normands, c'est-à-dire une invasion étrangère. Chacun, qu'il soit catholique ruiné, ouvrier en colère, lecteur de vulgarisation scientifique ou patriote humilié, peut trouver dans le livre l'explication qui lui convient, et toutes se ramènent à une seule cause : « Tout vient du Juif. »
+
+C'est là le piège. Une explication **monocausale** de tous les maux (la défaite, la crise économique, l'anticléricalisme, la corruption) est à la fois simple et impossible à réfuter : tout fait nouveau peut y être rangé. Les chiffres disent pourtant le contraire. Une « minorité infime », Drumont a raison sur ce point : quelque 70 000 à 80 000 personnes en métropole, sur près de 38 millions d'habitants. Une minorité « cohésive », non : les Juifs de France sont divisés entre riches et pauvres, Parisiens et provinciaux, pratiquants et incroyants, républicains et conservateurs. Quant à la « conquête », la France des années 1880 est gouvernée par des républicains presque tous catholiques de naissance ou protestants ; les ministres juifs se comptent sur les doigts d'une main.
+
+<span id="ligue-antisemitique" class="ancre"></span>
+
+### Des livres à la rue : la Ligue antisémitique
+
+Drumont ne se contente pas d'écrire. En 1889, avec le **marquis de Morès**, aventurier et ancien officier, le journaliste Jacques de Biez et **Jules Guérin**, il fonde la **Ligue antisémitique de France**. Morès recrute des hommes de main parmi les bouchers des abattoirs de La Villette, organise des réunions et des bagarres. La même année, Drumont soutient le général Boulanger, dont l'aventure mêle nationalistes, monarchistes et anciens socialistes. La ligue s'essouffle vite, mais elle marque une nouveauté : l'antisémitisme devient un mouvement politique, avec ses militants, ses candidats, ses journaux. Jules Guérin la refondera en 1897 ; voir aussi, sur ces milieux, la leçon sur <a href={urlLecon('xixe', 'courants-politiques/nationalistes')}>les nationalistes</a>.
+
+<span id="la-libre-parole" class="ancre"></span>
+
+### *La Libre Parole* (1892) et Panama
+
+Le **20 avril 1892**, Drumont lance un quotidien, ***La Libre Parole***, avec pour devise « La France aux Français ». Dès mai, le journal publie une campagne contre la présence d'officiers juifs dans l'armée ; plusieurs officiers juifs demandent réparation, et l'un d'eux, le capitaine **Armand Mayer**, est tué en duel par Morès le 23 juin 1892. L'émotion est forte, jusque dans l'armée et au Parlement.
+
+<span id="panama" class="ancre"></span>
+
+Quelques mois plus tard, *La Libre Parole* trouve le scandale qui fait sa fortune. La Compagnie de Panama, qui devait percer le canal entre l'Atlantique et le Pacifique, a fait faillite en 1889, ruinant environ 85 000 souscripteurs selon les estimations. À partir de septembre 1892, le journal révèle que des parlementaires ont été payés pour voter une loi favorable à la compagnie. Parmi les intermédiaires figurent plusieurs financiers juifs, le baron **Jacques de Reinach**, retrouvé mort en novembre 1892, Cornelius Herz, Léopold Arton. Drumont en fait la preuve de sa thèse : la République serait aux mains de la « finance juive ». La corruption est réelle, et elle touche des dizaines de députés et de ministres, en grande majorité non juifs ; mais seuls les noms juifs sont mis en avant. Au plus fort du scandale, *La Libre Parole* tire, selon les estimations, à plus de 200 000 exemplaires, et son supplément illustré, lancé en 1893, diffuse dans les kiosques des caricatures en couleurs comme celle reproduite plus haut. Sur Panama vu par les écrivains du temps, voir le chapitre <a href={urlChapitreEcrivains('xixe', '08-troisieme-republique')}>« La IIIe République jusqu'à 1900 »</a> de la section « écrivains ».
+
+<Encadre type="historiens" titre="La France fin de siècle, plus antisémite que ses voisins ?">
+
+À la fin du XIXe siècle, l'antisémitisme gagne toute l'Europe. En Allemagne, des députés antisémites entrent au Reichstag à partir de la fin des années 1880 ; à Vienne, Karl Lueger, élu sur un programme antisémite, devient maire en 1897 ; dans l'Empire russe, les Juifs subissent des lois d'exception et des pogroms meurtriers (1881-1882, puis Kichinev en 1903). La France ne connaît ni lois d'exception ni pogroms comparables. Pourtant, pour **Zeev Sternhell** (*La Droite révolutionnaire*, 1978), la France des années 1880-1900 est l'un des laboratoires de l'antisémitisme politique moderne, avec le plus grand succès de librairie (*La France juive*), un quotidien de masse (*La Libre Parole*) et des émeutes dans des dizaines de villes en 1898, étudiées par **Stephen Wilson** et plus récemment par **Pierre Birnbaum** (*Le Moment antisémite*, 1998). D'autres historiens soulignent l'autre face de l'exception française : nulle part l'antisémitisme n'a provoqué en retour une mobilisation aussi large et finalement victorieuse, celle des dreyfusards, et la République n'est jamais revenue sur l'égalité de 1791. La comparaison dépend donc de ce que l'on mesure : l'audience des idées, ou leur traduction dans la loi.
+
+</Encadre>
+
+<Encadre type="retenir">
+
+- Le krach de l'**Union générale** (**1882**), banque catholique, est attribué à tort à la « finance juive » : catholiques et anticapitalistes se rejoignent.
+- *La France juive* de **Drumont** (**1886**) fond les quatre familles en une seule explication : « Tout vient du Juif ». C'est un immense succès.
+- L'antisémitisme devient un **mouvement politique** : Ligue antisémitique (**1889**), quotidien ***La Libre Parole*** (**1892**).
+- Le scandale de **Panama** (**1892**) sert de preuve apparente : on ne retient, parmi des corrompus surtout non juifs, que les noms juifs.
+
+</Encadre>
+
+<span id="affaire-dreyfus" class="ancre"></span>
+
+## L'affaire Dreyfus, point d'aboutissement (1894-1899)
+
+<Question>Pourquoi une erreur judiciaire contre un officier devient-elle, en quelques années, l'affrontement de deux France, et quelle place l'antisémitisme y tient-il ?</Question>
+
+<span id="condamnation-1894" class="ancre"></span>
+
+### L'arrestation et la condamnation (1894)
+
+En septembre 1894, le service de renseignements de l'armée récupère dans une corbeille de l'ambassade d'Allemagne une lettre non signée, le **[bordereau](#glossaire-bordereau)**, qui annonce l'envoi de documents militaires. On cherche le traître parmi les officiers stagiaires de l'état-major. Les soupçons se portent vite sur le capitaine **Alfred Dreyfus**, polytechnicien, officier d'artillerie, issu d'une famille d'industriels juifs de Mulhouse qui a choisi la France en 1871. Son écriture ressemble vaguement à celle du bordereau ; il est juif, et c'est assez pour certains officiers convaincus d'avance. Il est arrêté le 15 octobre 1894.
+
+*La Libre Parole* l'apprend et révèle l'affaire à la fin d'octobre, en titrant le 1er novembre sur l'arrestation de « l'officier juif A. Dreyfus ». La campagne de presse pèse sur le ministre de la Guerre, le général Mercier, qui ne peut plus reculer. Le 22 décembre 1894, un conseil de guerre, siégeant à huis clos, condamne Dreyfus à la déportation à vie, après avoir reçu en secret, sans que la défense en soit informée, un dossier de pièces qui ne prouvaient rien. Presque toute la presse, presque toute la classe politique approuvent la condamnation ; certains, Jaurès compris, s'indignent même qu'un officier échappe à la peine de mort quand de simples soldats sont fusillés pour moins que cela.
+
+<span id="degradation" class="ancre"></span>
+
+Le **5 janvier 1895**, dans la cour de l'École militaire, Dreyfus est dégradé devant les troupes : on arrache ses galons, on brise son sabre. Il ne cesse de crier, selon le récit de Joseph Reinach : « Je suis innocent ! Vive la France ! » Au-dehors, massée aux grilles, la foule hurle à la mort. Il est ensuite déporté à l'île du Diable, en Guyane.
+
+<Oeuvre id="petit-journal-traitre" image="08/petit-journal-traitre" artiste="henri-meyer" titre="Le Traître. Dégradation d'Alfred Dreyfus" date="13 janvier 1895" technique="illustration en couleurs, une du Supplément illustré du Petit Journal" lieu="Paris, Bibliothèque nationale de France" faits="1895" regard="contemporain" commons="https://commons.wikimedia.org/wiki/File:D%C3%A9gradation_d'Alfred_Dreyfus_-_Le_Petit_Journal_(janvier_1895).jpg" musee="https://gallica.bnf.fr/ark:/12148/bpt6k7161044/f1.item" alt="Une de journal en couleurs : dans une cour pavée, devant un dôme doré et des troupes alignées, un adjudant casqué brise un sabre sur son genou devant un officier en uniforme sombre qui se tient droit ; des galons rouges gisent à terre.">
+<div slot="lire">
+
+Le *Petit Journal*, quotidien à cinq centimes qui tire alors à plus d'un million d'exemplaires, consacre à la dégradation la une en couleurs de son supplément illustré, huit jours après la cérémonie. Le titre, « Le traître », ne laisse aucune place au doute. L'image n'est pas une caricature antisémite : Dreyfus n'y est pas déformé, il se tient droit, presque digne. Mais elle montre l'unanimité de janvier 1895, où la culpabilité paraît évidente à la grande presse populaire, qui touche des millions de lecteurs. C'est sur ce consensus que l'antisémitisme a pu prospérer : il n'avait pas besoin de convaincre de la trahison, seulement d'en désigner la cause, la « race » du condamné.
+
+</div>
+</Oeuvre>
+
+<span id="esterhazy" class="ancre"></span>
+
+### Le doute, puis la bataille (1896-1898)
+
+Pendant deux ans, seuls la famille de Dreyfus, son frère Mathieu surtout, et quelques proches croient à son innocence. En novembre 1896, le journaliste **Bernard Lazare** publie à Bruxelles une brochure, *Une erreur judiciaire. La vérité sur l'affaire Dreyfus*. Lazare, juif de Nîmes, avait publié en 1894 un livre ambigu sur *L'Antisémitisme*, où il cherchait une partie des causes de l'hostilité dans le comportement des Juifs eux-mêmes ; l'Affaire fait de lui un combattant résolu. Sa brochure se termine par un appel :
+
+<Citation auteur="Bernard Lazare" oeuvre="Une erreur judiciaire. La vérité sur l'affaire Dreyfus" date="novembre 1896" edition="Bruxelles, Veuve Monnom, 1896, p. 24" lien="https://fr.wikisource.org/wiki/Une_erreur_judiciaire._La_v%C3%A9rit%C3%A9_sur_l%27affaire_Dreyfus">
+
+Il est encore temps de se ressaisir. Qu'il ne soit pas dit que, ayant devant soi un juif, on a oublié la justice.
+
+</Citation>
+
+<Oeuvre id="bernard-lazare" image="antisemitisme/bernard-lazare" createur="Atelier Gerschel" mention="photographie d'Aron ou de Charles Gerschel" titre="Bernard Lazare" date="avant 1899" technique="photographie reproduite en similigravure dans Louis Forest, Les Défenseurs de la justice. Affaire Dreyfus. 150 portraits (Stock, 1899)" lieu="Paris, Bibliothèque nationale de France (Gallica)" regard="contemporain" periode="1789-1906" commons="https://commons.wikimedia.org/wiki/File:Lazare,_Bernard_(phot._Gerschel).jpg" alt="Portrait photographique en buste : un homme d'une trentaine d'années, front dégarni, lorgnon, moustache et barbe en pointe, en veston sombre et cravate, les bras croisés, regardant vers la droite.">
+<div slot="lire">
+
+Ce portrait vient d'un album publié en 1899, au moment du procès de Rennes, qui rassemble cent cinquante « défenseurs de la justice » : écrivains, savants, hommes politiques, officiers. L'album répond aux galeries de portraits de la presse antisémite par une autre galerie, celle des dreyfusards. Bernard Lazare y figure en homme posé, bras croisés, le regard ailleurs : rien du « type » inventé par les caricaturistes. Il fut le premier à défendre publiquement Dreyfus, et l'un des rares à dire tôt que l'Affaire était aussi, et d'abord, une affaire d'antisémitisme. Il meurt en 1903, à trente-huit ans, avant la réhabilitation.
+
+</div>
+</Oeuvre>
+
+Au même moment, le nouveau chef du service de renseignements, le lieutenant-colonel **Georges Picquart**, découvre que l'écriture du bordereau est celle d'un autre officier, le commandant **Esterhazy**, joueur endetté en relations avec l'attaché militaire allemand. Ses chefs refusent de rouvrir le dossier, l'éloignent en Tunisie ; l'un de ses adjoints, le commandant Henry, fabrique un faux pour accabler Dreyfus. Le vice-président du Sénat, Auguste Scheurer-Kestner, alsacien et protestant, se convainc de l'innocence de Dreyfus à la fin de 1897. Jugé à la demande de Mathieu Dreyfus, Esterhazy est acquitté par un conseil de guerre le **11 janvier 1898**, sous les acclamations.
+
+<span id="j-accuse" class="ancre"></span>
+
+### « J'accuse… ! » et les émeutes de 1898
+
+Deux jours plus tard, le **13 janvier 1898**, **Émile Zola** publie dans *L'Aurore*, le journal où écrit Clemenceau, une lettre ouverte au président de la République, Félix Faure : « J'accuse… ! ». Il y accuse nommément les officiers et les experts qui ont fait condamner un innocent et acquitter un coupable. Il sait qu'il sera poursuivi pour diffamation, et il le veut : c'est le moyen de faire venir l'Affaire devant un tribunal public.
+
+<Oeuvre id="aurore-jaccuse" image="08/aurore-jaccuse" createur="L'Aurore" mention="quotidien dirigé par Ernest Vaughan" titre="« J'accuse… ! Lettre au président de la République », par Émile Zola" date="13 janvier 1898" technique="une de journal imprimé" lieu="Paris, Bibliothèque nationale de France" faits="1898" regard="contemporain" periode="1789-1906" commons="https://commons.wikimedia.org/wiki/File:J'accuse_-_Gallica_-_page_1.jpg" musee="https://gallica.bnf.fr/ark:/12148/bpt6k701453s" alt="Première page du journal L'Aurore barrée du titre « J'accuse…! » en très gros caractères, au-dessus de colonnes de texte serré.">
+<div slot="lire">
+
+Pas d'image, pas de caricature : une page de texte, et un titre en lettres énormes, choisi par Clemenceau dans la série de « J'accuse » qui termine la lettre. Face à la presse illustrée antisémite, la riposte dreyfusarde passe d'abord par l'écrit et par l'argument. Ce jour-là, *L'Aurore*, qui tire d'ordinaire à quelques dizaines de milliers d'exemplaires, en vend, selon les estimations, entre deux et trois cent mille. Zola y parle peu de l'antisémitisme, mais il le désigne comme l'arme de ceux qui ont égaré l'opinion ; le procès qui suit, en février 1898, se déroule au milieu des cris antisémites. Condamné à un an de prison, Zola s'exile en Angleterre en juillet 1898.
+
+</div>
+</Oeuvre>
+
+<span id="emeutes-1898" class="ancre"></span>
+
+La riposte antisémite est immédiate. De la mi-janvier à la fin de février 1898, des **émeutes antisémites** éclatent dans des dizaines de villes de France, Nantes, Rennes, Bordeaux, Marseille, Lyon, Nancy et bien d'autres : on brise les vitrines des magasins juifs, on brûle des effigies de Zola, on crie « Mort aux Juifs ! ». On ne compte pas de morts en métropole, mais la violence est générale ; en **Algérie**, à Alger surtout, les émeutes font des morts. C'est le sommet de l'antisémitisme de rue en France au XIXe siècle.
+
+### Deux France
+
+L'Affaire coupe alors le pays en deux camps, jusque dans les familles. Les **[dreyfusards](#glossaire-dreyfusard)**, écrivains, savants, professeurs (on commence à les appeler les « intellectuels »), républicains <a href={urlLecon('xixe', 'courants-politiques/radicaux')}>radicaux</a> comme Clemenceau, une partie des <a href={urlLecon('xixe', 'courants-politiques/republicains')}>républicains modérés</a>, puis les socialistes de Jaurès, défendent la justice, les droits de l'individu et la vérité. En février 1898 naît la **Ligue des droits de l'homme**, fondée par l'ancien ministre Ludovic Trarieux. Les **[antidreyfusards](#glossaire-antidreyfusard)**, catholiques conservateurs, nationalistes, antisémites, une grande partie des officiers, défendent l'honneur de l'armée, l'autorité de la chose jugée et la raison d'État ; ils fondent fin 1898 la **Ligue de la patrie française**. Tous les antidreyfusards ne sont pas antisémites ; mais presque tous les antisémites sont antidreyfusards, et c'est leur presse qui donne le ton.
+
+En août 1898, le faux du commandant Henry est découvert ; Henry avoue, est arrêté et se suicide dans sa cellule le 31 août. Esterhazy s'enfuit en Angleterre. La révision devient inévitable. Les antisémites ouvrent pourtant une souscription pour la veuve d'Henry, présenté comme un héros mort pour l'armée : des milliers de souscripteurs y joignent des messages souvent haineux, publiés par *La Libre Parole*.
+
+<span id="rennes" class="ancre"></span>
+
+### Rennes et la grâce (1899)
+
+Le 3 juin 1899, la Cour de cassation annule le jugement de 1894 et renvoie Dreyfus, ramené de l'île du Diable, devant un nouveau conseil de guerre, à **Rennes**. Le procès s'ouvre le 7 août. Le **9 septembre 1899**, contre toute évidence, les juges militaires le condamnent à nouveau, à dix ans de détention, « avec circonstances atténuantes ». Le jugement est absurde : on ne trahit pas son pays avec des circonstances atténuantes. Pour mettre fin à la crise, le gouvernement de Waldeck-Rousseau fait gracier Dreyfus par le président Loubet le **19 septembre**. Dreyfus, épuisé, accepte la grâce, tout en continuant à réclamer la reconnaissance de son innocence. Le même été, Jules Guérin, chef de la Ligue antisémitique, s'est retranché avec quelques militants dans son local de la rue de Chabrol, à Paris, pour échapper à une arrestation pour complot : le « Fort Chabrol » tient plus d'un mois, avant que Guérin se rende.
+
+<Encadre type="retenir">
+
+- Dreyfus, officier juif, est condamné à tort en **1894** ; *La Libre Parole* joue un rôle clé dans la campagne contre lui. Il est **dégradé le 5 janvier 1895**.
+- **Bernard Lazare** (1896), **Picquart**, Scheurer-Kestner, puis **Zola** (« **J'accuse… !** », **13 janvier 1898**) révèlent l'erreur et la culpabilité d'**Esterhazy**.
+- **Émeutes antisémites** dans des dizaines de villes en 1898, et en Algérie : c'est le sommet de l'antisémitisme de rue.
+- La France se divise en **dreyfusards** (Ligue des droits de l'homme) et **antidreyfusards** ; à **Rennes** (1899), Dreyfus est recondamné, puis **gracié**.
+
+</Encadre>
+
+Les adversaires de l'antisémitisme ne sont pas seulement des militants. Dès 1893, un historien catholique, **Anatole Leroy-Beaulieu**, membre de l'Institut, publie *Israël chez les nations*, une longue réfutation des thèses antisémites. Il ne nie pas que la France connaisse des maux, corruption et pouvoir de l'argent ; il refuse qu'on en fasse porter la faute à une minorité :
+
+<Citation auteur="Anatole Leroy-Beaulieu" oeuvre="Les Juifs et l'antisémitisme. Israël chez les nations" date="1893, préface" edition="Paris, Calmann Lévy, 1893, p. IX" lien="https://archive.org/details/lesjuifsetlanti00beagoog/page/n18" libelleLien="Voir la page numérisée">
+
+Les juifs seraient jusqu'au dernier bannis de la terre de France, Israël aurait disparu de la face de l'Europe que la France n'en serait guère plus saine, ni l'Europe mieux portante. La première chose, pour guérir, c'est de connaître sa maladie. Or, l'antisémitisme nous fait illusion ; il nous aveugle sur nous-mêmes en s'efforçant de nous faire croire qu'au lieu d'être en nous, la cause de notre mal est hors de nous.
+
+</Citation>
+
+C'est la meilleure description du mécanisme du **bouc émissaire** : l'antisémitisme rassure, parce qu'il place la cause des difficultés d'une société hors d'elle-même, dans un groupe qu'il suffirait d'écarter. Leroy-Beaulieu, catholique et libéral, répond à Drumont avec les armes de la raison et de la foi ; il redira la même chose dans ses conférences sur *L'Antisémitisme* en 1897.
+
+<span id="epilogue" class="ancre"></span>
+
+## Épilogue : la réhabilitation et ce qui reste (1899-1906)
+
+<Question>Pourquoi la victoire des dreyfusards ne met-elle pas fin à l'antisémitisme en France ?</Question>
+
+<span id="rehabilitation" class="ancre"></span>
+
+Après la grâce, la République des dreyfusards s'installe au pouvoir. Le gouvernement de Waldeck-Rousseau, puis celui d'Émile Combes, font juger les chefs nationalistes, réduisent l'influence des congrégations, et la loi de séparation des Églises et de l'État est votée en 1905. Une loi d'amnistie, en décembre 1900, éteint les poursuites liées à l'Affaire, au grand regret des dreyfusards qui voulaient voir juger les coupables. Le combat judiciaire continue pour Dreyfus. Le **12 juillet 1906**, la Cour de cassation, toutes chambres réunies, casse sans renvoi le jugement de Rennes : il n'y a plus rien qui puisse être qualifié de crime. Dreyfus est **réhabilité**, réintégré dans l'armée avec le grade de chef d'escadron et fait chevalier de la Légion d'honneur le 21 juillet, dans la cour de l'École militaire où il avait été dégradé. Picquart devient général, puis ministre de la Guerre en octobre 1906.
+
+<span id="heritage" class="ancre"></span>
+
+La défaite judiciaire et politique des antisémites est nette. *La Libre Parole* perd des lecteurs, Drumont n'est pas réélu en 1902, la Ligue antisémitique s'efface après la condamnation de Guérin. L'égalité des Juifs devant la loi, établie en 1791, n'a jamais été remise en cause par la République. Mais ce que le XIXe siècle laisse au XXe siècle ne disparaît pas pour autant. Le **vocabulaire** est là : « Sémite », « race juive », « finance juive », « ennemi de l'intérieur ». Les **réseaux** aussi : en 1898-1899, au cœur de l'Affaire, est née l'Action française, un mouvement nationaliste et royaliste dont Charles Maurras devient le maître à penser, et qui fait de l'antisémitisme l'un de ses principes. Les **images** enfin, celles de *La Libre Parole illustrée* et de *La France juive*, souvent rééditée au XXe siècle. Il serait faux de lire tout le XIXe siècle comme une marche inévitable vers les persécutions du siècle suivant : la France de 1906 est aussi celle où l'antisémitisme a été combattu et vaincu dans les institutions. Mais les idées formées entre 1845 et 1900 resteront disponibles, et d'autres sauront s'en servir. C'est l'histoire du XXe siècle.
+
+<Encadre type="retenir">
+
+- Le **12 juillet 1906**, Dreyfus est **réhabilité** par la Cour de cassation et réintégré dans l'armée.
+- Les antisémites sont battus politiquement : Drumont perd son siège en 1902, les ligues s'effacent, l'**égalité de 1791** n'est jamais remise en cause par la République.
+- Le XIXe siècle lègue pourtant au suivant un **vocabulaire**, des **images** et des **réseaux** (l'Action française naît pendant l'Affaire).
+
+</Encadre>
+
+*Voir aussi* : les leçons sur <a href={urlLecon('xixe', 'courants-politiques/catholiques')}>les catholiques</a>, <a href={urlLecon('xixe', 'courants-politiques/socialistes')}>les socialistes</a>, <a href={urlLecon('xixe', 'courants-politiques/nationalistes')}>les nationalistes</a>, <a href={urlLecon('xixe', 'courants-politiques/radicaux')}>les radicaux</a> et <a href={urlLecon('xixe', 'courants-politiques/republicains')}>les républicains</a> ; la leçon sur <a href={urlLecon('xixe', 'revolution-francaise')}>la Révolution française</a> ; dans la section « écrivains », la dernière partie du chapitre <a href={`${urlChapitreEcrivains('xixe', '08-troisieme-republique')}#partie-1894`}>« La IIIe République jusqu'à 1900 »</a>, consacrée à l'Affaire, avec les textes de Reinach, de Zola et de Brunetière.
+
+<ListeSousPages parent="xixe/antisemitisme" titre="Pour approfondir" suite="Lire la page" facultative />
+
+<span id="personnages" class="ancre"></span>
+
+## Personnages
+
+Quelques-uns des acteurs de ce récit, dans l'ordre de leur entrée en scène.
+
+<Personnages personnages={personnages} />
+
+<span id="glossaire" class="ancre"></span>
+
+## Glossaire
+
+<Glossaire termes={glossaire} />
+
+## Pour aller plus loin sur le site
+
+<BlocEcrivains siecle="xixe" />
+
+<BlocDiaporamas siecle="xixe" />

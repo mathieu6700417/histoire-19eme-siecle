@@ -1,0 +1,463 @@
+---
+titre: "Les parlements d’Ancien Régime"
+theme: politique
+ordre: 1
+periode: "XIIIe siècle-1790"
+resume: "Ni assemblées ni élus : des cours de justice souveraines, dont les juges, propriétaires de leur charge, sont devenus en un siècle les principaux adversaires du roi, au point d'ouvrir la crise de 1787-1788, avant de disparaître avec la Révolution."
+dureeLecture: 35
+---
+import FriseJournees from '../../../../components/FriseJournees.astro';
+import CarteFrance from '../../../../components/CarteFrance.astro';
+import Encadre from '../../../../components/Encadre.astro';
+import Citation from '../../../../components/Citation.astro';
+import Question from '../../../../components/Question.astro';
+import Oeuvre from '../../../../components/Oeuvre.astro';
+import Glossaire from '../../../../components/Glossaire.astro';
+import Personnages from '../../../../components/Personnages.astro';
+import { tranches, regnes, parties, journees, fond, zones, lieux, glossaire, personnages } from '../../../../data/xixe/parlements';
+import { urlChapitreEcrivains, urlLecon } from '../../../../utils/adresses';
+
+**Attention au faux ami.** Aujourd'hui, le Parlement désigne en France l'Assemblée nationale et le Sénat : des assemblées d'élus qui votent les lois. Sous l'Ancien Régime, un **[parlement](#glossaire-parlement)** est tout autre chose : une **cour de justice**, la plus haute d'une région, qui juge en dernier ressort au nom du roi. Ses membres ne sont pas élus ; ce sont des magistrats qui ont acheté leur charge et la transmettent à leurs fils. Le mot vient simplement de « parler » : la cour du roi « parlementait », c'est-à-dire délibérait. S'il a changé de sens, c'est par l'Angleterre : outre-Manche, le *Parliament* est devenu au fil des siècles une assemblée représentative qui consent l'impôt et fait la loi ; les admirateurs français des institutions anglaises, au XVIIIe siècle, puis les régimes parlementaires du XIXe siècle ont acclimaté ce sens anglais en France.
+
+Il faut pourtant comprendre ces juges pour comprendre la fin de la monarchie. Pendant un siècle, de la mort de Louis XIV à 1788, ce sont eux, et non des philosophes ou des émeutiers, qui tiennent tête au roi : ils refusent ses lois, l'accusent de « despotisme », réclament au nom de la nation des droits qu'aucun texte ne leur donnait. Ce sont eux encore qui, en exigeant les états généraux en 1787, ouvrent la porte par laquelle la Révolution va passer, avant d'être balayés par elle. Cette page explique d'abord ce qu'était l'institution, puis raconte, du XIIIe siècle à 1790, comment des serviteurs du roi sont devenus ses adversaires.
+
+La frise ci-dessous sert de carte : en haut les règnes, au milieu les parties du récit, en bas les grandes dates ; chaque élément mène au passage correspondant. Cinq siècles ne tiennent pas sur une échelle unique : les plus anciens sont comprimés.
+
+<FriseJournees debut={1250} fin={1791} echelle={tranches} idFrise="frise-parlements" rangees={[{ nom: 'Règnes', bandes: regnes }, { nom: 'Récit', bandes: parties }]} journees={journees} legende="Échelle par segments : de 1250 à 1700, un demi-siècle entre deux graduations ; de 1700 à 1770, une décennie ; de 1770 à 1790, une année. L'axe en tirets signale les périodes comprimées, et une double barre oblique chaque changement d'échelle." />
+
+<span id="comprendre-l-institution" class="ancre"></span>
+
+## Comprendre l'institution
+
+<Question>Pourquoi une cour de justice avait-elle son mot à dire sur les lois du roi ?</Question>
+
+<span id="origines" class="ancre"></span>
+
+### La cour du roi « en parlement »
+
+Au Moyen Âge, le roi de France gouverne entouré de sa **cour**, la *curia regis* : ses grands vassaux, des évêques, des conseillers de confiance. Avec eux, il délibère des affaires du royaume, lève des troupes, et surtout rend la justice, qui est le premier devoir d'un roi chrétien. L'image de Saint Louis jugeant ses sujets sous un chêne de Vincennes, rapportée par son compagnon Joinville, résume cet idéal : le roi est le juge suprême, et tout sujet doit pouvoir s'adresser à lui.
+
+Sous le règne de **Louis IX** (1226-1270), la cour prend l'habitude de se réunir plusieurs fois par an en sessions consacrées aux procès : on dit qu'elle siège « en parlement ». Elle reçoit de plus en plus d'**appels** contre les jugements des baillis et des sénéchaux, les représentants du roi dans les provinces, et même contre ceux des seigneurs. Des clercs et des juristes formés au droit romain y prennent une place croissante. À partir de 1254, ses décisions sont copiées dans des registres, les *Olim* (« autrefois », premier mot de l'un d'eux) : le parlement a désormais une mémoire, une jurisprudence, une existence distincte de la personne du roi.
+
+Au tournant du XIVe siècle, sous Philippe le Bel et ses fils, la cour se divise en organes spécialisés : le **Conseil du roi** pour la politique, la **Chambre des comptes** pour les finances, le **parlement** pour la justice. Le parlement s'installe à demeure dans le palais royal de l'île de la Cité, à Paris ; quand les rois préfèrent d'autres résidences, à partir de Charles V, il reste seul maître des lieux, qui deviennent le **Palais** par excellence, le Palais de justice. Une grande ordonnance du **11 mars 1345** (1344 selon le calendrier de l'époque, où l'année commençait à Pâques) fixe ses chambres et le nombre de ses membres. Ceux-ci, d'abord désignés chaque année, deviennent permanents ; une ordonnance de Louis XI, en 1467, les rend pratiquement inamovibles.
+
+Un principe éclaire tout ce qui suit : **toute justice émane du roi**. Le roi la *délègue* à ses cours, qui jugent en son nom ; mais il en garde la source, la **justice retenue**. Il peut à tout moment retirer une affaire à un tribunal pour la faire juger par son Conseil (l'**[évocation](#glossaire-evocation)**), gracier un condamné, ou venir siéger en personne : alors, dit un vieil adage, la délégation cesse, puisque celui au nom de qui l'on juge est là. Tout le conflit des siècles suivants tient dans cette ambiguïté : le parlement est-il un simple délégué du roi, ou un corps qui a ses droits propres ?
+
+<span id="paris-et-province" class="ancre"></span>
+
+### Le parlement de Paris et les parlements de province
+
+Jusqu'au XVe siècle, il n'y a qu'un parlement, celui de Paris, pour tout le royaume. Mais le royaume grandit, les distances sont longues et les droits sont divers : le Midi suit le **droit écrit**, hérité du droit romain, le Nord des **coutumes** locales, souvent orales. À mesure que les rois réunissent de grandes provinces, ils leur accordent, ou leur confirment, une cour souveraine sur place, souvent à la demande des états de la province, et en promettant de respecter leurs usages.
+
+Le premier parlement de province est celui de **Toulouse**, essayé dès 1420 et établi pour de bon en 1443 pour le Languedoc. Suivent **Grenoble** (1453, pour le Dauphiné), **Bordeaux** (1462, après la reconquête de la Guyenne sur les Anglais), **Dijon** (1477, après la mort du duc de Bourgogne Charles le Téméraire), **Rouen** (1499, où l'ancien Échiquier de Normandie devient permanent, avant de prendre le nom de parlement en 1515), **Aix** (1501, pour la Provence), **Rennes** (1554, pour la Bretagne). Les conquêtes du XVIIe siècle en ajoutent d'autres : **Pau** (1620, pour le Béarn et la Navarre), **Metz** (1633, pour les Trois-Évêchés), **Douai** (créé à Tournai en 1668 pour la Flandre conquise, installé à Douai en 1714), **Besançon** (1676, qui succède au parlement de Dole après la conquête de la Franche-Comté), enfin **Nancy** (1775, pour la Lorraine, réunie en 1766). Les dates de création sont parfois discutées : plusieurs de ces cours ont connu des débuts hésitants, des suppressions et des rétablissements.
+
+En 1789, on compte ainsi **treize parlements**. S'y ajoutent des **[conseils souverains](#glossaire-conseil-souverain)**, de même rang mais d'un nom plus modeste, dans des provinces réunies tardivement : l'Alsace (Colmar), le Roussillon (Perpignan), la Corse (Bastia, conseil supérieur). Le parlement de Paris garde un **[ressort](#glossaire-ressort)** immense, à peu près un tiers du royaume, de la Picardie à l'Auvergne et du Maine au Lyonnais : un plaideur de Lyon ou d'Aurillac doit monter à Paris pour faire juger son appel. Il garde aussi un prestige sans égal : c'est la « cour des pairs », où siègent de droit les princes du sang et les ducs et pairs, et où le roi vient tenir ses lits de justice.
+
+<CarteFrance idCarte="carte-parlements" fond={fond} zones={zones} lieux={lieux} titre="Les parlements et conseils souverains en 1789" legende="Ressorts simplifiés : ils sont reconstitués ici en regroupant des départements actuels, alors que les vrais ressorts suivaient les anciennes circonscriptions judiciaires (bailliages et sénéchaussées). Le contour est celui de la France actuelle ; la Savoie et le comté de Nice, hors du royaume en 1789, sont hachurés en croisillons." cles={[{ type: 'principal', libelle: 'parlement (avec sa date de création)' }, { type: 'secondaire', libelle: 'conseil souverain' }, { type: 'autre', libelle: 'conseil provincial d’Artois' }, { type: 'hors', libelle: 'enclave hors du royaume' }, { motif: 'hors', libelle: 'hors du royaume' }]} liste titreListe="Les treize parlements et les conseils souverains, dans l'ordre de leur création" />
+
+Il existe enfin d'autres **[cours souveraines](#glossaire-cour-souveraine)**, spécialisées : les chambres des comptes, qui vérifient les comptes des agents du roi, les cours des aides, qui jugent les procès d'impôts, le Grand Conseil. Elles enregistrent elles aussi certains actes royaux et peuvent faire des remontrances. On les retrouvera, avec la Cour des aides de Paris présidée par Malesherbes, aux côtés des parlements dans les grandes crises.
+
+<span id="organisation" class="ancre"></span>
+
+### Une grande maison de justice
+
+Prenons le parlement de Paris au XVIIIe siècle, le plus grand et le mieux connu. Il compte plus de deux cents magistrats, répartis en plusieurs chambres. La plus prestigieuse est la **[Grand-Chambre](#glossaire-grand-chambre)**, où siègent les plus anciens : elle juge les procès les plus importants, ceux des pairs, les affaires touchant la couronne, et c'est là que le roi tient ses lits de justice. Les **chambres des enquêtes**, où débutent les jeunes conseillers, jugent les appels « sur pièces », d'après les dossiers écrits ; la **chambre des requêtes** juge en première instance les causes de certains privilégiés. La **[Tournelle](#glossaire-tournelle)**, où les conseillers servent à tour de rôle, juge les appels criminels. Pendant les vacances judiciaires, de septembre à novembre, une **[chambre des vacations](#glossaire-chambre-des-vacations)** expédie les affaires urgentes. Pour les décisions graves, enregistrement contesté ou remontrances, toutes les chambres se réunissent : le parlement délibère alors « toutes chambres assemblées ».
+
+À la tête de la compagnie, le **[premier président](#glossaire-premier-president)**, choisi par le roi : c'est le seul dont la charge ne s'achète pas, signe qu'il est d'abord l'homme du souverain. Viennent ensuite les **[présidents à mortier](#glossaire-presidents-a-mortier)**, du nom de leur bonnet de velours galonné d'or, puis les conseillers, laïcs pour la plupart, quelques-uns clercs. À part, les **[gens du roi](#glossaire-gens-du-roi)** : le procureur général et les avocats généraux, qui défendent les intérêts du roi et de la société ; ils forment ce qu'on appelle déjà le **parquet**. Autour d'eux s'affaire un peuple d'avocats, de procureurs (nos avoués), de greffiers, d'huissiers et de clercs, regroupés dans la Basoche. Le Palais est une petite ville : dans sa galerie marchande, on vend des livres, des gants, des dentelles ; on y vient plaider, se montrer, apprendre les nouvelles.
+
+<Oeuvre id="galerie-du-palais" image="revolution-francaise/parlements/palais-de-justice" createur="Abraham Bosse" titre="La Galerie du Palais" date="vers 1638-1640" technique="eau-forte et burin" lieu="Paris, Bibliothèque nationale de France, département des Estampes et de la photographie" faits="1640" regard="contemporain" periode="1600-1700" commons="https://commons.wikimedia.org/wiki/File:La_Galerie_du_Palais_-_estampe_-_btv1b84035726.jpg" alt="Dans une galerie couverte bordée de boutiques, des gentilshommes à chapeau à plumes et des dames examinent livres, éventails, gants et dentelles présentés par des marchandes derrière leurs comptoirs ; un lévrier et un petit chien traversent le premier plan ; quatre quatrains sont gravés sous l'image.">
+<div slot="lire">
+
+La galerie marchande du Palais, dans l'île de la Cité, est au XVIIe siècle l'un des lieux mondains de Paris. On y achète des livres (à gauche, les enseignes portent les noms de Plutarque, de Cicéron ou de Machiavel) et des articles de mode. Abraham Bosse en fait une scène de galanterie, où l'on fait semblant d'acheter pour courtiser les marchandes. Le monde judiciaire n'y paraît que de biais : un quatrain se plaint des « chicaneurs » qui encombrent une boutique en parlant de leurs procès. L'image ne montre pas le parlement, mais le palais où il siège, carrefour de plaideurs, de praticiens et de badauds.
+
+</div>
+</Oeuvre>
+
+Chaque parlement de province reproduit ce modèle en plus petit : une Grand-Chambre, une Tournelle, une ou plusieurs chambres des enquêtes, avec quelques dizaines à une centaine de magistrats. Dans des villes comme Rennes, Grenoble, Aix ou Toulouse, le parlement fait vivre des centaines de familles, des praticiens du droit aux aubergistes qui logent les plaideurs. On comprendra mieux, plus loin, pourquoi leurs habitants se soulèvent quand on veut le leur enlever.
+
+<span id="magistrats" class="ancre"></span>
+
+### Les magistrats : une noblesse de robe
+
+Un conseiller au parlement n'est pas un fonctionnaire au sens actuel. Il est **[officier](#glossaire-office)** : il possède sa charge, qu'il a **achetée**. La monarchie, toujours à court d'argent, a pris l'habitude au XVIe siècle de vendre les offices publics ; cette **[vénalité des offices](#glossaire-venalite)**, d'abord honteuse puis officielle, devient une ressource essentielle du Trésor. En **décembre 1604**, Henri IV et son ministre Sully créent un droit annuel, surnommé la **[paulette](#glossaire-paulette)** du nom du financier Charles Paulet : moyennant un soixantième de la valeur de son office chaque année, l'officier peut le transmettre à qui il veut, même s'il meurt subitement. Les charges deviennent ainsi un patrimoine, qui se vend, s'hérite, se met en dot. Une charge de conseiller au parlement de Paris vaut des dizaines de milliers de livres, celle de président à mortier bien davantage : seules des familles déjà riches peuvent y prétendre.
+
+L'officier est presque intouchable : le roi ne peut le révoquer sans jugement pour forfaiture. Il est mal payé par l'État (ses « gages » sont minces), mais il perçoit des **[épices](#glossaire-epices)**, honoraires versés par les plaideurs, autrefois cadeaux de dragées et d'épices devenus obligatoires et payés en argent. Surtout, la charge **anoblit** : au XVIIe siècle, les offices des cours souveraines finissent par conférer la noblesse à ceux qui les exercent et à leurs descendants. Ainsi naît la **[noblesse de robe](#glossaire-noblesse-de-robe)**, du nom de la robe noire ou rouge des magistrats, longtemps regardée de haut par la noblesse d'épée, mais qui s'allie à elle au XVIIIe siècle.
+
+De véritables **dynasties parlementaires** se forment : les Molé, les Lamoignon, les Séguier, les d'Aligre, les Joly de Fleury, les Le Peletier, les Maupeou à Paris ; on est conseiller de père en fils, on épouse la fille d'un président. Ces familles vivent dans de beaux hôtels particuliers, au Marais ou dans l'île Saint-Louis, possèdent des terres et des seigneuries, et forment une élite cultivée : leurs bibliothèques sont parmi les plus riches du temps. Le plus illustre des parlementaires est un écrivain : **Montesquieu**, président à mortier au parlement de Bordeaux de 1716 à 1726. Beaucoup partagent deux convictions. Le **[gallicanisme](#glossaire-gallicanisme)** d'abord, attachement aux « libertés de l'Église gallicane » contre les prétentions du pape. Ensuite, pour une partie d'entre eux, une sympathie pour le **[jansénisme](#glossaire-jansenisme)**, catholicisme austère et persécuté, qui les dresse contre les jésuites et contre les évêques soutenus par Rome. Ces convictions religieuses pèseront lourd dans les conflits du XVIIIe siècle.
+
+<span id="pouvoirs" class="ancre"></span>
+
+### Juger, enregistrer, remontrer
+
+Le premier métier du parlement est de **juger**. Il reçoit en appel les procès civils et criminels de tous les tribunaux de son ressort, royaux ou seigneuriaux, et ses **arrêts** sont sans appel, sauf recours exceptionnel au Conseil du roi. Le parlement de Toulouse, par exemple, confirme en 1762 la condamnation à mort du protestant Jean Calas, que Voltaire fera réhabiliter ; celui de Paris confirme en 1766 celle du jeune chevalier de La Barre, accusé de blasphème.
+
+Mais un second pouvoir fait des parlements bien plus que des tribunaux : l'**[enregistrement](#glossaire-enregistrement)**. Pour qu'un acte du roi, ordonnance, édit, déclaration ou lettres patentes, s'applique dans le ressort d'une cour, il faut qu'elle l'ait « vérifié » et copié sur ses registres. En un temps sans journal officiel, c'est la façon de publier la loi et de la rendre opposable à tous. Et vérifier, c'est examiner : le texte est-il conforme aux lois antérieures, aux coutumes de la province, à la justice, à l'intérêt même du roi ? S'il ne l'est pas, la cour adresse au souverain des **[remontrances](#glossaire-remontrances)**, écrites ou orales, pour lui « remontrer », c'est-à-dire lui montrer, les défauts de sa loi. Le roi est censé être mal informé ; ses juges l'éclairent. En théorie, c'est un conseil ; en pratique, tant que l'acte n'est pas enregistré, il ne s'applique pas.
+
+Les parlements disposent encore d'un pouvoir réglementaire : les **[arrêts de règlement](#glossaire-arret-de-reglement)**, décisions générales valables dans tout leur ressort, sur la procédure, les métiers, les marchés. Ils exercent enfin la **police** au sens large de l'époque, c'est-à-dire l'administration du bon ordre : approvisionnement en grains, prix du pain, hygiène, mœurs, livres. C'est le parlement de Paris qui condamne en 1762 l'*Émile* de Rousseau à être lacéré et brûlé au pied de son grand escalier, et qui poursuit l'*Encyclopédie*. Défenseurs des libertés face au roi, les parlementaires ne sont pas pour autant des amis de la liberté de penser.
+
+<span id="riposte" class="ancre"></span>
+
+### La riposte du roi
+
+Face à une cour qui refuse d'enregistrer, le roi dispose d'une gradation de moyens. Il peut répondre aux remontrances et les rejeter ; envoyer des **[lettres de jussion](#glossaire-lettres-de-jussion)**, qui ordonnent d'enregistrer sans délai ; essuyer de nouvelles remontrances, dites itératives. En dernier recours, il vient lui-même au parlement tenir un **[lit de justice](#glossaire-lit-de-justice)**, du nom du dais et des coussins sur lesquels il siège : puisque la justice déléguée cesse en présence du roi, l'acte est enregistré « de son très exprès commandement », sans vote réel. Le roi peut aussi convoquer le parlement auprès de lui, à Versailles.
+
+<Oeuvre id="lit-de-justice" image="revolution-francaise/parlements/lit-de-justice-1723" createur="Nicolas Lancret" titre="Lit de justice tenu au parlement à l'occasion de la majorité de Louis XV, 22 février 1723" date="vers 1724" technique="huile sur toile" lieu="Paris, musée du Louvre" faits="1723" regard="contemporain" periode="1715-1730" commons="https://commons.wikimedia.org/wiki/File:Nicolas_Lancret_-_The_Seat_of_Justice_in_the_Parliament_of_Paris_in_1723_-_WGA12429.jpg" alt="Une vaste salle aux voûtes ornées et aux murs tendus de tapisseries fleurdelisées ; des centaines de magistrats en robe rouge ou noire, perruqués, sont assis en gradins face au jeune roi installé sous un dais dans l'angle ; au premier plan, des gardes et des huissiers sur un dallage en damier.">
+<div slot="lire">
+
+À treize ans, Louis XV vient au parlement de Paris pour y proclamer sa majorité, qui met fin à la Régence. Lancret, peintre des fêtes galantes, montre la Grand-Chambre du palais de la Cité comme une scène réglée avec soin : les robes rouges des présidents et des conseillers, alignées en gradins, dessinent la hiérarchie de la séance ; le roi, presque perdu dans l'angle, siège sous son dais, le « lit ». Tout dit l'ordre ; rien ne laisse voir les conflits. Le tableau est plus décoratif que documentaire, mais il fait comprendre l'essentiel : quand le roi est là, l'autorité du parlement s'efface devant la sienne.
+
+</div>
+</Oeuvre>
+
+Le lit de justice ne règle pourtant pas tout. Le parlement peut protester ensuite, déclarer l'enregistrement forcé nul, cesser de rendre la justice (on dirait aujourd'hui faire grève), démissionner en bloc. Le roi riposte à son tour : il **casse** les arrêts de la cour par un arrêt de son Conseil, fait arrêter les meneurs, ou **exile** la compagnie entière par **[lettres de cachet](#glossaire-lettre-de-cachet)** dans une petite ville de province, Pontoise, Soissons ou Troyes, où les plaideurs ne viennent guère. L'exil prive les magistrats de leurs épices et la capitale de sa justice : chacun y perd, et l'on finit presque toujours par négocier.
+
+<span id="theorie" class="ancre"></span>
+
+### La « théorie » parlementaire
+
+Pour justifier leur résistance, les parlementaires se sont donné, au fil des siècles, une véritable doctrine. Ils se disent les héritiers des anciennes assemblées des Francs et de la cour des pairs, plus vieux que la monarchie elle-même. Ils se présentent comme les **gardiens des [lois fondamentales](#glossaire-lois-fondamentales)** du royaume, ces règles que le roi lui-même ne peut changer : l'ordre de succession au trône, la catholicité du roi, l'inaliénabilité du domaine. Le roi est absolu, mais il n'est pas arbitraire : il doit gouverner selon les lois, et c'est au parlement, « dépositaire » de ces lois, de le lui rappeler.
+
+Montesquieu, en 1748, donne à cette idée une forme qui fera date. Dans une monarchie, explique-t-il, il faut des corps intermédiaires entre le prince et le peuple, et un « dépôt » où les lois soient conservées :
+
+<Citation auteur="Montesquieu" oeuvre="De l'esprit des lois" date="1748, livre II, chapitre 4" edition="Éd. de 1777, t. I, p. 34-35 ; orthographe de l'édition" lien="https://fr.wikisource.org/wiki/Esprit_des_lois_(1777)/L2/C4">
+Il ne suffit pas qu’il y ait dans une monarchie des rangs intermédiaires ; il faut encore un dépôt de lois. Ce dépôt ne peut être que dans les corps politiques, qui annoncent les lois lorsqu’elles sont faites, & les rappellent lorsqu’on les oublie. […] Le conseil du prince n’est pas un dépôt convenable. Il est par sa nature le dépôt de la volonté momentanée du prince qui exécute, & non pas le dépôt des lois fondamentales.
+</Citation>
+
+Montesquieu ne nomme pas les parlements, mais aucun lecteur ne s'y trompe : le « dépôt » des lois, ce sont eux.
+
+Au milieu du XVIIIe siècle, les parlementaires vont plus loin. Inspirés par l'avocat janséniste Louis-Adrien Le Paige, auteur de *Lettres historiques sur les fonctions essentielles du Parlement* (1753-1754), ils affirment que tous les parlements du royaume ne sont que les **« classes »** d'un seul et même Parlement de France : frapper l'un, c'est frapper tous les autres. Et, comme les états généraux ne sont plus réunis depuis 1614, ils prétendent parler au nom de la **nation**, dont ils seraient les seuls représentants. Ce vocabulaire de la nation, des lois fondamentales et du « despotisme » ministériel, c'est celui que reprendra la Révolution, retourné contre eux.
+
+<Encadre type="retenir">
+
+- Un **parlement** est une **cour de justice souveraine**, pas une assemblée élue : ses magistrats possèdent leur charge (**vénalité**, **paulette**) et forment la **noblesse de robe**.
+- Il y a **treize parlements** en 1789, plus des conseils souverains ; celui de **Paris** couvre à lui seul environ un tiers du royaume.
+- Leur pouvoir politique vient de l'**enregistrement** des lois et des **remontrances** ; le roi peut répondre par des **lettres de jussion**, un **lit de justice**, l'**exil**.
+- Ils se disent **gardiens des lois fondamentales** et, au XVIIIe siècle, **représentants de la nation**.
+
+</Encadre>
+
+<span id="le-bras-de-fer" class="ancre"></span>
+
+## Le bras de fer avec le roi
+
+<span id="au-service-du-roi" class="ancre"></span>
+
+### Au service du roi (XIVe-XVIe siècle)
+
+<Question>Pourquoi les juges du roi, d'abord ses meilleurs serviteurs, prennent-ils l'habitude de discuter ses ordres ?</Question>
+
+Pendant longtemps, le parlement est l'un des instruments les plus efficaces de la puissance royale. Ses juristes défendent les droits de la couronne contre les grands seigneurs, dont les justices sont soumises à l'appel, et contre l'Église : par l'« appel comme d'abus », ils peuvent annuler les décisions des tribunaux ecclésiastiques qui empiètent sur la justice du roi. Ils répandent, procès après procès, une idée simple : le roi est empereur en son royaume, et nul n'est au-dessus de sa justice. Quand la guerre civile entre Armagnacs et Bourguignons livre Paris aux Bourguignons, en 1418, les magistrats fidèles au dauphin, le futur Charles VII, le suivent et siègent à **Poitiers** jusqu'en 1436 : le parlement fait corps avec la cause royale.
+
+C'est pourtant dans cette fidélité même que naît le droit de discuter. Enregistrer, c'est vérifier ; vérifier, c'est pouvoir dire non, au moins pour un temps. Au XVe et au XVIe siècle, les remontrances se multiplient. En 1516, François Ier signe avec le pape le **concordat de Bologne**, qui lui donne la nomination des évêques ; le parlement, attaché aux élections prévues par la Pragmatique Sanction de 1438, refuse de l'enregistrer et ne s'incline qu'en 1518, sur ordre exprès du roi. Les rois laissent faire, tant que les juges finissent par obéir : ces remontrances leur permettent souvent de mesurer les résistances, ou de faire porter à la cour la responsabilité d'un retard commode.
+
+Les **guerres de Religion** (1562-1598) font du parlement un acteur politique. Très catholique, il a poursuivi les protestants avec rigueur sous Henri II ; il enregistre de mauvaise grâce les édits de pacification qui leur accordent une liberté de culte. Après l'assassinat du duc de Guise sur l'ordre d'Henri III (décembre 1588), Paris tombe aux mains de la **Ligue** catholique, qui refuse le roi. En janvier 1589, les ligueurs font jeter à la Bastille le premier président, Achille de Harlay, et des magistrats qui leur résistent. Le parlement se coupe en deux : les fidèles du roi se réfugient à **Tours**, où siège un parlement royaliste ; les autres restent à Paris, sous la coupe des Seize, les chefs de la Ligue parisienne, qui font pendre en novembre 1591 le président Barnabé Brisson, jugé trop tiède.
+
+<span id="arret-lemaistre" class="ancre"></span>
+
+Henri III assassiné en août 1589, le roi légitime est son lointain cousin protestant, **Henri de Navarre**, Henri IV. La Ligue, soutenue par l'Espagne, réunit à Paris des états généraux qui songent à élire un autre roi, peut-être l'infante d'Espagne, petite-fille d'Henri II par sa mère. C'est alors que le parlement de Paris, pourtant ligueur, fait un geste décisif. Le **28 juin 1593**, à l'initiative du président Jean Le Maistre, il rend un arrêt qui rappelle les lois fondamentales du royaume et déclare nul tout traité qui donnerait la couronne à un prince ou à une princesse étrangers :
+
+<Citation auteur="Parlement de Paris" oeuvre="Arrêt dit « arrêt Lemaistre »" date="28 juin 1593" edition="Isambert, Recueil général des anciennes lois françaises, t. XV, n° 51, p. 71 ; « l'é[t]at » corrige une coquille de l'édition" lien="https://archive.org/details/recueilgnral15fran/page/n82/mode/1up">
+[…] et néanmoins dès à présent ladite cour déclare tous traités faits et à faire ci-après pour l'établissement de prince ou princesse étrangers nuls et de nul effet et valeur, comme faits au préjudice de la loi salique et autres lois fondamentales de l'é[t]at.
+</Citation>
+
+Moins d'un mois plus tard, le 25 juillet 1593, Henri IV abjure le protestantisme ; en mars 1594, il entre dans Paris. Le parlement a montré qu'il pouvait, dans le chaos, se poser en gardien de la légitimité contre les factions. Henri IV lui en sait gré, mais lui rappelle aussi qui commande : en 1599, il doit lui faire enregistrer de force, ou presque, l'**édit de Nantes** qui accorde aux protestants la liberté de conscience.
+
+<Encadre type="retenir">
+
+- Du XIIIe au XVIe siècle, le parlement est un **instrument de la puissance royale** contre les seigneurs et contre l'Église.
+- L'**enregistrement**, qui suppose une vérification, lui donne l'habitude de faire des **remontrances**.
+- Pendant les **guerres de Religion**, il se divise, puis l'**arrêt Lemaistre** (1593) le pose en **gardien des lois fondamentales** et de la succession légitime.
+
+</Encadre>
+
+<span id="la-fronde" class="ancre"></span>
+
+### La Fronde et la mise au pas (XVIIe siècle)
+
+<Question>Pourquoi le parlement de Paris ose-t-il, en 1648, défier la régente et son ministre, et pourquoi se tait-il ensuite pendant un demi-siècle ?</Question>
+
+Le XVIIe siècle commence par une prise de rang. Le 14 mai 1610, Henri IV est assassiné ; dès le lendemain, le parlement déclare **Marie de Médicis** régente pour son fils Louis XIII, qui a huit ans. Personne ne lui avait reconnu ce droit ; il le prend, et la reine l'accepte pour asseoir son autorité. En 1643, à la mort de Louis XIII, rebelote : Anne d'Autriche fait casser par le parlement le testament de son mari, qui limitait ses pouvoirs de régente, et obtient la régence pleine et entière. Deux fois, le parlement a fait la régence ; il en tirera la conviction qu'il est le gardien naturel du royaume pendant les minorités.
+
+Entre-temps, Richelieu a tenu les cours en lisière : en février 1641, un édit leur interdit de se mêler des affaires de l'État et limite leurs remontrances. Mais la guerre contre l'Espagne coûte des sommes énormes. Pour la financer, le cardinal **Mazarin**, principal ministre de la régente, et son surintendant des Finances multiplient les expédients : taxes nouvelles, emprunts forcés, créations d'offices qui dévaluent ceux des magistrats en place. Au printemps 1648, il fait savoir que le renouvellement de la paulette sera payé par une retenue sur les gages des officiers, dont les membres du parlement seraient dispensés. La manœuvre, qui vise à diviser, échoue : le **13 mai 1648**, le parlement de Paris rend l'**arrêt d'Union**, qui invite les autres cours souveraines de Paris (Chambre des comptes, Cour des aides, Grand Conseil) à délibérer en commun.
+
+Réunis dans la chambre Saint-Louis du Palais à partir de la fin juin, leurs députés rédigent une sorte de charte en vingt-sept articles : rappel des **intendants**, ces commissaires que le roi envoie dans les provinces et qui empiètent sur les officiers ; aucun impôt nouveau sans vérification par les cours ; aucun sujet détenu plus de vingt-quatre heures sans être interrogé. C'est la **Fronde**, du nom des frondes des gamins de Paris qui se battaient dans les fossés. Le 26 août 1648, encouragée par une victoire à Lens, la régente fait arrêter un vieux conseiller très populaire, **Pierre Broussel**. Paris se couvre aussitôt de barricades. Le premier président **Mathieu Molé** va réclamer sa libération au Palais-Royal ; la régente cède, Broussel revient en triomphe. Le cardinal de Retz, alors coadjuteur de l'archevêque de Paris et l'un des meneurs de la Fronde, a raconté ces journées dans ses Mémoires :
+
+<Citation auteur="Cardinal de Retz" oeuvre="Mémoires" date="rédigés vers 1675-1677, livre II" edition="Éd. Petitot, Collection complète des mémoires relatifs à l'histoire de France, 2e série, t. 44, 1825, p. 191" lien="https://fr.wikisource.org/wiki/M%C3%A9moires_(Cardinal_de_Retz)/Livre_second/Section_2">
+[…] il se donne par le parlement, qui jusqu’à notre siècle n’avoit jamais commencé de révolution, et qui certainement auroit condamné par des arrêts sanglans celle qu’il faisoit lui-même, si tout autre que lui l’eût commencée. Il gronda sur l’édit du tarif ; et aussitôt qu’il eut seulement murmuré, tout le monde s’éveilla. On chercha en s’éveillant, comme à tâtons, les lois ; on ne les trouva plus.
+</Citation>
+
+<Oeuvre id="mole" image="revolution-francaise/parlements/mathieu-mole" createur="François-André Vincent" titre="Le Président Molé saisi par les factieux, au temps des guerres de la Fronde" date="1779" technique="huile sur toile" lieu="Detroit, Detroit Institute of Arts" faits="1648" regard="retrospectif" periode="1648-1653" commons="https://commons.wikimedia.org/wiki/File:Fran%C3%A7ois_Andr%C3%A9_Vincent_-_President_Mole_Manhandled_by_Insurgents_-_78.39_-_Detroit_Institute_of_Arts.jpg" alt="Dans une rue de Paris aux maisons à colombages, sous un ciel de fumée, un vieux magistrat barbu en robe rouge bordée d'hermine se tient droit et impassible ; un homme du peuple le saisit au collet, d'autres insurgés armés d'épées, de piques et de pistolets l'entourent ; au premier plan, une femme et un homme renversés lèvent les bras.">
+<div slot="lire">
+
+Plus d'un siècle après la Fronde, François-André Vincent peint Mathieu Molé, premier président du parlement, malmené par la foule ; on place d'ordinaire l'épisode pendant les troubles de 1648, sans certitude sur le moment exact. La composition l'isole au centre, immobile dans le rouge de sa robe, au milieu d'un tumulte de bras et d'armes : c'est le magistrat qui ne cède ni au roi ni à la rue. Le grand tableau, commandé pour les Bâtiments du roi, fut exposé au Salon de 1779 ; la toile de Detroit en est probablement une version réduite. Il est peint au moment même où les parlements, rappelés en 1774, se posent en défenseurs des lois : l'éloge de Molé est aussi un message pour le présent.
+
+</div>
+</Oeuvre>
+
+La suite échappe au parlement. Dans la nuit du 5 au 6 janvier 1649, la cour quitte Paris, que les troupes de Condé assiègent ; le parlement lève des troupes, puis négocie et signe la paix de Rueil en mars 1649. Vient ensuite la Fronde des princes (1650-1653), guerre civile où les grands seigneurs, Condé en tête, se servent du parlement plus qu'ils ne le servent. Les magistrats, divisés, effrayés par l'anarchie et par l'alliance des princes avec l'Espagne, finissent par souhaiter le retour de l'ordre. En octobre 1652, le jeune Louis XIV rentre dans Paris acclamé.
+
+Le roi n'oubliera jamais la Fronde. Une anecdote raconte qu'en avril 1655 il serait entré au parlement en habit de chasse, une cravache à la main, pour lui interdire de délibérer sur ses édits ; la scène est rapportée tardivement et le mot « L'État, c'est moi », qu'on lui prête à cette occasion, est une invention postérieure. Mais l'intention est réelle. En 1665, les cours souveraines sont rebaptisées « **cours supérieures** » : seul le roi est souverain. L'ordonnance civile de 1667 encadre les remontrances.
+
+<span id="declaration-de-1673" class="ancre"></span>
+
+Puis vient le coup décisif : les lettres patentes du **24 février 1673**, qu'on appelle souvent la déclaration de 1673. Les cours devront désormais enregistrer les actes du roi sans modification ; elles pourront ensuite présenter des remontrances, une seule fois et dans un délai fixé, mais l'acte s'appliquera de toute façon.
+
+<Citation auteur="Louis XIV" oeuvre="Lettres patentes portant règlement sur l'enregistrement dans les cours supérieures" date="Versailles, 24 février 1673" edition="Isambert, Recueil général des anciennes lois françaises, t. XIX, n° 715, p. 72" lien="https://archive.org/details/recueilgnral19fran/page/n81/mode/1up">
+Voulons que nos cours ayent à enregistrer purement et simplement nos lettres-patentes sans aucune modification, restriction, ni autres clauses qui en puissent surseoir ou empêcher la pleine et entière exécution ; et néanmoins où nos cours, en délibérant sur lesdites lettres, jugeroient nécessaires de nous faire leurs remontrances sur le contenu, le registre en sera chargé, et l'arrêté rédigé, après toutefois que l'arrêt d'enregistrement pur et simple aura été donné […].
+</Citation>
+
+Enregistrer d'abord, remontrer ensuite : le droit de remontrance est vidé de sa force. Pendant plus de quarante ans, les parlements se taisent ou presque. Ils jugent, ils enregistrent, ils murmurent. Louis XIV gouverne avec ses ministres et ses intendants, sans eux.
+
+<Encadre type="retenir">
+
+- Le parlement de Paris a **fait les régences** de 1610 et de 1643 : il se croit gardien du royaume pendant les minorités.
+- En **1648**, l'**arrêt d'Union** et la **chambre Saint-Louis** ouvrent la **Fronde** : les cours veulent contrôler l'impôt et limiter l'arbitraire.
+- La guerre civile qui suit discrédite la révolte ; **Louis XIV**, par la **déclaration du 24 février 1673**, impose d'**enregistrer d'abord, remontrer ensuite**.
+
+</Encadre>
+
+<span id="la-revanche-de-1715" class="ancre"></span>
+
+### La revanche de 1715
+
+<Question>Pourquoi, au lendemain de la mort de Louis XIV, le pouvoir rend-il aux parlements l'arme qu'il leur avait ôtée ?</Question>
+
+Louis XIV meurt le 1er septembre 1715. Son successeur, son arrière-petit-fils Louis XV, a cinq ans. Le vieux roi a rédigé un testament (1714) et un codicille qui organisent la régence à sa façon : le duc d'Orléans, son neveu, sera chef d'un conseil de régence où il n'aura qu'une voix parmi d'autres, et la garde du jeune roi comme le commandement de sa maison militaire iront au **duc du Maine**, fils légitimé que Louis XIV avait eu de Madame de Montespan.
+
+Philippe d'Orléans ne l'entend pas ainsi, et il sait à qui s'adresser. Le **2 septembre 1715**, dès le lendemain de la mort du roi, il se rend au parlement de Paris, où le testament a été déposé. Devant les magistrats, les princes et les pairs, il fait valoir son droit de naissance et obtient que le testament et le codicille soient, en pratique, **cassés** : il sera régent avec la plénitude de l'autorité, maître de composer le conseil. Et il paie aussitôt le service rendu. Le duc de Saint-Simon, présent ce jour-là, rapporte la fin de son discours :
+
+<Citation auteur="Saint-Simon" oeuvre="Mémoires" date="séance du parlement du 2 septembre 1715 (mémoires rédigés entre 1739 et 1749)" edition="Éd. Chéruel, Hachette, 1857, t. XIII, chap. VI, p. 124 ; le sujet est le duc d'Orléans" lien="https://fr.wikisource.org/wiki/M%C3%A9moires_(Saint-Simon)/Tome_13/6">
+[…] il lui expliqueroit ce qu’il pensoit sur la forme à donner au gouvernement, et qu’en attendant il profitoit du pouvoir de sa régence pour profiter des lumières et de la sagesse de la compagnie, et lui rendoit dès maintenant l’ancienne liberté des remontrances. Ces paroles furent suivies d’un applaudissement éclatant et général, et la séance fut aussitôt levée.
+</Citation>
+
+Une déclaration du **15 septembre 1715** confirme la promesse : les cours pourront présenter leurs remontrances **avant** l'enregistrement. L'arme forgée au fil des siècles et brisée en 1673 leur est rendue intacte. Les parlementaires s'en servent aussitôt. Ils combattent le système financier de l'Écossais John Law, qui crée une banque et une monnaie de papier ; le Régent doit tenir un lit de justice aux Tuileries en août 1718 pour les rappeler à l'ordre, puis exiler le parlement à Pontoise en 1720. En 1723, Louis XV, déclaré majeur à treize ans, vient tenir son lit de justice au parlement : c'est la scène que peint Lancret. La Régence est finie ; le conflit, lui, ne fait que commencer.
+
+<Encadre type="retenir">
+
+- Le **2 septembre 1715**, le parlement **casse le testament de Louis XIV** au profit du **Régent**, Philippe d'Orléans.
+- En échange, la déclaration du **15 septembre 1715** lui rend le **droit de remontrance préalable**.
+- Les parlements retrouvent ainsi un rôle politique qu'ils ne lâcheront plus jusqu'en 1789.
+
+</Encadre>
+
+<span id="le-siecle-des-conflits" class="ancre"></span>
+
+### Le siècle des conflits (1715-1770)
+
+<Question>Pourquoi les querelles religieuses et fiscales du XVIIIe siècle transforment-elles les parlements en opposition permanente au roi ?</Question>
+
+<span id="unigenitus" class="ancre"></span>
+
+Le premier grand terrain d'affrontement est religieux. En 1713, à la demande de Louis XIV, le pape Clément XI a condamné par la bulle **[*Unigenitus*](#glossaire-unigenitus)** cent une propositions tirées d'un livre du janséniste Pasquier Quesnel. Pour les jansénistes et pour beaucoup de gallicans, c'est une intrusion de Rome dans l'Église de France. Une déclaration royale du 24 mars 1730 fait de la bulle une **loi de l'État**. Le parlement de Paris proteste, cesse de rendre la justice ; en 1732, une partie de ses membres est exilée. Le conflit s'apaise, mais il couve.
+
+<span id="billets-de-confession" class="ancre"></span>
+
+Il se rallume vers 1750 avec l'affaire des **[billets de confession](#glossaire-billets-de-confession)**. L'archevêque de Paris, Christophe de Beaumont, et une partie du clergé exigent des mourants un billet prouvant qu'ils se sont confessés à un prêtre acceptant la bulle ; sans billet, on leur refuse les derniers sacrements. Pour les jansénistes, c'est être privé de sépulture chrétienne. Le parlement prend leur parti, poursuit les curés, ordonne de donner les sacrements, au nom de l'ordre public. Le **9 avril 1753**, il adopte de **Grandes Remontrances**, réquisitoire contre le pouvoir des évêques et contre les ministres. Louis XV refuse de les recevoir ; le parlement cesse son service ; le roi l'exile en mai 1753 à Pontoise, puis à Soissons, et tente de le remplacer par une chambre royale que les avocats et les plaideurs boycottent. En 1754, faute de solution, le roi rappelle les exilés et impose sur la querelle une « loi du silence ».
+
+Le second terrain est **fiscal**. En 1749, le contrôleur général Machault crée le **[vingtième](#glossaire-vingtieme)**, un impôt de 5 % sur les revenus, dû en principe par tous, privilégiés compris. Le clergé obtient d'en être dispensé ; les parlements, eux, en contestent chaque prolongation, chaque doublement exigé par la guerre de Sept Ans (1756-1763). En décembre 1756, un lit de justice impose à la fois de nouveaux impôts et une réforme du parlement ; une grande partie des conseillers démissionne. Quelques semaines plus tard, le 5 janvier 1757, un domestique déséquilibré, Robert François Damiens, frappe Louis XV d'un coup de canif ; à son procès, il explique avoir voulu « toucher » le roi pour qu'il rende justice au parlement. Le climat est devenu passionnel.
+
+<span id="jesuites" class="ancre"></span>
+
+Les parlements remportent alors leur plus grande victoire. Au début des années 1760, la faillite commerciale du père La Valette, jésuite établi à la Martinique, mène la Compagnie de Jésus devant le parlement de Paris. Les magistrats en profitent pour examiner ses constitutions, qu'ils jugent contraires aux lois du royaume, et le **6 août 1762**, un arrêt condamne la Compagnie dans le ressort de Paris ; la plupart des parlements de province suivent. Le roi s'incline : un édit de novembre 1764 supprime la Compagnie de Jésus en France. Pour les jansénistes, ennemis jurés des jésuites, c'est une revanche éclatante ; pour les parlements, la preuve qu'ils peuvent imposer leur volonté au roi.
+
+En Bretagne, au même moment, le parlement de Rennes s'oppose au commandant de la province, le **duc d'Aiguillon**, à propos des impôts et des corvées imposées pour construire des routes. En 1765, la plupart des magistrats démissionnent ; le procureur général **La Chalotais**, adversaire des jésuites, est arrêté en novembre 1765, accusé d'avoir écrit des lettres anonymes injurieuses pour le roi. Toute la France parlementaire s'enflamme pour l'« affaire de Bretagne », et les remontrances parlent désormais d'une seule voix, au nom de l'« union des classes ».
+
+<span id="flagellation" class="ancre"></span>
+
+C'est à cette prétention que Louis XV décide de répondre. Le **3 mars 1766**, sans s'être annoncé, il vient au parlement de Paris et y fait lire par un conseiller d'État, en sa présence, une réponse d'une netteté sans précédent. La séance, tombée le jour où le calendrier liturgique honorait la flagellation du Christ, est restée connue sous le nom de **séance de la Flagellation** :
+
+<Citation auteur="Louis XV" oeuvre="Réponse du roi au parlement de Paris, séance dite de la Flagellation" date="3 mars 1766" edition="J. Flammermont et M. Tourneux, Remontrances du parlement de Paris au XVIIIe siècle, t. II, 1895, n° LXXIV, p. 557" lien="https://archive.org/details/remontrancesdupa02franuoft/page/n610/mode/1up">
+[…] ses seuls, ses vrais ennemis sont ceux qui, dans son propre sein, lui font tenir un langage opposé à ses principes; qui lui font dire que tous les parlements ne font qu'un seul et même corps, distribué en plusieurs classes; que ce corps, nécessairement indivisible, est de l'essence de la Monarchie et qu'il lui sert de base; qu'il est le siège, le tribunal, l'organe de la Nation […].
+</Citation>
+
+Le « sein » dont il est question est celui de la magistrature : le roi vise la théorie de l'union des classes. Puis il rappelle d'où vient toute autorité :
+
+<Citation auteur="Louis XV" oeuvre="Réponse du roi au parlement de Paris, séance dite de la Flagellation" date="3 mars 1766" edition="Flammermont et Tourneux, t. II, p. 557-558" lien="https://archive.org/details/remontrancesdupa02franuoft/page/n610/mode/1up">
+[…] c'est en ma personne seule que réside la puissance souveraine, dont le caractère propre est l'esprit de conseil, de justice et de raison; que c'est de moi seul que mes cours tiennent leur existence et leur autorité […]; que c'est à moi seul qu'appartient le pouvoir législatif sans dépendance et sans partage; que c'est par ma seule autorité que les officiers de mes cours procèdent, non à la formation, mais à l'enregistrement, à la publication, à l'exécution de la loi […].
+</Citation>
+
+Le discours est un manifeste de la monarchie absolue : la souveraineté, la législation, la justice viennent du roi seul ; les cours ne sont qu'un corps d'officiers, sans existence propre. Il n'est suivi d'aucune mesure. Les parlements continuent comme avant ; quatre ans plus tard, l'affaire de Bretagne revient devant le parlement de Paris sous la forme d'un procès contre le duc d'Aiguillon, que le roi arrête d'autorité en juin 1770. Le parlement déclare le duc entaché dans son honneur. En décembre 1770, Louis XV fait enregistrer en lit de justice un édit qui interdit aux cours de cesser leur service et de correspondre entre elles. Le parlement de Paris se met en grève.
+
+<Encadre type="historiens" titre="Défenseurs des libertés ou défenseurs des privilèges ?">
+
+Les parlements ont longtemps eu bonne presse. Au XIXe siècle, une tradition libérale voit en eux, malgré leurs défauts, l'un des rares freins au pouvoir absolu : Tocqueville, dans *L'Ancien Régime et la Révolution* (1856), remarque que leur indépendance et leurs remontrances entretenaient chez les Français un certain esprit de résistance à l'arbitraire. L'historiographie de la Révolution marquée par Jaurès, puis par Georges Lefebvre, en fait au contraire l'avant-garde d'une **réaction aristocratique** : sous couvert de liberté, ils défendraient surtout les exemptions fiscales des privilégiés, et Lefebvre voit dans leur révolte de 1787-1788 une « révolution aristocratique ». Michel Antoine, biographe de Louis XV (1989), insiste lui aussi sur l'égoïsme de corps et sur le tort fait à une monarchie réformatrice.
+
+Les recherches plus récentes nuancent ce tableau. Jean Egret (*Louis XV et l'opposition parlementaire*, 1970) et William Doyle, qui a étudié le parlement de Bordeaux (1974), montrent des magistrats moins unis qu'on ne le croyait, et pas toujours hostiles à l'impôt. Dale Van Kley (*The Damiens Affair*, 1984 ; *Les Origines religieuses de la Révolution française*, 1996) et Julian Swann (*Politics and the Parlement of Paris under Louis XV*, 1995) soulignent le poids des convictions jansénistes et gallicanes, et l'invention d'un langage politique (nation, despotisme, lois fondamentales) qui dépasse largement la défense des privilèges. Pour beaucoup d'historiens aujourd'hui, les parlements furent les deux à la fois : des corps privilégiés jaloux de leurs droits, et le lieu où se forgea une culture d'opposition au pouvoir absolu.
+
+</Encadre>
+
+<Encadre type="retenir">
+
+- Au XVIIIe siècle, les parlements s'opposent au roi sur la **religion** (bulle *Unigenitus*, **billets de confession**) et sur l'**impôt** (**vingtième**).
+- Ils obtiennent la suppression des **jésuites** (1762-1764) et soutiennent le parlement de Bretagne contre le **duc d'Aiguillon**.
+- Le **3 mars 1766**, à la **séance de la Flagellation**, Louis XV rappelle que la souveraineté réside en sa **seule personne** ; sans effet durable.
+
+</Encadre>
+
+<span id="le-coup-de-majeste" class="ancre"></span>
+
+### Le « coup de majesté » de Maupeou (1771-1774)
+
+<Question>Pourquoi Louis XV, après des décennies d'hésitation, laisse-t-il son chancelier briser les parlements, et pourquoi cette réforme ne lui survit-elle pas ?</Question>
+
+Le chancelier **René-Nicolas de Maupeou**, nommé en 1768, est lui-même un ancien premier président du parlement de Paris, fils d'un premier président : il connaît la maison de l'intérieur. Avec l'abbé Terray aux Finances et le duc d'Aiguillon aux Affaires étrangères, il forme ce que leurs adversaires appellent le « triumvirat ». Puisque le parlement refuse de reprendre son service, Maupeou décide d'en finir.
+
+Dans la nuit du **19 au 20 janvier 1771**, des mousquetaires réveillent chaque magistrat parisien et lui présentent un ordre du roi : reprendre son service, oui ou non. Ceux qui refusent, la grande majorité, sont exilés dans des villages de province, et leurs offices confisqués. En février 1771, un édit découpe l'immense ressort de Paris : six **[conseils supérieurs](#glossaire-conseils-superieurs)**, à Arras, Blois, Châlons, Clermont, Lyon et Poitiers, jugeront désormais les appels au plus près des plaideurs. Le 13 avril, un lit de justice installe un nouveau parlement de Paris. Ses membres ne sont plus propriétaires de leurs charges : ils sont **nommés et payés par le roi**, et la justice devient **gratuite**, sans épices. Dans les mois suivants, les parlements de province sont à leur tour remodelés, certains supprimés.
+
+Sur le papier, la réforme répond à des critiques anciennes : la vénalité, les épices, la lenteur et l'éloignement de la justice. Voltaire, qui n'a pardonné ni l'affaire Calas ni le supplice du chevalier de La Barre, l'applaudit. Mais elle choque profondément. Les princes du sang protestent ; la Cour des aides de Paris, présidée par **Malesherbes**, adresse au roi le 18 février 1771 des remontrances indignées, où elle réclame la réunion de la nation :
+
+<Citation auteur="Malesherbes" oeuvre="Remontrances de la Cour des aides sur l'édit de décembre 1770 et l'état actuel du parlement de Paris" date="18 février 1771" edition="Œuvres inédites de Chrétien-Guillaume Lamoignon Malesherbes, Paris, 1808, p. 101" lien="https://archive.org/details/oeuvresinditesd00pissgoog/page/n124/mode/1up">
+Interrogez donc, Sire, la nation elle-même, puisqu'il n'y a plus qu'elle qui puisse être écoutée de Votre Majesté. Le témoignage incorruptible de ses représentans vous fera connaître au moins s'il est vrai, comme vos ministres ne cessent de le publier, que la magistrature seule prend intérêt à la violation des lois, ou si la cause que nous défendons aujourd'hui est celle de tout ce peuple par qui vous régnez, et pour qui vous régnez.
+</Citation>
+
+La Cour des aides est supprimée à son tour en avril 1771. Une avalanche de pamphlets, plus tard réunis sous le nom de *Maupeouana*, dénonce le « despotisme » du chancelier ; un « parti patriote » se forme, qui invoque la nation contre les ministres. En 1773-1774, Beaumarchais, en procès contre un conseiller du nouveau parlement, Goëzman, publie des *Mémoires* si drôles et si venimeux que toute la France rit des juges de Maupeou.
+
+<Oeuvre id="malesherbes" image="revolution-francaise/parlements/malesherbes" createur="Charles-Étienne Gaucher" mention="graveur, d'après un peintre non identifié" titre="Chrétien-Guillaume Lamoignon Malesherbes" date="vers 1795-1800" technique="burin et eau-forte" lieu="tirage conservé sur Wikimedia Commons" faits="1771" regard="retrospectif" periode="1771-1775" commons="https://commons.wikimedia.org/wiki/File:Malesherbes_(Chr%C3%A9tien_Guillaume_de_Lamoignon_de).jpg" alt="Portrait gravé en buste, dans un médaillon ovale, d'un homme corpulent en perruque à boucles et habit simple à gros boutons, au-dessus d'une tablette chargée d'un livre ouvert intitulé « Lois de la nature, des nations, des cités », d'une statuette, de plantes et de coquillages.">
+<div slot="lire">
+
+La gravure est posthume : sa lettre donne la date de la mort de Malesherbes, guillotiné le 3 floréal an II (22 avril 1794). Gaucher le montre sans robe de magistrat, en habit simple, plutôt en homme des Lumières qu'en premier président de la Cour des aides qui avait tenu tête à Louis XV. Le livre ouvert sur les « lois de la nature, des nations, des cités », les plantes et les coquillages rappellent le juriste, le botaniste, et peut-être l'ancien directeur de la Librairie qui avait protégé l'*Encyclopédie* ; le sens précis de chaque attribut reste incertain.
+
+</div>
+</Oeuvre>
+
+<Oeuvre id="maupeou" image="revolution-francaise/parlements/maupeou" createur="Jean-Baptiste-André Gautier-Dagoty" mention="peint et gravé" titre="C. R. A. de Maupeou, chancelier de France et garde des Sceaux (Galerie universelle)" date="1772" technique="gravure en couleurs" lieu="Paris, Bibliothèque nationale de France, département des Estampes et de la photographie" faits="1772" regard="contemporain" periode="1771-1774" commons="https://commons.wikimedia.org/wiki/File:C.R.A._de_Maupeou._-_Chancelier_de_France_et_Garde_des_Sceaux._-_Galerie_universelle_-_estampe_-_Peint_et_Grav%C3%A9_par_Gautier_Dagoty_fils_ain%C3%A9._-_btv1b100253881.jpg" alt="Portrait en buste d'un homme au visage plein, coiffé d'une perruque blanche à rouleaux, vêtu de la simarre rouge de chancelier avec un rabat blanc, portant les croix de l'ordre du Saint-Esprit, sur un fond uni ; sous l'image, son nom et son titre.">
+<div slot="lire">
+
+Cette gravure paraît en 1772, en pleine « révolution Maupeou ». Rien n'en transparaît : c'est une image officielle et flatteuse, avec la simarre écarlate du chancelier, les insignes de l'ordre du Saint-Esprit, un visage serein, presque débonnaire. Elle appartient à une *Galerie universelle* de grands hommes vendue en feuilles, et sa couleur est une prouesse technique pour l'époque. Au même moment, les pamphlets font de Maupeou le « despote » le plus haï du royaume : deux images opposées du même homme.
+
+</div>
+</Oeuvre>
+
+Pourtant, la réforme tient : la justice fonctionne, les nouveaux magistrats enregistrent, Terray redresse un peu les finances. Tout dépend du roi. Or Louis XV meurt le 10 mai 1774. Son petit-fils **Louis XVI**, vingt ans, veut commencer son règne dans la faveur publique ; son mentor, le vieux comte de Maurepas, est hostile à Maupeou. Le chancelier est renvoyé à la fin d'août 1774. On lui prête le mot qu'il aurait dit alors, d'avoir fait gagner au roi un procès de trois siècles que celui-ci pouvait reperdre s'il le voulait ; l'authenticité n'en est pas assurée, mais la formule résume l'enjeu.
+
+<span id="rappel-de-1774" class="ancre"></span>
+
+Le **12 novembre 1774**, dans un lit de justice, Louis XVI rétablit les anciens parlements, avec leurs anciens magistrats. Une ordonnance de discipline leur interdit les grèves et les démissions collectives ; ils n'en tiendront guère compte. Les parlementaires reviennent en héros, convaincus que la nation est derrière eux. Le roi, lui, s'est privé de l'instrument qui aurait pu rendre possibles les réformes fiscales dont la monarchie aura bientôt désespérément besoin.
+
+<Encadre type="retenir">
+
+- En **1771**, le chancelier **Maupeou** exile les parlementaires, crée des **conseils supérieurs**, supprime la **vénalité** et les **épices** dans les nouvelles cours.
+- La réforme est efficace mais impopulaire : on dénonce le **despotisme** ministériel au nom de la **nation**.
+- En **1774**, **Louis XVI** renvoie Maupeou et **rappelle les anciens parlements**, qui reviennent plus sûrs d'eux que jamais.
+
+</Encadre>
+
+<span id="contre-les-reformes" class="ancre"></span>
+
+### Les parlements contre les réformes (1774-1788)
+
+<Question>Pourquoi les parlements, rétablis par Louis XVI, deviennent-ils l'obstacle sur lequel butent toutes ses réformes, jusqu'à le contraindre à convoquer les états généraux ?</Question>
+
+Le premier ministre réformateur du règne, **Turgot**, contrôleur général des Finances à partir d'août 1774, en fait vite l'expérience. Au début de 1776, il présente six édits, dont deux font scandale : l'un supprime la corvée royale (le travail gratuit imposé aux paysans sur les routes) et la remplace par un impôt payé par tous les propriétaires ; l'autre abolit les jurandes, les corporations de métiers. Le parlement de Paris adresse au roi des remontrances où il défend l'ordre social, fondé sur la distinction des rangs. Le **12 mars 1776**, Louis XVI fait enregistrer les édits en lit de justice ; deux mois plus tard, sous la pression de la cour, il renvoie Turgot, et les édits sont abandonnés. La leçon est claire : le roi recule.
+
+Son successeur aux finances, le banquier genevois **Necker**, gouverne surtout par l'emprunt et évite les affrontements. Mais la guerre d'Amérique (1778-1783) fait exploser la dette. En 1786, **Calonne** propose un impôt sur toutes les terres, la « subvention territoriale » ; sachant que le parlement le refusera, il le soumet d'abord à une **assemblée de notables** (février 1787), qui le refuse aussi. Calonne tombe ; l'archevêque de Toulouse **Loménie de Brienne** lui succède et porte au parlement, en juillet 1787, un édit du timbre et l'impôt territorial. Le parlement de Paris répond qu'il n'a pas le pouvoir de consentir un impôt perpétuel, et que seule la nation assemblée en **états généraux** le pourrait. Pour des juges qui se disaient depuis un demi-siècle représentants de la nation, l'aveu est spectaculaire.
+
+<span id="exil-a-troyes" class="ancre"></span>
+
+Le 6 août 1787, un lit de justice à Versailles impose les édits ; le parlement déclare l'enregistrement nul. Le **15 août**, il est exilé à **Troyes**. Toute la France parlementaire proteste, et l'opinion parisienne fête les exilés. En septembre, un compromis les ramène à Paris. Le 19 novembre 1787, au cours d'une séance royale où le roi veut faire enregistrer une série d'emprunts, son cousin le **duc d'Orléans** proteste publiquement contre l'illégalité de la procédure ; le roi lui aurait répondu : « C'est légal, parce que je le veux. » Le mot est rapporté au XIXe siècle par Michelet ; les comptes rendus de la séance disent seulement que le roi maintint son ordre. Orléans est exilé, deux conseillers emprisonnés. Pendant l'hiver, les remontrances contre les **[lettres de cachet](#glossaire-lettre-de-cachet)** se succèdent.
+
+<span id="3-mai-1788" class="ancre"></span>
+
+Au printemps 1788, le parlement apprend que le garde des Sceaux **Lamoignon** prépare une grande réforme judiciaire. Il prend les devants. Le **3 mai 1788**, sur la proposition du conseiller **Duval d'Eprémesnil**, il adopte un arrêté solennel qui énumère les lois fondamentales du royaume telles qu'il les conçoit :
+
+<Citation auteur="Parlement de Paris" oeuvre="Arrêté sur les lois fondamentales du royaume" date="3 mai 1788" edition="J. Flammermont, Remontrances du parlement de Paris au XVIIIe siècle, t. III, p. 745-746" lien="https://archive.org/details/remontrancesdupa03franuoft/page/n800/mode/1up">
+Déclare que la France est une monarchie, gouvernée par le Roi, suivant les lois; Que de ces lois, plusieurs qui sont fondamentales embrassent et consacrent : Le droit de la maison régnante au Trône, de mâle en mâle, par ordre de primogéniture, à l'exclusion des filles et de leurs descendants; Le droit de la Nation d'accorder librement les subsides par l'organe des États généraux régulièrement convoqués et composés; […] L'inamovibilité des magistrats; Le droit des cours de vérifier dans chaque province les volontés du Roi et de n'en ordonner l'enregistrement qu'autant qu'elles sont conformes aux lois constitutives de la province ainsi qu'aux lois fondamentales de l'État […].
+</Citation>
+
+Le mélange est révélateur : à côté de la succession au trône et du consentement de la nation à l'impôt, les magistrats placent parmi les lois « fondamentales » leur propre inamovibilité et leur droit d'enregistrer.
+
+Le gouvernement ordonne l'arrestation de Duval d'Eprémesnil et de son collègue Goislard de Montsabert. Les deux hommes se réfugient au Palais, où le parlement siège en permanence ; dans la nuit du 5 au 6 mai, des troupes cernent la salle, et ils finissent par se livrer eux-mêmes. Le **8 mai 1788**, un lit de justice impose les **édits de Lamoignon** : l'enregistrement des lois passe à une « cour plénière » composée de grands personnages nommés par le roi ; une grande partie des procès est confiée à de nouveaux tribunaux, les **grands bailliages** ; les parlements sont mis en vacances.
+
+<span id="journee-des-tuiles" class="ancre"></span>
+
+La réplique vient des provinces. À **Rennes**, à **Pau**, à **Toulouse**, magistrats, nobles et avocats se mobilisent. À **Grenoble**, le **7 juin 1788**, quand les parlementaires reçoivent l'ordre de quitter la ville, les habitants ferment les portes, montent sur les toits et bombardent les soldats de tuiles : c'est la **journée des Tuiles**. Le 21 juillet, au château de **Vizille**, près de Grenoble, les trois ordres du Dauphiné se réunissent sans autorisation, à l'appel de notables comme le juge **Jean-Joseph Mounier** et le jeune avocat **Antoine Barnave**. Ils réclament le rétablissement des parlements, mais surtout les **états généraux**, avec autant de députés pour le tiers état que pour les deux autres ordres réunis, et un vote par tête.
+
+<Oeuvre id="vizille" image="revolution-francaise/parlements/vizille" createur="Alexandre Debelle" titre="Assemblée des trois ordres du Dauphiné au château de Vizille, le 21 juillet 1788" date="fin du XIXe siècle (avant 1897)" technique="huile sur toile" lieu="Vizille, musée de la Révolution française" faits="1788" regard="retrospectif" periode="1787-1788" commons="https://commons.wikimedia.org/wiki/File:Assemblee_des_Trois_Ordres_au_Chateau_de_Vizille_en_1788.png" alt="Dans une haute salle aux murs de pierre nue, éclairée par des fenêtres en plein cintre, un orateur debout sur une estrade, près d'une table où siège le président, fait face à une foule de députés en perruque et en habit, ecclésiastiques en noir et gentilshommes, qui tendent le bras et agitent leurs chapeaux en signe d'approbation.">
+<div slot="lire">
+
+Le peintre grenoblois Alexandre Debelle représente, un siècle après, l'assemblée réunie au château de Vizille par les trois ordres du Dauphiné. La scène est une reconstitution : elle célèbre l'union des ordres et fait de Vizille le prélude de 1789, dans l'esprit des commémorations du centenaire. Elle rappelle aussi d'où partait le mouvement : la défense du parlement de Grenoble contre les édits de Lamoignon. Les députés de Vizille demandaient son rétablissement, mais leur revendication principale, des états généraux avec un tiers doublé et le vote par tête, allait bientôt dépasser les parlementaires.
+
+</div>
+</Oeuvre>
+
+Le gouvernement est à bout de ressources : les prêteurs ne prêtent plus, faute d'enregistrement des emprunts, et le Trésor est vide. Le **8 août 1788**, Brienne annonce la réunion des états généraux pour le 1er mai 1789 ; le 16 août, l'État suspend une partie de ses paiements ; le 25 août, Brienne démissionne et Necker revient. Lamoignon est renvoyé en septembre, la réforme abandonnée, les parlements rappelés. Le bras de fer est gagné : le roi a cédé sur toute la ligne.
+
+<Encadre type="historiens" titre="Les parlements ont-ils provoqué la Révolution ?">
+
+Les contemporains l'ont souvent pensé, et les historiens ont longtemps parlé de « **révolte nobiliaire** » ou de « **révolution aristocratique** » (Georges Lefebvre, *Quatre-vingt-neuf*, 1939) pour désigner les années 1787-1788 : ce sont des privilégiés, et d'abord des parlementaires, qui ont paralysé la monarchie et exigé les états généraux. Jean Egret, dans *La Pré-Révolution française* (1962), a proposé le terme de « **pré-révolution** » et montré l'ampleur du mouvement dans les provinces, où se rencontrent magistrats, nobles libéraux et avocats.
+
+D'autres travaux déplacent la question. William Doyle (« The Parlements of France and the Breakdown of the Old Regime », 1970) juge que les parlements n'avaient ni programme ni volonté révolutionnaire : ils ont contribué à la faillite politique de la monarchie surtout en paralysant ses réformes, et ont été dépassés dès que la question du tiers état fut posée. Bailey Stone (*The French Parlements and the Crisis of the Old Regime*, 1986) insiste sur leur conservatisme social. Dale Van Kley et Keith Michael Baker, eux, mettent l'accent sur le langage politique forgé dans les querelles parlementaires (nation, constitution, despotisme), dont les révolutionnaires hériteront. David A. Bell (*Lawyers and Citizens*, 1994) montre que les **avocats** formés dans l'orbite des parlements fournissent une bonne part du personnel révolutionnaire. Les historiens ne tranchent pas : selon l'angle choisi, les parlements apparaissent comme les détonateurs, les complices involontaires ou les premières victimes de la Révolution.
+
+</Encadre>
+
+<Encadre type="retenir">
+
+- Rappelés en 1774, les parlements **bloquent les réformes** de **Turgot** (1776), puis de **Calonne** et de **Brienne** (1787).
+- En **juillet 1787**, le parlement de Paris réclame les **états généraux** ; il est exilé à **Troyes**.
+- L'**arrêté du 3 mai 1788** sur les lois fondamentales, puis la **révolte des provinces** contre les **édits de Lamoignon** (**journée des Tuiles**, **Vizille**) font céder le roi : le **8 août 1788**, il convoque les états généraux.
+
+</Encadre>
+
+<span id="la-chute" class="ancre"></span>
+
+### La chute (1788-1790)
+
+<Question>Pourquoi les parlements, triomphants à l'automne 1788, sont-ils balayés en deux ans par la Révolution qu'ils ont contribué à ouvrir ?</Question>
+
+<span id="forme-de-1614" class="ancre"></span>
+
+Le 24 septembre 1788, le parlement de Paris rentre au Palais sous les acclamations. Dès le lendemain, le **25 septembre**, en enregistrant la déclaration royale qui convoque les états généraux, il demande qu'ils soient convoqués et composés **« suivant la forme observée en 1614 »**, selon les termes rapportés par les historiens du parlement.
+
+En 1614, chaque ordre avait eu à peu près le même nombre de députés et l'on avait voté par ordre : le clergé et la noblesse l'emporteraient donc toujours, à deux voix contre une. En une phrase, le parlement perd sa popularité. Les « patriotes » comprennent que les magistrats réclamaient la liberté pour les corps privilégiés, non pour la nation tout entière. Selon une remarque souvent citée du journaliste genevois Mallet du Pan, au début de 1789, la querelle a changé de nature : il ne s'agit plus du roi contre le parlement, mais du tiers état contre les deux autres ordres. Le parlement tente en décembre de se rattraper par un nouvel arrêté plus conciliant ; personne ne l'écoute plus. En janvier 1789, la brochure de Sieyès, *Qu'est-ce que le tiers état ?*, ne lui accorde que mépris.
+
+Pendant les grands événements de 1789, les parlements sont absents. Les états généraux deviennent Assemblée nationale (17 juin), la Bastille tombe, et dans la **nuit du 4 août** l'Assemblée abolit les privilèges, et avec eux la **vénalité des offices** de judicature et les épices : la justice sera gratuite. Les magistrats, propriétaires de leurs charges, comprennent que leur temps est compté.
+
+<span id="mise-en-vacances" class="ancre"></span>
+
+Le **3 novembre 1789**, sur la proposition d'Alexandre de Lameth, l'Assemblée décide que les parlements resteront **en vacances** jusqu'à nouvel ordre : seules leurs chambres des vacations continueront d'expédier les affaires courantes. La plupart s'inclinent. Quelques-uns résistent : la chambre des vacations de Rouen proteste, celle de Metz aussi, et celle de **Rennes** refuse d'enregistrer le décret ; ses magistrats, convoqués à la barre de l'Assemblée en janvier 1790, y sont durement tancés. L'Assemblée, qui craint par-dessus tout ces corps capables de bloquer la loi, prépare leur remplacement.
+
+<span id="suppression" class="ancre"></span>
+
+La grande **loi des 16-24 août 1790** sur l'organisation judiciaire refait la justice de fond en comble : un **juge de paix** élu dans chaque canton, un **tribunal de district** dans chaque district, des juges élus pour six ans parmi les hommes de loi, une justice gratuite, des jurés en matière criminelle à partir de 1791, et, au sommet, un **tribunal de cassation** (créé en novembre 1790) chargé de veiller à la bonne application de la loi, non de juger les affaires. Surtout, la loi interdit aux juges ce qui avait fait la puissance des parlements :
+
+<Citation auteur="Assemblée nationale constituante" oeuvre="Loi sur l'organisation judiciaire, titre II, articles 10 à 12" date="16-24 août 1790" edition="J.-B. Duvergier, Collection complète des lois, décrets…, t. I, 1834, p. 311" lien="https://archive.org/details/collectioncompl19duvegoog/page/n352/mode/1up">
+10. Les tribunaux ne pourront prendre directement ou indirectement aucune part à l'exercice du pouvoir législatif, ni empêcher ou suspendre l'exécution des décrets du Corps-Législatif, sanctionnés par le Roi, à peine de forfaiture. 11. Ils seront tenus de faire transcrire purement et simplement dans un registre particulier, et de publier dans la huitaine, les lois qui leur seront envoyées. 12. Ils ne pourront point faire de réglemens, mais ils s'adresseront au Corps-Législatif toutes les fois qu'ils croiront nécessaire, soit d'interpréter une loi, soit d'en faire une nouvelle.
+</Citation>
+
+L'article 11 reprend, presque mot pour mot, la formule de Louis XIV en 1673 : transcrire « purement et simplement ». Mais il n'y a plus de remontrances du tout.
+
+Les anciens parlements n'ont plus de place dans cet ordre nouveau. Un décret des 6-11 septembre 1790 déclare « supprimés » les parlements, avec tous les tribunaux d'ancienne création ; leurs chambres des vacations cessent leurs fonctions le 30 septembre 1790 en province, le 15 octobre à Paris. Il n'y a ni émeute ni regret populaire : les parlements meurent dans l'indifférence. Plusieurs de leurs membres paieront pourtant cher leur fidélité à l'ancien ordre : en avril 1794, sous la Terreur, des dizaines d'anciens parlementaires de Paris, puis de Toulouse au mois de juillet, sont guillotinés pour les protestations qu'ils avaient rédigées en 1789-1790. Duval d'Eprémesnil et Malesherbes meurent sur l'échafaud le même jour, le 22 avril 1794.
+
+<Encadre type="retenir">
+
+- Le **25 septembre 1788**, en exigeant des états généraux **« suivant la forme observée en 1614 »**, le parlement de Paris **perd sa popularité** : on y voit la défense des privilégiés.
+- La **nuit du 4 août 1789** abolit la **vénalité des offices** ; le **3 novembre 1789**, les parlements sont **mis en vacances**.
+- La **loi des 16-24 août 1790** crée des juges **élus** et interdit aux tribunaux de toucher au **pouvoir législatif** ; les parlements disparaissent à l'**automne 1790**.
+
+</Encadre>
+
+<span id="epilogue" class="ancre"></span>
+
+## Épilogue : ce qu'il en reste
+
+Les parlements ont laissé à la France une méfiance durable envers les juges qui prétendent gouverner. La loi de 1790 interdit aux tribunaux de suspendre les lois ou de se mêler de l'administration ; le **Code civil** de 1804 leur défend, dans son article 5, de prononcer « par voie de disposition générale et réglementaire » : c'est la fin des arrêts de règlement. Pendant plus d'un siècle et demi, en France, aucun juge ne pourra écarter une loi votée par les représentants de la nation. Quand on parle, au XXe siècle, de « gouvernement des juges », c'est souvent le souvenir des parlements qui affleure, et il a longtemps pesé sur les débats autour du contrôle de la constitutionnalité des lois, confié depuis 1958 à un Conseil constitutionnel.
+
+Les lieux, eux, sont restés. Le Palais de la Cité est toujours le Palais de justice de Paris ; la **Cour de cassation**, héritière du tribunal de cassation de 1790, y siège. Dans l'ancienne Grand-Chambre, devenue « salle de la Liberté », siégea en 1793-1795 le Tribunal révolutionnaire, qui y jugea Marie-Antoinette. En province, les palais des parlements de Rennes, de Grenoble, de Dijon, de Rouen ou de Toulouse abritent encore, pour la plupart, des cours d'appel.
+
+Le mot, enfin, a changé de sens. Au XIXe siècle, la France adopte à son tour, sous la Restauration et la monarchie de Juillet, un « régime parlementaire » à l'anglaise, où les ministres doivent avoir la confiance des Chambres. On parle désormais des « parlementaires » pour désigner les députés. La Constitution de 1946, puis celle de 1958, consacrent l'usage : « le Parlement » y désigne les assemblées élues. Des cours souveraines de l'Ancien Régime, il ne reste dans la langue courante qu'un faux ami.
+
+*Voir aussi* : sur la page parente, <a href={urlLecon('xixe', 'revolution-francaise') + '#la-crise-de-la-monarchie'}>la crise de la monarchie (1787-1789)</a> et <a href={urlLecon('xixe', 'revolution-francaise') + '#journee-des-tuiles'}>la journée des Tuiles</a> ; le prologue de la section « écrivains », <a href={urlChapitreEcrivains('xixe', '00-prologue')}>la fin de l'Ancien Régime</a>, où Montesquieu et Tocqueville évoquent les parlements.
+
+<span id="personnages" class="ancre"></span>
+
+## Personnages
+
+Quelques-uns des acteurs de cette histoire, dans l'ordre chronologique.
+
+<Personnages personnages={personnages} />
+
+<span id="glossaire" class="ancre"></span>
+
+## Glossaire
+
+<Glossaire termes={glossaire} />

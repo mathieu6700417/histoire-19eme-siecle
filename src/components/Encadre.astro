@@ -1,15 +1,17 @@
 ---
-// Encadré « Définition » ou « À retenir ».
+// Encadré « Définition », « À retenir » ou « Ce qu'en disent les historiens » (spec 20 : débats
+// historiographiques présentés sans trancher).
 import { typographie } from '../utils/typographie.mjs';
 
 interface Props {
-  type?: 'definition' | 'retenir';
+  type?: 'definition' | 'retenir' | 'historiens';
   /** Terme défini (pour une définition) ou titre libre. */
   titre?: string;
 }
 
 const { type = 'definition', titre } = Astro.props;
-const etiquette = type === 'definition' ? 'Définition' : 'À retenir';
+const etiquettes = { definition: 'Définition', retenir: 'À retenir', historiens: 'Ce qu’en disent les historiens' } as const;
+const etiquette = etiquettes[type];
 ---
 
 <aside class={`encadre encadre--${type}`} aria-label={titre ? typographie(`${etiquette} : ${titre}`) : etiquette}>
@@ -36,6 +38,7 @@ const etiquette = type === 'definition' ? 'Définition' : 'À retenir';
     color: var(--c-texte-doux);
   }
   .encadre--retenir .encadre__etiquette { color: var(--c-bordeaux); }
+  .encadre--historiens { border-left-color: var(--c-texte-doux); }
   .encadre__terme { font-family: var(--f-titre); font-weight: 500; color: var(--c-bleu-nuit); }
   .encadre__contenu > :global(:last-child) { margin-bottom: 0; }
 </style>

@@ -1,0 +1,248 @@
+---
+// Carte de France monochrome (spec 21, « Les parlements d'Ancien Régime ») : un fond projeté
+// (JSON produit par un script de scripts/cartes/, d'après Natural Earth), des zones remplies
+// de gris ou de motifs (ressorts, provinces…), des lieux placés d'après leurs coordonnées
+// réelles (longitude, latitude). Strictement en gris : ni eau colorée ni couleur d'accent ;
+// les zones se distinguent par leur motif et par les libellés des lieux. Survol, toucher ou
+// clavier : le détail du lieu ou de la zone s'affiche sous la carte. Sur petit écran, la carte
+// garde une largeur minimale et défile horizontalement ; `liste` ajoute dessous la liste des
+// lieux principaux, lisible partout.
+// Usage MDX :
+//   <CarteFrance fond={fond} zones={zones} lieux={lieux} titre="…" legende="…" liste />
+import type { FondCarte, LieuCarte, MotifZone, ZoneCarte } from '../data/types';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  fond: FondCarte;
+  zones: Record<string, ZoneCarte>;
+  lieux: LieuCarte[];
+  titre: string;
+  legende?: string;
+  /** Légende des symboles : libellés des types de lieux et des motifs employés. */
+  cles?: { type?: LieuCarte['type']; motif?: MotifZone; libelle: string }[];
+  liste?: boolean;
+  titreListe?: string;
+  idCarte?: string;
+}
+
+const { fond, zones, lieux, titre, legende, cles = [], liste = false, titreListe = 'Les cours, de la plus ancienne à la plus récente', idCarte = 'carte-france' } = Astro.props;
+const { cadre, echelle, cx } = fond.projection;
+const px = (lon: number) => (lon - cadre[0]) * echelle * cx;
+const py = (lat: number) => (cadre[3] - lat) * echelle;
+const t = (s: string) => typographie(s);
+
+const remplissages: Record<MotifZone, string> = {
+  blanc: '#f6f4ef',
+  clair: '#efede8',
+  moyen: '#dedad2',
+  fonce: '#cbc7be',
+  hachures: `url(#${idCarte}-hachures)`,
+  points: `url(#${idCarte}-points)`,
+  hors: `url(#${idCarte}-hors)`,
+};
+
+// Libellés : décalage selon la position.
+const D = 7;
+const decalage: Record<NonNullable<LieuCarte['position']>, { dx: number; dy: number; ancre: 'start' | 'middle' | 'end' }> = {
+  e: { dx: D, dy: 4, ancre: 'start' },
+  o: { dx: -D, dy: 4, ancre: 'end' },
+  n: { dx: 0, dy: -D - 12, ancre: 'middle' },
+  s: { dx: 0, dy: D + 10, ancre: 'middle' },
+  ne: { dx: D - 2, dy: -D - 6, ancre: 'start' },
+  no: { dx: -D + 2, dy: -D - 6, ancre: 'end' },
+  se: { dx: D - 2, dy: D + 8, ancre: 'start' },
+  so: { dx: -D + 2, dy: D + 8, ancre: 'end' },
+};
+const H_DATE = 12;
+const lieuxListe = lieux.filter((l) => l.liste);
+---
+
+<figure class="carte-france large" data-carte-france>
+  <div class="carte-france__defilement" tabindex="0" role="region" aria-label={t(`${titre} (faire défiler horizontalement sur petit écran)`)}>
+    <svg viewBox={`0 0 ${fond.largeur} ${fond.hauteur}`} xmlns="http://www.w3.org/2000/svg" aria-labelledby={`${idCarte}-titre`}>
+      <title id={`${idCarte}-titre`}>{t(titre)}</title>
+      <defs>
+        <pattern id={`${idCarte}-hachures`} width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="5" height="5" fill="#f4f2ee" />
+          <line x1="0" y1="0" x2="0" y2="5" stroke="#c9c5bc" stroke-width="1.6" />
+        </pattern>
+        <pattern id={`${idCarte}-points`} width="5" height="5" patternUnits="userSpaceOnUse">
+          <rect width="5" height="5" fill="#f4f2ee" />
+          <circle cx="2.5" cy="2.5" r="1" fill="#aaa69d" />
+        </pattern>
+        <pattern id={`${idCarte}-hors`} width="6" height="6" patternUnits="userSpaceOnUse">
+          <rect width="6" height="6" fill="#fbfaf7" />
+          <path d="M0,0 L6,6 M6,0 L0,6" stroke="#b8b4ab" stroke-width="0.7" />
+        </pattern>
+      </defs>
+
+      {/* Pays voisins : simple contour clair. */}
+      <path class="carte-france__voisins" d={fond.voisins} />
+
+      {/* Zones (ressorts…) */}
+      {Object.entries(fond.zones).map(([id, d]) => {
+        const z = zones[id];
+        if (!z) return null;
+        const info = t(z.detail ?? z.libelle);
+        return (
+          <g class="carte-france__zone" data-info={info}>
+            <title>{info}</title>
+            <path d={d} fill={remplissages[z.motif]} />
+          </g>
+        );
+      })}
+
+      {/* Contour de la France et fleuves (gris) */}
+      <path class="carte-france__contour" d={fond.france} />
+      {fond.fleuves && <path class="carte-france__fleuves" d={fond.fleuves} />}
+
+      {/* Lieux */}
+      {lieux.map((l) => {
+        const x = px(l.lon);
+        const y = py(l.lat);
+        const p = decalage[l.position ?? 'e'];
+        const info = t(l.detail ?? l.nom);
+        const yNom = y + p.dy - (l.date && (l.position ?? 'e').startsWith('n') ? H_DATE : 0);
+        const contenu = (
+          <>
+            <title>{info}</title>
+            {l.type === 'principal' && <circle class="carte-france__point" cx={x} cy={y} r={3.6} />}
+            {l.type === 'secondaire' && <circle class="carte-france__point carte-france__point--vide" cx={x} cy={y} r={3.4} />}
+            {l.type === 'autre' && <rect class="carte-france__point carte-france__point--vide" x={x - 3} y={y - 3} width={6} height={6} />}
+            {l.type === 'hors' && <path class="carte-france__croix" d={`M${x - 3},${y - 3} L${x + 3},${y + 3} M${x + 3},${y - 3} L${x - 3},${y + 3}`} />}
+            <text class:list={['carte-france__nom', `carte-france__nom--${l.type}`]} x={x + p.dx} y={yNom} text-anchor={p.ancre}>{t(l.nom)}</text>
+            {l.date && <text class="carte-france__date" x={x + p.dx} y={yNom + H_DATE} text-anchor={p.ancre}>{t(l.date)}</text>}
+          </>
+        );
+        return l.lien
+          ? <a href={l.lien} class="carte-france__lieu carte-france__lien" data-info={info}>{contenu}</a>
+          : <g class="carte-france__lieu" data-info={info} tabindex="0">{contenu}</g>;
+      })}
+    </svg>
+  </div>
+
+  <p class="carte-france__info" aria-live="polite" data-carte-info>
+    {t('Survolez ou touchez une ville ou une zone pour lire son détail.')}
+  </p>
+
+  {cles.length > 0 && (
+    <ul class="carte-france__cles">
+      {cles.map((c) => (
+        <li>
+          <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true">
+            {c.motif && <rect x="1" y="1" width="20" height="12" fill={remplissages[c.motif]} stroke="#9a968d" stroke-width="0.6" />}
+            {c.type === 'principal' && <circle cx="11" cy="7" r="3.6" class="carte-france__point" />}
+            {c.type === 'secondaire' && <circle cx="11" cy="7" r="3.4" class="carte-france__point carte-france__point--vide" />}
+            {c.type === 'autre' && <rect x="8" y="4" width="6" height="6" class="carte-france__point carte-france__point--vide" />}
+            {c.type === 'hors' && <path d="M8,4 L14,10 M14,4 L8,10" class="carte-france__croix" />}
+          </svg>
+          {t(c.libelle)}
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <figcaption>
+    {legende && <p class="carte-france__legende">{t(legende)}</p>}
+    <p class="carte-france__source">{t(`Fond de carte : ${fond.source}`)}</p>
+  </figcaption>
+
+  {liste && lieuxListe.length > 0 && (
+    <details class="carte-france__liste">
+      <summary>{t(titreListe)}</summary>
+      <ul>
+        {lieuxListe.map((l) => (
+          <li><span class="carte-france__liste-nom">{t(l.nom)}</span>{l.date && <span class="carte-france__liste-date"> {t(l.date)}</span>}{l.detail && <> : {t(l.detail.replace(/^[^:]*:\s*/, ''))}</>}</li>
+        ))}
+      </ul>
+    </details>
+  )}
+</figure>
+
+<script>
+  // Détail du lieu ou de la zone survolés, touchés ou atteints au clavier.
+  document.querySelectorAll<HTMLElement>('[data-carte-france]').forEach((carte) => {
+    const info = carte.querySelector<HTMLElement>('[data-carte-info]');
+    if (!info) return;
+    const montrer = (e: Event) => {
+      const el = (e.target as Element).closest<SVGElement>('[data-info]');
+      if (el?.dataset.info) info.textContent = el.dataset.info;
+    };
+    carte.addEventListener('mouseover', montrer);
+    carte.addEventListener('focusin', montrer);
+    carte.addEventListener('click', montrer);
+  });
+</script>
+
+<style>
+  .carte-france { margin: var(--e-5) auto; }
+  .carte-france__defilement {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-block: 1px solid var(--c-filet);
+    background: var(--c-fond);
+  }
+  .carte-france__defilement svg {
+    display: block;
+    width: 100%;
+    min-width: 34rem;
+    max-width: 46rem;
+    height: auto;
+    margin-inline: auto;
+    font-family: var(--f-texte);
+  }
+  .carte-france__voisins { fill: #fbfaf7; stroke: #cfccc4; stroke-width: 0.6; }
+  .carte-france__zone path { stroke: #fbfaf7; stroke-width: 1.1; stroke-linejoin: round; }
+  .carte-france__zone:hover path { stroke: var(--c-texte-doux); }
+  .carte-france__contour { fill: none; stroke: #6f6b64; stroke-width: 0.9; stroke-linejoin: round; pointer-events: none; }
+  .carte-france__fleuves { fill: none; stroke: #a7a39a; stroke-width: 0.8; stroke-linecap: round; pointer-events: none; }
+  .carte-france__point { fill: var(--c-texte); stroke: #fbfaf7; stroke-width: 1; }
+  .carte-france__point--vide { fill: #fbfaf7; stroke: var(--c-texte); stroke-width: 1.2; }
+  .carte-france__croix { fill: none; stroke: var(--c-texte-doux); stroke-width: 1.3; }
+  /* Halo couleur du fond : les libellés restent lisibles sur les motifs. */
+  .carte-france__nom, .carte-france__date { stroke: #fbfaf7; stroke-width: 3.5px; paint-order: stroke; stroke-linejoin: round; }
+  .carte-france__nom { font-size: 13px; fill: var(--c-texte); }
+  .carte-france__nom--secondaire, .carte-france__nom--autre { font-size: 11.5px; }
+  .carte-france__nom--hors { font-size: 11px; font-style: italic; fill: var(--c-texte-doux); }
+  .carte-france__date { font-size: 10.5px; fill: var(--c-texte-doux); font-variant-numeric: oldstyle-nums; }
+  .carte-france__lieu { cursor: pointer; outline: none; }
+  .carte-france__lieu:hover .carte-france__nom,
+  .carte-france__lieu:focus-visible .carte-france__nom { text-decoration: underline; }
+  .carte-france__lieu:focus-visible .carte-france__point { stroke: var(--c-texte); stroke-width: 2; }
+
+  .carte-france__info {
+    min-height: 2.6em;
+    margin: var(--e-2) 0 0;
+    padding: var(--e-1) var(--e-3);
+    border-left: 1px solid var(--c-ocre-clair);
+    font-size: 1rem;
+  }
+  .carte-france__cles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-1) var(--e-3);
+    list-style: none;
+    padding: 0;
+    margin: var(--e-2) 0 0;
+    font-size: 0.95rem;
+    color: var(--c-texte-doux);
+  }
+  .carte-france__cles li { margin: 0; display: flex; align-items: center; gap: 0.4em; }
+  .carte-france__legende { font-size: 1rem; font-style: italic; color: var(--c-texte-doux); margin: var(--e-2) 0 0; }
+  .carte-france__source { font-size: 0.9rem; color: var(--c-texte-doux); margin: var(--e-1) 0 0; }
+  .carte-france__liste { margin-top: var(--e-2); font-size: 1rem; }
+  .carte-france__liste summary {
+    cursor: pointer;
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    color: var(--c-texte);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--c-texte-doux);
+    text-underline-offset: 0.2em;
+  }
+  .carte-france__liste ul { margin: var(--e-2) 0 0; padding-left: 1.1em; }
+  .carte-france__liste li { margin-bottom: 0.25em; }
+  .carte-france__liste-nom { font-variant: small-caps; letter-spacing: 0.04em; }
+  .carte-france__liste-date { color: var(--c-texte-doux); font-variant-numeric: oldstyle-nums; }
+</style>

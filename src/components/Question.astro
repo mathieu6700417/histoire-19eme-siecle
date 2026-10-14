@@ -1,0 +1,22 @@
+---
+// Question d'ouverture d'une partie de leçon (spec 20) : la question à laquelle la partie
+// répond, sous une étiquette en petites capitales. Usage MDX : <Question>Pourquoi … ?</Question>
+---
+
+<div class="question-partie">
+  <p class="question-partie__etiquette">La question</p>
+  <div class="question-partie__texte"><slot /></div>
+</div>
+
+<style>
+  .question-partie { margin: var(--e-3) auto var(--e-4); }
+  .question-partie__etiquette {
+    margin: 0;
+    font-variant: small-caps;
+    letter-spacing: 0.08em;
+    color: var(--c-texte-doux);
+    font-size: 0.95rem;
+  }
+  .question-partie__texte { font-family: var(--f-titre); font-style: italic; font-size: 1.22rem; line-height: 1.4; }
+  .question-partie__texte :global(p) { margin: 0; }
+</style>

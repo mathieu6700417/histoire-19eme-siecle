@@ -1,0 +1,27 @@
+---
+// Glossaire de fin de leçon (spec 20) : une liste de définitions, chaque terme ayant une ancre
+// (#glossaire-<id>) que le texte peut viser d'un lien discret. `*mot*` : italique.
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props { termes: { id: string; terme: string; definition: string }[] }
+const { termes } = Astro.props;
+const echapper = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const html = (s: string) => echapper(typographie(s)).replace(/\*([^*]+)\*/g, '<em>$1</em>');
+---
+
+<dl class="glossaire">
+  {termes.map((g) => (
+    <div class="glossaire__entree" id={`glossaire-${g.id}`}>
+      <dt set:html={html(g.terme)} />
+      <dd set:html={html(g.definition)} />
+    </div>
+  ))}
+</dl>
+
+<style>
+  .glossaire { margin: var(--e-3) auto var(--e-5); border-top: 1px solid var(--c-filet); }
+  .glossaire__entree { padding: var(--e-2) 0; border-bottom: 1px solid var(--c-filet); scroll-margin-top: var(--e-4); }
+  .glossaire__entree:target dt { text-decoration: underline; text-underline-offset: 0.2em; }
+  .glossaire dt { font-variant: small-caps; letter-spacing: 0.06em; font-weight: 500; }
+  .glossaire dd { margin: var(--e-1) 0 0; color: var(--c-texte); }
+</style>

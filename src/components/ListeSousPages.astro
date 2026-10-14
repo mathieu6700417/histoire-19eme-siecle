@@ -5,7 +5,10 @@
 // (src/content/lecons/<siecle>/<portail>/<sous>.mdx) y paraît sans toucher au portail.
 // Usage MDX : <ListeSousPages parent="xixe/figures" suite="Lire le portrait" />
 //   - `parent` : id complet du portail (« <siecle>/<slug> ») ;
-//   - `suite` : invitation affichée sous chaque résumé (par défaut « Lire la page »).
+//   - `suite` : invitation affichée sous chaque résumé (par défaut « Lire la page ») ;
+//   - `titre` : intertitre (h2) placé au-dessus de la liste (facultatif) ;
+//   - `facultative` : portail qui n'a peut-être encore aucune sous-page (spec 20) : sans
+//     sous-page, rien ne s'affiche (ni titre ni liste) et aucun avertissement n'est émis.
 import { getCollection } from 'astro:content';
 import { enfantsDe, lienLecon } from '../utils/lecons';
 import { typographie } from '../utils/typographie.mjs';
@@ -13,14 +16,18 @@ import { typographie } from '../utils/typographie.mjs';
 interface Props {
   parent: string;
   suite?: string;
+  titre?: string;
+  facultative?: boolean;
 }
 
-const { parent, suite = 'Lire la page' } = Astro.props;
+const { parent, suite = 'Lire la page', titre, facultative = false } = Astro.props;
 const enfants = enfantsDe(await getCollection('lecons'), parent);
-if (!enfants.length) console.warn(`[ListeSousPages] aucune sous-page pour ${parent}`);
+if (!enfants.length && !facultative) console.warn(`[ListeSousPages] aucune sous-page pour ${parent}`);
+const afficher = enfants.length > 0 || !facultative;
 ---
 
-<ul class="sous-pages">
+{afficher && titre && <h2 class="sous-pages__titre" id="sous-pages">{typographie(titre)}</h2>}
+{afficher && <ul class="sous-pages">
   {enfants.map((e) => (
     <li>
       <a class="sous-page" href={lienLecon(e.id)}>
@@ -33,7 +40,7 @@ if (!enfants.length) console.warn(`[ListeSousPages] aucune sous-page pour ${pare
       </a>
     </li>
   ))}
-</ul>
+</ul>}
 
 <style>
   .sous-pages {

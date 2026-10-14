@@ -1,0 +1,261 @@
+---
+// Frise d'un récit chronologique (spec 20, « La Révolution française ») : une ou deux rangées
+// de bandes (régimes, parties du récit) et des repères datés au jour près (grandes journées),
+// tous cliquables vers une ancre de la page. SVG inline, strictement monochrome : les bandes
+// se distinguent par des motifs (uni clair, hachures, points, uni moyen) et par leurs libellés.
+// Échelle exacte (chaque année a la même largeur) ; sur petit écran, défilement horizontal.
+// Échelle par segments (spec 21, frise sur cinq siècles) : `echelle` donne des tranches
+// contiguës de `debut` à `fin`, chacune avec sa largeur par an et son pas de graduation ; les
+// tranches comprimées (moins de px par an que la plus large) ont un axe en tirets, et une
+// double barre oblique marque chaque changement d'échelle. Sans `echelle` : échelle exacte.
+// Usage MDX :
+//   <FriseJournees debut={1787} fin={1800} rangees={[{ nom: 'Régimes', bandes: regimes },
+//     { nom: 'Récit', bandes: parties }]} journees={journees} legende="…" />
+import type { BandeFrise, JourneeFrise, TrancheFrise } from '../data/types';
+import { cibleLien, etagerLibelles, largeurTexte } from '../utils/svg';
+import { typographie } from '../utils/typographie.mjs';
+
+interface Props {
+  /** Première et dernière année de l'axe (fin exclue : 1800 = jusqu'au 31 décembre 1799). */
+  debut: number;
+  fin: number;
+  rangees: { nom: string; bandes: BandeFrise[] }[];
+  journees?: JourneeFrise[];
+  legende?: string;
+  pxParAn?: number;
+  /** Échelle par segments (facultative) : tranches contiguës couvrant debut → fin. */
+  echelle?: TrancheFrise[];
+  idFrise?: string;
+}
+
+const { debut, fin, rangees, journees = [], legende, pxParAn = 104, echelle, idFrise = 'frise-recit' } = Astro.props;
+const tranches: TrancheFrise[] = echelle ?? [{ debut, fin, pxParAn, pas: 1 }];
+if (tranches[0].debut !== debut || tranches[tranches.length - 1].fin !== fin || tranches.some((t, i) => i > 0 && t.debut !== tranches[i - 1].fin)) {
+  throw new Error(`[FriseJournees ${idFrise}] tranches d'échelle non contiguës ou hors de ${debut}-${fin}`);
+}
+const pxMax = Math.max(...tranches.map((t) => t.pxParAn));
+
+// --- Géométrie -------------------------------------------------------
+const COL_NOMS = 64;
+const MARGE_D = 20;
+const H_BANDE = 30;
+const ECART_BANDES = 4;
+const T_BANDE = 12.5;
+const T_JOUR = 12;
+const H_RANG_JOUR = 17;
+
+/** Date ISO → année décimale. */
+function annee(iso: string): number {
+  const [a, m = 1, j = 1] = iso.split('-').map(Number);
+  const debutAn = Date.UTC(a, 0, 1);
+  const finAn = Date.UTC(a + 1, 0, 1);
+  return a + (Date.UTC(a, m - 1, j) - debutAn) / (finAn - debutAn);
+}
+/** Abscisse d'une année (décimale) : somme des tranches traversées. */
+function xAnnee(a: number): number {
+  let px = COL_NOMS;
+  for (const t of tranches) {
+    if (a <= t.debut) break;
+    px += (Math.min(a, t.fin) - t.debut) * t.pxParAn;
+  }
+  return px;
+}
+const x = (iso: string | number) => xAnnee(typeof iso === 'number' ? iso : annee(iso));
+const largeur = xAnnee(fin) + MARGE_D;
+
+const yBandes = (i: number) => i * (H_BANDE + ECART_BANDES);
+const yAxe = rangees.length * (H_BANDE + ECART_BANDES) + 20; // années au-dessus de l'axe
+
+// Repères : libellés étagés sous l'axe pour éviter les chevauchements.
+const rangs = etagerLibelles(
+  journees.map((j) => ({ x: x(j.date), largeur: largeurTexte(j.court, T_JOUR) + 4 })),
+  4,
+);
+const nbRangs = journees.length ? Math.max(...rangs) + 1 : 0;
+const yJour = (r: number) => yAxe + 20 + r * H_RANG_JOUR;
+const hauteur = yJour(nbRangs) + 6;
+
+// Graduations : chaque année (pas 1, libellé centré sur l'année) ou tous les `pas` ans
+// (libellé sur le trait). Les bornes des tranches sont toujours graduées.
+const graduations: { a: number; centre: boolean; libelle: boolean }[] = [];
+for (const t of tranches) {
+  const pas = t.pas ?? 1;
+  const premier = Math.ceil(t.debut / pas) * pas;
+  if (premier !== t.debut && !graduations.some((g) => g.a === t.debut)) graduations.push({ a: t.debut, centre: false, libelle: false });
+  for (let a = premier; a < t.fin; a += pas) {
+    if (!graduations.some((g) => g.a === a)) graduations.push({ a, centre: pas === 1, libelle: true });
+  }
+}
+graduations.push({ a: fin, centre: tranches[tranches.length - 1].pas === 1 || !tranches[tranches.length - 1].pas, libelle: !(tranches[tranches.length - 1].pas === 1 || !tranches[tranches.length - 1].pas) });
+const annees = graduations.map((g) => g.a);
+// Changements d'échelle (entre deux tranches) et tranches comprimées.
+const ruptures = tranches.slice(1).map((t) => t.debut);
+const comprimees = tranches.filter((t) => t.pxParAn < pxMax);
+
+const libelleBande = (b: BandeFrise) => {
+  const dispo = x(b.fin) - x(b.debut) - 10;
+  if (largeurTexte(b.libelle, T_BANDE) <= dispo) return b.libelle;
+  if (b.court && largeurTexte(b.court, T_BANDE) <= dispo) return b.court;
+  return '';
+};
+const remplissage = (m: BandeFrise['motif'] = 0) =>
+  m === 1 ? `url(#${idFrise}-hachures)` : m === 2 ? `url(#${idFrise}-points)` : m === 3 ? '#e2dfd8' : '#f1efea';
+const texte = (s: string) => typographie(s);
+---
+
+<figure class="frise-recit large" data-frise-recit>
+  <div class="frise-recit__defilement" tabindex="0" role="region" aria-label="Frise chronologique (faire défiler horizontalement sur petit écran)">
+    <svg
+      viewBox={`0 0 ${largeur} ${hauteur}`}
+      width={largeur}
+      height={hauteur}
+      style={`min-width:${largeur}px`}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-labelledby={`${idFrise}-titre`}
+    >
+      <title id={`${idFrise}-titre`}>{texte(`Frise chronologique ${debut}-${fin - 1}`)}</title>
+      <defs>
+        <pattern id={`${idFrise}-hachures`} width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <rect width="6" height="6" fill="#f6f4f0" />
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#cfccc4" stroke-width="2" />
+        </pattern>
+        <pattern id={`${idFrise}-points`} width="6" height="6" patternUnits="userSpaceOnUse">
+          <rect width="6" height="6" fill="#f6f4f0" />
+          <circle cx="3" cy="3" r="1.1" fill="#bdb9b0" />
+        </pattern>
+      </defs>
+
+      {/* Lignes verticales des années (discrètes) */}
+      {annees.map((a) => (
+        <line class="frise-recit__annee" x1={x(a)} x2={x(a)} y1={0} y2={yAxe} />
+      ))}
+
+      {/* Rangées de bandes */}
+      {rangees.map((r, i) => (
+        <g>
+          <text class="frise-recit__nom-rangee" x={4} y={yBandes(i) + H_BANDE / 2 + 4}>{texte(r.nom)}</text>
+          {r.bandes.map((b) => {
+            // Fin au 1er janvier : l'année précédente est la dernière couverte (1800-01-01 → 1799).
+            const anFin = b.fin.endsWith('-01-01') ? String(Number(b.fin.slice(0, 4)) - 1) : b.fin.slice(0, 4);
+            const info = texte(`${b.libelle} (${b.dates ?? `${b.debut.slice(0, 4)}-${anFin}`})`);
+            const contenu = (
+              <>
+                <title>{info}</title>
+                <rect x={x(b.debut) + 0.5} y={yBandes(i)} width={Math.max(x(b.fin) - x(b.debut) - 1, 2)} height={H_BANDE} fill={remplissage(b.motif)} class="frise-recit__bande" />
+                <text x={(x(b.debut) + x(b.fin)) / 2} y={yBandes(i) + H_BANDE / 2 + 4} text-anchor="middle" class="frise-recit__txt-bande">{texte(libelleBande(b))}</text>
+              </>
+            );
+            return b.lien
+              ? <a href={cibleLien(b.lien)} class="frise-recit__lien" data-info={info}>{contenu}</a>
+              : <g data-info={info}>{contenu}</g>;
+          })}
+        </g>
+      ))}
+
+      {/* Axe et années */}
+      {comprimees.length === 0
+        ? <line class="frise-recit__axe" x1={x(debut)} x2={x(fin)} y1={yAxe} y2={yAxe} />
+        : tranches.map((t) => (
+          <line class:list={['frise-recit__axe', { 'frise-recit__axe--comprime': t.pxParAn < pxMax }]} x1={x(t.debut)} x2={x(t.fin)} y1={yAxe} y2={yAxe}>
+            {t.libelle && <title>{texte(t.libelle)}</title>}
+          </line>
+        ))}
+      {graduations.map((g) => (
+        <g class="frise-recit__graduation">
+          <line x1={x(g.a)} x2={x(g.a)} y1={yAxe} y2={yAxe + 5} />
+          {g.a < fin && g.centre && <text x={x(g.a + 0.5)} y={yAxe - 5} text-anchor="middle">{g.a}</text>}
+          {!g.centre && g.libelle && <text x={x(g.a)} y={yAxe - 5} text-anchor="middle">{g.a}</text>}
+        </g>
+      ))}
+      {ruptures.map((a) => (
+        <g class="frise-recit__rupture" aria-hidden="true">
+          <line x1={x(a) - 5} x2={x(a) - 1} y1={yAxe + 5} y2={yAxe - 5} />
+          <line x1={x(a) + 1} x2={x(a) + 5} y1={yAxe + 5} y2={yAxe - 5} />
+        </g>
+      ))}
+
+      {/* Grandes journées */}
+      {journees.map((j, i) => {
+        const xj = x(j.date);
+        const info = texte(j.libelle);
+        const contenu = (
+          <>
+            <title>{info}</title>
+            <line class="frise-recit__trait" x1={xj} x2={xj} y1={yAxe - 4} y2={yJour(rangs[i]) - 11} />
+            <circle class="frise-recit__point" cx={xj} cy={yAxe} r={2.6} />
+            <text class="frise-recit__txt-jour" x={xj} y={yJour(rangs[i])} text-anchor="middle">{texte(j.court)}</text>
+          </>
+        );
+        return j.lien
+          ? <a href={cibleLien(j.lien)} class="frise-recit__lien frise-recit__jour" data-info={info}>{contenu}</a>
+          : <g class="frise-recit__jour" data-info={info}>{contenu}</g>;
+      })}
+    </svg>
+  </div>
+
+  <p class="frise-recit__info" aria-live="polite" data-frise-info>
+    {texte('Survolez ou touchez un repère pour lire son détail ; cliquez pour aller au passage du récit.')}
+  </p>
+
+  <figcaption>
+    {legende && <p class="frise-recit__texte-legende">{typographie(legende)}</p>}
+  </figcaption>
+</figure>
+
+<script>
+  // Détail du repère ou de la bande survolés, touchés ou atteints au clavier.
+  document.querySelectorAll<HTMLElement>('[data-frise-recit]').forEach((frise) => {
+    const info = frise.querySelector<HTMLElement>('[data-frise-info]');
+    if (!info) return;
+    const montrer = (e: Event) => {
+      const el = (e.target as Element).closest<SVGElement>('[data-info]');
+      if (el?.dataset.info) info.textContent = el.dataset.info;
+    };
+    frise.addEventListener('mouseover', montrer);
+    frise.addEventListener('focusin', montrer);
+  });
+</script>
+
+<style>
+  .frise-recit { margin: var(--e-5) auto; }
+  .frise-recit__defilement {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-block: 1px solid var(--c-filet);
+    background: var(--c-fond);
+    padding: var(--e-2) 0;
+  }
+  .frise-recit__defilement svg { display: block; width: 100%; height: auto; font-family: var(--f-texte); }
+  .frise-recit__annee { stroke: var(--c-filet); stroke-width: 1; }
+  .frise-recit__nom-rangee { font-size: 11px; font-variant: small-caps; letter-spacing: 0.06em; fill: var(--c-texte-doux); }
+  .frise-recit__bande { stroke: #cfccc4; stroke-width: 1; }
+  .frise-recit__txt-bande { font-size: 12.5px; fill: var(--c-texte); }
+  .frise-recit__axe, .frise-recit__graduation line { stroke: var(--c-texte-doux); }
+  .frise-recit__axe--comprime { stroke-dasharray: 5 3; }
+  .frise-recit__rupture line { stroke: var(--c-texte); stroke-width: 1.2; }
+  .frise-recit__graduation text { font-size: 12px; fill: var(--c-texte-doux); font-variant-numeric: oldstyle-nums; }
+  .frise-recit__trait { stroke: var(--c-texte-doux); stroke-width: 0.8; stroke-dasharray: 2 2; }
+  .frise-recit__point { fill: var(--c-texte); }
+  /* Halo couleur du fond : les traits pointillés des repères voisins passent sous les libellés. */
+  .frise-recit__txt-jour { font-size: 12px; fill: var(--c-texte); stroke: var(--c-fond); stroke-width: 4px; paint-order: stroke; stroke-linejoin: round; }
+  .frise-recit__lien { cursor: pointer; outline: none; text-decoration: none; }
+  .frise-recit__lien text { text-decoration: none; }
+  .frise-recit__lien:hover .frise-recit__txt-jour,
+  .frise-recit__lien:focus-visible .frise-recit__txt-jour,
+  .frise-recit__lien:hover .frise-recit__txt-bande,
+  .frise-recit__lien:focus-visible .frise-recit__txt-bande { text-decoration: underline; }
+  .frise-recit__lien:hover .frise-recit__bande,
+  .frise-recit__lien:focus-visible .frise-recit__bande { stroke: var(--c-texte); }
+  .frise-recit__lien:hover .frise-recit__point,
+  .frise-recit__lien:focus-visible .frise-recit__point { r: 4px; }
+  .frise-recit__lien:focus-visible .frise-recit__trait { stroke: var(--c-texte); stroke-dasharray: none; }
+
+  .frise-recit__info {
+    min-height: 2.6em;
+    margin: var(--e-2) 0 0;
+    padding: var(--e-1) var(--e-3);
+    border-left: 1px solid var(--c-ocre-clair);
+    font-size: 1rem;
+  }
+  .frise-recit__texte-legende { font-size: 1rem; font-style: italic; color: var(--c-texte-doux); margin-top: var(--e-2); }
+</style>
