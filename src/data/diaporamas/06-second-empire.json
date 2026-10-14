@@ -8,7 +8,7 @@
     {
       "id": "autoritaire",
       "titre": "L'Empire autoritaire",
-      "dates": "1852-1856",
+      "dates": "1852-1860",
       "debut": 1,
       "reperes": [
         {
@@ -276,7 +276,14 @@
           "largeur": 1792,
           "hauteur": 768,
           "modele": "Tongyi-MAI/Z-Image-Turbo",
-          "genere_le": "2026-10-14"
+          "genere_le": "2026-10-14",
+          "encre": "claire"
+        },
+        "grand": {
+          "fichier": "001-grand.webp",
+          "largeur": 1451,
+          "hauteur": 2560,
+          "source": "original"
         }
       },
       "personnes_vues": [
@@ -495,6 +502,17 @@
           "hauteur": 1192,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "003-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1984,
+          "source": "original",
+          "couleur": {
+            "fichier": "003-couleur-grand.webp",
+            "largeur": 2560,
+            "hauteur": 1907
+          }
         }
       },
       "lieux": [
@@ -642,6 +660,20 @@
           "hauteur": 554,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "004-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1399,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.53,
+          "genere_le": "2026-10-14",
+          "couleur": {
+            "fichier": "004-couleur-grand.webp",
+            "largeur": 2520,
+            "hauteur": 1399
+          }
         }
       },
       "audio": {
@@ -852,7 +884,13 @@
             ],
             "quand": "chaque parcelle est cultivée"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "007-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1298,
+          "source": "original"
+        }
       },
       "chiffres": [
         {
@@ -1073,7 +1111,16 @@
               0.66
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "009-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1776,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.9,
+          "genere_le": "2026-10-14"
+        }
       },
       "lieux": [
         {
@@ -1136,7 +1183,16 @@
                   0.5
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "009-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1779,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 1.34,
+              "genere_le": "2026-10-14"
+            }
           },
           "instant": 7.45
         }
@@ -1200,7 +1256,13 @@
             ],
             "quand": "des modèles signés"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "010-grand.webp",
+          "largeur": 1798,
+          "hauteur": 2559,
+          "source": "original"
+        }
       },
       "mosaique": {
         "legende": "La crinoline, de la gravure de mode à la caricature",
@@ -1394,7 +1456,13 @@
               0.86
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "011-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1090,
+          "source": "original"
+        }
       },
       "camera_manuelle": true,
       "lieux": [
@@ -2005,7 +2073,8 @@
               "largeur": 1792,
               "hauteur": 768,
               "modele": "Tongyi-MAI/Z-Image-Turbo",
-              "genere_le": "2026-10-14"
+              "genere_le": "2026-10-14",
+              "encre": "claire"
             }
           },
           "instant": 5.97
@@ -2140,6 +2209,20 @@
               "hauteur": 780,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "016-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1444,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 1.82,
+              "genere_le": "2026-10-14",
+              "couleur": {
+                "fichier": "016-b-couleur-grand.webp",
+                "largeur": 2542,
+                "hauteur": 1422
+              }
             }
           },
           "instant": 12.07
@@ -2210,7 +2293,13 @@
           0.47,
           0.66,
           0.646
-        ]
+        ],
+        "grand": {
+          "fichier": "017-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1822,
+          "source": "original"
+        }
       },
       "citations": [
         {
@@ -2310,6 +2399,12 @@
           "duree": 16.79,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "018-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1501,
+          "source": "original"
         }
       },
       "lieux": [
@@ -2379,6 +2474,20 @@
               "hauteur": 780,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "018-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1560,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 2.0,
+              "genere_le": "2026-10-14",
+              "couleur": {
+                "fichier": "018-b-couleur-grand.webp",
+                "largeur": 2560,
+                "hauteur": 1560
+              }
             }
           },
           "instant": 7.55
@@ -2451,6 +2560,15 @@
           "fichier": "019-ambiance.m4a",
           "duree": 16.84,
           "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "019-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1771,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.3,
           "genere_le": "2026-10-14"
         }
       },
@@ -2569,6 +2687,17 @@
           "hauteur": 931,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "020-grand.webp",
+          "largeur": 2560,
+          "hauteur": 2064,
+          "source": "original",
+          "couleur": {
+            "fichier": "020-couleur-grand.webp",
+            "largeur": 1901,
+            "hauteur": 1489
+          }
         }
       },
       "chiffres": [
@@ -2623,6 +2752,20 @@
               "hauteur": 569,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "020-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1634,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 2.73,
+              "genere_le": "2026-10-14",
+              "couleur": {
+                "fichier": "020-b-couleur-grand.webp",
+                "largeur": 2467,
+                "hauteur": 1554
+              }
             }
           },
           "instant": 8.68
@@ -2678,7 +2821,13 @@
               0.632
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "021-grand.webp",
+          "largeur": 2107,
+          "hauteur": 2218,
+          "source": "original"
+        }
       },
       "mosaique": {
         "legende": "Roger Fenton en Crimée, 1855",
@@ -2914,6 +3063,17 @@
           "hauteur": 750,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "023-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1200,
+          "source": "original",
+          "couleur": {
+            "fichier": "023-couleur-grand.webp",
+            "largeur": 2560,
+            "hauteur": 1200
+          }
         }
       },
       "lieux": [
@@ -3068,7 +3228,8 @@
           "largeur": 1792,
           "hauteur": 768,
           "modele": "Tongyi-MAI/Z-Image-Turbo",
-          "genere_le": "2026-10-14"
+          "genere_le": "2026-10-14",
+          "encre": "claire"
         }
       },
       "personnes_vues": [
@@ -3568,6 +3729,17 @@
               "hauteur": 847,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "028-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1748,
+              "source": "original",
+              "couleur": {
+                "fichier": "028-b-couleur-grand.webp",
+                "largeur": 2438,
+                "hauteur": 1673
+              }
             }
           },
           "instant": 9.68
@@ -3720,6 +3892,20 @@
               "hauteur": 693,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "029-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1794,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 2.49,
+              "genere_le": "2026-10-14",
+              "couleur": {
+                "fichier": "029-b-couleur-grand.webp",
+                "largeur": 2560,
+                "hauteur": 1723
+              }
             }
           },
           "instant": 8.67
@@ -3815,6 +4001,17 @@
           "hauteur": 768,
           "modele": "Tongyi-MAI/Z-Image-Turbo",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "030-grand.webp",
+          "largeur": 1896,
+          "hauteur": 2560,
+          "source": "original",
+          "couleur": {
+            "fichier": "030-couleur-grand.webp",
+            "largeur": 1896,
+            "hauteur": 2560
+          }
         }
       },
       "audio": {
@@ -3899,7 +4096,8 @@
           "largeur": 1536,
           "hauteur": 960,
           "modele": "Tongyi-MAI/Z-Image-Turbo",
-          "genere_le": "2026-10-14"
+          "genere_le": "2026-10-14",
+          "encre": "claire"
         }
       },
       "personnes_vues": [
@@ -3944,7 +4142,13 @@
                   0.71
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "031-b-grand.webp",
+              "largeur": 2175,
+              "hauteur": 1563,
+              "source": "original"
+            }
           },
           "instant": 14.42
         }
@@ -4022,6 +4226,17 @@
           "hauteur": 1161,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "032-grand.webp",
+          "largeur": 2500,
+          "hauteur": 1859,
+          "source": "original",
+          "couleur": {
+            "fichier": "032-couleur-grand.webp",
+            "largeur": 2429,
+            "hauteur": 1814
+          }
         }
       },
       "lieux": [
@@ -4088,6 +4303,17 @@
               "hauteur": 810,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "032-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1402,
+              "source": "original",
+              "couleur": {
+                "fichier": "032-b-couleur-grand.webp",
+                "largeur": 2461,
+                "hauteur": 1296
+              }
             }
           },
           "instant": 9.39
@@ -4153,7 +4379,13 @@
             ],
             "quand": "rachètent à temps les maisons condamnées"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "033-grand.webp",
+          "largeur": 2214,
+          "hauteur": 1892,
+          "source": "original"
+        }
       },
       "plans": [
         {
@@ -4272,6 +4504,17 @@
           "hauteur": 650,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "034-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1235,
+          "source": "original",
+          "couleur": {
+            "fichier": "034-couleur-grand.webp",
+            "largeur": 2132,
+            "hauteur": 1040
+          }
         }
       },
       "plans": [
@@ -4545,6 +4788,17 @@
           "hauteur": 627,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "036-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1053,
+          "source": "original",
+          "couleur": {
+            "fichier": "036-couleur-grand.webp",
+            "largeur": 2490,
+            "hauteur": 1003
+          }
         }
       },
       "audio": {
@@ -4623,6 +4877,12 @@
           "duree": 17.95,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "037-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1746,
+          "source": "original"
         }
       },
       "personnes": [
@@ -4671,7 +4931,13 @@
                 ],
                 "quand": "avec lac, grotte et cascade"
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "037-b-grand.webp",
+              "largeur": 2190,
+              "hauteur": 1560,
+              "source": "original"
+            }
           },
           "instant": 11.22
         }
@@ -4743,6 +5009,17 @@
           "hauteur": 1075,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "038-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1781,
+          "source": "original",
+          "couleur": {
+            "fichier": "038-couleur-grand.webp",
+            "largeur": 2476,
+            "hauteur": 1720
+          }
         }
       },
       "lieux": [
@@ -4917,7 +5194,13 @@
               0.58
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "039-grand.webp",
+          "largeur": 2156,
+          "hauteur": 1593,
+          "source": "original"
+        }
       },
       "camera_manuelle": true,
       "lieux": [
@@ -5088,7 +5371,13 @@
             ],
             "quand": "partageaient la même maison"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "041-grand.webp",
+          "largeur": 2267,
+          "hauteur": 1716,
+          "source": "original"
+        }
       },
       "plans": [
         {
@@ -5139,6 +5428,17 @@
               "hauteur": 762,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "041-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1602,
+              "source": "original",
+              "couleur": {
+                "fichier": "041-b-couleur-grand.webp",
+                "largeur": 2461,
+                "hauteur": 1219
+              }
             }
           },
           "instant": 8.92
@@ -5207,6 +5507,17 @@
           "hauteur": 1099,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "042-grand.webp",
+          "largeur": 2226,
+          "hauteur": 1569,
+          "source": "original",
+          "couleur": {
+            "fichier": "042-couleur-grand.webp",
+            "largeur": 2151,
+            "hauteur": 1529
+          }
         }
       },
       "personnes": [
@@ -5357,6 +5668,20 @@
               "hauteur": 1058,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "043-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1693,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 1.33,
+              "genere_le": "2026-10-14",
+              "couleur": {
+                "fichier": "043-b-couleur-grand.webp",
+                "largeur": 2560,
+                "hauteur": 1693
+              }
             }
           },
           "instant": 8.72
@@ -5771,6 +6096,15 @@
           "largeur": 1792,
           "hauteur": 768,
           "modele": "Tongyi-MAI/Z-Image-Turbo",
+          "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "047-grand.webp",
+          "largeur": 1947,
+          "hauteur": 2560,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.6,
           "genere_le": "2026-10-14"
         }
       },
@@ -6334,6 +6668,12 @@
           "duree": 16.51,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "051-grand.webp",
+          "largeur": 2560,
+          "hauteur": 2083,
+          "source": "original"
         }
       },
       "lieux": [
@@ -6586,7 +6926,13 @@
             ],
             "quand": "Lalla Fatma N'Soumer"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "053-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1270,
+          "source": "original"
+        }
       },
       "lieux": [
         {
@@ -6750,6 +7096,17 @@
               "hauteur": 952,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "054-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1587,
+              "source": "original",
+              "couleur": {
+                "fichier": "054-b-couleur-grand.webp",
+                "largeur": 2491,
+                "hauteur": 1524
+              }
             }
           },
           "instant": 5.98
@@ -6897,6 +7254,20 @@
               "hauteur": 1056,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "055-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1742,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 1.54,
+              "genere_le": "2026-10-14",
+              "couleur": {
+                "fichier": "055-b-couleur-grand.webp",
+                "largeur": 2560,
+                "hauteur": 1690
+              }
             }
           },
           "instant": 12.45
@@ -6977,6 +7348,17 @@
           "hauteur": 1047,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "056-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1848,
+          "source": "original",
+          "couleur": {
+            "fichier": "056-couleur-grand.webp",
+            "largeur": 2439,
+            "hauteur": 1676
+          }
         }
       },
       "lieux": [
@@ -7079,7 +7461,8 @@
           "largeur": 1792,
           "hauteur": 768,
           "modele": "Tongyi-MAI/Z-Image-Turbo",
-          "genere_le": "2026-10-14"
+          "genere_le": "2026-10-14",
+          "encre": "claire"
         }
       },
       "lieux": [
@@ -7389,7 +7772,13 @@
               0.8
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "060-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1922,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "060.m4a",
@@ -7590,6 +7979,17 @@
           "hauteur": 1106,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "062-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1902,
+          "source": "original",
+          "couleur": {
+            "fichier": "062-couleur-grand.webp",
+            "largeur": 2514,
+            "hauteur": 1770
+          }
         }
       },
       "plans": [
@@ -7678,7 +8078,16 @@
               0.616
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "063-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1718,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.09,
+          "genere_le": "2026-10-14"
+        }
       },
       "lieux": [
         {
@@ -7745,6 +8154,17 @@
               "hauteur": 901,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "063-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1574,
+              "source": "original",
+              "couleur": {
+                "fichier": "063-b-couleur-grand.webp",
+                "largeur": 2464,
+                "hauteur": 1441
+              }
             }
           },
           "instant": 8.77
@@ -7830,6 +8250,15 @@
           "fichier": "064-ambiance.m4a",
           "duree": 15.31,
           "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "064-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1666,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.31,
           "genere_le": "2026-10-14"
         }
       },
@@ -7982,7 +8411,13 @@
                   0.85
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "065-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1288,
+              "source": "original"
+            }
           },
           "instant": 9.76
         }
@@ -8044,6 +8479,17 @@
           "hauteur": 1199,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "066-grand.webp",
+          "largeur": 2349,
+          "hauteur": 1788,
+          "source": "original",
+          "couleur": {
+            "fichier": "066-couleur-grand.webp",
+            "largeur": 2349,
+            "hauteur": 1760
+          }
         }
       },
       "lieux": [
@@ -8170,6 +8616,17 @@
           "hauteur": 1106,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "067-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1942,
+          "source": "original",
+          "couleur": {
+            "fichier": "067-couleur-grand.webp",
+            "largeur": 2501,
+            "hauteur": 1769
+          }
         }
       },
       "lieux": [
@@ -8820,6 +9277,20 @@
           "hauteur": 969,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "072-grand.webp",
+          "largeur": 1996,
+          "hauteur": 1421,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.37,
+          "genere_le": "2026-10-14",
+          "couleur": {
+            "fichier": "072-couleur-grand.webp",
+            "largeur": 1996,
+            "hauteur": 1330
+          }
         }
       },
       "personnes": [
@@ -9025,7 +9496,13 @@
               0.55
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "073-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1397,
+          "source": "original"
+        }
       },
       "lieux": [
         {
@@ -9161,7 +9638,16 @@
             ],
             "quand": "doit céder trois provinces"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "074-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1469,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.28,
+          "genere_le": "2026-10-14"
+        }
       },
       "plans": [
         {
@@ -9193,7 +9679,13 @@
                   0.527
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "074-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 2000,
+              "source": "original"
+            }
           },
           "instant": 13.16
         }
@@ -9249,7 +9741,13 @@
               0.6
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "075-grand.webp",
+          "largeur": 2240,
+          "hauteur": 1642,
+          "source": "original"
+        }
       },
       "personnes": [
         {
@@ -9387,7 +9885,16 @@
               0.8
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "077-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1914,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.88,
+          "genere_le": "2026-10-14"
+        }
       },
       "personnes": [
         {
@@ -9648,7 +10155,13 @@
             ],
             "quand": "un mélange d'air et de gaz d'éclairage"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "079-grand.webp",
+          "largeur": 2142,
+          "hauteur": 1378,
+          "source": "original"
+        }
       },
       "personnes": [
         {
@@ -9727,6 +10240,17 @@
           "hauteur": 1111,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "080-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1819,
+          "source": "original",
+          "couleur": {
+            "fichier": "080-couleur-grand.webp",
+            "largeur": 2508,
+            "hauteur": 1777
+          }
         }
       },
       "chiffres": [
@@ -9775,6 +10299,17 @@
               "hauteur": 922,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "080-b-grand.webp",
+              "largeur": 2482,
+              "hauteur": 2007,
+              "source": "original",
+              "couleur": {
+                "fichier": "080-b-couleur-grand.webp",
+                "largeur": 2130,
+                "hauteur": 1430
+              }
             }
           },
           "instant": 8.4
@@ -9860,6 +10395,12 @@
           "duree": 17.13,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "081-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1723,
+          "source": "original"
         }
       },
       "audio": {
@@ -10155,6 +10696,12 @@
               ],
               "duree": 5,
               "intention": "On glisse de droite à gauche depuis le réverbère jusqu'à la colonnade de la Bourse."
+            },
+            "grand": {
+              "fichier": "083-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1618,
+              "source": "original"
             }
           },
           "instant": 7.56
@@ -10236,6 +10783,12 @@
           "duree": 19.63,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "084-grand.webp",
+          "largeur": 2560,
+          "hauteur": 867,
+          "source": "original"
         }
       },
       "lieux": [
@@ -10408,6 +10961,17 @@
           "hauteur": 1029,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "085-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1715,
+          "source": "original",
+          "couleur": {
+            "fichier": "085-couleur-grand.webp",
+            "largeur": 2440,
+            "hauteur": 1646
+          }
         }
       },
       "personnes": [
@@ -10456,7 +11020,16 @@
                   0.59
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "085-b-grand.webp",
+              "largeur": 2278,
+              "hauteur": 1469,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 1.83,
+              "genere_le": "2026-10-14"
+            }
           },
           "instant": 12.0
         }
@@ -10976,7 +11549,13 @@
           0.5,
           1.0,
           0.649
-        ]
+        ],
+        "grand": {
+          "fichier": "091-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1864,
+          "source": "original"
+        }
       },
       "lieux": [
         {
@@ -11147,7 +11726,13 @@
             ],
             "quand": "qu'au loin s'entasse la moisson"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "093-grand.webp",
+          "largeur": 2395,
+          "hauteur": 1792,
+          "source": "original"
+        }
       },
       "lieux": [
         {
@@ -11266,7 +11851,13 @@
               0.62
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "094-grand.webp",
+          "largeur": 2150,
+          "hauteur": 1654,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "094.m4a",
@@ -11319,7 +11910,13 @@
               0.78
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "095-grand.webp",
+          "largeur": 2547,
+          "hauteur": 1668,
+          "source": "original"
+        }
       },
       "plans": [
         {
@@ -11351,7 +11948,13 @@
                   0.86
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "095-b-grand.webp",
+              "largeur": 2541,
+              "hauteur": 2042,
+              "source": "original"
+            }
           },
           "instant": 7.05
         }
@@ -11416,7 +12019,13 @@
             ],
             "quand": "chimiste qui n'a jamais vu"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "096-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1936,
+          "source": "original"
+        }
       },
       "lieux": [
         {
@@ -11851,7 +12460,13 @@
                   0.72
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "099-b-grand.webp",
+              "largeur": 2194,
+              "hauteur": 1426,
+              "source": "original"
+            }
           },
           "instant": 9.12
         }
@@ -12025,6 +12640,12 @@
           "flou": "faible",
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "101-grand.webp",
+          "largeur": 1622,
+          "hauteur": 2559,
+          "source": "original"
         }
       },
       "plans": [
@@ -12066,7 +12687,13 @@
                 ],
                 "quand": "Dans les ateliers, on se cotise"
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "101-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1755,
+              "source": "original"
+            }
           },
           "instant": 6.63
         }
@@ -12130,7 +12757,13 @@
             ],
             "quand": "un revenant de soixante-six ans"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "102-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1584,
+          "source": "original"
+        }
       },
       "chiffres": [
         {
@@ -12530,7 +13163,13 @@
               0.42
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "106-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1941,
+          "source": "original"
+        }
       },
       "lieux": [
         {
@@ -12725,7 +13364,8 @@
           "largeur": 1792,
           "hauteur": 768,
           "modele": "Tongyi-MAI/Z-Image-Turbo",
-          "genere_le": "2026-10-14"
+          "genere_le": "2026-10-14",
+          "encre": "claire"
         }
       },
       "personnes_vues": [
@@ -12793,7 +13433,13 @@
               0.75
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "109-grand.webp",
+          "largeur": 2150,
+          "hauteur": 1674,
+          "source": "original"
+        }
       },
       "personnes": [
         {
@@ -12977,7 +13623,13 @@
             ],
             "quand": "une femme nue, assise entre"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "111-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1989,
+          "source": "original"
+        }
       },
       "lieux": [
         {
@@ -13084,7 +13736,13 @@
               0.904
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "112-grand.webp",
+          "largeur": 2138,
+          "hauteur": 1215,
+          "source": "original"
+        }
       },
       "camera_manuelle": true,
       "personnes": [
@@ -13179,6 +13837,17 @@
           "hauteur": 1184,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "113-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1933,
+          "source": "original",
+          "couleur": {
+            "fichier": "113-couleur-grand.webp",
+            "largeur": 2508,
+            "hauteur": 1895
+          }
         }
       },
       "lieux": [
@@ -13305,6 +13974,17 @@
           "hauteur": 1103,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "114-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1883,
+          "source": "original",
+          "couleur": {
+            "fichier": "114-couleur-grand.webp",
+            "largeur": 2560,
+            "hauteur": 1765
+          }
         }
       },
       "audio": {
@@ -13386,6 +14066,12 @@
           "duree": 17.63,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "115-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1333,
+          "source": "original"
         }
       },
       "personnes": [
@@ -13432,6 +14118,17 @@
               "hauteur": 711,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "115-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1234,
+              "source": "original",
+              "couleur": {
+                "fichier": "115-b-couleur-grand.webp",
+                "largeur": 2490,
+                "hauteur": 1137
+              }
             }
           },
           "instant": 11.54
@@ -13872,6 +14569,12 @@
           "duree": 19.71,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "119-grand.webp",
+          "largeur": 2560,
+          "hauteur": 872,
+          "source": "original"
         }
       },
       "personnes": [
@@ -14010,6 +14713,17 @@
           "hauteur": 899,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "120-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1504,
+          "source": "original",
+          "couleur": {
+            "fichier": "120-couleur-grand.webp",
+            "largeur": 2214,
+            "hauteur": 1438
+          }
         }
       },
       "plans": [
@@ -14042,7 +14756,13 @@
                   0.7
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "120-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1802,
+              "source": "original"
+            }
           },
           "instant": 11.06
         }
@@ -14097,7 +14817,13 @@
               0.79
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "121-grand.webp",
+          "largeur": 2048,
+          "hauteur": 1254,
+          "source": "original"
+        }
       },
       "chiffres": [
         {
@@ -14147,7 +14873,13 @@
                 ],
                 "quand": "La Légion célèbre encore chaque année"
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "121-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1826,
+              "source": "original"
+            }
           },
           "instant": 6.71
         }
@@ -14361,6 +15093,12 @@
           "duree": 16.95,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "123-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1264,
+          "source": "original"
         }
       },
       "lieux": [
@@ -14569,6 +15307,20 @@
           "hauteur": 768,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "125-grand.webp",
+          "largeur": 2457,
+          "hauteur": 1843,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.4,
+          "genere_le": "2026-10-14",
+          "couleur": {
+            "fichier": "125-couleur-grand.webp",
+            "largeur": 2457,
+            "hauteur": 1843
+          }
         }
       },
       "lieux": [
@@ -14658,6 +15410,12 @@
           "duree": 16.24,
           "modele": "EzAudio s3_xl",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "126-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1603,
+          "source": "original"
         }
       },
       "lieux": [
@@ -14795,7 +15553,16 @@
             ],
             "quand": "un énorme canon d'acier"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "127-grand.webp",
+          "largeur": 2447,
+          "hauteur": 1758,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.69,
+          "genere_le": "2026-10-14"
+        }
       },
       "audio": {
         "fichier": "127.m4a",
@@ -15023,6 +15790,15 @@
               "flou": "faible",
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "129-b-grand.webp",
+              "largeur": 597,
+              "hauteur": 1030,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 1.52,
+              "genere_le": "2026-10-14"
             }
           },
           "instant": 13.2
@@ -15215,7 +15991,16 @@
                 ],
                 "quand": "Manet peint la scène"
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "131-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1392,
+              "source": "ia",
+              "modele": "Real-ESRGAN x4plus",
+              "facteur": 1.8,
+              "genere_le": "2026-10-14"
+            }
           },
           "instant": 6.12
         }
@@ -15474,6 +16259,17 @@
           "hauteur": 1005,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "134-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1669,
+          "source": "original",
+          "couleur": {
+            "fichier": "134-couleur-grand.webp",
+            "largeur": 2484,
+            "hauteur": 1608
+          }
         }
       },
       "audio": {
@@ -15540,6 +16336,17 @@
           "hauteur": 1051,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "135-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1808,
+          "source": "original",
+          "couleur": {
+            "fichier": "135-couleur-grand.webp",
+            "largeur": 2461,
+            "hauteur": 1681
+          }
         }
       },
       "plans": [
@@ -15594,6 +16401,17 @@
               "hauteur": 955,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "135-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1803,
+              "source": "original",
+              "couleur": {
+                "fichier": "135-b-couleur-grand.webp",
+                "largeur": 2466,
+                "hauteur": 1698
+              }
             }
           },
           "instant": 8.58
@@ -16029,7 +16847,13 @@
                   0.67
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "138-b-grand.webp",
+              "largeur": 2501,
+              "hauteur": 1771,
+              "source": "original"
+            }
           },
           "instant": 9.18
         }
@@ -16148,7 +16972,13 @@
                   0.6
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "139-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1923,
+              "source": "original"
+            }
           },
           "instant": 11.18
         }
@@ -16236,6 +17066,20 @@
           "hauteur": 796,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "140-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1755,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 2.2,
+          "genere_le": "2026-10-14",
+          "couleur": {
+            "fichier": "140-couleur-grand.webp",
+            "largeur": 2560,
+            "hauteur": 1755
+          }
         }
       },
       "lieux": [
@@ -16334,6 +17178,17 @@
           "hauteur": 537,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "141-grand.webp",
+          "largeur": 2560,
+          "hauteur": 872,
+          "source": "original",
+          "couleur": {
+            "fichier": "141-couleur-grand.webp",
+            "largeur": 2560,
+            "hauteur": 859
+          }
         }
       },
       "personnes": [
@@ -16470,6 +17325,17 @@
               "hauteur": 632,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "142-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1285,
+              "source": "original",
+              "couleur": {
+                "fichier": "142-b-couleur-grand.webp",
+                "largeur": 2043,
+                "hauteur": 1011
+              }
             }
           },
           "instant": 11.44
@@ -16559,6 +17425,15 @@
           "fichier": "143-ambiance.m4a",
           "duree": 15.91,
           "modele": "EzAudio s3_xl",
+          "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "143-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1635,
+          "source": "ia",
+          "modele": "Real-ESRGAN x4plus",
+          "facteur": 1.83,
           "genere_le": "2026-10-14"
         }
       },
@@ -16812,6 +17687,17 @@
               "hauteur": 885,
               "modele": "black-forest-labs/FLUX.2-klein-4B",
               "genere_le": "2026-10-14"
+            },
+            "grand": {
+              "fichier": "145-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1857,
+              "source": "original",
+              "couleur": {
+                "fichier": "145-b-couleur-grand.webp",
+                "largeur": 2510,
+                "hauteur": 1749
+              }
             }
           },
           "instant": 9.03
@@ -17348,6 +18234,17 @@
           "hauteur": 988,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "150-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1813,
+          "source": "original",
+          "couleur": {
+            "fichier": "150-couleur-grand.webp",
+            "largeur": 2375,
+            "hauteur": 1581
+          }
         }
       },
       "personnes": [
@@ -17434,7 +18331,13 @@
               0.75
             ]
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "151-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1773,
+          "source": "original"
+        }
       },
       "citations": [
         {
@@ -17483,7 +18386,13 @@
                   0.78
                 ]
               }
-            ]
+            ],
+            "grand": {
+              "fichier": "151-b-grand.webp",
+              "largeur": 2560,
+              "hauteur": 1971,
+              "source": "original"
+            }
           },
           "instant": 6.34
         }
@@ -17555,6 +18464,17 @@
           "hauteur": 1095,
           "modele": "black-forest-labs/FLUX.2-klein-4B",
           "genere_le": "2026-10-14"
+        },
+        "grand": {
+          "fichier": "152-grand.webp",
+          "largeur": 2560,
+          "hauteur": 1752,
+          "source": "original",
+          "couleur": {
+            "fichier": "152-couleur-grand.webp",
+            "largeur": 2560,
+            "hauteur": 1752
+          }
         }
       },
       "audio": {
@@ -17616,7 +18536,13 @@
             ],
             "quand": "l'Allemagne s'unit, et tout repose"
           }
-        ]
+        ],
+        "grand": {
+          "fichier": "153-grand.webp",
+          "largeur": 2560,
+          "hauteur": 2048,
+          "source": "original"
+        }
       },
       "audio": {
         "fichier": "153.m4a",

@@ -96,7 +96,8 @@ export interface ImageDiapo {
  *  dessin cachée par l'image à son rapprochement final, d'après laquelle il a été composé ; `quand` :
  *  passage exact de la narration (dans la fenêtre de l'image) où le trait commence (absent : peu après
  *  l'apparition de l'image) ; `modele` nommé pour les crédits. */
-export interface VignetteDiapo { fichier: string; traces: string; centre: [number, number]; quand?: string; largeur: number; hauteur: number; modele: string; genere_le?: string }
+/** `encre` : « claire » sur un fond prolongé sombre (vignettes.py, annotations du 2026-10-14) : trait clair, sans éclaircie. */
+export interface VignetteDiapo { fichier: string; traces: string; centre: [number, number]; quand?: string; largeur: number; hauteur: number; encre?: 'claire'; modele: string; genere_le?: string }
 /** Fond prolongé (spec 17) : fichier « 001-fond.webp », « 004-b-fond.webp » ; `boite` : place de
  *  l'image (sa zone utile) dans le fond, en fractions du fond [x0, y0, x1, y1] ; `flou` : « faible »
  *  (≈ 0,5 % de la largeur de la scène) ou « fort » (≈ 2,5 % : le fond net montre une invention à
@@ -109,7 +110,9 @@ export interface AmbianceDiapo { fichier: string; duree: number; modele: string;
 /** Variante « grand écran » (spec 17) : fichier « 083-grand.webp », « 034-b-grand.webp » ; `source` :
  *  « original » (fichier plus grand tiré de Commons, sans IA) ou « ia » (agrandie par `modele`,
  *  `facteur` fois l'original, le `genere_le`). */
-export interface GrandDiapo { fichier: string; largeur: number; hauteur: number; source: 'original' | 'ia'; modele?: string; facteur?: number; genere_le?: string }
+export interface GrandDiapo { fichier: string; largeur: number; hauteur: number; source: 'original' | 'ia'; modele?: string; facteur?: number; genere_le?: string;
+  /** Version colorisée (spec 16) à la même finesse (« 086-couleur-grand.webp »), mêmes proportions que `couleur`. */
+  couleur?: { fichier: string; largeur: number; hauteur: number } }
 /** Version colorisée (spec 16) : fichier dans public/diaporamas/<slug>/ (« 086-couleur.webp »,
  *  « 034-b-couleur.webp »), `largeur` × `hauteur` = zone utile de l'image en pixels, `modele` nommé
  *  pour les crédits, `genere_le` : date du calcul. */
@@ -763,6 +766,32 @@ export function libelleDate(date: string, fin?: string) {
   return `${libelleSimple(date, a1 !== a2)}\u00a0– ${droite}`;
 }
 
+/** Dates d'un acte en ISO partiel [début, fin] : « 1852-1856 » → ['1852', '1856'],
+ *  « juillet-octobre 1789 » → ['1789-07', '1789-10'], « 22-24 février 1848 » → ['1848-02-22',
+ *  '1848-02-24'] ; la partie gauche reprend le mois et l'année de la droite. `null` si illisible. */
+export function isoActe(dates: string): [string, string] | null {
+  const lire = (s: string) => {
+    const m = /^(?:(\d{1,2})(?:er)?\s+)?(?:([a-zéû]+)\s*)?(\d{4})?$/i.exec(s.trim());
+    if (!m || (!m[1] && !m[2] && !m[3]) || (m[1] && !m[2] && m[3])) {
+      // Jour seul (« 22 », à gauche de « 22-24 février 1848 ») : rien d'autre.
+      return /^\d{1,2}$/.test(s.trim()) ? { j: Number(s), m: 0, a: 0 } : null;
+    }
+    const mois = m[2] ? MOIS.indexOf(m[2].toLowerCase()) + 1 : 0;
+    if (m[2] && !mois) return null;
+    return { j: m[1] ? Number(m[1]) : 0, m: mois, a: m[3] ? Number(m[3]) : 0 };
+  };
+  const cotes = dates.split(/\s*[-–]\s*/);
+  if (cotes.length > 2) return null;
+  const d = cotes.map(lire);
+  if (d.some((x) => !x)) return null;
+  const fin = d.at(-1)!, debut = { ...d[0]! };
+  if (!fin.a) return null;
+  if (!debut.a) { debut.a = fin.a; if (!debut.m && debut.j) debut.m = fin.m; }
+  const iso = (x: { j: number; m: number; a: number }) =>
+    [String(x.a), x.m && String(x.m).padStart(2, '0'), x.m && x.j && String(x.j).padStart(2, '0')].filter(Boolean).join('-');
+  return [iso(debut), iso(fin)];
+}
+
 /** Années (première et dernière) des dates d'un acte : « juillet-octobre 1789 » → [1789, 1789]. */
 const anneesActe = (dates: string) => (dates.match(/\b1[789]\d\d\b/g) ?? []).map(Number);
 
@@ -800,6 +829,15 @@ export function friseDe(d: Diaporama) {
     dater,
     annees: Array.from({ length: a1 - a0 + 1 }, (_, k) => ({ a: a0 + k, x0: frac(jour(a0 + k, 1, 1)), x1: frac(jour(a0 + k + 1, 1, 1)) })),
     actes: debutsActes.map((x0, k) => ({ x0, x1: k + 1 < debutsActes.length ? debutsActes[k + 1] : 100 })),
+    /** Période annoncée de chaque acte (ses dates, sous le titre du carton), `null` si illisible.
+     *  Annotations du 2026-10-14 : la période en couleur du carton suit ces dates, et non plus
+     *  l'étendue des dates de ses diapositives (qui débordent : rappels, conséquences). */
+    periodes: d.actes.map((a) => {
+      const iso = isoActe(a.dates);
+      if (!iso) return null;
+      const { x0, x1 } = dater(iso[0], iso[1]);
+      return { x0, x1 };
+    }),
     diapos,
   };
 }

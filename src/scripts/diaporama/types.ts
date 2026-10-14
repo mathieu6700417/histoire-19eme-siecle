@@ -64,14 +64,15 @@ export interface Diapo {
  *  fondu croisé, étapes de la caméra (fractions de la zone utile, instants de la même horloge). */
 /** Version colorisée d'une image : `u` = rectangle qu'elle recouvre (fractions de l'image servie :
  *  la zone utile arrondie au pixel, comme à la fabrication). */
-export interface Couleur { src: string; u: Rect }
+export interface Couleur { src: string; u: Rect; g?: string }   // g : version grand écran (spec 17), choisie par etat.ts
 /** Fond prolongé d'une image entière (spec 17, fond.ts) : `b` = boîte de l'image dans le fichier de
  *  fond (fractions du fond) ; `fort` : flou fort (le fond net montre une invention à cacher). */
 export interface Fond { src: string; b: Rect; fort: boolean }
 /** Dessin traversant (spec 17, essai 5, révision du 2026-10-14 ; vignette.ts) : encre (`src`, `l` × `h`
  *  px, au format de l'écran), tracés (`tr`, JSON compact), instant `t` (s de la voix) du passage qui le
  *  déclenche (null : départ par défaut). */
-export interface Vignette { src: string; tr: string; t: number | null; l: number; h: number }
+/** `cl` : encre claire, sans éclaircie (fond prolongé sombre). */
+export interface Vignette { src: string; tr: string; t: number | null; l: number; h: number; cl?: boolean }
 export interface Entier { v: Rect | null; z: number }
 export interface Entree { c: Rect[]; d: number }
 export interface Plan { img: string; g?: string; u: Rect; l: number; h: number; alt: string; legende: string; t: number; camera: { c: Rect; t: number }[]; en?: Entier | null; ent?: Entree | null; coul?: Couleur | null; fond?: Fond | null; vig?: Vignette | null }
@@ -94,7 +95,8 @@ export interface DateFrise { j0: number; j1: number; x0: number; x1: number; lib
 export interface Donnees {
   slug: string; pause: number; carton: number; volet: number;
   mosaique: { apparition: number; pas: number; fondu: number; tenue: number };
-  actes: { titre: string; dates: string; debut: number }[]; diapos: Diapo[];
+  /** `periode` : dates annoncées de l'acte sur la frise (%), `null` si illisibles. */
+  actes: { titre: string; dates: string; debut: number; periode: { x0: number; x1: number } | null }[]; diapos: Diapo[];
   /** Musique de fond : les pistes de chaque acte. */
   fond: Piste[][];
   /** Générique d'ouverture et récapitulatif de fin (generique.ts) ; null sans `generique`. */

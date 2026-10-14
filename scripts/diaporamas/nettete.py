@@ -19,12 +19,14 @@ proportions, `NNN-grand.webp` (plan : `NNN-b-grand.webp`), que le lecteur ne cha
 `mesurer` ouvre la page construite (`npm run build`) dans le vrai Chrome sans fenêtre, en plein écran
 1920 × 1080, et relève par le crochet `__camera` le cadre le plus serré de l'image de chaque
 diapositive (ouverture d'acte comprise) et de chaque plan (spec 14), au pas de 0,1 s. Il en tire la
-largeur qu'il faudrait pour 1 pixel d'image par pixel d'écran (grand côté plafonné à COTE_MAX), la
-compare à l'original de Commons recadré comme l'image servie, et décide :
-  - `rien`      l'image servie suffit (ou l'original n'apporte pas GAIN_MIN de plus) ;
+largeur qu'il faudrait pour 1 pixel d'image par pixel d'écran (grand côté plafonné à COTE_MAX, 2 560 px),
+la compare à l'original de Commons recadré comme l'image servie, et décide :
+  - `rien`      l'image servie suffit (au plus SEUIL_BESOIN, 1,3 px d'écran par px d'image, au cadre le
+                plus serré), ou l'original n'apporte pas GAIN_MIN de plus ;
   - `original`  un fichier plus grand tiré de l'original suffit (au plus SEUIL_IA px d'écran par px) ;
   - `ia`        l'original laisse plus de SEUIL_IA : Real-ESRGAN x4plus (BSD-3) sur l'original, puis
                 réduction à la largeur utile.
+La Révolution, pilote commité, garde ses réglages d'alors (REGLAGES_PILOTE : 3 200 px, seuil 1).
 Mosaïques (vignettes), avant / après (image « après »), objets, médaillons, cartes, galeries, lectures
 et épisodes : hors champ. Résultat : .cache/diaporamas/<slug>/nettete/mesure.json.
 
@@ -34,7 +36,9 @@ et épisodes : hors champ. Résultat : .cache/diaporamas/<slug>/nettete/mesure.j
 scripts/colab/nettete.py, session arrêtée à la fin, même en cas d'erreur), puis accorde les couleurs
 des images agrandies à celles de l'original (`accorder` : le modèle les décale un peu). `publier` copie les variantes
 dans public/diaporamas/<slug>/ et écrit `image.grand` { fichier, largeur, hauteur, source (« original »
-ou « ia »), et pour l'IA : modele, facteur, genere_le } ; idempotent. `renumeroter.py` suit fichiers et
+ou « ia »), et pour l'IA : modele, facteur, genere_le } ; idempotent. Une image colorisée (`image.couleur`, spec 16) reçoit aussi sa version colorisée à la même finesse,
+`NNN-couleur-grand.webp` (`grand.couleur` { fichier, largeur, hauteur } : couleur + (variante − image
+servie), sans modèle ; voir `couleur_grande`). `renumeroter.py` suit fichiers et
 champs ; `verifier.py` contrôle la famille « netteté (spec 17) ». Signalement des images agrandies par
 IA : crédits de la page et livre d'images seulement, rien au cartouche.
 """
@@ -51,14 +55,25 @@ from generation import colab   # CLI colab, tuée et refaite si elle ne répond 
 
 Image.MAX_IMAGE_PIXELS = None
 ECRAN = 1920            # largeur de l'écran de référence (plein écran 1920 × 1080)
-COTE_MAX = 3200         # grand côté d'une variante, au plus
+COTE_MAX = 2560         # grand côté d'une variante, au plus (2 560 px depuis le 2026-10-14)
+SEUIL_BESOIN = 1.3      # pas de variante si l'image servie laisse au plus 1,3 px d'écran par px d'image
 SEUIL_IA = 1.25         # px d'écran par px d'image que l'original peut laisser sans qu'on passe à l'IA
+# Pilote de la Révolution (2026-10-12), validé et commité avec les réglages d'alors : 3 200 px, une
+# variante dès que l'image servie laisse plus de 1 px d'écran par px. Gardés pour elle seule, afin
+# qu'une nouvelle mesure ne la republie pas (spec 17, « Netteté : poids, et généralisation »).
+REGLAGES_PILOTE = {'revolution': dict(cote_max=3200, seuil_besoin=1.0)}
+
+
+def reglages(slug: str) -> dict:
+    """Plafond du grand côté et seuil de besoin de la période (les réglages du 2026-10-14, sauf pilote)."""
+    return REGLAGES_PILOTE.get(slug, dict(cote_max=COTE_MAX, seuil_besoin=SEUIL_BESOIN))
 GAIN_MIN = 1.15         # une variante doit être au moins 15 % plus large que l'image servie
 QUALITE = 74            # WebP, comme les images du site
 QUALITE_BRUT = 92       # sortie de Colab, avant l'accord des couleurs (réencodée ensuite à QUALITE)
 RAYON_ACCORD = 0.012    # flou de l'accord des couleurs, en fraction du grand côté
 MODELE = 'Real-ESRGAN x4plus'
 SUFFIXE = '-grand.webp'
+SUFFIXE_COULEUR = '-couleur-grand.webp'   # version colorisée d'une image à variante (spec 16 × 17)
 REMOTE = '/content/nettete'
 
 
@@ -70,6 +85,37 @@ def dossier(slug: str) -> Path:
 
 def nom_grand(image: dict) -> str:
     return Path(image['fichier']).with_suffix('').as_posix() + SUFFIXE
+
+
+def nom_couleur_grand(image: dict) -> str:
+    return Path(image['fichier']).with_suffix('').as_posix() + SUFFIXE_COULEUR
+
+
+def couleur_grande(slug: str, i: dict, grand: Path) -> dict | None:
+    """Version colorisée à la finesse de la variante, pour une image qui porte les deux (`image.couleur`,
+    spec 16, et `image.grand`). Le lecteur pose la couleur sur l'image après un fondu lent et l'y laisse :
+    à 1 600 px, elle masquerait la finesse de la variante pendant la plus grande part de la diapositive.
+    Aucun calcul de modèle : couleur + (variante − image servie), sur la zone que couvre la couleur.
+    Les couleurs restent exactement celles de la version relue, seul le détail vient de la variante (le
+    trait de l'original, ou celui de Real-ESRGAN). Mêmes proportions que la version colorisée : le
+    lecteur la pose dans la même boîte (`couleur.ts`). Rend le champ `grand.couleur`, ou None."""
+    import numpy as np
+    coul = i.get('couleur')
+    if not coul:
+        return None
+    L, H = i['largeur'], i['hauteur']
+    x0, y0, _, _ = co.zone_px(i)
+    x1, y1 = x0 + coul['largeur'], y0 + coul['hauteur']
+    G = Image.open(grand).convert('RGB')
+    k = G.width / L
+    boite = (round(x0 * k), round(y0 * k), min(G.width, round(x1 * k)), min(G.height, round(y1 * k)))
+    g = G.crop(boite)
+    S = Image.open(c.PUBLIC / slug / i['fichier']).convert('RGB').crop((x0, y0, x1, y1)).resize(g.size, Image.LANCZOS)
+    C = Image.open(c.PUBLIC / slug / coul['fichier']).convert('RGB').resize(g.size, Image.LANCZOS)
+    a = lambda im: np.asarray(im, dtype=np.int16)
+    sortie = c.PUBLIC / slug / nom_couleur_grand(i)
+    Image.fromarray(np.clip(a(C) + a(g) - a(S), 0, 255).astype(np.uint8)).save(sortie, 'WEBP', quality=QUALITE, method=6)
+    return dict(fichier=sortie.name, largeur=g.width, hauteur=g.height)
 
 
 def cibles(args: list[str]) -> set[str]:
@@ -127,17 +173,17 @@ def relever(slug: str, dist: Path) -> dict:
     return releve
 
 
-def decider(image: dict, vue_l: float, original: tuple[int, int]) -> dict:
+def decider(image: dict, vue_l: float, original: tuple[int, int], cote_max: int = COTE_MAX, seuil_besoin: float = SEUIL_BESOIN) -> dict:
     """Largeur utile et décision pour une image dont la vue la plus serrée fait `vue_l` de sa zone utile."""
     L, H = image['largeur'], image['hauteur']
     u = image.get('utile') or [0, 0, 1, 1]
     rc = image.get('recadrage') or [0, 0, 1, 1]
     besoin = ECRAN / (vue_l * (u[2] - u[0]))                 # largeur d'image pour 1 px d'écran par px d'image
-    cible = min(besoin, COTE_MAX * L / max(L, H))            # grand côté plafonné
+    cible = min(besoin, cote_max * L / max(L, H))            # grand côté plafonné
     lo = original[0] * (rc[2] - rc[0])                       # largeur de l'original, recadré comme l'image servie
     r = dict(servie=[L, H], original=list(original), original_recadre=round(lo), besoin=round(besoin),
              densite_servie=round(besoin / L, 2), densite_original=round(besoin / lo, 2))
-    if cible < L * GAIN_MIN:
+    if besoin <= L * seuil_besoin or cible < L * GAIN_MIN:
         return dict(r, decision='rien', motif='image servie suffisante')
     if lo * SEUIL_IA >= cible:
         largeur = round(min(cible, lo))
@@ -153,6 +199,7 @@ def mesurer(slug: str, dist: Path) -> None:
     f, d = c.lire(slug)
     releve = relever(slug, dist)
     imgs = co.images(d)
+    rg = reglages(slug)
     infos = c.infos_fichiers([e['image']['commons'] for e in imgs])
     mesure = {}
     for e in imgs:
@@ -161,12 +208,12 @@ def mesurer(slug: str, dist: Path) -> None:
         info = infos.get(i['commons'], {'manquant': True})
         if not v or info.get('manquant') or not i.get('largeur'):
             continue
-        m = decider(i, v['l'], (info['largeur'], info['hauteur']))
+        m = decider(i, v['l'], (info['largeur'], info['hauteur']), **rg)
         m.update(cle=e['cle'], commons=i['commons'], titre=i.get('titre_court') or i.get('titre'), auteur=i.get('auteur'), technique=i.get('technique'),
                  vue=v['vue'], instant=v['t'], utile=i.get('utile') or [0, 0, 1, 1], recadrage=i.get('recadrage'), url=info['url'],
                  plan=e['plan'] is not None)
         mesure[e['cle']] = m
-    (dossier(slug) / 'mesure.json').write_text(json.dumps(dict(slug=slug, ecran=ECRAN, cote_max=COTE_MAX, seuil_ia=SEUIL_IA, images=mesure), ensure_ascii=False, indent=1))
+    (dossier(slug) / 'mesure.json').write_text(json.dumps(dict(slug=slug, ecran=ECRAN, **rg, seuil_ia=SEUIL_IA, images=mesure), ensure_ascii=False, indent=1))
     nb = {k: sum(m['decision'] == k for m in mesure.values()) for k in ('rien', 'original', 'ia')}
     ds = sorted(m['densite_servie'] for m in mesure.values())
     print(f"{len(mesure)} image(s) mesurée(s) ({sum(m['plan'] for m in mesure.values())} plan(s)) ; px d'écran par px servi : médiane {ds[len(ds) // 2]}, maximum {ds[-1]}")
@@ -337,7 +384,7 @@ def publier(slug: str, seulement: set[str]) -> None:
     dest = dossier(slug)
     f, d = c.lire(slug)
     par_cle = {e['cle']: e for e in co.images(d)}
-    n = {'original': 0, 'ia': 0}
+    n = {'original': 0, 'ia': 0, 'couleur': 0}
     poids = 0
     for cle, m in mesure.items():
         if m['decision'] == 'rien' or (seulement and cle not in seulement):
@@ -368,11 +415,18 @@ def publier(slug: str, seulement: set[str]) -> None:
             champ.update(modele=MODELE, facteur=round(taille[0] / m['original_recadre'], 2),
                          genere_le=ancien.get('genere_le') if ancien.get('source') == 'ia' and ancien.get('largeur') == taille[0]
                          else datetime.date.fromtimestamp(src.stat().st_mtime).isoformat())
+        cg = couleur_grande(slug, i, cible)
+        if cg:
+            champ['couleur'] = cg
+            poids += (c.PUBLIC / slug / cg['fichier']).stat().st_size
+            n['couleur'] += 1
+        elif (c.PUBLIC / slug / nom_couleur_grand(i)).exists():
+            (c.PUBLIC / slug / nom_couleur_grand(i)).unlink()
         i['grand'] = champ
         n[m['decision']] += 1
         poids += cible.stat().st_size
     c.ecrire(f, d)
-    print(f"{n['original']} variante(s) tirée(s) de l'original, {n['ia']} agrandie(s) par {MODELE} : {poids / 1e6:.1f} Mo ; "
+    print(f"{n['original']} variante(s) tirée(s) de l'original, {n['ia']} agrandie(s) par {MODELE}, dont {n['couleur']} avec leur version colorisée : {poids / 1e6:.1f} Mo ; "
           f'puis : python3 scripts/diaporamas/verifier.py {slug} et npm run build')
 
 
@@ -385,9 +439,9 @@ def retirer(slug: str, seulement: set[str], tout: bool) -> None:
         g = e['image'].get('grand')
         if not g or (not tout and e['cle'] not in seulement):
             continue
-        fichier = c.PUBLIC / slug / g['fichier']
-        if fichier.exists():
-            fichier.unlink()
+        for nom in (g['fichier'], (g.get('couleur') or {}).get('fichier')):
+            if nom and (c.PUBLIC / slug / nom).exists():
+                (c.PUBLIC / slug / nom).unlink()
         del e['image']['grand']
         retires += 1
     c.ecrire(f, d)

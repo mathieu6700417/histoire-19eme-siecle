@@ -4,7 +4,7 @@ Décidé avec l'utilisateur le 2026-10-12, après la question « en quoi d'autre
 Colab Pro pour rendre les diaporamas plus sympas ? ». Trois pistes retenues pour un **essai**, dans
 le cadre de la spec 16 (modèles à poids ouverts, rien d'inventé, signalement), puis une quatrième
 (fonds prolongés). **État au 2026-10-14 : relief abandonné ; ambiances sonores et fonds prolongés
-devenus des règles ; netteté appliquée à la Révolution seulement, suspendue ailleurs.**
+devenus des règles ; netteté appliquée à la Révolution et au Second Empire, règle pour les périodes 07 et suivantes.**
 
 ## Règles communes
 
@@ -84,7 +84,8 @@ après visionnage et écoute :
 ### Netteté : règles d'intégration
 
 Plafond de taille et seuil de besoin **révisés le 2026-10-14** (« Netteté : poids, et généralisation »,
-plus bas), qui prévalent ; la netteté n'est appliquée qu'à la Révolution.
+plus bas), qui prévalent ; la netteté est appliquée à la Révolution (réglages du pilote) et au Second
+Empire, et c'est une **règle pour les périodes 07 et suivantes**.
 
 | Sujet | Décision |
 |---|---|
@@ -118,7 +119,12 @@ Décisions de l'utilisateur avant de généraliser :
 |---|---|
 | Plafond | Grand côté à **2 560 px** au lieu de 3 200 (l'utilisateur ne voit pas de différence ; −22 % mesuré sur échantillon). Qualité WebP 74 inchangée. |
 | Besoin | **Pas de variante pour toutes les images** : seulement quand l'image servie manque vraiment de finesse au cadre le plus serré, c'est-à-dire plus de **1,3 pixel d'écran par pixel d'image** en plein écran 1920 × 1080 (seuil choisi à la mise en œuvre, à réviser). Real-ESRGAN, comme avant, seulement si l'original de Commons laisse plus de 1,25. |
-| Champ | **Rien n'est appliqué pour l'instant** (décisions de l'utilisateur du 2026-10-14 : « n'étends pas la netteté des autres périodes pour l'instant », puis « qu'il ne touche à rien pour l'instant »). La Révolution reste telle que commitée (132 variantes, plafond 3 200 px) ; les deux réglages ci-dessus sont décidés mais **pas encore mis en œuvre** dans `nettete.py`. Ne rien relancer sans sa demande. |
+| Champ | **Révolution + Second Empire, et règle pour les périodes 07 et suivantes** (décision de l'utilisateur du 2026-10-14, après visionnage du Second Empire : « Pourquoi cette image n'a pas été upscalée ? », diapositive 84, Le Creusot). Les périodes 02 à 05 ne sont pas concernées. La Révolution reste telle que commitée (132 variantes, plafond 3 200 px, une variante dès 1 px d'écran par px) : `nettete.py` lui garde ses réglages de pilote (`REGLAGES_PILOTE`), une nouvelle mesure ne la republie pas. |
+| Mise en œuvre | Faite le 2026-10-14 dans `nettete.py` (`COTE_MAX` = 2 560, `SEUIL_BESOIN` = 1,3 ; `reglages(slug)`) ; `verifier.py` contrôle le plafond de la période. |
+| Images colorisées | Une image qui porte une variante et une version colorisée (`image.couleur`, spec 16) reçoit aussi **sa version colorisée à la même finesse** (`grand.couleur`, `NNN-couleur-grand.webp`) : sinon le calque couleur, posé après un fondu lent et gardé jusqu'à la fin, masquerait la variante pendant la plus grande part de la diapositive. Aucun modèle : couleur relue + (variante − image servie) ; les couleurs restent celles qui ont été relues, seul le détail vient de la variante. Le lecteur la prend sur grand écran, comme la variante (`etat.ts`). |
+| Clips | Une image à clip (`image.video`) reçoit sa variante comme les autres : elle sert avant l'entrée du clip (ouverture, plongée) ; **le clip garde sa résolution** (≈ 1 600 px de large, Wan 2.2) et n'est pas refait. |
+
+Second Empire (2026-10-14, journal `docs/journal/nettete-06-second-empire.jsonl`) : 237 images mesurées (84 plans), **106 variantes** : 83 tirées de l'original de Commons, 23 agrandies par Real-ESRGAN (≈ 9 min de session L4, ≈ 0,3 unité Colab, 0 $ Gemini) ; 131 images sans variante. 43 versions colorisées grand écran. **97,7 Mo ajoutés** (≈ 65 Mo de variantes, ≈ 32 Mo de couleur). Diapositive 84 (Le Creusot, image à clip) : variante de 2 560 × 867 px tirée de l'original (2 836 px), qui laisse encore ≈ 2,3 px d'écran par px au cadre le plus serré (plafond)  ; mais le clip (1 632 × 544 px) entre en fondu à 1,8 s et reste jusqu'à la fin : la variante ne sert que les premières secondes, et l'annotation (prise à 4,5 s, sur le clip) reste à faire : agrandir le clip lui-même est à décider. Planche : `.cache/diaporamas/essais-colab/nettete/relecture-second-empire.html`.
 
 ## Fonds prolongés des images entières (essai 4, règle depuis le 2026-10-12)
 
@@ -244,7 +250,7 @@ marge, le contenu, le rendu du trait et la durée :
 | Contenu | **Aucun personnage** (ni silhouette, ni foule, ni main) : lieux, objets, décors seuls ; ni texte, ni cadre, ni drapeau ou insigne précis. |
 | Style | **Esquisse simple** : peu de traits nets, sans hachures ni ombres, beaucoup de blanc. |
 | Tracé | Les deux bords se dessinent **ensemble**, une plume par bord, contours d'abord, vitesse constante, **8 s**. |
-| Rendu | Simple éclaircie du fond prolongé sous chaque bord, encre sombre (inchangé). |
+| Rendu | Simple éclaircie du fond prolongé sous chaque bord, encre sombre (inchangé). **Révision du 2026-10-14** (visionnage : « sur les images sombres ça serait mieux de dessiner en blanc, au lieu d'avoir un halo blanc ») : sur un fond prolongé sombre (luminance moyenne des marges sous 0,4), **trait blanc cassé, sans éclaircie** ; calculé à la publication (`encre: "claire"`). Second Empire : 6 dessins sur 29 (1, 15b, 24, 31, 57, 108). |
 | Modèle | Z-Image-Turbo (inchangé). |
 | Dose, signalement, relecture, téléphone, mouvement réduit | Inchangés ; relecture : personnage, cadre, faux texte, anachronisme, centre chargé. |
 
@@ -268,5 +274,9 @@ ou une surimpression de coin l'efface le temps de leur passage.
 
 - Ambiances sonores : extension à des diapositives sans clip, dose.
 - Fonds prolongés : fonds des images entières colorisées (période 05) ; atténuation de la jonction.
-- Netteté : mise en œuvre des deux réglages de poids et extension aux périodes 02 à 05, quand
-  l'utilisateur le demandera.
+- Netteté : seuil de besoin de 1,3 à réviser au visionnage ; périodes 02 à 05 hors champ tant que
+  l'utilisateur ne les demande pas.
+
+Décidé le 2026-10-14 après le compte rendu du Second Empire : les **versions colorisées à la même
+finesse sont gardées** (règle, avec la netteté) ; les **clips ne sont pas agrandis** (ils restent à
+leur résolution de génération, même posés sur une image agrandie).

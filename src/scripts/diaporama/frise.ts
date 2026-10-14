@@ -1,7 +1,7 @@
 // Frise du temps : curseur et date dans le carton d'acte et au bas de l'image (4 s à chaque
 // changement d'année), surimpressions poussées au-dessus. Lit `x.date`, `lec.derniere`.
 // Spec 12, « Frise du temps », « Frise simplifiée » ; README : « Frise du temps ».
-import { CARTON_ACTE_DUREE, CARTON_ACTE_MAX, CARTON_ACTE_MIN, CARTON_ONDE, CARTON_TRACE, CARTON_TRACE_DUREE, DUREE_FRISE, FONDU_FRISE } from './constantes';
+import { CARTON_ACTE_DUREE, CARTON_ACTE_MAX, CARTON_ACTE_MIN, CARTON_TRACE, CARTON_TRACE_DUREE, DUREE_FRISE, FONDU_FRISE } from './constantes';
 import { adoucir } from './geometrie';
 import { mouvementReduit } from './outils';
 import type { DateFrise } from './types';
@@ -37,9 +37,11 @@ export function installerFrise(lec: Lecteur) {
     el.textContent = dt.libelle;
     placerDate(f, dt);
   }
-  /** Intervalle de chaque acte sur la frise (%) : du début de la première date de ses
-   *  diapositives à la fin de la dernière (dates reprises comprises). */
-  const intervallesActes = D.actes.map((_, k) => {
+  /** Intervalle de chaque acte sur la frise (%) : ses dates annoncées (annotations du
+   *  2026-10-14) ; à défaut, du début de la première date de ses diapositives à la fin de la
+   *  dernière (dates reprises comprises). */
+  const intervallesActes = D.actes.map((a, k) => {
+    if (a.periode) return a.periode;
     const ds = D.diapos.filter((_, j) => acteDe[j] === k).map((x) => x.date).filter((x): x is DateFrise => Boolean(x));
     return ds.length ? { x0: Math.min(...ds.map((x) => x.x0)), x1: Math.max(...ds.map((x) => x.x1)) } : null;
   });
@@ -49,8 +51,9 @@ export function installerFrise(lec: Lecteur) {
   // tracé), puis le segment de l'acte avance de sa première à sa dernière date en s'épaississant
   // pendant que les années défilent sous le titre. Révision du 2026-10-12 (annotations de
   // visionnage) : plus de dates clés sous la frise ; la période de l'acte est en couleur
-  // (--c-accent) : segment, zone teintée qui s'étend avec lui, puis onde qui s'en écarte.
-  // Mouvement réduit : état final d'emblée, sans onde.
+  // (--c-accent) : segment et zone teintée qui s'étend avec lui. Révision du 2026-10-14 : plus
+  // d'onde ni de rouge ; segment en dégradé du gris au noir, zone en gris dégradé (CSS).
+  // Mouvement réduit : état final d'emblée.
   let carton: { k: number; debut: number; annees: [number, number] | null; passes: { el: HTMLElement; x0: number; x1: number }[] } | null = null;
   /** Carton d'acte : prépare la frise de l'acte `k` (actes passés, période de l'acte). */
   function poserActe(f: HTMLElement, k: number) {
@@ -71,7 +74,7 @@ export function installerFrise(lec: Lecteur) {
     // Le segment part quand les dates sont là (après le titre, écrit lettre par lettre).
     const debut = Math.min(CARTON_ACTE_MAX, Math.max(CARTON_ACTE_MIN, 1.6 + 0.12 * lettres));
     carton = { k, debut, annees: m ? [Number(m[1]), Number(m[2])] : null, passes };
-    for (const el of piste.querySelectorAll<HTMLElement>('.frise-t__acte, .frise-t__zone, .frise-t__onde')) el.hidden = !intervallesActes[k];
+    for (const el of piste.querySelectorAll<HTMLElement>('.frise-t__acte, .frise-t__zone')) el.hidden = !intervallesActes[k];
     majFriseCarton(0);
   }
   /** Frise du carton à l'instant `t` de son horloge. */
@@ -79,7 +82,7 @@ export function installerFrise(lec: Lecteur) {
     if (!friseCarton || !carton) return;
     if (mouvementReduit.matches) t = Infinity;
     const filet = friseCarton.querySelector<HTMLElement>('.frise-t__filet')!, acte = friseCarton.querySelector<HTMLElement>('.frise-t__acte')!;
-    const zone = friseCarton.querySelector<HTMLElement>('.frise-t__zone')!, onde = friseCarton.querySelector<HTMLElement>('.frise-t__onde')!;
+    const zone = friseCarton.querySelector<HTMLElement>('.frise-t__zone')!;
     const bornes = friseCarton.querySelectorAll<HTMLElement>('.frise-t__borne');
     // 1. Tracé : avancée régulière, départ et arrêt doux.
     const q = adoucir((t - CARTON_TRACE) / CARTON_TRACE_DUREE), X = q * 100;
@@ -96,17 +99,9 @@ export function installerFrise(lec: Lecteur) {
       acte.style.height = `${(2 + 3 * p).toFixed(2)}px`;
       acte.style.opacity = t >= carton.debut ? '1' : '0';
       // Zone teintée : elle s'étend avec le segment, un peu plus large que lui.
-      zone.style.left = onde.style.left = `${(iv.x0 + w / 2).toFixed(3)}%`;
-      zone.style.width = `calc(${w.toFixed(3)}% + ${(12 * p).toFixed(1)}px)`;
-      zone.style.opacity = (0.16 * p).toFixed(3);
-      // Onde : une fois le segment arrivé, un contour s'écarte de la zone et s'efface, en boucle.
-      const u = t - carton.debut - CARTON_ACTE_DUREE;
-      if (Number.isFinite(u) && u >= 0) {
-        const f = (u / CARTON_ONDE) % 1;
-        onde.style.width = `calc(${w.toFixed(3)}% + ${(12 + 26 * f).toFixed(1)}px)`;
-        onde.style.height = `calc(1.1rem + ${(14 * f).toFixed(1)}px)`;
-        onde.style.opacity = (0.55 * (1 - f) ** 1.5).toFixed(3);
-      } else onde.style.opacity = '0';
+      zone.style.left = `${(iv.x0 + w / 2).toFixed(3)}%`;
+      zone.style.width = `calc(${w.toFixed(3)}% + ${(40 * p).toFixed(1)}px)`;
+      zone.style.opacity = (0.3 * p).toFixed(3);
     }
     if (carton.annees) {
       const [a0, a1] = carton.annees, a = a0 + Math.round(p * (a1 - a0));

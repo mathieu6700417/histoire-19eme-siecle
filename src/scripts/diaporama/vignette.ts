@@ -8,7 +8,8 @@
 // VIGNETTE_DUREE s : le tracé découvre l'encre du dessin généré (`src`) à travers un masque où l'on
 // peint ses tracés ordonnés (`tr`, vignettes_trace.py) ; aucun trait n'est redessiné. Seuls les
 // tracés des marges réellement visibles (mesurées sur toute la fenêtre de l'image, rapprochement
-// compris) sont gardés et minutés. Une simple éclaircie du fond prolongé sous chaque bord.
+// compris) sont gardés et minutés. Une simple éclaircie du fond prolongé sous chaque bord ; sur un
+// fond sombre (`v.cl`, annotations du 2026-10-14), le trait est clair et sans éclaircie.
 // Le dessin est dans le calque, entre le fond prolongé et l'image (pour un plan : dans son fond noir,
 // après son fond prolongé) : il suit le fondu croisé, et un plan qui couvre l'image le couvre aussi.
 // Départ : au passage `quand` (`v.t`), jamais avant que l'image soit installée (VIGNETTE_ATTENTE,
@@ -19,7 +20,7 @@
 // (téléphone) : rien. Préférence « réduire les animations » : le dessin paraît entier, sans tracé.
 // Le cartouche le signale (« dessin généré par IA », classe `en-vignette`).
 // README : « Dessins traversants (spec 17, essai 5) ».
-import { FONDU_PLAN, FONDU_REDUIT, VIGNETTE_APRES_ENTREE, VIGNETTE_ATTENTE, VIGNETTE_ATTENTE_PLAN, VIGNETTE_DUREE, VIGNETTE_ECLAIRCIE, VIGNETTE_ECLAIRCIE_L, VIGNETTE_ENCRE,
+import { FONDU_PLAN, FONDU_REDUIT, VIGNETTE_APRES_ENTREE, VIGNETTE_ATTENTE, VIGNETTE_ATTENTE_PLAN, VIGNETTE_DUREE, VIGNETTE_ECLAIRCIE, VIGNETTE_ECLAIRCIE_L, VIGNETTE_ENCRE, VIGNETTE_ENCRE_CLAIRE,
   VIGNETTE_FIN, VIGNETTE_FONDU_CENTRE, VIGNETTE_MARGE_MIN, VIGNETTE_SCENE_MIN, VIGNETTE_SEUIL } from './constantes';
 import { adoucir } from './geometrie';
 import { mouvementReduit } from './outils';
@@ -174,7 +175,7 @@ export function installerVignette(lec: Lecteur) {
     // centrée un peu sous le milieu (le dessin pose sur une ligne de sol).
     [[g, g, -1], [dr, W - dr, 1]].forEach(([bord, m, sens], j) => {
       const el = ecl[j], l = Math.min(1.15 * m, VIGNETTE_ECLAIRCIE_L * hd);
-      el.hidden = m < 4;
+      el.hidden = m < 4 || Boolean(e.v.cl);
       const x0 = sens < 0 ? bord + 0.1 * l - l : bord - 0.1 * l;
       Object.assign(el.style, { left: `${x0.toFixed(1)}px`, width: `${l.toFixed(1)}px`, top: `${(top + 0.14 * hd).toFixed(1)}px`, height: `${(0.84 * hd).toFixed(1)}px` });
     });
@@ -212,7 +213,7 @@ export function installerVignette(lec: Lecteur) {
         x.clearRect(0, 0, can.width, can.height);
         x.drawImage(ink, 0, 0);
         x.globalCompositeOperation = 'source-in';
-        x.fillStyle = VIGNETTE_ENCRE;
+        x.fillStyle = v.cl ? VIGNETTE_ENCRE_CLAIRE : VIGNETTE_ENCRE;
         x.fillRect(0, 0, can.width, can.height);
         x.globalCompositeOperation = 'source-over';
         et.fini = true;
@@ -259,7 +260,7 @@ export function installerVignette(lec: Lecteur) {
       x.globalAlpha = 1;
     }
     x.globalCompositeOperation = 'source-in';
-    x.fillStyle = VIGNETTE_ENCRE;
+    x.fillStyle = v.cl ? VIGNETTE_ENCRE_CLAIRE : VIGNETTE_ENCRE;
     x.fillRect(0, 0, can.width, can.height);
     x.globalCompositeOperation = 'source-over';
     et.s = s;

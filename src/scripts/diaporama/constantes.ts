@@ -101,7 +101,6 @@ export const CARTON_TRACE_DUREE = 1.6;
 export const CARTON_ACTE_MIN = 2.8;     // le segment de l'acte part au plus tôt ici (après le tracé)…
 export const CARTON_ACTE_MAX = 4.4;     // … et au plus tard là (titre très long)
 export const CARTON_ACTE_DUREE = 2.5;   // avancée du segment, années qui défilent
-export const CARTON_ONDE = 1.5;         // période de l'onde autour de la période de l'acte (après l'avancée)
 // Rangée de portraits : fondu de l'ovale et de son étiquette quand la voix dit le nom (s).
 export const PORTRAIT_FONDU = 0.45;
 // Portraits et objets du bas (révision du 2026-10-09 : 1,5 fois plus grands) : hauteur de l'ovale
@@ -151,4 +150,5 @@ export const VIGNETTE_ECLAIRCIE_L = 0.6;    // largeur d'une éclaircie, au plus
 export const VIGNETTE_FONDU_CENTRE = 0.6;   // s : fondu du dessin autour d'un chiffre, d'une date ou d'une surimpression de coin
 export const VIGNETTE_FIN = 0.4;            // s : le dessin entier rattrape le tracé à la fin
 export const VIGNETTE_ENCRE = '#1a1714';    // encre sombre (monochrome)
+export const VIGNETTE_ENCRE_CLAIRE = '#f3efe6'; // encre claire sur un fond prolongé sombre (sans éclaircie)
 export const VIGNETTE_SEUIL = 0.04;         // opacité à partir de laquelle le cartouche le signale

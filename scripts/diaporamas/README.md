@@ -60,8 +60,8 @@ garde le numéro d'origine ; l'identifiant et la capture ne changent pas ; `--es
 | `couleur.py` | Images colorisées par IA (spec 16) : `publier <slug> <lot.json> [--seulement 86 34b] [--sauf …] [--jugement bon] [--essai]` (retrouve chaque image par son `commons`, contrôle zone utile et taille, copie `NNN-couleur.webp` / `NNN-b-couleur.webp`, écrit `image.couleur`, consigne la recette dans `src/data/diaporamas/generation/<slug>-couleur.json`), `retirer <slug> 86 34b` (ou `--tout`), `lister <slug>` (voir « Couche générée », « Colorisation »). |
 | `ambiance.py` | Ambiances sonores des clips (spec 17) : consigne dans le lot de génération, calcul EzAudio sur Colab (`scripts/colab/ambiance.py`), normalisation, page d'écoute, `publier | retirer`. Voir « Ambiances sonores des clips ». |
 | `fond.py` | Fonds prolongés des images entières (spec 17) : `preparer | lancer [--passe 2] | rapatrier | relire | planche | publier | retirer | lister`, FLUX.2 klein 4B sur Colab (`scripts/colab/fond.py`), deux passes. Voir « Fonds prolongés des images entières ». |
-| `vignettes.py` | Dessins traversants sous les images entières (spec 17, essai 5 ; **règle pour les périodes 06 et suivantes**) : `preparer | lancer | rapatrier | arreter | tracer | planche | publier | retirer | lister`, Z-Image-Turbo sur Colab (`scripts/colab/vignettes.py`), trait extrait par `vignettes_trace.py --plein` (venv `.cache/venv-vignettes`). Lot écrit à la main : `src/data/diaporamas/generation/<slug>-vignettes.json`. Voir « Dessins traversants (spec 17, essai 5) ». |
-| `nettete.py` | Netteté, variantes grand écran (spec 17) : mesure au cadre le plus serré, variante depuis l'original de Commons ou Real-ESRGAN sur Colab (`scripts/colab/nettete.py`), `publier | retirer`. **Révolution seulement, suspendue ailleurs** (spec 17). |
+| `vignettes.py` | Dessins traversants sous les images entières (spec 17, essai 5 ; **règle pour les périodes 06 et suivantes**) : `preparer | lancer | rapatrier | arreter | tracer | planche | publier | encres | retirer | lister`, Z-Image-Turbo sur Colab (`scripts/colab/vignettes.py`), trait extrait par `vignettes_trace.py --plein` (venv `.cache/venv-vignettes`). Lot écrit à la main : `src/data/diaporamas/generation/<slug>-vignettes.json`. Voir « Dessins traversants (spec 17, essai 5) ». |
+| `nettete.py` | Netteté, variantes grand écran (spec 17) : mesure au cadre le plus serré, variante depuis l'original de Commons ou Real-ESRGAN sur Colab (`scripts/colab/nettete.py`), `publier | retirer | planche`. **Règle pour les périodes 06 et suivantes** (2 560 px, seuil 1,3) ; Révolution faite avec les réglages du pilote ; 02 à 05 hors champ (spec 17). |
 | `prononciation.yaml` | Lexique appliqué au texte envoyé à la voix (jamais aux sous-titres). |
 
 Données et sorties :
@@ -216,8 +216,9 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
    entières (`camera.py --entiers`), `fond.py preparer → lancer → relire → lancer --passe 2 → relire
    → planche → publier` (Colab par la CLI, ≈ 1 h de L4 et 1,5 à 2 unités par période ; voir « Fonds
    prolongés des images entières »). Zéro Gemini.
-   La **netteté** (`nettete.py`, spec 17) n'est appliquée qu'à la Révolution : ne pas la lancer sur
-   une autre période sans demande de l'utilisateur.
+   **Netteté** (`nettete.py`, spec 17, règle pour les périodes 06 et suivantes) : en dernier, après la
+   colorisation et les images entières, `npm run build` puis `nettete.py mesurer → preparer → lancer →
+   publier → planche` (voir « Netteté : variantes grand écran »). Les périodes 02 à 05 n'en reçoivent pas.
 10. **Colorisation « couleur seule »** (spec 16, règle depuis le 2026-10-14) : gravures, lithographies
    et photographies monochromes de scènes et de lieux (ni portraits, ni peintures, ni documents, ni
    caricatures, ni images à clip, avant / après ou mosaïque) ; lot fabriqué sur Colab par la CLI
@@ -1900,18 +1901,30 @@ Constat de l'essai du 2026-10-12 : au cadre le plus serré de la caméra, en ple
 aucune image servie (1 600 px au plus) n'offre un pixel d'image par pixel d'écran. `nettete.py` ajoute
 à chaque image trop petite une **variante de mêmes proportions**, `NNN-grand.webp` (plan :
 `NNN-b-grand.webp`), tirée de l'original de Commons, ou agrandie par Real-ESRGAN x4plus (BSD-3) quand
-l'original laisse plus de 1,25 px d'écran par px d'image. Grand côté plafonné à 3 200 px, WebP qualité 74.
+l'original laisse plus de 1,25 px d'écran par px d'image. **Règle pour les périodes 06 et suivantes**
+(décision du 2026-10-14) : variante seulement si l'image servie laisse plus de 1,3 px d'écran par px
+d'image (`SEUIL_BESOIN`), grand côté plafonné à 2 560 px (`COTE_MAX`), WebP qualité 74. La Révolution,
+pilote commité, garde ses réglages d'alors (3 200 px, variante dès 1 px : `REGLAGES_PILOTE`) ; les
+périodes 02 à 05 sont hors champ. Étape de production : la dernière de la couche calculée, une fois
+caméra, plans, colorisation et images entières figés.
 
 ```sh
 npm run build                                           # la mesure lit le lecteur construit (dist/)
-python3 scripts/diaporamas/nettete.py mesurer revolution    # cadre le plus serré de chaque image → décision
-python3 scripts/diaporamas/nettete.py preparer revolution   # originaux de Commons, variantes sans IA, kit Colab
-python3 scripts/diaporamas/nettete.py lancer revolution     # Real-ESRGAN sur Colab (L4, ≈ 10 s par image), puis accord des couleurs
-python3 scripts/diaporamas/nettete.py publier revolution    # public/ et champ image.grand
-python3 scripts/diaporamas/nettete.py planche revolution    # relecture des images agrandies par IA
-python3 scripts/diaporamas/nettete.py lister revolution ; … retirer revolution 83 49   # ou --tout
+python3 scripts/diaporamas/nettete.py mesurer second-empire    # cadre le plus serré de chaque image → décision
+python3 scripts/diaporamas/nettete.py preparer second-empire   # originaux de Commons, variantes sans IA, kit Colab
+python3 scripts/diaporamas/nettete.py lancer second-empire     # Real-ESRGAN sur Colab (L4, ≈ 10 s par image), puis accord des couleurs
+python3 scripts/diaporamas/nettete.py publier second-empire    # public/, champ image.grand (et grand.couleur)
+python3 scripts/diaporamas/nettete.py planche second-empire    # relecture des images agrandies par IA
+python3 scripts/diaporamas/nettete.py lister second-empire ; … retirer second-empire 83 49   # ou --tout
 ```
 
+- **Images colorisées** (spec 16) : la version colorisée est un calque posé sur l'image après un fondu
+  lent et gardé jusqu'à la fin ; à 1 600 px elle masquerait la variante. `publier` fabrique donc, pour
+  toute image qui porte les deux, `NNN-couleur-grand.webp` (`grand.couleur` { fichier, largeur, hauteur },
+  mêmes proportions que `image.couleur`) : couleur relue + (variante − image servie), sans modèle ; le
+  lecteur la prend sur grand écran avec la variante (`etat.ts`, `coul.g`). Une image recolorisée repasse
+  par `publier`.
+- **Clips** (`image.video`) : la variante sert avant l'entrée du clip ; le clip garde sa résolution.
 - **L'image servie ne change pas** (`fichier`, `largeur`, `hauteur`) : zone utile, cadres de caméra,
   entrées en scène, clips (`image.video`), versions colorisées (`image.couleur`, au pixel de la zone
   utile de l'image servie), livre d'images, sources de `generation.py` restent tels quels. Toutes ces
@@ -2155,7 +2168,10 @@ python3 scripts/diaporamas/vignettes.py lister <slug>
   lit pas le minutage du fichier : il garde les tracés des marges visibles et les minute lui-même.
 - **Lecteur** (`vignette.ts`) : canevas plein scène entre le fond prolongé et l'image (pour un plan :
   dans son fond noir, après son fond prolongé ; un plan qui couvre l'image couvre son dessin) ; marges
-  mesurées à l'écran sur toute la fenêtre de l'image (rapprochement compris) ; éclaircie sous chaque bord ;
+  mesurées à l'écran sur toute la fenêtre de l'image (rapprochement compris) ; éclaircie sous chaque bord,
+  sauf sur un fond sombre : **encre claire, sans éclaircie** (champ `encre: "claire"`, posé par `publier`
+  quand la luminance moyenne des marges du fond prolongé, sur la hauteur du dessin, est sous
+  `ENCRE_SEUIL` = 0,4 ; `vignettes.py encres <slug>` le recalcule pour les dessins déjà publiés) ;
   départ : `quand`, jamais avant 2 s (image de la diapositive) ou 1,2 s (plan) ni avant la fin de
   l'entrée en scène ; calé sur la voix (figé en pause, repeint après un saut en arrière) ; s'efface
   pendant un chiffre, une date ou une surimpression ; mouvement réduit : le dessin paraît entier ; rien

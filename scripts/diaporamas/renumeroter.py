@@ -127,6 +127,8 @@ def main() -> int:
                       + [x['image'].get('couleur') or {}] + [(p.get('image') or {}).get('couleur') or {} for p in x.get('plans') or []]
                       # variantes grand écran (spec 17) : NNN-grand.webp, NNN-b-grand.webp
                       + [x['image'].get('grand') or {}] + [(p.get('image') or {}).get('grand') or {} for p in x.get('plans') or []]
+                      # et leur version colorisée (NNN-couleur-grand.webp, NNN-b-couleur-grand.webp)
+                      + [(x['image'].get('grand') or {}).get('couleur') or {}] + [((p.get('image') or {}).get('grand') or {}).get('couleur') or {} for p in x.get('plans') or []]
                       # fonds prolongés (spec 17) : NNN-fond.webp, NNN-b-fond.webp
                       + [x['image'].get('fond') or {}] + [(p.get('image') or {}).get('fond') or {} for p in x.get('plans') or []])
             # vignettes dessinées (spec 17, essai 5) : encre et tracés, NNN-vignette.webp et .json, NNN-b-vignette.…

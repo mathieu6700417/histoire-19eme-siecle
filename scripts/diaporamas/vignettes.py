@@ -18,6 +18,7 @@ cartouche le signale. Mode d'emploi complet : README, « Dessins traversants (sp
     python3 scripts/diaporamas/vignettes.py planche <slug>             # relecture : montages et planche.html
     python3 scripts/diaporamas/vignettes.py publier <slug> [--seulement 31,34b] [--sauf …] [--essai]
     python3 scripts/diaporamas/vignettes.py retirer <slug> 31 34b …    # ou --tout
+    python3 scripts/diaporamas/vignettes.py encres <slug> [--essai]   # encre claire sur fond sombre
     python3 scripts/diaporamas/vignettes.py lister <slug>
 
 **Lot** (écrit à la main) : src/data/diaporamas/generation/<slug>-vignettes.json, qui sert aussi de
@@ -72,6 +73,8 @@ ATTENTE_PLAN = 1.2         # s : de même après l'instant d'un plan (VIGNETTE_A
 DUREE = 8.0                # s : durée du tracé (VIGNETTE_DUREE du lecteur)
 FENETRE_CHIFFRE = 5.0      # s : chiffre clé ou date républicaine à l'écran (4 à 5 s, diaporamas.ts), marge comprise
 SUFFIXE = '-vignette'
+ENCRE_SEUIL = 0.4          # luminance moyenne des marges du fond prolongé (0-1, avant FOND_LUMIERE) sous
+                           # laquelle le dessin est tracé à l'encre claire, sans éclaircie (annotations du 2026-10-14)
 REMOTE = '/content/vignettes'
 ESSAI = c.CACHE / 'vignettes'
 VENV = c.RACINE / '.cache' / 'venv-vignettes' / 'bin' / 'python'
@@ -559,6 +562,51 @@ for (const it of D.items) {
 
 # --- Intégration à la période ----------------------------------------------------------------
 
+def luminance_marges(slug: str, im: dict) -> float | None:
+    """Luminance moyenne (0-1) du fond prolongé dans les deux marges, sur la hauteur où pose le dessin
+    (bas de l'image) ; None sans fond prolongé."""
+    from PIL import Image
+    f = im.get('fond')
+    if not f or not (c.PUBLIC / slug / f['fichier']).exists():
+        return None
+    with Image.open(c.PUBLIC / slug / f['fichier']) as fo:
+        g = fo.convert('L')
+        W, H = g.size
+        x0, y0, x1, y1 = f['boite']
+        haut, bas = int(H * (y0 + 0.3 * (y1 - y0))), max(int(H * y1), int(H * (y0 + 0.3 * (y1 - y0))) + 1)
+        zones = [(0, haut, int(W * x0), bas), (int(W * x1), haut, W, bas)]
+        vals = [sum(i * n for i, n in enumerate(g.crop(z).histogram())) / (255 * (z[2] - z[0]) * (z[3] - z[1]))
+                for z in zones if z[2] - z[0] >= 2]
+    return sum(vals) / len(vals) if vals else None
+
+
+def encre(slug: str, im: dict) -> dict:
+    """Champ « encre » du dessin : claire sur un fond sombre (sinon rien : encre sombre)."""
+    lum = luminance_marges(slug, im)
+    return {'encre': 'claire'} if lum is not None and lum < ENCRE_SEUIL else {}
+
+
+def encres(slug: str, essai: bool) -> int:
+    """Recalcule l'encre des dessins publiés d'après leur fond prolongé."""
+    f, d = c.lire(slug)
+    slug = d['slug']
+    n = 0
+    for e in images(d):
+        v = e['image'].get('vignette')
+        if not v:
+            continue
+        lum, avant = luminance_marges(slug, e['image']), v.get('encre')
+        v.pop('encre', None)
+        v.update(encre(slug, e['image']))
+        n += v.get('encre') != avant
+        print(f"  {e['cle']:>5} : marges {'?' if lum is None else f'{lum:.2f}'} → encre {v.get('encre', 'sombre')}"
+              + (' (changée)' if v.get('encre') != avant else ''))
+    if not essai:
+        c.ecrire(f, d)
+    print(f"{n} encre(s) {'à changer' if essai else 'changée(s)'} dans {slug}")
+    return 0
+
+
 def publier(slug: str, seulement: set[str], sauf: set[str], essai: bool) -> int:
     from PIL import Image
     f, d = c.lire(slug)
@@ -600,7 +648,7 @@ def publier(slug: str, seulement: set[str], sauf: set[str], essai: bool) -> int:
                     shutil.copy(s, t)
             im['vignette'] = {'fichier': cible_e.name, 'traces': cible_t.name, 'centre': centre(im, L / H),
                               **({'quand': v['quand']} if v.get('quand') else {}),
-                              'largeur': L, 'hauteur': H, 'modele': lot.get('modele') or MODELE,
+                              'largeur': L, 'hauteur': H, **encre(slug, im), 'modele': lot.get('modele') or MODELE,
                               'genere_le': datetime.date.fromtimestamp(brut.stat().st_mtime).isoformat()}
         o = src_e.stat().st_size + src_t.stat().st_size
         poids += o
@@ -653,13 +701,13 @@ def lister(slug: str) -> int:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('commande', choices=['preparer', 'lancer', 'rapatrier', 'arreter', 'tracer', 'planche', 'publier', 'retirer', 'lister'])
+    ap.add_argument('commande', choices=['preparer', 'lancer', 'rapatrier', 'arreter', 'tracer', 'planche', 'publier', 'encres', 'retirer', 'lister'])
     ap.add_argument('slug')
     ap.add_argument('cibles', nargs='*', metavar='CLE', help='retirer : numéros actuels (31 34b)')
     ap.add_argument('--seulement', default='', help='lancer : noms de fichiers (031,034-b) ; tracer, publier : numéros (31,34b)')
     ap.add_argument('--sauf', default='', help='publier : numéros à laisser (31,34b)')
     ap.add_argument('--tout', action='store_true', help='retirer : tous les dessins de la période')
-    ap.add_argument('--essai', action='store_true', help="publier : n'écrit rien")
+    ap.add_argument('--essai', action='store_true', help="publier, encres : n'écrit rien")
     ap.add_argument('--graines', default='1,2,3', help='tirages à calculer (ex. 1,2,3)')
     ap.add_argument('--gpu', default='L4')
     ap.add_argument('--session', default=None)
@@ -683,6 +731,8 @@ def main() -> None:
         planche(a.slug)
     elif a.commande == 'publier':
         sys.exit(publier(a.slug, cles, {cle(k) for k in a.sauf.split(',') if k.strip()}, a.essai))
+    elif a.commande == 'encres':
+        sys.exit(encres(a.slug, a.essai))
     elif a.commande == 'retirer':
         if not a.cibles and not a.tout:
             raise SystemExit('retirer : donner des cibles (31 34b) ou --tout')

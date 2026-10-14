@@ -19,7 +19,8 @@ export function installerEtat(lec: Lecteur) {
   // Netteté (spec 17) : sur un grand écran, la variante « grand écran » (`g`, mêmes proportions) remplace
   // l'image servie, pour toute la séance : même boîte, mêmes cadres, seule la finesse change. Jamais
   // sur un petit écran (téléphone : poids et mémoire) ni avec l'économie de données.
-  if (grandEcran()) for (const x of D.diapos) { if (x.g) x.img = x.g; for (const p of x.plans ?? []) if (p.g) p.img = p.g; }
+  // Une version colorisée (`coul`) a la sienne, à la même finesse (`coul.g`).
+  if (grandEcran()) for (const x of D.diapos) for (const i of [x, ...(x.plans ?? [])]) { if (i.g) i.img = i.g; if (i.coul?.g) i.coul.src = i.coul.g; }
   const $ = <T extends HTMLElement = HTMLElement>(s: string) => racine.querySelector(s) as T;
   const lecteur = $('.lecteur');
   const scene = $('.lecteur__scene');

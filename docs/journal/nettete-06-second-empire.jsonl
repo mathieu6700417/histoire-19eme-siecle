@@ -1,0 +1,12 @@
+{"ts": "2026-10-14T18:13:32+00:00", "quoi": "debut", "etape": "reglages", "texte": "COTE_MAX 2560, seuil de besoin 1,3 (Révolution gardée : 3200, 1)"}
+{"ts": "2026-10-14T18:13:50+00:00", "quoi": "fin", "etape": "reglages", "texte": "mis en œuvre ; verifier revolution OK"}
+{"ts": "2026-10-14T18:13:50+00:00", "quoi": "debut", "etape": "mesurer", "texte": ""}
+{"ts": "2026-10-14T18:15:29+00:00", "quoi": "fin", "etape": "mesurer", "texte": "237 images mesurées (84 plans) ; 131 rien, 83 original, 23 Real-ESRGAN ; 84 : original (Commons 2836 px → 2560×867)"}
+{"ts": "2026-10-14T18:15:29+00:00", "quoi": "debut", "etape": "preparer", "texte": ""}
+{"ts": "2026-10-14T18:19:35+00:00", "quoi": "fin", "etape": "preparer", "texte": "83 variantes tirées de l'original (55,7 Mo) ; kit IA 23 images, 45 Mo ; 4 min"}
+{"ts": "2026-10-14T18:19:36+00:00", "quoi": "debut", "etape": "lancer", "texte": "Colab L4, 23 images Real-ESRGAN"}
+{"ts": "2026-10-14T18:28:36+00:00", "quoi": "fin", "etape": "lancer", "texte": "23 images Real-ESRGAN x4plus sur L4 (≈ 4 min de calcul, ≈ 9 min de session) ; ≈ 0,3 unité Colab ; session arrêtée, colab sessions : aucune"}
+{"ts": "2026-10-14T18:28:36+00:00", "quoi": "debut", "etape": "publier", "texte": ""}
+{"ts": "2026-10-14T18:30:11+00:00", "quoi": "fin", "etape": "publier", "texte": "106 variantes (83 original, 23 Real-ESRGAN) + 43 versions colorisées grand écran ; 97,7 Mo ajoutés (62 Mo variantes, 31 Mo couleur... ) ; verifier OK, build OK"}
+{"ts": "2026-10-14T18:30:17+00:00", "quoi": "note", "etape": "publier", "texte": "poids exact : 97,7 Mo (≈ 65 Mo de variantes, ≈ 32 Mo de versions colorisées grand écran) ; Révolution inchangée (REGLAGES_PILOTE) ; planche .cache/diaporamas/essais-colab/nettete/relecture-second-empire.html ; Colab ≈ 0,3 unité, 0 $ Gemini"}
+{"ts": "2026-10-14T18:31:02+00:00", "quoi": "note", "etape": "publier", "texte": "diapositive 84 : la variante ne sert que 0 à 1,8 s, le clip 1632×544 couvre ensuite l'image ; annotation laissée à faire, agrandir le clip est à décider"}

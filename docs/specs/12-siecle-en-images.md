@@ -609,7 +609,9 @@ actifs** (pas de bouton).
     avec un **cadre adapté au lieu** : France seule, France et voisins pour un lieu proche
     (Fleurus, Mayence, Turin), Europe-Méditerranée avec la France repérée pour un lieu lointain
     (Égypte, Moscou, Algérie), monde si nécessaire (Mexique). On voit toujours où c'est par
-    rapport à la France.
+    rapport à la France. **Eau en bleu-gris pâle** (annotations du 2026-10-14, « mettre les
+    mers / rivières en bleu pour aider à la lecture ») : mers `--c-eau`, fleuves `--c-eau-trait`,
+    dans les médaillons comme dans les cartes d'épisode ; terres et France restent en gris.
   - **Paris** : un **plan d'époque du domaine public** (Commons), choisi pour la période
     (plan de Verniquet, vers 1790, pour la Révolution ; plans des années 1830, 1860 et 1890
     ensuite), désaturé en gris, recadré et zoomé sur le lieu, avec le point. Le plan est
@@ -1139,6 +1141,11 @@ suivantes (détail des coûts : `docs/journal/diaporama-02-consulat-empire-bilan
   session est arrêtée à la fin (`colab stop`, puis `colab sessions`). Ces étapes viennent après la
   caméra ; elles ne coûtent rien à Gemini mais demandent une relecture : page d'écoute pour les
   ambiances, relecture de chaque fond (un fond qui invente passe en flou fort).
+- **Netteté (spec 17, règle depuis le 2026-10-14, périodes 06 et suivantes)** : en dernière étape de la
+  couche calculée, une fois caméra, plans, colorisation et images entières figés (la mesure lit le lecteur
+  construit : `npm run build` d'abord), `nettete.py mesurer → preparer → lancer → publier`, puis
+  `planche` des images agrandies par IA, relue avant de livrer. Une image recadrée, remplacée ou
+  recolorisée après coup repasse par `mesurer` et `publier`.
 
 ### Consulat et Empire enrichi (2026-10-09)
 
@@ -1282,7 +1289,9 @@ rythme de l'horloge du carton (figée en pause ; état final si l'on passe le ca
    passage, les **actes déjà vus** restent en **gris** (segments de 3 px), la dernière année arrive
    au bout du tracé ;
 2. quand le titre est écrit (2,8 à 4,4 s selon sa longueur), le **segment de l'acte** avance de sa
-   première à sa dernière date en 2,5 s et **s'épaissit** (2 à 5 px) pendant que **les années
+   première à sa dernière date en 2,5 s (**dates annoncées de l'acte**, champ `dates`, depuis les
+   annotations du 2026-10-14 : l'étendue des dates de ses diapositives débordait, rappels et
+   conséquences compris ; elle ne sert plus qu'à défaut de dates lisibles) et **s'épaissit** (2 à 5 px) pendant que **les années
    défilent** sous le titre (« 1820 », « 1820-1821 »… « 1820-1824 » ; texte fixe si les dates de
    l'acte ne sont pas deux années) ;
 3. ~~puis deux ou trois dates clés de l'acte paraissent sous la frise~~ **(retiré le 2026-10-12,
@@ -1290,13 +1299,18 @@ rythme de l'horloge du carton (figée en pause ; état final si l'on passe le ca
    avec les événements, mais un peu de couleur et un intervalle qui s'anime »)**. À la place, la
    **période de l'acte est en couleur** (couleur d'accent du thème, `--c-accent`, rouge de
    rubrique `#8a2b22`) : le segment, une **zone teintée** (16 % d'opacité, 1,1 rem de haut) qui
-   s'étend avec lui, puis, le segment arrivé, une **onde** (contour fin) qui s'écarte de la zone
-   et s'efface, toutes les 1,5 s, jusqu'à l'ouverture des volets. Le champ `reperes` des actes
+   s'étend avec lui, ~~puis, le segment arrivé, une **onde** (contour fin) qui s'écarte de la zone
+   et s'efface, toutes les 1,5 s, jusqu'à l'ouverture des volets~~. **Révision du 2026-10-14**
+   (annotations du Second Empire, « cette anim rouge c'est pas top ») : **plus d'onde** ; le
+   segment passe **en dégradé du noir d'encre au rouge** (rouge plein aux 70 %), la zone devient
+   un **halo gris dégradé** aux bords estompés (30 % d'opacité, 40 px plus large que le segment).
+   Puis, le même jour : **« enlève le rouge complètement »** : le segment va du **gris au noir
+   d'encre** (noir plein aux 70 %) ; plus aucune couleur sur la frise. Le champ `reperes` des actes
    reste admis dans les données (et contrôlé par `verifier.py`) mais n'est plus affiché.
 
 Durée du carton inchangée (12 s, volets à 8,5 s : la frise est copiée dans les volets à son état
 du moment). Serif ; tout le reste de la frise demeure gris et noir. Mouvement réduit : état final
-d'emblée, sans onde. La frise du bas de l'image ne change pas.
+d'emblée. La frise du bas de l'image ne change pas.
 
 ### Images remplacées
 
@@ -1530,7 +1544,7 @@ périodes 06 et suivantes :
 | Clips « mouvement » (spec 16) | **Règle** | Une dizaine de clips par période, plafond 15 (`generation.py`). **La diapositive 1** (première image après le carton du premier acte) **est toujours animée et a son ambiance sonore** (décision de l'utilisateur du 2026-10-14, périodes 07 et suivantes) : l'agent A la choisit donc parmi les scènes animables en largeur (jamais un portrait ni une image entière), et elle compte dans la dizaine. |
 | Ambiance sonore des clips (spec 17) | **Règle** | **Tout clip a son ambiance** (EzAudio, −12 dB), consigne écrite dans le lot à côté de celle du clip (`ambiance.py`). Page d'écoute jugée par l'utilisateur avant publication. |
 | Colorisation « couleur seule » (spec 16) | **Règle** (décision de l'utilisateur du 2026-10-14, pilote de la période 05) | Toute gravure, lithographie ou photographie monochrome de scène ou de lieu est colorisée (champ et exclusions : spec 16) : FLUX.2 klein 4B, chrominance seule posée sur la luminance de l'original, consigne neutre plus une phrase de couleurs par image, saturation modérée. Relecture de chaque image avant publication (`couleur.py publier`). Jamais sur une image à clip, un avant / après ou une mosaïque. Périodes 01 à 04 et 06 : à rattraper. |
-| Netteté, variantes grand écran (spec 17) | **Révolution seulement** ; suspendue par l'utilisateur le 2026-10-14 | Ne pas l'appliquer aux autres périodes ni retoucher la Révolution sans sa demande. Réglages décidés pour la suite, pas encore mis en œuvre : variante seulement si l'image servie laisse plus de 1,3 px d'écran par px d'image au cadre le plus serré, grand côté plafonné à 2 560 px (spec 17). |
+| Netteté, variantes grand écran (spec 17) | **Règle** pour les périodes 06 (appliquée le 2026-10-14) et suivantes (décision de l'utilisateur du 2026-10-14, après visionnage du Second Empire) ; Révolution faite avec les réglages du pilote ; périodes 02 à 05 hors champ | Après la caméra et la colorisation (la mesure lit le lecteur construit) : `nettete.py mesurer → preparer → lancer → publier → planche`. Variante seulement si l'image servie laisse plus de 1,3 px d'écran par px d'image au cadre le plus serré en plein écran 1920 × 1080 ; tirée de l'original de Commons, Real-ESRGAN si l'original laisse plus de 1,25 ; grand côté plafonné à 2 560 px. Une image colorisée reçoit sa version colorisée à la même finesse (sans modèle) ; un clip garde sa résolution. Signalement aux crédits et au livre d'images. Colab ≈ 5 min de L4 pour une vingtaine d'images. |
 | Fonds prolongés des images entières (spec 17) | **Règle** (pilote Restauration validé le 2026-10-12 : « c'est nickel avec les fonds ») | Toute image entière a son fond prolongé : FLUX.2 klein 4B en deux passes, flou 0,25 %, luminosité 80 %, flou fort pour les fonds qui inventent (`fond.py`). Relecture de chaque fond avant publication. |
 | Vignettes dessinées sous les images entières (spec 17, essai 5) | **Règle** pour les périodes 06 et suivantes (décision de l'utilisateur du 2026-10-14 : « c'est nickel avec C ») | Une trentaine par période, **dessin traversant** sous l'image entière (on en voit les deux bords), esquisse simple sans personnage, tracé des deux bords en 8 s (révision du 2026-10-14), simple éclaircie du fond, Z-Image-Turbo, signalées « dessin généré par IA » ; relecture de chaque dessin. Détail : spec 17, « Révision après visionnage du pilote ». |
 | Relief / parallaxe | **Refusé deux fois** (2026-10-08, 2026-10-12) | Ne plus le proposer. |

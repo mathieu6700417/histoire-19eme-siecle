@@ -14,8 +14,13 @@
   --c-filet: #dcd9d2;         /* filets fins */
   --c-lien: var(--c-bordeaux);
   /* Couleur d'accent du thème (2026-10-12) : rouge de rubrique des éditions savantes (8,6:1 sur le
-     fond). Seule couleur admise ; pour l'instant, la période de l'acte sur la frise des cartons. */
+     fond). Inemployée depuis le 2026-10-14 (la frise des cartons est repassée en noir et gris) ;
+     ne s'emploie que là où l'utilisateur le demande. */
   --c-accent: #8a2b22;
+  /* Eau des cartes (annotations du 2026-10-14) : bleu-gris pâle d'atlas ancien, pour lire mers et
+     fleuves d'un coup d'œil sans rompre la sobriété ; seule autre couleur admise, cartes seulement. */
+  --c-eau: #dfe7ea;           /* mers et océans */
+  --c-eau-trait: #7d9cab;     /* fleuves et rivières */
 
   /* Typographie */
   --f-texte: 'EB Garamond', Garamond, 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;

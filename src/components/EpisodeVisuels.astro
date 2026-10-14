@@ -592,13 +592,14 @@ const statique = mode === 'livre';
   .ev-courbe__repere text { fill: var(--c-texte); font-size: 18px; }
   .ev-courbe__filet { stroke: var(--c-texte-doux); stroke-width: 1; }
 
-  /* Carte : terres en gris très clair, France un peu plus soutenue ; zones hachurées, flèches
-     en trait plein qui se dessinent, villes rebelles en points noirs cerclés. */
+  /* Carte : terres en gris très clair, France un peu plus soutenue, mers et fleuves en bleu-gris
+     pâle (--c-eau, annotations du 2026-10-14) ; zones hachurées, flèches en trait plein qui se
+     dessinent, villes rebelles en points noirs cerclés. */
   .ev-carte { display: flex; align-items: center; justify-content: center; gap: 1rem; min-height: 0; flex: 1 1 0; width: 100%; }
-  .ev-carte__svg { height: 100%; width: auto; max-width: 100%; min-height: 0; overflow: hidden; font-family: inherit; }
+  .ev-carte__svg { height: 100%; width: auto; max-width: 100%; min-height: 0; overflow: hidden; font-family: inherit; background: var(--c-eau); }
   .ev-carte__terres { fill: #ebe9e4; stroke: #c9c6bf; stroke-width: 1; }
   .ev-carte__france { fill: #dcd9d1; stroke: #5e5b55; stroke-width: 2.2; stroke-linejoin: round; }
-  .ev-carte__fleuve { fill: none; stroke: #b4b1aa; stroke-width: 2; }
+  .ev-carte__fleuve { fill: none; stroke: var(--c-eau-trait); stroke-width: 2; }
   .ev-carte__svg text { font-size: calc(38px * var(--k, 1)); fill: var(--c-texte); paint-order: stroke; stroke: rgba(251, 250, 247, 0.85); stroke-width: calc(6px * var(--k, 1)); stroke-linejoin: round; }
   .ev-carte__svg pattern line { stroke: #3d3b37; stroke-width: calc(2.5px * var(--k, 1)); }
   .ev-carte__zone { opacity: var(--p); }

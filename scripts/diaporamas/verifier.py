@@ -2510,8 +2510,24 @@ def controler_nettete(d: dict, dossier) -> tuple[list[str], list[str], int, int,
                            f'(image ou recadrage changés : nettete.py mesurer, preparer, publier, ou retirer)')
         if taille[0] < i['largeur'] * 1.1:
             avert.append(f"{p} : variante de {taille[0]} px à peine plus large que l'image servie ({i['largeur']} px) : sans intérêt")
-        if max(taille) > nt.COTE_MAX + 1:
-            erreurs.append(f'{p} : variante de {max(taille)} px de grand côté ({nt.COTE_MAX} au plus)')
+        gc = g.get('couleur')
+        if gc and not i.get('couleur'):
+            erreurs.append(f'{p} : grand.couleur sans version colorisée (image.couleur)')
+        elif i.get('couleur') and not gc:
+            avert.append(f'{p} : image colorisée sans version colorisée grand écran (nettete.py publier) : la couleur masquera la variante')
+        elif gc:
+            fc = dossier / (gc.get('fichier') or '')
+            if gc.get('fichier') != nt.nom_couleur_grand(i) or not fc.is_file():
+                erreurs.append(f"{p} : grand.couleur : fichier « {gc.get('fichier')} » absent ou mal nommé (attendu : {nt.nom_couleur_grand(i)})")
+            else:
+                poids += fc.stat().st_size
+                with Image.open(fc) as im:
+                    tc = im.size
+                rc0 = i['couleur']['largeur'] / i['couleur']['hauteur']
+                if tc != (gc.get('largeur'), gc.get('hauteur')) or abs(tc[0] / tc[1] - rc0) > 0.004 * rc0:
+                    erreurs.append(f"{p} : grand.couleur {tc[0]}×{tc[1]} : dimensions déclarées ou proportions de la version colorisée non tenues")
+        if max(taille) > nt.reglages(dossier.name)['cote_max'] + 1:
+            erreurs.append(f"{p} : variante de {max(taille)} px de grand côté ({nt.reglages(dossier.name)['cote_max']} au plus)")
     return erreurs, avert, n, n_ia, poids
 
 

@@ -98,7 +98,7 @@ function vignetteLecteur(i: ImageDiapo, x: Diaporama['diapositives'][number], qu
     const pos = x.narration.indexOf(v.quand, depuis);
     if (pos >= 0) t = Math.max(0, instantCaractere(x.narration, pos, x.audio?.duree ?? 6, x.audio?.phrases) - 0.2);
   }
-  return { src: urlMedia(d.slug, v.fichier), tr: urlMedia(d.slug, v.traces), t, l: v.largeur, h: v.hauteur };
+  return { src: urlMedia(d.slug, v.fichier), tr: urlMedia(d.slug, v.traces), t, l: v.largeur, h: v.hauteur, ...(v.encre === 'claire' ? { cl: true } : {}) };
 }
 /** Livre d'images (sans JavaScript) : le dessin sous l'image qu'il accompagne, en entier, avec sa mention. */
 function livreVignette(i: ImageDiapo) {
@@ -121,7 +121,9 @@ const nomModele = (m: string) => m.split('/').pop()!.replace(/-/g, ' ');
 function couleurLecteur(i: ImageDiapo) {
   const c = i.couleur!, u = zoneUtileDe(i), L = i.largeur ?? 1600, H = i.hauteur ?? 1200;
   const x0 = Math.round(u[0] * L), y0 = Math.round(u[1] * H);
-  return { src: urlMedia(d.slug, c.fichier), u: [x0 / L, y0 / H, (x0 + c.largeur) / L, (y0 + c.hauteur) / H] };
+  return { src: urlMedia(d.slug, c.fichier), u: [x0 / L, y0 / H, (x0 + c.largeur) / L, (y0 + c.hauteur) / H],
+    // Netteté (spec 17) : version colorisée à la finesse de la variante grand écran, mêmes proportions.
+    g: i.grand?.couleur ? urlMedia(d.slug, i.grand.couleur.fichier) : undefined };
 }
 
 /** Cartouche d'un intermède dans le lecteur : *œuvre* et compositeur rédigés à la main
@@ -271,7 +273,7 @@ const donnees = {
   slug: d.slug,
   pause: PAUSE,
   carton: CARTON,
-  actes: d.actes.map((a) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut })),
+  actes: d.actes.map((a, k) => ({ titre: t(a.titre), dates: t(a.dates), debut: a.debut, periode: frise?.periodes[k] ?? null })),
   diapos: d.diapositives.map((x, k) => ({
     n: x.n,
     // Clé stable de la reprise : le fichier Commons de l'image, qui survit aux renumérotations
@@ -370,7 +372,7 @@ function friseHtml(classe: string) {
   if (!frise) return '';
   const crans = [...frise.annees.map((a) => a.x0), 100].map((x, k, X) => `<span class="frise-t__cran${k === 0 || k === X.length - 1 ? ' frise-t__cran--borne' : ''}" style="left:${x}%"></span>`).join('');
   const a0 = frise.annees[0].a, a1 = frise.annees.at(-1)!.a;
-  return `<div class="frise-t ${classe}" aria-hidden="true"><span class="frise-t__borne">${a0}</span><div class="frise-t__piste"><span class="frise-t__date"></span><span class="frise-t__filet"></span>${crans}${classe === 'frise-t--carton' ? '<span class="frise-t__zone"></span><span class="frise-t__onde"></span><span class="frise-t__acte"></span>' : ''}<span class="frise-t__curseur"></span></div><span class="frise-t__borne">${a1}</span></div>`;
+  return `<div class="frise-t ${classe}" aria-hidden="true"><span class="frise-t__borne">${a0}</span><div class="frise-t__piste"><span class="frise-t__date"></span><span class="frise-t__filet"></span>${crans}${classe === 'frise-t--carton' ? '<span class="frise-t__zone"></span><span class="frise-t__acte"></span>' : ''}<span class="frise-t__curseur"></span></div><span class="frise-t__borne">${a1}</span></div>`;
 }
 // Dans chaque calque, après l'image : sa version colorisée par IA (spec 16, couleur.ts : sur la zone
 // utile, même transformation), la boîte du clip d'une image mise en mouvement (spec 16,
@@ -1349,8 +1351,9 @@ const sectionsLivre = d.actes.map((a, i) => ({
      au rythme de l'horloge du carton (frise.ts, `majFriseCarton`) : le filet se trace de gauche à
      droite, les actes déjà vus restent en gris, le segment de l'acte avance et s'épaissit pendant
      que les années défilent sous le titre. Ni curseur ni date. Révision du 2026-10-12 : plus de dates
-     clés dessous ; la période de l'acte est en couleur (--c-accent : segment, zone teintée, onde),
-     seule exception de couleur avec les œuvres de la visionneuse. */
+     clés dessous ; la période de l'acte était en couleur (--c-accent). Révision du 2026-10-14
+     (annotations) : plus d'onde ni de rouge ; segment en dégradé du gris au noir d'encre, zone en
+     gris dégradé. */
   .diaporama .frise-t--carton { max-width: min(46rem, 100%); margin-top: var(--e-3); text-align: left; column-gap: 0.9rem; }
   .diaporama .frise-t--carton .frise-t__curseur, .diaporama .frise-t--carton .frise-t__date { display: none; }
   .diaporama .frise-t--carton .frise-t__piste { height: 1.9rem; }
@@ -1367,10 +1370,10 @@ const sectionsLivre = d.actes.map((a, i) => ({
     bottom: 0.45rem;
     height: 5px;
     min-width: 6px;
-    background: var(--c-accent);
+    background: linear-gradient(90deg, #8f8c85, var(--c-texte) 70%);
     transform: translate(-50%, calc(50% - 0.5px));
   }
-  .diaporama .frise-t__zone, .diaporama .frise-t__onde {
+  .diaporama .frise-t__zone {
     position: absolute;
     bottom: 0.45rem;
     height: 1.1rem;
@@ -1379,8 +1382,7 @@ const sectionsLivre = d.actes.map((a, i) => ({
     transform: translate(-50%, calc(50% - 0.5px));
     pointer-events: none;
   }
-  .diaporama .frise-t__zone { background: var(--c-accent); }
-  .diaporama .frise-t__onde { border: 1px solid var(--c-accent); box-sizing: border-box; }
+  .diaporama .frise-t__zone { background: linear-gradient(90deg, transparent, #8f8c85 18%, #8f8c85 82%, transparent); }
   .diaporama .lecteur:fullscreen .frise-t--carton { max-width: min(60rem, 80%); }
   .diaporama .lecteur:fullscreen .frise-t--carton .frise-t__borne { font-size: 1.15rem; }
   .diaporama .en-carton .frise-t--carton { animation: frise-entree 900ms cubic-bezier(0.2, 0.6, 0.3, 1) 300ms both; }
