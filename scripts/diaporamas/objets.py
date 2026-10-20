@@ -37,7 +37,7 @@ chaque au plus) ; `quand` : passage exact de la narration ; `instant` écrit par
 import argparse, hashlib, io, json, re, subprocess, sys, time
 from pathlib import Path
 
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 
 import commun as c
 
@@ -197,12 +197,24 @@ def registre(ids: list[str] | None, force: bool) -> int:
     return 0
 
 
+def _police(taille: int):
+    """Police TrueType (la police bitmap par défaut de PIL ne connaît pas « œ »)."""
+    for chemin in ('/System/Library/Fonts/Supplemental/Arial.ttf', '/Library/Fonts/Arial.ttf',
+                   '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'):
+        try:
+            return ImageFont.truetype(chemin, taille)
+        except OSError:
+            pass
+    return ImageFont.load_default(size=taille)
+
+
 def planche() -> None:
     """Objets détourés sur damier, gris moyen et fond sombre ; manuscrits avec leur halo."""
     r = [o for o in lire_registre() if o.get('fichier')]
     T = 260
     P = Image.new('RGB', (T * 3 + 20, (T + 24) * len(r)), 'white')
     d = ImageDraw.Draw(P)
+    police = _police(13)
     for k, o in enumerate(r):
         im = Image.open(c.PUBLIC / o['fichier']).convert('RGBA')
         im.thumbnail((T - 10, T - 10))
@@ -224,7 +236,7 @@ def planche() -> None:
                 h = o['halo']
                 ImageDraw.Draw(f).rectangle([ox + h[0] * im.width, oy + h[1] * im.height, ox + h[2] * im.width, oy + h[3] * im.height], outline=(220, 0, 0), width=2)
             P.paste(f, (x, y))
-        d.text((4, y + T + 4), f"{o['id']} - {o['nom'][:70]} ({o['date']}, {o['musee']})", fill='black')
+        d.text((4, y + T + 4), f"{o['id']} - {o['nom'][:70]} ({o['date']}, {o['musee']})", fill='black', font=police)
     CACHE.mkdir(parents=True, exist_ok=True)
     P.save(CACHE / 'planche.jpg', quality=85)
     print(f"planche : {(CACHE / 'planche.jpg').relative_to(c.RACINE)}")

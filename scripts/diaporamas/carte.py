@@ -58,6 +58,12 @@ FONDS = {
     # Algérie du Nord (2026-10-18, période 07 : insurrection de 1871) : trait de côte fin et libellés à la taille
     # habituelle (le fond `europe`, recadré sur la Kabylie, grossissait les libellés et simplifiait trop la côte).
     'algerie': {'cadre': [-2.5, 32.5, 10.5, 37.8], 'echelle': 120, 'tolerance': 1.1, 'fleuves': []},
+    # Outre-mer de la IIIe République (2026-10-20, période 08) : un fond par théâtre, trait de côte fin et libellés à
+    # la taille habituelle, au lieu d'agrandir les fonds `europe` ou `monde`. Tunisie et Algérie de l'Est (Kroumirie,
+    # Bardo, Sfax, Kairouan) ; Tonkin et Annam (Hanoï, Hué, Lang Son, fleuve Rouge = « Hong ») ; Madagascar.
+    'tunisie': {'cadre': [5.5, 32.0, 13.0, 37.8], 'echelle': 120, 'tolerance': 1.0, 'fleuves': []},
+    'indochine': {'cadre': [101.5, 14.5, 111.5, 24.0], 'echelle': 100, 'tolerance': 1.0, 'fleuves': ['Hong']},
+    'madagascar': {'cadre': [41.5, -26.5, 52.5, -11.0], 'echelle': 70, 'tolerance': 1.0, 'fleuves': []},
     # Carte de l'empire colonial (spec 12, « Les colonies au fil du récit », 2026-10-12) : le monde de
     # Tahiti à la Nouvelle-Calédonie, commun à toutes les périodes ; chaque carte y prend son `cadre`.
     # Largeur ~2 000 unités (libellés du lecteur à ~3 % de la largeur d'une vue) ; coordonnées au dixième
@@ -127,7 +133,8 @@ PLANS = {
         'auteur': 'Alexandre Vuillemin (Hachette)',
         'date': '1870',
         'credit': 'Plan de Vuillemin, 1870',
-        'slugs': ['annee-terrible'], 'teintes': True,
+        # Sert aussi la période 08 (2026-10-20) : aucun plan libre et calé des années 1880-1900 ; la voirie change peu.
+        'slugs': ['annee-terrible', 'troisieme-republique'], 'teintes': True,
         'recadrage': [300, 330, 7700, 6560], 'largeur': 2000, 'qualite': 55,
         'points': [
             ('Arc de Triomphe (centre de la place)', 2224, 2410, 48.87378, 2.29504),

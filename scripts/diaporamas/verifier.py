@@ -123,6 +123,25 @@ CARTON = 12.0   # carton de changement d'acte (s), compté dans la durée totale
 APRES_CITATION = 2.0  # la citation en surimpression reste ~2 s après son dernier mot
 
 
+# Débit de la voix (mots lus par minute) mesuré sur les périodes 05 à 07 : narrations 155 à 161,
+# lectures 151 à 167. Sert à estimer la durée à l'étape A, avant la synthèse des voix.
+MOTS_PAR_MINUTE = 157
+
+
+def estimer_duree(d: dict, duree_generique: float) -> float:
+    """Durée estimée de la période (s) d'après les mots : narrations, lectures et épisodes au
+    débit MOTS_PAR_MINUTE, une pause PAUSE après chacun, cartons d'acte, intermèdes (leur `duree`,
+    sinon `fin` − `debut`, sinon 20 s) et générique. Sert avant les voix (étape A)."""
+    s = 60 / MOTS_PAR_MINUTE
+    textes = ([x.get('narration') or '' for x in d['diapositives']]
+              + [c.texte_lu(l) for l in d.get('lectures') or []]
+              + [e.get('narration') or '' for e in d.get('episodes') or []])
+    voix = sum(c.nb_mots(t) * s + PAUSE for t in textes)
+    chants = sum(p.get('duree') or (p['fin'] - p['debut'] if p.get('fin') and p.get('debut') is not None else 20)
+                 for p in (d.get('musique') or {}).get('intermedes') or [])
+    return voix + chants + CARTON * len(d['actes']) + duree_generique
+
+
 def pause_apres(x: dict) -> float:
     """Pause après la voix : PAUSE, allongée quand la narration finit par une citation en
     surimpression (max(PAUSE, fin du dernier mot + 2 s − durée de la voix)) ; même calcul que
@@ -588,8 +607,12 @@ def controler_surimpressions(d: dict) -> tuple[list[str], list[str], int, int]:
             if not isinstance(lon, (int, float)) or not isinstance(lat, (int, float)):
                 erreurs.append(f'{q} : coordonnées manquantes')
                 continue
-            if fond not in FONDS_LIEU:
-                erreurs.append(f'{q} : fond inconnu ({fond} ; {", ".join(FONDS_LIEU)})')
+            # Fond régional de carte.py (2026-10-20, 08 n° 139 : Tananarive hors du fond « monde ») :
+            # admis pour un lieu seul (le médaillon à plusieurs lieux ne connaît que FONDS_LIEU).
+            regional = (fond not in FONDS_LIEU and len(lieux) == 1
+                        and (c.DONNEES / 'fonds' / f'{fond}.json').is_file())
+            if fond not in FONDS_LIEU and not regional:
+                erreurs.append(f'{q} : fond inconnu ({fond} ; {", ".join(FONDS_LIEU)} ; régional pour un lieu seul)')
             elif fond == 'paris':
                 if not plan:
                     erreurs.append(f'{q} : aucun plan de Paris pour cette période (carte.py, PLANS)')
@@ -1731,7 +1754,10 @@ def controler_avant_apres_mosaiques(d: dict, img_etat: dict, dossier) -> tuple[l
             tc = (ap.get('titre_court') or '').strip()
             if not tc or len(tc) > 60:
                 erreurs.append(f"{q} : titre court de l'image après manquant ou trop long")
-            if ap.get('commons') == x['image'].get('commons'):
+            # Même fichier admis s'il est recadré autrement (2026-10-20, 08 n° 130 : les deux moitiés
+            # d'un dessin de Caran d'Ache, « avant » en haut, « après » en bas).
+            if ap.get('commons') == x['image'].get('commons') and (
+                    not ap.get('recadrage') or ap.get('recadrage') == x['image'].get('recadrage')):
                 erreurs.append(f'{q} : image après identique à l’image avant')
             r = ap.get('cadre')
             if not (isinstance(r, list) and len(r) == 4 and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
@@ -2782,6 +2808,10 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
     if fait('A'):
         e_gen, a_gen, duree_generique = controler_generique(d)
         R.plus('A', 'générique', e_gen, a_gen)
+        # Durée estimée d'après les mots (avant les voix) : avertissement sous 55 min dès la période 06.
+        estimee = estimer_duree(d, duree_generique)
+        if d.get('numero', 0) >= 6 and estimee < 55 * 60:
+            R.plus('A', 'durée estimée', (), [f'durée estimée d’après les mots : {estimee / 60:.1f} min (55 à 65 visées à partir de la période 06)'])
     # Spec 14 : plans, lectures illustrées, galeries (contrôles locaux, rangés par étape).
     e_pl, a_pl, n_sup = controler_plans(d, img, dossier)
     for et, fam in (('A', 'plans et galeries (images)'), ('B', 'plans et galeries (zone utile, caméra)'), ('C', 'plans et galeries (instants, durées)')):
@@ -2795,6 +2825,9 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
     chiffres = etape in (None, 'C')   # les lignes de chiffres ne sont justes qu'avec tous les contrôles
     if etape:
         print(f"{d['titre']} ({d['periode']}) — étape {etape} ({ETAPES[etape]})")
+        if etape == 'A':
+            print(f'Durée estimée d’après les mots ({MOTS_PAR_MINUTE} mots/min, pauses, cartons, intermèdes, '
+                  f'générique) : {estimee / 60:.1f} min.')
     else:
         print(f"{d['titre']} ({d['periode']}) : {len(diapos)} diapositives, {len(d['actes'])} actes, "
               f"{len(oeuvres)} œuvres différentes.")

@@ -60,7 +60,7 @@ garde le numéro d'origine ; l'identifiant et la capture ne changent pas ; `--es
 | `musique.py` | Musique : enregistrements libres (Commons, Internet Archive), licences, découpe, fondus, sonie, m4a. `--indicatif` : les deux extraits de l'indicatif commun du générique. Rappelle en fin de passe les pistes absentes du registre des enregistrements. |
 | `carte.py` | Fonds de carte (Natural Earth, domaine public) des épisodes et des médaillons de lieu : `src/data/diaporamas/<siecle>/fonds/<nom>.json` (`france`, `voisins`, `europe`, `monde`) ; plans de Paris d'époque calés (`public/<siecle>/diaporamas/fonds/<nom>.webp`, `src/data/diaporamas/<siecle>/plans/<nom>.json`). `monde` descend à -20° (Sainte-Hélène) ; `--fond NOM` ne refait que ce fond. |
 | `surimpressions.py` | Cartes de lieu, citations, portraits, objets de musée, manuscrits, chiffres clés et dates républicaines en surimpression : instants calés sur la voix (alignement des mots de la narration) ; `--relever` liste les passages entre guillemets. |
-| `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle, bilan des mentions. |
+| `objets.py` | Objets de musée et manuscrits : registre `objets.json` (licence par l'API, téléchargement avec cache, détourage local par rembg, webp transparent ; fac-similés des manuscrits), planche de contrôle (légendes en police TrueType : la police par défaut de PIL refusait « œ »), bilan des mentions. |
 | `portraits.py` | Portraits des personnes nommées : recherche assistée (Wikidata, Commons), registre `portraits.json` (licence par l'API, téléchargement avec cache, cadre du visage par le détecteur local YuNet depuis le 2026-10-10, Gemini en repli demandé seulement, webp ovale), contrôle de visibilité des personnes sur les images (consignes au titre de la période du JSON), planche de contrôle. `--lot FICHIER` : lignes `id|nom`, Wikidata en une ligne par personne et pré-remplissage du registre (`--essai` : sans écrire). Options Gemini : `--budget`, `--reflexion`, `--modele`. |
 | `ajouter_lieux.py` | Ajout idempotent des lieux des médaillons à plusieurs lieux de la Révolution (données en dur, coordonnées Wikidata) ; `--fichier` pour une copie, `--essai` pour voir sans écrire. |
 | `renumeroter.py` | Insertion de diapositives et renumérotation : fichiers, renvois par numéro et états du cache recalculés, sans resynthèse. |
@@ -263,6 +263,11 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
 
 Chaque agent termine son étape par `verifier.py <slug> --etape A` (ou `B`, `C`), et lance
 `gemini.py --solde` avant une étape payante (voir « Vérification par étape et solde Gemini »).
+
+Attendre un script long (`images.py`, `lancer`, `encoder`…) : le lancer **en arrière-plan avec
+notification de fin** (outil de l'agent), jamais par une boucle `until ! pgrep -f "images.py …"` :
+le motif figure dans la ligne de commande du shell de la boucle elle-même, `pgrep -f` la trouve
+toujours et la boucle ne se termine jamais (vu sur la période 07).
 
 ## Cartouches et graphiques
 
@@ -1421,6 +1426,10 @@ pour tous). Code de sortie 1 s'il y a des erreurs de l'étape. Sans `--etape`, r
 | C (surimpressions, vérification) | surimpressions, portraits, objets et manuscrits, chiffres et dates, avant/après et mosaïques, puis **tout** (vérification complète, sortie résumée) |
 
 À l'étape A, les lectures ne sont pas comparées à Wikisource (contrôle de l'étape B, sans réseau en A).
+À l'étape A, une **durée estimée d'après les mots** est affichée (narrations, lectures et épisodes à
+157 mots/min, débit mesuré sur les périodes 05 à 07, plus pauses, cartons, intermèdes et générique ;
+écart de moins d'une minute avec la durée réelle sur 05 à 07) ; avertissement « durée estimée » sous
+55 min à partir de la période 06.
 Contrôle de la répartition : `python3 scripts/diaporamas/tester_etapes.py consulat-empire` (la
 réunion des messages de A, B et C doit égaler la vérification complète ; A et B sans message commun).
 
@@ -1842,7 +1851,11 @@ illisible et session absente de `colab sessions`) ; relancer ensuite avec `--seu
   retour de l'utilisateur du 2026-10-12, « deux fois plus lentement ») et l'encode **comme pour le
   site** (sans son, H.264 yuv420p, crf 27, débit plafonné à 3,2 Mbit/s : sans plafond les gravures
   très détaillées font 10 à 12 Mo, avec 4,2 Mo sans perte visible à l'échelle 1 ; les tableaux 1,2 à
-  2,5 Mo). Ni boucle ni aller-retour (autre retour du même jour, après une première version en
+  2,5 Mo). Depuis le 2026-10-20, ce plafond est aussi borné par `POIDS_MAX` (4,3 Mo) ÷ durée du clip
+  ralenti, soit ≈ 1,9 Mbit/s pour un clip de 18 s, et un clip encore trop lourd est réencodé avec un
+  plafond réduit de 15 % : les clips longs de L'année terrible (17 à 18 s) faisaient 5,6 à 7,4 Mo avec
+  le seul plafond fixe ; réencodés à l'essai, 4,2 à 4,4 Mo, à peine plus doux dans les hachures les
+  plus serrées (gravure de la 071). Les clips déjà publiés n'ont pas été réencodés. Ni boucle ni aller-retour (autre retour du même jour, après une première version en
   aller-retour bouclé) : le lecteur le joue une fois puis tient sa dernière image. La planche montre
   ce que verra le lecteur, avec le poids.
 - La planche montre côte à côte la source, les clips et la narration audio de la diapositive.

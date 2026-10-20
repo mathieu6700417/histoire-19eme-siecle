@@ -1268,6 +1268,21 @@ pour que chaque vers tienne sur une ligne (`ajusterVers`, lectures.ts) ; une car
 des cours d'eau détaillés (élément `trait` de `style: "eau"`, tracé lissé en bleu-gris) qui remplacent
 alors les fleuves du fond, trop grossiers à cette échelle.
 
+### La IIIe République jusqu'à 1900 (2026-10-20)
+
+Dosage atteint : 149 diapositives en 10 actes, 210 images (34 plans, 16 images de galerie), 61,1 min ; 6 lectures
+(Louise Michel, Hubertine Auclert, Ferry, Liard-Courtois, Maupassant, Zola) et six épisodes de 49 à 64 s. Familles :
+campagnes 19, pourquoi matériel 19, femmes 21, vie ordinaire 23, Europe 12, arts et techniques 40, **colonies 22** et
+4 cartes d'outre-mer (fonds `tunisie`, `indochine`, `madagascar` ajoutés à `carte.py`). Dernière période du siècle :
+deux diapositives de bilan de la période, puis deux de **bilan du siècle** (1789-1900). 3 avant/après (49, 130, 143),
+2 mosaïques (78, 94), 11 clips, 106 fonds, 43 images colorisées, 29 dessins. Particularités :
+- un seul chant (Habanera de *Carmen*, Marthe Chenal 1915) ; « En revenant de la revue » n'a pas d'enregistrement
+  chanté libre : galerie sur fanfare ; *L'Internationale* nommée, jamais jouée ;
+- plan `paris-1870` repris (aucun plan libre des années 1880-1900 déjà calé) ;
+- avant/après 130 : un même dessin (Caran d'Ache, « Un dîner en famille ») recadré en deux moitiés (`verifier.py`
+  admet un même fichier recadré autrement) ;
+- médaillon de lieu hors de France (Tananarive) sur un fond régional (`verifier.py` l'admet pour un lieu seul).
+
 ## Retours du visionnage de la Restauration (2026-10-11)
 
 Huit annotations laissées par l'utilisateur sur la période 03 (spec 15). Trois décisions, dont deux

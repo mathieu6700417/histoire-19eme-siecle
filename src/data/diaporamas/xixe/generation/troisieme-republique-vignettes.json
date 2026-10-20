@@ -1,0 +1,269 @@
+{
+ "usage": "vignettes",
+ "forme": "dessin traversant (spec 17, révision du 2026-10-14)",
+ "modele": "Tongyi-MAI/Z-Image-Turbo",
+ "style": "Very simple pen line drawing, like a quick sketch by a 19th-century French book illustrator: a few clean continuous black ink strokes, minimal contour sketch, outlines only, no hatching, no cross-hatching, no shading, no tone, lots of white space, plain white background, no people, no human figures, an empty scene with no person at all, no hands, no crowd, no border, no frame, no rectangle, no text, no letters, no numbers, no signature, no flag, no insignia. Objects, buildings and settings of France between 1871 and 1900.",
+ "vignettes": [
+  {
+   "n": "2",
+   "graine": 40020,
+   "gauche": "the long palace facade of Versailles with rows of tall windows",
+   "droite": "an empty armchair at a desk covered with papers and an inkwell",
+   "tirage": 3,
+   "jugement": "bon",
+   "raison": "tirage 2 : deux silhouettes au pied du palais"
+  },
+  {
+   "n": "17",
+   "graine": 40170,
+   "gauche": "a royal crown resting on a cushion",
+   "droite": "a sealed letter and a quill pen on a writing desk",
+   "tirage": 1,
+   "jugement": "bon",
+   "raison": "tirage 2 encadré"
+  },
+  {
+   "n": "19",
+   "graine": 40190,
+   "gauche": "a ballot box on a table with folded voting papers",
+   "droite": "the columned facade of a parliament building",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "22",
+   "graine": 40220,
+   "gauche": "an easel with a blank canvas and a paintbox",
+   "droite": "a garden with a bench and flowering bushes",
+   "quand": "des jardins",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "24",
+   "graine": 40240,
+   "gauche": "a tobacco factory building in a southern town",
+   "droite": "a guitar and a folded fan on a chair",
+   "quand": "le public bourgeois",
+   "tirage": 3,
+   "jugement": "bon",
+   "raison": "tirage 1 : silhouettes devant l'usine"
+  },
+  {
+   "n": "31",
+   "graine": 40310,
+   "gauche": "a Kanak round hut with a tall pointed thatched roof among coconut palms",
+   "droite": "a herd of cattle grazing in a fenced field on a hillside",
+   "tirage": 2,
+   "jugement": "bon",
+   "raison": "tirage 1 : troupeau sous le centre"
+  },
+  {
+   "n": "42",
+   "graine": 40420,
+   "gauche": "a newspaper kiosk on a boulevard",
+   "droite": "a rotary printing press with rolls of paper",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "44",
+   "graine": 40440,
+   "gauche": "a ballot box on a table",
+   "droite": "a stack of tied newspapers beside a printing press",
+   "tirage": 2,
+   "jugement": "bon",
+   "raison": "tirages 1 et 3 : faux titre de journal"
+  },
+  {
+   "n": "45",
+   "graine": 40450,
+   "gauche": "a law court entrance with steps",
+   "droite": "a writing desk with a marriage certificate and a pen",
+   "quand": "adultère",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "46",
+   "graine": 40460,
+   "gauche": "a town hall with a clock on its pediment",
+   "droite": "a workshop bench with tools hanging on the wall",
+   "tirage": 3,
+   "jugement": "bon",
+   "raison": "tirage 1 : maison coupée au bord"
+  },
+  {
+   "n": "47",
+   "graine": 40470,
+   "gauche": "the columned facade of a stock exchange",
+   "droite": "an iron strongbox with bundles of share certificates",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "55",
+   "graine": 40550,
+   "gauche": "a steamship unloading sacks of grain at a quay",
+   "droite": "a plough left in a field",
+   "tirage": 2,
+   "jugement": "bon",
+   "raison": "le vapeur entre un peu sous le centre (caché)"
+  },
+  {
+   "n": "60",
+   "graine": 40600,
+   "gauche": "a customs post with a barrier across a road",
+   "droite": "sacks of wheat and a weighing scale in a granary",
+   "tirage": 3,
+   "jugement": "bon"
+  },
+  {
+   "n": "67",
+   "graine": 40670,
+   "gauche": "a dugout canoe on a wide tropical river with palm trees",
+   "droite": "a camp table with a map and a compass",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "73",
+   "graine": 40730,
+   "gauche": "a desk with a large map of Europe and a pair of compasses",
+   "droite": "a fortress on a hill above a border river",
+   "quand": "L'Italie, vexée",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "74",
+   "graine": 40740,
+   "gauche": "gymnastic bars and a shooting target in a courtyard",
+   "droite": "a statue on a pedestal covered with wreaths",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "84",
+   "graine": 40840,
+   "gauche": "a tall city apartment building with a damaged doorway and scattered stones",
+   "droite": "a cobbled street with a gas lamp",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "87",
+   "graine": 40870,
+   "gauche": "a white city on a hillside above the sea",
+   "droite": "a table set with glasses and a candelabrum",
+   "quand": "lève son verre",
+   "tirage": 3,
+   "jugement": "bon"
+  },
+  {
+   "n": "91",
+   "graine": 40910,
+   "gauche": "a laboratory bench with flasks and a microscope",
+   "droite": "a country house with a garden",
+   "quand": "L'enfant survit",
+   "tirage": 2,
+   "jugement": "bon",
+   "raison": "tirage 3 : maison sous le centre"
+  },
+  {
+   "n": "92",
+   "graine": 40920,
+   "gauche": "a washbasin with a jug and surgical instruments laid on a cloth",
+   "droite": "a narrow damp courtyard between tall tenement houses",
+   "tirage": 2,
+   "jugement": "bon",
+   "raison": "tirage 3 : panneau fléché"
+  },
+  {
+   "n": "93",
+   "graine": 40930,
+   "gauche": "an iron lattice tower under construction with cranes",
+   "droite": "a drawing table with plans and compasses",
+   "tirage": 3,
+   "jugement": "bon",
+   "raison": "tirage 2 : silhouettes au pied de la tour"
+  },
+  {
+   "n": "116",
+   "graine": 41160,
+   "gauche": "a factory with tall smoking chimneys",
+   "droite": "a meeting hall with an empty speaker's table and rows of chairs",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "121",
+   "graine": 41210,
+   "gauche": "an embassy building behind an iron gate",
+   "droite": "a wastepaper basket full of torn papers",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "122",
+   "graine": 41220,
+   "gauche": "a military courthouse with closed shutters",
+   "droite": "a stone fortress on a rocky island in the sea",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "123",
+   "graine": 41230,
+   "gauche": "the long stone facade of a military school with a central dome",
+   "droite": "a broken sabre lying on the cobbles",
+   "quand": "dehors, la foule",
+   "tirage": 1,
+   "jugement": "bon",
+   "raison": "tirages 2 et 3 : sabre sous le centre"
+  },
+  {
+   "n": "129",
+   "graine": 41290,
+   "gauche": "the stone facade of a law court with steps",
+   "droite": "a steamship leaving a harbour",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "134",
+   "graine": 41340,
+   "gauche": "the facade of a government ministry with a courtyard gate",
+   "droite": "an empty long table with chairs in a council room",
+   "tirage": 2,
+   "jugement": "bon",
+   "raison": "tirage 3 : silhouettes devant le palais"
+  },
+  {
+   "n": "136",
+   "graine": 41360,
+   "gauche": "a lycée building with a courtyard gate in a provincial town",
+   "droite": "a sabre and an officer's kepi on a table",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "141",
+   "graine": 41410,
+   "gauche": "a dry savanna with acacia trees",
+   "droite": "an abandoned village of round thatched huts",
+   "tirage": 2,
+   "jugement": "bon",
+   "raison": "tirage 1 : village sous le centre"
+  },
+  {
+   "n": "145",
+   "graine": 41450,
+   "gauche": "the steps and columns of a law court",
+   "droite": "a lawyer's black robe and cap resting on a chair",
+   "tirage": 1,
+   "jugement": "ecarte",
+   "raison": "un personnage assis (professeur en toge) dans les trois tirages"
+  }
+ ]
+}

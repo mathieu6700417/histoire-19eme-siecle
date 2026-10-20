@@ -4727,5 +4727,1127 @@
       0.406
     ],
     "fichier": "portraits/hugo-1870.webp"
+  },
+  {
+    "id": "broglie",
+    "nom": "Albert de Broglie",
+    "dates": "1821-1901",
+    "commons": "File:De Broglie. Né le 13 Juin 1821. Galérie contemporaine, littéraire, artistique (serietitel), RP-F-00-6256.jpg",
+    "auteur": "Photographie de la Galerie contemporaine (Goupil), Rijksmuseum",
+    "date": "vers 1876-1884",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:De_Broglie._N%C3%A9_le_13_Juin_1821._Gal%C3%A9rie_contemporaine,_litt%C3%A9raire,_artistique_(serietitel),_RP-F-00-6256.jpg",
+    "cadre_visage": [
+      0.35,
+      0.245,
+      0.47,
+      0.335
+    ],
+    "fichier": "portraits/broglie.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "chambord",
+    "nom": "Comte de Chambord",
+    "dates": "1820-1883",
+    "commons": "File:Portrait Henri Comte de Chambord.jpg",
+    "auteur": "Peintre non identifié (huile sur toile, provenance maison de Habsbourg)",
+    "date": "XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_Henri_Comte_de_Chambord.jpg",
+    "cadre_visage": [
+      0.308,
+      0.101,
+      0.659,
+      0.444
+    ],
+    "fichier": "portraits/chambord.webp"
+  },
+  {
+    "id": "grevy",
+    "nom": "Jules Grévy",
+    "dates": "1807-1891",
+    "commons": "File:Portrait Jules Grévy.jpg",
+    "auteur": "Photographe non identifié",
+    "date": "années 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_Jules_Gr%C3%A9vy.jpg",
+    "cadre_visage": [
+      0.382,
+      0.036,
+      0.67,
+      0.269
+    ],
+    "fichier": "portraits/grevy.webp"
+  },
+  {
+    "id": "paul-bert",
+    "nom": "Paul Bert",
+    "dates": "1833-1886",
+    "commons": "File:Paul Bert 01.jpg",
+    "auteur": "Destréguil (photographie)",
+    "date": "années 1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Paul_Bert_01.jpg",
+    "cadre_visage": [
+      0.346,
+      0.134,
+      0.719,
+      0.473
+    ],
+    "fichier": "portraits/paul-bert.webp"
+  },
+  {
+    "id": "auclert",
+    "nom": "Hubertine Auclert",
+    "dates": "1848-1914",
+    "commons": "File:Charles Gallot - Hubertine Auclert, Suffrage des femmes.jpg",
+    "auteur": "Charles Gallot (photographie), bibliothèque Marguerite-Durand",
+    "date": "fin du XIXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Charles_Gallot_-_Hubertine_Auclert,_Suffrage_des_femmes.jpg",
+    "cadre_visage": [
+      0.379,
+      0.208,
+      0.602,
+      0.355
+    ],
+    "fichier": "portraits/auclert.webp"
+  },
+  {
+    "id": "waldeck-rousseau",
+    "nom": "Waldeck-Rousseau",
+    "dates": "1846-1904",
+    "commons": "File:Waldeck-Rousseau (Nadar).jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1900",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Waldeck-Rousseau_(Nadar).jpg",
+    "cadre_visage": [
+      0.201,
+      0.036,
+      0.792,
+      0.516
+    ],
+    "fichier": "portraits/waldeck-rousseau.webp"
+  },
+  {
+    "id": "henri-riviere",
+    "nom": "Commandant Rivière",
+    "dates": "1827-1883",
+    "commons": "File:Commandant Rivière - btv1b53139537s.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "entre 1875 et 1883",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Commandant_Rivi%C3%A8re_-_btv1b53139537s.jpg",
+    "cadre_visage": [
+      0.293,
+      0.18,
+      0.71,
+      0.554
+    ],
+    "fichier": "portraits/henri-riviere.webp"
+  },
+  {
+    "id": "deroulede",
+    "nom": "Paul Déroulède",
+    "dates": "1846-1914",
+    "commons": "File:Paul Déroulède, by Jean-François Portaels.jpg",
+    "auteur": "Jean-François Portaels",
+    "date": "1877",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Paul_D%C3%A9roul%C3%A8de,_by_Jean-Fran%C3%A7ois_Portaels.jpg",
+    "cadre_visage": [
+      0.345,
+      0.058,
+      0.596,
+      0.316
+    ],
+    "fichier": "portraits/deroulede.webp"
+  },
+  {
+    "id": "boulanger",
+    "nom": "Général Boulanger",
+    "dates": "1837-1891",
+    "commons": "File:Georges Ernest Boulanger by Atelier Nadar.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "années 1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Georges_Ernest_Boulanger_by_Atelier_Nadar.jpg",
+    "cadre_visage": [
+      0.135,
+      0.123,
+      0.713,
+      0.616
+    ],
+    "fichier": "portraits/boulanger.webp"
+  },
+  {
+    "id": "sadi-carnot",
+    "nom": "Sadi Carnot",
+    "dates": "1837-1894",
+    "commons": "File:Portrait de Sadi Carnot - Léon BONNAT.jpg",
+    "auteur": "Léon Bonnat",
+    "date": "1890",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Sadi_Carnot_-_L%C3%A9on_BONNAT.jpg",
+    "cadre_visage": [
+      0.366,
+      0.148,
+      0.587,
+      0.33
+    ],
+    "fichier": "portraits/sadi-carnot.webp"
+  },
+  {
+    "id": "casimir-perier",
+    "nom": "Casimir-Perier",
+    "dates": "1847-1907",
+    "commons": "File:Jean Casimir-Perier (cropped).jpg",
+    "auteur": "Photographie publiée par Pierre de Coubertin, The Evolution of France under the Third Republic",
+    "date": "1897",
+    "licence": "No restrictions",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean_Casimir-Perier_(cropped).jpg",
+    "cadre_visage": [
+      0.227,
+      0.007,
+      0.772,
+      0.452
+    ],
+    "fichier": "portraits/casimir-perier.webp"
+  },
+  {
+    "id": "eiffel",
+    "nom": "Gustave Eiffel",
+    "dates": "1832-1923",
+    "commons": "File:Gustave Eiffel 1888 Nadar2.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "1888",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Gustave_Eiffel_1888_Nadar2.jpg",
+    "cadre_visage": [
+      0.29,
+      0.163,
+      0.733,
+      0.483
+    ],
+    "fichier": "portraits/eiffel.webp"
+  },
+  {
+    "id": "maupassant",
+    "nom": "Guy de Maupassant",
+    "dates": "1850-1893",
+    "commons": "File:Portrait de Guy de Maupassant, (1850-1893), romancier, PH16994.jpg",
+    "auteur": "Alphonse Liébert (photographie), musée Carnavalet",
+    "date": "années 1880",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Guy_de_Maupassant,_(1850-1893),_romancier,_PH16994.jpg",
+    "cadre_visage": [
+      0.294,
+      0.195,
+      0.661,
+      0.458
+    ],
+    "fichier": "portraits/maupassant.webp"
+  },
+  {
+    "id": "rodin",
+    "nom": "Auguste Rodin",
+    "dates": "1840-1917",
+    "commons": "File:Auguste Rodin 1893 Nadar.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "1893",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Auguste_Rodin_1893_Nadar.jpg",
+    "cadre_visage": [
+      0.216,
+      0.0,
+      0.723,
+      0.555
+    ],
+    "fichier": "portraits/rodin.webp"
+  },
+  {
+    "id": "becquerel",
+    "nom": "Henri Becquerel",
+    "dates": "1852-1908",
+    "commons": "File:Paul Nadar - Henri Becquerel.jpg",
+    "auteur": "Paul Nadar (photographie)",
+    "date": "entre 1890 et 1908",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Paul_Nadar_-_Henri_Becquerel.jpg",
+    "cadre_visage": [
+      0.296,
+      0.098,
+      0.783,
+      0.518
+    ],
+    "fichier": "portraits/becquerel.webp"
+  },
+  {
+    "id": "jaures",
+    "nom": "Jean Jaurès",
+    "dates": "1859-1914",
+    "commons": "File:Jean Jaurès vers 1892.jpg",
+    "auteur": "Studio Marc fils, Castres (photographie)",
+    "date": "vers 1892",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean_Jaur%C3%A8s_vers_1892.jpg",
+    "cadre_visage": [
+      0.353,
+      0.159,
+      0.73,
+      0.484
+    ],
+    "fichier": "portraits/jaures.webp"
+  },
+  {
+    "id": "pelloutier",
+    "nom": "Fernand Pelloutier",
+    "dates": "1867-1901",
+    "commons": "File:Fernand Pelloutier-portrait.jpg",
+    "auteur": "Photographe non identifié",
+    "date": "vers 1899",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Fernand_Pelloutier-portrait.jpg",
+    "cadre_visage": [
+      0.137,
+      0.034,
+      1.0,
+      0.66
+    ],
+    "fichier": "portraits/pelloutier.webp"
+  },
+  {
+    "id": "dreyfus",
+    "nom": "Alfred Dreyfus",
+    "dates": "1859-1935",
+    "commons": "File:Alfred Dreyfus (1859-1935) - photo originale.jpg",
+    "auteur": "Aron Gerschel (photographie)",
+    "date": "vers 1894",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Alfred_Dreyfus_(1859-1935)_-_photo_originale.jpg",
+    "cadre_visage": [
+      0.382,
+      0.127,
+      0.884,
+      0.56
+    ],
+    "fichier": "portraits/dreyfus.webp"
+  },
+  {
+    "id": "mathieu-dreyfus",
+    "nom": "Mathieu Dreyfus",
+    "dates": "1857-1930",
+    "commons": "File:Mathieu Dreyfus - photo Nadar.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "années 1890",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Mathieu_Dreyfus_-_photo_Nadar.jpg",
+    "cadre_visage": [
+      0.348,
+      0.038,
+      0.766,
+      0.474
+    ],
+    "fichier": "portraits/mathieu-dreyfus.webp"
+  },
+  {
+    "id": "marguerite-durand",
+    "nom": "Marguerite Durand",
+    "dates": "1864-1936",
+    "commons": "File:Marguerite Durand 1910 - Restoration.jpg",
+    "auteur": "Agence Rol (photographie)",
+    "date": "1910",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Marguerite_Durand_1910_-_Restoration.jpg",
+    "cadre_visage": [
+      0.516,
+      0.253,
+      0.709,
+      0.406
+    ],
+    "fichier": "portraits/marguerite-durand.webp"
+  },
+  {
+    "id": "severine",
+    "nom": "Séverine",
+    "dates": "1855-1929",
+    "commons": "File:Séverine Atelier Nadar 01.png",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1890",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:S%C3%A9verine_Atelier_Nadar_01.png",
+    "cadre_visage": [
+      0.239,
+      0.203,
+      0.783,
+      0.664
+    ],
+    "fichier": "portraits/severine.webp"
+  },
+  {
+    "id": "felix-faure",
+    "nom": "Félix Faure",
+    "dates": "1841-1899",
+    "commons": "File:Portrait de Félix Faure.jpg",
+    "auteur": "Pierre Petit (photographie)",
+    "date": "vers 1895",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_F%C3%A9lix_Faure.jpg",
+    "cadre_visage": [
+      0.287,
+      0.108,
+      0.748,
+      0.486
+    ],
+    "fichier": "portraits/felix-faure.webp"
+  },
+  {
+    "id": "loubet",
+    "nom": "Émile Loubet",
+    "dates": "1838-1929",
+    "commons": "File:M. Loubet. (Président de la République Française) - btv1b53117473z.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1899",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:M._Loubet._(Pr%C3%A9sident_de_la_R%C3%A9publique_Fran%C3%A7aise)_-_btv1b53117473z.jpg",
+    "cadre_visage": [
+      0.317,
+      0.144,
+      0.602,
+      0.387
+    ],
+    "fichier": "portraits/loubet.webp"
+  },
+  {
+    "id": "millerand",
+    "nom": "Alexandre Millerand",
+    "dates": "1859-1943",
+    "commons": "File:Alexandre Millerand, par Nadar.jpg",
+    "auteur": "Paul Nadar (photographie)",
+    "date": "vers 1900",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Alexandre_Millerand,_par_Nadar.jpg",
+    "cadre_visage": [
+      0.276,
+      0.031,
+      0.796,
+      0.495
+    ],
+    "fichier": "portraits/millerand.webp"
+  },
+  {
+    "id": "gallieni",
+    "nom": "Gallieni",
+    "dates": "1849-1916",
+    "commons": "File:Général Gallieni. Ancien gouverneur de Madagascar - btv1b532294754.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1905",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:G%C3%A9n%C3%A9ral_Gallieni._Ancien_gouverneur_de_Madagascar_-_btv1b532294754.jpg",
+    "cadre_visage": [
+      0.292,
+      0.133,
+      0.66,
+      0.483
+    ],
+    "fichier": "portraits/gallieni.webp"
+  },
+  {
+    "id": "morisot",
+    "nom": "Berthe Morisot",
+    "dates": "1841-1895",
+    "commons": "File:Edouard Manet - Berthe Morisot With a Bouquet of Violets - Google Art Project.jpg",
+    "auteur": "Édouard Manet",
+    "date": "1872",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Edouard_Manet_-_Berthe_Morisot_With_a_Bouquet_of_Violets_-_Google_Art_Project.jpg",
+    "cadre_visage": [
+      0.214,
+      0.23,
+      0.646,
+      0.562
+    ],
+    "fichier": "portraits/morisot.webp"
+  },
+  {
+    "id": "gramme",
+    "nom": "Zénobe Gramme",
+    "dates": "1826-1901",
+    "commons": "File:M. Gramme. Electricien - btv1b532499155.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "1889",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:M._Gramme._Electricien_-_btv1b532499155.jpg",
+    "cadre_visage": [
+      0.397,
+      0.176,
+      0.592,
+      0.365
+    ],
+    "fichier": "portraits/gramme.webp"
+  },
+  {
+    "id": "camille-see",
+    "nom": "Camille Sée",
+    "dates": "1847-1919",
+    "commons": "File:Camille Sée by Franck.png",
+    "auteur": "Franck (photographie)",
+    "date": "entre 1860 et 1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Camille_S%C3%A9e_by_Franck.png",
+    "cadre_visage": [
+      0.218,
+      0.091,
+      0.848,
+      0.531
+    ],
+    "fichier": "portraits/camille-see.webp"
+  },
+  {
+    "id": "naquet",
+    "nom": "Alfred Naquet",
+    "dates": "1834-1916",
+    "commons": "File:Naquet - btv1b53144821d.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "entre 1875 et 1895",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Naquet_-_btv1b53144821d.jpg",
+    "cadre_visage": [
+      0.302,
+      0.148,
+      0.723,
+      0.53
+    ],
+    "fichier": "portraits/naquet.webp"
+  },
+  {
+    "id": "francis-garnier",
+    "nom": "Francis Garnier",
+    "dates": "1839-1873",
+    "commons": "File:FrancisGarnierPhotograph.JPG",
+    "auteur": "Photographe non identifié",
+    "date": "années 1860",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:FrancisGarnierPhotograph.JPG",
+    "cadre_visage": [
+      0.4,
+      0.04,
+      0.56,
+      0.15
+    ],
+    "fichier": "portraits/francis-garnier.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "courbet-amiral",
+    "nom": "Amiral Courbet",
+    "dates": "1827-1885",
+    "commons": "File:Amédée Courbet Appert BNF Gallica.jpg",
+    "auteur": "Ernest-Eugène Appert (photographie)",
+    "date": "vers 1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Am%C3%A9d%C3%A9e_Courbet_Appert_BNF_Gallica.jpg",
+    "cadre_visage": [
+      0.352,
+      0.153,
+      0.576,
+      0.332
+    ],
+    "fichier": "portraits/courbet-amiral.webp"
+  },
+  {
+    "id": "clemenceau",
+    "nom": "Georges Clemenceau",
+    "dates": "1841-1929",
+    "commons": "File:Édouard Manet - Portrait of George Clemeceau.jpg",
+    "auteur": "Édouard Manet",
+    "date": "1879-1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:%C3%89douard_Manet_-_Portrait_of_George_Clemeceau.jpg",
+    "cadre_visage": [
+      0.322,
+      0.057,
+      0.646,
+      0.355
+    ],
+    "fichier": "portraits/clemenceau.webp"
+  },
+  {
+    "id": "wilson",
+    "nom": "Daniel Wilson",
+    "dates": "1840-1919",
+    "commons": "File:Wilson, Daniel (atelier Nadar).jpeg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Wilson,_Daniel_(atelier_Nadar).jpeg",
+    "cadre_visage": [
+      0.249,
+      0.117,
+      0.759,
+      0.569
+    ],
+    "fichier": "portraits/wilson.webp"
+  },
+  {
+    "id": "bonnemains",
+    "nom": "Marguerite de Bonnemains",
+    "dates": "1855-1891",
+    "commons": "File:Bonnemains, Marguerite (Petit Parisien illustré, 1891-10-11).jpg",
+    "auteur": "Gravure du Petit Parisien illustré",
+    "date": "11 octobre 1891",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Bonnemains,_Marguerite_(Petit_Parisien_illustr%C3%A9,_1891-10-11).jpg",
+    "cadre_visage": [
+      0.234,
+      0.059,
+      0.693,
+      0.477
+    ],
+    "fichier": "portraits/bonnemains.webp"
+  },
+  {
+    "id": "lesseps",
+    "nom": "Ferdinand de Lesseps",
+    "dates": "1805-1894",
+    "commons": "File:Retrato de Ferdinand de Lesseps, por Felix Nadar.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "entre 1872 et 1876",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Retrato_de_Ferdinand_de_Lesseps,_por_Felix_Nadar.jpg",
+    "cadre_visage": [
+      0.311,
+      0.126,
+      0.706,
+      0.506
+    ],
+    "fichier": "portraits/lesseps.webp"
+  },
+  {
+    "id": "reinach",
+    "nom": "Jacques de Reinach",
+    "dates": "1840-1892",
+    "commons": "File:Baron de Reinach.jpg",
+    "auteur": "Gravure de presse (« L'affaire du Panama »)",
+    "date": "1893",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Baron_de_Reinach.jpg",
+    "cadre_visage": [
+      0.242,
+      0.0,
+      0.861,
+      0.537
+    ],
+    "fichier": "portraits/reinach.webp"
+  },
+  {
+    "id": "auguste-vaillant",
+    "nom": "Auguste Vaillant",
+    "dates": "1861-1894",
+    "commons": "File:Auguste Vaillant.jpg",
+    "auteur": "Charles Gallot (photographie)",
+    "date": "vers 1893",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Auguste_Vaillant.jpg",
+    "cadre_visage": [
+      0.0,
+      0.0,
+      0.991,
+      0.826
+    ],
+    "fichier": "portraits/auguste-vaillant.webp"
+  },
+  {
+    "id": "emile-henry",
+    "nom": "Émile Henry",
+    "dates": "1872-1894",
+    "commons": "File:Emile Henry 1872-1894.jpg",
+    "auteur": "Photographe non identifié",
+    "date": "entre 1890 et 1892",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Emile_Henry_1872-1894.jpg",
+    "cadre_visage": [
+      0.14,
+      0.007,
+      0.819,
+      0.633
+    ],
+    "fichier": "portraits/emile-henry.webp"
+  },
+  {
+    "id": "leon-xiii",
+    "nom": "Léon XIII",
+    "dates": "1810-1903",
+    "commons": "File:Papa Leone XIII (3x4 cropped).jpeg",
+    "auteur": "Braun et Cie (photographie)",
+    "date": "1878",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Papa_Leone_XIII_(3x4_cropped).jpeg",
+    "cadre_visage": [
+      0.355,
+      0.062,
+      0.654,
+      0.323
+    ],
+    "fichier": "portraits/leon-xiii.webp"
+  },
+  {
+    "id": "nicolas-ii",
+    "nom": "Nicolas II",
+    "dates": "1868-1918",
+    "commons": "File:Nicolas II - Ilia Répine - Musée russe Ж-5725.jpg",
+    "auteur": "Ilia Répine",
+    "date": "1896",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Nicolas_II_-_Ilia_R%C3%A9pine_-_Mus%C3%A9e_russe_%D0%96-5725.jpg",
+    "cadre_visage": [
+      0.442,
+      0.154,
+      0.582,
+      0.266
+    ],
+    "fichier": "portraits/nicolas-ii.webp"
+  },
+  {
+    "id": "bartholdi",
+    "nom": "Auguste Bartholdi",
+    "dates": "1834-1904",
+    "commons": "File:Bartholdi, Auguste, Nadar, GALLICA.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "vers 1875",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Bartholdi,_Auguste,_Nadar,_GALLICA.jpg",
+    "cadre_visage": [
+      0.176,
+      0.093,
+      0.849,
+      0.569
+    ],
+    "fichier": "portraits/bartholdi.webp"
+  },
+  {
+    "id": "edison",
+    "nom": "Thomas Edison",
+    "dates": "1847-1931",
+    "commons": "File:Portrait of Thomas Edison taken in Paris. (f3eede167bd345a4ae882f43cd733597).jpg",
+    "auteur": "Photographe non identifié, Paris",
+    "date": "vers 1889",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_of_Thomas_Edison_taken_in_Paris._(f3eede167bd345a4ae882f43cd733597).jpg",
+    "cadre_visage": [
+      0.342,
+      0.144,
+      0.702,
+      0.482
+    ],
+    "fichier": "portraits/edison.webp"
+  },
+  {
+    "id": "seurat",
+    "nom": "Georges Seurat",
+    "dates": "1859-1891",
+    "commons": "File:Georges Seurat 1888 (cropped).jpg",
+    "auteur": "Photographe non identifié",
+    "date": "1888",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Georges_Seurat_1888_(cropped).jpg",
+    "cadre_visage": [
+      0.282,
+      0.183,
+      0.778,
+      0.575
+    ],
+    "fichier": "portraits/seurat.webp"
+  },
+  {
+    "id": "renoir",
+    "nom": "Auguste Renoir",
+    "dates": "1841-1919",
+    "commons": "File:Pierre Auguste Renoir, uncropped image.jpg",
+    "auteur": "Photographe non identifié, musée d'Orsay",
+    "date": "vers 1875",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pierre_Auguste_Renoir,_uncropped_image.jpg",
+    "cadre_visage": [
+      0.277,
+      0.177,
+      0.716,
+      0.587
+    ],
+    "fichier": "portraits/renoir.webp"
+  },
+  {
+    "id": "cheret",
+    "nom": "Jules Chéret",
+    "dates": "1836-1932",
+    "commons": "File:Chéret, Jules, Nadar, Gallica.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1900",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Ch%C3%A9ret,_Jules,_Nadar,_Gallica.jpg",
+    "cadre_visage": [
+      0.151,
+      0.138,
+      0.778,
+      0.618
+    ],
+    "fichier": "portraits/cheret.webp"
+  },
+  {
+    "id": "toulouse-lautrec",
+    "nom": "Toulouse-Lautrec",
+    "dates": "1864-1901",
+    "commons": "File:(Albi) Musée Toulouse-Lautrec - Henri de Toulouse-Lautrec en Buste (1890)- Charles Maurin.jpg",
+    "auteur": "Charles Maurin, musée Toulouse-Lautrec d'Albi",
+    "date": "1890",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:(Albi)_Mus%C3%A9e_Toulouse-Lautrec_-_Henri_de_Toulouse-Lautrec_en_Buste_(1890)-_Charles_Maurin.jpg",
+    "cadre_visage": [
+      0.28,
+      0.28,
+      0.85,
+      0.62
+    ],
+    "fichier": "portraits/toulouse-lautrec.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "mucha",
+    "nom": "Alfons Mucha",
+    "dates": "1860-1939",
+    "commons": "File:Alfons Mucha LOC 3c05828u (cropped).jpg",
+    "auteur": "George R. Lawrence Co. (photographie)",
+    "date": "1906",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Alfons_Mucha_LOC_3c05828u_(cropped).jpg",
+    "cadre_visage": [
+      0.392,
+      0.119,
+      0.935,
+      0.596
+    ],
+    "fichier": "portraits/mucha.webp"
+  },
+  {
+    "id": "mallarme",
+    "nom": "Stéphane Mallarmé",
+    "dates": "1842-1898",
+    "commons": "File:Mallarmé Nadar.jpg",
+    "auteur": "Paul Nadar (photographie)",
+    "date": "vers 1890",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Mallarm%C3%A9_Nadar.jpg",
+    "cadre_visage": [
+      0.228,
+      0.114,
+      0.761,
+      0.556
+    ],
+    "fichier": "portraits/mallarme.webp"
+  },
+  {
+    "id": "marey",
+    "nom": "Étienne-Jules Marey",
+    "dates": "1830-1904",
+    "commons": "File:Docteur Marey - btv1b53170692j.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "entre 1875 et 1895",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Docteur_Marey_-_btv1b53170692j.jpg",
+    "cadre_visage": [
+      0.388,
+      0.163,
+      0.581,
+      0.343
+    ],
+    "fichier": "portraits/marey.webp"
+  },
+  {
+    "id": "louis-lumiere",
+    "nom": "Louis Lumière",
+    "dates": "1864-1948",
+    "commons": "File:Auguste and Louis Lumière.jpg",
+    "auteur": "Photographe non identifié (Louis, à droite, avec son frère Auguste)",
+    "date": "vers 1895",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Auguste_and_Louis_Lumi%C3%A8re.jpg",
+    "cadre_visage": [
+      0.46,
+      0.31,
+      0.63,
+      0.5
+    ],
+    "fichier": "portraits/louis-lumiere.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "auguste-lumiere",
+    "nom": "Auguste Lumière",
+    "dates": "1862-1954",
+    "commons": "File:Auguste and Louis Lumière.jpg",
+    "auteur": "Photographe non identifié (Auguste, à gauche, avec son frère Louis)",
+    "date": "vers 1895",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Auguste_and_Louis_Lumi%C3%A8re.jpg",
+    "cadre_visage": [
+      0.3,
+      0.28,
+      0.47,
+      0.47
+    ],
+    "fichier": "portraits/auguste-lumiere.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "ader",
+    "nom": "Clément Ader",
+    "dates": "1841-1925",
+    "commons": "File:Portrait de Clément Ader, Gallica.jpg",
+    "auteur": "Photographe non identifié (recueil de la BnF)",
+    "date": "début du XXe siècle",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Cl%C3%A9ment_Ader,_Gallica.jpg",
+    "cadre_visage": [
+      0.123,
+      0.14,
+      0.804,
+      0.664
+    ],
+    "fichier": "portraits/ader.webp"
+  },
+  {
+    "id": "lucie-dreyfus",
+    "nom": "Lucie Dreyfus",
+    "dates": "1869-1945",
+    "commons": "File:Lucie Dreyfus - portrait médaillon.jpg",
+    "auteur": "Photographe non identifié",
+    "date": "vers 1900",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Lucie_Dreyfus_-_portrait_m%C3%A9daillon.jpg",
+    "cadre_visage": [
+      0.283,
+      0.128,
+      0.688,
+      0.479
+    ],
+    "fichier": "portraits/lucie-dreyfus.webp"
+  },
+  {
+    "id": "esterhazy",
+    "nom": "Esterhazy",
+    "dates": "1847-1923",
+    "commons": "File:Ferdinand Walsin Esterhazy en uniforme du 74e d'infanterie.png",
+    "auteur": "Photographe non identifié",
+    "date": "entre 1893 et 1898",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Ferdinand_Walsin_Esterhazy_en_uniforme_du_74e_d%27infanterie.png",
+    "cadre_visage": [
+      0.279,
+      0.17,
+      0.704,
+      0.477
+    ],
+    "fichier": "portraits/esterhazy.webp"
+  },
+  {
+    "id": "henry",
+    "nom": "Commandant Henry",
+    "dates": "1846-1898",
+    "commons": "File:Hubert-Joseph Henry.jpg",
+    "auteur": "Marius Neyroud (photographie)",
+    "date": "vers 1895",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Hubert-Joseph_Henry.jpg",
+    "cadre_visage": [
+      0.224,
+      0.023,
+      0.657,
+      0.439
+    ],
+    "fichier": "portraits/henry.webp"
+  },
+  {
+    "id": "caran-d-ache",
+    "nom": "Caran d'Ache",
+    "dates": "1858-1909",
+    "commons": "File:Caran d'Ache (atelier Nadar).JPEG",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "1886",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Caran_d%27Ache_(atelier_Nadar).JPEG",
+    "cadre_visage": [
+      0.198,
+      0.115,
+      0.764,
+      0.582
+    ],
+    "fichier": "portraits/caran-d-ache.webp"
+  },
+  {
+    "id": "forain",
+    "nom": "Jean-Louis Forain",
+    "dates": "1852-1931",
+    "commons": "File:Portrait de Jean Louis Forain, (1852-1931), peintre dessinateur, PH9002.jpg",
+    "auteur": "Atelier Nadar (photographie), musée Carnavalet",
+    "date": "1894",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Jean_Louis_Forain,_(1852-1931),_peintre_dessinateur,_PH9002.jpg",
+    "cadre_visage": [
+      0.419,
+      0.132,
+      0.656,
+      0.315
+    ],
+    "fichier": "portraits/forain.webp"
+  },
+  {
+    "id": "behanzin",
+    "nom": "Béhanzin",
+    "dates": "1845-1906",
+    "commons": "File:Behanzin (2).jpg",
+    "auteur": "Édouard Aublet (gravure)",
+    "date": "1895",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Behanzin_(2).jpg",
+    "cadre_visage": [
+      0.264,
+      0.15,
+      0.651,
+      0.581
+    ],
+    "fichier": "portraits/behanzin.webp"
+  },
+  {
+    "id": "kitchener",
+    "nom": "Lord Kitchener",
+    "dates": "1850-1916",
+    "commons": "File:Lord Kitchener of Khartoum.png",
+    "auteur": "Alexander Bassano (photographie)",
+    "date": "1899",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Lord_Kitchener_of_Khartoum.png",
+    "cadre_visage": [
+      0.187,
+      0.044,
+      0.781,
+      0.508
+    ],
+    "fichier": "portraits/kitchener.webp"
+  },
+  {
+    "id": "guimard",
+    "nom": "Hector Guimard",
+    "dates": "1867-1942",
+    "commons": "File:Hector-Guimard-(1907).jpg",
+    "auteur": "Photographe non identifié, Cooper-Hewitt",
+    "date": "1907",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Hector-Guimard-(1907).jpg",
+    "cadre_visage": [
+      0.236,
+      0.052,
+      0.758,
+      0.47
+    ],
+    "fichier": "portraits/guimard.webp"
+  },
+  {
+    "id": "scheurer-kestner",
+    "nom": "Scheurer-Kestner",
+    "dates": "1833-1899",
+    "commons": "File:Portrait d'Auguste Scheurer-Kestner, (1833-1899), (industriel, homme politique), PH56355.jpg",
+    "auteur": "Cyrus Anatole Pougnet (photographie), musée Carnavalet",
+    "date": "entre 1860 et 1890",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_d%27Auguste_Scheurer-Kestner,_(1833-1899),_(industriel,_homme_politique),_PH56355.jpg",
+    "cadre_visage": [
+      0.361,
+      0.174,
+      0.611,
+      0.349
+    ],
+    "fichier": "portraits/scheurer-kestner.webp"
+  },
+  {
+    "id": "buisson",
+    "nom": "Ferdinand Buisson",
+    "dates": "1841-1932",
+    "commons": "File:Ferdinand Buisson 1914 (cropped).jpg",
+    "auteur": "Agence Meurisse (photographie)",
+    "date": "1914",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Ferdinand_Buisson_1914_(cropped).jpg",
+    "cadre_visage": [
+      0.266,
+      0.157,
+      0.899,
+      0.614
+    ],
+    "fichier": "portraits/buisson.webp"
+  },
+  {
+    "id": "degas-1876",
+    "nom": "Edgar Degas",
+    "dates": "1834-1917",
+    "commons": "File:(Albi) Portrait de Degas vers 1876 - Marcellin Desboutin - Fondation Custodia Paris.jpg",
+    "auteur": "Marcellin Desboutin (pointe sèche), fondation Custodia",
+    "date": "vers 1876",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:(Albi)_Portrait_de_Degas_vers_1876_-_Marcellin_Desboutin_-_Fondation_Custodia_Paris.jpg",
+    "cadre_visage": [
+      0.439,
+      0.237,
+      0.723,
+      0.56
+    ],
+    "fichier": "portraits/degas-1876.webp"
+  },
+  {
+    "id": "mac-mahon-1873",
+    "nom": "Mac-Mahon",
+    "dates": "1808-1893",
+    "commons": "File:Portrait de Patrice de Mac-Mahon, (1808-1893), (Maréchal de France, Président de la République 1873-79), PH52968 (1 of 2).jpg",
+    "auteur": "Photographe non identifié, musée Carnavalet",
+    "date": "années 1870",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Patrice_de_Mac-Mahon,_(1808-1893),_(Mar%C3%A9chal_de_France,_Pr%C3%A9sident_de_la_R%C3%A9publique_1873-79),_PH52968_(1_of_2).jpg",
+    "cadre_visage": [
+      0.352,
+      0.249,
+      0.656,
+      0.498
+    ],
+    "fichier": "portraits/mac-mahon-1873.webp"
+  },
+  {
+    "id": "fouillee",
+    "nom": "Augustine Fouillée (G. Bruno)",
+    "dates": "1833-1923",
+    "note": "aucun portrait libre identifié (l'image Wikidata est une illustration du Tour de la France par deux enfants)"
+  },
+  {
+    "id": "bienvenue",
+    "nom": "Fulgence Bienvenüe",
+    "dates": "1852-1936",
+    "note": "pas de portrait libre de la période : photographies des années 1930 seulement"
+  },
+  {
+    "id": "zola",
+    "nom": "Émile Zola",
+    "dates": "1840-1902",
+    "commons": "File:Émile Zola, par Nadar, btv1b53215721q f1.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "vers 1896",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:%C3%89mile_Zola,_par_Nadar,_btv1b53215721q_f1.jpg",
+    "cadre_visage": [
+      0.347,
+      0.136,
+      0.721,
+      0.47
+    ],
+    "fichier": "portraits/zola.webp"
   }
 ]

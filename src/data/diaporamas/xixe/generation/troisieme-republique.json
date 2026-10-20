@@ -1,0 +1,92 @@
+{
+  "slug": "troisieme-republique",
+  "modele": "Wan 2.2 TI2V-5B",
+  "negatif": "text, letters, subtitles, watermark, logo, photorealistic, 3D render, modern clothing, cars, deformed faces, distorted bodies, extra limbs, flickering, fast motion, camera shake, jump cut, morphing, blurry, low quality, oversaturated colours, new characters appearing",
+  "ambiance": {
+    "modele": "EzAudio s3_xl",
+    "graines": [
+      42,
+      43
+    ],
+    "note": "Ambiance sonore de chaque clip (spec 17) : consigne anglaise par diapositive (champ « ambiance » de l'élément), rien que la narration ne dise, ni voix, ni musique, ni son anachronique ; deux tirages de 10 s enchaînés en fondu."
+  },
+  "elements": [
+    {
+      "n": 1,
+      "type": "mouvement",
+      "graine": 8001,
+      "prompt": "Thick smoke rises from the burning palace and drifts slowly to the right across the sky, the clouds glide very slowly, the red glow in the windows flickers faintly, the river water ripples gently; the buildings, the bridge and the boats stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1870s coloured lithograph: same colours and drawn lines, same composition; nothing new appears, no text.",
+      "ambiance": "Crackling fire far away, river water lapping against moored boats, light wind"
+    },
+    {
+      "n": 11,
+      "type": "mouvement",
+      "graine": 8011,
+      "prompt": "The water ripples gently, the small dark boats rock very slowly, the smoke of the distant steamers drifts in the mist, the reflection of the orange sun shimmers on the water. Almost static camera, very slow push-in. Keep exactly the look of this 1872 oil painting: same colours and loose brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Calm harbour at dawn, gentle lapping water, a distant steamship whistle, seagulls far away"
+    },
+    {
+      "n": 32,
+      "type": "mouvement",
+      "graine": 8032,
+      "prompt": "The clouds drift slowly across the sky, the two balloons sway very gently, the fountains of the cascade splash, tiny visitors stroll slowly in the gardens. Almost static camera, very slow push-in. Keep exactly the look of this 1878 coloured lithograph: same colours and drawn lines, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Busy fairground crowd heard from afar, murmuring voices, water fountains splashing"
+    },
+    {
+      "n": 35,
+      "type": "mouvement",
+      "graine": 8035,
+      "prompt": "The flags flutter gently in the breeze above the square, the light clouds drift across the sky, the festive crowd stirs slightly and waves hats in place; faces stay unchanged. Almost static camera, very slow push-in. Keep exactly the look of this 1881 oil painting: same colours and vivid brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Huge festive crowd cheering in a square, flags flapping in the wind, hats and footsteps"
+    },
+    {
+      "n": 50,
+      "type": "mouvement",
+      "graine": 8050,
+      "prompt": "The long black crape veils on the arch stir slowly in the wind, the leaves of the trees sway gently, the dense crowd around the catafalque stirs very slightly in place; the arch and the buildings stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1885 albumen photograph: same sepia tones and grain, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Vast silent crowd, shuffling footsteps, soft wind in the trees, a muffled drum far away"
+    },
+    {
+      "n": 58,
+      "type": "mouvement",
+      "graine": 8058,
+      "prompt": "The leaves of the trees and the grass stir gently in the breeze, the white coifs and collars of the seated women flutter slightly, the distant procession near the church moves slowly; faces stay unchanged. Almost static camera, very slow push-in. Keep exactly the look of this 1887 oil painting: same colours and smooth brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Quiet country meadow, birds, a church bell tolling far away, soft wind"
+    },
+    {
+      "n": 75,
+      "type": "mouvement",
+      "graine": 8175,
+      "prompt": "Only the air moves: the small flag flutters slightly and a faint haze of dust drifts low over the ground. The tirailleurs, the drummers and the mounted officers stay perfectly still in their places, as in a picture, keeping exactly their poses, legs and faces. Almost static camera, very slow push-in. Keep exactly the look of this 1886 wood engraving: same black engraved lines on paper, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Marching boots on dry ground, a drum beating in step, a distant crowd"
+    },
+    {
+      "n": 99,
+      "type": "mouvement",
+      "graine": 8199,
+      "prompt": "Only the light and the leaves move: the dappled sunlight flickers softly through the leaves on the dresses and on the ground, the leaves of the trees sway gently, the glass lamps shimmer. All the people, dancers and seated figures alike, stay perfectly still in their places, as in a painting, keeping exactly their poses and faces. Almost static camera, very slow push-in. Keep exactly the look of this 1876 oil painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Open-air dance garden, lively crowd chatter and laughter, feet shuffling on gravel, glasses clinking"
+    },
+    {
+      "n": 110,
+      "type": "mouvement",
+      "graine": 8210,
+      "prompt": "The river water ripples gently, smoke drifts slowly from the distant chimneys under the bridge, the misty air moves. The workers on the planks sway almost imperceptibly under their baskets but stay in their places; the planks, the barges and the bridge stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1875 oil painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "River quay, footsteps on wooden planks, water lapping against barges, distant factory noise"
+    },
+    {
+      "n": 142,
+      "type": "mouvement",
+      "graine": 8142,
+      "prompt": "The river water ripples, the small steamboats glide very slowly on the Seine, the clouds drift across the sky, a thin plume of smoke rises from a distant chimney. Almost static camera, very slow push-in. Keep exactly the look of this 1900 coloured lithograph: same colours and drawn lines, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Riverside crowd far away, water lapping, a steamboat whistle in the distance"
+    },
+    {
+      "n": 147,
+      "type": "mouvement",
+      "graine": 8247,
+      "prompt": "Only the flags and the air move: the red flags and the tricolour flags flutter slowly in the cold wind, white steam drifts from the factory chimneys behind. The marching crowd stays perfectly still in place, as in a painting: every man, woman and child keeps exactly the same pose, the same face and the same place; no one raises or carries anything new. Almost static camera, very slow push-in. Keep exactly the look of this 1899 oil painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+      "ambiance": "Marching crowd footsteps on frozen ground, murmuring voices, flags flapping, distant factory hum"
+    }
+  ]
+}

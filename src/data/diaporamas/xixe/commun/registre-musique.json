@@ -433,7 +433,8 @@
       "periodes": [
         "01-revolution",
         "02-consulat-empire",
-        "05-deuxieme-republique"
+        "05-deuxieme-republique",
+        "08-troisieme-republique"
       ],
       "statut": "retenu",
       "verifie": "2026-10-08"
@@ -3669,6 +3670,632 @@
       ],
       "statut": "retenu",
       "verifie": "2026-10-18"
+    },
+    {
+      "id": "commons:File:Camille Saint-Saëns - Phaéton.flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Camille Saint-Saëns - Phaéton.flac"
+      },
+      "oeuvre": "Phaéton, poème symphonique",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1873",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction Louis Fourestier (enregistrement de 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Camille_Saint-Sa%C3%ABns_-_Pha%C3%A9ton.flac",
+      "duree": 589.6,
+      "structure": [
+        [
+          0.0,
+          267.2,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l#disc1/01.03. Scènes Pittoresques:Angélus.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l",
+        "fichier": "disc1/01.03. Scènes Pittoresques:Angélus.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "Scènes pittoresques : Angélus",
+      "compositeur": "Jules Massenet",
+      "date_oeuvre": "1874",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff (disque London, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l",
+      "duree": 296.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Angélus"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national#disc1/01.01. L'Arlésienne Suite: Prelude.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national",
+        "fichier": "disc1/01.01. L'Arlésienne Suite: Prelude.mp3",
+        "publication": "1955"
+      },
+      "oeuvre": "L’Arlésienne, suite nº 1 : Prélude",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1872",
+      "interprete": "Orchestre national de l’Opéra de Paris, direction Pierre-Michel Le Conte (disque Capitol, 1955)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1955 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1955, avant 1963) ; https://archive.org/details/lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national",
+      "duree": 394.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          189.7,
+          "fond, Prélude"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l#disc1/02.01. Scènes Alsaciennes: Dimanche Matin.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l",
+        "fichier": "disc1/02.01. Scènes Alsaciennes: Dimanche Matin.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "Scènes alsaciennes : Dimanche matin",
+      "compositeur": "Jules Massenet",
+      "date_oeuvre": "1881",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff (disque London, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l",
+      "duree": 404.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Dimanche matin"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l#disc1/02.04. Scènes Alsaciennes: Dimanche Soir.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l",
+        "fichier": "disc1/02.04. Scènes Alsaciennes: Dimanche Soir.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "Scènes alsaciennes : Dimanche soir",
+      "compositeur": "Jules Massenet",
+      "date_oeuvre": "1881",
+      "interprete": "Orchestre de la Société des concerts du Conservatoire, direction Albert Wolff (disque London, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_massenet-scenes-pittoresques-scenes-alsaci_jules-massenet-albert-wolff-orchestre-de-l",
+      "duree": 348.3,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          51.3,
+          "fond, Dimanche soir"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national#disc1/01.04. L'Arlésienne Suite: Pastorale.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national",
+        "fichier": "disc1/01.04. L'Arlésienne Suite: Pastorale.mp3",
+        "publication": "1955"
+      },
+      "oeuvre": "L’Arlésienne, suite nº 2 : Pastorale",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1872",
+      "interprete": "Orchestre national de l’Opéra de Paris, direction Pierre-Michel Le Conte (disque Capitol, 1955)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1955 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1955, avant 1963) ; https://archive.org/details/lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national",
+      "duree": 295.6,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          275.0,
+          "fond, Pastorale"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "commons:File:Camille Saint-Saëns - Suite Algérienne, I. Prélude (en vue d'Alger).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Camille Saint-Saëns - Suite Algérienne, I. Prélude (en vue d'Alger).flac"
+      },
+      "oeuvre": "Suite algérienne : Prélude (En vue d’Alger)",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1880",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction Louis Fourestier (enregistrement de 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Camille_Saint-Sa%C3%ABns_-_Suite_Alg%C3%A9rienne,_I._Pr%C3%A9lude_(en_vue_d%27Alger).flac",
+      "duree": 229.1,
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Prélude (En vue d’Alger)"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "commons:File:Camille Saint-Saëns - Suite Algérienne, III. Rêverie du soir (à Blida).flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Camille Saint-Saëns - Suite Algérienne, III. Rêverie du soir (à Blida).flac"
+      },
+      "oeuvre": "Suite algérienne : Rêverie du soir (à Blida)",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1880",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction Louis Fourestier (enregistrement de 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Camille_Saint-Sa%C3%ABns_-_Suite_Alg%C3%A9rienne,_III._R%C3%AAverie_du_soir_(%C3%A0_Blida).flac",
+      "duree": 301.2,
+      "structure": [
+        [
+          0.0,
+          72.3,
+          "fond, Rêverie du soir (à Blida)"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_french-orchestral-music_ernest-ansermet-lorchestre-de-la-suisse-ro#disc1/01.01. Danse Macabre, Op. 40.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_french-orchestral-music_ernest-ansermet-lorchestre-de-la-suisse-ro",
+        "fichier": "disc1/01.01. Danse Macabre, Op. 40.mp3",
+        "publication": "1953"
+      },
+      "oeuvre": "Danse macabre, poème symphonique",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1874",
+      "interprete": "Orchestre de la Suisse romande, direction Ernest Ansermet (disque London, 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1953 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1953, avant 1963) ; https://archive.org/details/lp_french-orchestral-music_ernest-ansermet-lorchestre-de-la-suisse-ro",
+      "duree": 446.4,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          374.8,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_symphony-no-3_camille-saint-sans-boston-symphony-orchest#disc1/01.01. Symphony No. 3 In C Minor, Op. 78: First Movement: Adagio; Allegro Moderato; Poco Adagio.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_symphony-no-3_camille-saint-sans-boston-symphony-orchest",
+        "fichier": "disc1/01.01. Symphony No. 3 In C Minor, Op. 78: First Movement: Adagio; Allegro Moderato; Poco Adagio.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "Symphonie nº 3 « avec orgue » : premier mouvement",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1886",
+      "interprete": "Orchestre symphonique de Boston, Berj Zamkochian à l’orgue, direction Charles Munch (disque RCA Victor, 1959)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_symphony-no-3_camille-saint-sans-boston-symphony-orchest",
+      "duree": 1153.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          498.9,
+          "fond, premier mouvement"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national#disc1/02.01. Pelléas And Mélisande Suite, Op. 80: Prelude.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national",
+        "fichier": "disc1/02.01. Pelléas And Mélisande Suite, Op. 80: Prelude.mp3",
+        "publication": "1955"
+      },
+      "oeuvre": "Pelléas et Mélisande, suite : Prélude",
+      "compositeur": "Gabriel Fauré",
+      "date_oeuvre": "1898",
+      "interprete": "Orchestre national de l’Opéra de Paris, direction Pierre-Michel Le Conte (disque Capitol, 1955)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1955 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1955, avant 1963) ; https://archive.org/details/lp_bizet-larlsienne-suite-faur-pellas-and-mli_pierre-michel-le-conte-orchestre-national",
+      "duree": 336.7,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          304.0,
+          "fond, Prélude"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_symphony-in-d-minor_andr-cluytens-orchestre-national-de-france#disc1/01.01. Symphony In D Minor: 1st Movement: Lento-Allegro Non Troppo.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_symphony-in-d-minor_andr-cluytens-orchestre-national-de-france",
+        "fichier": "disc1/01.01. Symphony In D Minor: 1st Movement: Lento-Allegro Non Troppo.mp3",
+        "publication": "1953"
+      },
+      "oeuvre": "Symphonie en ré mineur : Lento, Allegro non troppo",
+      "compositeur": "César Franck",
+      "date_oeuvre": "1888",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction André Cluytens (disque Angel, 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1953 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1953, avant 1963) ; https://archive.org/details/lp_symphony-in-d-minor_andr-cluytens-orchestre-national-de-france",
+      "duree": 1026.6,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          425.1,
+          "fond, Lento, Allegro non troppo"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr#disc1/02.01. Massenet: \"Le Cid\" Ballet Music - Castillane.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr",
+        "fichier": "disc1/02.01. Massenet: \"Le Cid\" Ballet Music - Castillane.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Le Cid, ballet : Castillane",
+      "compositeur": "Jules Massenet",
+      "date_oeuvre": "1885",
+      "interprete": "Orchestre philharmonique d’Israël, direction Jean Martinon (disque London, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr",
+      "duree": 170.7,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, Castillane"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr#disc1/02.06. Massenet: \"Le Cid\" Ballet Music - Madrilene.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr",
+        "fichier": "disc1/02.06. Massenet: \"Le Cid\" Ballet Music - Madrilene.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Le Cid, ballet : Madrilène",
+      "compositeur": "Jules Massenet",
+      "date_oeuvre": "1885",
+      "interprete": "Orchestre philharmonique d’Israël, direction Jean Martinon (disque London, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr",
+      "duree": 213.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          203.5,
+          "fond, Madrilène"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:marthe-chenal-georges-bizet-carmen-habanera-pathe-saphir-n-49-enregistrement-en-1915#Marthe Chenal - Georges Bizet  - Carmen - Habanera - Pathé saphir N° 49 enregistré en 1915 .mp3",
+      "source": {
+        "type": "archive",
+        "id": "marthe-chenal-georges-bizet-carmen-habanera-pathe-saphir-n-49-enregistrement-en-1915",
+        "fichier": "Marthe Chenal - Georges Bizet  - Carmen - Habanera - Pathé saphir N° 49 enregistré en 1915 .mp3",
+        "publication": "1915"
+      },
+      "oeuvre": "Carmen : Habanera",
+      "compositeur": "Georges Bizet, sur un livret de Henri Meilhac et Ludovic Halévy",
+      "date_oeuvre": "1875",
+      "interprete": "Marthe Chenal, soprano, avec orchestre",
+      "enregistrement": "Pathé, 1915",
+      "genre": "chant",
+      "licence": "Domaine public",
+      "preuve_date": "année de publication déclarée dans la source : 1915 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1915, avant 1963) ; item : http://creativecommons.org/publicdomain/mark/1.0/ ; https://archive.org/details/marthe-chenal-georges-bizet-carmen-habanera-pathe-saphir-n-49-enregistrement-en-1915",
+      "duree": 177.3,
+      "filtres": "78tours",
+      "structure": [
+        [
+          0.8,
+          25.8,
+          "« L'amour est un oiseau rebelle »"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:78_boulanger-march_the-black-diamonds-band-desormes_gbia3038427a#Boulanger March - The Black Diamonds Band.flac",
+      "source": {
+        "type": "archive",
+        "id": "78_boulanger-march_the-black-diamonds-band-desormes_gbia3038427a",
+        "fichier": "Boulanger March - The Black Diamonds Band.flac",
+        "publication": "1910"
+      },
+      "oeuvre": "En revenant de la revue (Marche Boulanger)",
+      "compositeur": "Louis-César Desormes, sur des paroles de Lucien Delormel et Léon Garnier",
+      "date_oeuvre": "1886",
+      "interprete": "The Black Diamonds Band, fanfare (78 tours Zonophone, vers 1910)",
+      "enregistrement": "Zonophone, vers 1910",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (78 tours publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1910 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1910, avant 1963) ; https://archive.org/details/78_boulanger-march_the-black-diamonds-band-desormes_gbia3038427a",
+      "duree": 204.4,
+      "filtres": "78tours",
+      "structure": [
+        [
+          5.5,
+          29.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_larlesienne-suites-1-and-2-espana-raps_jean-morel-georges-bizet-emmanuel-chabr#disc1/01.01. España Rapsodie.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_larlesienne-suites-1-and-2-espana-raps_jean-morel-georges-bizet-emmanuel-chabr",
+        "fichier": "disc1/01.01. España Rapsodie.mp3",
+        "publication": "1959"
+      },
+      "oeuvre": "España, rhapsodie",
+      "compositeur": "Emmanuel Chabrier",
+      "date_oeuvre": "1883",
+      "interprete": "Orchestre dirigé par Jean Morel (disque RCA Victor Red Seal, 1959)",
+      "enregistrement": "RCA Victor, 1959",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1959 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1959, avant 1963) ; https://archive.org/details/lp_larlesienne-suites-1-and-2-espana-raps_jean-morel-georges-bizet-emmanuel-chabr",
+      "duree": 406.0,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          5.5,
+          29.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_la-mer-rhapsodie-espagnole-gymnopedies-nos_serge-koussevitzky-boston-symphony-orchest#disc1/02.02. Gymnopedie No. 1.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_la-mer-rhapsodie-espagnole-gymnopedies-nos_serge-koussevitzky-boston-symphony-orchest",
+        "fichier": "disc1/02.02. Gymnopedie No. 1.mp3",
+        "publication": "1957"
+      },
+      "oeuvre": "Gymnopédie nº 1 (orchestration de Claude Debussy, 1897)",
+      "compositeur": "Erik Satie",
+      "date_oeuvre": "1888",
+      "interprete": "Orchestre symphonique de Boston, direction Serge Koussevitzky (disque RCA Camden, 1957)",
+      "enregistrement": "RCA Camden, 1957",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1957 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1957, avant 1963) ; https://archive.org/details/lp_la-mer-rhapsodie-espagnole-gymnopedies-nos_serge-koussevitzky-boston-symphony-orchest",
+      "duree": 620.6,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          1.0,
+          25.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_la-mer-prelude-a-lapres-midi-dun-faune_claude-debussy-maurice-ravel-ernest-ans#disc1/02.02. Prelude A L'apres-Midi D'un Faune.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_la-mer-prelude-a-lapres-midi-dun-faune_claude-debussy-maurice-ravel-ernest-ans",
+        "fichier": "disc1/02.02. Prelude A L'apres-Midi D'un Faune.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Prélude à l’après-midi d’un faune",
+      "compositeur": "Claude Debussy",
+      "date_oeuvre": "1894",
+      "interprete": "Orchestre de la Suisse romande, direction Ernest Ansermet (disque London, 1958)",
+      "enregistrement": "London, 1958",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_la-mer-prelude-a-lapres-midi-dun-faune_claude-debussy-maurice-ravel-ernest-ans",
+      "duree": 550.4,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          4.4,
+          28.4,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr#disc1/02.07. Massenet: \"Le Cid\" Ballet Music - Navarraise.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr",
+        "fichier": "disc1/02.07. Massenet: \"Le Cid\" Ballet Music - Navarraise.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Le Cid, ballet : Navarraise",
+      "compositeur": "Jules Massenet",
+      "date_oeuvre": "1885",
+      "interprete": "Orchestre philharmonique d’Israël, direction Jean Martinon (disque London, 1958)",
+      "enregistrement": "London, 1958",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_le-cid-ballet-music-les-patineurs-the-ska_jean-martinon-israel-philharmonic-orchestr",
+      "duree": 170.8,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          1.5,
+          25.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "08-troisieme-republique"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "commons:File:Columbia-dwx1550ix-c-wlx1289.ogg",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Columbia-dwx1550ix-c-wlx1289.ogg"
+      },
+      "oeuvre": "Prélude à l'après-midi d'un faune, première face (Columbia, 1930 ; transfert très faible, environ un demi-ton trop haut : vitesse à corriger)",
+      "compositeur": "Claude Debussy",
+      "interprete": "Orchestre des Concerts Straram, direction Walther Straram",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-20"
+    },
+    {
+      "id": "archive:irvinggilmore-12#32893 PAULUS - La Légion Étrangère (Galle) Mx. 1040 G (21.VIII.1900).flac",
+      "source": {
+        "type": "archive",
+        "id": "irvinggilmore-12",
+        "fichier": "32893 PAULUS - La Légion Étrangère (Galle) Mx. 1040 G (21.VIII.1900).flac"
+      },
+      "oeuvre": "La Légion étrangère (Gramophone 32893, 1900)",
+      "compositeur": "Galle",
+      "interprete": "Paulus",
+      "structure": [],
+      "periodes": [],
+      "statut": "possible",
+      "verifie": "2026-10-20"
     }
   ],
   "introuvables": [
@@ -3803,6 +4430,12 @@
       "compositeur": "Joseph Darcier, sur des paroles d'Alexis Bouvier",
       "cherche": "2026-10-18",
       "ou": "cherché le 2026-10-18 : Commons (rien), Internet Archive (seulement « Paris canaille » de Léo Ferré, sans rapport) ; aucun enregistrement ancien libre"
+    },
+    {
+      "oeuvre": "En revenant de la revue (chantée)",
+      "compositeur": "Louis-César Desormes, paroles de Lucien Delormel et Léon Garnier",
+      "cherche": "2026-10-20",
+      "ou": "cherché le 2026-10-20 : Commons (revenant revue, Paulus) : rien ; Internet Archive (\"revenant de la revue\", paulus collection:78rpm) : seulement des partitions et des versions instrumentales « Boulanger March » (78 tours de fanfare, retenue : Black Diamonds Band) ; Paulus enregistré en 1900 dans d'autres chansons (irvinggilmore-12, La Légion étrangère)"
     }
   ]
 }

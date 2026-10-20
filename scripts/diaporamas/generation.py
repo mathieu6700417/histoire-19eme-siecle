@@ -43,9 +43,13 @@ MODELE = 'Wan 2.2 TI2V-5B'  # modèle par défaut (crédits), sauf `modele` dans
 # calculées : 24 images/s fluides, ≈ 20 s de calcul par clip ; retour de l'utilisateur : « deux fois
 # plus lentement »), puis H.264 crf 27 avec un plafond de débit de 3,2 Mbit/s, qui borne les gravures
 # très détaillées (sans le plafond : 10 à 12 Mo ; avec : 4,2 Mo, sans perte visible à l'échelle 1) ;
-# les tableaux font 1,2 à 2,5 Mo.
+# les tableaux font 1,2 à 2,5 Mo. Depuis que les clips durent jusqu'à la fin de la diapositive
+# (17 à 18 s), ce plafond fixe donnait 5,6 à 7,4 Mo (6 clips sur 11 de L'année terrible au-dessus de
+# 4,5 Mo) : le plafond est désormais aussi borné par POIDS_MAX ÷ durée du clip ralenti (≈ 1,9 Mbit/s
+# pour 18 s), et un clip encore trop lourd est réencodé avec un plafond réduit de 15 %.
 CRF = 27
 DEBIT_MAX = '3200k'
+POIDS_MAX = 4.3e6            # octets visés par clip (garde ≈ 0,2 Mo sous 4,5 Mo)
 RALENTI = 2
 IMAGES_PAR_S = 24
 # Longueur générée par diapositive (retour de l'utilisateur du 2026-10-12 : le clip ne doit pas
@@ -167,16 +171,33 @@ def encoder(slug: str, origine: str) -> None:
         clip = clips / brut.name
         if clip.exists() and clip.stat().st_mtime >= brut.stat().st_mtime:
             continue
+        encoder_clip(brut, clip)
+        print(f'{clip.relative_to(c.RACINE)} : {clip.stat().st_size / 1e6:.1f} Mo')
+
+
+def encoder_clip(brut: Path, clip: Path) -> None:
+    """Un brut → un clip pour le site : ralenti par interpolation, H.264 crf CRF, plafond de débit
+    DEBIT_MAX borné par POIDS_MAX ÷ durée ; un clip encore au-dessus de POIDS_MAX est réencodé avec
+    un plafond réduit de 15 % (deux fois au plus)."""
+    duree = float(subprocess.run(
+        ['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', str(brut)],
+        capture_output=True, text=True, check=True).stdout.strip() or 0) * RALENTI
+    debit = int(DEBIT_MAX[:-1])
+    if duree > 0:
+        debit = min(debit, int(POIDS_MAX * 8 / duree / 1000))
+    for essai in range(3):
         # Le clip est joué une seule fois par le lecteur, puis tenu sur sa dernière image (retour de
         # l'utilisateur du 2026-10-12 : ni boucle ni aller-retour), ralenti par interpolation.
         subprocess.run([
             'ffmpeg', '-y', '-loglevel', 'error', '-i', str(brut),
             '-vf', f'setpts={RALENTI}*PTS,minterpolate=fps={IMAGES_PAR_S}:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1',
             '-map', '0:v:0', '-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', str(CRF),
-            '-maxrate', DEBIT_MAX, '-bufsize', str(int(DEBIT_MAX[:-1]) * 2) + 'k',
+            '-maxrate', f'{debit}k', '-bufsize', f'{debit * 2}k',
             '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(clip),
         ], check=True)
-        print(f'{clip.relative_to(c.RACINE)} : {clip.stat().st_size / 1e6:.1f} Mo')
+        if clip.stat().st_size <= POIDS_MAX * 1.05:
+            break
+        debit = int(debit * 0.85)
 
 
 def colab(*args: str, timeout: float = 300, silencieux: bool = False, code: str | None = None, essais: int = 3) -> str:
