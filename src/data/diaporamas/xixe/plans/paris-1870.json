@@ -1,0 +1,120 @@
+{
+  "nom": "paris-1870",
+  "fichier": "fonds/paris-1870.webp",
+  "largeur": 2000,
+  "hauteur": 1684,
+  "titre": "Nouveau plan de Paris divisé en vingt arrondissements",
+  "auteur": "Alexandre Vuillemin (Hachette)",
+  "date": "1870",
+  "credit": "Plan de Vuillemin, 1870",
+  "commons": "File:1870 Vuillemin Map of Paris.jpg",
+  "licence": "Domaine public",
+  "licence_relevee": "Public domain",
+  "slugs": [
+    "annee-terrible"
+  ],
+  "calage": {
+    "u": [
+      5.982779814538726,
+      0.13074413814081537,
+      -19.858564872529193
+    ],
+    "v": [
+      -0.03178207868842454,
+      -10.803935888334802,
+      528.436853303225
+    ],
+    "metres_par_pixel": 6.12,
+    "ecart_moyen_m": 28,
+    "points": [
+      [
+        "Arc de Triomphe (centre de la place)",
+        2224,
+        2410,
+        48.87378,
+        2.29504,
+        27
+      ],
+      [
+        "Notre-Dame (milieu de l’édifice)",
+        4645,
+        3815,
+        48.853,
+        2.3498,
+        20
+      ],
+      [
+        "Hôtel de Ville",
+        4773,
+        3577,
+        48.85639,
+        2.35222,
+        31
+      ],
+      [
+        "Colonne de Juillet (Bastille)",
+        5493,
+        3791,
+        48.85322,
+        2.36914,
+        16
+      ],
+      [
+        "Place du Trône, auj. de la Nation (centre)",
+        6680,
+        4105,
+        48.84833,
+        2.39583,
+        7
+      ],
+      [
+        "Dôme des Invalides",
+        3012,
+        3694,
+        48.855,
+        2.3125,
+        42
+      ],
+      [
+        "Observatoire (milieu de l’édifice)",
+        4043,
+        4907,
+        48.836389,
+        2.337229,
+        54
+      ],
+      [
+        "Obélisque de la Concorde",
+        3403,
+        2959,
+        48.86556,
+        2.32111,
+        29
+      ],
+      [
+        "Colonne Vendôme",
+        3755,
+        2829,
+        48.86747,
+        2.32941,
+        7
+      ],
+      [
+        "Panthéon",
+        4482,
+        4261,
+        48.8462,
+        2.34611,
+        13
+      ],
+      [
+        "Gare du Nord (embarcadère)",
+        4900,
+        1906,
+        48.88111,
+        2.35528,
+        24
+      ]
+    ]
+  }
+}

@@ -352,6 +352,7 @@ def lancer(slug: str, gpu: str, session: str, graines: str, seulement: str, repr
         raise SystemExit(f'Manifeste absent : lancer « preparer {slug} » d\'abord')
     R = distant(slug)
     if not reprendre:
+        fond.une_seule_session(session)
         print(f'session « {session} » ({gpu})…', flush=True)
         fond.colab('new', '-s', session, '--gpu', gpu, timeout=600)
     try:

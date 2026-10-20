@@ -377,7 +377,9 @@ export type ElementCarte = Quand & (
   | { type: 'zone'; points?: [number, number][]; parties?: [number, number][][]; libelle?: string;
       /** hachures (défaut), plein (gris foncé), clair (gris moyen) ; découpée sur les terres. */
       style?: 'hachures' | 'plein' | 'clair'; etiquette?: [number, number] }
-  | { type: 'trait'; points: [number, number][]; libelle?: string; etiquette?: [number, number] });
+  /** trait : noir, se dessine (défaut) ; eau : cours d'eau détaillé d'une carte recadrée, lissé, en
+   *  bleu-gris (il remplace alors les fleuves du fond, trop grossiers à cette échelle). */
+  | { type: 'trait'; points: [number, number][]; libelle?: string; etiquette?: [number, number]; style?: 'eau' });
 
 /** Épisode : courte narration (voix du narrateur) sur ce que les images ne montrent pas, avec des
  *  visuels animés synchronisés sur les passages `quand` de la narration. */

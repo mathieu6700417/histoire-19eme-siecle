@@ -1372,6 +1372,8 @@ const sectionsLivre = d.actes.map((a, i) => ({
     background: linear-gradient(90deg, #8f8c85, var(--c-texte) 70%);
     transform: translate(-50%, calc(50% - 0.5px));
   }
+  /* Mise au point en fin d'animation (annotations du 2026-10-18) : noir plein en fondu (--net). */
+  .diaporama .frise-t__acte::after { content: ''; position: absolute; inset: 0; background: var(--c-texte); opacity: var(--net, 0); }
   .diaporama .frise-t__zone {
     position: absolute;
     bottom: 0.45rem;

@@ -101,6 +101,7 @@ export const CARTON_TRACE_DUREE = 1.6;
 export const CARTON_ACTE_MIN = 2.8;     // le segment de l'acte part au plus tôt ici (après le tracé)…
 export const CARTON_ACTE_MAX = 4.4;     // … et au plus tard là (titre très long)
 export const CARTON_ACTE_DUREE = 2.5;   // avancée du segment, années qui défilent
+export const CARTON_NET_DUREE = 0.9;    // puis mise au point : halo effacé, segment noir plein
 // Rangée de portraits : fondu de l'ovale et de son étiquette quand la voix dit le nom (s).
 export const PORTRAIT_FONDU = 0.45;
 // Portraits et objets du bas (révision du 2026-10-09 : 1,5 fois plus grands) : hauteur de l'ovale

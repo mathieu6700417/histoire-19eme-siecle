@@ -51,7 +51,7 @@ from PIL import Image
 
 import commun as c
 import couleur as co
-from generation import colab   # CLI colab, tuée et refaite si elle ne répond pas
+from generation import colab, une_seule_session   # CLI colab, tuée et refaite si elle ne répond pas ; règle d'une seule session
 
 Image.MAX_IMAGE_PIXELS = None
 ECRAN = 1920            # largeur de l'écran de référence (plein écran 1920 × 1080)
@@ -208,7 +208,13 @@ def mesurer(slug: str, dist: Path) -> None:
         info = infos.get(i['commons'], {'manquant': True})
         if not v or info.get('manquant') or not i.get('largeur'):
             continue
-        m = decider(i, v['l'], (info['largeur'], info['hauteur']), **rg)
+        # `image.rotation` (images.py) : l'original se compte redressé, comme l'image servie.
+        original = (info['largeur'], info['hauteur'])
+        if (i.get('rotation') or 0) % 180:
+            original = original[::-1]
+        m = decider(i, v['l'], original, **rg)
+        if i.get('rotation'):
+            m['rotation'] = i['rotation']
         m.update(cle=e['cle'], commons=i['commons'], titre=i.get('titre_court') or i.get('titre'), auteur=i.get('auteur'), technique=i.get('technique'),
                  vue=v['vue'], instant=v['t'], utile=i.get('utile') or [0, 0, 1, 1], recadrage=i.get('recadrage'), url=info['url'],
                  plan=e['plan'] is not None)
@@ -237,16 +243,19 @@ def original_recadre(m: dict, largeur_mini: int) -> Image.Image:
     recadré comme l'image servie, en RVB."""
     import images as im_mod
     rc = m['recadrage'] or [0, 0, 1, 1]
+    rot = m.get('rotation') or 0                              # `original` est compté redressé (mesurer)
     demande = min(m['original'][0], round(largeur_mini / (rc[2] - rc[0])) + 8)
     url = m['url']
     if demande < m['original'][0] * 0.9:
         # Version réduite servie par Commons : un original de 12 000 px pèse des dizaines de Mo.
-        info = c.infos_fichiers([m['commons']], largeur=demande)[m['commons']]
+        # Commons compte la largeur de l'original non tourné.
+        largeur_commons = round(demande * m['original'][1] / m['original'][0]) if rot % 180 else demande
+        info = c.infos_fichiers([m['commons']], largeur=largeur_commons)[m['commons']]
         url = info.get('vignette') or url
-    im = Image.open(io.BytesIO(im_mod.telecharger(url)))
+    im = im_mod.tourner(Image.open(io.BytesIO(im_mod.telecharger(url))), rot)
     im.load()
     if im.width < demande * 0.98 and url != m['url']:        # Commons a servi plus petit que demandé : l'original
-        im = Image.open(io.BytesIO(im_mod.telecharger(m['url'])))
+        im = im_mod.tourner(Image.open(io.BytesIO(im_mod.telecharger(m['url']))), rot)
         im.load()
     if im.mode not in ('RGB', 'L'):
         fond = Image.new('RGB', im.size, (251, 250, 247))
@@ -299,6 +308,7 @@ def lancer(slug: str, gpu: str, session: str | None, garder: bool, reprendre: bo
     session = session or f'nettete-{slug}'
     R = REMOTE
     if not reprendre:
+        une_seule_session(session)
         print(f'session « {session} » ({gpu})…')
         colab('new', '-s', session, '--gpu', gpu, timeout=600)
     try:
@@ -400,7 +410,8 @@ def publier(slug: str, seulement: set[str]) -> None:
             continue
         with Image.open(src) as im:
             taille = im.size
-        if [i['largeur'], i['hauteur']] != m['servie'] or (i.get('recadrage') or None) != (m['recadrage'] or None):
+        if [i['largeur'], i['hauteur']] != m['servie'] or (i.get('recadrage') or None) != (m['recadrage'] or None) \
+                or (i.get('rotation') or 0) != (m.get('rotation') or 0):
             print(f'  {cle:>4} : image servie ou recadrage changés depuis la mesure : ignorée')
             continue
         if abs(taille[0] / taille[1] - i['largeur'] / i['hauteur']) > 0.004 * i['largeur'] / i['hauteur']:

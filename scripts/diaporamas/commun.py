@@ -366,25 +366,40 @@ _MULT = {'cent': 100, 'cents': 100, 'mille': 1000, 'million': 10 ** 6, 'millions
          'milliard': 10 ** 9, 'milliards': 10 ** 9}
 
 
-def nombre_dit(texte: str) -> int | None:
+def nombre_dit(texte: str) -> int | float | None:
     """Nombre écrit dans `texte`, en chiffres (« 1 300 », « 7 ») ou en toutes lettres (« trois cent
-    mille », « vingt-neuf », « quatre-vingt-trois », « mille trois cents ») : la première suite de
-    mots-nombres ; None s'il n'y en a pas."""
+    mille », « vingt-neuf », « quatre-vingt-trois », « mille trois cents », « deux milliards et
+    demi ») : la première suite de mots-nombres ; None s'il n'y en a pas. « et demi(e) » ajoute la
+    moitié du dernier multiplicateur (« deux milliards et demi » : 2 500 000 000 ; « trois et
+    demi » : 3,5, rendu en flottant s'il n'est pas entier)."""
+    # « un franc cinquante » : 1,5 (francs et centimes dits sans le mot « centimes »).
+    fr = re.match(r"\s*([a-zà-ÿ\- ]+?)\s+francs?\s+([a-zà-ÿ\- ]+)", texte.lower())
+    if fr:
+        a, b = nombre_dit(fr.group(1)), nombre_dit(fr.group(2))
+        if a is not None and b is not None and 0 < b < 100:
+            v = round(a + b / 100, 2)
+            return int(v) if v == int(v) else v
     m = re.search(r'\d[\d   ]*\d|\d', texte)
     mots = re.findall(r"[a-zà-ÿ]+", texte.lower().replace('-', ' '))
     suite, vu = [], False
     for w in mots:
-        if w in _UNITES or w in _MULT or (w == 'et' and vu):
+        if w in _UNITES or w in _MULT or (w == 'et' and vu) or (w in ('demi', 'demie') and suite[-1:] == ['et']):
             suite.append(w)
             vu = True
+            if w in ('demi', 'demie'):
+                break
         elif vu:
             break
     if not suite:
         return int(re.sub(r'\D', '', m.group())) if m else None
-    total, courant = 0, 0
+    total, courant, dernier = 0, 0, 1
     for w in suite:
         if w == 'et':
             continue
+        if w in ('demi', 'demie'):
+            # « deux milliards et demi » : moitié du dernier multiplicateur ; « trois et demi » : 0,5.
+            v = total + courant + dernier / 2
+            return int(v) if v == int(v) else v
         if w in _UNITES:
             # « quatre vingt » : 4 × 20 (aussi après une centaine : « deux cent quatre-vingt-un »)
             if _UNITES[w] == 20 and courant % 100 == 4:
@@ -395,7 +410,7 @@ def nombre_dit(texte: str) -> int | None:
             courant = max(1, courant) * 100
         else:
             total += max(1, courant) * _MULT[w]
-            courant = 0
+            courant, dernier = 0, _MULT[w]
     return total + courant
 
 

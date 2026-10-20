@@ -40,7 +40,9 @@ Tout va dans .cache/diaporamas/fonds/<slug>/ :
 **Méthode (retenue le 2026-10-12 après deux retours de l'utilisateur).** Deux passes du modèle.
 Passe 1 : la zone utile est posée au centre d'une toile de 1392 × 576 px (2,42 hauteurs d'image de
 large, multiples de 16), le reste prérempli d'un flou de la même image ; le modèle prolonge **les
-côtés**. La sortie est accordée en couleur sur l'original (gain et décalage par canal mesurés sur la
+côtés**. Toile grise unie à la place du flou (2026-10-18, `toile_de`) pour les décors photographiques ou
+sombres, où le modèle laissait le flou (période 06) ; `"toile": "grise" | "floue"` dans lot.json force
+le choix, et la passe 2 suit la même toile. La sortie est accordée en couleur sur l'original (gain et décalage par canal mesurés sur la
 partie commune), raccordée à ses bords, et l'original est recollé. Passe 2, pour les décors : cette
 image élargie est posée au milieu d'une toile de 1392 × 864 px (25 % de plus en haut et en bas),
 bandes préremplies d'un flou, et le modèle prolonge **le haut et le bas** d'après une consigne qui
@@ -84,6 +86,7 @@ import argparse, datetime, html, json, math, re, shutil, subprocess, sys, time, 
 from pathlib import Path
 
 import commun as c
+from generation import sessions_colab, une_seule_session   # règle « une seule session Colab à la fois » (aussi pour vignettes.py)
 
 MODELE = 'black-forest-labs/FLUX.2-klein-4B'
 H_IMAGE = 576            # hauteur de l'image dans la toile (px)
@@ -128,6 +131,14 @@ DESSUS_DESSOUS = {   # passe 2, genres sans décor : ce qu'il y a au-dessus et a
     'uni': ('the same plain background, in the same even tone, with nothing on it',) * 2,
 }
 PAPIER = ('lithographie', 'gravure', 'eau-forte', 'estampe', 'dessin', 'manuscrit', 'placard', 'imprimé')
+# Toile grise (2026-10-18, bilan de la période 06) : sur les décors sombres ou photographiques, le
+# modèle laisse souvent le préremplissage flou tel quel (10 décors sur 37 dans la 06, tous réussis
+# une fois refaits sur une toile grise unie). Par défaut, ces décors partent donc sur une toile grise ;
+# `"toile": "grise" | "floue"` dans lot.json force le choix (les deux passes suivent la même toile).
+GRIS_TOILE = (128, 128, 128)
+SOMBRE = 90              # luminance moyenne (0-255) des bandes latérales de la zone utile sous laquelle un décor est « sombre »
+BANDE_SOMBRE = 0.08      # largeur de ces bandes (fraction de la zone utile)
+PHOTO = ('photographi', 'albumin', 'daguerréotype', 'collodion', 'ferrotype')
 
 
 def dossier(slug: str) -> Path:
@@ -176,6 +187,22 @@ def style_de(im: dict) -> str:
     return STYLE_DEFAUT
 
 
+def toile_de(regle: dict, genre: str, im: dict, zone) -> str:
+    """« grise » ou « floue » : le lot décide (`toile`), sinon grise pour un décor photographique
+    (technique) ou sombre (bords latéraux de la zone utile sous SOMBRE)."""
+    if regle.get('toile') in ('grise', 'floue'):
+        return regle['toile']
+    if genre != 'decor':
+        return 'floue'
+    if any(m in (im.get('technique') or '').lower() for m in PHOTO):
+        return 'grise'
+    from PIL import ImageStat
+    g = zone.convert('L')
+    b = max(4, round(g.width * BANDE_SOMBRE))
+    lum = (ImageStat.Stat(g.crop((0, 0, b, g.height))).mean[0] + ImageStat.Stat(g.crop((g.width - b, 0, g.width, g.height))).mean[0]) / 2
+    return 'grise' if lum < SOMBRE else 'floue'
+
+
 def toile(zone):
     """Dimensions de la toile et boîte de l'image [x0, y0, w, h] (px)."""
     h = H_IMAGE
@@ -200,20 +227,30 @@ def preparer(slug: str) -> None:
         orig.save(dest / 'orig' / f'{nom}.webp', quality=92, method=5)
         Wc, Hc, (x0, y0, w, h) = toile(zone)
         petit = zone.resize((w, h), Image.LANCZOS)
-        k = max(Wc / zone.width, Hc / zone.height) * 1.08
-        g = zone.resize((round(zone.width * k), round(zone.height * k)), Image.BILINEAR)
-        gx, gy = (g.width - Wc) // 2, (g.height - Hc) // 2
-        g = g.crop((gx, gy, gx + Wc, gy + Hc)).filter(ImageFilter.GaussianBlur(28))
-        g.paste(petit, (x0, y0))
-        g.save(dest / 'in' / f'{nom}.jpg', quality=95, subsampling=0)
         regle = lot.get(nom) or {}
         genre = regle.get('genre') or genre_de(im)
-        consigne = (f'Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless '
-                    f'continuation of {QUOI[genre]}. {regle.get("plus", "").strip()} Keep the central picture exactly unchanged, '
-                    f'at the same place and size. Style: {style_de(im)}. The added areas contain only background; {INTERDITS}.')
+        sorte = toile_de(regle, genre, im, zone)
+        if sorte == 'grise':
+            g = Image.new('RGB', (Wc, Hc), GRIS_TOILE)
+        else:
+            k = max(Wc / zone.width, Hc / zone.height) * 1.08
+            g = zone.resize((round(zone.width * k), round(zone.height * k)), Image.BILINEAR)
+            gx, gy = (g.width - Wc) // 2, (g.height - Hc) // 2
+            g = g.crop((gx, gy, gx + Wc, gy + Hc)).filter(ImageFilter.GaussianBlur(28))
+        g.paste(petit, (x0, y0))
+        g.save(dest / 'in' / f'{nom}.jpg', quality=95, subsampling=0)
+        if sorte == 'grise':   # consigne des tirages refaits sur toile grise de la période 06
+            consigne = (f'Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, '
+                        f'detailed, seamless continuation of {QUOI[genre]}. {regle.get("plus", "").strip()} Keep the central picture exactly '
+                        f'unchanged, at the same place and size. Style: {style_de(im)}. The added areas contain only background, in sharp '
+                        f'focus, not blurred; {INTERDITS}.')
+        else:
+            consigne = (f'Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless '
+                        f'continuation of {QUOI[genre]}. {regle.get("plus", "").strip()} Keep the central picture exactly unchanged, '
+                        f'at the same place and size. Style: {style_de(im)}. The added areas contain only background; {INTERDITS}.')
         elements.append(dict(nom=nom, cle=e['cle'], n=e['n'], commons=im.get('commons'), titre=im.get('titre'), auteur=im.get('auteur'),
                              date=im.get('date'), technique=im.get('technique'), utile=im.get('utile') or [0, 0, 1, 1],
-                             zone=[zone.width, zone.height], toile=[Wc, Hc], boite=[x0, y0, w, h], genre=genre,
+                             zone=[zone.width, zone.height], toile=[Wc, Hc], boite=[x0, y0, w, h], genre=genre, fond_toile=sorte,
                              dessus=regle.get('dessus'), dessous=regle.get('dessous'), bandes=regle.get('bandes'), teinte=regle.get('teinte'),
                              consigne=' '.join(consigne.split()), graine=zlib.crc32((im.get('commons') or nom).encode()) % 100000))
     (dest / 'manifeste.json').write_text(json.dumps(dict(slug=slug, modele=MODELE, elements=elements), ensure_ascii=False, indent=1), encoding='utf-8')
@@ -227,6 +264,7 @@ def preparer(slug: str) -> None:
         print(f"  à compléter dans lot.json avant la passe 2 (« dessus », « dessous » d'un décor) : {', '.join(sans)}")
     print(f"{len(elements)} images entières ({sum(1 for e in elements if e['cle'].isdigit())} images de diapositive, "
           f"{sum(1 for e in elements if not e['cle'].isdigit())} plans ou galeries) ; genres {dict(collections.Counter(e['genre'] for e in elements))} ; "
+          f"{sum(1 for e in elements if e['fond_toile'] == 'grise')} sur toile grise ; "
           f"kit {(dest / 'kit.zip').stat().st_size / 1e6:.1f} Mo")
 
 
@@ -302,10 +340,20 @@ def lancer(slug: str, gpu: str, session: str, graines: str, seulement: str, repr
         preparer2(slug)
         renvoyer_kit = True
     if not reprendre:
+        une_seule_session(session)
         print(f'session « {session} » ({gpu})…', flush=True)
         colab('new', '-s', session, '--gpu', gpu, timeout=600)
     try:
-        colab('exec', '-s', session, '--timeout', '60', timeout=90, code=f'import os; os.makedirs("{R}/in{s}", exist_ok=True); os.makedirs("{R}/out{s}", exist_ok=True)')
+        # Premier exec : le noyau d'une session neuve peut répondre 503 (pas prêt, 2026-10-14) : on réessaie.
+        for essai in range(4):
+            try:
+                colab('exec', '-s', session, '--timeout', '60', timeout=90, code=f'import os; os.makedirs("{R}/in{s}", exist_ok=True); os.makedirs("{R}/out{s}", exist_ok=True)')
+                break
+            except SystemExit as e:
+                if essai == 3:
+                    raise
+                print(f'  (premier exec refusé : {str(e)[:120]} ; nouvel essai dans 30 s)', flush=True)
+                time.sleep(30)
         if not reprendre or renvoyer_kit:
             colab('upload', '-s', session, str(dest / f'kit{s}.zip'), f'{R}/kit{s}.zip', timeout=900)
             colab('exec', '-s', session, '--timeout', '120', timeout=150, code=f'import zipfile; zipfile.ZipFile("{R}/kit{s}.zip").extractall("{R}/in{s}")')
@@ -318,14 +366,33 @@ def lancer(slug: str, gpu: str, session: str, graines: str, seulement: str, repr
             print(f'sans suivi : « rapatrier {slug} » puis « arreter {slug} » à la main (session {session})')
             return
         debut = time.time()
+        dernier_rapatriement = debut
+        perdue = False
         while time.time() - debut < 3 * 3600:
             time.sleep(60)
             fin = suivre(slug, session, 3, passe).splitlines()
             if fin:
                 print(' ', fin[-1], flush=True)
+            else:
+                # Journal illisible : la session a-t-elle disparu (2026-10-14 : deux sessions L4 perdues,
+                # suivi resté trois heures sur une chaîne vide) ?
+                noms = sessions_colab()
+                if noms is not None and session not in noms:
+                    print(f'session « {session} » absente de colab sessions : perdue ; suivi arrêté '
+                          f'(sorties déjà rapatriées gardées ; relancer avec --seulement les images manquantes)', flush=True)
+                    perdue = True
+                    break
             if any(l.endswith(' FIN') or ' ERREUR' in l for l in fin):
                 break
-        rapatrier(slug, session, passe)
+            # Rapatriement au fil de l'eau (toutes les 10 min) : une session perdue n'emporte que le reste.
+            if time.time() - dernier_rapatriement > 600:
+                try:
+                    rapatrier(slug, session, passe)
+                except SystemExit as e:
+                    print(f'  (rapatriement intermédiaire impossible : {str(e)[:120]})', flush=True)
+                dernier_rapatriement = time.time()
+        if not perdue:
+            rapatrier(slug, session, passe)
     finally:
         if not garder and not sans_suivi:
             arreter(session)
@@ -551,12 +618,16 @@ def preparer2(slug: str) -> None:
         m = marge_bande(g.height)
         Hc = g.height + 2 * m
         k = Hc / g.height * 1.04
-        pre = g.resize((round(g.width * k), round(g.height * k)), Image.BILINEAR)
-        px, py = (pre.width - g.width) // 2, (pre.height - Hc) // 2
-        pre = pre.crop((px, py, px + g.width, py + Hc)).filter(ImageFilter.GaussianBlur(24))
+        grise = el.get('fond_toile') == 'grise'   # même toile qu'en passe 1 (bandes restées floues : 22, 30, 59, 73b, 131 de la 06)
+        if grise:
+            pre = Image.new('RGB', (g.width, Hc), GRIS_TOILE)
+        else:
+            pre = g.resize((round(g.width * k), round(g.height * k)), Image.BILINEAR)
+            px, py = (pre.width - g.width) // 2, (pre.height - Hc) // 2
+            pre = pre.crop((px, py, px + g.width, py + Hc)).filter(ImageFilter.GaussianBlur(24))
         pre.paste(g, (0, m))
         pre.save(dest / 'in2' / f"{el['nom']}.jpg", quality=95, subsampling=0)
-        consigne = (f'Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, '
+        consigne = (f'Extend this wide picture upward and downward to fill the whole frame: replace the {"flat gray" if grise else "blurred"} bands at the top and at the bottom with a sharp, '
                     f'seamless continuation of the same scene. Above the picture: {dessus}. Below the picture: {dessous}. Keep the wide central picture exactly '
                     f'unchanged, at the same place and size. Style: {style_de(el)}. The added bands contain only background, not blurred; {INTERDITS}.')
         els.append(dict(nom=el['nom'], marge=m, toile=[g.width, Hc], consigne=consigne, graine=el['graine'] + DECALAGE_GRAINE_2))

@@ -31,7 +31,7 @@ export function installerLectures(lec: Lecteur) {
       etats.set(el, e);
     }
     // Remise à zéro : tout sera recalculé au premier rendu.
-    e.lu = -1; e.cour = -1; e.y = -1; e.hz = -1; e.actif = -1; e.phrase = -2;
+    e.lu = -1; e.cour = -1; e.y = -1; e.hz = -1; e.wz = -1; e.actif = -1; e.phrase = -2;
     e.mots?.forEach((l) => l.forEach((x) => x.classList.remove('est-lu', 'est-courant')));
     if (e.defile) e.defile.style.transform = '';
     e.anims?.forEach((a) => (a.p = -1));
@@ -65,8 +65,11 @@ export function installerLectures(lec: Lecteur) {
       });
       e.lu = lu; e.cour = cour;
     }
+    // Poème : chaque vers sur une ligne (annotations du 2026-10-18), recalculé si la largeur change.
+    const z = e.zone!;
+    if (el.classList.contains('citation--poeme') && z.clientWidth !== e.wz) { ajusterVers(el, z); e.wz = z.clientWidth; e.y = -1; }
     // Défilement : recalculé aussi quand la zone change de taille (plein écran, rotation).
-    const z = e.zone!, hz = z.clientHeight;
+    const hz = z.clientHeight;
     const repere = e.mots![Math.max(0, Math.min(N - 1, cour - 1))]?.[0];
     const H = e.defile!.offsetHeight;
     let y = 0;
@@ -82,6 +85,19 @@ export function installerLectures(lec: Lecteur) {
       z.classList.toggle('deborde', y > 0);
       e.y = y; e.hz = hz;
     }
+  }
+  /** Réduit le texte d'un poème pour que le plus long vers tienne sur une ligne, sans descendre
+   *  sous VERS_REDUC_MIN de la taille normale (au-delà, le vers passe à la ligne en retrait). */
+  const VERS_REDUC_MIN = 0.62;
+  function ajusterVers(el: HTMLElement, z: HTMLElement) {
+    const corps = el.querySelector<HTMLElement>('.citation__corps')!;
+    corps.style.fontSize = '';
+    z.classList.add('mesure-vers');
+    let large = 0;
+    for (const v of z.querySelectorAll<HTMLElement>('.citation__vers')) large = Math.max(large, v.scrollWidth);
+    z.classList.remove('mesure-vers');
+    const r = large > z.clientWidth ? Math.max(VERS_REDUC_MIN, (z.clientWidth / large) * 0.98) : 1;
+    if (r < 1) corps.style.fontSize = `calc(var(--taille) * ${r.toFixed(3)})`;
   }
   Object.assign(lec, { etats });
 }

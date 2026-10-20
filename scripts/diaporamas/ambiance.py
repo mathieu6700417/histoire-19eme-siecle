@@ -86,6 +86,7 @@ def lancer(slug: str, gpu: str, session: str | None, garder: bool, reprendre: bo
     session = session or f'ambiance-{slug}'
     R = REMOTE
     if not reprendre:
+        g.une_seule_session(session)
         print(f'session « {session} » ({gpu})…')
         g.colab('new', '-s', session, '--gpu', gpu, timeout=600)
     try:

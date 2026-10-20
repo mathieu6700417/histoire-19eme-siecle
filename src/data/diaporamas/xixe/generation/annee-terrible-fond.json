@@ -1,0 +1,1260 @@
+{
+  "usage": "fond",
+  "images": {
+    "File:Mitrailleuse et chassepot.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 53677,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.094,
+        0.049,
+        0.896,
+        0.838
+      ],
+      "flou": "faible"
+    },
+    "File:Charles Cousin-Montauban, Graf von Palikao, c. 1865-1875.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 2981,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.114,
+        0.075,
+        0.876,
+        0.846
+      ],
+      "flou": "faible"
+    },
+    "File:Bilder vom Kriegschauplass, 1870. Nr 4.Unter dem Rothen Krenz in Rezonville. G.23186.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a village street in Lorraine in summer 1870, in the same hand-coloured wood engraving: half-timbered house fronts, a stone wall and dusty ground strewn with straw. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 88212,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale summer sky and drifting smoke above the roofs. Below the picture: the dusty trampled ground of the street with straw. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 87243,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.053,
+        0.068,
+        0.948,
+        0.861
+      ],
+      "flou": "faible"
+    },
+    "File:M. le général de Galliffet - btv1b532567738.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 1367,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.158,
+        0.075,
+        0.846,
+        0.936
+      ],
+      "flou": "faible"
+    },
+    "File:Guillaume Ier et Napoléon III à Sedan lors de la capitulation. PH16643.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the same faded sepia picture of a château drawing room, same grain: heavy curtains, panelled walls and a carved armchair. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 89129,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the panelled wall and the heavy curtains. Below the picture: the patterned carpet of the drawing room. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 90160,
+      "tirage_haut_bas": 2,
+      "genre": "decor",
+      "utile": [
+        0.08,
+        0.055,
+        0.937,
+        0.831
+      ],
+      "flou": "faible"
+    },
+    "File:Napoleon auf Wilhelmshöhe (BM 1871,1209.4539).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 26994,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.154,
+        0.084,
+        0.891,
+        0.876
+      ],
+      "flou": "faible"
+    },
+    "File:JOURNEE DU 4 SEPTEMBRE Les gardes nationaux et le peuple pénètrent dans le Corps législatif..jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the interior of the Corps législatif in the same black-and-white wood engraving: tall stone columns and draped walls of the hall, drawn in fine engraved lines. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 61469,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the tall columns and the dark coffered ceiling. Below the picture: the dark floor of the hall in engraved hatching. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 60500,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.045,
+        0.02,
+        0.973,
+        0.932
+      ],
+      "flou": "faible"
+    },
+    "File:Le Gouvernement de la défense nationale.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 48576,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.107,
+        0.105,
+        0.881,
+        0.856
+      ],
+      "flou": "faible"
+    },
+    "File:Portrait de l'impératrice Eugénie, (Eugénie de Montijo), (1826-1920), PH50198 (2 of 2).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 98319,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.097,
+        0.064,
+        0.903,
+        0.836
+      ],
+      "flou": "faible"
+    },
+    "File:Affiche première Commune de Lyon, Archives municipales de Lyon, 6fi 6833.TIF": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 96697,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.0,
+        0.0,
+        0.986,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Arrivée de Victor Hugo à Paris gare du Nord, septembre 1870, 2017.0.3565.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the forecourt of the Gare du Nord at night in the same black-and-white wood engraving: the stone station front with tall arches, and cobbled ground. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 75579,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the dark night sky above the station front. Below the picture: the cobbled ground of the forecourt. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 74610,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.074,
+        0.08,
+        0.927,
+        0.883
+      ],
+      "flou": "fort",
+      "invente": "rue de gare inventée, devantures éclairées d'allure tardive",
+      "raison": "rue de gare inventée, devantures éclairées d'allure tardive"
+    },
+    "File:Portrait de Favre Jules, (1809-1880), (homme politique, avocat, membre de l' Académie française), PH50337 (2 of 2).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 5354,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.07,
+        0.044,
+        0.936,
+        0.846
+      ],
+      "flou": "faible"
+    },
+    "File:Bismarck Otto Eduard Leopold von ( 1815-1898). Homme d'Etat prussien, il est ministre-président de la Prusse du 1862 à, PH4142-21.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 21700,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.064,
+        0.034,
+        0.916,
+        0.942
+      ],
+      "flou": "faible"
+    },
+    "File:A Charonne novembre 1870 fonte des obus, G.16503.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 45235,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.096,
+        0.094,
+        0.916,
+        0.856
+      ],
+      "flou": "faible"
+    },
+    "File:Ludovico Tuminello - Veduta della breccia di Porta Pia. Fotografia stereoscopica scattata il 21 settembre 1870.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the same faded sepia stereoscopic photograph of Rome in 1870, same grain: old city walls, tiled roofs, cypress trees and a pale hazy sky. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 23817,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale hazy sky. Below the picture: the stone parapet and rooftops in the foreground. Keep the wide central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 23848,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Breccia di Porta Pia Ademollo.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a breached city wall during a battle, painted in oil with loose brushwork, not a photograph: thick grey-green smoke, the dark ruined brick wall and trampled earth. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 31751,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the thick grey smoke and the ruined wall. Below the picture: the trampled brown earth. Keep the wide central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 31782,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "fort",
+      "invente": "soldats inventés de chaque côté",
+      "raison": "soldats inventés de chaque côté"
+    },
+    "File:Adolphe Thiers - photographie Nadar.png": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 20047,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.115,
+        0.119,
+        0.884,
+        0.822
+      ],
+      "flou": "faible"
+    },
+    "File:La Patrie en danger (7 septembre 1870), journal d'Auguste Blanqui.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 94309,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.0,
+        0.034,
+        1.0,
+        0.91
+      ],
+      "flou": "faible"
+    },
+    "File:Édouard Manet - Effet de neige à Petit–Montrouge.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a snowy suburb of Paris in winter, painted in oil with loose brushwork, not a photograph: snow-covered fields, brown mud, low houses and a grey winter sky. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 43966,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the heavy grey winter sky. Below the picture: the snow and brown mud of the field. Keep the wide central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 43997,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "fort",
+      "invente": "village inventé, peint plus net et plus vif que la toile",
+      "raison": "village inventé, peint plus net et plus vif que la toile"
+    },
+    "File:Pellicule du Journal Pigeons Voyageurs, Souvenir du Siège de Paris, 1870-1871. PH20110 (16 of 20).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 74990,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.11,
+        0.071,
+        0.696,
+        0.958
+      ],
+      "flou": "faible"
+    },
+    "File:Vonoven - Sphère métallique utilisée pendant le siège de 1870-71, pour le transport des dépêches par eau - P514 - Musée Carnavalet.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 90900,
+      "tirage": 3,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.024,
+        0.024,
+        0.976,
+        0.976
+      ],
+      "flou": "faible"
+    },
+    "File:Le ballon - la ville de Paris investie confie à l'air son appel à la France - estampe - P. Puvis de Chavannes pinx. ; Emile Vernier lith. - btv1b52502249g.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a wide hilly landscape around Paris in the same grey crayon lithograph: bare hills, sparse bare trees and a pale grey sky. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 45275,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale grey sky. Below the picture: the bare ground of the hillside. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 44306,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.01,
+        0.055,
+        0.991,
+        0.966
+      ],
+      "flou": "faible"
+    },
+    "File:Le Ballon. Allégorie à la défense de Paris (1870-1871), P1711.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a wide landscape at dusk around Paris, painted in oil, not a photograph: a grassy hillside, distant blue hills and a pale golden sky. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 97052,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale dusk sky. Below the picture: the dark green grass of the hillside. Keep the wide central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 96083,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.084,
+        0.055,
+        0.886,
+        0.936
+      ],
+      "flou": "fort",
+      "invente": "paysage d'automne d'un rendu réaliste, étranger à la manière de Puvis",
+      "raison": "paysage d'automne d'un rendu réaliste, étranger à la manière de Puvis"
+    },
+    "File:Victor Hugo by Étienne Carjat 1876 - full.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 1573,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Gustave Flourens 1871.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 33535,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.121,
+        0.078,
+        0.861,
+        0.916
+      ],
+      "flou": "faible"
+    },
+    "File:The Graphic M.Gambetta at Tours, Paris Musées 20230515041359.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a town street in the same black-and-white wood engraving: the stone front of a public building with tall arches, drawn in fine engraved lines. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 88701,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the stone facade and cornice of the building. Below the picture: the paved ground of the street. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 88732,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.069,
+        0.096,
+        0.759,
+        0.82
+      ],
+      "flou": "faible"
+    },
+    "File:Lionel Royer - Bataille d'Auvours, le 10 janvier 1871 (1874).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a winter battlefield, painted in oil with loose brushwork, not a photograph: a dark stormy sky, snow-covered hills, dark woods and trampled earth. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 68494,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the dark stormy sky. Below the picture: the trampled snow and mud. Keep the wide central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 68525,
+      "tirage_haut_bas": 2,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        0.986
+      ],
+      "flou": "fort",
+      "invente": "soldats et blessés inventés",
+      "raison": "soldats et blessés inventés"
+    },
+    "File:Mobiles bretons, officier, 1870. Paris Musées 20231027110528.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 21006,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.014,
+        0.014,
+        0.986,
+        0.986
+      ],
+      "flou": "faible"
+    },
+    "File:Le village de Sierk surpris par un détachement de uhlans. Paris Musées 20231017105404.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 78862,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.014,
+        0.0,
+        0.986,
+        0.99
+      ],
+      "flou": "faible"
+    },
+    "File:Adolphe Crémieux - Photo Ferdinand Mulnier.png": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 38366,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.124,
+        0.084,
+        0.876,
+        0.876
+      ],
+      "flou": "faible"
+    },
+    "File:No. 2. Zuaven, Turcos, Spahis und Zephirs. Paris Musées 20230509212143.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is an open hilly landscape in the same hand-coloured wood engraving: dry grass, distant hills and a pale sky. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 86727,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale sky. Below the picture: the dry grassy ground. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 85758,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.116,
+        0.171,
+        0.896,
+        0.796
+      ],
+      "flou": "faible"
+    },
+    "File:Spahis.JPG": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 5524,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.019,
+        0.119,
+        0.991,
+        0.922
+      ],
+      "flou": "faible"
+    },
+    "File:Edouard Manet, Line in Front of the Butcher Shop (Queue devant la boucherie), 1870, NGA 39035.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a Paris street in the rain, in the same loose etching on yellowed paper: a wet pavement and a building wall sketched in a few etched lines. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 81264,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale rainy sky and the building wall drawn in etched lines. Below the picture: the wet pavement sketched in etched lines. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 81295,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.014,
+        0.014,
+        0.976,
+        0.976
+      ],
+      "flou": "fort",
+      "invente": "rue haussmannienne nette, étrangère à l'eau-forte de Manet",
+      "raison": "rue haussmannienne nette, étrangère à l'eau-forte de Manet"
+    },
+    "File:La bourgeoise.Une queue de boucherie pendant le siège de Paris. Paris Musées 20231003141626.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a Paris street in winter in the same black-and-white lithograph: shuttered shop fronts and stone house fronts drawn in crayon lines. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 18449,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the upper floors of the stone house fronts. Below the picture: the muddy pavement of the street. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 18480,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "fort",
+      "invente": "devantures et enseigne à lettres inventées",
+      "raison": "devantures et enseigne à lettres inventées"
+    },
+    "File:La queue pour la viande de rats, Paris Musées 20230515065144.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a Paris street at night in the same crayon lithograph: a long stone wall, a pavement and a dark sky. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 96646,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the dark night sky over the wall. Below the picture: the pavement and the gutter. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 95677,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.01,
+        0.99,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Paris assiégé 22 Menu de siège, Paris Musées 20230512163942.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 38414,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.01,
+        0.01,
+        1.0,
+        0.97
+      ],
+      "flou": "faible"
+    },
+    "File:Gustave Guillaumet - Cantine municipale au faubourg Saint-Martin, pendant le siège de Paris (1871) - P135 - Musée Carnavalet.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a snowy Paris street in winter, painted in oil with loose brushwork, not a photograph: old house fronts, a doorway and trampled snow. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 73663,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the grey winter sky and the house fronts. Below the picture: the trampled grey snow of the street. Keep the wide central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 73694,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.011,
+        0.0,
+        0.989,
+        0.992
+      ],
+      "flou": "fort",
+      "invente": "façades à balcons et plaques, détaillées et nettes, plus tardives que la scène",
+      "raison": "façades à balcons et plaques, détaillées et nettes, plus tardives que la scène"
+    },
+    "File:Un obus sur le boulevard.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the boulevard Saint-Michel at night in winter in the same black-and-white wood engraving: bare trees, snow on the ground and a stormy clouded sky. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 4130,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the stormy clouded night sky. Below the picture: the snowy ground of the boulevard. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 3161,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "fort",
+      "invente": "silhouettes lointaines dans l'allée et façades nettes",
+      "raison": "silhouettes lointaines dans l'allée et façades nettes"
+    },
+    "File:Le foyer de la Comédie-Française pendant le siège de Paris., G.24744.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the interior of a theatre foyer in the same dark etching: panelled walls with pilasters and a parquet floor, drawn in etched lines. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 4345,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the moulded ceiling and the panelled walls. Below the picture: the parquet floor. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 3376,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.034,
+        0.019,
+        0.966,
+        0.976
+      ],
+      "flou": "faible"
+    },
+    "File:Ceci a tué cela - estampe - btv1b530273653.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a calm sea under a blank pale sky in the same crayon lithograph: low waves drawn in a few horizontal strokes and an empty horizon. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 94125,
+      "tirage": 3,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the blank pale sky. Below the picture: the low waves of the sea. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 92156,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.112,
+        0.115,
+        0.859,
+        0.793
+      ],
+      "flou": "faible"
+    },
+    "File:A v Werner - Kaiserproklamation am 18 Januar 1871 (3. Fassung 1885).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the Hall of Mirrors at Versailles, painted in oil, not a photograph: gilded arcades, and marble pilasters. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 97062,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the gilded vaulted ceiling. Below the picture: the parquet floor and the red carpet of the dais. Keep the wide central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 96093,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "fort",
+      "invente": "tableaux et silhouette inventés dans la galerie",
+      "raison": "tableaux et silhouette inventés dans la galerie"
+    },
+    "File:Otto von Bismarck, Albrecht von Roon, Helmuth von Moltke, c. 1860-1870.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 18611,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.084,
+        0.064,
+        0.906,
+        0.886
+      ],
+      "flou": "faible"
+    },
+    "File:Assemblée Nationale. Déclaration , 17 février 1871, à l'Assemblée de Bordeaux par les députés alsaciens et lorrains - btv1b10225106m.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 88029,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.019,
+        0.047,
+        0.981,
+        0.916
+      ],
+      "flou": "faible"
+    },
+    "File:Portrait d'Adolphe Thiers (1797-1877), historien, homme d'état, premier président de la Troisième République, PH56999.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 33627,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.197,
+        0.044,
+        0.936,
+        0.886
+      ],
+      "flou": "faible"
+    },
+    "File:New map in France in 1871 - shewing the new Alsace-Lorraine boundary and the departements occupied by the german armies, during the armistice - btv1b10111203p (1 of 2).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 62359,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.07,
+        0.073,
+        0.927,
+        0.912
+      ],
+      "flou": "faible"
+    },
+    "File:Elle attend, JJ Henner 1871.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 77448,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Camille Saint-Saëns. Compositeur de musique - btv1b53229757b.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 29059,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.117,
+        0.059,
+        0.889,
+        0.892
+      ],
+      "flou": "faible"
+    },
+    "File:Actualités. 312 L'assemblée de Bordeaux Qui prendra le couteau, QB.1301.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a dim bare room in the same crayon lithograph: a dark wall drawn in dense crayon strokes. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 62163,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the dim wall in dense dark crayon strokes. Below the picture: the bare floor in dark crayon strokes. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 62194,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.055,
+        0.105,
+        0.93,
+        0.836
+      ],
+      "flou": "faible"
+    },
+    "File:La Vie Moderne, 2e année, n° 9, 28 février 1880, 2017.0.494.2.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 60907,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.184,
+        0.075,
+        0.816,
+        0.856
+      ],
+      "flou": "faible"
+    },
+    "File:REPUBLIQUE LIBERTE, EGALITE Comité Central DE LA GARDE NATIONALE Le Comité Central de la Garde nationale, AFF3663.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 13913,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.029,
+        0.014,
+        0.985,
+        0.986
+      ],
+      "flou": "faible"
+    },
+    "File:Séance secrète de la Commune (Van Elven, 1871).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the same dim sepia photograph of a meeting hall, same grain: dark panelled walls and heavy drapery. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 63213,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the dark ceiling and drapery. Below the picture: the dark floor of the hall. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 63244,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "fort",
+      "invente": "assemblée prolongée, personnages inventés",
+      "raison": "assemblée prolongée, personnages inventés"
+    },
+    "File:General Jaroslav Dombrowski.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 70354,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.064,
+        0.064,
+        0.966,
+        0.936
+      ],
+      "flou": "faible"
+    },
+    "File:N°43 Ch. Beslay, Paris Musées 20231029210909.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 66561,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.191,
+        0.082,
+        0.823,
+        0.87
+      ],
+      "flou": "faible"
+    },
+    "File:Affiche seconde Commune de Lyon, Archives municipales de Lyon, 6fi 6832.TIF": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 78060,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.014,
+        0.0,
+        0.986,
+        0.986
+      ],
+      "flou": "faible"
+    },
+    "File:Une séance du Club des femmes dans l'église Saint-Germain-l'Auxerois by Frédéric Lix (cropped).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the interior of a gothic church in the same black-and-white wood engraving: tall stone pillars, pointed arches and dark side chapels. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 21518,
+      "tirage": 2,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pointed vaults of the church. Below the picture: the stone floor of the nave. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 20549,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Commune de Paris. Affiche. 20 avril 1871. n°176.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 13940,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Commune de Paris. Manifeste du Comité central de l'Union des femmes pour la défense de Paris et le soin aux blessés. Affiche. 6 mai 1871. n°270.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 65588,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "flou": "faible"
+    },
+    "File:La Pastora - Jules Breton.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 27237,
+      "tirage": 3,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.184,
+        0.055,
+        0.846,
+        0.876
+      ],
+      "flou": "faible"
+    },
+    "File:Portrait de Louise Michel (1830-1905), pendant la Commune de Paris 1871. PH15064.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 62359,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.084,
+        0.055,
+        0.916,
+        0.886
+      ],
+      "flou": "faible"
+    },
+    "File:République Française LIBERTE- EGALITE- FRATERNITE SOLIDARITE ECOLES LAÏQUES CITOYENS, Jusqu'ici, les Ecoles congrég, AFF3618.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 64834,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.02,
+        0.008,
+        0.985,
+        0.978
+      ],
+      "flou": "faible"
+    },
+    "File:Portrait de Gustave Courbet (1819-1877), peintre, PH19814.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 99717,
+      "tirage": 3,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.107,
+        0.08,
+        0.894,
+        0.876
+      ],
+      "flou": "faible"
+    },
+    "File:Actualités (20)Le vrai père Duchêne. Paris Musées 20230515214044.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 3376,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.148,
+        0.117,
+        0.858,
+        0.824
+      ],
+      "flou": "faible"
+    },
+    "File:Demandez la grrrrande colère du Père Duchêne. Paris Musées 20230903204314.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 57417,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.126,
+        0.117,
+        0.8,
+        0.832
+      ],
+      "flou": "faible"
+    },
+    "File:Maison d'Adophe Thiers (en cours de démolition), Commune de Paris (1871). Place Saint-Georges, 9ème arrondissement, Pari, PH23416.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the same faded sepia photograph of a demolished house in Paris, same grain: heaps of stone rubble, broken walls and a pale sky. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 4002,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale empty sky. Below the picture: the stone rubble on the ground. Keep the wide central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 5033,
+      "tirage_haut_bas": 2,
+      "genre": "decor",
+      "utile": [
+        0.064,
+        0.044,
+        0.928,
+        0.836
+      ],
+      "flou": "faible"
+    },
+    "File:La colonne Vendôme, 8ème arrondissement, Paris. Vers 1865. PH18471.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the place Vendôme in the same faded sepia photograph of the 1860s, same grain: uniform classical facades with arcades around the square and a pale sky. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 39316,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale empty sky. Below the picture: the paved ground of the square. Keep the wide central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 39347,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "flou": "faible"
+    },
+    "File:Portrait de Georges Darboy (1813-1871), (archevêque de Paris), PH48970(2).jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 7618,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.049,
+        0.038,
+        0.949,
+        0.88
+      ],
+      "flou": "faible"
+    },
+    "File:La Commune 1871. Portraits des otages condamnés à mort par la Commune et incarcérés à la Roquette, troisième section, PH20150.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 78694,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.014,
+        0.0,
+        0.986,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Souvenirs de la Commune. - Batterie avancée de l'armée de Versailles, au pont de Neuilly. -, G.38504.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the approach to a bridge in the same black-and-white wood engraving: earthworks, drifting smoke, bare trees and a pale sky. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 40172,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the smoky pale sky. Below the picture: the rough ground with planks and earth. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 40203,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.124,
+        0.064,
+        0.896,
+        0.926
+      ],
+      "flou": "faible"
+    },
+    "File:Gorge du fort d'Issy-les-Moulineaux, PH29433.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the same grey photograph of a fort's earthworks, same grain: grassy ramparts, bare churned earth and a pale overcast sky. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 66391,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale overcast sky. Below the picture: the bare churned earth. Keep the wide central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 66422,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.016,
+        0.014,
+        0.984,
+        0.986
+      ],
+      "flou": "faible"
+    },
+    "File:Affiches de la Commune de Paris République Française, n° 259. Comité de Salut Public Nous croyons devoir communiquer. le 5 mai 1871. affiche-texte, non identifié.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 39349,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.034,
+        0.034,
+        0.966,
+        0.976
+      ],
+      "flou": "faible"
+    },
+    "File:Carte de la Frontière Nord-est de la France. 1870-1871. Extrait de la Carte de France au 320.000e - Publiée par le Dépôt de la Guerre - btv1b53084788m.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 32837,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.064,
+        0.055,
+        0.936,
+        0.936
+      ],
+      "flou": "faible"
+    },
+    "File:Frédéric Lix - Les pétroleuses et leurs complices.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a burning Paris street in the same black-and-white wood engraving: ruined blackened house fronts and smoke. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 24279,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the smoke-filled sky above the ruined houses. Below the picture: the cobbled street strewn with debris. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century engraving, same fine hatching, same ink and paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 24310,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.016,
+        0.014,
+        0.986,
+        0.966
+      ],
+      "flou": "fort",
+      "invente": "devantures d'allure tardive",
+      "raison": "devantures d'allure tardive"
+    },
+    "File:Une pétroleuse, Paul Klenck 01.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 34565,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.039,
+        0.024,
+        0.929,
+        0.885
+      ],
+      "flou": "faible"
+    },
+    "File:Paris 1871 - communards.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the same faded sepia photograph, same grain: only the bare earth of the ground and a plain rough wall; no more coffins. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 71766,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the plain rough wall behind. Below the picture: the bare earth of the ground. Keep the wide central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 71797,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Portrait de Jean-Baptiste Clément, (1837-1903), homme politique socialiste et chansonnier, PH9006.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 46796,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.094,
+        0.055,
+        0.906,
+        0.906
+      ],
+      "flou": "faible"
+    },
+    "File:Portrait de Morel Eugénie, pris à la prison des Chantiers à Versailles. Commune de Paris, 1871. PH11061.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 33504,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.034,
+        0.024,
+        0.956,
+        0.906
+      ],
+      "flou": "faible"
+    },
+    "File:Portrait de Marchais Joséphine, pris à la prison des Chantiers à Versailles. Commune de Paris, 1871. PH22337.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: early photograph, same tone, same grain. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 24599,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.084,
+        0.044,
+        0.916,
+        0.886
+      ],
+      "flou": "faible"
+    },
+    "File:Presqu'île Ducos, partie affectée à la déportation - Gravé chez Erhard - btv1b53098520g.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain background behind the subject: one even, flat tone of the same colour as the background at the edges of the picture, with the same soft gradient and texture, sharp and not blurred, and nothing else. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 78220,
+      "tirage": 2,
+      "haut_bas": "papier",
+      "genre": "uni",
+      "utile": [
+        0.064,
+        0.055,
+        0.936,
+        0.936
+      ],
+      "flou": "faible"
+    },
+    "File:MarxBurgeroorlog1871Pag01.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the plain empty sheet of paper around the drawing: the same paper tone and grain, left blank. Keep the central picture exactly unchanged, at the same place and size. Style: same medium, same colours, same texture as the picture. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 53848,
+      "tirage": 1,
+      "haut_bas": "papier",
+      "genre": "papier",
+      "utile": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ],
+      "flou": "faible"
+    },
+    "File:Edouard Manet, The Barricade (La barricade), 1871, NGA 33391.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the blurred areas around it with a seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is a Paris street in the same sketchy crayon lithograph: pale house fronts drawn in a few loose crayon lines, a pale sky and drifting smoke. Keep the central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added areas contain only background; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 47032,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the blurred bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the pale sky and drifting smoke. Below the picture: the cobbled street sketched in loose crayon lines. Keep the wide central picture exactly unchanged, at the same place and size. Style: 19th-century lithograph on paper, same soft crayon grain, same paper tone. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 47063,
+      "tirage_haut_bas": 1,
+      "genre": "decor",
+      "utile": [
+        0.011,
+        0.013,
+        1.0,
+        0.99
+      ],
+      "flou": "fort",
+      "invente": "rue nette et garde-corps, étrangers au croquis de Manet",
+      "raison": "rue nette et garde-corps, étrangers au croquis de Manet"
+    },
+    "File:Ernest Meissonier - Les Ruines du palais des Tuileries - château de Compiègne.jpg": {
+      "consigne": "Extend this picture to fill the whole wide frame: replace the flat gray areas on the left and right with a sharp, detailed, seamless continuation of the same setting that is visible at the very edges of the picture, in the same place, the same light and the same colours. It is the burnt-out interior of the Tuileries palace, painted in oil, not a photograph: blackened stone walls, charred beams and heaps of rubble. Keep the central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added areas contain only background, in sharp focus, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine": 44946,
+      "tirage": 1,
+      "haut_bas": "modele",
+      "consigne_haut_bas": "Extend this wide picture upward and downward to fill the whole frame: replace the flat gray bands at the top and at the bottom with a sharp, seamless continuation of the same scene. Above the picture: the blackened ruined walls open to the sky. Below the picture: the heaps of rubble on the floor. Keep the wide central picture exactly unchanged, at the same place and size. Style: early 19th-century oil painting, same palette, same brushwork, same light. The added bands contain only background, not blurred; no people, no figures, no faces, no bodies, no animals, no text, no letters, no signature, no stamp, no frame, no border, no drop shadow, no picture within a picture, no window, no modern elements.",
+      "graine_haut_bas": 45977,
+      "tirage_haut_bas": 2,
+      "genre": "decor",
+      "utile": [
+        0.019,
+        0.012,
+        0.984,
+        0.984
+      ],
+      "flou": "faible"
+    }
+  },
+  "modele": "black-forest-labs/FLUX.2-klein-4B",
+  "methode": "Deux passes de FLUX.2 klein 4B. Passe 1 : la zone utile au centre d'une toile préremplie d'un flou de la même image, le modèle prolonge les côtés ; sortie accordée en couleur sur l'original et raccordée à ses bords (sans IA), original recollé. Passe 2 (« haut_bas » : « modele », décors) : l'image élargie au milieu d'une toile plus haute, le modèle prolonge le haut et le bas d'après une consigne qui les nomme ; bandes accordées et jonction fondue (sans IA). « haut_bas » : « papier » (genres papier et uni) : bandes de papier continues sans modèle (miroir des côtés). « haut_bas » : « etire » : bord étiré et assombri sans modèle (premier procédé, gardé par exception)."
+}

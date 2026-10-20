@@ -952,7 +952,7 @@ def cadrer(slug: str, x: dict) -> dict:
 def empreinte(x: dict, version: str = VERSION) -> str:
     i = x['image']
     cle = json.dumps([version, MODELE, x['narration'], i['fichier'], i['commons'], i.get('recadrage'),
-                      i.get('largeur'), i.get('hauteur')], ensure_ascii=False)
+                      i.get('largeur'), i.get('hauteur')] + ([i['rotation']] if i.get('rotation') else []), ensure_ascii=False)
     return hashlib.sha1(cle.encode()).hexdigest()[:16]
 
 

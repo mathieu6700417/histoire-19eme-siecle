@@ -1,0 +1,387 @@
+{
+  "usage": "couleur",
+  "images": {
+    "File:Départ pour le Camp de Chalons. - 1¦er¦. août 1870. - estampe - Non identifié - btv1b53028694c.jpg": {
+      "consigne": "Add colours to this 1870 print, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A wide esplanade with avenues of green summer trees, the Invalides in pale stone with its gilded dome in the distance, sandy beige ground, columns of French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, dark carriages, pale blue sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:La Frontière - Bataille de Wissembourg - Les turcos s'emparant pour la troisième fois d'une batterie ennemie - estampe - H. Dut ; (Dessin de M. Godefroy Durand.) - btv1b53028917j.jpg": {
+      "consigne": "Add colours to this 1870 print, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Hand-to-hand fight at an artillery battery: Algerian tirailleurs in light blue jackets, baggy light blue trousers, white gaiters and red fez caps; German soldiers in dark Prussian-blue tunics with black spiked helmets; guns with brown wooden wheels, grey powder smoke, brown earth, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Bataille de Forbach, 6 août 1870 - Jean-Adolphe Bocquin et Jules Férat.jpg": {
+      "consigne": "Add colours to this 1870 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A wide battlefield seen from a height: brownish-green fields and slopes, grey and white powder smoke, a burning village with orange flames and dark smoke, small soldiers in dark blue and madder red, pale grey sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Ruines de la bibliothèque municipale de Strasbourg.jpg": {
+      "consigne": "Add sober, natural colours to this old 1870 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. The ruined church and library of Strasbourg: pale pinkish-grey sandstone walls and empty Gothic windows, a long grey wall with pale paper posters, pale grey sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Bataille de Gravelotte. 16 Août 1870. Paris Musées 20230820083529.jpg": {
+      "consigne": "Add colours to this 1870 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A battle among trees and fields: French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis fighting German soldiers in dark Prussian-blue tunics with black spiked helmets, cannon with brown wheels, green trees, ochre fields, grey smoke, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Secours aux blessés et traces des combats de 1870-1871 à Saint-Cloud - btv1b8447012j (09 of 22).jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A field ambulance in a park: a white canvas tent, a dark wagon, men in dark coats, stretchers, bare brown trees, beige gravel, a pale stone building behind, pale sky; any small flag is white with a red cross.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Guillaume Ier et Napoléon III à Sedan lors de la capitulation. PH16643.jpg": {
+      "consigne": "Add sober, natural colours to this old 1870 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. An elegant drawing room: two officers in dark blue military coats with gold epaulettes, upholstered armchairs in muted dark red, brown wood panelling, pale curtains, a patterned carpet.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Franse krijgsgevangen in Wesel (D), 1870.jpg": {
+      "consigne": "Add colours to this 1870 drawing, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A prisoners' camp at dusk: rows of white canvas tents, campfires with a warm orange glow, a dark town with church spires on the horizon, a cannon with brown wheels, grey dusk sky with a crescent moon; any small flag is white with a red cross.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:JOURNEE DU 4 SEPTEMBRE Les gardes nationaux et le peuple pénètrent dans le Corps législatif..jpg": {
+      "consigne": "Add colours to this 1870 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A crowd invading a legislative hall: pale stone columns, men in dark coats and hats, some national guards in dark blue tunics and red kepis, pale grey light; keep any small flag almost uncoloured, pale.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Arrivée de Victor Hugo à Paris gare du Nord, septembre 1870, 2017.0.3565.jpg": {
+      "consigne": "Add colours to this 1870 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A railway station forecourt at night: warm yellow gas lamps, pale stone station walls, a crowd in dark coats and hats, women in muted dresses, grey paving.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:A Charonne novembre 1870 fonte des obus, G.16503.jpg": {
+      "consigne": "Add colours to this 1870 etching, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A foundry casting shells: dark brown wooden beams, the glowing orange mouth of a furnace, a worker in a white shirt and grey trousers, dark grey iron, deep shadows.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Ludovico Tuminello - Veduta della breccia di Porta Pia. Fotografia stereoscopica scattata il 21 settembre 1870.jpg": {
+      "consigne": "Add sober, natural colours to this old 1870 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. View over Rome: pale beige and ochre walls, red-brown tiled roofs, dark green trees and cypresses, a pale hazy sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:DEFENSE DE PARIS. - La garde nationale aux remparts..jpg": {
+      "consigne": "Add colours to this 1870 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. On the ramparts of Paris: earthworks of brown earth and green turf, a cannon in dark grey iron, national guards in dark blue tunics and red kepis and trousers with red stripes, stacked rifles, pale sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Atelier de fabrication des ballons-poste à la gare d'Orléans.jpg": {
+      "consigne": "Add colours to this 1874 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A great railway station hall turned into a balloon workshop: grey ironwork and a glass roof, huge balloons of pale beige and muted striped cloth, brown wicker baskets, workers in dark and grey clothes.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Le ballon - la ville de Paris investie confie à l'air son appel à la France - estampe - P. Puvis de Chavannes pinx. ; Emile Vernier lith. - btv1b52502249g.jpg": {
+      "consigne": "Add colours to this 1870 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. An allegory: a woman in a long black dress holding a rifle, a small pale balloon in the sky, grey-blue hills, a pale grey-blue sky, beige ground, a white tent.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Lebourget.JPG": {
+      "consigne": "Add colours to this 1871 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Street fighting in a village: pale beige and grey plastered houses with brown shutters, French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, German soldiers in dark Prussian-blue tunics with black spiked helmets, grey smoke, grey sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:The Graphic M.Gambetta at Tours, Paris Musées 20230515041359.jpg": {
+      "consigne": "Add colours to this 1870 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A man in a black coat reading a proclamation to a crowd in a street: men in dark coats, women in muted dresses and white caps, a pale stone building.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:HL Damals – Schlacht von Loigny.jpg": {
+      "consigne": "Add colours to this 1875 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A battle on a snowy plain: French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, dark horses, grey smoke, white snow, pale grey sky; any French flag is a tricolour with three vertical bands, blue at the hoist, white in the middle, red at the fly.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Siège de Paris, 1870-1871 Rationnement de la Boulangerie. Paris Musées 20230602131925.jpg": {
+      "consigne": "Add colours to this 1871 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A crowd of women and children waiting for bread in winter: dark brown, grey and dark blue shawls, white caps, pale stone walls, grey ground.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:SOUVENIRS DU SIEGE DE PARIS. - ABATTAGE D'ARBRES POUR LE CHAUFFAGE DE LA POPULATION. Paris Musées 20230515104933.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Felling trees for firewood in winter: men in dark coats and grey and faded blue workers' smocks, bare brown trees and branches, grey snowy ground, pale stone buildings, pale grey sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Un obus sur le boulevard.jpg": {
+      "consigne": "Add colours to this 1871 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A shell fallen on a boulevard at night in winter: bare dark trees, white snow, a warm yellow gas lamp, people in dark coats bending over a wounded man, dark cloudy sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Le foyer de la Comédie-Française pendant le siège de Paris., G.24744.jpg": {
+      "consigne": "Add colours to this 1877 etching, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A theatre foyer turned into a hospital: pale cream walls with muted gilded mouldings, a white marble bust, beds with white sheets, a folding screen with a muted pattern, a red-brown armchair, a dark wooden floor.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Emeute du 22 janvier-Fusillade de l'hôtel de Ville recto Envahissement de l'Hôtel de Ville (31 ocotobre verso.jpg": {
+      "consigne": "Add colours to this nineteenth-century print, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Breton mobile guards in dark blue uniforms in a vaulted stone hall: pale beige stone arches and walls, grey daylight from the doorway. The crowd seen through the far doorway is dark grey and dark blue, never green.",
+      "graine": 11,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "relance : foule verte dans la porte"
+    },
+    "File:Barricade de la Chaussée Ménilmontant, 18 mars 1871. PH4142-172.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A barricade on a cobbled street: pale beige stone buildings, grey cobblestones, national guards in dark blue tunics and red kepis, men in dark clothes, pale sky; painted shop signs stay as they are.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Commune de Paris Canons à Montmartre le 18 mars.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Rows of cannon on the hill of Montmartre: dark bronze and grey guns with brown wooden carriages, beige and brown earth, pale stone houses with grey roofs, green trees, pale hazy sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Commune de Paris Les canons 18 mars 1871.jpg": {
+      "consigne": "Add colours to this 1871 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Dragging cannon across a square: national guards in dark blue tunics and red kepis, a pale stone town hall with a clock, bare trees, grey paving, pale grey sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Barricade de la rue de la Roquette, place de la Bastille, 18 mars 1871. PH4142-165.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A barricade of grey paving stones in a narrow Paris street: pale beige and grey stone house fronts, dark shop fronts, national guards in dark blue tunics and red kepis, pale sky; keep any small flag almost uncoloured, pale. The flag on the barricade stays pale greyish white, uncoloured: no blue and no red on it.",
+      "graine": 11,
+      "saturation": 0.7,
+      "jugement": "bon",
+      "remarque": "relance : drapeau teint en bleu et blanc"
+    },
+    "File:Séance secrète de la Commune (Van Elven, 1871).jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A night meeting: men in black coats around a table covered with green cloth, dark wood panelling, warm lamplight, some national guards in dark blue tunics and red kepis.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Commune de Marseille. Le 4 avril 1871, depuis le fort Saint-Nicolas et la colline de la Garde, le général Espivent fait bombarder les insurgés marseillais retranchés dans la préfecture (Source Musée du vieux Marseille).jpg": {
+      "consigne": "Add colours to this 1871 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A hilltop basilica in Marseille: pale cream stone with grey-green stripes and a gilded statue on the bell tower, an ochre rocky hillside, cannon, French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, white smoke, pale blue sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Une séance du Club des femmes dans l'église Saint-Germain-l'Auxerois by Frédéric Lix (cropped).jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A women's club in a Gothic church: pale grey stone pillars and vaults, a brown carved wooden pulpit, a warm golden chandelier, women in dark dresses and white caps, men in dark coats, some national guards in dark blue tunics and red kepis.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Maison d'Adophe Thiers (en cours de démolition), Commune de Paris (1871). Place Saint-Georges, 9ème arrondissement, Pari, PH23416.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Demolition of a house: pale beige stone walls, rubble of pale stone, workers in white shirts and dark trousers, pale sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:La colonne Vendôme, 8ème arrondissement, Paris. Vers 1865. PH18471.jpg": {
+      "consigne": "Add sober, natural colours to this old 1865 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A square with a tall column: the column in dark greenish bronze, uniform pale stone facades with grey slate roofs, beige paving, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:La Commune. Campement de la cavalerie de l'armée de Versailles sur la terrasse des Tuileries. PH31924.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. Cavalry camped in a palace garden: brown and grey horses, soldiers in dark blue with madder-red trousers, green chestnut trees, a pale stone balustrade, beige gravel, pale sky.",
+      "graine": 7,
+      "saturation": 0.5,
+      "jugement": "defaut",
+      "remarque": "pantalons garance trop roses : saturation 0,5"
+    },
+    "File:Neuilly. Rue Peyronnet- Rubble in the Streets WDL1320.png": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A ruined house in a suburb: pale beige stone and plaster rubble, broken brown timbers, grey slate fragments, a tall dark chimney, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Porte Maillot. The Great Battery from the Left. May 14th, 1871, 5-30 AM, under Fire of Mont Valérien WDL1296.png": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. An artillery battery behind earthworks: beige earth and sandbags, guns in dark grey, soldiers in dark blue, pale stone buildings in the distance, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Gorge du fort d'Issy-les-Moulineaux, PH29433.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A ruined fort: grass-covered ramparts in dull green and brown earth, a pale stone archway, a pale grey sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:BorjBouArirrij-mokrani-revolte-1871.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A fortified town in Algeria under attack: whitewashed walls and flat roofs, orange flames and black smoke, men in white burnouses, ochre earth, pale sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Intérieur Kabyle 1871.jpg": {
+      "consigne": "Add colours to this 1872 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A Kabyle house courtyard: whitewashed walls, a brown wooden trellis roof, a brown horse, people in white and pale ochre robes, earthen pots, beige ground.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Frédéric Lix - Les pétroleuses et leurs complices.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A burning street: orange flames in the windows, grey smoke, pale stone and brown timber houses, women in dark dresses and white caps, a soldier in dark blue and madder red.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Commune de Paris éxécution de communards caserne Lobau.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. An execution in a barracks courtyard: pale beige stone arcades, French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, grey smoke, men in dark clothes, grey paving.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Commune de Paris prisonniers à Versailles.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A roll call of prisoners: prisoners in dark and grey clothes and faded blue smocks, French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, a pale stone wall, beige ground.",
+      "graine": 7,
+      "saturation": 0.6,
+      "jugement": "defaut",
+      "remarque": "pantalons rouges sur des prisonniers, atténués à 0,6"
+    },
+    "File:Guerre civile, G.17057.jpg": {
+      "consigne": "Add colours to this 1871 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A dead national guard lying by a barricade: a dark blue uniform, grey paving stones, a pale grey street; muted tones only.",
+      "graine": 7,
+      "saturation": 0.55,
+      "jugement": "defaut",
+      "remarque": "lithographie de Manet : bleu de l'uniforme atténué"
+    },
+    "File:The War - A mitrailleuse battery dispatched from Paris by the Strasbourg Railway. - estampe - non identifié - btv1b53028629q.jpg": {
+      "consigne": "Add colours to this 1870 print, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A Paris railway station: pale stone and grey ironwork with a glass roof, wooden canopies, gun carriages in dark green-grey with brown wheels, brown and black horses, French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, pale grey sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Kampf des 10. bairischen Jägerbataillons mit Turcos in den Weinbergen bei Weissenburg am 4. August - Nach der Stizze eines verwundeten Offiziers gezeichnet von R. A. Etwall - estampe - non identifié - btv1b53028972s.jpg": {
+      "consigne": "Add colours to this 1870 print, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Fighting in vineyards on a hillside: Bavarian infantry in light blue tunics with black crested helmets, Algerian tirailleurs in light blue jackets and red fez caps, green vines, brown earth, white-grey powder smoke, grey sky.",
+      "graine": 7,
+      "saturation": 0.6,
+      "jugement": "defaut",
+      "remarque": "paquetage rouge atténué"
+    },
+    "File:Frœschwiller-FR-67-ruiné en 1870-gravure.jpg": {
+      "consigne": "Add colours to this 1874 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A ruined village house: pale beige plaster and grey stone rubble, dark brown timber beams, red-brown roof tiles, a dark carriage with brown horses, men in dark coats, a green tree, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Siège de Strasbourg (1870) (05A).jpg": {
+      "consigne": "Add sober, natural colours to this old 1870 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A ruined district of a city seen from a height: grey and beige stone rubble, broken brown timbers, red-brown roof tiles, the cathedral spire in pinkish sandstone in the distance, pale grey sky, two soldiers in dark uniforms in the foreground.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Siège de Paris, vue prise du fort de Montrouge (1).jpg": {
+      "consigne": "Add sober, natural colours to this old 1870 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. View from a fort over the countryside south of Paris: beige earthworks and pale stone casemates, grey slate roofs, green-brown fields, pale hazy sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Metz-sortie-14.jpg": {
+      "consigne": "Add colours to this 1872 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. An army camped by a river under rain: grey-green water and marshy meadows, poplars, French cavalry and infantry in dark blue with madder-red trousers, brown horses, grey sky. Every horse is brown, bay, black or grey, never pink.",
+      "graine": 3,
+      "saturation": 0.6,
+      "jugement": "bon",
+      "remarque": "relance : chevaux roses"
+    },
+    "File:Siège de ParisDépart d'un Ballon-poste. Paris Musées 20230515100812.jpg": {
+      "consigne": "Add colours to this 1870 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A balloon launch on a square: two balloons of pale yellowish varnished cloth with brown netting, white tents, dark carriages and brown horses, people in dark coats, beige ground, green-brown hills, pale blue sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:La bourgeoise.Une queue de boucherie pendant le siège de Paris. Paris Musées 20231003141626.jpg": {
+      "consigne": "Add colours to this 1870 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A queue of women in winter before a butcher's shop: women in dark brown and grey shawls and white caps, a pale stone shop front with pale paper notices, grey pavement.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:SIEGE DE PARIS. - L'abattage des arbres pour le chauffage, dans l'avenue de Vincennes. Paris Musées 20230515105727.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Felling trees on a wide avenue in winter: bare brown trees, two tall pale stone columns, grey snowy ground, small figures in dark clothes, carts, pale grey sky.",
+      "graine": 7,
+      "saturation": 0.5,
+      "jugement": "defaut",
+      "remarque": "arbres trop orangés : saturation 0,5"
+    },
+    "File:Barricade du Boulevard Puebla, hauteurs de Ménilmontant 18 Mars 1871..jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A barricade across a wide boulevard: pale beige stone buildings, grey paving stones, national guards in dark blue tunics and red kepis, a pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Les clubs, Saint-Sulpice dans la soirée du 12 mai, les gardes nationaux font évacuer l'église (M Vierge).jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A political club in a large church at night: pale stone pillars, a gilded crucifix, warm yellow lamplight, a crowd in dark clothes, women in white caps, brown wooden chairs.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Maison d'Adophe Thiers (en cours de démolition), Commune de Paris (1871). Place Saint-Georges, 9ème arrondissement, Pari, PH39159.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A small square with a fountain: a pale stone mansion, green trees and lawns, beige gravel, a grey stone fountain, people in dark clothes, pale sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:La Commune de Paris, 1871. Groupe devant les débris de la colonne Vendôme abattue par les fédérés le 16 mai 1871, 1er ar, PH20148(1).jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. The fallen bronze column and statue on a square: dark greenish bronze, pale beige stone facades, beige paving, national guards in dark blue tunics and red kepis, men in dark coats, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Souvenirs de la Commune. - Batterie avancée de l'armée de Versailles, au pont de Neuilly. -, G.38504.jpg": {
+      "consigne": "Add colours to this 1871 engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. An artillery battery at the approach to a bridge: earthworks of brown earth and sandbags, French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, grey smoke, bare trees, a pale stone arch in the distance, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Neuilly. Rue du Roule. Rubble in the Street WDL1326.png": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. A ruined street in a suburb: pale beige and grey houses gutted by shells, broken brown timbers, heaps of pale rubble, green trees, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Ruines de la Commune de Paris, 1871. Intérieur du Fort militaire d'Issy, Issy-Les-Moulineaux, 92130., ph4407.jpg": {
+      "consigne": "Add sober, natural colours to this old 1871 photograph. This is a pure colorization: the output must be pixel-aligned with the input. Do not restore, clean, sharpen, crop or reframe; keep every scratch, stain, blur and edge exactly where it is; do not add, remove or move anything. Only add colour: muted, low-saturation, natural tints. The inside of a ruined fort: beige earth, broken brown timbers and planks, grey stone rubble, pale stone barrack walls, pale sky.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:1871 evacuation of Bordj, Algeria.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. A town in Algeria in flames: whitewashed buildings, orange flames and dark smoke, men in white burnouses, some French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, ochre ground, pale sky.",
+      "graine": 1871,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Souvenirs de la Commune. Une exécution dans le jardin du luxembourg.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. An execution in a public garden: a pale stone balustrade and urns, green trees, French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, grey smoke, men in dark clothes, beige gravel.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Commune de paris prisonniers à l'orangerie de Versailles.jpg": {
+      "consigne": "Add colours to this 1871 wood engraving, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. Prisoners under the stone vaults of an orangery: pale beige stone arches, straw on the floor, prisoners in dark and grey clothes, dim light.",
+      "graine": 7,
+      "saturation": 0.7,
+      "jugement": "bon"
+    },
+    "File:Edouard Manet, The Barricade (La barricade), 1871, NGA 33391.jpg": {
+      "consigne": "Add colours to this 1871 lithograph, like a delicately hand-coloured print. This is a pure colorization: the output must be pixel-aligned with the input. Keep every line, hatching, figure, face, building and inscription exactly where it is; do not redraw, restore, sharpen, crop or reframe; do not add, remove or move anything. Only add colour: sober, muted, natural watercolour tints with low saturation, staying inside the shapes; no vivid or arbitrary colour. An execution at a barricade in a Paris street: pale beige house fronts, French infantry of 1870 in dark blue greatcoats, madder-red trousers and red kepis, grey smoke, grey paving; muted tones only.",
+      "graine": 1871,
+      "saturation": 0.5,
+      "jugement": "defaut",
+      "remarque": "lithographie de Manet : rouges atténués"
+    }
+  },
+  "methode": "FLUX.2 klein 4B (4 pas), consigne de pure colorisation ; luminance de l'original + chrominance du modèle (YCbCr, chrominance floutée, saturation indiquée par image)"
+}

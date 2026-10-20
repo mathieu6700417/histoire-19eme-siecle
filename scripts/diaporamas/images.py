@@ -17,7 +17,8 @@ dans .cache/diaporamas/lots/<nom>.json et planche-contact <nom>.jpg (vignettes n
 Pour chaque diapositive : interroge l'API Commons (imageinfo, extmetadata), refuse toute
 licence autre que le domaine public (ou CC0), télécharge une version de 2400 px de large
 au plus (cache dans .cache/diaporamas/originaux/), retire les marges de papier si le JSON
-donne `image.recadrage` ([x0, y0, x1, y1] en fractions), écrit public/<siecle>/diaporamas/<slug>/NNN.webp
+donne `image.recadrage` ([x0, y0, x1, y1] en fractions ; après `image.rotation`, degrés horaires
+multiples de 90, pour un scan couché ou à l'envers), écrit public/<siecle>/diaporamas/<slug>/NNN.webp
 (1600 px au plus sur le grand côté, qualité 74) et complète dans le JSON les métadonnées
 laissées vides (titre, auteur, date) ainsi que licence, largeur et hauteur. Les champs
 déjà remplis à la main ne sont jamais écrasés. Écrit aussi vignette.webp (diapositive 1,
@@ -79,11 +80,37 @@ def telecharger(url: str) -> bytes:
     return donnees
 
 
-def en_webp(donnees: bytes, destination: Path, cote: int, recadrage=None, poids_max: int | None = None) -> tuple[int, int]:
+ROTATIONS = (0, 90, 180, 270)
+
+
+def tourner(im: Image.Image, rotation) -> Image.Image:
+    """`image.rotation` (2026-10-18) : degrés dans le sens des aiguilles d'une montre, multiple de
+    90 (scan de Commons couché ou à l'envers), appliqués à l'original AVANT `recadrage`, qui se lit
+    donc sur l'image redressée."""
+    r = int(rotation or 0) % 360
+    if r not in ROTATIONS:
+        raise ValueError(f'rotation {rotation} : multiple de 90 attendu')
+    return im if not r else im.transpose({90: Image.ROTATE_270, 180: Image.ROTATE_180, 270: Image.ROTATE_90}[r])
+
+
+def noter_rotation(etat: dict, img: dict) -> None:
+    """Rotation relevée dans l'état d'images.py (seulement si elle est donnée : état inchangé pour les
+    images sans rotation) ; voir `meme_rotation`."""
+    if img.get('rotation'):
+        etat['rotation'] = img['rotation']
+
+
+def meme_rotation(ancien: dict, img: dict) -> bool:
+    return (ancien.get('rotation') or 0) == (img.get('rotation') or 0)
+
+
+def en_webp(donnees: bytes, destination: Path, cote: int, recadrage=None, poids_max: int | None = None,
+            rotation=None) -> tuple[int, int]:
     im = Image.open(io.BytesIO(donnees))
     im.load()
+    im = tourner(im, rotation)
     if recadrage:
-        # Marges de papier retirées : [x0, y0, x1, y1] en fractions de l'image d'origine.
+        # Marges de papier retirées : [x0, y0, x1, y1] en fractions de l'image d'origine (redressée).
         x0, y0, x1, y1 = recadrage
         im = im.crop((round(x0 * im.width), round(y0 * im.height), round(x1 * im.width), round(y1 * im.height)))
     if im.mode not in ('RGB', 'L'):
@@ -191,13 +218,14 @@ def _annexes(a_faire: list, dossier: Path, etat: dict, force: bool) -> list[str]
         img['licence'] = 'Domaine public'
         sortie = dossier / img['fichier']
         etat[cle]['recadrage'] = img.get('recadrage')
+        noter_rotation(etat[cle], img)
         if sortie.exists() and not force and img.get('largeur') and ancien.get('commons') == img['commons'] \
-                and ancien.get('recadrage') == img.get('recadrage'):
+                and ancien.get('recadrage') == img.get('recadrage') and meme_rotation(ancien, img):
             continue
         try:
             infos_l = c.infos_fichiers([img['commons']], largeur=max(cote, 2400 if cote == GRAND_COTE else cote))[img['commons']]
             largeur, hauteur = en_webp(telecharger(infos_l['vignette']), sortie, cote, img.get('recadrage'),
-                                       POIDS_MAX_SUP if sup else None)
+                                       POIDS_MAX_SUP if sup else None, img.get('rotation'))
         except Exception as e:  # noqa: BLE001
             echecs.append(f'{cle} : téléchargement ou conversion impossible ({e})')
             continue
@@ -400,12 +428,14 @@ def main() -> int:
                 img[champ] = valeur[:160]
         sortie = dossier / img['fichier']
         etat[str(x['n'])]['recadrage'] = img.get('recadrage')
+        noter_rotation(etat[str(x['n'])], img)
         if sortie.exists() and not a.force and img.get('largeur') and ancien.get(str(x['n']), {}).get('recadrage') == img.get('recadrage') \
+                and meme_rotation(ancien.get(str(x['n']), {}), img) \
                 and ancien.get(str(x['n']), {}).get('commons') == img['commons']:
             continue
         try:
             donnees = telecharger(info['vignette'])
-            largeur, hauteur = en_webp(donnees, sortie, GRAND_COTE, img.get('recadrage'))
+            largeur, hauteur = en_webp(donnees, sortie, GRAND_COTE, img.get('recadrage'), rotation=img.get('rotation'))
         except Exception as e:  # noqa: BLE001 — on signale et on continue
             echecs.append(f"{x['n']:3d} : téléchargement ou conversion impossible ({e})")
             continue

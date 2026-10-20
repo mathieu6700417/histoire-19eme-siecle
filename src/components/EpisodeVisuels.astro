@@ -137,6 +137,16 @@ function fenetre(f: FondCarte, cadre?: [number, number, number, number]) {
   const [x0, y0] = projeter(f, [cadre[0], cadre[3]]), [x1, y1] = projeter(f, [cadre[2], cadre[1]]);
   return { vb: `${x0} ${y0} ${r2(x1 - x0)} ${r2(y1 - y0)}`, k: r2(Math.max((x1 - x0) / f.largeur, (y1 - y0) / f.hauteur)) };
 }
+/** Tracé lissé passant par les points (Catmull-Rom converti en courbes de Bézier). */
+function lisse(P: [number, number][]) {
+  let d = `M${P[0].map(r2).join(',')}`;
+  for (let i = 0; i < P.length - 1; i++) {
+    const a = P[Math.max(0, i - 1)], b = P[i], c = P[i + 1], e = P[Math.min(P.length - 1, i + 2)];
+    const c1 = [b[0] + (c[0] - a[0]) / 6, b[1] + (c[1] - a[1]) / 6], c2 = [c[0] - (e[0] - b[0]) / 6, c[1] - (e[1] - b[1]) / 6];
+    d += ` C${c1.map(r2).join(',')} ${c2.map(r2).join(',')} ${c.map(r2).join(',')}`;
+  }
+  return d;
+}
 const anneau = (f: FondCarte, r: [number, number][]) => `M${r.map((p) => projeter(f, p).join(',')).join(' L')}Z`;
 /** Libellé sur plusieurs lignes (`\n`), centré verticalement sur le point. */
 function lignes(x: number, y: number, texte: string, hl = 1.1) {
@@ -302,7 +312,8 @@ const statique = mode === 'livre';
                   {/* Tracés du fond écrits une seule fois par page (Diaporama.astro, « fonds partagés ») */}
                   <use class="ev-carte__terres" href={`#fond-${f.nom}-terres`} />
                   <use class="ev-carte__france" href={`#fond-${f.nom}-france`} />
-                  {f.fleuves.map((_, i) => <use class="ev-carte__fleuve" href={`#fond-${f.nom}-fleuve-${i}`} />)}
+                  {!v.elements.some((el) => el.type === 'trait' && el.style === 'eau') &&
+                    f.fleuves.map((_, i) => <use class="ev-carte__fleuve" href={`#fond-${f.nom}-fleuve-${i}`} />)}
                   {v.elements.map((el, j) => {
                     const tj = quandEl(k, el.quand, j);
                     if (el.type === 'zone') {
@@ -315,6 +326,15 @@ const statique = mode === 'livre';
                         <g class={`ev-carte__zone est-${style} anim`} data-t={tj} data-d="1.2">
                           <path d={parties.map((r) => anneau(f, r)).join(' ')} clip-path={`url(#${uid}-terres-${k})`} fill={style === 'hachures' ? `url(#${uid}-hachures-${k})` : undefined} />
                           {el.libelle && <text x={r2(cx)} y={r2(cy)} text-anchor="middle">{lignes(r2(cx), r2(cy), t(el.libelle)).map((x) => <tspan x={x.x} dy={x.dy}>{x.l}</tspan>)}</text>}
+                        </g>
+                      );
+                    }
+                    if (el.type === 'trait' && el.style === 'eau') {
+                      const et = el.etiquette && projeter(f, el.etiquette);
+                      return (
+                        <g class="ev-carte__eau anim" data-t={tj} data-d="1.6">
+                          <path d={lisse(el.points.map((p) => projeter(f, p)))} pathLength="1" />
+                          {el.libelle && et && <text x={et[0]} y={et[1]} text-anchor="middle">{t(el.libelle)}</text>}
                         </g>
                       );
                     }
@@ -614,6 +634,9 @@ const statique = mode === 'livre';
   /* Trait (fleuve nommé) : se dessine de la source à l'embouchure. */
   .ev-carte__trace { fill: none; stroke: var(--c-texte); stroke-width: calc(5px * var(--k, 1)); stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
   .ev-carte__fleuve-nomme text { font-style: normal; opacity: clamp(0, calc(var(--p) * 2 - 0.6), 1); }
+  /* Cours d'eau détaillé (carte recadrée) : bleu-gris des fleuves, il se dessine ; nom en italique. */
+  .ev-carte__eau path { fill: none; stroke: var(--c-eau-trait); stroke-width: calc(7px * var(--k, 1)); stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
+  .ev-carte__eau text { font-style: italic; fill: var(--c-texte-doux); font-size: calc(30px * var(--k, 1)) !important; opacity: clamp(0, calc(var(--p) * 2 - 0.6), 1); }
   .ev-carte__trait { fill: none; stroke: var(--c-texte); stroke-width: calc(6px * var(--k, 1)); stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
   .ev-carte__pointe { fill: var(--c-texte); opacity: clamp(0, calc((var(--p) - 0.85) * 7), 1); }
   .ev-carte__fleche text { opacity: var(--p); font-variant: small-caps; letter-spacing: 0.04em; }

@@ -1,0 +1,92 @@
+{
+ "slug": "annee-terrible",
+ "modele": "Wan 2.2 TI2V-5B",
+ "negatif": "text, letters, subtitles, watermark, logo, photorealistic, 3D render, modern clothing, cars, deformed faces, distorted bodies, extra limbs, flickering, fast motion, camera shake, jump cut, morphing, blurry, low quality, oversaturated colours, new characters appearing",
+ "ambiance": {
+  "modele": "EzAudio s3_xl",
+  "graines": [
+   42,
+   43
+  ],
+  "note": "Ambiance sonore de chaque clip (spec 17) : consigne anglaise par diapositive (champ « ambiance » de l'élément), rien que la narration ne dise, ni voix, ni musique, ni son anachronique ; deux tirages de 10 s enchaînés en fondu."
+ },
+ "elements": [
+  {
+   "n": 1,
+   "type": "mouvement",
+   "graine": 7101,
+   "prompt": "Only the sky and the air move: the clouds glide very slowly across the evening sky and a light haze drifts over the far end of the boulevard. The people of the crowd stay perfectly still, as in a painting: every face, hand and body keeps exactly its shape and its painted detail. Static camera, very slow push-in. Keep exactly the look of this 1879 oil painting: same colours and brushwork, same composition; nothing new appears, no text.",
+   "ambiance": "A cheering crowd in a city street heard from a little distance, marching boots on paving stones, a military drum far away"
+  },
+  {
+   "n": 6,
+   "type": "mouvement",
+   "graine": 7006,
+   "prompt": "The gun smoke drifts across the field behind the charge, dust rises slowly under the hooves, the cuirassiers' horses stir very slightly, the distant trees sway; riders keep their faces and armour unchanged. Almost static camera, very slow push-in. Keep exactly the look of this 1887 oil painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Galloping horses on soft ground, distant rifle volleys, cannon thunder"
+  },
+  {
+   "n": 38,
+   "type": "mouvement",
+   "graine": 7038,
+   "prompt": "The two balloons sway very gently on their ropes, the clouds drift slowly across the sky, the crowd on the slope stirs slightly in place. Almost static camera, very slow push-in. Keep exactly the look of this 1871 oil painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Murmuring outdoor crowd, wind gusts, ropes creaking"
+  },
+  {
+   "n": 46,
+   "type": "mouvement",
+   "graine": 7046,
+   "prompt": "The gun smoke along the wall and at the windows of the house drifts and rises slowly, a thin haze moves in the cold air; the soldiers stay in their places. Almost static camera, very slow push-in. Keep exactly the look of this 1879 oil painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Cold wind, distant rifle shots and cannon fire"
+  },
+  {
+   "n": 53,
+   "type": "mouvement",
+   "graine": 7053,
+   "prompt": "The flames over the burning town flicker, the dark smoke rises and drifts slowly into the sky, the glow on the water trembles; the figures in the foreground stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1870 coloured lithograph: same colours and drawn lines, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "A town burning in the distance: steady crackling fire, the low roar of flames, timber falling far away, a light wind"
+  },
+  {
+   "n": 57,
+   "type": "mouvement",
+   "graine": 7057,
+   "prompt": "The long column of soldiers moves almost imperceptibly through the snow, a light snow drifts in the air, the low clouds glide slowly, the small flag stirs slightly in the wind. Almost static camera, very slow push-in. Keep exactly the look of this 1881 panorama painting: same colours and brushwork, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Snowy wind, slow footsteps in snow, horses snorting, a cart creaking"
+  },
+  {
+   "n": 71,
+   "type": "mouvement",
+   "graine": 7071,
+   "prompt": "The column of national guards advances very slowly, the raised rifles sway slightly, a light cold haze drifts in the background; faces stay unchanged. Almost static camera, very slow push-in. Keep exactly the look of this 1871 lithograph: same black lithographic lines and grey tones, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Marching boots on frozen ground, drums, cold wind"
+  },
+  {
+   "n": 89,
+   "type": "mouvement",
+   "graine": 7089,
+   "prompt": "The smoke of a cannon salute drifts slowly over the square, the clouds glide across the sky, the crowd stirs slightly in place; buildings stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1871 wood engraving: same black engraved lines on paper, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "A large crowd cheering in a square, a distant cannon salute, drums"
+  },
+  {
+   "n": 106,
+   "type": "mouvement",
+   "graine": 7106,
+   "prompt": "The column of national guards walks slowly along the embankment, the clouds drift across the sky, distant haze moves on the hills. Almost static camera, very slow push-in. Keep exactly the look of this 1871 wood engraving: same black engraved lines on paper, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Tired footsteps on gravel, distant cannon from a fort, wind"
+  },
+  {
+   "n": 120,
+   "type": "mouvement",
+   "graine": 7120,
+   "prompt": "The thick plumes of smoke over the burning city roll and drift slowly across the sky, the fires glow and flicker faintly, the water of the river shimmers; all buildings stay perfectly still. Almost static camera, very slow push-in. Keep exactly the look of this 1871 wood engraving: same black engraved lines on paper, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Distant roaring fire over a city, crackling timber, far-off explosions, a bell far away"
+  },
+  {
+   "n": 126,
+   "type": "mouvement",
+   "graine": 7126,
+   "prompt": "The gun smoke drifts slowly between the tombs, the leaves of the trees sway gently; the fighters and the tombs stay in their places and keep their shape. Almost static camera, very slow push-in. Keep exactly the look of this 1871 wood engraving: same black engraved lines on paper, same composition; every figure stays in its place and keeps its shape; nothing new appears, no text.",
+   "ambiance": "Rifle fire among stone tombs, distant cannon, wind in trees"
+  }
+ ]
+}

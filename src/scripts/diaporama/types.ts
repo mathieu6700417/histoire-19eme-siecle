@@ -114,7 +114,7 @@ export interface Generique {
 // Éléments de chaque carte et panneau, relevés une fois (à leur premier affichage).
 export interface Anim { el: Element & ElementCSSInlineStyle; t: number; d: number; p: number }
 export interface EtatSegment {
-  mots?: HTMLElement[][]; zone?: HTMLElement; defile?: HTMLElement; lu?: number; cour?: number; y?: number; hz?: number;
+  mots?: HTMLElement[][]; zone?: HTMLElement; defile?: HTMLElement; lu?: number; cour?: number; y?: number; hz?: number; wz?: number;
   ev?: { el: HTMLElement; t: number }[]; anims?: Anim[]; actif?: number; phrase?: number;
   traces?: { el: SVGRectElement; l: number; trace: [number, number][]; x: number }[];
   docs?: { el: HTMLElement; page: HTMLElement; l: number; h: number; vues: number[][] }[];

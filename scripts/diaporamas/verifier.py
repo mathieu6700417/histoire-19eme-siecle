@@ -1328,6 +1328,28 @@ def _instants_ok(texte: str, quands: list[str]) -> list[str]:
     return [q for q in quands if q and q not in texte]
 
 
+def _sous_elements_tardifs(q: str, visuels: list[dict], texte: str) -> list[str]:
+    """Éléments d'un visuel d'épisode (éléments de carte, chiffres, barres, repères, lignes de
+    document, événements de chronologie) dont le `quand` tombe au passage du visuel suivant ou
+    après : le lecteur a déjà changé de visuel, l'élément n'est jamais montré (carte « L'empire en
+    1870 » de la période 06, Asie jamais vue). Positions de première occurrence, comme
+    `instantPassage` d'EpisodeVisuels.astro."""
+    notes = []
+    for k, v in enumerate(visuels[:-1]):
+        suivant = visuels[k + 1].get('quand')
+        fin = texte.find(suivant) if suivant else -1
+        if fin < 0:
+            continue
+        for cle in ('elements', 'items', 'barres', 'reperes', 'lignes', 'evenements'):
+            for x in v.get(cle) or []:
+                qx = x.get('quand') if isinstance(x, dict) else None
+                if qx and texte.find(qx) >= fin:
+                    nom = x.get('libelle') or x.get('texte') or x.get('type') or cle
+                    notes.append(f"{q}, visuel {k + 1} ({v.get('type')}) : « {nom} » (« {qx} ») dit au passage "
+                                 f"du visuel suivant (« {suivant} ») ou après : jamais montré (avancer le passage ou le visuel suivant)")
+    return notes
+
+
 def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexique: dict) -> tuple[list[str], list[str], float]:
     """Lectures d'époque et épisodes : erreurs, avertissements, durée ajoutée (pauses comprises)."""
     erreurs, avert = [], []
@@ -1518,6 +1540,8 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
                         erreurs.append(f"{qv} : zone « {x.get('libelle', '')} » : anneau de moins de 3 points")
                     elif te == 'trait' and len(x.get('points') or []) < 2:
                         erreurs.append(f'{qv} : trait de moins de 2 points')
+                    elif te == 'trait' and x.get('style') not in (None, 'eau'):
+                        erreurs.append(f"{qv} : style de trait inconnu ({x.get('style')})")
             elif tv == 'document':
                 im = v.get('image') or {}
                 cle = f"{e['_cle']}:{k}"
@@ -1584,6 +1608,8 @@ def controler_segments(d: dict, dossier, voix_etat: dict, img_etat: dict, lexiqu
                 avert.append(f'{q} : carton {ou} : le carton-titre ouvre l’épisode, il ne le clôt pas')
         for qa in _instants_ok(t, quands):
             erreurs.append(f'{q} : « {qa} » absent de la narration')
+        # Avertissement (et non erreur) : cinq cas dans les périodes 02, 03 et 06 déjà publiées.
+        avert += _sous_elements_tardifs(q, e['visuels'], t)
         audio(q, e, t, VOIX, (45, 90))
     for x in lectures + episodes:
         x.pop('_cle', None)
@@ -1923,6 +1949,8 @@ def controler_plans(d: dict, img_etat: dict, dossier) -> tuple[dict, dict, dict]
             E['A'].append(f'{q} : titre court trop long ({len(tc)} caractères, 60 au plus)')
         if i.get('recadrage') is not None and not rect(i['recadrage']):
             E['A'].append(f"{q} : recadrage invalide ({i['recadrage']})")
+        if i.get('rotation') is not None and i['rotation'] not in (0, 90, 180, 270):
+            E['A'].append(f"{q} : rotation invalide ({i['rotation']} : 90, 180 ou 270 degrés horaires)")
         # Pas deux fois la même image dans la période, sauf reprise voulue (détail d'une œuvre déjà montrée).
         if (deja[i['commons']] or vues_sup[i['commons']] > 1) and not s['entree'].get('reprise'):
             E['A'].append(f"{q} : image déjà employée dans la période ({i['commons']}) ; « reprise »: true si c'est voulu (détail)")
@@ -2649,6 +2677,8 @@ def verifier(slug: str, etape: str | None = None, tout: bool = False) -> bool:
             r = i.get('recadrage')
             if r is not None and not (isinstance(r, list) and len(r) == 4 and 0 <= r[0] < r[2] <= 1 and 0 <= r[1] < r[3] <= 1):
                 erreurs.append(f'{p} : recadrage invalide ({r})')
+            if i.get('rotation') is not None and i['rotation'] not in (0, 90, 180, 270):
+                erreurs.append(f"{p} : rotation invalide ({i['rotation']} : 90, 180 ou 270 degrés horaires)")
             tc = (i.get('titre_court') or '').strip()
             if not tc:
                 erreurs.append(f'{p} : titre court (titre_court) manquant pour le cartouche')

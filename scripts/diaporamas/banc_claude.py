@@ -853,7 +853,7 @@ def relire(a) -> int:
 # --- Production : appliquer, restaurer --------------------------------------------------------
 
 def _meme_vue(a: dict, b: dict) -> bool:
-    cles = ('fichier', 'commons', 'recadrage', 'largeur', 'hauteur', 'utile', 'visage')
+    cles = ('fichier', 'commons', 'recadrage', 'rotation', 'largeur', 'hauteur', 'utile', 'visage')
     return a['narration'] == b['narration'] and all(a['image'].get(k) == b['image'].get(k) for k in cles) \
         and (a.get('audio') or {}).get('phrases') == (b.get('audio') or {}).get('phrases')
 

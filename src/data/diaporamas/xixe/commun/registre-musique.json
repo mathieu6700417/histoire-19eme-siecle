@@ -3137,9 +3137,17 @@
       "oeuvre": "Orphée aux Enfers, ouverture (1858, arr. Carl Binder 1860 ; disque Mercury, 1960)",
       "compositeur": "Jacques Offenbach",
       "interprete": "Orchestre symphonique de Détroit, direction Paul Paray",
-      "structure": [],
-      "periodes": [],
-      "statut": "possible",
+      "structure": [
+        [
+          434.5,
+          458.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
       "verifie": "2026-10-14"
     },
     {
@@ -3197,9 +3205,17 @@
       "oeuvre": "Les Troyens, Marche troyenne (1863 ; disque Mercury, 1960)",
       "compositeur": "Hector Berlioz",
       "interprete": "Orchestre symphonique de Détroit, direction Paul Paray",
-      "structure": [],
-      "periodes": [],
-      "statut": "possible",
+      "structure": [
+        [
+          0.5,
+          24.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
       "verifie": "2026-10-14"
     },
     {
@@ -3258,6 +3274,401 @@
       "periodes": [],
       "statut": "possible",
       "verifie": "2026-10-14"
+    },
+    {
+      "id": "archive:lp_french-overtures_ferdinand-hrold-adolphe-c-adam-daniel-fran_0#disc1/02.02. Mignon.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_french-overtures_ferdinand-hrold-adolphe-c-adam-daniel-fran_0",
+        "fichier": "disc1/02.02. Mignon.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Mignon, ouverture",
+      "compositeur": "Ambroise Thomas",
+      "date_oeuvre": "1866",
+      "interprete": "Orchestre symphonique de la Radiodiffusion nationale belge, direction Franz André (disque Telefunken, 1960)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/lp_french-overtures_ferdinand-hrold-adolphe-c-adam-daniel-fran_0",
+      "duree": 438.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          296.4,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_berlioz-five-overtures_andre-cluytens-orchestre-national-de-lo#disc1/01.02. Overture \"Le Roi Lear\", Op. 4.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_berlioz-five-overtures_andre-cluytens-orchestre-national-de-lo",
+        "fichier": "disc1/01.02. Overture \"Le Roi Lear\", Op. 4.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Le Roi Lear, ouverture : introduction",
+      "compositeur": "Hector Berlioz",
+      "date_oeuvre": "1831",
+      "interprete": "Orchestre national de l’Opéra de Paris, direction André Cluytens (disque Angel, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_berlioz-five-overtures_andre-cluytens-orchestre-national-de-lo",
+      "duree": 887.9,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          144.8,
+          "fond, introduction"
+        ],
+        [
+          232.0,
+          583.7,
+          "fond, Allegro disperato"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "commons:File:Camille Saint-Saëns - Le Rouet d'Omphale.flac",
+      "source": {
+        "type": "commons",
+        "fichier": "File:Camille Saint-Saëns - Le Rouet d'Omphale.flac"
+      },
+      "oeuvre": "Le Rouet d’Omphale, poème symphonique",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1871",
+      "interprete": "Orchestre national de la Radiodiffusion française, direction Louis Fourestier (enregistrement de 1953)",
+      "genre": "instrumental",
+      "licence": "Domaine public",
+      "preuve_date": "licence relevée par musique.py : Public domain ; https://commons.wikimedia.org/wiki/File:Camille_Saint-Sa%C3%ABns_-_Le_Rouet_d%27Omphale.flac",
+      "duree": 509.0,
+      "structure": [
+        [
+          0.0,
+          261.7,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr#disc1/01.01. Grande Pièce Symphonique.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr",
+        "fichier": "disc1/01.01. Grande Pièce Symphonique.mp3",
+        "publication": "1961"
+      },
+      "oeuvre": "Grande Pièce symphonique pour orgue",
+      "compositeur": "César Franck",
+      "date_oeuvre": "1862",
+      "interprete": "Marcel Dupré, orgue de Saint-Sulpice (disque Mercury, 1961)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1961 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1961, avant 1963) ; https://archive.org/details/lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr",
+      "duree": 1570.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          293.2,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_camille-saint-saens-symphony-no-2-in-a-min_camille-saint-sans-walter-goehr-netherland#disc1/01.01. Saint Saens Symphony No. 2 In A Minor, Op. 55: Allegro moderato.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_camille-saint-saens-symphony-no-2-in-a-min_camille-saint-sans-walter-goehr-netherland",
+        "fichier": "disc1/01.01. Saint Saens Symphony No. 2 In A Minor, Op. 55: Allegro moderato.mp3",
+        "publication": "1954"
+      },
+      "oeuvre": "Symphonie nº 2 en la mineur : Allegro moderato",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1859",
+      "interprete": "Orchestre philharmonique des Pays-Bas, direction Walter Goehr (disque Concert Hall, 1954)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1954 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1954, avant 1963) ; https://archive.org/details/lp_camille-saint-saens-symphony-no-2-in-a-min_camille-saint-sans-walter-goehr-netherland",
+      "duree": 495.6,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          318.2,
+          "fond, Allegro moderato"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_ballets-roma-bourre-fantasque_georges-bizet-emmanuel-chabrier#disc1/01.02. Roma Ballet (Complete): Andante.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_ballets-roma-bourre-fantasque_georges-bizet-emmanuel-chabrier",
+        "fichier": "disc1/01.02. Roma Ballet (Complete): Andante.mp3",
+        "publication": "1955"
+      },
+      "oeuvre": "Roma, symphonie : Andante",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1866-1868",
+      "interprete": "Orchestre du New York City Ballet, direction Leon Barzin (disque Vox, 1955)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1955 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1955, avant 1963) ; https://archive.org/details/lp_ballets-roma-bourre-fantasque_georges-bizet-emmanuel-chabrier",
+      "duree": 453.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          328.3,
+          "fond, Andante"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr#disc1/02.02. Pastorale.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr",
+        "fichier": "disc1/02.02. Pastorale.mp3",
+        "publication": "1961"
+      },
+      "oeuvre": "Pastorale pour orgue, opus 19",
+      "compositeur": "César Franck",
+      "date_oeuvre": "1862",
+      "interprete": "Marcel Dupré, orgue de Saint-Sulpice (disque Mercury, 1961)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1961 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1961, avant 1963) ; https://archive.org/details/lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr",
+      "duree": 502.4,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          383.6,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_ballets-roma-bourre-fantasque_georges-bizet-emmanuel-chabrier#disc1/01.03. Roma Ballet (Complete): Finale (Carnaval).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_ballets-roma-bourre-fantasque_georges-bizet-emmanuel-chabrier",
+        "fichier": "disc1/01.03. Roma Ballet (Complete): Finale (Carnaval).mp3",
+        "publication": "1955"
+      },
+      "oeuvre": "Roma, symphonie : finale (Carnaval)",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1866-1868",
+      "interprete": "Orchestre du New York City Ballet, direction Leon Barzin (disque Vox, 1955)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1955 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1955, avant 1963) ; https://archive.org/details/lp_ballets-roma-bourre-fantasque_georges-bizet-emmanuel-chabrier",
+      "duree": 363.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          null,
+          "fond, finale (Carnaval)"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit#disc1/02.02. Symphony No. 2 In E Flat: IV. Final: Allegro Leggiero Assai.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+        "fichier": "disc1/02.02. Symphony No. 2 In E Flat: IV. Final: Allegro Leggiero Assai.mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Symphonie nº 2 en mi bémol majeur : finale",
+      "compositeur": "Charles Gounod",
+      "date_oeuvre": "1855",
+      "interprete": "Orchestre des Concerts Lamoureux, direction Igor Markevitch (disque Decca, 1958)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+      "duree": 389.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          60.0,
+          "fond, finale"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr#disc1/02.01. Fantaisie In A Major.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr",
+        "fichier": "disc1/02.01. Fantaisie In A Major.mp3",
+        "publication": "1961"
+      },
+      "oeuvre": "Fantaisie en la majeur pour orgue, opus 16",
+      "compositeur": "César Franck",
+      "date_oeuvre": "1862",
+      "interprete": "Marcel Dupré, orgue de Saint-Sulpice (disque Mercury, 1961)",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1961 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1961, avant 1963) ; https://archive.org/details/lp_dupr-at-saint-sulpice-volume-three_csar-franck-marcel-dupr",
+      "duree": 894.2,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.0,
+          525.2,
+          "fond"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit#disc1/02.03.  Jeux D' Enfants (Suite for Orchestra, Op. 22): I. Marche (Trompette Et Tambour); II. Berceuse (La Poupée); III. Impromptu (La Toupie); IV. Duo (Petit Mari, Petite Femme); V. Galop (Le Bal).mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+        "fichier": "disc1/02.03.  Jeux D' Enfants (Suite for Orchestra, Op. 22): I. Marche (Trompette Et Tambour); II. Berceuse (La Poupée); III. Impromptu (La Toupie); IV. Duo (Petit Mari, Petite Femme); V. Galop (Le Bal).mp3",
+        "publication": "1958"
+      },
+      "oeuvre": "Jeux d’enfants : Marche (Trompette et tambour)",
+      "compositeur": "Georges Bizet",
+      "date_oeuvre": "1871",
+      "interprete": "Orchestre des Concerts Lamoureux, direction Igor Markevitch (disque Decca, 1958)",
+      "enregistrement": "Decca, 1958",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1958 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1958, avant 1963) ; https://archive.org/details/lp_gounod-symphony-no-2-bizet-jeux-d-enfants_charles-gounod-georges-bizet-igor-markevit",
+      "duree": 687.1,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          30.0,
+          55.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:lp_camille-saint-saens-symphony-no-2-in-a-min_camille-saint-sans-walter-goehr-netherland#disc1/01.02. Saint Saens Symphony No. 2 In A Minor, Op. 55:  Adagio.mp3",
+      "source": {
+        "type": "archive",
+        "id": "lp_camille-saint-saens-symphony-no-2-in-a-min_camille-saint-sans-walter-goehr-netherland",
+        "fichier": "disc1/01.02. Saint Saens Symphony No. 2 In A Minor, Op. 55:  Adagio.mp3",
+        "publication": "1954"
+      },
+      "oeuvre": "Symphonie nº 2 en la mineur : Adagio",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1859",
+      "interprete": "Orchestre philharmonique des Pays-Bas, direction Walter Goehr (disque Concert Hall, 1954)",
+      "enregistrement": "Concert Hall, 1954",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1954 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1954, avant 1963) ; https://archive.org/details/lp_camille-saint-saens-symphony-no-2-in-a-min_camille-saint-sans-walter-goehr-netherland",
+      "duree": 213.8,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          0.5,
+          25.5,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
+    },
+    {
+      "id": "archive:20210610-marches-francaises-paul-paray##(3) Marche héroïque in E-Flat major, Op 34.mp3",
+      "source": {
+        "type": "archive",
+        "id": "20210610-marches-francaises-paul-paray",
+        "fichier": "#(3) Marche héroïque in E-Flat major, Op 34.mp3",
+        "publication": "1960"
+      },
+      "oeuvre": "Marche héroïque",
+      "compositeur": "Camille Saint-Saëns",
+      "date_oeuvre": "1871",
+      "interprete": "Orchestre symphonique de Détroit, direction Paul Paray (disque Mercury, 1960)",
+      "enregistrement": "Mercury, 1960",
+      "genre": "instrumental",
+      "licence": "Domaine public en Europe (disque publié avant 1963)",
+      "preuve_date": "année de publication déclarée dans la source : 1960 ; licence relevée par musique.py : Domaine public en Europe (enregistrement publié en 1960, avant 1963) ; https://archive.org/details/20210610-marches-francaises-paul-paray",
+      "duree": 403.5,
+      "filtres": "microsillon",
+      "structure": [
+        [
+          1.0,
+          25.0,
+          "intermède musical"
+        ]
+      ],
+      "periodes": [
+        "07-annee-terrible"
+      ],
+      "statut": "retenu",
+      "verifie": "2026-10-18"
     }
   ],
   "introuvables": [
@@ -3380,6 +3791,18 @@
       "compositeur": "Hortense de Beauharnais",
       "cherche": "2026-10-14",
       "ou": "cherché de nouveau le 2026-10-14 : Commons (deux fichiers, l'un MIDI, l'autre d'origine nationalanthems.info, écartés) ; Internet Archive (\"partant pour la syrie\") : partitions, vidéos YouTube, un 78 tours russe NC-ND"
+    },
+    {
+      "oeuvre": "Le Temps des cerises (chant)",
+      "compositeur": "Antoine Renard, sur des paroles de Jean-Baptiste Clément",
+      "cherche": "2026-10-18",
+      "ou": "cherché le 2026-10-18 : Commons (recherche plein texte, catégorie « Le Temps des cerises (song) » : seulement un MIDI et des partitions), Internet Archive (78 tours, titres « temps des cerises » : rien d'antérieur à 1963 sous licence vérifiable) ; Gallica exclu (réutilisation commerciale non libre)"
+    },
+    {
+      "oeuvre": "La Canaille (chant)",
+      "compositeur": "Joseph Darcier, sur des paroles d'Alexis Bouvier",
+      "cherche": "2026-10-18",
+      "ou": "cherché le 2026-10-18 : Commons (rien), Internet Archive (seulement « Paris canaille » de Léo Ferré, sans rapport) ; aucun enregistrement ancien libre"
     }
   ]
 }

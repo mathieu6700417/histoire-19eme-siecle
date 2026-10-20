@@ -93,6 +93,12 @@ build ralentiraient tout, et on les prépare une fois pour toutes par script. Po
 
 `camera` : étapes de caméra (voir « Caméra calée sur la narration »), remplies par `camera.py`.
 Les durées et les phrases horodatées sont remplies par `voix.py`.
+Champs facultatifs de `image` écrits à la main, appliqués au WebP par `images.py` (la légende reste
+celle de l'œuvre entière) : `recadrage` `[x0, y0, x1, y1]` (fractions de l'original) retire les
+marges de papier ; `rotation` (2026-10-18) redresse un scan couché ou à l'envers : 90, 180 ou 270
+degrés dans le sens des aiguilles d'une montre, appliqués **avant** le recadrage (qui se lit donc
+sur l'image redressée). Valable pour toute image passée par `images.py` (diapositive, plan, après,
+vignette, panneau d'épisode) ; `verifier.py` refuse une autre valeur.
 
 **Actes** : 6 à 10 par période, ce sont les sous-chapitres affichés sur la barre de progression.
 
@@ -1235,6 +1241,32 @@ Particularités :
   maintenant jusqu'au bilan. L'extension du Sénégal le long du fleuve est dite, non tracée (deux comptoirs). Les six
   épisodes font 31 à 40 s (45 à 90 visés) ;
 - un chiffre en « et demi » (« deux milliards et demi ») n'est pas lu par `commun.nombre_dit` : retiré (46).
+
+### L'année terrible (2026-10-18)
+
+Dosage atteint : 138 diapositives en 10 actes, 209 images (55 plans, 15 images de galerie, 1 d'épisode), 55,6 min ;
+6 lectures (Hugo, Sand, Louise Michel, André Léo, Daudet, Goncourt ; toutes en voix de femme) et six épisodes de 49
+à 59 s : « Un mois pour perdre », « Paris dans l'étau », « La guerre en province », « L'Alsace-Lorraine arrachée »,
+« L'empire et l'Algérie en 1871 », « Sept jours de mai ». Familles : arts et techniques 32, colonies 7 et la carte,
+campagnes 9, pourquoi matériel 15, femmes 15, vie ordinaire 16, Europe 8. 3 avant/après (43, 121, 122), 2 mosaïques
+(118, 135), 11 clips, 81 fonds, 62 images colorisées, 21 dessins. Particularités :
+- **aucun chant** : *La Canaille* et *Le Temps des cerises* n'ont pas d'enregistrement ancien libre ; leurs galeries
+  passent sur de la musique instrumentale ; *L'Internationale* (musique de 1888) est nommée, jamais jouée ;
+- **plan de Paris de 1870** (Vuillemin, `paris-1870`) pour les médaillons de lieu : il atteint Montmartre, Belleville
+  et les portes ; **fond de carte `algerie`** (Natural Earth 1:50 m) pour l'insurrection de 1871 ;
+- **chiffres disputés** dits avec leurs sources : morts de la Semaine sanglante (Tombs 5 700 à 7 400, Rougerie
+  ≈ 10 000, Lissagaray 20 000 ; pertes de l'armée ≈ 400 dans la semaine) ;
+- **colonne Vendôme** : photographie d'avant en hauteur, d'après en largeur, pas de volet possible : diapositive à
+  plan (105, 105b) ;
+- **portraits datés** : `hugo-1870` et `thiers-1870` (un seul portrait par identifiant au registre ; les entrées
+  communes `hugo` et `thiers` restent celles des périodes précédentes) ;
+- clip de la diapositive 14 écarté (titre imprimé lisible dans la zone utile).
+
+Retours du visionnage (annotations du 2026-10-18) : la frise du carton finit nette (mise au point de
+0,9 s après l'avancée du segment : halo effacé, segment noir plein) ; un poème lu est réduit (jusqu'à 62 %)
+pour que chaque vers tienne sur une ligne (`ajusterVers`, lectures.ts) ; une carte recadrée peut porter
+des cours d'eau détaillés (élément `trait` de `style: "eau"`, tracé lissé en bleu-gris) qui remplacent
+alors les fleuves du fond, trop grossiers à cette échelle.
 
 ## Retours du visionnage de la Restauration (2026-10-11)
 

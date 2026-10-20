@@ -3991,5 +3991,741 @@
     "nom": "André Léo",
     "dates": "1824-1900",
     "note": "La photographie de Commons (Andreleo.jpg, image P18 de Wikidata) est signalée par sa propre notice comme ne montrant pas André Léo : écartée ; aucun autre portrait libre (2026-10-14)."
+  },
+  {
+    "id": "moltke",
+    "nom": "Moltke",
+    "dates": "1800-1891",
+    "commons": "File:Helmuth Karl Bernhard von Moltke Günther BNF Gallica.jpg",
+    "auteur": "Carl Günther (photographie)",
+    "date": "années 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Helmuth_Karl_Bernhard_von_Moltke_G%C3%BCnther_BNF_Gallica.jpg",
+    "cadre_visage": [
+      0.43,
+      0.227,
+      0.692,
+      0.417
+    ],
+    "fichier": "portraits/moltke.webp"
+  },
+  {
+    "id": "bazaine",
+    "nom": "Bazaine",
+    "dates": "1811-1888",
+    "commons": "File:Jean-Adolphe Beaucé - Achille-François Bazaine, Marshal of France, Marshal of France, 1867.jpg",
+    "auteur": "Jean-Adolphe Beaucé",
+    "date": "1867",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean-Adolphe_Beauc%C3%A9_-_Achille-Fran%C3%A7ois_Bazaine,_Marshal_of_France,_Marshal_of_France,_1867.jpg",
+    "cadre_visage": [
+      0.363,
+      0.103,
+      0.53,
+      0.235
+    ],
+    "fichier": "portraits/bazaine.webp"
+  },
+  {
+    "id": "margueritte",
+    "nom": "Général Margueritte",
+    "dates": "1823-1870",
+    "note": "seul portrait libre trouvé : 300 × 407 px, sous le seuil de 500 px"
+  },
+  {
+    "id": "trochu",
+    "nom": "Trochu",
+    "dates": "1815-1896",
+    "commons": "File:Crimean War, General Louis Trochu (1854-56 Q71484).jpg",
+    "auteur": "Photographe non identifié (Imperial War Museums)",
+    "date": "1854-1856, guerre de Crimée",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Crimean_War,_General_Louis_Trochu_(1854-56_Q71484).jpg",
+    "cadre_visage": [
+      0.427,
+      0.126,
+      0.573,
+      0.249
+    ],
+    "fichier": "portraits/trochu.webp"
+  },
+  {
+    "id": "favre",
+    "nom": "Jules Favre",
+    "dates": "1809-1880",
+    "commons": "File:Jules Favre Gallica.png",
+    "auteur": "Eugène Appert (photographie)",
+    "date": "vers 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jules_Favre_Gallica.png",
+    "cadre_visage": [
+      0.229,
+      0.122,
+      0.752,
+      0.527
+    ],
+    "fichier": "portraits/favre.webp"
+  },
+  {
+    "id": "simon",
+    "nom": "Jules Simon",
+    "dates": "1814-1896",
+    "commons": "File:Jules Simon - Nadar.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "années 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jules_Simon_-_Nadar.jpg",
+    "cadre_visage": [
+      0.291,
+      0.099,
+      0.61,
+      0.415
+    ],
+    "fichier": "portraits/simon.webp"
+  },
+  {
+    "id": "evans",
+    "nom": "Thomas W. Evans",
+    "dates": "1823-1897",
+    "commons": "File:Henri Gervex - Portrait Thomas W. Evans.jpg",
+    "auteur": "Henri Gervex",
+    "date": "1892",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Henri_Gervex_-_Portrait_Thomas_W._Evans.jpg",
+    "cadre_visage": [
+      0.43,
+      0.097,
+      0.68,
+      0.307
+    ],
+    "fichier": "portraits/evans.webp"
+  },
+  {
+    "id": "freycinet",
+    "nom": "Freycinet",
+    "dates": "1828-1923",
+    "commons": "File:Freycinet, de Saulces de, Charles, Nadar, Gallica.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "vers 1880",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Freycinet,_de_Saulces_de,_Charles,_Nadar,_Gallica.jpg",
+    "cadre_visage": [
+      0.16,
+      0.095,
+      0.812,
+      0.582
+    ],
+    "fichier": "portraits/freycinet.webp"
+  },
+  {
+    "id": "chanzy",
+    "nom": "Chanzy",
+    "dates": "1823-1883",
+    "commons": "File:Chanzy Antoine Alfred Eugène (1823-1883). Général et gouverneur général de l'Algérie (1873-1879), il est à la tête de la, PH4142-41(1).jpg",
+    "auteur": "Photographe non identifié (musée Carnavalet)",
+    "date": "vers 1870",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Chanzy_Antoine_Alfred_Eug%C3%A8ne_(1823-1883)._G%C3%A9n%C3%A9ral_et_gouverneur_g%C3%A9n%C3%A9ral_de_l%27Alg%C3%A9rie_(1873-1879),_il_est_%C3%A0_la_t%C3%AAte_de_la,_PH4142-41(1).jpg",
+    "cadre_visage": [
+      0.326,
+      0.172,
+      0.67,
+      0.407
+    ],
+    "fichier": "portraits/chanzy.webp"
+  },
+  {
+    "id": "faidherbe",
+    "nom": "Faidherbe",
+    "dates": "1818-1889",
+    "commons": "File:Faidherbearmee.JPG",
+    "auteur": "Marie Madeleine Rignot-Dubaux",
+    "date": "1884",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Faidherbearmee.JPG",
+    "cadre_visage": [
+      0.312,
+      0.048,
+      0.744,
+      0.414
+    ],
+    "fichier": "portraits/faidherbe.webp"
+  },
+  {
+    "id": "bourbaki",
+    "nom": "Bourbaki",
+    "dates": "1816-1897",
+    "commons": "File:General Bourbaki.jpg",
+    "auteur": "Richard Brend'amour (gravure)",
+    "date": "1895-1896",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:General_Bourbaki.jpg",
+    "cadre_visage": [
+      0.321,
+      0.046,
+      0.751,
+      0.438
+    ],
+    "fichier": "portraits/bourbaki.webp"
+  },
+  {
+    "id": "denfert-rochereau",
+    "nom": "Denfert-Rochereau",
+    "dates": "1823-1878",
+    "commons": "File:Col. Denfert-Rochereau by Étienne Carjat 1878.jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "1878",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Col._Denfert-Rochereau_by_%C3%89tienne_Carjat_1878.jpg",
+    "cadre_visage": [
+      0.26,
+      0.08,
+      0.644,
+      0.428
+    ],
+    "fichier": "portraits/denfert-rochereau.webp"
+  },
+  {
+    "id": "aurelle-de-paladines",
+    "nom": "Aurelle de Paladines",
+    "dates": "1804-1877",
+    "commons": "File:Général d'Aurelle de Paladines, PPG3862.jpg",
+    "auteur": "Edmond Morin et Léon-Louis Chapon (gravure)",
+    "date": "1871",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:G%C3%A9n%C3%A9ral_d%27Aurelle_de_Paladines,_PPG3862.jpg",
+    "cadre_visage": [
+      0.43,
+      0.27,
+      0.575,
+      0.405
+    ],
+    "fichier": "portraits/aurelle-de-paladines.webp",
+    "cadre_visage_manuel": true
+  },
+  {
+    "id": "ducrot",
+    "nom": "Ducrot",
+    "dates": "1817-1882",
+    "commons": "File:Portrait d'Auguste Alexandre Ducrot (1817-1882), (général, homme politique), PH49834 (1 of 2).jpg",
+    "auteur": "Photographe non identifié (musée Carnavalet)",
+    "date": "avant 1882",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_d%27Auguste_Alexandre_Ducrot_(1817-1882),_(g%C3%A9n%C3%A9ral,_homme_politique),_PH49834_(1_of_2).jpg",
+    "cadre_visage": [
+      0.307,
+      0.146,
+      0.552,
+      0.328
+    ],
+    "fichier": "portraits/ducrot.webp"
+  },
+  {
+    "id": "dagron",
+    "nom": "Dagron",
+    "dates": "1819-1900",
+    "note": "pas de portrait libre identifié (l'image de Wikidata est une photographie faite par Dagron, pas son portrait)"
+  },
+  {
+    "id": "degas",
+    "nom": "Degas",
+    "dates": "1834-1917",
+    "commons": "File:Edgar Degas- Self Portrait MET DP815799.jpg",
+    "auteur": "Edgar Degas (autoportrait gravé)",
+    "date": "1857",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Edgar_Degas-_Self_Portrait_MET_DP815799.jpg",
+    "cadre_visage": [
+      0.386,
+      0.234,
+      0.636,
+      0.397
+    ],
+    "fichier": "portraits/degas.webp"
+  },
+  {
+    "id": "bazille",
+    "nom": "Bazille",
+    "dates": "1841-1870",
+    "commons": "File:Bazille, Frédéric, album Manet, BNF Gallica.jpg",
+    "auteur": "Photographe non identifié (album Manet, BnF)",
+    "date": "1867",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Bazille,_Fr%C3%A9d%C3%A9ric,_album_Manet,_BNF_Gallica.jpg",
+    "cadre_visage": [
+      0.348,
+      0.164,
+      0.651,
+      0.385
+    ],
+    "fichier": "portraits/bazille.webp"
+  },
+  {
+    "id": "monet",
+    "nom": "Monet",
+    "dates": "1840-1926",
+    "commons": "File:Claude Monet 1899 Nadar crop.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "1899",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Claude_Monet_1899_Nadar_crop.jpg",
+    "cadre_visage": [
+      0.251,
+      0.066,
+      0.79,
+      0.558
+    ],
+    "fichier": "portraits/monet.webp"
+  },
+  {
+    "id": "pissarro",
+    "nom": "Pissarro",
+    "dates": "1830-1903",
+    "commons": "File:Pissarro-portrait-c1900.jpg",
+    "auteur": "Photographe non identifié",
+    "date": "vers 1900",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pissarro-portrait-c1900.jpg",
+    "cadre_visage": [
+      0.246,
+      0.03,
+      0.718,
+      0.457
+    ],
+    "fichier": "portraits/pissarro.webp"
+  },
+  {
+    "id": "regnault",
+    "nom": "Henri Regnault",
+    "dates": "1843-1871",
+    "commons": "File:Henri Regnault par Berthaud BNF Gallica.jpg",
+    "auteur": "Michel Berthaud (photographie)",
+    "date": "vers 1865",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Henri_Regnault_par_Berthaud_BNF_Gallica.jpg",
+    "cadre_visage": [
+      0.269,
+      0.135,
+      0.562,
+      0.34
+    ],
+    "fichier": "portraits/regnault.webp"
+  },
+  {
+    "id": "puvis-de-chavannes",
+    "nom": "Puvis de Chavannes",
+    "dates": "1824-1898",
+    "commons": "File:Pierre-Cécile Puvis de Chavannes BNF Gallica.jpg",
+    "auteur": "Anatole Louis Godet (photographie)",
+    "date": "1882",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Pierre-C%C3%A9cile_Puvis_de_Chavannes_BNF_Gallica.jpg",
+    "cadre_visage": [
+      0.208,
+      0.052,
+      0.738,
+      0.518
+    ],
+    "fichier": "portraits/puvis-de-chavannes.webp"
+  },
+  {
+    "id": "sarah-bernhardt",
+    "nom": "Sarah Bernhardt",
+    "dates": "1844-1923",
+    "commons": "File:Gustave Doré - Sarah Bernhardt, 1870.jpg",
+    "auteur": "Gustave Doré",
+    "date": "1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Gustave_Dor%C3%A9_-_Sarah_Bernhardt,_1870.jpg",
+    "cadre_visage": [
+      0.345,
+      0.146,
+      0.743,
+      0.553
+    ],
+    "fichier": "portraits/sarah-bernhardt.webp"
+  },
+  {
+    "id": "flourens",
+    "nom": "Flourens",
+    "dates": "1838-1871",
+    "commons": "File:Gustave Flourens-1.1.jpg",
+    "auteur": "Photographe non identifié",
+    "date": "1871",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Gustave_Flourens-1.1.jpg",
+    "cadre_visage": [
+      0.379,
+      0.167,
+      0.609,
+      0.315
+    ],
+    "fichier": "portraits/flourens.webp"
+  },
+  {
+    "id": "louise-michel",
+    "nom": "Louise Michel",
+    "dates": "1830-1905",
+    "commons": "File:Portrait de Louise Michel (1830-1905), pendant la Commune de Paris 1871. PH15063.jpg",
+    "auteur": "Ernest Charles Appert (photographie)",
+    "date": "1871",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Louise_Michel_(1830-1905),_pendant_la_Commune_de_Paris_1871._PH15063.jpg",
+    "cadre_visage": [
+      0.348,
+      0.156,
+      0.735,
+      0.442
+    ],
+    "fichier": "portraits/louise-michel.webp"
+  },
+  {
+    "id": "lecomte",
+    "nom": "Général Lecomte",
+    "dates": "1817-1871",
+    "commons": "File:Lecomte Claude Martin (1817-1871). Général de brigade, il est chargé Par Thiers de récupérer les canons détenus par la G, PH4142-144.jpg",
+    "auteur": "Bertaud (photographie)",
+    "date": "avant 1870",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Lecomte_Claude_Martin_(1817-1871)._G%C3%A9n%C3%A9ral_de_brigade,_il_est_charg%C3%A9_Par_Thiers_de_r%C3%A9cup%C3%A9rer_les_canons_d%C3%A9tenus_par_la_G,_PH4142-144.jpg",
+    "cadre_visage": [
+      0.296,
+      0.143,
+      0.676,
+      0.412
+    ],
+    "fichier": "portraits/lecomte.webp"
+  },
+  {
+    "id": "clement-thomas",
+    "nom": "Clément-Thomas",
+    "dates": "1809-1871",
+    "commons": "File:Clément Thomas.jpg",
+    "auteur": "Pierre Petit (photographie)",
+    "date": "entre 1860 et 1871",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Cl%C3%A9ment_Thomas.jpg",
+    "cadre_visage": [
+      0.341,
+      0.18,
+      0.74,
+      0.503
+    ],
+    "fichier": "portraits/clement-thomas.webp"
+  },
+  {
+    "id": "valles",
+    "nom": "Jules Vallès",
+    "dates": "1832-1885",
+    "commons": "File:Portrait de Jules Vallès (1832-1885), écrivain, publiciste et membre de la Commune en 1871. PH57263 (1 of 2).jpg",
+    "auteur": "Photographe non identifié (musée Carnavalet)",
+    "date": "entre 1860 et 1885",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Jules_Vall%C3%A8s_(1832-1885),_%C3%A9crivain,_publiciste_et_membre_de_la_Commune_en_1871._PH57263_(1_of_2).jpg",
+    "cadre_visage": [
+      0.258,
+      0.179,
+      0.656,
+      0.452
+    ],
+    "fichier": "portraits/valles.webp"
+  },
+  {
+    "id": "delescluze",
+    "nom": "Delescluze",
+    "dates": "1809-1871",
+    "commons": "File:Portrait de Delescluze Louis Charles, (1809-1871), (publiciste, membre de la commune), PH49287.jpg",
+    "auteur": "Carjat et Cie (photographie)",
+    "date": "vers 1870",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Delescluze_Louis_Charles,_(1809-1871),_(publiciste,_membre_de_la_commune),_PH49287.jpg",
+    "cadre_visage": [
+      0.266,
+      0.194,
+      0.654,
+      0.5
+    ],
+    "fichier": "portraits/delescluze.webp"
+  },
+  {
+    "id": "frankel",
+    "nom": "Léo Frankel",
+    "dates": "1844-1896",
+    "note": "seuls portraits libres trouvés : 176 et 293 × 450 px, sous le seuil de 500 px"
+  },
+  {
+    "id": "dmitrieff",
+    "nom": "Élisabeth Dmitrieff",
+    "dates": "1851-1918",
+    "note": "seul portrait libre : 222 × 316 px (Liébert, 1871), sous le seuil de 500 px"
+  },
+  {
+    "id": "brocher",
+    "nom": "Victorine Brocher",
+    "dates": "1839-1921",
+    "note": "seul portrait libre : 1918, 432 px, sous le seuil de 500 px"
+  },
+  {
+    "id": "rossel",
+    "nom": "Rossel",
+    "dates": "1844-1871",
+    "commons": "File:Portrait de Rossel Louis, (dit Randal), (1844-1871), (officier, membre de la Commune, fusillé), PH22415.jpg",
+    "auteur": "Ernest Charles Appert (photographie)",
+    "date": "1871",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Rossel_Louis,_(dit_Randal),_(1844-1871),_(officier,_membre_de_la_Commune,_fusill%C3%A9),_PH22415.jpg",
+    "cadre_visage": [
+      0.326,
+      0.123,
+      0.627,
+      0.341
+    ],
+    "fichier": "portraits/rossel.webp"
+  },
+  {
+    "id": "dombrowski",
+    "nom": "Dombrowski",
+    "dates": "1836-1871",
+    "commons": "File:Petit - Portrait de Jaroslaw Dombrowski (1836-1871), ancien officier polonais réfugié à Paris en 1865 - recto.jpg",
+    "auteur": "Pierre Petit (photographie)",
+    "date": "entre 1865 et 1871",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Petit_-_Portrait_de_Jaroslaw_Dombrowski_(1836-1871),_ancien_officier_polonais_r%C3%A9fugi%C3%A9_%C3%A0_Paris_en_1865_-_recto.jpg",
+    "cadre_visage": [
+      0.386,
+      0.141,
+      0.617,
+      0.297
+    ],
+    "fichier": "portraits/dombrowski.webp"
+  },
+  {
+    "id": "darboy",
+    "nom": "Mgr Darboy",
+    "dates": "1813-1871",
+    "commons": "File:Mgr Georges Darboy Photographie ca1860 BNF Gallica.jpg",
+    "auteur": "Robert Jefferson Bingham (photographie)",
+    "date": "vers 1865",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Mgr_Georges_Darboy_Photographie_ca1860_BNF_Gallica.jpg",
+    "cadre_visage": [
+      0.373,
+      0.107,
+      0.702,
+      0.407
+    ],
+    "fichier": "portraits/darboy.webp"
+  },
+  {
+    "id": "mokrani",
+    "nom": "El Mokrani",
+    "dates": "1815-1871",
+    "note": "aucun portrait d'époque libre (l'image de Wikidata est un dessin de 2024 sous CC BY-SA)"
+  },
+  {
+    "id": "el-haddad",
+    "nom": "Cheikh El Haddad",
+    "dates": "1790-1873",
+    "note": "aucun portrait d'époque libre trouvé",
+    "note_dates": "né vers 1790"
+  },
+  {
+    "id": "vaillant",
+    "nom": "Édouard Vaillant",
+    "dates": "1840-1915",
+    "commons": "File:Mr Vaillant, député - btv1b90206428.jpg",
+    "auteur": "Agence Meurisse (photographie)",
+    "date": "1912",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Mr_Vaillant,_d%C3%A9put%C3%A9_-_btv1b90206428.jpg",
+    "cadre_visage": [
+      0.207,
+      0.198,
+      0.707,
+      0.623
+    ],
+    "fichier": "portraits/vaillant.webp"
+  },
+  {
+    "id": "pottier",
+    "nom": "Eugène Pottier",
+    "dates": "1816-1887",
+    "commons": "File:Eugène Pottier par Étienne Carjat.jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "vers 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Eug%C3%A8ne_Pottier_par_%C3%89tienne_Carjat.jpg",
+    "cadre_visage": [
+      0.315,
+      0.158,
+      0.675,
+      0.389
+    ],
+    "fichier": "portraits/pottier.webp"
+  },
+  {
+    "id": "rosa-bordas",
+    "nom": "Rosa Bordas",
+    "dates": "1840-1901",
+    "note": "seul portrait libre : 407 × 432 px, sous le seuil de 500 px"
+  },
+  {
+    "id": "galliffet",
+    "nom": "Galliffet",
+    "dates": "1831-1909",
+    "commons": "File:Portrait de Gaston Alexandre Auguste Marquis de Galliffet (1830-1909), (Général, officier d'ordonnance de Napoléon III, PH50887.jpg",
+    "auteur": "Atelier Nadar (photographie)",
+    "date": "entre 1860 et 1890",
+    "licence": "CC0",
+    "page": "https://commons.wikimedia.org/wiki/File:Portrait_de_Gaston_Alexandre_Auguste_Marquis_de_Galliffet_(1830-1909),_(G%C3%A9n%C3%A9ral,_officier_d%27ordonnance_de_Napol%C3%A9on_III,_PH50887.jpg",
+    "cadre_visage": [
+      0.35,
+      0.121,
+      0.838,
+      0.481
+    ],
+    "fichier": "portraits/galliffet.webp"
+  },
+  {
+    "id": "ferre",
+    "nom": "Théophile Ferré",
+    "dates": "1846-1871",
+    "commons": "File:Théophile Ferré.jpg",
+    "auteur": "Eugène Appert (photographie)",
+    "date": "1871",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Th%C3%A9ophile_Ferr%C3%A9.jpg",
+    "cadre_visage": [
+      0.321,
+      0.12,
+      0.784,
+      0.415
+    ],
+    "fichier": "portraits/ferre.webp"
+  },
+  {
+    "id": "marx",
+    "nom": "Karl Marx",
+    "dates": "1818-1883",
+    "commons": "File:Karl Marx 001 restored.jpg",
+    "auteur": "John Jabez Edwin Mayall (photographie)",
+    "date": "1875",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Karl_Marx_001_restored.jpg",
+    "cadre_visage": [
+      0.437,
+      0.157,
+      0.74,
+      0.388
+    ],
+    "fichier": "portraits/marx.webp"
+  },
+  {
+    "id": "meissonier",
+    "nom": "Meissonier",
+    "dates": "1815-1891",
+    "commons": "File:Ernest Meissonier young.png",
+    "auteur": "Nadar (photographie)",
+    "date": "avant 1891",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Ernest_Meissonier_young.png",
+    "cadre_visage": [
+      0.328,
+      0.165,
+      0.654,
+      0.411
+    ],
+    "fichier": "portraits/meissonier.webp"
+  },
+  {
+    "id": "henner",
+    "nom": "Henner",
+    "dates": "1829-1905",
+    "commons": "File:Jean-Jacques Henner photo.jpg",
+    "auteur": "Nadar (photographie)",
+    "date": "vers 1900",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Jean-Jacques_Henner_photo.jpg",
+    "cadre_visage": [
+      0.228,
+      0.135,
+      0.893,
+      0.614
+    ],
+    "fichier": "portraits/henner.webp"
+  },
+  {
+    "id": "gueydon",
+    "nom": "Amiral de Gueydon",
+    "dates": "1809-1886",
+    "commons": "File:Amiral Louis Henri de Gueydon.png",
+    "auteur": "Gravure d'après Benque (L'Illustration)",
+    "date": "1886",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Amiral_Louis_Henri_de_Gueydon.png",
+    "cadre_visage": [
+      0.256,
+      0.03,
+      0.823,
+      0.466
+    ],
+    "fichier": "portraits/gueydon.webp"
+  },
+  {
+    "id": "gaston-cremieux",
+    "nom": "Gaston Crémieux",
+    "dates": "1836-1871",
+    "commons": "File:Gaston Crémieux2.jpg",
+    "auteur": "Eugène Appert (photographie)",
+    "date": "1871",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Gaston_Cr%C3%A9mieux2.jpg",
+    "cadre_visage": [
+      0.322,
+      0.127,
+      0.788,
+      0.544
+    ],
+    "fichier": "portraits/gaston-cremieux.webp"
+  },
+  {
+    "id": "liebert",
+    "nom": "Liébert",
+    "dates": "1826-1913",
+    "note": "pas de portrait libre identifié (l'image de Wikidata est une photographie faite par Liébert, pas son portrait)"
+  },
+  {
+    "id": "thiers-1870",
+    "nom": "Thiers",
+    "dates": "1797-1877",
+    "commons": "File:Adolphe Thiers - photographie Nadar.png",
+    "auteur": "Nadar (photoglyptie, Galerie contemporaine)",
+    "date": "années 1870",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Adolphe_Thiers_-_photographie_Nadar.png",
+    "cadre_visage": [
+      0.414,
+      0.222,
+      0.636,
+      0.412
+    ],
+    "fichier": "portraits/thiers-1870.webp"
+  },
+  {
+    "id": "hugo-1870",
+    "nom": "Victor Hugo",
+    "dates": "1802-1885",
+    "commons": "File:Victor Hugo by Étienne Carjat 1876 - full.jpg",
+    "auteur": "Étienne Carjat (photographie)",
+    "date": "1876",
+    "licence": "Public domain",
+    "page": "https://commons.wikimedia.org/wiki/File:Victor_Hugo_by_%C3%89tienne_Carjat_1876_-_full.jpg",
+    "cadre_visage": [
+      0.349,
+      0.111,
+      0.655,
+      0.406
+    ],
+    "fichier": "portraits/hugo-1870.webp"
   }
 ]

@@ -1,7 +1,7 @@
 // Frise du temps : curseur et date dans le carton d'acte et au bas de l'image (4 s à chaque
 // changement d'année), surimpressions poussées au-dessus. Lit `x.date`, `lec.derniere`.
 // Spec 12, « Frise du temps », « Frise simplifiée » ; README : « Frise du temps ».
-import { CARTON_ACTE_DUREE, CARTON_ACTE_MAX, CARTON_ACTE_MIN, CARTON_TRACE, CARTON_TRACE_DUREE, DUREE_FRISE, FONDU_FRISE } from './constantes';
+import { CARTON_ACTE_DUREE, CARTON_ACTE_MAX, CARTON_ACTE_MIN, CARTON_NET_DUREE, CARTON_TRACE, CARTON_TRACE_DUREE, DUREE_FRISE, FONDU_FRISE } from './constantes';
 import { adoucir } from './geometrie';
 import { mouvementReduit } from './outils';
 import type { DateFrise } from './types';
@@ -92,16 +92,20 @@ export function installerFrise(lec: Lecteur) {
     for (const p of carton.passes) p.el.style.width = `${Math.max(0, Math.min(p.x1, X) - p.x0).toFixed(3)}%`;
     // 2. Segment de l'acte : il avance et s'épaissit ; les années défilent.
     const iv = intervallesActes[carton.k], p = adoucir((t - carton.debut) / CARTON_ACTE_DUREE);
+    // 3. Mise au point (annotations du 2026-10-18) : le segment arrivé, le halo se resserre et
+    // s'efface, le dégradé passe au noir plein : la période finit nette.
+    const n = adoucir((t - carton.debut - CARTON_ACTE_DUREE) / CARTON_NET_DUREE);
     if (iv) {
       const w = (iv.x1 - iv.x0) * p;
       acte.style.left = `${(iv.x0 + w / 2).toFixed(3)}%`;
       acte.style.width = `${w.toFixed(3)}%`;
       acte.style.height = `${(2 + 3 * p).toFixed(2)}px`;
       acte.style.opacity = t >= carton.debut ? '1' : '0';
+      acte.style.setProperty('--net', n.toFixed(3));
       // Zone teintée : elle s'étend avec le segment, un peu plus large que lui.
       zone.style.left = `${(iv.x0 + w / 2).toFixed(3)}%`;
-      zone.style.width = `calc(${w.toFixed(3)}% + ${(40 * p).toFixed(1)}px)`;
-      zone.style.opacity = (0.3 * p).toFixed(3);
+      zone.style.width = `calc(${w.toFixed(3)}% + ${(40 * p * (1 - n)).toFixed(1)}px)`;
+      zone.style.opacity = (0.3 * p * (1 - n)).toFixed(3);
     }
     if (carton.annees) {
       const [a0, a1] = carton.annees, a = a0 + Math.round(p * (a1 - a0));

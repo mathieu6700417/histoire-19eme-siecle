@@ -55,6 +55,9 @@ FONDS = {
     'europe': {'cadre': [-12.0, 26.0, 42.0, 60.5], 'echelle': 20, 'tolerance': 1.0, 'fleuves': []},
     # Sud à -20° (2026-10-09) : Sainte-Hélène (-15,9°), qui revient après 1815 (retour des Cendres, 1840).
     'monde': {'cadre': [-100.0, -20.0, 50.0, 64.0], 'echelle': 6, 'tolerance': 0.9, 'fleuves': []},
+    # Algérie du Nord (2026-10-18, période 07 : insurrection de 1871) : trait de côte fin et libellés à la taille
+    # habituelle (le fond `europe`, recadré sur la Kabylie, grossissait les libellés et simplifiait trop la côte).
+    'algerie': {'cadre': [-2.5, 32.5, 10.5, 37.8], 'echelle': 120, 'tolerance': 1.1, 'fleuves': []},
     # Carte de l'empire colonial (spec 12, « Les colonies au fil du récit », 2026-10-12) : le monde de
     # Tahiti à la Nouvelle-Calédonie, commun à toutes les périodes ; chaque carte y prend son `cadre`.
     # Largeur ~2 000 unités (libellés du lecteur à ~3 % de la largeur d'une vue) ; coordonnées au dixième
@@ -112,6 +115,32 @@ PLANS = {
             ('Rotonde de la Villette', 5733, 666, 48.88333, 2.36944),
             ('Place du Trône, auj. de la Nation (centre)', 7316, 3877, 48.84833, 2.39583),
             ('Rotonde de Chartres (parc Monceau)', 2091, 951, 48.88025, 2.30908),
+        ],
+    },
+    # L'année terrible (ajout du 2026-10-18) : Paris aux vingt arrondissements, jusqu'aux fortifications
+    # (Montmartre, Belleville, Père-Lachaise, portes : hors du plan de 1838). Plan colorié de Vuillemin,
+    # Hachette, 1870 (8 000 × 6 811) ; ~1,6 m par pixel de l'original. Points relevés sur agrandissements
+    # quadrillés (agent A de la période 07) ; écarts de 30 à 45 m : à contrôler sur captures.
+    'paris-1870': {
+        'commons': 'File:1870 Vuillemin Map of Paris.jpg',
+        'titre': 'Nouveau plan de Paris divisé en vingt arrondissements',
+        'auteur': 'Alexandre Vuillemin (Hachette)',
+        'date': '1870',
+        'credit': 'Plan de Vuillemin, 1870',
+        'slugs': ['annee-terrible'], 'teintes': True,
+        'recadrage': [300, 330, 7700, 6560], 'largeur': 2000, 'qualite': 55,
+        'points': [
+            ('Arc de Triomphe (centre de la place)', 2224, 2410, 48.87378, 2.29504),
+            ('Notre-Dame (milieu de l’édifice)', 4645, 3815, 48.85300, 2.34980),
+            ('Hôtel de Ville', 4773, 3577, 48.85639, 2.35222),
+            ('Colonne de Juillet (Bastille)', 5493, 3791, 48.85322, 2.36914),
+            ('Place du Trône, auj. de la Nation (centre)', 6680, 4105, 48.84833, 2.39583),
+            ('Dôme des Invalides', 3012, 3694, 48.85500, 2.31250),
+            ('Observatoire (milieu de l’édifice)', 4043, 4907, 48.836389, 2.337229),
+            ('Obélisque de la Concorde', 3403, 2959, 48.86556, 2.32111),
+            ('Colonne Vendôme', 3755, 2829, 48.86747, 2.32941),
+            ('Panthéon', 4482, 4261, 48.84620, 2.34611),
+            ('Gare du Nord (embarcadère)', 4900, 1906, 48.88111, 2.35528),
         ],
     },
 }
@@ -285,7 +314,14 @@ def plan(nom: str, p: dict) -> dict:
     if not original.exists():
         original.write_bytes(c.http_get(info['url']))
         time.sleep(1)
-    im = Image.open(original).convert('L')
+    if p.get('teintes'):
+        # Plan colorié (aplats par arrondissement) : on garde le canal le plus clair de chaque pixel, de sorte que
+        # les aplats deviennent du papier et que seule l'encre (sombre dans les trois canaux) reste.
+        from PIL import ImageChops
+        r_, g_, b_ = Image.open(original).convert('RGB').split()
+        im = ImageChops.lighter(ImageChops.lighter(r_, g_), b_)
+    else:
+        im = Image.open(original).convert('L')
     cx, cy = caler(p['points'])
     m_x = 111320 * math.cos(math.radians(48.85)) / math.hypot(cx[0], cy[0])  # mètres par pixel
     m_y = 111200 / math.hypot(cx[1], cy[1])

@@ -289,6 +289,8 @@ const nature = l.nature.trim().toLowerCase() === l.oeuvre.trim().toLowerCase() ?
   .citation--livre.citation--poeme .citation__texte p { white-space: pre-line; }
   /* Un vers par ligne ; s'il est trop long, la suite passe à la ligne en retrait. */
   .citation__vers { display: block; padding-left: 1.6em; text-indent: -1.6em; }
+  /* Mesure (lectures.ts, `ajusterVers`) : largeur naturelle de chaque vers, sans coupure. */
+  .citation__texte.mesure-vers .citation__vers { white-space: nowrap; width: max-content; }
   .citation--lecteur.citation--poeme .citation__texte p { margin-bottom: 0.6em; }
 
   /* Mots : invisibles mais à leur place (pas de saut de mise en page), puis le mot en cours en

@@ -200,6 +200,40 @@ def colab(*args: str, timeout: float = 300, silencieux: bool = False, code: str 
     return r.stdout
 
 
+def sessions_colab() -> list[str] | None:
+    """Noms des sessions actives d'après `colab sessions` (lignes « [nom] endpoint | Hardware: … » ;
+    « ? » pour une session du serveur inconnue de la CLI locale) ; None si la CLI ne répond pas."""
+    try:
+        r = subprocess.run([str(Path.home() / '.local/bin/colab'), 'sessions'], capture_output=True, text=True, timeout=120)
+    except (subprocess.TimeoutExpired, OSError):
+        return None
+    if r.returncode != 0:
+        return None
+    return [m.group(1) for m in (re.match(r'\[([^\]]+)\] \S', l) for l in r.stdout.splitlines()) if m and m.group(1) != 'colab']
+
+
+def une_seule_session(session: str) -> None:
+    """Règle « une seule session Colab à la fois » (bilan de la période 06 : la session A100 des clips
+    a disparu pendant que l'agent des fonds ouvrait des sessions L4 ; onze clips perdus). Appelée avant
+    `colab new` : refuse d'ouvrir `session` si une autre session est active, sauf COLAB_PLUSIEURS=1
+    dans l'environnement (simple avertissement). Pour enchaîner deux calculs, réutiliser la session
+    ouverte (`--session <nom> --reprendre`) ou l'arrêter d'abord (`colab stop -s <nom>`)."""
+    noms = sessions_colab()
+    if noms is None:
+        print('  (colab sessions sans réponse : impossible de vérifier qu\'aucune autre session n\'est active)', flush=True)
+        return
+    autres = [n for n in noms if n != session]
+    if not autres:
+        return
+    msg = (f"session(s) Colab déjà active(s) : {', '.join(autres)} ; une seule session à la fois. "
+           f"Réutiliser la session ouverte (--session <nom> --reprendre) ou l'arrêter (colab stop -s <nom>) ; "
+           f"COLAB_PLUSIEURS=1 pour passer outre")
+    if os.environ.get('COLAB_PLUSIEURS') == '1':
+        print(f'  AVERTISSEMENT : {msg} (passé outre)', flush=True)
+        return
+    raise SystemExit(msg)
+
+
 REMOTE = '/content/mouvement'   # dossier propre au script sur la machine Colab (session réutilisable)
 
 
@@ -216,6 +250,7 @@ def lancer(slug: str, gpu: str, session: str | None, profil: str, seulement: str
     if reprendre:
         print(f'session « {session} » réutilisée (--reprendre)')
     else:
+        une_seule_session(session)
         print(f'session « {session} » ({gpu}{", mémoire haute" if high_mem else ""})…')
         colab('new', '-s', session, '--gpu', gpu, *(['--high-mem'] if high_mem else []), timeout=600)
     R = REMOTE
@@ -241,10 +276,14 @@ def lancer(slug: str, gpu: str, session: str | None, profil: str, seulement: str
                               code=f'import os; p="{R}/out/log.txt"; print(open(p, encoding="utf-8").read() if os.path.exists(p) else "")')
                 echecs = 0
             except (SystemExit, subprocess.TimeoutExpired) as e:
-                print(f'  (lecture du journal impossible : {e}) ')
+                print(f'  (lecture du journal impossible : {e}) ', flush=True)
                 echecs += 1
                 # Session perdue (2026-10-14 : « Session … not found » pendant une heure) : on cesse d'attendre.
-                if 'not found' in str(e) or echecs >= 10:
+                # 2026-10-18 (période 07) : la session a disparu sans « not found » (appels sans réponse) et
+                # le suivi a continué ; on consulte donc aussi `colab sessions` à chaque échec.
+                noms = sessions_colab()
+                absente = noms is not None and session not in noms
+                if 'not found' in str(e) or absente or echecs >= 10:
                     print('session injoignable : suivi arrêté (clips déjà rapatriés gardés dans bruts/)')
                     break
                 continue

@@ -198,6 +198,11 @@ python3 scripts/diaporamas/registre_musique.py ajouter --depuis restauration
    Champ facultatif `image.recadrage` : `[x0, y0, x1, y1]` (fractions de l'original) pour
    retirer les grandes marges de papier des estampes BnF et Carnavalet ; il est appliqué au
    WebP, la légende reste celle de l'œuvre entière.
+   Champ facultatif `image.rotation` (2026-10-18) : `90`, `180` ou `270` (degrés, sens des
+   aiguilles d'une montre) pour redresser un scan couché ou à l'envers ; appliqué au WebP
+   **avant** `recadrage`, qui se lit donc sur l'image redressée. Changer la rotation refait le
+   WebP à la passe suivante d'`images.py` (relevée dans l'état), puis `utile.py`, `camera.py` et,
+   le cas échéant, `nettete.py mesurer` (qui compte l'original redressé).
 2. Relire les images sur une planche-contact (vignettes numérotées) : marges, cadres de
    musée photographiés, reflets, sujet réellement représenté.
 3. `images.py <slug>` : refuse toute licence autre que domaine public / CC0 ; complète les
@@ -1805,6 +1810,17 @@ d'eux-mêmes, `essais`), et une session ouverte par un autre travail bloque tout
 (« Allocation refused ») : `lancer --session <nom> --reprendre` la réutilise dans `/content/mouvement`
 (dossier propre), `--garder` la laisse ouverte ; finir par `colab sessions` et arrêter ce qui reste.
 
+**Une seule session Colab à la fois** (2026-10-18, bilan de la période 06 : la session A100 des clips a
+disparu pendant que les fonds ouvraient des sessions L4, onze clips perdus). Avant `colab new`,
+`generation.py`, `fond.py`, `ambiance.py`, `nettete.py` et `vignettes.py` lisent `colab sessions`
+(`generation.une_seule_session`) et **refusent** d'ouvrir une session si une autre est active : réutiliser
+celle-ci (`--session <nom> --reprendre`) ou l'arrêter (`colab stop -s <nom>`). `COLAB_PLUSIEURS=1`
+devant la commande passe outre (simple avertissement), à n'employer que sur décision explicite.
+`generation.py lancer` et `fond.py lancer` rapatrient au fil de l'eau (chaque clip fini ; les tirages
+de fonds toutes les 10 min) et arrêtent le suivi quand la session disparaît (`fond.py` : journal
+illisible et session absente de `colab sessions`) ; relancer ensuite avec `--seulement` ce qui manque.
+`fond.py lancer` réessaie aussi le premier `exec` d'une session neuve (503, noyau pas prêt).
+
 - Le lot `src/data/diaporamas/<siecle>/generation/<slug>.json` donne, par élément, la diapositive `n`, le
   `type` (`mouvement`), la consigne `prompt` (anglais : mouvements voulus, « nothing new appears,
   no text », style de l'œuvre conservé) et la `graine` ; `negatif` et `modele` sont communs au lot.
@@ -2027,6 +2043,15 @@ Tout se passe dans `.cache/diaporamas/fonds/<slug>/` ; deux fichiers s'écrivent
 `constats.json` (par image : `tirage`, `tirage2`, `flou`, `invente`, `raison`).
 `lot.json` accepte aussi `"teinte": "gauche|droite|coins"` (genres `uni` et `papier`) : la même teinte
 des deux côtés, prise sur ce bord de l'image ou dans ses coins.
+`lot.json` accepte aussi `"toile": "grise" | "floue"` (2026-10-18). Par défaut, `preparer` pose les
+**décors photographiques** (technique : photographie, papier albuminé, daguerréotype, collodion) ou
+**sombres** (bandes latérales de 8 % de la zone utile sous 90 de luminance moyenne) sur une **toile
+grise unie** (128) avec une consigne qui la nomme (« flat gray areas », « in sharp focus, not
+blurred »), au lieu du flou de l'image : dans la 06, le modèle laissait le flou sur 10 décors sur 37,
+tous réussis refaits sur toile grise. La passe 2 suit la même toile (bandes restées floues : 22, 30,
+59, 73b, 131 de la 06). Les autres genres et décors restent sur toile floue ; forcer `"grise"` pour un
+uni sombre (45c, 146 de la 06) ou une gravure dont le flou reste (71, 107), `"floue"` pour l'inverse.
+Sur la 06, la règle aurait mis 27 décors sur 37 en toile grise ; `preparer` en donne le compte.
 
 - **Une session pour plusieurs périodes** : chaque période a son dossier distant
   (`/content/fond/<slug>/in`, `out`, `in2`, `out2`) ; avant le 2026-10-14 tout allait dans
@@ -2038,7 +2063,8 @@ des deux côtés, prise sur ce bord de l'image ou dans ses coins.
   arrête la session à la fin, passe 2 comprise.
 - **Retenter quelques images** : corriger `plus` dans `lot.json`, `preparer`, puis
   `lancer <slug> --graines 3,4 --seulement 038-b,077 --reprendre --renvoyer-kit --garder`. Les tirages
-  3 et plus ne sont lus par `relire` et `planche` que s'ils sont notés dans `constats.json`.
+  3 et plus ne sont lus par `relire` et `planche` que s'ils sont notés dans `constats.json`. Zone
+  restée floue : `"toile": "grise"` dans `lot.json`, puis la même suite (`preparer`, graines 3,4).
 - **Choisir le genre d'après la zone utile, pas d'après la technique ni le sujet** : une gravure dont
   le dessin va jusqu'au bord de la zone utile est un `decor` ; une scène entourée d'une marge de
   papier (vignette, coins arrondis, légende sous l'image) est un `papier`, même si elle montre une

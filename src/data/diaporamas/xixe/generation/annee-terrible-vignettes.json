@@ -1,0 +1,213 @@
+{
+ "usage": "vignettes",
+ "forme": "dessin traversant (spec 17, révision du 2026-10-14)",
+ "modele": "Tongyi-MAI/Z-Image-Turbo",
+ "style": "Very simple pen line drawing, like a quick sketch by a 19th-century French book illustrator: a few clean continuous black ink strokes, minimal contour sketch, outlines only, no hatching, no cross-hatching, no shading, no tone, lots of white space, plain white background, no people, no human figures, an empty scene with no person at all, no hands, no crowd, no border, no frame, no rectangle, no text, no letters, no numbers, no signature, no flag, no insignia. Objects, buildings and settings of France in 1870 and 1871.",
+ "vignettes": [
+  {
+   "n": "16",
+   "graine": 30160,
+   "gauche": "a low stone wall on a grassy hillside, a broken cavalry sabre and a dropped cuirass lying in the grass",
+   "droite": "a cluster of trees on a hill and a small village church steeple in the distance",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "28",
+   "graine": 30280,
+   "gauche": "a foundry crucible pouring into sand moulds, with a row of shells standing on the floor",
+   "droite": "a row of new field cannons on wooden carriages in a factory yard with a tall chimney",
+   "quand": "les quartiers et les journaux",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "31",
+   "graine": 30310,
+   "gauche": "a travelling trunk and a top hat resting on a railway station bench",
+   "droite": "a horse-drawn travelling carriage on a road, with the domes and spires of a distant capital",
+   "quand": "aucune ne bouge",
+   "tirage": 3,
+   "jugement": "bon",
+   "raison": "Tirages 1 et 2 : ville dessinée au centre caché."
+  },
+  {
+   "n": "39",
+   "graine": 30390,
+   "gauche": "a wicker pigeon basket with its lid open on a wooden table",
+   "droite": "a magic lantern projector on a small table aimed at a blank screen",
+   "tirage": 1,
+   "jugement": "bon",
+   "raison": "Lanterne magique à objectif en tube ; tirage 3 trop proche du pavillon de phonographe."
+  },
+  {
+   "n": "42",
+   "graine": 30420,
+   "gauche": "a small table with a stack of bound books and a quill in an inkwell",
+   "droite": "a bronze field cannon on its wooden carriage",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "51",
+   "graine": 30510,
+   "gauche": "rows of rain-soaked canvas tents in a muddy field",
+   "droite": "an empty cart stuck in deep mud with puddles under a rainy sky",
+   "quand": "venus des campagnes bretonnes",
+   "tirage": 3,
+   "jugement": "bon"
+  },
+  {
+   "n": "54",
+   "graine": 30540,
+   "gauche": "a village farmyard with sacks of grain, a haystack and an empty stable",
+   "droite": "a country road with a wayside cross and a village church in the distance",
+   "quand": "lève des contributions",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "59",
+   "graine": 30590,
+   "gauche": "a white-walled Algerian town with a minaret and palm trees",
+   "droite": "a writing desk with a blank sheet of paper, a wax seal and an inkwell",
+   "quand": "trente-cinq mille juifs",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "62",
+   "graine": 30620,
+   "gauche": "a butcher's shop front with closed shutters and empty meat hooks",
+   "droite": "a gas street lamp on a wet pavement at night",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "63b",
+   "graine": 30632,
+   "gauche": "a butcher's chopping block with a cleaver and empty hooks above it",
+   "droite": "an empty iron-railed animal enclosure under tall trees in a garden",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "75",
+   "graine": 30750,
+   "gauche": "a spiked helmet resting on a folded map on a camp table",
+   "droite": "a field telescope on a tripod in front of a row of tents",
+   "jugement": "ecarte",
+   "raison": "Le casque à pointe des trois tirages se lit comme une mine hérissée de pointes."
+  },
+  {
+   "n": "82",
+   "graine": 30820,
+   "gauche": "the empty tiered benches of an assembly hall",
+   "droite": "a small shop front with closed shutters on a quiet street",
+   "quand": "Elle exige",
+   "jugement": "ecarte",
+   "raison": "Les bancs étagés des trois tirages ressemblent à des gradins de stade."
+  },
+  {
+   "n": "88b",
+   "graine": 30882,
+   "gauche": "a barricade of piled paving stones and an overturned cart in a narrow street",
+   "droite": "the facade of a large city hall with a clock tower",
+   "tirage": 2,
+   "jugement": "bon",
+   "raison": "Tirage 1 : voiture automobile (anachronisme) ; tirage 3 : silhouettes devant l'hôtel de ville."
+  },
+  {
+   "n": "92",
+   "graine": 30920,
+   "gauche": "a heavy iron strongbox with a large key in its lock",
+   "droite": "the arched stone gateway of a bank with heavy closed wooden doors",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "96",
+   "graine": 30960,
+   "gauche": "a baker's bread oven with a long wooden peel and round loaves on a rack",
+   "droite": "an empty workshop with a workbench and tools hanging on the wall",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "98",
+   "graine": 30980,
+   "gauche": "a farmhouse with a haystack and a plough in a field",
+   "droite": "a small balloon floating above fields and a village steeple",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "99",
+   "graine": 30990,
+   "gauche": "a wooden stretcher and a medical bag at the foot of a fort's earth rampart",
+   "droite": "a rifle leaning against a stone wall beside a field canteen",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "100",
+   "graine": 31000,
+   "gauche": "a schoolroom with wooden desks, slates and a blank blackboard on an easel",
+   "droite": "a small village schoolhouse with a bell turret",
+   "quand": "Des crucifix",
+   "tirage": 3,
+   "jugement": "bon"
+  },
+  {
+   "n": "107",
+   "graine": 31070,
+   "gauche": "the high stone wall and arched gate of an old prison",
+   "droite": "the towers of a Gothic cathedral seen from a riverside quay",
+   "tirage": 2,
+   "jugement": "bon"
+  },
+  {
+   "n": "116",
+   "graine": 31160,
+   "gauche": "a textile mill with a tall chimney and long rows of windows",
+   "droite": "an ironworks with a blast furnace, chimneys and a heap of coal",
+   "quand": "Des industriels alsaciens",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "123b",
+   "graine": 31232,
+   "gauche": "an oil can and a broken bottle on the cobbles in front of a cellar opening",
+   "droite": "a burnt-out house front with empty openings and wisps of smoke",
+   "tirage": 1,
+   "jugement": "bon"
+  },
+  {
+   "n": "128",
+   "graine": 31280,
+   "gauche": "a cherry tree branch heavy with cherries",
+   "droite": "a barricade of paving stones across a narrow street with a lantern",
+   "jugement": "ecarte",
+   "raison": "La barricade des trois tirages est une barrière métallique de foule moderne : anachronisme."
+  },
+  {
+   "n": "136b",
+   "graine": 31362,
+   "gauche": "a barricade of paving stones and overturned barrels in a narrow street",
+   "droite": "a stone wall with a dropped rifle and a kepi lying on the ground",
+   "tirage": 3,
+   "jugement": "bon",
+   "raison": "Tirages 1 et 2 : barrière moderne."
+  },
+  {
+   "n": "138",
+   "graine": 31380,
+   "gauche": "a tall burnt-out palace wall with empty arched openings and scattered stones",
+   "droite": "a broken stone column and rubble in a ruined courtyard",
+   "quand": "des dizaines de milliers",
+   "tirage": 3,
+   "jugement": "bon"
+  }
+ ]
+}
