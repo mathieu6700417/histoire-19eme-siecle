@@ -34,6 +34,14 @@ l'eau ; le site doit rester simple à étendre sans toucher aux pages existantes
   des chapitres écrivains s'affichent en gris dans la page et en couleur dans la visionneuse
   (spec 11).
   Pas de mode sombre pour l'instant. Responsive (lecture confortable sur téléphone).
+- **Livres** (charte 23, décidée le 2026-10-20) : enquêtes lettrées illustrées d'environ 3 h de
+  lecture, section « Livres » du siècle (`/<siecle>/livres/<slug>/`) ; un livre déclare un siècle
+  principal et des siècles associés, et paraît dans chacun. Deux exceptions propres à ce format :
+  niveau **universitaire** (pas lycée) et documents d'époque **en couleur dans la page**. Chaque
+  livre instruit une hypothèse trouvée par la méthode de la charte (cabinet des lentilles,
+  séminaire sur pièces, débat contradicteur, lecture du corpus, hypothèses et pré-enquête), menée
+  en séance avec l'utilisateur **avant** toute écriture ; ne jamais proposer d'angle ou de thèse
+  en dehors de cette méthode. Premier livre : George Sand et Chopin (spec 24).
 - **Pas de quiz** pour l'instant (pourra être ajouté plus tard).
 - **Structure** : sommaire des siècles à la racine ; pour chaque siècle, un accueil listant les
   leçons par thème, puis ses sections facultatives (« Écrivains », « Images ») ; navigation du
@@ -87,6 +95,9 @@ fonctions de `utils/lecons.ts`, `utils/ecrivains.ts`, `utils/diaporamas.ts` qui 
 Pour ajouter un siècle : une entrée dans `src/data/siecles.ts` (sections disponibles, plan des
 chapitres s'il a des écrivains ou des images), puis ses dossiers `<siecle>/` (contenus, données,
 médias). Scripts de production : `--siecle <id>` (défaut `xixe`).
+
+Livres : suivre `docs/specs/23-charte-livres.md` (méthode en six étapes, format, exactitude,
+fichiers sous `docs/livres/<slug>/` puis `src/content/livres/<slug>/`).
 
 Section « Le siècle raconté par ses écrivains » : suivre `docs/specs/00-charte-chapitres-ecrivains.md`
 (règles et procédure, qui prévalent sur les specs 02 et 03) et les scripts de `scripts/ecrivains/`.
